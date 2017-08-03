@@ -1,0 +1,210 @@
+[#include "../../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+<div class="wmes-content"  ng-controller="Searchctrl" ng-app="mySearch">
+	<div class="ifa_choose_condition">
+		<p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='transaction.title'/]</p>
+		<div class="funds_choice_wrap">
+			<p class="funds_choice_title">[@lang_res k='criteria.period'/]</p>
+			<ul class="funds_choice">
+                <li class="period_all fund_choice_active funds_all fund_choice_active2" data-name="Period Date" data-key="" data-value="Issue Date_00">[@lang_res k='criteria.all'/]</li>
+                <li data-name="Period Date" data-key="[@lang_res k='criteria.period.week.1'/]" data-type="D" data-value="-7">[@lang_res k='criteria.period.week.1'/]</li>
+                <li data-name="Period Date" data-key="[@lang_res k='criteria.period.month.1'/]" data-type="M" data-value="-1">[@lang_res k='criteria.period.month.1'/]</li>
+                <li data-name="Period Date" data-key="[@lang_res k='criteria.period.month.2'/]" data-type="M" data-value="-2">[@lang_res k='criteria.period.month.2'/]</li>
+                <li data-name="Period Date" data-key="[@lang_res k='criteria.period.month.3'/]" data-type="M"  data-value="-3">[@lang_res k='criteria.period.month.3'/]</li>
+                <li data-name="Period Date" data-key="[@lang_res k='criteria.period.month.6'/]" data-type="M" data-value="-6">[@lang_res k='criteria.period.month.6'/]</li>
+                <li data-name="Period Date" data-key="[@lang_res k='criteria.period.year.1'/]" data-type="Y" data-value="-1">[@lang_res k='criteria.period.year.1'/]</li>
+                <li data-name="Period Date" data-key="" data-value="other" class="recommend-date-li recommend-date-choice">
+                    <p class="recommend-other">[@lang_res k='criteria.period.other'/]</p>
+                    <div class="recommend-other-wrap">
+                        <div class="recom-input-wrap">
+                            <input id="fromDate" readonly class="laydate-icon" type="" name="">
+                        </div>
+                        <span class="recommend-to-word">[@lang_res k='criteria.period.to'/]</span>
+                        <div class="recom-input-wrap">
+                            <input id="toDate" readonly class="laydate-icon" type="" name="">
+                        </div>
+                        <a data-name="Period Date" class="recommend-date-ok" href="javascript:;">[@lang_res k='global.ok'/]</a>
+                    </div>  
+                </li>
+            </ul>
+		</div>
+        <div class="funds_choice_wrap">
+            <p class="funds_choice_title">[@lang_res k='criteria.status'/]</p>
+            <ul class="funds_choice">
+                <li class="status_all fund_choice_active  funds_all fund_choice_active2"  data-name="Status" data-key="" data-value="Status_00">[@lang_res k='criteria.all'/]</li>
+                <li data-name="Status" data-key="[@lang_res k='order.plan.history.status.display.1'/]" data-value="-10,1">[@lang_res k='order.plan.history.status.display.1'/]</li>
+                <li data-name="Status" data-key="[@lang_res k='order.plan.history.status.display.2'/]" data-value="2">[@lang_res k='order.plan.history.status.display.2'/]</li>
+                <li data-name="Status" data-key="[@lang_res k='order.plan.history.status.display.3'/]" data-value="3">[@lang_res k='order.plan.history.status.display.3'/]</li>
+                <li data-name="Status" data-key="[@lang_res k='order.plan.history.status.display.4'/]" data-value="4">[@lang_res k='order.plan.history.status.display.4'/]</li>
+                <li data-name="Status" data-key="[@lang_res k='order.plan.history.status.display.5'/]" data-value="5">[@lang_res k='order.plan.history.status.display.5'/]</li>
+                <li data-name="Status" data-key="[@lang_res k='order.plan.history.status.display.6'/]" data-value="6">[@lang_res k='order.plan.history.status.display.6'/]</li>
+                <li data-name="Status" data-key="[@lang_res k='order.plan.history.status.display.7'/]" data-value="7">[@lang_res k='order.plan.history.status.display.7'/]</li>
+                <li data-name="Status" data-key="[@lang_res k='order.plan.history.status.display.-1'/]" data-value="-1">[@lang_res k='order.plan.history.status.display.-1'/]</li>
+            </ul>
+            <input type="hidden" name="status"/>
+        </div>
+        <!-- 
+        [#if adminType?? && adminType=='2']
+        <div class="funds_choice_wrap" style="height:65px;height-max:160px;overflow: auto;">
+			<p class="funds_choice_title">[@lang_res k='console.ifa.team.list.table.title.ifaFirm'/]</p>
+			<ul class="funds_choice" id="funds_logo">
+				<li class="ifafirm_all fund_choice_active funds_all fund_choice_active2"  data-name="ifafirm" data-key="" data-value="">[@lang_res k='criteria.all'/]</li>
+				[#if ifafirms?exists && ifafirms?size gt 0 ]
+				[#list ifafirms as items]
+				<li style="width: 105px;height: 40px;" title="${(items.ifafirmName)!}" data-letter="${items.ifafirmName!}" data-key="${(items.ifafirmName)!}" data-name="FundHouse" data-value="${(items.id)!}" >
+					<img style="width: 110px;height: 40px;" src="${base}${items.iconUrl!}" alt="${(items.ifafirmName)!}">
+				</li>
+				[/#list]
+				[/#if]
+			</ul>
+		</div>
+        [/#if]
+         -->
+    </div>
+    <div class="strategies_list_wrap">       			
+		<div class="funds_list_selected">
+            <p class="funds_selected_title">[@lang_res k='criteria.selected'/] </p>
+			<ul class="selection_criteria">
+				<p class="funds_title_selection">[@lang_res k='criteria.selected.reset'/] </p>
+			</ul>
+		</div>
+		<div class="funds_keyserach_wrap">
+            <p class="funds_currency_title">[@lang_res k='criteria.currency'/] </p>
+            <div style="cursor: pointer;" class="funds_currency_xiala">
+                <input id="hidDefCurrency" value="${currencyCode!}" type="hidden">
+                <input id="portfolio-currency" style="width: 60px;" class="portfolio-currency" type="text" value="${currencyCode!}" readonly>
+                <span class="icon_xiala"></span>
+                <ul id="currency-choice">
+                </ul>
+            </div>
+            <div class="funds_keyserach">
+				<input type="text" id="txtKeyWord" title="[@lang_res k='order.plan.history.search.keyWord.placeholder'/]" placeholder="[@lang_res k='order.plan.history.search.keyWord.placeholder'/]">
+				<span class="icon_search" ng-click="searchKeyBtn()"></span>
+			</div>
+        </div>
+        <div class="funds_keyserach_wrap">
+			<p class="ifa_serach_sum">
+				[@lang_res k='criteria.total.a'/]					
+				<span class="funds_serach_digital" ng-bind="total"></span> [@lang_res k='criteria.total.b'/]
+			</p> 
+        </div>
+		<div class="funds-views-list ng-cloak" style="display:block;">
+			<table class="funds_search_information" style="width:660px;position: relative;display:table;">
+                <tbody>
+                   <tr class="funds_tables_th">
+                        <th style="width: 70px;" class="funds_tables_header">
+                           	 [@lang_res k='order.plan.history.order.time'/]
+                        </th>
+                        <th  class="funds_tables_header">
+                            [@lang_res k='transaction.list.clientName'/]<br>( [@lang_res k='order.plan.history.account.no'/] )
+                        </th>
+                        <th  class="funds_tables_header">
+                          	 [@lang_res k='order.plan.history.trade.code'/]
+                        </th>
+                        <th class="funds_tables_header">
+                           	[@lang_res k='order.plan.history.product.name'/]<br>( [@lang_res k='order.plan.history.symbol.code'/] )
+                        </th>
+                    </tr>
+                    <tr ng-repeat="items in dataList">
+                        <td  class="funds_search_tdcenter" ng-bind="items.orderDateStr"></td>
+                        <td class="funds_search_tdcenter">
+                        	<p>{{items.clientName}}</p>
+	                        <p ng-if="items.accountNo!=null">( {{items.accountNo}} )</p>
+                        </td>
+                        <td class="funds_search_tdcenter" ng-bind="items.itsOrderNumber"></td>
+                        <td class="funds_search_tdcenter">
+	                        <p>{{items.fundName}}</p>
+	                        <p ng-if="items.product!=null">( {{items.symbolCode}} )</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="funds_search_wrap">     
+	            <div class="funds_search_content">
+	                <table class="funds_search_information" style="display: table;width: 950px;">
+		                <tbody>
+		                    <tr class="funds_tables_th">
+		                        <th class="funds_tables_header">
+		                            [@lang_res k='order.plan.history.trade.type'/]
+		                        </th>
+		                        <th class="funds_tables_header">
+		                            [@lang_res k='order.plan.history.currency'/]
+		                        </th>
+		                        <th class="funds_tables_header">
+		                            [@lang_res k='order.plan.history.price'/]
+		                        </th>
+		                        <th class="funds_tables_header">
+		                            [@lang_res k='order.plan.history.unit'/]
+		                        </th>
+		                        <th class="funds_tables_header">
+		                            [@lang_res k='order.plan.history.total.amount'/]<br>( [@lang_res k='order.plan.history.total.fee'/] )
+		                        </th>
+		                        <th style="width: 70px;" class="funds_tables_header">
+		                            [@lang_res k='order.plan.history.close.time'/]
+		                        </th>
+		                        <th class="funds_tables_header">
+		                        	[@lang_res k='transaction.list.status'/]
+		                        </th>
+		                        <th class="funds_tables_header">
+		                        	[@lang_res k='order.plan.history.trader'/]
+		                        </th>
+		                        [#if adminType?? && adminType=='2']
+		                        <th class="funds_tables_header">
+		                        	[@lang_res k='member.ifafirm'/]
+		                        </th>
+		                        [/#if]
+		                        <th class="funds_tables_header">
+		                        	[@lang_res k='order.plan.history.remark'/]
+		                        </th>
+		                    </tr>
+		                    <tr ng-repeat="items in dataList">
+		                        <td class="funds_search_tdcenter" ng-bind="items.orderTypeDisplay"></td>
+		                        <td class="funds_search_tdcenter" ng-bind="items.tranFeeCurName"></td>
+		                        <td class="funds_search_tdcenter">
+			                        <div ng-if="items.transactionPrice!=null||items.transactionPrice!=''">
+				                        <span class="conversion-flag" ng-bind="items.transactionPrice|formatCurrency:''"></span>
+				                        <span class="to-currency" ng-bind="items.currencyName"></span>
+			                        </div>
+		                        </td>
+		                        <td class="funds_search_tdcenter" ng-bind="items.transactionUnit"></td>
+		                        <td class="funds_search_tdcenter">
+		                        	<div ng-if="items.transactionAmount!=null||items.transactionAmount!=''">
+				                        <span class="conversion-flag" ng-bind="items.transactionAmount|formatCurrency:''"></span>
+				                        <span class="to-currency" ng-bind="items.currencyName"></span>
+			                        </div>
+			                        <div ng-if="items.fee!=null||items.fee!=''">
+				                        ( <span class="conversion-flag" ng-bind="items.fee|formatCurrency:''"></span>
+				                          <span class="to-currency" ng-bind="items.currencyName"></span> )
+			                        </div>
+		                        </td>
+		                        <td class="funds_search_tdcenter" ng-bind="items.closeTimeStr"></td>
+		                        <td class="funds_search_tdcenter" ng-bind="items.statusDisplay"></td>
+		                        <td class="funds_search_tdcenter" ng-bind="items.trader"></td>
+		                        [#if adminType?? && adminType=='2']
+	                          	<td class="funds_search_tdcenter">
+		                          	<img style="height: 40px;" title="{{items.ifaFirmName}}" alt="{{items.ifaFirmName}}" ng-src="${base!}{{items.firmLogo}}">
+		                        </td>
+		                        [/#if]
+		                        <td class="funds_search_tdcenter" ng-bind="items.remark"></td>
+		                    </tr>
+		                </tbody>
+	            	</table>
+				</div>
+			</div>
+			<div class="no_list_tips">
+	            <img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+	            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+			</div>
+		</div>
+		<ul class="ifa_list_paging">
+            <wmespage conf="transactionConf"></wmespage>
+		</ul>
+    </div>
+ </div>
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var props = [@load_prop k=''/];
+     seajs.use('${base}/res/web/console/transactionRecode/transactionPage.js');
+</script>

@@ -1,0 +1,37 @@
+.wmes-content{min-height:500px;overflow-x:hidden;overflow-y:hidden;}
+.view_content{}
+.view_content .view_left{float:left;width:65%;border-right:1px solid #eef0f2;}
+.view_content .view_right{float:left;width:30%;margin-left:3%;}
+.view_content .view_right .tip{line-height: 28px;}
+.view_content .view_right .act_box{margin-top: 30px;}
+.view_content .view_right .act_box #select_photo{height:25px;line-height:25px;background:#f38932}
+.view_content .view_right .act_box #select_photo:hover{background:#964d12}
+.view_content .imgbox{margin:4%;margin-left:0;border:1px solid #eef0f2;padding:4%;text-align:center}
+.tuijiantouxiang{margin-top:4px;}
+.tuijiantouxiang li{float:left;width:60px;height:60px;margin:8px 20px 8px 0;}
+.tuijiantouxiang li img{width:60px;height:60px;}
+.big_img{width:100px;height:100px;border:1px solid #eef0f2;margin:10px 0;}
+.little_img{width:50px;height:50px;border:1px solid #eef0f2;margin:10px 0;}
+.little_wrap{color:#999;}
+.little_title{margin-bottom:8px;color:#666;font-weight: bold;}
+
+
+
+.edit_contentbox{display:none;position: absolute;top:0;left:0;background:rgba(0,0,0,0.8);width:100%;padding-left:10%;height:100%;}
+.edit_content{width:620px;margin:0px auto;margin-top:210px;}
+.edit_content .range_box{width:360px;text-align:center;margin-top: 4px;}
+.edit_content #change_img_range{vertical-align:middle;width: 260px;}
+.edit_content #btnZoomOut{vertical-align:middle;}
+.edit_content #btnZoomIn{vertical-align:middle;}
+
+#imageBox{position: relative;height: 240px;width: 360px;border:1px solid #aaa;background: #fff;
+    overflow: hidden;background-repeat: no-repeat;cursor:move;background-position: 111px 56px;}
+#imageBox .thumbBox
+{position: absolute;top: 55px;left: 110px;width: 130px;height: 130px;box-sizing: border-box;border: 1px solid rgb(102, 102, 102);
+    box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);background: none repeat scroll 0% 0% transparent;}
+#imageBox .spinner{position: absolute;top: 0;left: 0;bottom: 0;right: 0;text-align: center;line-height: 400px;
+	background: rgba(0,0,0,0.7);}
+#fileload{width: 120px;height:25px;line-height: 25px;background:#f38932}
+#fileload:hover{background:#964d12}
+#uploadImg{ font-size:12px; overflow:hidden;margin:15px 0;}
+#file{ position:absolute; z-index:100;opacity:0;filter:alpha(opacity=0);float:left;width:120px;height:25px;}

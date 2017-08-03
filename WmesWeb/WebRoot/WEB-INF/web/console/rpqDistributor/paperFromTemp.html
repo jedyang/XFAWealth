@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet"  >
+    <link rel="stylesheet" type="text/css" href="/wmes/res/css/Funds.css">
+    <style>
+		.login-dialog .modal-dialog {width: 1000px;}
+		.firminfo-dialog .modal-dialog{width: 900px;}
+		.teaminfo-dialog .modal-dialog{width: 700px;}
+		.btneditnode{text-decoration:underline;}
+        .wmes-contentbox {
+            background: #ffffff;
+            padding-top: 5px;
+        }
+	</style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>	
+<input id="btnCloseIframe" type="hidden" />
+    <div class="container-fluid pd0" id="wmes_wraper">
+	    <div class="clear"></div>
+	    <div class="tab_wrap" id="tab_wrap" >
+	        <!-- tab一 -->
+	        <form class="form-inline" style="display:block;">
+	              	<input type="hidden" value="" class="hiddenSearch" id="selClienttype"/>
+                	<input type="hidden" value="" class="hiddenSearch" id="selPagetype"/>
+                    <div class="funds_choice_wrap">
+                    	<p class="funds_choice_title">[@lang_res  k='console.rpq.clienttype'/]</p>
+                    	<ul class="funds_choice">
+                    		<li class="period_all selClienttype fund_choice_active2 fund_choice_active" data-name="selClienttype" data-key="" data-value="">[@lang_res k='ifaspace.info.all'/]</li>
+                    		<li class="" data-name="selClienttype" data-key="[@lang_res  k='console.rpq.Individual'/]" data-value="Individual">[@lang_res  k='console.rpq.Individual'/]</li>
+                    		<li class="" data-name="selClienttype" data-key="[@lang_res  k='console.rpq.Corporate'/]" data-value="Corporate">[@lang_res  k='console.rpq.Corporate'/]</li>
+                    		<li class="" data-name="selClienttype" data-key="[@lang_res  k='console.rpq.FI'/]" data-value="FI">[@lang_res  k='console.rpq.FI'/]</li>
+                    	</ul>
+                    </div>
+                    <div class="funds_choice_wrap">
+                    	<p class="funds_choice_title">[@lang_res  k='console.rpq.pagetype'/]</p>
+                    	<ul class="funds_choice">
+                    		<li class="period_all selPagetype fund_choice_active2 fund_choice_active" data-name="selPagetype" data-key="" data-value="">[@lang_res k='ifaspace.info.all'/]</li>
+                    		<li class="" data-name="selPagetype" data-key="[@lang_res k='console.rpq.openAccountRpq'/]" data-value="O">[@lang_res k='console.rpq.openAccountRpq'/]</li>
+                    		<li class="" data-name="selPagetype" data-key="[@lang_res k='console.rpq.openAccountRpq'/]" data-value="K">[@lang_res k='console.rpq.openAccountRpq'/]</li>
+                    	</ul>
+                    </div>
+	             <div class="clear"></div>
+                 <div class="pdt20" style="padding-top: 5px;">
+                 	<a id="confirmAdd" href="javascript:selectTemplateSubmit();" class="btn-blue-s">[@lang_res k='global.confirm'/]</a>
+                 	<a id="btnToDoSearch" href="javascript:void(0);" class="btn-blue-s">[@lang_res k='global.query'/]</a>
+                 </div>
+                 <!-- 筛选条件 -->
+                    <div class="funds_list_selected">
+			            <p class="funds_selected_title">[@lang_res k='criteria.selected'/]</p>
+						<ul class="selection_criteria">
+							<p class="funds_title_selection">[@lang_res k='criteria.selected.reset'/]</p>
+						</ul>
+					</div>
+					<!-- 数据条数与输入框查询 -->
+                    <div class="funds_keyserach_wrap">
+						<p class="ifa_serach_sum" style="line-height:33px;">
+							[@lang_res k='criteria.total.a'/]					
+							<span class="funds_serach_digital" id="dataTotal"></span> [@lang_res k='criteria.total.b'/]
+						</p> 
+					 	<div style="height:33px;" class="funds_keyserach ifa_keyserach">
+							<input type="text" class="searchCondition" id="txtTitle" placeholder="[@lang_res k='console.rpq.questionList.seachTitleTip'/]">
+							<span class="icon_search"></span>	
+	                   	</div>
+			        </div>	                 						
+	             <div>
+	                 <table border="0" id="pagedatalist" cellpadding="0" cellspacing="0" class="table table-hover table-striped" >
+						<tbody>
+							<tr>
+								<th class="table-head" style="width:5%;">[@lang_res k='rpq.qustionTemp.select'/]</th>
+	                       		<th class="table-head" style="width:35%;">[@lang_res  k='console.rpq.title'/]</th>
+	                      		<!--  <th class="table-head">问卷语言</th>-->
+	                        	<th class="table-head" style="width:15%;">[@lang_res  k='console.rpq.clienttype'/]</th>
+	                        	<th class="table-head" style="width:15%;">[@lang_res  k='console.rpq.pagetype'/]</th>
+	                        	<th class="table-head" style="width:10%;">[@lang_res  k='global.status'/]</th>
+	                        	<th class="table-head" style="width:20%;">[@lang_res k='global.operate'/]</th>
+	                    	</tr>
+	               		</tbody>
+					</table>
+	       			<nav  class="pull-right">
+	             		<!-- log分页 -->
+		           		<ul id='pagination' class="pagination pagination-sm">  
+		           		</ul>
+	       			</nav>
+	   				<div class="clear"></div>                      
+	            </div>
+	        </form>         
+	    </div>            
+    </div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		//搜索條件點擊事件
+		$(".funds_choice li").on("click",function(){
+			$(this).siblings().removeClass("fund_choice_active2").end();
+			if($(this).index()==0){
+                $(this).addClass('fund_choice_active2');
+            }
+			$(this).siblings().removeClass("fund_choice_active").end().addClass("fund_choice_active");
+			
+			var selection_criterialenght = $(".selection_criteria li").length;
+			for(var i = 0; i < selection_criterialenght ;i++){
+				if($(".selection_criteria li").eq(i).attr("data-name") == $(this).attr("data-name") ){
+					$(".selection_criteria li").eq(i).remove();
+				}
+			}
+			if($(this).attr("data-key") != undefined && $(this).attr("data-key") != ""){
+				$(".funds_title_selection").before('<li data-name="' + $(this).attr("data-name") + '">' + $(this).attr("data-key") + '<span class="selection_delete"></span></li>')
+			}
+			
+			var selectId = $(this).attr("data-name");
+			var selectValue= $(this).attr("data-value");
+			$("#"+selectId).val(selectValue);
+			loadQuestionsTempList(0)
+		});
+		
+		//执行清除方案点击操作
+		$(".funds_title_selection").on("click",function(){
+			$(".period_all").click();
+		});	
+		
+		//清除单个搜索条件
+		$(document).on("click",".selection_delete",function(){
+			var selectId = $(this).parent().data("name");
+			$("."+selectId).click();
+		});		
+		//问卷预览
+		$("body").on("click",".btnsetpagequest","",function(){
+			//alert("page");
+			var pageId = ($(this).parent().find('a:eq(1)').attr('id'));
+			var url = "${base}/console/rpq/view_page.do?r="+Math.random()+"&id="+pageId;
+			BootstrapDialog.show({
+				title : "[@lang_res  k='console.rpq.form.title'/]",
+				cssClass : 'login-dialog',
+				type : BootstrapDialog.TYPE_PRIMARY,
+				size : BootstrapDialog.SIZE_WIDE,
+				draggable : true,
+				message : $('<div><iframe scrolling="no" frameborder="0" name="pageView" onload="this.height=pageView.document.body.scrollHeight" width="100%" src="'+url+'" id="pageView"></iframe></div>').load(),
+				buttons : [{
+					label : "[@lang_res  k='global.close'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				}]
+			});
+		});
+		
+		//等级预览
+		$("body").on("click",".btnsetlevel","",function(){
+			//alert("level");
+			var pageId = ($(this).parent().find('a:eq(1)').attr('id'));
+			var url = "${base}/console/rpqDistributor/pageLevelView.do?pageid="+pageId+"&v=1";
+			BootstrapDialog.show({
+				title : "[@lang_res  k='rpq.quetionTemp.viewPaperLevel'/]",
+				cssClass : 'login-dialog',
+				type : BootstrapDialog.TYPE_PRIMARY,
+				size : BootstrapDialog.SIZE_WIDE,
+				draggable : true,
+				message : $('<div><iframe scrolling="no" frameborder="0" name="pageView" onload="this.height=pageView.document.body.scrollHeight" width="100%" src="'+url+'" id="pageView"></iframe></div>').load(),
+				buttons : [{
+					label : "[@lang_res  k='global.close'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				}]
+			});
+		});
+		setAutoSearch('.searchCondition',loadQuestionsTempList,0);
+		loadQuestionsTempList(0);
+		function loadQuestionsTempList(pageid){
+			//alert("xxx");
+			var title = $('#txtTitle').val();
+			var clientType = $('#selClienttype').val();
+			var pageType = $('#selPagetype').val();
+			$.ajax({
+				url:"${base}/console/rpqDistributor/pageFromTempListJson.do?r="+Math.random(),
+				type : 'post',
+				datatype : 'json',
+				data : {
+					title : title,
+					clientType : clientType,
+					pageType : pageType,
+					page : pageid + 1,
+					rows : 8
+				},
+			 	beforeSend: function () {
+                    //indexmsg = layer.msg("正在加载数据中，请稍候....", { time: 50000 });
+                },
+                complete: function () {
+					//layer.close(indexmsg);
+                },
+				success : function(json) {
+					var total = json.total;
+					var table = json.rows;
+					var html = '';
+					$("#pagedatalist tbody tr:gt(0)").empty();
+					if(!!total){
+						$("#dataTotal").html(total)
+					}else{
+						$("#dataTotal").html(0)
+					}
+					$.each(table,function(i, n) {
+							var id = n.rpqPageid;
+							var title = n.rpqPageTitle;
+							//客户类型
+							var clientType = n.clientType;
+							if('FI'==clientType){
+								clientType="[@lang_res  k='console.rpq.FI'/]";
+							}else if('Individual'==clientType){
+								clientType = "[@lang_res  k='console.rpq.Individual'/]";
+							}else if('Corporate'==clientType){
+								clientType = "[@lang_res  k='console.rpq.Corporate'/]"
+							}
+							//适用类型
+							var pageType = n.pageType;
+							if (pageType == 'O')
+								pageType = '[@lang_res k='console.rpq.openAccountRpq'/]';
+							else
+								pageType = '[@lang_res k='console.rpq.KYCrpq'/]';
+							
+							//题库状态
+							var status = n.status;	
+							var status_2 = '';
+							if('using' == status)
+								status_2 = '[@lang_res k="global.status.using"/]';
+							else if('unusing' == status)
+								status_2 = '[@lang_res k="global.status.unusing"/]';
+							else if('draft' == status)
+								status_2 = '[@lang_res k="global.status.draft"/]';
+							else if('delete' == status)
+								status_2 = '[@lang_res k="global.status.delete"/]';
+							
+							var langCode = n.langCode;
+							var button = '<a id="'+id+'" pageid="' + id 
+								+ '" class="btnsetpagequest" href="javascript:void(0);">[@lang_res k="rpq.qustionTemp.viewPaper"/]</a>&nbsp;&nbsp;'
+								+ '<a id="'+id+'" pageid="' + id 
+								+ '" class="btnsetlevel" href="javascript:void(0);">[@lang_res k="rpq.quetionTemp.viewPaperLevel"/]</a>';
+							
+						  	html += '<tr>'
+						  		+ '<td><input pageId="'+id+'" type="checkbox" class="checkbox"></td>'
+								+ '<td><a href="javascript:void(0);" onclick="ShowFirmDialog(\''+id+'\')">'+title+'</a></td>'
+								+ '<td>'+clientType+'</td>'
+								+ '<td>'+pageType+'</td>'
+								+ '<td>'+status_2+'</td>'
+								+ '<td>'+button +'</td>'
+								+ '</tr>'
+						});
+					$('#pagedatalist').append(html);
+
+					$("#pagination").pagination(total, {
+						callback : pageselectCallback,
+						numDetail : '',
+						items_per_page : 8,
+						num_display_entries : 4,
+						current_page : pageid,
+						num_edge_entries : 2
+					});
+				}
+			});
+			//回调
+			function pageselectCallback(page_id, jq) {
+				loadQuestionsTempList(page_id);
+			}
+		}
+	});
+    
+   	function infoFormDialog(id){
+		BootstrapDialog.show({
+			title : "[@lang_res  k='console.rpq.quest.list.title'/]",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="no" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="${base}/console/rpq/quest_form.do?id='+id+'"></iframe></div>').load(),
+			buttons : [{
+					label : "[@lang_res  k='global.close'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+			}]
+	  	});
+	}
+   	
+   	
+   	//选中模板提交关联
+   	function selectTemplateSubmit(){
+   		var ids = "";
+   		var selectTemp = $("#pagedatalist").find(":checkbox:checked");
+   		if(!!selectTemp &&　selectTemp.length>0){
+   			$.each(selectTemp, function(i, n) {
+				var id = $(n).attr("pageId");
+				ids += id + ",";
+			});
+   			//alert(ids);
+   			//return;
+   			$.ajax({
+   				url:"${base}/console/rpqDistributor/templateUnionDistributor.do?r="+Math.random(),
+   				type:"post",
+   				dataType:"json",
+   				data:{tempId:ids},
+   				success:function(data){
+   					if(data.result){
+	   					window.parent.layer.msg("[@lang_res k='global.success.save'/]",{icon:2,time:1000},
+	   							function () { 
+	   								window.parent.bindList(0); 
+	   								closeTab();
+	   							}
+	   					);
+   					}
+   				},
+   				error:function(){
+   					
+   				}
+   			});
+   			
+   		}else{
+   			layer.msg("[@lang_res k='rpq.quetionTemp.selectTemplate'/]", {icon : 3});
+			return;
+   		}
+   	}
+   	
+</script>
+</body>
+</html>
+

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>管理员管理</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	</head>
+	<body>
+
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="right-side container-fluid">
+				<div class="r-side-container">
+					<!--<ul class="tab" id="tab-search">
+						<li class="tab-li-crr">
+							<a href="javascript:;" onclick="javascript:bindAdmin(0);">管理员列表</a>
+						</li>
+					</ul>-->
+					<div class="clear"></div>
+					<div class="tab_wrap">
+						<div class="form-inline">
+							<div>
+								<div class="row pd10">
+									<div class="col-md-4">
+										<label for="txtkeyword">
+											[@lang_res k='member.list.keyword'/]
+										</label>
+										<input id='txtkeyword' type="text" class="form-control keyWord" id="s-1">
+									</div>
+
+									[#if curMember?exists && curMember.id?exists && curMember.memberType==0]
+									<div class="col-md-4">
+										<label for="ddlType">
+											[@lang_res k='member.admin.type'/]
+										</label>
+
+										<select id="ddlType" class="form-control keyWord" name="type" value="${(adminVo.type)?if_exists}">
+											<option value="">
+												[@lang_res k='global.pleaseSelect'/]
+											</option>
+											<option value="0" [#if adminVo?exists&&adminVo.type?exists&&adminVo.type=="0"]selected[/#if]>
+												[@lang_res k='member.admin.type.platform'/]
+											</option>
+											<option value="1" [#if adminVo?exists&&adminVo.type?exists&&adminVo.type=="1"]selected[/#if]>
+												[@lang_res k='member.admin.type.ifa'/]
+											</option>
+											<option value="2" [#if adminVo?exists&&adminVo.type?exists&&adminVo.type=="2"]selected[/#if]>
+												[@lang_res k='member.admin.type.distributor'/]
+											</option>
+										</select>
+
+									</div>
+									[/#if]
+									<div class="col-md-2">
+										<button type="button" class="btn btn-primary" id="btnSearch">
+											<i class="glyphicon glyphicon-search"></i> [@lang_res k='global.query'/]
+										</button>
+									</div>
+								</div>
+								<div class="clear"></div>
+								<div class="pdt20">
+									<a href="#" onclick="javascript:addForm();" class="btn-blue-s">[@lang_res k='global.add'/]</a>
+
+								</div>
+								<div>
+									<table id="adminlist" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+										<thead>
+											<tr>
+												<th class="table-head">
+													[@lang_res k='member.info.loginCode'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='member.info.nickName'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='member.admin.parent'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='member.admin.type'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='member.admin.company'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='global.operate'/]
+												</th>
+
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<ul id='Pagination' class="pagination pull-right">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/jquery.pagination.js"></script>
+		<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+		<script src="${base}/res/third/layer/layer_v2.js"></script>
+		<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+
+		<script type="text/javascript">
+	$(function() {
+
+		bindAdmin(0);
+		$("#btnSearch").bind("click", function() {
+			bindAdmin(0);
+		});
+		 setAutoSearch('.keyWord',bindAdmin,0);
+
+	});
+	//按下回车键搜索
+	document.onkeydown = function(e) {
+		var ev = document.all ? window.event : e;
+		if (ev.keyCode == 13) {
+			bindAdmin(0);
+		}
+	}
+	function addForm() {
+		/*		layer.open({
+		 type : 2,
+		 title : '   ',
+		 shadeClose : true,
+		 shade : false,
+		 maxmin : false, //开启最大化最小化按钮
+		 area : [ '893px', '600px' ],
+		 content : '${base}/console/member/admin/add.do?'
+		 });*/
+		BootstrapDialog.show({
+			title : "[@lang_res k='member.admin.add'/]",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div></div>').load('add.do?'),
+			buttons : []
+		});
+	}
+	function detailForm(id) {
+		/*layer.open({
+			type : 2,
+			title : '    ',
+			shadeClose : true,
+			shade : false,
+			maxmin : false, //开启最大化最小化按钮
+			area : [ '893px', '600px' ],
+			content : '${base}/console/member/admin/detail.do?id=' + id
+		});*/
+		BootstrapDialog.show({
+			title : "[@lang_res k='member.admin.detail'/]",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div></div>').load('detail.do?id=' + id)
+
+		});
+
+	}
+	function bindAdmin(curPage) {
+		var type = $("#ddlType").val();
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/member/admin/listJson.do?datestr=' + new Date().getTime(),
+			data : {
+				'keyword' : $("#txtkeyword").val(),
+				'type' : type,
+				'page' : curPage + 1,
+				'rows' : 10,
+				'sort' : 'type,ifafirm.id,distributor.id',
+				'order' : 'asc'
+			},
+			success : function(json) {
+				var html = "";
+				var total = json.total;
+				var table = json.rows;
+				$.each(table, function(i, n) {
+					var type = n.type;
+					var typeValue = "";
+					if (type == 0) {
+						typeValue = "[@lang_res k='member.admin.type.platform'/]";
+					} else if (type == 1) {
+						typeValue = "[@lang_res k='member.admin.type.ifa'/]";
+					} else if (type == 2) {
+						typeValue = "[@lang_res k='member.admin.type.distributor'/]";
+					}
+					html += "<tr><td><a href='#' onclick='javascript:detailForm(\"" + n.id + "\")'>" + n.loginCode + "</td><td>" + n.nickName + "</td><td>" + n.parentName + "</td><td>" + typeValue + "</td><td>" + n.companyName + "</td><td><a href='#' onclick='javascript:deleteMember(\""
+							+ n.memberId + "\");'>[@lang_res  k='global.delete'/]<a/>&nbsp;&nbsp;<a href='#' onclick='javascript:detailForm(\"" + n.id + "\")'>[@lang_res  k='global.edit'/]<a/></tr>";
+				});
+
+				$('#adminlist tbody').empty().append(html);
+				$("#Pagination").pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 10,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+			bindAdmin(page_id);
+		}
+	}
+
+	function deleteMember(id) {
+		layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/member/delete.do?memberId=" + id,
+				data : {},
+				success : function(json) {
+					if (json != undefined && json.result == true) {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]", {
+							title : "[@lang_res k='global.prompt'/]",
+							icon : 1,
+							time : 1000
+						});
+						bindAdmin(0);
+					} else {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]", {
+							title : "[@lang_res k='global.prompt'/]",
+							icon : 5,
+							time : 1000
+						});
+					}
+				}
+			})
+		})
+	}
+</script>
+
+	</body>
+</html>

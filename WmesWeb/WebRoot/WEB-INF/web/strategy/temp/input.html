@@ -1,0 +1,115 @@
+[#include "../../inc/head.html"/]
+ <link rel="stylesheet" href="${base}/res/css/openaccount.css">
+ <link rel="stylesheet" href="${base}/res/css/Funds.css">
+ <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<div class="blue_background">
+    <div class="white_background funds_background">   
+		<div class="zhongxin_right">
+            <div class="OpenAccount_big_title">
+                <h2>[@lang_res k='strategy.info.form.title'/]</h2>
+            </div>
+            <div class="BasicInfo_show">
+                <form class="form-horizontal">
+                    <div class="BasicInfo_row">
+                        <div class="BasicInfo_gray_half">
+                            <span class="font_gray_left font_gray_half">[@lang_res k='strategy.info.form.strategyName'/]</span>
+                            <input class="BasicInfo_input" type="text" id="txtStrategyName"  value="${(strategyVO.strategyName)?if_exists}" >
+                        </div>
+                        <div class="BasicInfo_gray_half">
+                            <span class="font_gray_left font_gray_half">[@lang_res k='strategy.info.form.isPublic'/]</span>
+							<select class="BasicInfo_select" id="selIsPublic" name="selIsPublic">
+								<option value="">
+									[@lang_res k='global.pleaseSelect'/]
+								</option>
+								<option value="1" [#if strategyVO.isPublic?exists && strategyVO.isPublic=='1']selected[/#if]>[@lang_res k='strategy.info.options.ispublic.1'/]</option>
+								<option value="0" [#if strategyVO.isPublic?exists && strategyVO.isPublic=='0']selected[/#if]>[@lang_res k='strategy.info.options.ispublic.0'/]</option>
+								
+							</select>
+                        </div>
+                    </div>      
+                    
+                    <div class="BasicInfo_row">
+                        <div class="BasicInfo_gray_half">
+                            <span class="font_gray_left font_gray_half">[@lang_res k='strategy.info.form.riskLevel'/]</span>
+                        
+                            <input class="BasicInfo_input" type="text" id="txtRiskLevel"  value="${(strategyVO.riskLeve)?if_exists}" >
+                        </div>
+                        <div class="BasicInfo_gray_half">
+                            <span class="font_gray_left font_gray_half">[@lang_res  k='strategy.info.form.goal'/]</span>
+                        
+                            <textarea class="BasicInfo_textarea" id="txtInvestmentGoal" rows="2">${(strategyVO.investmentGoal)?if_exists}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="BasicInfo_row">
+                        <div class="BasicInfo_gray_half">
+                            <span class="font_gray_left font_gray_half">[@lang_res k='strategy.info.form.investor'/]</span>
+                        
+                            <textarea class="BasicInfo_textarea"  id="txtInvestorSuitability" rows="2">${(strategyVO.investorSuitability)?if_exists}</textarea>
+                        </div>
+                        <div class="BasicInfo_gray_half">
+                            <span class="font_gray_left font_gray_half">[@lang_res k='strategy.info.form.reason'/]</span>
+                        
+                            <textarea class="BasicInfo_textarea"  id="txtReason" rows="2">${(strategyVO.reason)?if_exists}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="BasicInfo_row">
+                        <div class="BasicInfo_gray_half">
+                           <span class="font_gray_left font_gray_half">[@lang_res k='strategy.info.form.remark'/]</span>
+                        
+                            <textarea class="BasicInfo_textarea" id="txtRemark" rows="2">${(strategyVO.remark)?if_exists}</textarea>
+                        </div>
+                        <div class="BasicInfo_gray_half">
+                            <span class="font_gray_left font_gray_half">[@lang_res k='strategy.info.form.creator'/]</span>
+                        
+                            <input class="BasicInfo_input" type="text" id="txtCreator"  value="${(strategyVO.creator.nickName)?if_exists}" >
+                        </div>
+                    </div> 
+                    <div class="BasicInfo_row">
+                        <div class="BasicInfo_gray_half">
+                            <span class="font_gray_left font_gray_half">[@lang_res k='strategy.info.form.createTime'/]</span>
+                        
+                            <input class="BasicInfo_input" type="text" id="txtCreateTime"  value="${(strategyVO.createTime)?if_exists}" >
+                        </div>
+                        <div class="BasicInfo_gray_half">
+                            <span class="font_gray_left font_gray_half">[@lang_res k='strategy.info.form.status'/]</span>
+                        
+							<select class="BasicInfo_select" id="selStatus" name="selStatus">
+								<option value="">
+									[@lang_res k='global.pleaseSelect'/]
+								</option>
+								<option value="draft" [#if strategyVO.status?exists && strategyVO.status=='draft']selected[/#if]>[@lang_res k='strategy.info.options.status.draft'/]</option>
+								<option value="using" [#if strategyVO.status?exists && strategyVO.status=='using']selected[/#if]>[@lang_res k='strategy.info.options.status.using'/]</option>
+								<option value="unusing" [#if strategyVO.status?exists && strategyVO.status=='unusing']selected[/#if]>[@lang_res k='strategy.info.options.status.unusing'/]</option>
+								
+							</select>
+                        </div>
+                    </div>  
+                    
+                    <div class="BasicInfo_row">
+                        <div class="BasicInfo_gray_half">
+                            <span class="font_gray_left font_gray_half">[@lang_res k='strategy.info.form.isValid'/]</span>
+                        
+							<select class="BasicInfo_select" id="selIsValid" name="selIsValid">
+								<option value="">
+									[@lang_res k='global.pleaseSelect'/]
+								</option>
+								<option value="1" [#if strategyVO.isValid?exists && strategyVO.isValid==1]selected[/#if]>[@lang_res k='strategy.info.options.isvalid.1'/]</option>
+								<option value="0" [#if strategyVO.isValid?exists && strategyVO.isValid==0]selected[/#if]>[@lang_res k='strategy.info.options.isvalid.0'/]</option>
+								
+							</select>
+                        </div>
+                    </div>  
+                    
+                </form>
+                <div class="btn_middle_div">
+                    <a href="#" id="btnClose" class="btn_middle">[@lang_res k='global.close'/]</a>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+[#include "../../inc/foot.html"/] 

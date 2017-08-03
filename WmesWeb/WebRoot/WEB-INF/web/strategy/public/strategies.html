@@ -1,0 +1,160 @@
+[#include "../../inc/head_v2.html"/]
+
+        <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+        <link rel="stylesheet" href="${base}/res/css/Funds.css">
+        <link rel="stylesheet" href="${base}/res/css/animate.css">
+        <link rel="stylesheet" href="${base}/res/css/ifa.css">  
+
+        <div class="wmes-top">
+            <a href="javascript:;" class="header-over">IFA</a>
+        </div>
+        <div class="wmes-content">
+        		<div class="ifa_choose_condition">
+
+                <div class="ifa_choose_condition">
+		<p class="wmes-wrap-title">Strategies</p>
+		<div class="funds_choice_wrap">
+			<p class="funds_choice_title">Location</p>
+			<ul class="funds_choice funds_choice_sector">
+				<li class="fund_choice_active funds_all" data-name="Location" data-key="" data-value="Location_00">ALL</li>
+				<li data-name="Location" data-key="China" data-value="Location_01">China</li>
+				<li data-name="Location" data-key="EU" data-value="Location_02">EU</li>
+				<li data-name="Location" data-key="2 Month" data-value="Location_03">American</li>
+			</ul>
+		</div>
+		<div class="funds_choice_wrap">
+			<p class="funds_choice_title">Sector</p>
+			<ul class="funds_choice">
+				<li class="fund_choice_active  funds_all" data-name="Sector" data-key="" data-value="Sector_00">All</li>
+				<li data-name="Sector" data-key="Asian Small% Mid Cap" data-value="Sector_01">Asian Small% Mid Cap</li>
+				<li data-name="Sector" data-key="Biotechnology" data-value="Sector_02">Biotechnology</li>
+				<li data-name="Sector" data-key="Climate Change" data-value="Sector_03">Climate Change</li>
+				<li data-name="Sector" data-key="Commodity Futures" data-value="Sector_04">Commodity Futures</li>
+				<li data-name="Sector" data-key="Consumer" data-value="Sector_05">Consumer</li>
+				<li data-name="Sector" data-key="Convertibles" data-value="Sector_06">Convertibles</li>
+				<li data-name="Sector" data-key="Energy" data-value="Sector_07">Energy</li>
+				<li data-name="Sector" data-key="Finance" data-value="Sector_08">Finance</li>
+				<li data-name="Sector" data-key="Gold & Precious Metals" data-value="Sector_09"> Gold &amp; Precious Metals</li>
+				<li data-name="Sector" data-key="General" data-value="Sector_10">General</li>
+				<li data-name="Sector" data-key="Global Agriculture" data-value="Sector_11">Global Agriculture</li>
+				<li data-name="Sector" data-key="Growth" data-value="Sector_12">Growth</li>
+				<li data-name="Sector" data-key="Global Agriculture" data-value="Sector_13">Global Agriculture</li>
+				<li data-name="Sector" data-key="Healthcare" data-value="Sector_14">Healthcare</li>
+				<li data-name="Sector" data-key="High Dividend" data-value="Sector_15">High Dividend</li>
+				<li data-name="Sector" data-key="High Yield Industrials" data-value="Sector_16">High Yield Industrials</li>
+				<li data-name="Sector" data-key="Inflation-linked" data-value="Sector_17">Inflation-linked</li>
+				<li data-name="Sector" data-key="Infrastructure" data-value="Sector_18">Infrastructure</li>
+				<li data-name="Sector" data-key="International Technolo" data-value="Sector_19">International Technolo</li>
+				<li data-name="Sector" data-key="Gold & Precious Metals" data-value="Sector_20">Gold &amp; Precious Metals</li>
+			</ul>
+		</div>
+		<div class="funds_choice_wrap">
+			<p class="funds_choice_title">Risk</p>
+			<ul class="funds_choice">
+				<li class="fund_choice_active  funds_all" data-name="Risk" data-key="" data-value="Risk Level_00">All</li>
+				<li data-name="Risk" data-key="Very Conservative" data-value="Risk Level_01">Very Conservative</li>
+				<li data-name="Risk" data-key="Conservative" data-value="Risk Level_02">Conservative</li>
+				<li data-name="Risk" data-key="Moderate" data-value="Risk Level_03">Moderate</li>
+				<li data-name="Risk" data-key="Aggressive" data-value="Risk Level_04">Aggressive</li>
+				<li data-name="Risk" data-key="Very Aggressive" data-value="Risk Level_05">Very Aggressive</li>
+			</ul>
+		</div>
+		<!--  <div class="ifa_more_wrap">
+						<p id="yfunds_hidde_title">More selectors <span class="funds_xia_ico"></span></p>
+					</div>-->
+
+
+<!--                
+                <div class="funds_choice_wrap" style="text-align:right;">
+                    <ul class="sort_choice" style="padding-right:200px;">
+                        Sort by : <li data-name="sort" data-key="views"   data-value="views"  class="sort_choice_active">Views</li>
+                                <li data-name="issued" data-key="issued"   data-value="issued" >Issued date</li>
+                    </ul>
+                </div>
+-->
+                
+	            <div class="white_background funds_selected_wrap" ng-controller="Searchctrl"  ng-app="mySearch">   
+	                <div class="funds_selected">
+	                    <p class="funds_selected_title">[@lang_res l=Session["_LANG_CODE_"] k='global.selectedCondition'/] :</p>
+	                    <ul class="selection_criteria">
+	                    <p class="funds_title_selection">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.resetFilter'/] </p>
+	                    </ul>
+	                </div>
+	                <div class="funds_keyserach_wrap">
+	                    <div class="funds_keyserach">
+	                        <input type="text"  id="txtKeyword" placeholder="Please input keyword" >
+	                        <span class="icon_search" id="searchKeyBtn"></span>
+	                    </div>
+	                    <div class="funds_serach_results">
+	                        <p class="funds_serach_sum">
+	                        Total of  <span class="funds_serach_digital">[#if dataList??]${dataList?size}[/#if]</span> records found</p>
+	                    </div>
+	                </div>
+	            </div>
+
+
+        		</div>
+
+        		<div class="strategies_list_wrap">       			
+<!--        		
+			<div class="funds_list_selected">
+				<p class="funds_selected_title">Selected condition </p>
+				<ul class="selection_criteria">
+				<p class="funds_title_selection">Reset filter </p>
+				</ul>
+			</div>
+			<div class="ifa_keyserach_wrap">
+				<p class="ifa_serach_sum">
+					A total of 					
+					<span id="dataCount" class="funds_serach_digital ng-binding" ng-bind="datatotal">[#if dataList??]${dataList?size}[/#if]</span> funds to meet your requirements</p>
+				<div class="funds_keyserach ifa_keyserach">
+					<input type="text" id="fundName" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+					<span class="icon_search" id="searchKeyBtn"></span>
+				</div>
+			</div>
+-->
+
+					<div class="strategies_list">
+						<ul class="strategies_list_ul">
+
+<!-- 动态生成策略显示块 -->
+[#if dataList?exists && dataList?size gt 0 ]
+[#list dataList as data]
+	<li>
+		<div class="strategies_list_ico">
+			<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+			<p class="strategies_eve_num">${data.click}</p>
+			${(data.isFollow)!}
+			<img strategyid="${data.id}" class="strategies_fav_img" follow=“${(data.isFollow)!}” followdesc="说明，若follow值等于1则当前用户已收藏过本项" src="${base}/res/images/fund/strategies_fav.png">
+		</div>
+		<div class="strategies_word_wrap">
+			<a href="${base}/front/strategy/info/strategiesdetail.do?id=${data.id}" ><p class="strategies_list_name">${data.strategyName}</p></a>
+			<p class="strategies_list_fund">${data.productCount} Funds</p>
+			<p class="strategies_list_goal">${data.investmentGoal}</p>
+			<p class="strategies_list_word">${data.description}</p>
+		</div>
+		<div class="strategies_list_inf">
+			<img class="strategies_inf_img" src="${base}/res/images/ifa2.png">
+			<p class="strategies_list_ifaname">${data.creator.nickName}</p>
+			<p class="strategies_time_word">${data.lastUpdate?string("yyyy-MM-dd HH:mm:ss")}</p>
+			<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+		</div>
+	</li>
+[/#list]
+[/#if]	
+<!-- 动态生成策略显示块 -->
+						</ul>
+					</div>
+	 				<ul class="ifa_list_paging">
+	 					<li class="ifa_pagint_num">1</li>
+	 					<li class="ifa_pagint_num">2</li>
+	 					<li class="ifa_pagint_num ifa_pagint_now">3</li>
+	 					<li class="ifa_pagint_some">...</li>
+	 					<li class="ifa_pagint_num">10</li>
+	 				</ul>
+        		</div>
+        </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+    seajs.use('http://localhost/res/web/strategy/strategies.js');
+</script>

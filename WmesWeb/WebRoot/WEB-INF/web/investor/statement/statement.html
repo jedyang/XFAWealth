@@ -1,0 +1,56 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/community.css">
+<link rel="stylesheet" href="${base}/res/css/swiper.css">
+<style>
+.myzone-notice-list{width:100%;}
+.myzone-notice-list li{margin-bottom:15px;border-bottom:1px dashed #e3e5e6;padding-bottom:15px;}
+.dialog-notice{
+    position: fixed;
+    top: 0px;
+    z-index: 999999;
+    padding-left: 100px;
+    margin-left: 70px;
+}
+.selectSector-title-sub{
+	float:left;
+	font-size: 14px;
+    padding-bottom: 15px;
+    color:#b7b5b5;
+    margin-left:25px;
+}
+.notice-content{
+	clear: both;
+    margin: 0 2%;
+}
+.dispaly-active{
+	height: 100%;
+ 	width: calc(100% - 110px);
+}
+.wmes-ruturn{display:block};	
+</style>
+<div class="wmes-content">
+	<div ng-app="statement" ng-controller="statementCtrl" class="wmes-notice-list-con ng-cloak">
+		<div class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='investor.zone.e.statement'/]</div>
+		<ul class="myzone-notice-list myzone-notice-list-amend">
+			<li id="{{items.id}}" ng-repeat="items in statement">
+				<span class="zhangdan"></span>
+				<p class="notice-preview" style="line-height:32px;"><a target="_self" data-url="{{items.linkUrl}}" href="${base!}/res/images/Fundprofile & Analysis - xinhua.pdf" ng-bind="items.name|characters:60"></a></p>
+				<i ng-bind="items.member.nickName"></i>
+				<b ng-bind="items.pubDate"></b>
+			</li>
+		</ul>
+		<div ng-if="statement==null||statement.length==0" class="wmes-nodata-tips" style="display:block;">
+			<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+			<span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+		</div>
+		<div class="wmes-page">
+			<wmespage conf="statementConf"></wmespage>
+        </div>
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+var props = [@load_prop k=''/];
+seajs.use('${base}/res/web/statement/statement.js');
+</script>

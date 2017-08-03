@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[@lang_res k='console.ifafirm.team.list.title'/]</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+	<link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet"  >
+		
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+		<input type="hidden" id="ifaId" name="ifaId" value="${ifaId?if_exists}"/>
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="tab-side container-fluid">
+				<div class="tab-side-container">
+					<div class="clear"></div>
+					<div class="tab_wrap">
+						<form class="form-inline" style="display: block;">
+							<div class="pdt20" style="padding-top: 5px;">
+								<a id="spreadControl" href="javascript:ctrlTreeTable();"
+									class="btn-blue-s"><i
+									class="glyphicon glyphicon-plus-sign"></i> [@lang_res k='global.expand'/]</a>
+							</div>
+							<div>
+								<table id="ifaFirmTeamList" border="0" id="tree" cellpadding="0"
+									cellspacing="0" class="table table-hover ">
+									<tbody>
+										<tr>
+											<th class="table-head">
+												[@lang_res k='console.ifafirm.team.list.table.title.organizationCode'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.ifafirm.team.list.table.title.organizationName'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='global.operate'/]
+											</th>
+										</tr>
+									</tbody>
+								</table>
+								<nav class="pull-right">
+									<ul id='pagination' class="pagination pagination-sm"></ul>
+								</nav>
+								<div class="clear"></div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+	var ifaId = $("#ifaId").val();
+	var ifaFirmTeamJson = ${ifaFirmTeamJson!''};
+	var ifaTeamJson = ${ifaTeamJson!''};
+	bindTeanList(0,ifaId,ifaFirmTeamJson,ifaTeamJson);
+	
+	//绑定收缩展示
+	$("#spreadControl").bind("click", function() {
+		ctrlTreeTable();
+	});
+	
+	//绑定数据  wwluo 160816
+		function bindTeanList(curPage,ifaId,ifaFirmTeamJson,ifaTeamJson) {
+				var pageSize = 20;
+				var total = ifaFirmTeamJson.total;
+				var table = ifaFirmTeamJson.list;
+				$('#ifaFirmTeamList tbody tr:gt(0)').empty();
+				var tr = '';
+				var ifafirmId = '';
+				$.each(table,function(index, array) {
+					var flag = 'false';
+					var id = array.id == null ? "" : array.id;
+					$.each(ifaTeamJson.list,function(index1, array1) {
+					   var teamId = array1.id == null ? "" : array1.id;
+					   if(id == teamId){
+					   		flag = 'true';
+					   		return true;
+					   }
+					});
+					ifafirmId = array.ifafirm.id == null ? "" : array.ifafirm.id;
+					var companyName = array.ifafirm.companyName == null ? "" : array.ifafirm.companyName;
+					var code = array.code == null ? "" : array.code;
+					var name = array.name == null ? "" : array.name;
+					var classLayer = array.classLayer == null ? "" : array.classLayer;
+					if(null != array.parent && null != array.parent.id){
+						var parentId = array.parent.id;
+					}
+					var ifafirmUrl = '${base}/console/ifa/ifa_firm_detail.do?ifafirmId=' + ifafirmId;
+	                tr += '<tr classlayer="' + classLayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id="' + parentId + '">'
+	                +'<td><span class="folder class_planname">' + code + '</span></td>'
+	                +'<td  class="class_startdate">' + name + '</td>';
+	                if('false' == flag){
+		                tr += '<td><ul class="nav nav-pills"><li role="presentation"><a classlayer="1" teamid="' + id + '" ifafirmId=\''+ifafirmId+'\' id=\''+id+'\' ifaId=\''+ifaId+'\' class="btndelnode" href="javascript:;">'
+		                	    + '<i class="glyphicon glyphicon-star-empty text-bold"></i> '+"[@lang_res k='console.ifafirm.team.list.table.operate.join'/]"+'</a></li></ul></td></tr>';
+	                }else if('true' == flag){
+		                tr += '<td><ul class="nav nav-pills"><li role="presentation" class="disabled"><a classlayer="1" teamid="' + id + '" class="btndelnode">'
+		                	    + '<i class="glyphicon glyphicon-star text-bold"></i> '+"[@lang_res k='console.ifafirm.team.list.table.operate.alreadyJoined'/]"+'</a></li></ul></td></tr>';
+	                }
+				});
+				$('#ifaFirmTeamList').append('<input type="hidden" id="ifafirmId" name="ifafirmId" value="' + ifafirmId + '"/>');
+				$('#ifaFirmTeamList tbody').append(tr);
+		        $('#ifaFirmTeamList').fadeIn(1000);
+		        $('#ifaFirmTeamList').treetable({ expandable: true,clickableNodeNames:true });
+		        //$('#ifaFirmTeamList').treetable('expandAll'); //加载时直接结构全部显示出来
+		        $('tr[classLayer = 1]').each(function(){
+					$(this).css('fontWeight','bold');
+				}); 
+				$('.btndelnode').css('fontWeight','bold');
+				$('#pagination').pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : pageSize,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+				function pageselectCallback(page_id, jq) {
+					bindTeanList(page_id,ifaId,ifaFirmTeamJson,ifaTeamJson);
+				}
+				//绑定加入团队
+				$(".btndelnode").bind("click", function() {
+					var ifafirmId = $(this).attr("ifafirmId");
+					var teamId = $(this).attr("teamId");
+					var ifaId = $(this).attr("ifaId");
+					addTeam(ifafirmId,teamId,ifaId);
+				});
+		}
+		
+		//加入组织（保存） wwluo 160819
+		function addTeam(ifafirmId,teamId,ifaId){
+			$.ajax({
+				type:'post',
+				url:'${base}/console/ifa/addTeam.do?datestr='
+							+ new Date().getTime(),
+				data:{
+					ifafirmId : ifafirmId,
+					teamId : teamId,
+					ifaId : ifaId
+					},
+				success:function(flag){
+					if (flag){
+					    var a = $('a[teamid="' + teamId + '"]');
+					    a.parent().addClass('disabled');
+					    a.html('<i class="glyphicon glyphicon-star text-bold"></i>[@lang_res k="console.ifafirm.team.list.table.operate.alreadyJoined"/]');
+					    a.attr('href','javascript:void(0)');
+						layer.msg("[@lang_res k='global.success.save'/]", { icon: 1, time: 2000 });
+					   $(window.document).find("#ifa_team_tab").trigger('click');
+					}
+					else{
+						layer.msg("[@lang_res k='global.failed.save'/]", { icon: 0, time: 2000 });
+					}
+				}
+			});
+		}
+		
+        //treeTable收缩展开控制  wwluo 160819
+		function ctrlTreeTable(){
+		    var height = window.document.documentElement.scrollHeight;
+			var span = ($('.indenter').children())[0];
+			if (typeof(span) != "undefined"){
+				var title = span.title;
+			    if('Expand'==title){
+			        var height = window.outerHeight;
+					$('#Info1',parent.document).attr('height',height);
+			    	$('#ifaFirmTeamList').treetable('expandAll');
+			    	$('#spreadControl').html(' [@lang_res k="global.collapse"/]');
+			        $('#spreadControl').find('i').remove();
+			        $('#spreadControl').prepend('<i class="glyphicon glyphicon-minus-sign"></i>');
+			    	return false;
+			    }else if('Collapse'==title){
+			    	$('#ifaFirmTeamList').treetable('collapseAll');
+			    	$('#spreadControl').html(' [@lang_res k="global.expand"/]');
+			    	$('#spreadControl').find('i').remove();
+			        $('#spreadControl').prepend('<i class="glyphicon glyphicon-plus-sign"></i>');
+			        var height = window.document.documentElement.scrollHeight;
+					$('#Info1',parent.document).attr('height',height);
+			        return false;
+			    }
+			}
+	    }
+});
+		
+		
+</script>
+</body>
+</html>

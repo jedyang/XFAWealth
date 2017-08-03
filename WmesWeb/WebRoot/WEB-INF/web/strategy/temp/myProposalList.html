@@ -1,0 +1,115 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+<style>
+.client-proposal-accept{float:none;padding-top:0;}
+.client-proposal-accept > img{float:none}
+.strategies_list_wrap{border:0;}
+.client-proposal-num{margin-top:16px;}
+.ifa_keyserach_wrap {overflow: visible;height: 29px;}
+.proposal_xiala ul {z-index: 5;}
+</style>
+<div class="wmes-content">
+	<div class="strategies_list_wrap">
+		<p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>My Proposals List</p>
+		<div class="ifa_keyserach_wrap">
+			<!-- <div class="investor-choose-left" style="padding-right:15px">
+		                        <p class="investor-xiala-title">CUR: </p>
+		                        <div class="investor-xiala">
+		                            <input type="text" value="USD" placeholder="USD" readonly="">
+		                            <span class="icon_xiala"></span>
+		                            <ul>
+		                            [#if currencyType?exists && currencyType?size gt 0]
+		                            [#list currencyType as list]
+		                                <li>${list.itemCode!}</li>
+		                                [/#list]
+		                                [/#if]
+		                            </ul>
+		                        </div>
+		                    </div> -->
+            <div style="float:right;margin-right:20px;">
+          	 	<p class="order-plan-cur-title">[@lang_res k='order.plan.rebalance.CUR'/]</p>
+                <div class="proposal_xiala" style="width: 100px;">
+                   <input id="hidDefCurrency" value="${(currencyCode)!''}" type="hidden">
+                   <input id="portfolio-currency" style="width: 60px;" class="portfolio-currency" type="text"  value="" readonly>
+                   <span class="icon_xiala portfolio-currency" style="margin-top: 7px;"></span>
+                   <ul id="currency-choice" style="width:98px"></ul>
+                </div>
+          	 </div>
+		</div>
+		<table class="funds_search_information strategies_List myProposalList">
+			<tbody>
+				<tr class="funds_tables_th">
+					<th class="funds_tables_header" style="width:37%;text-align: center;">
+						[@lang_res k='crm.proposal.proposalName'/]
+					</th>
+					<th class="funds_tables_header" style="width:30%;text-align: left;padding-left:5%;">
+						[@lang_res k='crm.proposal.initialInvestAmount'/]
+					</th>
+					<th class="funds_tables_header" style="width:25%;">
+						[@lang_res k='clients.proposal.status'/]
+					</th>
+				</tr>
+				[#if proposalList?exists && proposalList?size gt 0]
+				[#list proposalList as list]
+				<tr>
+					<td class="tdleft funds_tables_fnames">
+					    [#if list.status=="-2" || list.status=="0"]
+						<a href="${base}/front/crm/proposal/createProposalSetOne.do?id=${list.id}"><p>${list.proposalName!}</p></a>
+						 [#elseif list.status=="1" ]
+						 <a href="${base}/front/crm/proposal/confirmProposal.do?proposalId=${list.id}"><p>${list.proposalName!}</p></a>
+						 [#elseif list.status=="2" || list.status=="-1" ]
+						 <a href="${base}/front/crm/proposal/previewProposal.do?proposalId=${list.id}"><p>${list.proposalName!}</p></a>
+						 [/#if]
+						<div class="client-proposal-apr">
+							<img src="${base}/res/images/client/time_ico.png">[#if list.lastUpdate??]${list.lastUpdate!}[/#if]
+						</div>
+					</td>
+					<td class="funds_search_tdcenter" style="text-align: center;">
+						<div class="client-proposal-amount">
+							<p class="client-proposal-num">
+								<span class="conversion-flag">[@num_fmt s='${list.initialInvestAmount!}' f='#,###.00'/]</span>  <span class="to-currency">${list.currencyName!}</span>
+							</p>
+						</div>
+					</td>
+					<td class="funds_search_tdcenter">
+					   [@lang_res k='clients.proposal.status.${list.status}'/]
+						<!--<div class="client-proposal-accept" style="color:#000;">
+						[#if list.status=="-2"]
+						 <img style="height:50px;width:80px" src="${base}/res/images/client/canceled_ico.png">
+						 [#elseif list.status=="-1" ]
+						 <img style="height:50px ;width:80px" src="${base}/res/images/client/reject_ico.png">
+						  [#elseif list.status=="0" ]
+						 <img style="height:50px ;width:80px" src="${base}/res/images/client/draft_ico.png">
+						 [#elseif list.status=="1" ]
+						 <img style="height:50px;width:80px" src="${base}/res/images/client/tobefill_ico.png">
+						 [#elseif list.status=="2" ]
+						 <img style="height:50px;width:80px" src="${base}/res/images/client/accepted_ico.png">
+						 [/#if]
+						</div>
+					--></td>
+				</tr>
+				[/#list]
+				[#else]
+				
+				<tr>
+				<td colspan='3'>
+				 <div  style="dispaly:block;    text-align: center;margin-top: 30px;">
+                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                      </div>
+                      </td>
+				</tr>
+				[/#if]
+				
+			</tbody>
+		</table>
+
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('${base!}/res/web/proposal/myProposals.js');
+</script>

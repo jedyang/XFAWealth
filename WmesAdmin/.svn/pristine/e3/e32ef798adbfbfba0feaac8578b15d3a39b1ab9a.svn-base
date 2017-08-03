@@ -1,0 +1,59 @@
+package com.fsll.wmes.group.vo;
+
+import com.fsll.wmes.entity.MemberGroupDetail;
+
+public class MemberGroupDetailVO extends MemberGroupDetail{
+
+	private String clientName;
+	private String accountNo;
+	private String totalAsset; // 账户总资产
+	private String totalMarket; // 账户总市值
+	private String accountCreateTime; // 开户时间
+	private String ifaName;
+	private String ifaFirmLogoUrl;
+	
+	public String getClientName() {
+		return clientName;
+	}
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
+	public String getAccountNo() {
+		return accountNo;
+	}
+	public void setAccountNo(String accountNo) {
+		this.accountNo = accountNo;
+	}
+	public String getTotalAsset() {
+		return totalAsset;
+	}
+	public void setTotalAsset(String totalAsset) {
+		this.totalAsset = totalAsset;
+	}
+	public String getTotalMarket() {
+		return totalMarket;
+	}
+	public void setTotalMarket(String totalMarket) {
+		this.totalMarket = totalMarket;
+	}
+	public String getAccountCreateTime() {
+		return accountCreateTime;
+	}
+	public void setAccountCreateTime(String accountCreateTime) {
+		this.accountCreateTime = accountCreateTime;
+	}
+	public String getIfaName() {
+		return ifaName;
+	}
+	public void setIfaName(String ifaName) {
+		this.ifaName = ifaName;
+	}
+	public String getIfaFirmLogoUrl() {
+		return ifaFirmLogoUrl;
+	}
+	public void setIfaFirmLogoUrl(String ifaFirmLogoUrl) {
+		this.ifaFirmLogoUrl = ifaFirmLogoUrl;
+	}
+	
+	
+}

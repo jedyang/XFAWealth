@@ -1,0 +1,565 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问卷管理</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet"  >
+    <style>
+           .login-dialog .modal-dialog {width: 1000px;}
+            .firminfo-dialog .modal-dialog{width: 900px;}
+            .teaminfo-dialog .modal-dialog{width: 700px;}
+            .btneditnode{text-decoration:underline;}
+        </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<input id="btnCloseIframe" type="hidden" />
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container">
+            <ul class="tab" id="tab-search">
+                <li class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res  k='console.rpq.list.tab.title'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap" >
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+	                    <div class="row pd10" style="">
+	                        <div class="col-md-4">
+	                        	<label for="txtTitle">[@lang_res  k='console.rpq.questForm.nameQuestionnaire'/]</label>
+	                        	<input type="text" class="form-control searchCondition" id="txtTitle">
+	                        	
+	                        </div>
+	                       	<div class="col-md-3">
+	                        	<label for="selClienttype">[@lang_res  k='console.rpq.questForm.adaptCustomer'/]</label>
+	                           	<select id="selClienttype" class="form-control searchCondition">
+                           				<option value=''>[@lang_res  k='global.pleaseSelect'/]</option>
+	                                   	<option value='Individual'>[@lang_res  k='member.individual'/]</option>
+	                                   	<option value='Corporate'>[@lang_res  k='member.coporate'/]</option>
+	                                   	<option value='FI'>[@lang_res  k='member.fi'/]</option>
+	                            </select> 
+	                       	</div>
+	                       	<div class="col-md-3">
+	                       		<label for="selPagetype">[@lang_res  k='console.rpq.questForm.adaptType'/]</label>
+	                           	<select id="selPagetype" class="form-control searchCondition">
+	                                   <option value=''>[@lang_res  k='global.pleaseSelect'/]</option>
+	                                   <option value='O'>[@lang_res  k='console.rpq.questForm.openRPQ'/]</option>
+	                           		   <option value='I'>[@lang_res  k='console.rpq.questForm.investmentRPQ'/]</option>
+	                           		   <option value='K'>[@lang_res  k='console.rpq.questForm.KYCRPQ'/]</option>
+	                            </select> 
+	                       	</div>
+	                       	<div >
+	                       		<a id="btnToDoSearch" href="javascript:void(0);" class="btn-blue-s" style="margin-top: 0px;">[@lang_res k='global.query'/]</a>
+	                       	</div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20" style="padding-top: 5px;">
+                    	<a id="btnAddInfoForm" href="javascript:ShowFirmDialog('');" class="btn-blue-s">[@lang_res k='global.add'/]</a>
+                    </div>
+                    <div>
+                        <table border="0" id="pagedatalist" cellpadding="0" cellspacing="0" class="table table-hover table-striped" >
+                                <tbody>
+                                    <tr>
+                                        <th class="table-head" style="widht:30%;">[@lang_res  k='console.rpq.questForm.nameQuestionnaire'/]</th>
+                                        <!--  <th class="table-head">问卷语言</th>-->
+                                        <th class="table-head">[@lang_res  k='console.rpq.questForm.adaptCustomer'/]</th>
+                                        <th class="table-head">[@lang_res  k='console.rpq.questForm.adaptType'/]</th>
+                                        <!-- <th class="table-head">[@lang_res  k='console.rpq.questForm.stateQuestionnaire'/]</th> -->
+                                        <th class="table-head">[@lang_res  k='console.rpq.questForm.option'/]</th>
+                                    </tr>
+                                </tbody>
+                               
+                            </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>         
+            </div>            
+        </div>
+    </div>
+
+
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+   
+		//关闭弹框
+		$('#btnCloseIframe').click(function() {
+			$(".close").click();			
+		});
+		//进入题库页面
+		$('#btnManagerRequ').on('click',managerRequ);
+		//收缩所有
+		$('#btnCollapseAll').on('click',CollapseAll);
+		//弹出公司搜索列表
+		$('#btnShowFirmDialog').on('click',ShowFirmListDialog);
+		//保存整个团队信息
+		$('#btnSaveInfoForm').on('click',SaveInfoForm);
+		//进入题库页面
+		function managerRequ()
+		{
+			window.location.href = '${base}/console/rpq/quest_list.do' ;
+		}
+		//收缩所有
+		function CollapseAll()
+		{
+			$('#tree').treetable('collapseAll'); return false;
+		}
+		
+		function SaveInfoForm()
+		{
+			var checkifafirmid = $('#txtSelectedCompanyName').attr('companyid');
+			if(checkifafirmid==''||checkifafirmid==null||checkifafirmid==undefined)
+			{ layer.msg("[@lang_res  k='ifafirm.message.promptNotSelectedIfafirm'/]", { icon: 0, time: 1000 }, function () { }); return false;}
+			
+			 var TotalData = '{"PlanList":[';
+			 var json = '[';
+			 $("#tree tbody tr").each(function (i, n) {
+			 		var ifafirmid = $(this).attr('ifafirmid');
+                    var teamid = $(this).attr('id');
+                    var parentid = $(this).attr('data-tt-parent-id');
+                    var classlayer = $(this).attr('classlayer');
+                    var html = $(this).html(); // (planid);
+                    var teamname = $(this).find('td:eq(0)').find('span:eq(1)').text();
+                    var code = $(this).find('td:eq(1)').text();
+                    var sort = $(this).find('td:eq(2)').find('input').val();
+                    if(sort==''||sort==undefined)sort='99';
+                    //给装JSON
+                    if(classlayer!=undefined&&classlayer!='0')//标题栏跟公司信息不需包含
+                    {
+	                     json += '{"id":"' + teamid + '","parentid":"'+parentid+'","ifafirmid":"'+ifafirmid+'","name":"' + teamname + '","code":"' + code + '","orderby":"' + sort + '","classlayer":"' + classlayer + '"},';
+	                    //TotalData += json;
+                    }
+                });
+                //console.log();
+                 json = json.substring(0, json.length - 1);json+= ']';
+                //console.log(json);
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url : "${base}/console/ifafirm/saveallteaminfo.do?datestr="+ new Date().getTime(),
+	            	data: { 'json': json },
+                    beforeSend: function () {
+                        indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptSaveTeamInfoLoading'/]", { time: 50000 });
+                    },
+                    complete: function () {
+
+                    },
+                    error: function (data) {
+                        layer.msg("[@lang_res  k='global.failed.save'/]", { icon: 0, time: 2000 }, function () { });
+                    },
+                    success: function (json) {
+                        layer.msg("[@lang_res  k='global.success.save'/]", { icon: 1, time: 2000 }, function () { });
+                    }
+                });
+			                
+			               
+		}
+		//
+		function ShowFirmListDialog()
+		{
+			 BootstrapDialog.show({
+				title : "[@lang_res  k='ifafirm.list.selectIfafirm'/]",
+				cssClass : 'login-dialog',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('dialogFirmShow.do?procedureid='),
+				buttons : [  {
+					label : "[@lang_res  k='global.confirm'/]",
+					cssClass : 'btn-primary',
+					action : function(dialogItself) {
+						 var selected = $('#id_irm_selected');
+						 var selectedid = selected.attr('companyid');
+						 var selectedname = selected.attr('companyname');
+						 //console.log(selectedid);console.log(selectedname);
+						 if(selectedid == undefined || selectedid == '')
+						 {
+						 	layer.alert("[@lang_res  k='ifafirm.message.promptNotSelectedIfafirm'/]", {icon: 0 });
+						 	return;
+						 }
+						 $('#txtSelectedCompanyName').val(selectedname);
+						 $('#txtSelectedCompanyName').attr('companyid',selectedid);
+						 bindList(0);
+						 
+						 dialogItself.close();
+					}
+				},  {
+					label : "[@lang_res  k='global.back'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
+		}
+		//点击编辑
+            $("body").on('click', '.btneditpage', '', function () {
+            	
+                //获取前个节点
+                var pageid = $(this).parent().find('a').attr('id');
+                
+                //modify wwluo 160811
+                //window.location.href = '${base}/console/rpq/form.do?id='+pageid;
+                ShowFirmDialog(pageid);
+                //end
+            });
+            
+			//点击团队成员管理，弹出管理窗口
+            $("body").on('click', '.btnedituser', '', function () {
+                //获取前个节点
+                var teamid = $(this).parent().parent().attr('id');//所属团队
+                var ifafirmid = $(this).parent().find('.btnaddchildnode').attr('ifafirmid'); //所属公司
+
+                 BootstrapDialog.show({
+				title : "[@lang_res  k='ifafirm.list.managementTeamUser'/]",
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('dialogTeamUser.do?teamid='+teamid+'&ifafirmid='+ifafirmid),
+				buttons : [  {
+					label : "[@lang_res  k='global.confirm'/]",
+					cssClass : 'btn-primary',
+					action : function() {
+					     var list = '';
+						 $("#selTeamifaList option").each(function () { //遍历全部option
+				            var name = $(this).text();
+				            var ifaid = $(this).val();
+				            list+= ifaid + ',';
+				        });
+				        if(list!='')
+				        {
+				        	 $.ajax({
+					                type: "post", //统一用post方式 
+					                url: "${base}/console/ifafirm/saveteammemberifainfo.do?datestr="+ new Date().getTime(),
+					                data: {"teamid":teamid,"list":list,"ifafirmid":ifafirmid}, //传送的参数列表
+					                dataType: "json",
+					                crossDomain: true,
+					                error: function (XMLHttpRequest, textStatus, errorThrown) {
+					                    //错误时在这里添加一些提示信息
+					                    layer.alert(errorThrown);
+					                },
+					               /* beforeSend: function () {
+					                    index = layer.msg('正在保存数据中....', {  time: 50000 });
+					                },*/
+					                success: function (data, textStatus) {
+										console.log(data);
+										if(data.result == true)
+											layer.msg('[@lang_res  k='global.success.save'/]', { icon: 2, time: 2000 }, function () { });
+										else
+											layer.msg('[@lang_res  k='global.failed.save'/]', { icon: 1, time: 2000 }, function () { });
+					                },
+					                complete: function () { layer.close(index); }
+					            });
+				        }
+					}
+				},  {
+					label : "[@lang_res  k='global.back'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+				});
+            });
+            
+           function getguid() {
+			    function fourchar() { return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1); }
+			    var guid = (fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar()).toUpperCase();
+			    return guid;
+			}
+			
+            var child=0;
+         	//点击点转到设置关联题目页面
+            $("body").on('click', '.btnsetpagequest', '', function () {
+            	var pageid = ($(this).parent().find('a:eq(2)').attr('id'));
+           		//window.location.href = '${base}/console/rpq/set_page_quest.do?pageid='+pageid;
+               
+                //modify wwluo 160811
+                var url = '${base}/console/rpq/set_page_quest.do?pageid='+pageid;
+                showform('set-page-quest'+pageid,'[@lang_res k="console.rpq.list.table.operate.setQuestion"/]',url);
+                //end
+            });
+            //点击点转到设置分数等级页面
+            $("body").on('click', '.btnsetlevel', '', function () {
+            	var pageid = ($(this).parent().find('a:eq(2)').attr('id'));
+           		//window.location.href = '${base}/console/rpq/page_level_list.do?pageid='+pageid;
+            
+                //modify wwluo 160811
+                var url = '${base}/console/rpq/page_level_list.do?pageid='+pageid;
+                showform('set-page-level'+pageid,'[@lang_res k="console.rpq.list.table.operate.setLevel"/]',url);
+                //end
+            });
+            //
+            //点击删除问卷
+            $("body").on('click', '.btndelpage', '', function () {
+                var indexmsg = new Object();
+                //获取前个节点
+                var pageid = ($(this).parent().find('a:eq(2)').attr('id'));
+                 layer.confirm("[@lang_res  k='console.rpq.questForm.deleteQuestionaire'/]", { icon: 3  },function () { 
+					 $.ajax({
+						type : 'post',
+						datatype : 'json',
+						url : "${base}/console/rpq/delPage.do?datestr="
+								+ new Date().getTime(),
+						data : {'id':pageid  },
+						beforeSend: function () {
+                            indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", { time: 500000 });
+	                    },
+	                    complete: function () {
+	                        if (indexmsg)
+							    layer.close(indexmsg);
+	                    },
+						success : function(json) {
+							console.log(json);
+							json = JSON.parse(json);
+							var result = json.result;
+							if(result==true||result=='true'){
+								layer.msg("[@lang_res k='global.success.delete'/]", { icon: 1, time: 2000 }, function () { bindList(0); });
+							}
+						}
+					});
+                 	layer.closeAll();
+                 });
+            });
+            
+            
+            
+            //效果
+            $("body").on("mouseover", ".class_planname", function () {
+                $(this).css({ 'color': '#ffffff', 'background-color': '#2d80ce', 'cursor': 'pointer', 'border-bottom-right-radius': '4px', 'border-bottom-left-radius': '4px', 'border-top-right-radius': '4px', 'border-top-left-radius': '4px' });
+            });
+            $("body").on("mouseleave", ".class_planname", function () {
+                $(this).css({ 'color': '#000000', 'background-color': '' });
+            });
+            $("body").on("mouseover", ".btneditnode", function () {
+                $(this).css({ 'text-decoration': 'underline' });
+            });
+            $("body").on("mouseleave", ".btneditnode", function () {
+                $(this).css({ 'text-decoration': 'none' });
+            });
+		//bindList(0);
+		//$('#btnShowFirmDialog').on('click',showFirmDialog);
+		$('#btnToDoSearch').click(function() {
+			bindList(0);
+		});
+		
+		
+		
+	
+	var types = [BootstrapDialog.TYPE_DEFAULT, 
+                     BootstrapDialog.TYPE_INFO, 
+                     BootstrapDialog.TYPE_PRIMARY, 
+                     BootstrapDialog.TYPE_SUCCESS, 
+                     BootstrapDialog.TYPE_WARNING, 
+                     BootstrapDialog.TYPE_DANGER];	
+
+    
+		 setAutoSearch('.searchCondition',bindList,0);
+		//分页绑定Table数据
+		bindList(0);
+
+    //delete wwluo 160811
+	/*function showform(id) {
+		window.location.href = '${base}/console/workflow/detail.do?id=' + id;
+	}*/
+	
+	
+	});
+	
+	function bindList(pageid) {
+		var title = $('#txtTitle').val();
+		var clientType = $('#selClienttype').val();
+		var pageType = $('#selPagetype').val();
+		var ifafirmid = $('#txtSelectedCompanyName').val();
+		$.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : "${base}/console/rpq/listpageJson.do?datestr="
+							+ new Date().getTime(),
+					data : {
+						title : title,
+						clientType : clientType,
+						pageType : pageType,
+						page : pageid + 1,
+						rows : 8
+					},
+					 /*beforeSend: function () {
+                        indexmsg = layer.msg("正在加载数据中，请稍候....", { time: 50000 });
+                    },*/
+                    complete: function () {
+						//layer.close(indexmsg);
+                    },
+					success : function(json) {
+						var total = json.total;
+						var table = json.rows;
+						var html = '';
+						$("#pagedatalist tbody tr:gt(0)").empty();
+						$.each(table,function(i, n) {
+								var id = n[0].id;
+								var title = n[1].title;
+								
+								var clientType = "";
+								if(!!n[2] &&　!!n[2].clientType){
+									clientType = n[2].clientType;
+								}
+								if("Individual"==clientType){clientType="[@lang_res  k='member.individual'/]"}
+								else if("Corporate"==clientType){clientType="[@lang_res  k='member.coporate'/]"}
+								else if("FI"==clientType){clientType="[@lang_res  k='member.fi'/]"}
+								
+								var pageType = " ";
+								if(null!=n[2]){
+									pageType = n[2].pageType;
+									if (pageType == 'O')
+										pageType = '[@lang_res  k='console.rpq.questForm.openRPQ'/]';
+									else if(pageType == 'I')
+										pageType = '[@lang_res  k='console.rpq.questForm.investmentRPQ'/]';
+									else if(pageType == 'K')
+										pageType = '[@lang_res  k='console.rpq.questForm.KYCRPQ'/]';
+									else
+										pageType = '[@lang_res  k='console.rpq.questForm.other'/]';
+								}
+								
+								var status = "";
+								if(n[0] != null){
+									status = n[0].status;
+									if(status == 'using'){
+										status = '[@lang_res  k='console.rpq.questForm.using'/]';
+									}else if(status == 'unusing'){
+										status = '[@lang_res  k='console.rpq.questForm.unusing'/]';
+									}else if(status == 'draft'){
+										status = '[@lang_res  k='console.rpq.questForm.draft'/]';
+									}else if(status == 'delete'){
+										status = '[@lang_res  k='console.rpq.questForm.delete'/]';
+									}else {
+										status = "";
+									}
+								 }
+									
+								var langCode = n[0].langCode;
+								var button = '<a classlayer="1" pageid="' + id + '" class="btndelpage" href="javascript:void(0);"> '+"[@lang_res  k='global.delete'/]"+'</a>&nbsp;&nbsp;'
+											+'<a id="'+id+'" pageid="' + id + '" class="btnsetpagequest" href="javascript:void(0);"> [@lang_res  k='console.rpq.questForm.setTopic'/]</a>&nbsp;&nbsp;'
+											+'<a id="'+id+'" pageid="' + id + '" class="btnsetlevel" href="javascript:void(0);"> [@lang_res  k='console.rpq.questForm.setTopicLevel'/]</a>';
+								
+								
+								//modify wwluo 160811	
+								  //html += '<tr><td><a href="javascript:void(0);" onclick="editpage(\''+id+'\')">'
+								  html += '<tr><td><a href="javascript:void(0);" onclick="ShowFirmDialog(\''+id+'\')">'
+										+ title+'</a></td>'
+										+ '<td>'+ clientType+ '</td>'
+										+ '<td>'+pageType+'</td>'
+										//+ '<td>'+status+'</td>'
+										+ '<td>'+button+'</td></tr>'
+								//end
+							});
+						$('#pagedatalist').append(html);
+
+						$("#pagination").pagination(total, {
+							callback : pageselectCallback,
+							numDetail : '',
+							items_per_page : 8,
+							num_display_entries : 4,
+							current_page : pageid,
+							num_edge_entries : 2
+						});
+					}
+				})
+		//回调
+		function pageselectCallback(page_id, jq) {
+			bindList(page_id);
+		}
+	}
+	
+	function delnode(id)
+    {
+    layer.confirm("[@lang_res  k='ifafirm.message.promptIsDelTeam'/]", { title:"[@lang_res  k='global.prompt'/]",btn:["[@lang_res  k='global.confirm'/]","[@lang_res  k='global.cancel'/]"], icon: 3   },function () { 
+    		$('#tree tr[data-tt-parent-id="'+id+'"]').remove();
+    		$('#tree tr[id="'+id+'"]').remove();
+    		layer.closeAll();
+    		
+    		 //删除节点的数据库
+	                $.ajax({
+						type : 'post',
+						datatype : 'json',
+						url : "${base}/console/ifafirm/delIfafirmTeamInfo.do?datestr="
+								+ new Date().getTime(),
+						data : {'id':id  },
+						 beforeSend: function () {
+                        indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", { time: 500000 });
+                    },
+                    complete: function () {
+						layer.close(indexmsg);
+                    },
+						success : function(json) {
+							console.log(json);
+							json = JSON.parse(json);
+							var result = json.result;
+							if(result==true||result=='true'){
+								layer.msg("[@lang_res  k='global.success.save'/]", { icon: 1, time: 2000 }, function () { });
+							}
+						}
+					});
+    	});
+    }
+    
+    //delete wwluo 160811
+    /*function editpage(id)
+    {
+    	window.location.href = '${base}/console/rpq/form.do?id='+id;
+    }*/
+    
+    //modify wwluo 160811
+    function ShowFirmDialog(id) {
+		//window.location.href = '${base}/console/rpq/form.do' ;
+		BootstrapDialog.show({
+			title : "[@lang_res  k='console.rpq.form.title'/]",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="no" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="${base}/console/rpq/form.do?id='+id+'"></iframe></div>').load(),
+			buttons : [{
+				label : "[@lang_res  k='global.close'/]",
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			}]
+	  	});
+	}
+   //end
+   
+</script>
+</body>
+</html>
+

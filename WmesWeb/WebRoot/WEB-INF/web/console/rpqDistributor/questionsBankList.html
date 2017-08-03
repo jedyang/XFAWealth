@@ -1,0 +1,389 @@
+[#include "../../inc/head_v2.html"/]
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet"  >
+    <link rel="stylesheet" type="text/css" href="/wmes/res/css/Funds.css">
+    <style>
+		.login-dialog .modal-dialog {width: 1000px;}
+		.firminfo-dialog .modal-dialog{width: 900px;}
+		.teaminfo-dialog .modal-dialog{width: 700px;}
+		.btneditnode{text-decoration:underline;}
+        .wmes-contentbox {
+            background: #ffffff;
+            padding-top: 5px;
+        }
+	</style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+<input id="btnCloseIframe" type="hidden" />
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div >
+        <div class="r-side-container" style="margin-left:80px">
+        	<p class="wmes-wrap-title">
+			[@lang_res k='console.rpq.questForm.pageTitle'/]
+            </p>
+            <div class="clear"></div>
+            <div class="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <input type="hidden" value="" id="selQuestType"/>
+                	<input type="hidden" value="" id="selStatus"/>
+                    <div class="funds_choice_wrap">
+                    	<p class="funds_choice_title">[@lang_res  k='console.rpq.questForm.questType'/]</p>
+                    	<ul class="funds_choice">
+                    		<li class="period_all selQuestType fund_choice_active2 fund_choice_active" data-name="selQuestType" data-key="" data-value="">[@lang_res k='ifaspace.info.all'/]</li>
+                    		<li class="" data-name="selQuestType" data-key="[@lang_res  k='console.rpq.questForm.radio'/]" data-value="radio">[@lang_res  k='console.rpq.questForm.radio'/]</li>
+                    		<li class="" data-name="selQuestType" data-key="[@lang_res  k='console.rpq.questForm.dropdownChoice'/]" data-value="select">[@lang_res  k='console.rpq.questForm.dropdownChoice'/]</li>
+                    		<li class="" data-name="selQuestType" data-key="[@lang_res  k='console.rpq.questForm.checkbox'/]" data-value="checkbox">[@lang_res  k='console.rpq.questForm.checkbox'/]</li>
+                    		<li class="" data-name="selQuestType" data-key="[@lang_res  k='console.rpq.questForm.text'/]" data-value="text">[@lang_res  k='console.rpq.questForm.text'/]</li>
+                    		<li class="" data-name="selQuestType" data-key="[@lang_res  k='console.rpq.questForm.texearea'/]" data-value="textarea">[@lang_res  k='console.rpq.questForm.texearea'/]</li>
+                    	</ul>
+                    </div>
+                    <div class="funds_choice_wrap">
+                    	<p class="funds_choice_title">[@lang_res  k='console.rpq.questForm.questStatus'/]</p>
+                    	<ul class="funds_choice">
+                    		<li class="period_all selStatus fund_choice_active2 fund_choice_active" data-name="selStatus" data-key="" data-value="">[@lang_res k='ifaspace.info.all'/]</li>
+                    		<li class="" data-name="selStatus" data-key="[@lang_res k='console.rpq.questForm.using'/]" data-value="using">[@lang_res k='console.rpq.questForm.using'/]</li>
+                    		<li class="" data-name="selStatus" data-key="[@lang_res k='console.rpq.questForm.unusing'/]" data-value="unusing">[@lang_res k='console.rpq.questForm.unusing'/]</li>
+                    		<li class="" data-name="selStatus" data-key="[@lang_res k='console.rpq.questForm.draft'/]" data-value="draft">[@lang_res k='console.rpq.questForm.draft'/]</li>
+                    		<li class="" data-name="selStatus" data-key="[@lang_res k='console.rpq.questForm.delete'/]" data-value="delete">[@lang_res k='console.rpq.questForm.delete'/]</li>
+                    	</ul>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20" style="padding-top: 5px;">
+                    	<a id="btnAddInfoForm" href="javascript:void(0);" class="btn-blue-s"> [@lang_res k='global.add'/]</a>
+                    	<a id="btnToDoSearch" href="javascript:void(0);" class="btn-blue-s"> [@lang_res k='global.query'/]</a>
+                    </div>
+                    <!-- 筛选条件 -->
+                    <div class="funds_list_selected">
+			            <p class="funds_selected_title">[@lang_res k='criteria.selected'/]</p>
+						<ul class="selection_criteria">
+							<p class="funds_title_selection">[@lang_res k='criteria.selected.reset'/]</p>
+						</ul>
+					</div>
+					<!-- 数据条数与输入框查询 -->
+                    <div class="funds_keyserach_wrap">
+						<p class="ifa_serach_sum" style="line-height:33px;">
+							[@lang_res k='criteria.total.a'/]					
+							<span class="funds_serach_digital" id="dataTotal"></span> [@lang_res k='criteria.total.b'/]
+						</p> 
+					 	<div style="height:33px;" class="funds_keyserach ifa_keyserach">
+                       		<input type="text" class="searchCondition" id="txtTitle" placeholder="[@lang_res k='console.rpq.questForm.questNameSearchTip'/]">
+                       		<span class="icon_search"></span>	
+                    	</div>
+			        </div>
+                    <div>
+                        <table border="0" id="pagedatalist" cellpadding="0" cellspacing="0" class="table table-hover " >
+                                <tbody>
+                                    <tr>
+                                        <th class="table-head" style="width:50%;">[@lang_res  k='console.rpq.questForm.questName'/]</th>
+                                        <th class="table-head">[@lang_res  k='console.rpq.questForm.customerType'/]</th>
+                                        <th class="table-head">[@lang_res  k='console.rpq.questForm.questType'/]</th>
+                                        <!--<th class="table-head">创建人</th>-->
+                                        <th class="table-head">[@lang_res  k='console.rpq.questForm.creationTime'/]</th>
+                                        <th class="table-head">[@lang_res  k='console.rpq.questForm.state'/]</th>
+                                        <th class="table-head">[@lang_res  k='console.rpq.questForm.option'/]</th>
+                                    </tr>
+                                </tbody>
+                               
+                            </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>         
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		//搜索條件點擊事件
+		$(".funds_choice li").on("click",function(){
+			$(this).siblings().removeClass("fund_choice_active2").end();
+			if($(this).index()==0){
+                $(this).addClass('fund_choice_active2');
+            }
+			$(this).siblings().removeClass("fund_choice_active").end().addClass("fund_choice_active");
+			
+			var selection_criterialenght = $(".selection_criteria li").length;
+			for(var i = 0; i < selection_criterialenght ;i++){
+				if($(".selection_criteria li").eq(i).attr("data-name") == $(this).attr("data-name") ){
+					$(".selection_criteria li").eq(i).remove();
+				}
+			}
+			if($(this).attr("data-key") != undefined && $(this).attr("data-key") != ""){
+				$(".funds_title_selection").before('<li data-name="' + $(this).attr("data-name") + '">' + $(this).attr("data-key") + '<span class="selection_delete"></span></li>')
+			}
+			
+			var selectId = $(this).attr("data-name");
+			var selectValue= $(this).attr("data-value");
+			//alert(selectId+"===="+selectValue);
+			$("#"+selectId).val(selectValue);
+			bindList(0)
+		});
+		
+		//执行清除方案点击操作
+		$(".funds_title_selection").on("click",function(){
+			$(".period_all").click();
+		});	
+		
+		//清除单个搜索条件
+		$(document).on("click",".selection_delete",function(){
+			var selectId = $(this).parent().data("name");
+			$("."+selectId).click();
+		});		
+		
+		
+		//跳转表单页面
+		$('#btnAddInfoForm').on('click',function(){
+			infoFormDialog("");	
+		});
+		
+		function ShowFirmDialog(){
+			 window.location.href = '${base}/console/rpq/form.do' ;
+		}
+		
+		//点击删除
+        $("body").on('click', '.btndelquest', '', function () {
+            //获取前个节点
+            var pageid = $(this).parent().find('a').attr('pageid');
+            delquest(pageid);
+        });
+            
+     	function delquest(id)
+	    {
+	    	layer.confirm("[@lang_res  k='console.rpq.questForm.deleteTopic'/]", { title:"[@lang_res  k='global.prompt'/]",btn:["[@lang_res  k='global.confirm'/]","[@lang_res  k='global.cancel'/]"], icon: 3   },function () { 
+	    		$('#tree tr[data-tt-parent-id="'+id+'"]').remove();
+	    		$('#tree tr[id="'+id+'"]').remove();
+	    		layer.closeAll();
+	    		
+	    		 //删除节点的数据库
+                $.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : "${base}/console/rpq/delQuest.do?datestr="
+							+ new Date().getTime(),
+					data : {'id':id  },
+					 beforeSend: function () {
+                       indexmsg = layer.msg("[@lang_res  k='console.rpq.questForm.deleteTopic'/]", { time: 500000 });
+                   },
+                   complete: function () {
+					layer.close(indexmsg);
+                   },
+                   error:function(){layer.msg("[@lang_res  k='console.rpq.questForm.deleteFail'/]", { icon: 0, time: 2000 }, function () {  });},
+					success : function(json) {
+						console.log(json);
+						json = JSON.parse(json);
+						var result = json.result;
+						if(result==true||result=='true'){
+							layer.msg("[@lang_res  k='console.rpq.questForm.deleteSuccess'/]", { icon: 1, time: 2000 }, function () { bindList(0); });
+						} else
+						{
+							layer.msg("[@lang_res  k='console.rpq.questForm.deleteFail'/]", { icon: 0, time: 2000 }, function () {  });
+						}
+					}
+				});
+	    	});
+	    }
+            
+        //效果
+        $("body").on("mouseover", ".class_planname", function () {
+            $(this).css({ 'color': '#ffffff', 'background-color': '#2d80ce', 'cursor': 'pointer', 'border-bottom-right-radius': '4px', 'border-bottom-left-radius': '4px', 'border-top-right-radius': '4px', 'border-top-left-radius': '4px' });
+        });
+        $("body").on("mouseleave", ".class_planname", function () {
+            $(this).css({ 'color': '#000000', 'background-color': '' });
+        });
+        $("body").on("mouseover", ".btneditnode", function () {
+            $(this).css({ 'text-decoration': 'underline' });
+        });
+        $("body").on("mouseleave", ".btneditnode", function () {
+            $(this).css({ 'text-decoration': 'none' });
+        });
+            
+		$('#btnToDoSearch').click(function() {
+			bindList(0);
+		});
+		
+		$('#btnCloseIframe').click(function() {
+			$(".close").click();			
+		});
+	
+		var types = [BootstrapDialog.TYPE_DEFAULT, 
+                     BootstrapDialog.TYPE_INFO, 
+                     BootstrapDialog.TYPE_PRIMARY, 
+                     BootstrapDialog.TYPE_SUCCESS, 
+                     BootstrapDialog.TYPE_WARNING, 
+                     BootstrapDialog.TYPE_DANGER];	
+    
+	 	setAutoSearch('.searchCondition',bindList,0);
+		//分页绑定Table数据
+		bindList(0);
+		function bindList(pageid) {
+			var title = $('#txtTitle').val();
+			//var adaptType = $('#selAdaptType').val();
+			var status = $("#selStatus").val();
+			var questType = $('#selQuestType').val();
+			//var ifafirmid = $('#txtSelectedCompanyName').val();
+			$.ajax({
+						type : 'post',
+						datatype : 'json',
+						url : "${base}/console/rpqDistributor/questionsListJson.do?datestr="
+								+ new Date().getTime(),
+						data : {
+							title : title,
+							status:status,
+							//adaptType:adaptType,
+							questType : questType,
+							page : pageid + 1,
+							rows : 8
+						},
+	                    complete: function () {
+							layer.close(indexmsg);
+	                    },
+						success : function(json) {
+							var total = json.total;
+							var table = json.rows;
+							var html = '';
+							$("#pagedatalist tbody tr:gt(0)").empty();
+							if(!!total){
+								$("#dataTotal").html(total)
+							}else{
+								$("#dataTotal").html(0)
+							}
+							$.each(table,function(i, n) { //console.log(n[0].id);console.log(n[1]);
+									
+									var id = n[0].id;
+									var title = n[1].title;
+									var type = n[0].type;
+									if ( type== '0')
+										type = '[@lang_res  k='member.info.memberType.platform'/]';
+									else if(type=='1')
+										type = '[@lang_res  k='member.info.memberType.distributor'/]';
+									else if(type=='2')
+										type = '[@lang_res  k='member.info.memberType.ifa'/]';
+									else type = ' ';
+										
+									var status = "";
+									if(n[0] != null){
+										status = n[0].status;
+										if(status == 'using'){
+											status = '[@lang_res  k='console.rpq.questForm.using'/]';
+										}else if(status == 'unusing'){
+											status = '[@lang_res  k='console.rpq.questForm.unusing'/]';
+										}else if(status == 'draft'){
+											status = '[@lang_res  k='console.rpq.questForm.draft'/]';
+										}else if(status == 'delete'){
+											status = '[@lang_res  k='console.rpq.questForm.delete'/]';
+										}else {
+											status = "";
+										}
+									 }
+									 
+									//var createby = n[0].creatorId;
+									var createdt = n[0].createTime;
+									var langCode = n[0].langCode;
+									var button = '<a id="'+id+'" pageid="' + id + '" class="btneditquest" href="javascript:infoFormDialog(\''+id+'\')" > '+"[@lang_res  k='global.edit'/]"+'</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" pageid="' + id + '" class="btndelquest" href="javascript:void(0);"> '+"[@lang_res  k='global.delete'/]"+'</a>';
+									
+									//var questType = n[0].questType==null?" ":n[0].questType;
+									var questType = "";
+									if(n[0] != null){
+										questType = n[0].questType;
+										if(questType == 'radio'){
+											questType = '[@lang_res  k='console.rpq.questForm.radio'/]';
+										}else if(questType == 'select'){
+											questType = '[@lang_res  k='console.rpq.questForm.dropdownChoice'/]';
+										}else if(questType == 'checkbox'){
+											questType = '[@lang_res  k='console.rpq.questForm.checkbox'/]';
+										}else if(questType == 'text'){
+											questType = '[@lang_res  k='console.rpq.questForm.text'/]';
+										}else if(questType == 'textarea'){
+											questType = '[@lang_res  k='console.rpq.questForm.texearea'/]';
+										}else {
+											questType = "";
+										}
+									}
+									
+									html += '<tr><td><a href="#" onclick="infoFormDialog(\''+id+'\')">'
+											+ title
+											+ '</a></td><td>'
+											+ type
+	                                        + '</td><td>' 
+	                                        + questType 
+											//+ '</td><td>'
+											//+ createby
+											+ '</td><td>'
+											+ createdt
+											+ '</td><td>'
+											+ status 
+											+ '</td><td>' 
+											+ button 
+											+ '</td></tr>'
+								});
+							$('#pagedatalist').append(html);
+	
+							$("#pagination").pagination(total, {
+								callback : pageselectCallback,
+								numDetail : '',
+								items_per_page : 8,
+								num_display_entries : 4,
+								current_page : pageid,
+								num_edge_entries : 2
+							});
+						}
+					})
+			//回调
+			function pageselectCallback(page_id, jq) {
+				bindList(page_id);
+			}
+		}
+
+		function showform(id) {
+			window.location.href = '${base}/console/workflow/detail.do?id=' + id;
+		}
+	});
+    
+    function editSuperFirm(id)
+    {
+    	window.location.href = '${base}/console/ifafirm/dialogFirmInfo.do?id=' + id;
+    }
+    
+   	function infoFormDialog(id){
+		BootstrapDialog.show({
+			title : "[@lang_res  k='console.rpq.quest.list.title'/]",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="no" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="${base}/console/rpq/quest_form.do?id='+id+'"></iframe></div>').load(),
+			buttons : [{
+					label : "[@lang_res  k='global.close'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+			}]
+	  	});
+	}
+</script>
+[#include "../../inc/foot_v2.html"/]
+

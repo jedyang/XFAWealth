@@ -1,0 +1,682 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代理商部门管理</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet"  >
+    <style>
+           .login-dialog .modal-dialog {width: 1000px;}
+            .firminfo-dialog .modal-dialog{width: 900px;}
+            .teaminfo-dialog .modal-dialog{width: 700px;}
+            .btneditnode{text-decoration:underline;}
+        </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<input type="hidden" id="hidid"  value="${(id)?if_exists}"/>
+<input type="hidden" id="hidname"  value="${(name)?if_exists}"/>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container">
+
+            <div class="clear"></div>
+            <div class="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div class="clear"></div>
+                    <div class="pdt20" style="padding-top: 5px;">
+                    	<a id="btnSaveInfoForm" href="javascript:void(0);" class="btn-blue-s"><i class="glyphicon glyphicon-ok-circle"></i> 保存排序</a>
+                        <a id="btnExpandAll" href="javascript:void(0);" class="btn-blue-s"><i class="glyphicon glyphicon-plus-sign"></i> 展开</a>
+                        <a id="btnCollapseAll" href="javascript:void(0);" class="btn-blue-s"><i class="glyphicon glyphicon-minus-sign"></i> 收缩</a>
+                    </div>
+                    <div>
+                        <table border="0" id="tree" cellpadding="0" cellspacing="0" class="table table-hover " >
+                                <tbody>
+                                    <tr>
+                                        <th class="table-head">组织架构名称</th>
+                                        <th class="table-head">组织架构代码</th>
+                                        <th class="table-head">组织架构序号</th>
+                                        <th class="table-head">操作</th>
+                                    </tr>
+                                </tbody>
+                               
+                            </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		//展开所有
+		$('#btnExpandAll').on('click',ExpandAll);
+		//收缩所有
+		$('#btnCollapseAll').on('click',CollapseAll);
+		//弹出公司信息窗体
+		$('#btnAddInfoForm').on('click',ShowFirmDialog);
+		//弹出公司搜索列表
+		$('#btnShowFirmDialog').on('click',ShowFirmListDialog);
+		//保存整个团队信息
+		$('#btnSaveInfoForm').on('click',SaveInfoForm);
+		//展开所有
+		function ExpandAll()
+		{
+			$('#tree').treetable('expandAll'); return false;
+		}
+		//收缩所有
+		function CollapseAll()
+		{
+			$('#tree').treetable('collapseAll'); return false;
+		}
+		//
+		function ShowFirmDialog()
+		{
+			 window.location.href = '${base}/console/ifafirm/dialogFirmInfo.do?id=' ;
+		}
+		//
+		function SaveInfoForm()
+		{
+			var checkifafirmid = $('#txtSelectedCompanyName').attr('companyid');
+			if(checkifafirmid==''||checkifafirmid==null||checkifafirmid==undefined)
+			{ layer.msg('请选择公司', { icon: 0, time: 1000 }, function () { }); return false;}
+			
+			 var TotalData = '{"PlanList":[';
+			 var json = '[';
+			 $("#tree tbody tr").each(function (i, n) {
+			 		var ifafirmid = $(this).attr('ifafirmid');
+                    var teamid = $(this).attr('id');
+                    var parentid = $(this).attr('data-tt-parent-id');
+                    var classlayer = $(this).attr('classlayer');
+                    var html = $(this).html(); // (planid);
+                    var teamname = $(this).find('td:eq(0)').find('span:eq(1)').text();
+                    var code = $(this).find('td:eq(1)').text();
+                    var sort = $(this).find('td:eq(2)').find('input').val();
+                    if(sort==''||sort==undefined)sort='99';
+                    //给装JSON
+                    if(classlayer!=undefined&&classlayer!='0')//标题栏跟公司信息不需包含
+                    {
+	                     json += '{"id":"' + teamid + '","parentid":"'+parentid+'","ifafirmid":"'+ifafirmid+'","name":"' + teamname + '","code":"' + code + '","orderby":"' + sort + '","classlayer":"' + classlayer + '"},';
+	                    //TotalData += json;
+                    }
+                });
+                console.log();
+                 json = json.substring(0, json.length - 1);json+= ']';
+                console.log(json);
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url : "${base}/console/ifafirm/saveallteaminfo.do?datestr="+ new Date().getTime(),
+	            	data: { 'json': json },
+                    beforeSend: function () {
+                        indexmsg = layer.msg('保存团队信息中，请稍候...', { time: 50000 });
+                    },
+                    complete: function () {
+
+                    },
+                    error: function (data) {
+                        layer.msg('保存失败', { icon: 0, time: 2000 }, function () { });
+                    },
+                    success: function (json) {
+                        layer.msg('保存成功', { icon: 1, time: 2000 }, function () { });
+                    }
+                });
+			                
+			               
+		}
+		//
+		function ShowFirmListDialog()
+		{
+			 BootstrapDialog.show({
+				title : '选择公司',
+				cssClass : 'login-dialog',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('dialogFirmShow.do?procedureid='),
+				buttons : [  {
+					label : '确定',
+					cssClass : 'btn-primary',
+					action : function(dialogItself) {
+						 var selected = $('#id_irm_selected');
+						 var selectedid = selected.attr('companyid');
+						 var selectedname = selected.attr('companyname');
+						 //console.log(selectedid);console.log(selectedname);
+						 if(selectedid == undefined || selectedid == '')
+						 {
+						 	layer.alert('请选择公司', {icon: 0 });
+						 	return;
+						 }
+						 $('#txtSelectedCompanyName').val(selectedname);
+						 $('#txtSelectedCompanyName').attr('companyid',selectedid);
+						 bindList(0);
+						 
+						 dialogItself.close();
+					}
+				},  {
+					label : '关闭',
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
+		}
+		//点击编辑
+            $("body").on('click', '.btneditnode', '', function () {
+            	
+                //获取前个节点
+                var teamid = $(this).parent().parent().attr('id');alert(teamid);
+                var name = $(this).parent().parent().find('.class_planname').text();
+                var code = $(this).parent().parent().find('.class_startdate').text();
+				var teamhtml='<div id="id_teaminfo" >'
+                +'<form class="form-horizontal">'
+                +'    <div class="form-group">'
+                +'        <div class="col-md-3 text-right">'
+                +'            <label for="txtLoginCode" class="label-control">团队名称</label>'
+                   +'     </div>'
+                      +'  <div class="col-md-7">'
+                         +'   <input id="txtName" type="text" class="form-control " value="'+name+'">'
+                 +'       </div>'
+                  +'  </div>'
+                  +'  <div class="form-group">'
+                    +'    <div class="col-md-3 text-right">'
+                    +'        <label for="txtNickName" class="label-control">团队代码</label>'
+                    +'    </div>'
+                      +'  <div class="col-md-7">'
+                      +'      <input id="txtCode" type="text" class="form-control " value="'+code+'">'
+                      +'  </div>'
+                   +' </div>    '  
+                    +' <div class="form-group">'
+                       +' <div class="col-md-3 text-right">'
+                        +'    <label for="txtNickName" class="label-control">备注信息</label>'
+                      +'  </div>'
+                      +'  <div class="col-md-7">'
+                         +'   <input id="txtRemark" type="text" class="form-control " value="">'
+                            
+                       +' </div>'
+                   +' </div>'
+                    
+                +'</form>'
+            +'</div>';
+                BootstrapDialog.show({
+					title : '编辑团队信息',
+					type:BootstrapDialog.TYPE_PRIMARY,
+					size:BootstrapDialog.SIZE_WIDE,
+	            	draggable: true,
+					message : teamhtml,
+					buttons : [  {
+						label : '保存',
+						cssClass : 'btn-primary',
+						action : function(dialogItself) {
+							  var name = $('#txtName').val();
+						      var code = $('#txtCode').val(); 
+						      var elementid = '#'+teamid;
+						      console.log($(elementid).html());
+						      $(elementid).find('.class_planname').text(name);
+						      $(elementid).find('.class_startdate').text(code);
+						      
+						      //添加进数据库
+				                $.ajax({
+									type : 'post',
+									datatype : 'json',
+									url : "${base}/console/ifafirm/addIfafirmTeamInfo.do?datestr="
+											+ new Date().getTime(),
+									data : {'id':teamid,'name':name,'code':code },
+									success : function(json) {
+										console.log(json);
+										json = JSON.parse(json);
+										var result = json.result;
+										if(result==true||result=='true'){
+											layer.msg('保存团队成功', { icon: 1, time: 2000 }, function () { });
+										}
+									}
+								});
+							
+						      dialogItself.close();
+						}
+					},  {
+						label : '关闭',
+						action : function(dialogItself) {
+							dialogItself.close();
+						}
+					} ]
+				});
+            });
+            
+			//点击团队成员管理，弹出管理窗口
+            $("body").on('click', '.btnedituser', '', function () {
+                //获取前个节点
+                var teamid = $(this).parent().parent().attr('id');//所属团队
+                var ifafirmid = $(this).parent().find('.btnaddchildnode').attr('ifafirmid'); //所属公司
+
+                 BootstrapDialog.show({
+				title : '团队成员管理',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('dialogTeamUser.do?teamid='+teamid+'&ifafirmid='+ifafirmid),
+				buttons : [  {
+					label : '确定',
+					cssClass : 'btn-primary',
+					action : function() {
+					     var list = '';
+						 $("#selTeamifaList option").each(function () { //遍历全部option
+				            var name = $(this).text();
+				            var ifaid = $(this).val();
+				            list+= ifaid + ',';
+				        });
+				        if(list!='')
+				        {
+				        	 $.ajax({
+					                type: "post", //统一用post方式 
+					                url: "${base}/console/ifafirm/saveteammemberifainfo.do?datestr="+ new Date().getTime(),
+					                data: {"teamid":teamid,"list":list,"ifafirmid":ifafirmid}, //传送的参数列表
+					                dataType: "json",
+					                crossDomain: true,
+					                error: function (XMLHttpRequest, textStatus, errorThrown) {
+					                    //错误时在这里添加一些提示信息
+					                    layer.alert(errorThrown);
+					                },
+					                beforeSend: function () {
+					                    index = layer.msg('正在保存数据中....', {  time: 50000 });
+					                },
+					                success: function (data, textStatus) {
+										console.log(data);
+										if(data.result == true)
+											layer.msg('保存成功', { icon: 1, time: 2000 }, function () { });
+										else
+											layer.msg('保存败', { icon: 0, time: 2000 }, function () { });
+					                },
+					                complete: function () { layer.close(index); }
+					            });
+				        }
+					}
+				},  {
+					label : '关闭',
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+				});
+            });
+            
+           function getguid() {
+			    //    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxx'.replace(/[xy]/g, function (c) {
+			    //        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			    //        return v.toString(16);
+			    //    });
+			    function fourchar() { return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1); }
+			    var guid = (fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar()).toUpperCase();
+			    return guid;
+			}
+			
+            var child=0;
+         	//点击添加子部门，弹出子部门添加窗口 ifafirmid="'+ifafirmId+'" parentteamid="
+            $("body").on('click', '.btnaddchildnode', '', function () {
+            var teamhtml='<div id="id_teaminfo" >'
+                +'<form class="form-horizontal">'
+                +'    <div class="form-group">'
+                +'        <div class="col-md-3 text-right">'
+                +'            <label for="txtLoginCode" class="label-control">部门名称</label>'
+                   +'     </div>'
+                      +'  <div class="col-md-7">'
+                         +'   <input id="txtName" type="text" class="form-control " value="">'
+                 +'       </div>'
+                  +'  </div>'
+                  +'  <div class="form-group">'
+                    +'    <div class="col-md-3 text-right">'
+                    +'        <label for="txtNickName" class="label-control">部门代码</label>'
+                    +'    </div>'
+                      +'  <div class="col-md-7">'
+                      +'      <input id="txtCode" type="text" class="form-control " value="">'
+                      +'  </div>'
+                   +' </div>    '  
+                    +' <div class="form-group">'
+                       +' <div class="col-md-3 text-right">'
+                        +'    <label for="txtNickName" class="label-control">备注信息</label>'
+                      +'  </div>'
+                      +'  <div class="col-md-7">'
+                         +'   <input id="txtRemark" type="text" class="form-control " value="">'
+                            
+                       +' </div>'
+                   +' </div>'
+                    
+                +'</form>'
+            +'</div>';
+                //获取前个节点
+                //$('#id_teaminfo').show();
+                console.log($(this).parent().html());
+                var distributorid = $(this).parent().find('.btnaddchildnode').attr('distributorid'); //所属公司
+                var parentteamid = $(this).parent().find('.btnaddchildnode').attr('parentteamid'); //父团队节点
+                var classlayer = $(this).parent().find('.btnaddchildnode').attr('classlayer'); 
+                var childclasslayer = '';
+                if(classlayer=='0')childclasslayer='1';
+                if(classlayer=='1')childclasslayer='2';
+                if(classlayer=='2')childclasslayer='3';
+alert(parentteamid);
+				
+                 BootstrapDialog.show({
+				title : '添加子团队',
+				//cssClass:'teaminfo-dialog',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : teamhtml,
+				onshow: function(dialogRef){ 
+                	$('#id_teaminfo').show();
+                	//alert(1);
+            	},
+            	onhide: function(dialogRef){
+                	$('#id_teaminfo').hide();
+                	//alert(2);
+            	},
+				buttons : [  {
+					label : '保存',
+					cssClass : 'btn-primary',
+					action : function(dialogItself) { 
+						    var name = $('#txtName').val();
+						    console.log($('#txtName'));
+						    var code = $('#txtCode').val();
+			                if (name == '') { layer.msg('请输入计划名称！'); return; }
+			                var datattparentid = parentteamid;
+			                //var classlayer = '1';
+			                var id = getguid();
+			                var html_row = ''; // '<tr id="8-1" data-tt-id="' + GLOBAL.NewGuid() + '" data-tt-parent-id="' + datattid + '"><td><span class="folder">' + planname + '</span></td><td style="cursor:pointer;" date="2016-2-24" class="class_startdate">2016年2月24日</td><td class="class_enddate">2016年1月24日</td><td><input type="text" class="form-control"  style="height:22px; width:50px;"></td><td><a href="#"> 选择参与人</a></td><td><a  class="btnaddchildnode" href="javascript:void(0);"> 添加子计划</a></td></tr>';
+			                if (childclasslayer == '1')//如果是首层
+                                html_row = '<tr ifafirmid="'+ifafirmid+'" classlayer="' + childclasslayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id="' + datattparentid + '"><td><span class="folder class_planname">' + name + '</span></td><td  class="class_startdate">' + code + '</td><td  class="class_enddate"><input type="text" class="form-control sort" value="" style="height:22px; width:50px;"></td><td><a classlayer="1" teamid="' + id + '" class="btneditnode" href="javascript:void(0);"> 编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btndelnode" href="javascript:void(0);"> 删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" ifafirmid="'+ifafirmid+'" parentteamid="' + id + '" class="btnaddchildnode" href="javascript:void(0);"> 添加子团队</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btnedituser" href="javascript:void(0);"> 管理团队成员</a></td></tr>';
+                            if (childclasslayer == '2')//如果是首层
+                                html_row = '<tr ifafirmid="'+ifafirmid+'" classlayer="' + childclasslayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id="' + datattparentid + '"><td><span class="folder class_planname">' + name + '</span></td><td  class="class_startdate">' + code + '</td><td  class="class_enddate"><input type="text" class="form-control sort" value="" style="height:22px; width:50px;"></td><td><a classlayer="1" teamid="' + id + '" class="btneditnode" href="javascript:void(0);"> 编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btndelnode" href="javascript:void(0);"> 删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="2" ifafirmid="'+ifafirmid+'" parentteamid="' + id + '" class="btnaddchildnode" href="javascript:void(0);"> 添加子团队</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btnedituser" href="javascript:void(0);"> 管理团队成员</a></td></tr>';
+                           	if (childclasslayer == '3')//如果是首层
+                                html_row = '<tr ifafirmid="'+ifafirmid+'" classlayer="' + childclasslayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id="' + datattparentid + '"><td><span class="folder class_planname">' + name + '</span></td><td  class="class_startdate">' + code + '</td><td  class="class_enddate"><input type="text" class="form-control sort" value="" style="height:22px; width:50px;"></td><td><a classlayer="1" teamid="' + id + '" class="btneditnode" href="javascript:void(0);"> 编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btndelnode" href="javascript:void(0);"> 删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btnedituser" href="javascript:void(0);"> 管理团队成员</a></td></tr>';
+                           
+			                child++;
+			                
+			                
+			
+			                var newRow = jQuery(html_row);
+			                var cquoi = jQuery(newRow[0]);console.log(newRow);console.log(cquoi);
+			                var node = $("#tree").treetable("node", datattparentid);
+			                
+			                jQuery('#tree').treetable("loadBranch", node, cquoi);
+			                
+			                //添加进数据库
+			                $.ajax({
+								type : 'post',
+								datatype : 'json',
+								url : "${base}/console/ifafirm/addIfafirmTeamInfo.do?datestr="
+										+ new Date().getTime(),
+								data : {'id':id,'ifafirmid':ifafirmid,'parentid':parentteamid,'name':name,'code':code,'classlayer':childclasslayer },
+								success : function(json) {
+									console.log(json);
+									json = JSON.parse(json);
+									var result = json.result;
+									if(result==true||result=='true'){
+										layer.msg('添加团队成功', { icon: 1, time: 2000 }, function () { });
+									}
+								}
+							});
+							
+			                dialogItself.close();
+					}
+				},  {
+					label : '关闭',
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+				});
+				
+				//return false;
+            });
+            
+            //
+            //点击删除，弹出删除团队提示
+            $("body").on('click', '.btndelnode11', '', function () {
+                //获取前个节点
+                var teamid = $(this).attr('teamid'); //alert(teamid);
+                var userelementid = $(this).parent().find('input').attr('id'); // html();
+ 				var tr = $(this).parent().parent();
+ 				var classlayer = tr.attr('classlayer'); 
+ 				var datattparentid = tr.attr('data-tt-parent-id'); 
+                 layer.confirm('您确认要删除该团队吗？', { icon: 3  },function () { 
+                 console.log($(this).html());
+                 
+                    if(classlayer=='1')//如果是父层，则删除时同时删除子层
+	                 {
+	                 alert('');
+	                 	//获取所有子层
+	                 	//$('#tree tr[data-tt-parent-id="'+datattparentid+'"]').remove();
+	                 }
+                 	tr.remove(); 
+                 	layer.closeAll();
+                 });
+            });
+            
+            
+            
+            //效果
+            $("body").on("mouseover", ".class_planname", function () {
+                $(this).css({ 'color': '#ffffff', 'background-color': '#2d80ce', 'cursor': 'pointer', 'border-bottom-right-radius': '4px', 'border-bottom-left-radius': '4px', 'border-top-right-radius': '4px', 'border-top-left-radius': '4px' });
+            });
+            $("body").on("mouseleave", ".class_planname", function () {
+                $(this).css({ 'color': '#000000', 'background-color': '' });
+            });
+            $("body").on("mouseover", ".btneditnode", function () {
+                $(this).css({ 'text-decoration': 'underline' });
+            });
+            $("body").on("mouseleave", ".btneditnode", function () {
+                $(this).css({ 'text-decoration': 'none' });
+            });
+		//bindList(0);
+		//$('#btnShowFirmDialog').on('click',showFirmDialog);
+		$('#btnToDoSearch').click(function() {
+			bindList(0);
+		});
+		
+		
+		
+	
+	var types = [BootstrapDialog.TYPE_DEFAULT, 
+                     BootstrapDialog.TYPE_INFO, 
+                     BootstrapDialog.TYPE_PRIMARY, 
+                     BootstrapDialog.TYPE_SUCCESS, 
+                     BootstrapDialog.TYPE_WARNING, 
+                     BootstrapDialog.TYPE_DANGER];	
+    $(document).on('click','.show_action', function () {
+    	var procedureid = $(this).parent().find('.del_info').attr('procedureid'); 
+    	//window.location.href = 'action_list.do?procedureid='+procedureid;
+        BootstrapDialog.show({
+				title : '环节定义',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('action_list.do?procedureid='+procedureid),
+				buttons : [  {
+					label : '确定',
+					cssClass : 'btn-primary',
+					action : function() {
+						 
+					}
+				},  {
+					label : '关闭',
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
+    });
+    
+    	//动态绑定删除按钮事件
+		$(document).on('click', '.del_info', function() { 
+			var procedureid = $(this).parent().find('.del_info').attr('procedureid');
+			var postData = { 'procedureid': procedureid };
+			layer.confirm('删除后将不可恢复，您确认要删除该流程吗？', { icon: 3  },function () {
+		        $.ajax({
+	            type: "post",
+	            url : "${base}/console/workflow/deleteinfo.do?datestr="+ new Date().getTime(),
+	            data: postData,
+	            async: false,
+	            dataType: "json",
+	            error: function (XMLHttpRequest, textStatus, errorThrown) {
+	
+	            },
+	            beforeSend: function () {
+                        indexmsg = layer.msg('保存团队信息中，请稍候...', { time: 50000 });
+                    },
+	            success: function (data, textStatus) {
+	               // console.log(data);
+	               var result = data.result;
+	               if(result==true)
+	               { 
+	               layer.msg('删除成功', {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            bindList(0); 
+                        });
+	               //alert('删除成功'); bindList(0); 
+	               }
+	               else alert('删除失败');
+	            }
+	        });
+		    });
+	        
+		});
+		
+		//分页绑定Table数据
+		bindList(0);
+	function bindList(pageid) {
+		var distributorid = '1';//$('#txtSelectedCompanyName').attr('companyid');
+		$.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : "${base}/console/distributor/listDistributorOrgJson.do?datestr="
+							+ new Date().getTime(),
+					data : {
+						distributorid : distributorid
+					},
+					 beforeSend: function () {
+                        indexmsg = layer.msg('正在获取组织架构数据中，请稍候...', { time: 50000 });
+                    },
+                    complete: function () {
+						layer.close(indexmsg);
+                    },
+					success : function(json) {console.log(json);
+						var html = '';
+						//组装顶级节点
+						//var  result = JSON.parse(json);
+
+						var selectedid = $('#hidid').val();
+						 var selectedname = $('#hidname').val();
+						var supernode = '<tr ifafirmid="'+selectedid+'" classlayer="0" id="' + selectedid + '" data-tt-id="' + selectedid + '" data-tt-parent-id=""><td colspan="3" ><span class="folder class_planname"><b>' + selectedname + '</b></span></td><td><a classlayer="1" firmid="' + selectedid + '"  href="javascript:editSuperFirm(\''+selectedid+'\');"> 编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" firmid="' + selectedid + '" class="btndelnode" href="javascript:void(0);"> 删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="0" ifafirmid="'+selectedid+'" parentteamid="" class="btnaddchildnode" href="javascript:void(0);"> 添加团队</a></td></tr>';
+						$("#tree tbody tr:gt(0)").empty();
+						 $.each(JSON.parse(json.distributorOrgJson), function (i, n) {console.log(n.name);
+						 	var id = n.id;
+						 	
+						 	var parentId = '';
+						 	var parent = n.parent;
+						 	if(parent!=null)parentId = parent.id;
+						 	
+                            var code = n.code;
+                            var name = n.name;
+                            var orderBy = n.orderBy;
+                            var classLayer = n.classLayer;
+                            if (orderBy == null || orderBy == 'null') orderBy = '';
+                            
+                            var tr = '';
+                            if (classLayer == '1')//如果是首层
+                                tr = '<tr distributorid="'+distributorid+'" classlayer="' + classLayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id=""><td><span class="folder class_planname">' + name + '</span></td><td  class="class_startdate">' + code + '</td><td  class="class_enddate"><input type="text" class="form-control sort" value="' + orderBy + '" style="height:22px; width:50px;"></td><td><a classlayer="1" orgid="' + id + '" class="btneditnode" href="javascript:void(0);"> 编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" orgid="' + id + '" class="btndelnode" href="javascript:delnode(\''+id+'\');"> 删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" distributorid="'+distributorid+'" parentteamid="' + id + '" class="btnaddchildnode" href="javascript:void(0);"> 添加子团队</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" orgid="' + id + '" class="btnedituser" href="javascript:void(0);"> 管理团队成员</a></td></tr>';
+                            if (classLayer == '2')//如果是2层
+                                tr = '<tr distributorid="'+distributorid+'" classlayer="' + classLayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id="' + parentId + '"><td><span class="folder class_planname">' + name + '</span></td><td  class="class_startdate">' + code + '</td><td  class="class_enddate"><input type="text" class="form-control sort" value="' + orderBy + '" style="height:22px; width:50px;"></td><td><a classlayer="1" orgid="' + id + '" class="btneditnode" href="javascript:void(0);"> 编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" orgid="' + id + '" class="btndelnode" href="javascript:delnode(\''+id+'\');"> 删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="2" distributorid="'+distributorid+'" parentteamid="' + id + '" class="btnaddchildnode" href="javascript:void(0);"> 添加子团队</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" orgid="' + id + '" class="btnedituser" href="javascript:void(0);"> 管理团队成员</a></td></tr>';
+                           if (classLayer == '3')//如果是3层
+                                tr = '<tr distributorid="'+distributorid+'" classlayer="' + classLayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id="' + parentId + '"><td><span class="folder class_planname">' + name + '</span></td><td  class="class_startdate">' + code + '</td><td  class="class_enddate"><input type="text" class="form-control sort" value="' + orderBy + '" style="height:22px; width:50px;"></td><td><a classlayer="1" orgid="' + id + '" class="btneditnode" href="javascript:void(0);"> 编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" orgid="' + id + '" class="btndelnode" href="javascript:delnode(\''+id+'\');"> 删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="2" distributorid="'+distributorid+'" parentteamid="' + id + '" class="btnaddchildnode" href="javascript:void(0);"> 添加子团队</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" orgid="' + id + '" class="btnedituser" href="javascript:void(0);"> 管理团队成员</a></td></tr>';
+                           if (classLayer == '4')//如果是4层
+                                tr = '<tr distributorid="'+distributorid+'" classlayer="' + classLayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id="' + parentId + '"><td><span class="folder class_planname">' + name + '</span></td><td  class="class_startdate">' + code + '</td><td  class="class_enddate"><input type="text" class="form-control sort" value="' + orderBy + '" style="height:22px; width:50px;"></td><td><a classlayer="1" orgid="' + id + '" class="btneditnode" href="javascript:void(0);"> 编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" orgid="' + id + '" class="btndelnode" href="javascript:delnode(\''+id+'\');"> 删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="2" distributorid="'+distributorid+'" parentteamid="' + id + '" class="btnaddchildnode" href="javascript:void(0);"> 添加子团队</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" orgid="' + id + '" class="btnedituser" href="javascript:void(0);"> 管理团队成员</a></td></tr>';
+                           
+                            html += tr;
+                        });
+						
+                        $("#tree tbody").append(supernode + html);
+                        $('#tree').fadeIn(1000);
+                        $("#tree").treetable({ expandable: true }); //启用才会出现树形收缩
+                        $("#tree").treetable('expandAll'); //加载时直接结构全部显示出来
+					}
+				});
+	}
+
+	function showform(id) {
+		window.location.href = '${base}/console/workflow/detail.do?id=' + id;
+	}
+	});
+
+	function delnode(id)
+    {
+    layer.confirm('您确认要删除该团队吗？', { icon: 3  },function () { 
+    		$('#tree tr[data-tt-parent-id="'+id+'"]').remove();
+    		$('#tree tr[id="'+id+'"]').remove();
+    		layer.closeAll();
+    		
+    		 //删除节点的数据库
+	                $.ajax({
+						type : 'post',
+						datatype : 'json',
+						url : "${base}/console/ifafirm/delIfafirmTeamInfo.do?datestr="
+								+ new Date().getTime(),
+						data : {'id':id  },
+						 beforeSend: function () {
+                        indexmsg = layer.msg('正在删除团队信息中，请稍候...', { time: 500000 });
+                    },
+                    complete: function () {
+						layer.close(indexmsg);
+                    },
+						success : function(json) {
+							console.log(json);
+							json = JSON.parse(json);
+							var result = json.result;
+							if(result==true||result=='true'){
+								layer.msg('删除团队成功', { icon: 1, time: 2000 }, function () { });
+							}
+						}
+					});
+    	});
+    }
+    
+    function editSuperFirm(id)
+    {
+    	window.location.href = '${base}/console/ifafirm/dialogFirmInfo.do?id=' + id;
+    }
+    
+</script>
+</body>
+</html>

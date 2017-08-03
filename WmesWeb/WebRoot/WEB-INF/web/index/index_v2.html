@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>wmes</title>
+    <script>
+        var base_root = '${base}';
+        var lang = '${Session["_LANG_CODE_"]!}';
+        
+        var sub_user_type = '${Session["_FRONT_USER_TYPE_"]!}';
+        
+        var lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        if(lang=='en'){
+        	lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_EN.js";	
+        }else if(lang=='tc'){
+        	lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_TC.js";
+        }else if(lang=='sc'){
+        	lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        }
+    </script>
+<link rel="stylesheet" href="${base}/res/css/indexAnimate.css">
+<script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+    <script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+</head>
+
+<body>
+<div class="anima-box" id="wmes-home-animate">
+	<div class="wmes"></div>
+    <div class="wmes-txt"> <img src="${base}/res/images/wmes-txt.png" alt=""></div>
+    <div class="sm"><img src="${base}/res/images/smlogo.png" alt=""></div>
+	<div class="l1"></div>
+    <div class="l2"></div>
+    <div class="l3"></div>
+</div>
+<div class="anima-box" id="wmes-home-list" style="display:none;">
+	<div class="logo">
+	<img src="${base}/res/images/smlogo.png" alt="">
+
+	</div>
+	<div class="list">
+		<ul>
+	    	<li><a href="${base}/roleSelect.do?role=IFA" class="t-link">IFA</a></li>
+	    	<li><a href="${base}/roleSelect.do?role=investor" class="t-link">Investor</a></li>
+	    	<li><a href="javascript:;" class="t-link">IFA Firm</a><p class="t-link-small-tx">Coming Soon</p></li>
+	    	<li> <a href="javascript:;" class="t-link">Distributor</a><p class="t-link-small-tx">Coming Soon</p></li>
+	    </ul>
+	</div>
+
+</div>
+</body>
+</html>
+<script type="text/javascript">
+     seajs.use('${base}/res/js/wmeshome.js');
+</script>

@@ -1,0 +1,769 @@
+[#include "../../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/community.css">
+<link rel="stylesheet" href="${base}/res/css/swiper.css">
+<style>
+	/*swiper 重写*/
+	
+	.swiper-button-next,
+	.swiper-button-prev {
+		position: absolute;
+		top: 80px;
+		width: 50px;
+		height: 50px;
+		opacity: 0.7;
+		margin-top: -22px;
+		z-index: 10;
+		cursor: pointer;
+		background-position: center;
+		background-repeat: no-repeat;
+		display: none;
+	}
+	
+	.swiper-button-disabled {
+		display: none!important;
+	}
+	
+	.swiper-button-prev {
+		background: url('${base}/res/images/ifa/left_ico.png') no-repeat;
+		background-size: 100% 100%;
+		left: 0px;
+	}
+	
+	.swiper-button-next {
+		background: url('${base}/res/images/ifa/right_ico.png') no-repeat;
+		background-size: 100% 100%;
+		right: 0px;
+	}
+	
+	.wmes-myzone-myifa .community-popularity-wrap-mes-name {
+		margin-top: 7px;
+	}
+	
+	.community-popularity-wrap {
+		border-bottom: 1px dashed #dedede;
+		padding-bottom: 12px;
+	}
+	
+	.swiper-button-next,
+	.swiper-button-prev {
+		display: block;
+		top:100px;
+	}
+	.ifa-news-contents li{width:46%;float:left;border:0;margin-bottom:0;}
+	.ifa-news-contents li:nth-child(1){margin-right:6%;}
+	.ifa-news-contents{overflow:hidden;margin-top:15px;}
+	.news-word-wrap{margin-bottom:0;}
+	.gray-box{margin-top:10px;}
+	.wmes-wrap-title{font-size:22px;line-height:22px;min-height:22px;}
+	.myzone-notice-list li b{margin:0;}
+	.myzone-noticeconleft .myzone-notice-list-amend li:nth-child(2n+1){background: #f4f8fb;}
+	.myzone-noticeconleft .myzone-notice-list-amend li:nth-child(2n){background: #fafcf2;}
+	.myzone-noticeconleft .myzone-notice-list-amend li {min-height: 33px;border-bottom: 0;padding: 10px 20px;line-height:33px;}
+	.myzone-noticeconleft .myzone-notice-list-amend li .gray-box {margin-top: 13px;}
+</style>
+<div class="wmes-content">
+	<div class="wmes-myzone-bg">
+		<div class="wmes-myzone-left">
+			<div class="wmes-myzone-left-top">
+				<div class="myzone-myassets">
+					<p class="wmes-wrap-title">My Assets</p>
+					<div class="myzone-myassets-content">
+						<ul class="myzone-myassets-choose">
+							<li class="myzone-myassets-chooseac">All Portfolio</li>
+							<li>"黄模建"的组合</li>
+						</ul>
+						<ul class="myzone-myassets-rows">
+							<li>
+								<p class="my-assets-title">Total Assets (USD)</p>
+								<p class="my-assets-word"><span>110,750.00</span><img class="eve_ico" src="${base}/res/images/ifa/eves_ico_02.png"></p>
+							</li>
+							<li>
+								<p class="my-assets-title">Cash (USD)</p>
+								<p class="my-assets-word"><span>110,750.00</span></p>
+							</li>
+							<li>
+								<p class="my-assets-title">Acc.Return (USD)</p>
+								<p class="my-assets-word"><span class="price_positive">0.00</span></p>
+							</li>
+						</ul>
+						<div id="mycharts"></div>
+					</div>
+				</div>
+				<div class="wmes-myzone-performancecon">
+					<p class="wmes-wrap-title">Top Performance</p>
+					<ul class="wmes-community-tab">
+						<li class="wmes-community-tabac">Portfolios</li>
+						<li>Funds</li>
+					</ul>
+					<div class="myzone-topPerformance-list">
+						<div class="myzone-topPerformance-first">
+							<div class="myzone-topPerformance-title"><span>1</span><b>目标盈III型010期</b></div>
+							<p class="price_positive">11.04%</p>
+							<p>Total Return</p>
+							<div class="funds_leveal_6"></div>
+							<img src="${base}/res/images/community/lizi1.png"/>
+						</div>
+						<ul>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span><b>目标盈III型010期</b></div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span><b>目标盈III型010期</b></div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span><b>目标盈III型010期</b></div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span><b>目标盈III型010期</b></div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+						</ul>
+					</div>
+					<div class="myzone-topPerformance-list myzone-topPerformance-fundslist">
+						<div class="myzone-topPerformance-first">
+							<div class="myzone-topPerformance-title"><span>1</span><b>目标盈III型010期</b></div>
+							<p class="price_positive">11.04%</p>
+							<p>Total Return</p>
+							<div class="funds_leveal_6"></div>
+							<img src="${base}/res/images/community/lizi1.png"/>
+						</div>
+						<ul>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span><b>目标盈III型010期</b></div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span><b>目标盈III型010期</b></div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span><b>目标盈III型010期</b></div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span><b>目标盈III型010期</b></div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="myzone-selectedfundscon">
+					<p class="myzone-big-title" style="margin-left:9px;">Most Selected Funds</p>
+					<ul class="myzone-selectedfunds">
+						<li>
+							<p class="myzone-selectedfunds-title">ABE0019</p>
+							<div class="myzone-selectedfunds-content">
+								<div class="funds_leveal_6"></div>
+								<div class="myzone-selectedfunds-contentright">
+									<p>6</p>
+									<p>Portfolios</p>
+								</div>
+							</div>
+							<div class="myzone-selectedfundsbg">2</div>
+							<img src="${base}/res/images/community/lizi1.png"/>
+						</li>
+						<li>
+							<p class="myzone-selectedfunds-title">ABE0019</p>
+							<div class="myzone-selectedfunds-content">
+								<div class="funds_leveal_6"></div>
+								<div class="myzone-selectedfunds-contentright">
+									<p>6</p>
+									<p>Portfolios</p>
+								</div>
+							</div>
+							<div class="myzone-selectedfundsbg">3</div>
+							<img src="${base}/res/images/community/lizi1.png"/>
+						</li>
+						<li>
+							<p class="myzone-selectedfunds-title">ABE0019</p>
+							<div class="myzone-selectedfunds-content">
+								<div class="funds_leveal_6"></div>
+								<div class="myzone-selectedfunds-contentright">
+									<p>6</p>
+									<p>Portfolios</p>
+								</div>
+							</div>
+							<div class="myzone-selectedfundsbg">1</div>
+							<img src="${base}/res/images/community/lizi1.png"/>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<div class="wmes-myzone-right">
+			<div class="wmes-myzone-myifa">
+				<p class="wmes-wrap-title">Link To My IFA</p>
+				<div class="wmes-myzone-myifa-title">IFA</div>
+				<div class="wmes-myzone-ifacon">
+					<img src="${base}/res/images/hyzx_touxiang_08.png" />
+					<p class="myzone-ifaname">Jennifer</p>
+					<div class="contactifa">联系她</div>
+				</div>
+				<div class="wmes-myzone-myifa-title">Buddy</div>
+				<ul class="wmes-myzone-buddycon">
+					<li class="community-popularity-wrap">
+						<img class="community-popularity-wrap-img" src="${base}/res/images/hyzx_touxiang_08.png">
+						<div class="community-popularity-wrap-mes">
+							<div class="community-popularity-wrap-mes-name">
+								<p>sakura1</p>
+							</div>
+							<div class="community-popularity-wrap-mes-content">
+								<div class="community-popularity-wrap-mes-followers">
+									<p>Followers</p><span>1</span></div>
+							</div>
+						</div>
+					</li>
+					<li class="community-popularity-wrap">
+						<img class="community-popularity-wrap-img" src="${base}/res/images/hyzx_touxiang_08.png">
+						<div class="community-popularity-wrap-mes">
+							<div class="community-popularity-wrap-mes-name">
+								<p>sakura1</p>
+							</div>
+							<div class="community-popularity-wrap-mes-content">
+								<div class="community-popularity-wrap-mes-followers">
+									<p>Followers</p><span>1</span></div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="wmes-myzone-myfavouritescon">
+				<p class="myzone-big-title" style="margin-left:9px;">My Favourites</p>
+				<ul class="wmes-myzone-myfavouriteslist">
+					<li class="wmes-myzone-myfavourites-portfolios">
+						<div class="myzone-myfavourites-portfolios-title">亚太贵金属激进型投资组合</div>
+						<div class="myzone-myfavourites-portfolios-content">
+							<div class="myzone-myfavourites-portfolios-left">
+								<span class="funds_leveal_6"></span>
+							</div>
+							<div class="myzone-myfavourites-portfolios-right">
+								<p class="price_positive myzone-myfavourites-portfolios-num">16.34%</p>
+								<p>LAUNCH Return</p>
+							</div>
+						</div>
+						<div class="myzone-myfavourites-portfolios-namecon">
+							<div class="myzone-myfavourites-portfolios-name">
+								<p>Denny Liu</p>
+								<div>2017-03-15</div>
+							</div>
+						</div>
+						<div class="myzone-myfavourites-collect"></div>
+						<div class="myzone-myfavourites-type">Portfolios<span class="myzone-myfavourites-tips">1</span></div>
+					</li>
+					<li class="wmes-myzone-myfavourites-watchlists">
+						<div class="myzone-myfavourites-watchlists-contentcon">
+							<p class="myzone-myfavourites-watchlists-content">Energy (>10%)</p>
+							<div>(25 managed funds)</div>
+						</div>
+						<div class="myzone-myfavourites-portfolios-namecon">
+							<div class="myzone-myfavourites-portfolios-name">
+								<div>2017-03-15</div>
+							</div>
+						</div>
+						<div class="myzone-myfavourites-collect"></div>
+						<div class="myzone-myfavourites-type">Watchlists<span class="myzone-myfavourites-tips">9</span></div>
+					</li>
+					<li class="wmes-myzone-myfavourites-strategies">
+						<div class="myzone-myfavourites-strategies-contentcon">
+							<img src="${base}/res/images/community/nodata.png" />
+						</div>
+						<div class="myzone-myfavourites-collect"></div>
+						<div class="myzone-myfavourites-type">Strategies<span class="myzone-myfavourites-tips">88</span></div>
+					</li>
+				</ul>
+				<ul class="wmes-community-tab">
+					<li class="wmes-community-tabac">News</li>
+					<li>Topic</li>
+				</ul>
+				<div class="wmes-community-news-con" style="display: block;">
+					<div class="wmes-community-news-wrap">
+						<div class="wmes-community-news-title topicTitle">China, Saudi Arabia agree to deepen cooperation</div>
+						<div class="wmes-community-news-message">
+							<div class="wmes-community-news-message-left">
+								<div class="wmes-community-news-type ng-binding">Store<span class="ng-binding">2017-03-17 16:17:27</span></div>
+							</div>
+							<div class="wmes-community-news-message-right">
+								<div class="wmes-community-news-message-right-relycon">
+									<div class="wmes-community-topic-collect"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="wmes-community-news-con">
+					<img src="${base}/res/images/community/nodata.png">
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="myzone-noticecon">
+		<div class="myzone-noticeconleft" style="min-height:344px;">
+			<div class="myzone-big-title" style="margin-bottom:8px"><a class="click-into-list" href="#">Notice</a></div>
+			<ul class="myzone-notice-th">
+				<li class="myzone-notice-thliac"><img src="${base}/res/images/community/fundlist.png"/>fund</li>
+				<li><img src="${base}/res/images/community/system.png"/>system</li>
+			</ul>
+			<div class="notice-list-cut notice-list-cutac">
+				<ul class="myzone-notice-list myzone-notice-list-amend">
+					<li>
+						<span class="gray-box"></span>
+						<p class="notice-preview">光大保德信安祺债券型证券投资基金业务公告</p>
+						<i>管理员</i>
+						<b>2017-04-01 19:00:49</b>
+					</li>
+					<li>
+						<span class="gray-box"></span>
+						<p class="notice-preview">光大保德信安祺债券型证券投资基金业务公告</p>
+						<i>管理员</i>
+						<b>2017-04-01 19:00:49</b>
+					</li>
+					<li>
+						<span class="gray-box"></span>
+						<p class="notice-preview">光大保德信安祺债券型证券投资基金业务公告</p>
+						<i>管理员</i>
+						<b>2017-04-01 19:00:49</b>
+					</li>
+					<li>
+						<span class="gray-box"></span>
+						<p class="notice-preview">光大保德信安祺债券型证券投资基金业务公告</p>
+						<i>管理员</i>
+						<b>2017-04-01 19:00:49</b>
+					</li>
+				</ul>
+			</div>
+			<div class="notice-list-cut">
+				<ul class="myzone-notice-list myzone-notice-list-amend">
+					<li>
+						<span class="gray-box"></span>
+						<p class="notice-preview">光大保德信安祺债券型证券投资基金业务公告</p>
+						<i>管理员</i>
+						<b>2017-04-01 19:00:49</b>
+					</li>
+					<li>
+						<span class="gray-box"></span>
+						<p class="notice-preview">光大保德信安祺债券型证券投资基金业务公告</p>
+						<i>管理员</i>
+						<b>2017-04-01 19:00:49</b>
+					</li>
+					<li>
+						<span class="gray-box"></span>
+						<p class="notice-preview">光大保德信安祺债券型证券投资基金业务公告</p>
+						<i>管理员</i>
+						<b>2017-04-01 19:00:49</b>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="myzone-noticeconright">
+			<div class="myzone-big-title" style="margin-bottom:8px"><a class="click-into-list" href="#">e-Statement</a></div>
+				<ul class="e-Statement-list">
+					<li>
+						<img src="/wmes/res/images/community/zhangdan.png">
+						<div class="e-Statement-content">
+							<p>2017年02月投资收益账单</p>
+							<p>2017-04-30</p>
+						</div>
+					</li>
+					<li>
+						<img src="/wmes/res/images/community/zhangdan.png">
+						<div class="e-Statement-content">
+							<p>2017年02月投资收益账单</p>
+							<p>2017-04-30</p>
+						</div>
+					</li>
+					<li>
+						<img src="/wmes/res/images/community/zhangdan.png">
+						<div class="e-Statement-content">
+							<p>2017年02月投资收益账单</p>
+							<p>2017-04-30</p>
+						</div>
+					</li>
+					<li>
+						<img src="/wmes/res/images/community/zhangdan.png">
+						<div class="e-Statement-content">
+							<p>2017年02月投资收益账单</p>
+							<p>2017-04-30</p>
+						</div>
+					</li>
+					<li>
+						<img src="/wmes/res/images/community/zhangdan.png">
+						<div class="e-Statement-content">
+							<p>2017年02月投资收益账单</p>
+							<p>2017-04-30</p>
+						</div>
+					</li>
+				</ul>
+		</div>
+	</div>
+	<div class="myzone-recommended">
+		<p class="myzone-recommended-title">Recommended</p>
+		<div class="myzone-recommended-rows">
+			<p class="myzone-little-title"><b></b><a class="click-into-list" href="#">Portfolios</a><span class="ifa-more-ico"></span></p>
+			<div class="swiper-container">
+				<ul class="swiper-wrapper myzone-list">
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon">
+							<div class="funds_leveal_6"></div>
+							<div>
+								<p class="price_positive">11.04%</p>
+								<p>1 Mon Return</p>
+							</div>
+						</div>
+					</li>
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon">
+							<div class="funds_leveal_6"></div>
+							<div>
+								<p class="price_positive">11.04%</p>
+								<p>1 Mon Return</p>
+							</div>
+						</div>
+					</li>
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon">
+							<div class="funds_leveal_6"></div>
+							<div>
+								<p class="price_positive">11.04%</p>
+								<p>1 Mon Return</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+			</div>
+		</div>
+		<div class="myzone-recommended-rows">
+			<p class="myzone-little-title"><b></b><a class="click-into-list" href="#">Strategies</a><span class="ifa-more-ico"></span></p>
+			<div class="swiper-container">
+				<ul class="swiper-wrapper myzone-list myzone-strategies-list">
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon" style="margin-top:0">
+							<div class="funds_leveal_6"></div>
+							<div class="myzone-strategies-charts" data-value='[{"name":"fund","value":100.0},{"name":"stock","value":100.0}]'></div>
+						</div>
+					</li>
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon" style="margin-top:0">
+							<div class="funds_leveal_6"></div>
+							<div class="myzone-strategies-charts" data-value='[{"name":"fund","value":100.0},{"name":"stock","value":100.0}]'></div>
+						</div>
+					</li>
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon" style="margin-top:0">
+							<div class="funds_leveal_6"></div>
+							<div class="myzone-strategies-charts" data-value='[{"name":"fund","value":100.0},{"name":"stock","value":100.0}]'></div>
+						</div>
+					</li>
+				</ul>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+			</div>
+		</div>
+		<div class="myzone-recommended-rows">
+			<p class="myzone-little-title"><b></b><a class="click-into-list" href="#">Funds</a><span class="ifa-more-ico"></span></p>
+			<div class="swiper-container">
+				<ul class="swiper-wrapper myzone-list">
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon">
+							<div class="funds_leveal_6"></div>
+							<div>
+								<p class="price_positive">11.04%</p>
+								<p>1 Mon Return</p>
+							</div>
+						</div>
+					</li>
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon">
+							<div class="funds_leveal_6"></div>
+							<div>
+								<p class="price_positive">11.04%</p>
+								<p>1 Mon Return</p>
+							</div>
+						</div>
+					</li>
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon">
+							<div class="funds_leveal_6"></div>
+							<div>
+								<p class="price_positive">11.04%</p>
+								<p>1 Mon Return</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+			</div>
+		</div>
+		<div class="myzone-recommended-rows">
+			<p class="myzone-little-title"><b></b><a class="click-into-list" href="#">News</a><span class="ifa-more-ico"></span></p>
+			<ul class="ifa-news-contents">
+				<li>
+                	<p class="insights-content space-word-show"><span class="gray-box"></span> <a class="wmes-community-news-title" href="${base}/front/news/info/newsContent.do?id=ae55d13df369483ba9046e1a2e989293" target="_self">Metals rally s staying power</a></p>
+                	<div class="news-word-wrap">
+                    	<a class="ifa-news-img" href="javascript:;">
+                        	<img src="http://sc.xinfinance.com/uploads/allimg/170227/12_022F921129203.jpg">
+                    	</a>
+                    	<div class="news-wrap">
+                         	<p class="ifa-news-word">上周末披露的年报显示，巴菲特旗下的伯克希尔-哈撒韦公司又经历了辉煌一年，全年入账200多亿美元。</p>
+                        	<p class="insights-time"></p>
+                    	</div>
+                	</div>
+            	</li>
+				<li>
+                	<p class="insights-content space-word-show"><span class="gray-box"></span> <a class="wmes-community-news-title" href="${base}/front/news/info/newsContent.do?id=ae55d13df369483ba9046e1a2e989293" target="_self">Metals rally s staying power</a></p>
+                	<div class="news-word-wrap">
+                    	<a class="ifa-news-img" href="javascript:;">
+                        	<img src="http://sc.xinfinance.com/uploads/allimg/170227/12_022F921129203.jpg">
+                    	</a>
+                    	<div class="news-wrap">
+                         	<p class="ifa-news-word">上周末披露的年报显示，巴菲特旗下的伯克希尔-哈撒韦公司又经历了辉煌一年，全年入账200多亿美元。</p>
+                        	<p class="insights-time"></p>
+                    	</div>
+                	</div>
+            	</li>
+        	</ul>
+		</div>
+		<div class="myzone-recommended-rows">
+			<p class="myzone-little-title"><b></b><a class="click-into-list" href="#">Insights</a><span class="ifa-more-ico"></span></p>
+			<ul class="myzone-recommended-insights">
+				<li class="wmes-community-news-wrap">
+					<a href="${base}/front/community/info/topicDetail.do?id=40280ae35aff1473015aff28b22a000e&amp;type=t"><div class="wmes-community-news-title">习近平和普京分别致贺信</div></a>
+					<div class="wmes-community-news-type">Store<span>2017-03-24 15:12:21</span></div>
+					<p class="wmes-community-news-text">原标题：习近平和普京分别致贺信据新华社俄罗斯喀山3月23日电...</p>
+					<div class="wmes-community-news-message">
+						<div class="wmes-community-news-message-left">
+							<img membertype="2" memberid="40280a25559b852e01559b8615da0002" class="headPortrait wmes-community-news-headPortrait" src="${base}/res/images/hyzx_touxiang_08.png">
+							<div class="wmes-community-news-message-name">sakura1</div>
+							<div class="wmes-community-news-message-ifasign"></div>
+							
+						</div>
+						<div class="wmes-community-news-message-right">
+							<div class="wmes-community-news-message-right-caicon">
+								<div class="wmes-community-news-message-right-cai"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-nicecon">
+								<div behavior="like" iscancel="" type="t" topicid="40280ae35aff1473015aff28b22a000e" class="wmes-community-news-message-right-nice"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-relycon">
+								<div class="wmes-community-news-message-right-rely"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-eyecon">
+								<div class="wmes-community-news-message-right-eye"></div><span>1</span>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="wmes-community-news-wrap">
+					<a href="${base}/front/community/info/topicDetail.do?id=40280ae35aff1473015aff28b22a000e&amp;type=t"><div class="wmes-community-news-title">习近平和普京分别致贺信</div></a>
+					<div class="wmes-community-news-type">Store<span>2017-03-24 15:12:21</span></div>
+					<p class="wmes-community-news-text">原标题：习近平和普京分别致贺信据新华社俄罗斯喀山3月23日电...</p>
+					<div class="wmes-community-news-message">
+						<div class="wmes-community-news-message-left">
+							<img membertype="2" memberid="40280a25559b852e01559b8615da0002" class="headPortrait wmes-community-news-headPortrait" src="${base}/res/images/hyzx_touxiang_08.png">
+							<div class="wmes-community-news-message-name">sakura1</div>
+							<div class="wmes-community-news-message-ifasign"></div>
+							
+						</div>
+						<div class="wmes-community-news-message-right">
+							<div class="wmes-community-news-message-right-caicon">
+								<div class="wmes-community-news-message-right-cai"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-nicecon">
+								<div behavior="like" iscancel="" type="t" topicid="40280ae35aff1473015aff28b22a000e" class="wmes-community-news-message-right-nice"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-relycon">
+								<div class="wmes-community-news-message-right-rely"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-eyecon">
+								<div class="wmes-community-news-message-right-eye"></div><span>1</span>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="myzone-recommended">
+	<div class="myzone-recommended-rows">
+			<p class="myzone-recommended-title"><a class="click-into-list" href="#">Topics</a></p>
+			<ul class="myzone-recommended-insights">
+				<li class="wmes-community-news-wrap">
+					<a href="${base}/front/community/info/topicDetail.do?id=40280ae35aff1473015aff28b22a000e&amp;type=t"><div class="wmes-community-news-title">习近平和普京分别致贺信</div></a>
+					<div class="wmes-community-news-type">Store<span>2017-03-24 15:12:21</span></div>
+					<div class="wmes-community-news-message">
+						<div class="wmes-community-news-message-left">
+							<img membertype="2" memberid="40280a25559b852e01559b8615da0002" class="headPortrait wmes-community-news-headPortrait" src="${base}/res/images/hyzx_touxiang_08.png">
+							<div class="wmes-community-news-message-name">sakura1</div>
+							<div class="wmes-community-news-message-ifasign"></div>
+							
+						</div>
+						<div class="wmes-community-news-message-right">
+							<div class="wmes-community-news-message-right-caicon">
+								<div class="wmes-community-news-message-right-cai"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-nicecon">
+								<div behavior="like" iscancel="" type="t" topicid="40280ae35aff1473015aff28b22a000e" class="wmes-community-news-message-right-nice"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-relycon">
+								<div class="wmes-community-news-message-right-rely"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-eyecon">
+								<div class="wmes-community-news-message-right-eye"></div><span>1</span>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="wmes-community-news-wrap">
+					<a href="${base}/front/community/info/topicDetail.do?id=40280ae35aff1473015aff28b22a000e&amp;type=t"><div class="wmes-community-news-title">习近平和普京分别致贺信</div></a>
+					<div class="wmes-community-news-type">Store<span>2017-03-24 15:12:21</span></div>
+					<div class="wmes-community-news-message">
+						<div class="wmes-community-news-message-left">
+							<img membertype="2" memberid="40280a25559b852e01559b8615da0002" class="headPortrait wmes-community-news-headPortrait" src="${base}/res/images/hyzx_touxiang_08.png">
+							<div class="wmes-community-news-message-name">sakura1</div>
+							<div class="wmes-community-news-message-ifasign"></div>
+							
+						</div>
+						<div class="wmes-community-news-message-right">
+							<div class="wmes-community-news-message-right-caicon">
+								<div class="wmes-community-news-message-right-cai"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-nicecon">
+								<div behavior="like" iscancel="" type="t" topicid="40280ae35aff1473015aff28b22a000e" class="wmes-community-news-message-right-nice"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-relycon">
+								<div class="wmes-community-news-message-right-rely"></div><span>0</span>
+							</div>
+							<div class="wmes-community-news-message-right-eyecon">
+								<div class="wmes-community-news-message-right-eye"></div><span>1</span>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!---->
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('${base}/res/web/community/myzone.js');
+</script>

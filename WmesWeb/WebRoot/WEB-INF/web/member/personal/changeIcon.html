@@ -1,0 +1,103 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/js/library/cropbox/style.css">
+<style type="text/css">
+.btnBack{margin:60px auto;padding:0 30px;height:39px;width:80px;line-height:39px;background:#2d80ce;color:#fff;border-radius: 4px;text-align: center;cursor: pointer;}
+.ifa_choose_condition{min-height: 791px;}
+#imageBox .thumbBox{border-radius:50%;top: calc(50% - 90px);left: calc(50% - 90px);width: 180px;height: 180px;}
+#cropImg{border-radius:50%;border:1px solid #eef0f2;}
+.big_img,.little_img{border-radius:50%;overflow:hidden;}
+</style>
+<script type="text/javascript">
+	var _root_ = '${base}';
+</script>
+<div class="wmes-content">
+	<div class="ifa_choose_condition" style="position: relative;">
+		<p class="wmes-wrap-title">[@lang_res k='member.changeIcon'/]</p>
+		<div class="view_content">
+			<div class="act_box">
+	            <div id="uploadImg" style="overflow: hidden;">
+					<input type="file" accept="image/*" id="file" size="1" >
+					<a id="fileload" class="btn_middle" href="javascript:;">[@lang_res k='member.changeIcon.select.photo'/]</a>
+				</div>
+            </div>
+            
+			<div class="view_left">
+				<p class="tip">
+	           		[@lang_res k='member.changeIcon.tip2'/]
+	           	</p>
+	           	<div class="imgbox"><!--
+	           		[#if iconUrl??]
+	            		--><img id="cropImg" src="${base}[@user_head u='${iconUrl!}' g='${gender!}'/]"  height="200px;" width="200px;"/><!--
+	                [#else]
+	           		[#if gender?? && gender=="F"]
+	           			<img id="cropImg" src="${base}/loadImgSrcByPath.do?filePath=/res/images/hyzx_touxiang_08.png"><!--
+	           		[#else]
+	                    <img id="cropImg" src="${base}/loadImgSrcByPath.do?filePath=/res/images/hyzx_touxiang_07.png"><!--
+	                [/#if]
+	             	[/#if]
+	           	--></div>
+			</div>
+			<div class="view_right">
+				<p class="little_title">[@lang_res k='member.changeIcon.preview'/]</p>
+             	<div class="big_img">
+             		<img id="bigImg" src="${base}[@user_head u='${iconUrl!}' g='${gender!}'/]" height="100px;" width="100px;">
+             	</div>
+             	<p class="little_wrap">100*100[@lang_res k='member.changeIcon.pixel'/]</p>
+             	<div class="little_img">
+             		<img id="littleImg" src="${base}[@user_head u='${iconUrl!}' g='${gender!}'/]" height="50px;" width="50px;">
+             	</div>
+             	<p class="little_wrap">50*50[@lang_res k='member.changeIcon.pixel'/]</p>
+            </div>
+        	<div class="clear"></div>
+			
+		</div>
+		<div class="clear"></div>
+		<div class="btnBack" id="btn_back" >[@lang_res k='global.back'/]</div>
+		
+	</div>
+	
+	
+       	
+    <div class="clear"></div>
+   	<div class="edit_contentbox">
+		<div class="edit_content" style="display:none;">
+         		<div id="imageBox" >
+      				<div class="thumbBox" style="border-radio:50%"></div>
+      				<div class="spinner"></div>
+  				</div>
+			<div class="clear"></div>
+				<div class="range_box">
+  					<input id="btnZoomOut" type="button" value="-"/>
+          			<input id="change_img_range" type="range" disabled="disabled" min="128" max="256" value="128" />
+          			<input id="btnZoomIn" type="button" value="+"/>
+           	</div>
+     			<div class="btn_middle_div" style="text-align: left;position:relative;z-index: 102;">
+          			<a style="margin-left:30px;" id="btn_save" class="btn_middle" href="javascript:;">[@lang_res k='global.save'/]</a>
+          			<a id="btn_cancel" class="btn_middle" href="javascript:;">[@lang_res k='global.cancel'/]</a>
+       		</div>
+		</div>
+	</div>
+	
+</div>
+<form id="changeIcon_form">
+	<input type="hidden" name="gender" value="${gender!''}" />
+	<input type="hidden" name="iconUrl" value="${iconUrl!''}" />
+	<input type="hidden" name="flag" value="${flag!''}" />
+	<input type="hidden" name="flagId" value="${flagId!''}" />
+	<input type="hidden" name="actType" value="edit">
+</form>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript" src="${base}/res/console/js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="${base}/res/js/library/cropbox/yui-min.js"></script>
+<script type="text/javascript" src="${base}/res/js/library/cropbox/cropbox.js"></script>
+<script type="text/javascript" src="${base}/res/web/member/personal/changeIcon.js"></script>
+
+<script>
+$('#btn_back').on('click',function(){
+	self.location=document.referrer;
+	//window.location.href = '${base}/front/member/personal/info.do?rondom='+Math.random();
+});
+</script>
+

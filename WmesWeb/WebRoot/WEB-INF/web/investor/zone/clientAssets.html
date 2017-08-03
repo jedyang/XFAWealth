@@ -1,0 +1,167 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/strategy.css">
+  
+<style type="text/css">
+	.swiper-button-next{top: 80px;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23bbbbbb'%2F%3E%3C%2Fsvg%3E")}
+	.swiper-button-prev{top: 80px;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23bbbbbb'%2F%3E%3C%2Fsvg%3E");}
+	.tips-div{text-align:center;    background: white;padding-top:20px;}
+	.buddy-btn{
+		margin:15px 35px;
+    height: 37px;
+    color: #fff;
+    background: #1c9ddc;
+    text-align: center;
+    line-height: 37px;
+    border-radius: 3px;
+    font-size:14px;
+    cursor: pointer;
+    font-weight: 700;}
+  .buddy-btn:hover{background:#0976dc;}
+  .PortfoliosTips{color:#999;}
+</style>
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">My Zone</a>
+</div>
+<div class="wmes-content">
+	<div class="ifa-zone-row">
+		<p class="ifa-zone-title">[#if individual??]${individual.firstName!} ${individual.lastName!}[/#if][@lang_res k='assets.clientassets.title'/]<span class="ifa-more-ico"></span></p>
+		<div class="my-assets-wrap" style="margin:25px 0 15px 0;border-bottom:1px solid #d7dce4;">
+				<div class="my-assets-rows">
+					<p class="my-assets-title">[@lang_res k='assets.totalAsset'/]</p>
+					<p class="my-assets-word"><span class="eve-hide" data-num="[@num_color  s='${assetsVO.totalMarketValue!}' c='${displayColor!}' f='#,##0.00'/]">[@num_color  s='${assetsVO.totalAssets!}' c='${displayColor!}' f='#,##0.00'/]</span> <span class="my-assets-cur">${currency!}</span><img class="eve_ico" src="${base}/res/images/ifa/eves_ico_02.png"></p>
+				</div>
+				<div class="my-assets-rows">
+					<p class="my-assets-title">[@lang_res k='assets.totalReturn'/]</p>
+					<p class="my-assets-word">
+					<span class="eve-hide" data-num="[@num_color  s='${assetsVO.totalReturnValue!}' c='${displayColor!}' f='#,##0.00'/]">[@num_color  s='${assetsVO.totalReturnValue!}' c='${displayColor!}' f='#,##0.00'/]</span><span class="my-assets-cur">${currency!}</span>
+					</p>
+				</div>
+				<div class="my-assets-rows">
+					<p class="my-assets-title">[@lang_res k='assets.totalReturn.rate'/]</p>
+					<p class="my-assets-word">
+					<span class="eve-hide" data-num="[@num_color  s='${assetsVO.totalReturnRate!}' c='${displayColor!}'/]">[@num_color  s='${assetsVO.totalReturnRate!}' c='${displayColor!}'/]</span>
+					
+					</p>
+				</div>
+		</div>
+		<div class="my-assets-wrap">
+			<ul class="portfolios_list">
+			[#if portfolioList?exists && portfolioList?size gt 0]
+			[#list portfolioList as list]
+				<li class="portfolios_list_blue">
+					<a href="${base}/front/strategy/info/conservativePortfolio.do?id=${list.portfolioId!}"><p class="portfolios_list_title" >${list.portfolioName!}</p></a>
+					<ul class="portfolios_list_content">
+						<li>
+							<div class="c100 p${list.totalAssetsRate!}" style="background:#f3e9d4;transform: scale(0.8);">
+								<span style="color:#000">${list.totalAssetsRate!}%</span>
+								<div class="slice">
+									<div class="bar"></div>
+									<div class="fill"></div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<p class="my-assets-title">[@lang_res k='assets.totalReturn'/]</p>
+							<p class="my-assets-word">
+							   <span class="eve-hide" data-num="${list.totalReturnValue!}">[@num_color  s='${list.totalReturnValue!}' c='${displayColor!}' f='#,##0.00'/]</span><span class="my-assets-cur">${currency!}</span>
+							</p>
+						</li>
+						<li>
+							<p class="my-assets-title">[@lang_res k='assets.totalReturn.rate'/]</p>
+							<p class="my-assets-word">
+								<span class="eve-hide" data-num="${list.totalReturnRate!}">[@num_color  s='${list.totalReturnRate!}' c='${displayColor!}'/]</span>
+							</p>
+						</li>
+						<li>
+							<p class="my-assets-title">[@lang_res k='assets.totalAsset'/]</p>
+							<p class="my-assets-word"><span class="eve-hide" data-num="${list.totalAssets!}">[@num_color  s='${list.totalAssets!}' c='${displayColor!}' f='#,##0.00'/]</span> <span class="my-assets-cur">${currency!}</span></p>
+						</li>
+					</ul>
+				</li>
+				[/#list]
+				[/#if]
+				
+				<li class="portfolios_list_orange" style="display:none">
+					<p class="portfolios_list_title">Cash</p>
+					<ul class="portfolios_list_content">
+						<li>
+							<div class="c100 p29" style="background:#f3e9d4;transform: scale(0.8);">
+								<span style="color:#000">29%</span>
+								<div class="slice">
+									<div class="bar" style="transform:rotate(126deg);"></div>
+									<div class="fill"></div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<p class="my-assets-title">Available Amount</p>
+							<p class="my-assets-word"><span class="eve-hide" data-num="[@num_color  s='${assetsVO.totalMarketValue!}' c='${displayColor!}' f='#,##0.00'/]">[@num_color  s='${assetsVO.totalMarketValue!}' c='${displayColor!}' f='#,##0.00'/]</span> <span class="my-assets-cur">${currency!}</span><img class="eve_ico" src="${base}/res/images/ifa/eves_ico_02.png"></p>
+						</li>
+						<li>
+							<p class="my-assets-title">Total Cash Balance</p>
+							<p class="my-assets-word"><span class="eve-hide" data-num="[@num_color  s='${assetsVO.totalMarketValue!}' c='${displayColor!}' f='#,##0.00'/]">[@num_color  s='${assetsVO.totalMarketValue!}' c='${displayColor!}' f='#,##0.00'/]</span> <span class="my-assets-cur">${currency!}</span><img class="eve_ico" src="${base}/res/images/ifa/eves_ico_02.png"></p>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="my-main-assets">
+			<div class="my-cassets-tab">
+				<p class="period-time">[@lang_res k='assets.timePeriod'/]</p>
+				<ul class="my-period-list">
+				       <li period="1W" >[@lang_res k='search.period.1w'/]</li>
+                        <li period="2W" >[@lang_res k='search.period.2w'/]</li>
+                        <li period="1M" >[@lang_res k='search.period.1m'/]</li>
+                        <li period="3M" >[@lang_res k='search.period.3m'/]</li>
+                        <li period="6M" class="period-active">[@lang_res k='search.period.6m'/]</li>
+                        <li period="1Y" >[@lang_res k='search.period.1y'/]</li>
+                        <li period="3Y" >[@lang_res k='search.period.3y'/]</li>
+                        <li period="5Y" >[@lang_res k='search.period.5y'/]</li>
+                        <li period="YTD" >[@lang_res k='search.period.ytd'/]</li>
+				</ul>
+			</div>
+			<div class="my-period-choose">
+				<p class="my-period-active">[@lang_res k='assets.cumulativProfitAndLoss'/]</p>
+				<p>[@lang_res k='assets.dailyProfitAndLoss'/]</p>
+			</div>
+			<div class="my-period-chart">
+				<div class="asset-cart" id="asset-cart"  ></div>
+				 <div class="wmes-nodata-tips assetsTips">
+                             <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                             <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                       </div>  
+			</div>
+		</div>
+	</div>
+	
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+var totalMarketValue=${assetsVO.totalMarketValue};
+var totalCashValue=${assetsVO.totalCashValue};
+var _checkList='${checkList!}';
+var _accountType="${accountType!}";
+var base_root="${base}";
+var display_color="${displayColor!}";
+     seajs.use('${base}/res/web/portfolio/clientAssets.js');
+     
+     //验证登录后回调事件
+function callbackloginresult(json){
+	 	 seajs.use('jquery', function($){
+		 	var count=0;
+		 	$.each(json,function(i,n){
+			 	if(n.status="1"){
+			 	count++;
+		 	    }
+		 	})
+		 	if(count>0){
+		 	 setTimeout(function(){
+		       window.location.url= window.location.url+"&check=1";
+		     },500);
+		    }
+	    });
+ 	}
+     
+</script>

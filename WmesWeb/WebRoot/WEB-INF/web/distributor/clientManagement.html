@@ -1,0 +1,169 @@
+ [#include "../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<!--
+    <div class="wmes-top">
+        <a href="javascript:;" class="header-over">Client Account Management</a>
+    </div>
+    -->
+<div class="wmes-content">
+	<div class="account-wrap">
+		<div class="conservative-choice-wrap">
+			<p class="conservative-choice-title">
+				[@lang_res k='member.register.ifafirm'/]
+			</p>
+			<ul class="conservative-choice">
+				<li class=" conservative_all conservative-choice-active" data-name="ifafirm">
+					[@lang_res k='global.all'/]
+				</li>
+				[#if ifafirmList?exists && ifafirmList?size gt 0 ] [#list ifafirmList as ifafirm]
+				<li data-name="ifafirm" data-key="${ifafirm.companyName}" data-value="${ifafirm.id}">
+					${ifafirm.companyName}
+				</li>
+				[/#list] [/#if]
+			</ul>
+		</div>
+		<div class="conservative-choice-wrap">
+				<p class="conservative-choice-title">[@lang_res k='account.list.kycPeriod'/]</p>
+				<ul class="conservative-choice">
+					<li class="conservative_all conservative-choice-active" data-name="period" >[@lang_res k='global.all'/]</li>
+					<li data-name="period" data-key="7 [@lang_res k='account.list.day'/]" data-value="7">7 [@lang_res k='account.list.day'/]</li>
+					<li data-name="period" data-key="14 [@lang_res k='account.list.day'/]" data-value="14">14 [@lang_res k='account.list.day'/]</li>
+					<li data-name="period" data-key="30 [@lang_res k='account.list.day'/]" data-value="30">30 [@lang_res k='account.list.day'/]</li>
+					<li data-name="period" data-key="60 [@lang_res k='account.list.day'/]" data-value="60">60 [@lang_res k='account.list.day'/]</li>
+					<li data-name="period" data-key="90 [@lang_res k='account.list.day'/]" data-value="90">90 [@lang_res k='account.list.day'/]</li>
+				</ul>
+			</div>
+		<div class="conservative-choice-wrap">
+				<p class="conservative-choice-title">[@lang_res k='account.list.clientName'/]</p>
+				<ul>
+                    <li>
+                        <div class="search-condition">
+                            <input type="text" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+                            <span class="icon_search" id="searchKeyBtn"></span>
+                        </div>
+                    </li>
+                </ul>
+			</div>
+	</div>
+
+		<div class="account-wrap" ng-controller="Searchctrl" ng-app="mySearch">
+        <div class="account-list-choose">
+                <p class="account-checkbox-title">[@lang_res k='account.list.show'/] :</p>
+            <div class="account-checkbox">
+				<input type="checkbox" value="" [#if in_use?exists & in_use='1']checked="true"[/#if] id="Active">
+				<label for="Active"></label>
+			</div>
+			<p class="account-checkbox-font">[@lang_res k='account.list.active'/]</p>
+
+			<!--<div class="account-checkbox">
+				<input type="checkbox" value="" [#if inApproval?exists & inApproval='1']checked="true"[/#if] id="Processing">
+				<label for="Processing"></label>
+			</div>
+			 <p class="account-checkbox-font">Processing <span ng-if="approvalCount!='' && approvalCount!='0'">({{approvalCount}})</span></p>
+
+			--><div class="account-checkbox">
+				<input type="checkbox" value="" [#if cancellation?exists & cancellation='1']checked="true"[/#if] id="Cancel">
+				<label for="Cancel"></label>
+			</div>
+			 <p class="account-checkbox-font">[@lang_res k='account.list.canceled'/]</p>
+            </div>
+            <div class="builder-title">
+            		<p class="builder-list builder-arrow-dowm">[@lang_res k='assets.totalAsset'/] <span class="builder-arrow"></span></p>
+            		<p class="builder-list">[@lang_res k='assets.marketValue'/] <span class="builder-arrow"></span></p>
+            		<p class="builder-list">[@lang_res k='assets.cash'/] <span class="builder-arrow"></span></p>
+                <div class="account-choose-left">
+                    <p class="account-xiala-title">
+                        [@lang_res k='account.list.cur'/]
+                    </p>
+                    <div class="proposal_xiala">
+                        <input type="text"  [#if cur?exists & cur!='']value="${cur}"[#else]placeholder="USD"[/#if] readonly="" id="currency" >
+                        <span class="icon_xiala"></span>
+                        <ul>
+                            <li>CNY</li>
+                            <li>HKD</li>
+                            <li>USD</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="listContent"  ng-repeat="list in dataList" ng-init="checkLast($last)" class="animated flipInX" >
+             <div class="client-list-contsnts" ng-if="list.openStatus=='1' && list.isValid=='1'" >
+            		<div class="client-list-cleft">
+            			<div class="client-list-nwrap">
+            				<p class="client-list-name"><span>
+            				<a class="proposal-a-href" href="${base}/front/investor/myAccountDetail.do?id={{list.id}}" ng-if="list.openStatus=='1' && list.subFlag=='0'">{{list.accountNo}}</a>
+            				<a class="proposal-a-href" href="#" ng-if="list.openStatus=='1' && list.subFlag=='1'">{{list.accountNo}}</a>
+            				</span> {{list.loginCode}}</p>
+            				<ul class="client-list-describe">
+            					<li ng-if="list.subFlag=='0'">[@lang_res k='account.list.masterAccount'/]</li>
+            					<li ng-if="list.subFlag=='1'">[@lang_res k='account.list.subAccount'/]</li>
+            					<li>[@lang_res k='account.list.risk'/] {{list.riskLevel}} </li>
+            					<li ng-if="list.cies!='' && list.cies!=null">{{list.cies}}</li>
+            					<li ng-if="list.faca!='' && list.faca!=null">{{list.faca}}</li>
+                                <li ng-if="list.baseCurrency!='' && list.baseCurrency!=null">{{list.baseCurrency}}</li> 
+            				</ul>
+                            <div class="client-total-wrap">
+                                <p class="client-total-word">[@lang_res k='assets.totalAsset'/]</p>
+                                <p class="client-total">{{list.totalAssest}} {{currency}}</p>
+                            </div>
+                            
+            			</div>
+            		</div>
+            		<div class="client-list-cright"> 			
+                        <div class="client-list-days">
+                            <div class="client-half-day">
+                                <div >
+                                    <p class="client-half-word" ng-if="list.openStatus=='1'" >{{list.nextRPQDate}} <span>[@lang_res k='account.list.day'/]</span></p>
+                                    <p class="client-half-time">[@lang_res k='account.list.nextRPQDate'/]</p>
+                                </div>
+                                <div >
+                                    <p class="client-half-word" ng-if="list.openStatus=='1'">{{list.nextDCDate}} <span>[@lang_res k='account.list.day'/]</span></p>
+                                    <p class="client-half-time">[@lang_res k='account.list.nextDocumentCheckDate'/]</p>
+                                </div>
+                            </div>
+                            <img title="{{list.ifafirmName}}" class="client-invest-ico" src="${base}{{list.ifafirmIcon}}">
+                        </div>
+            		</div>
+            	</div>
+            	
+            	<div class="client-list-approval" ng-if="list.isValid!='1'" >
+            		<div class="client-list-cleft">
+            			<div class="client-list-nwrap">
+            				<p class="client-list-name"><span>
+            				<a style="color: #cccccc;" href="${base}/front/investor/myAccountDetail.do?id={{list.id}}"><span>{{list.accountNo}}</span></a>
+            				</span> {{list.loginCode}}</p>
+            				<ul class="client-list-describe">
+            					<li ng-if="list.subFlag=='0'">[@lang_res k='account.list.masterAccount'/]</li>
+            					<li ng-if="list.subFlag=='1'">[@lang_res k='account.list.subAccount'/]</li>
+            					<li>[@lang_res k='account.list.risk'/] {{list.riskLevel}}</li>
+            					<li ng-if="list.cies!='' && list.cies!=null">{{list.cies}}</li>
+            					<li ng-if="list.faca!='' && list.faca!=null">{{list.faca}}</li>
+                                <li ng-if="list.baseCurrency!='' && list.baseCurrency!=null">{{list.baseCurrency}}</li> 
+            				</ul>
+            			</div>
+            			<div class="client-list-days">
+            				<img title="{{list.ifafirmName}}" class="client-invest-ico" src="${base}{{list.ifafirmIcon}}">
+            				<div class="client-half-day">
+            				</div>
+            			</div>
+            		</div><img class="account-list-old" src="${base}/res/images/client/canceled_ico.png"  >
+            	</div>
+            </div>
+            <div class="no_list_tips">
+				<div class="notipswrap">
+					<div class="noResult">
+						[@lang_res k='fund.info.noFund.sorry'/]
+					</div>
+					<p class="noResultText">
+						[@lang_res k='fund.info.noFund.suggestion.one'/]
+						<br>
+						[@lang_res k='fund.info.noFund.suggestion.two'/]
+					</p>
+				</div>
+	 </div>
+</div>
+[#include "../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/openAccount/distributorAccountList.js');
+</script>

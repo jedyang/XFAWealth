@@ -1,0 +1,67 @@
+
+
+<link rel="stylesheet" href="${base}/res/css/other.css">
+<style>
+ol, ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+</style>
+
+	<div class="member-comment-wrap member-comment-wrap-application" style="font-family: '微软雅黑';">
+		<div class="application-title">Background Review</div>
+		<div class="application-information">
+			<div class="review-title">
+				Client
+			</div>
+			<div class="application-information-content">
+				<div class="application-information-portrait application-information-portrait1"><img class="application-information-portrait-img" src="${base}/${InvestorBackground.member.iconUrl!}" alt="">
+						<ul class="review-information">
+							<li>${InvestorBackground.member.loginCode}</li>
+							<li>${InvestorBackground.member.mobileNumber}</li>
+							<li>${InvestorBackground.member.email}</li>
+							<li>
+								<div><span>ID/Passport No</span>4564433333</div>
+								<div><b>Status：</b>${InvestorBackground.status}</div>
+							</li>
+						</ul>
+				</div>
+			</div>
+			<p class="training-title">Data sources</p>
+			<p class="training-content">${InvestorBackground.sourceFrom!}</p>
+			<p class="training-title">Result</p>
+			<p class="training-content">${InvestorBackground.result!}</p>
+			<p class="training-title">Officer's comment</p>
+			<p class="training-content">${InvestorBackground.comment!}</p>
+			<div class="applications-information-main-left applications-information-main-left-amend">
+        		<div>
+        			<span class="applications-information-main-left1 applications-information-main-left1-amend">Create By</span>
+        			<span class="applications-information-main-left1 applications-information-main-left1-amend">Create Date</span>
+        			<span class="applications-information-main-left1 applications-information-main-left1-amend">Last Update</span>
+        		</div>
+        		<div style="width:200px;">
+        			<span style="width:200px;">${InvestorBackground.member.loginCode}</span>
+        			<span style="width:200px;">${InvestorBackground.createTime!}</span>
+        			<span style="width:200px;">${InvestorBackground.lastUpdate!}</span>
+        		</div>
+        	</div>
+        	<div style="display:none;" class="training-close-bn">Close</div>
+		</div>
+		
+        	
+        	
+        </div>
+	<script src="${base}/res/js/jquery.min.js" type="text/javascript"></script>
+	<script src="${base}/res/third/layer/layer2.4.js" type="text/javascript"></script>
+	<script>
+	$(function() {
+		$('.training-close-bn').click(function(){
+			layer.closeAll();
+		});
+	});
+	</script>
+		
+
+
+

@@ -1,0 +1,216 @@
+[#include "../../inc/head_v2.html"/]
+<style>
+	.ifa_pagint_now span {
+		color: black;
+	}
+	
+	.page_left {
+		background:rgba(0, 0, 0, 0) url("${base}/res/images/ifa/left_ico.png") no-repeat scroll 0 0;
+		width: 62px;
+		height: 62px;
+		position: absolute;
+		cursor: pointer;
+		font-size: 30px;
+		text-align: center;
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+		background-color: #ccc;
+		color: white;
+		line-height: 62px;
+		border-radius: 10%;
+		margin: auto;
+		left: 0px;
+		top: 300px;
+		bottom: 0;
+	}
+	
+	.page_left:hover {
+		background-color: #4ba6de;
+	}
+	
+	.page_right {
+		background:rgba(0,
+		0,
+		0,
+		0) url("${base}/res/images/ifa/right_ico.png") no-repeat scroll 0 0;
+		width: 62px;
+		height: 62px;
+		position: absolute;
+		font-size: 30px;
+		text-align: center;
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+		background-color: #ccc;
+		color: white;
+		line-height: 62px;
+		cursor: pointer;
+		border-radius: 10%;
+		margin: auto;
+		right: 1px;
+		top: 300px;
+		bottom: 0;
+	}
+	
+	.page_right:hover {
+		background-color: #4ba6de;
+	}
+</style>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/wmes_console.css">
+<div class="wmes-content">
+	<div class="ifa_choose_condition">
+		<div class="wmes-wrap-title" style="height:16px;">
+			<p>IFA Firm账号管理</p>
+		</div>
+		<ul class="builder-tab application-information-tab">
+			<li class="tab-active">账号信息<span></span></li>
+		</ul>
+		<div class="AccountInfo">
+			<p>Account Info</p>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+				<tbody>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">Login Account：</span>
+						</td>
+						<td class="register_table_right">
+							<input class="register_input" id="loginCode" name="loginCode" type="text" maxlength="20" data-prompt-position="inline" data-prompt-target="codeError">
+							<span id="codeError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">Password：</span>
+						</td>
+						<td>
+							<input class="register_input" type="password" name="password" id="password" maxlength="20" data-prompt-position="inline" data-prompt-target="pswError">
+							<span id="pswError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">Strength：</span>
+						</td>
+						<td class="paw_level">
+							<div class="register_strength">
+								<ul>
+									<li></li>
+									<li></li>
+									<li></li>
+									<li></li>
+									<li></li>
+									<li></li>
+									<li></li>
+								</ul>
+							</div>
+							<span class="register_strength_font"></span>
+							<span class="register_strength_font">很弱</span>
+							<span class="register_strength_font">弱</span>
+							<span class="register_strength_font">中</span>
+							<span class="register_strength_font">较强</span>
+							<span class="register_strength_font">强</span>
+							<span class="register_strength_font">很强</span>
+							<span class="register_strength_font">极好</span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">Confirm Password：</span>
+						</td>
+						<td>
+							<input class="register_input" type="password" id="passwordok" maxlength="20" data-prompt-position="inline" data-prompt-target="passwordokError">
+							<span id="passwordokError"></span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+		<div class="AccountInfo">
+			<p>Account Info</p>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+				<tbody>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">Nick Name ：</span>
+						</td>
+						<td>
+							<input class="register_input" type="text" name="nickName" maxlength="20">
+						</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top" class="register_table_left">
+							<span class="font_gray_left">Email：</span>
+						</td>
+						<td>
+							<input class="register_input" name="email" id="email" type="text" maxlength="30" data-prompt-position="inline" data-prompt-target="emailError">
+							<span id="emailError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">Mobile：</span>
+						</td>
+						<td>
+							<span>+</span>
+							<input class="register_input phone_code" type="text" style="width:108px;" id="regPhoneCode" name="mobileCode">
+							<input class="register_input_217" type="text" id="regPhoneKey" name="mobileNumber" data-prompt-position="inline" data-prompt-target="moblieError">
+							<input class="register_input_217" type="hidden" name="mobile" id="FiraPhone">
+							<span id="mobileError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">Currency：</span>
+						</td>
+						<td>
+							<select class="register_input">
+								<option>&lt;--Please Select--&gt;</option>
+								<option>USD</option>
+								<option>CNY</option>
+								<option>HKD</option>
+								<option>JPY</option>
+								<option>EUR</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">Language：</span>
+						</td>
+						<td>
+							<select class="register_input">
+								<option>&lt;--Please Select--&gt;</option>
+								<option>English</option>
+								<option>简体中文</option>
+								<option>繁體中文</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">Status：</span>
+						</td>
+						<td style="padding-top:8px;">
+							<span style="color:blue;margin-top:8px;cursor: pointer;">草稿</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<ul class="ifa_btn">
+				<a class="ifa_save">保存</a>
+				<a class="ifa_startUsing">启用</a>
+				<a class="ifa_stopUsing">停用</a>
+				<a class="ifa_return">返回</a>
+			</ul>
+
+		</div>
+
+	</div>
+
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('${base}/res/web/member/regist/strength.js');
+</script>

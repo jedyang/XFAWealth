@@ -1,0 +1,235 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+    <div class="wmes-top">
+        <a href="javascript:;" class="header-over">Confirm Portfolio</a>
+    </div>
+    <div class="wmes-content">
+        <div class="ifa_choose_condition">
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">Investment Amount</p>
+						<ul class="funds_choice">
+							<li class="fund_choice_active  funds_all" data-name="Investment Amount" data-key="" data-value="Investment Amount_00">Any</li>
+							<li data-name="Investment Amount" data-key="Small" data-value="Investment Amount_01">Small</li>
+							<li data-name="Investment Amount" data-key="Medium" data-value="Investment Amount_02">Medium</li>
+							<li data-name="Investment Amount" data-key="Large" data-value="Investment Amount_03">Large</li>
+						</ul>
+					</div>
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">Period</p>
+						<ul class="funds_choice">
+							<li class="fund_choice_active  funds_all" data-name="Period" data-key="" data-value="Period_00">All</li>
+							<li data-name="Period" data-key="1-Month" data-value="Period_01">1-Month</li>
+							<li data-name="Period" data-key="3-Month" data-value="Period_02">3-Month</li>
+							<li data-name="Period" data-key="6-Month" data-value="Period_03">6-Month</li>
+							<li data-name="Period" data-key="1-Year" data-value="Period_04">1-Year</li>
+							<li data-name="Period" data-key="3-Year" data-value="Period_05">3-Year</li>
+						</ul>
+					</div> 
+						<div class="funds_choice_wrap">
+							<p class="funds_choice_title">Client</p>
+							<ul>
+								<li><input type="text" class="search-condition-input"/></li>
+							</ul>
+						</div>
+					<div class="fund_more_content">
+	        		
+						<div class="funds_choice_wrap">
+							<p class="funds_choice_title">Risk Level</p>
+							<ul class="funds_choice">
+								<li class="fund_choice_active  funds_all" data-name="Risk Level" data-key="" data-value="Risk Level_00">All</li>
+								<li data-name="Risk Level" data-key="1" data-value="Risk Level_01">1</li>
+								<li data-name="Risk Level" data-key="2" data-value="Risk Level_02">2</li>
+								<li data-name="Risk Level" data-key="3" data-value="Risk Level_03">3</li>
+								<li data-name="Risk Level" data-key="4" data-value="Risk Level_04">4</li>
+								<li data-name="Risk Level" data-key="5" data-value="Risk Level_05">5</li>
+							</ul>
+						</div>
+						<div class="funds_choice_wrap">
+							<p class="funds_choice_title">Total Return</p>
+							<ul class="funds_choice">
+								<li class="fund_choice_active  funds_all" data-name="Total Return" data-key="" data-value="Risk Level_000">All</li>
+								<li data-name="Total Return" data-key="<0" data-value="Total Return_00">&lt;0</li>
+								<li data-name="Total Return" data-key="0-10%" data-value="Total Return_01">0-10%</li>
+								<li data-name="Total Return" data-key="10%-20%" data-value="Total Return_02">10%-20%</li>
+								<li data-name="Total Return" data-key="20%-30%" data-value="Total Return_03">20%-30%</li>
+								<li data-name="Total Return" data-key="30%-40%" data-value="Total Return_04">30%-40%</li>
+								<li data-name="Total Return" data-key=">50%" data-value="Total Return_05">&gt;50%</li>
+							</ul>
+						</div>
+						<div class="funds_choice_wrap">
+							<p class="funds_choice_title">Objective</p>
+							<ul class="funds_choice">
+								<li class="fund_choice_active  funds_all"  data-name="Objective" data-key="" data-value="Source_00">All</li>
+								<li data-name="Objective" data-key="Conservative" data-value="Source_01">Conservative</li>
+								<li data-name="Objective" data-key="Balanced" data-value="Source_02">Balanced</li>
+								<li data-name="Objective" data-key="Aggressive" data-value="Source_03">Aggressive</li>
+							</ul>
+						</div>
+					</div>
+					<div class="ifa_more_wrap">
+						<p id="yfunds_hidde_title">
+							<span style="display:inline-block;">More selectors </span>
+							<span  style="display:none;">Pack up </span> 
+							<span class="funds_xia_ico"></span>
+						</p>
+					</div>
+        		</div>
+        		<div class="strategies_list_wrap">       			
+	    			<div class="funds_list_selected">
+		                <p class="funds_selected_title">Selected condition </p>
+						<ul class="selection_criteria">
+							<p class="funds_title_selection">Reset filter </p>
+						</ul>
+					</div>
+					<div class="ifa_keyserach_wrap">
+						<p class="ifa_serach_sum">
+							A total of 					
+							<span class="funds_serach_digital ng-binding" >4</span> portfolios to meet your requirements</p>
+						<div class="funds_keyserach ifa_keyserach">
+							<input type="text" id="fundName" placeholder="Please enter keyword search">
+							<span class="icon_search" id="searchKeyBtn"></span>
+						</div>
+					</div>
+					<div class="strategies_list" >
+						<table class="funds_search_information strategies_List">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                    <th class="funds_tables_fnames">
+                                        Portfolio Name
+                                    </th>
+                                    <th class="funds_tables_header">
+                                        Risk Level    
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        Objective
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        Total Asset
+                                        <p class="funds_arrow_wraps">
+                                            	<span class="arrow_top"></span>
+                                            	<span class="arrow_down down_active"></span>
+                                            </p>
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        Total Returm
+                                        <p class="funds_arrow_wraps">
+                                            	<span class="arrow_top"></span>
+                                            	<span class="arrow_down"></span>
+                                            </p>
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            AIP
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            Client
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            Last Modified
+                                            <p class="funds_arrow_wraps">
+                                            	<span class="arrow_top"></span>
+                                            	<span class="arrow_down"></span>
+                                            </p>
+                                    </th>
+                                    <!--<th class="funds_tables_header">Actions</th>-->
+                                </tr>
+                                <tr >
+                                    <td class="tdleft funds_tables_fnames">
+                                        <a href="javascript:;" >Conservative Portfolio</a>
+                                    </td>
+                                    <td class="funds_search_tdcenter"><img src="${base}/res/images/strategy/risk_level_06.png"  width="75px"/></td>
+                                    <td class="funds_search_tdcenter">Aggressive</td>
+                                    <td class="funds_search_tdcenter">124,313.11HKD</td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="funds_search_negative"></span>
+                                        <span class="funds_search_positive">+10.99%</span>
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        Yes
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        William Law
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                       2016-07-23
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td class="tdleft funds_tables_fnames">
+                                        <a href="javascript:;" >Modeate Growth Portfolio</a>
+                                    </td>
+                                    <td class="funds_search_tdcenter"><img src="${base}/res/images/strategy/risk_level_04.png" width="75px"/></td>
+                                    <td class="funds_search_tdcenter">Balanced</td>
+                                    <td class="funds_search_tdcenter">354,256.95HKD</td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="funds_search_negative"></span>
+                                        <span class="funds_search_positive">+35.59%</span>
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        Yes
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        David Chen
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                       2016-06-20
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td class="tdleft funds_tables_fnames">
+                                        <a href="javascript:;" >Low-Cost Expert Investment Portfolio</a>
+                                    </td>
+                                    <td class="funds_search_tdcenter"><img src="${base}/res/images/strategy/risk_level_02.png" width="75px"/></td>
+                                    <td class="funds_search_tdcenter">Conservative</td>
+                                    <td class="funds_search_tdcenter">102,1248.93HKD</td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="funds_search_negative">-20.09%</span>
+                                        <span class="funds_search_positive"></span>
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        Yes
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        Jackson Law
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                       2016-05-12
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td class="tdleft funds_tables_fnames">
+                                        <a href="javascript:;" >Bond Portfolio</a>
+                                    </td>
+                                    <td class="funds_search_tdcenter"><img src="${base}/res/images/strategy/risk_level_03.png" width="75px"/></td>
+                                    <td class="funds_search_tdcenter">Balanced</td>
+                                    <td class="funds_search_tdcenter">432,387.33HKD</td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="funds_search_negative">-10.21%</span>
+                                        <span class="funds_search_positive"></span>
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        Yes
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        Rainy Lee
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                       2016-04-03
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+					</div>
+	 				<ul class="ifa_list_paging">
+	 					<li class="ifa_pagint_num">1</li>
+	 					<li class="ifa_pagint_num">2</li>
+	 					<li class="ifa_pagint_num ifa_pagint_now">3</li>
+	 					<li class="ifa_pagint_some">...</li>
+	 					<li class="ifa_pagint_num">10</li>
+	 				</ul>
+        		</div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/strategy/confirmPortf.js');
+</script>

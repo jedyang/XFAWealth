@@ -1,0 +1,145 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+    <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+    <div class="wmes-content">
+        <div class="ifa_choose_condition">
+        <input type="hidden" id="dateFormat" value="${dateFormat!}">
+       
+                <p class="wmes-wrap-title" style="margin-bottom:0">
+                	<a href="javascript:history.go(-1)">
+          				<span class="wmes-ruturn"></span>
+          			</a>
+          			[@lang_res k='clients.proposal.title'/]</p>
+					<div class="client-more-screen-wrap">
+						<div class="funds_choice_wrap">
+					
+						<p class="funds_choice_title">[@lang_res k='clients.proposal.period'/]</p>
+						<ul class="funds_choice" data-name="period">
+							<li class="fund_choice_active  funds_all" data-name="period" data-key="" data-value="">[@lang_res k='clients.proposal.all'/]</li>
+							<li data-name="period" data-key="[@lang_res k='clients.proposal.month.1'/]" data-value="1">[@lang_res k='clients.proposal.month.1'/]</li>
+							<li data-name="period" data-key="[@lang_res k='clients.proposal.month.3'/]" data-value="3">[@lang_res k='clients.proposal.month.3'/]</li>
+							<li data-name="period" data-key="[@lang_res k='clients.proposal.month.6'/]" data-value="6">[@lang_res k='clients.proposal.month.6'/]</li>
+							<li data-name="period" data-key="[@lang_res k='clients.proposal.year.1'/]" data-value="12">[@lang_res k='clients.proposal.year.1'/]</li>
+							<li data-name="period" data-key="[@lang_res k='clients.proposal.year.3'/]" data-value="36">[@lang_res k='clients.proposal.year.3'/]</li>
+                            <li class="recommend-date-li recommend-date-choice" data-name="period" data-key="" data-value="">
+                                <p class="recommend-other">[@lang_res k='clients.proposal.other'/]</p>
+                                <div class="recommend-other-wrap">
+                                    <div class="recom-input-wrap">
+                                        <input id="fromDate" readonly class="laydate-icon" type="" name="" style="width: 150px;padding:3px 12px;">
+                                    </div>
+                                    <p class="recommend-date-name">[@lang_res k='global.to'/]</p>
+                                    <div class="recom-input-wrap">
+                                        <input id="toDate" readonly class="laydate-icon" type="" name="" style="width: 150px;padding:3px 12px;" >
+                                    </div>
+                                    <a data-name="period" class="recommend-date-ok" href="javascript:">[@lang_res k='global.ok'/]</a>
+                                </div>
+                            </li>
+						</ul>
+					</div>   
+                    <div class="funds_choice_wrap">
+                        <p class="funds_choice_title">[@lang_res k='clients.proposal.status'/]</p>
+                        <ul class="funds_choice" data-name="status">
+                            <li class="fund_choice_active funds_all" data-name="status" data-key="" data-value="Issue Date_00">[@lang_res k='clients.proposal.all'/]</li>
+                            <li data-name="status" data-key="[@lang_res k='clients.proposal.accepted'/]" data-value="2">[@lang_res k='clients.proposal.accepted'/]</li>
+                            <li data-name="status" data-key="[@lang_res k='clients.proposal.draft'/]" data-value="0">[@lang_res k='clients.proposal.draft'/]</li>
+                            <li data-name="status" data-key="[@lang_res k='clients.proposal.toBeConfirm'/]" data-value="1">[@lang_res k='clients.proposal.toBeConfirm'/]</li>
+                            <li data-name="status" data-key="[@lang_res k='clients.proposal.beReturn'/]" data-value="-1">[@lang_res k='clients.proposal.beReturn'/]</li>
+                        </ul>
+                    </div>
+					</div>
+					
+                    <div class="wmes-menu-hide"><div class="wmes-menu-hidecon"><b>[@lang_res k='clients.proposal.selected.condition'/]</b><span></span></div></div>
+        		</div>
+        		<div class="strategies_list_wrap">       			
+	    			<div class="funds_list_selected ifa-more-ico-hidden">
+		                <p class="funds_selected_title">[@lang_res k='clients.proposal.selected.condition'/] </p>
+						<ul class="selection_criteria">
+							<p class="funds_title_selection">[@lang_res k='clients.proposal.reset'/] </p>
+						</ul>
+					</div>
+					<div class="ifa_keyserach_wrap">
+						<p class="ifa_serach_sum">
+							[@lang_res k='clients.proposal.total.prefix'/] 					
+							<span id="dataTotal" class="funds_serach_digital">0</span> [@lang_res k='clients.proposal.total.suffix'/]</p>
+						<div class="search-condition" style="float:right;">
+                                    <input id="txtKeyWord" type="text" placeholder="[@lang_res k='clients.proposal.table.client'/],[@lang_res k='clients.proposal.table.name'/]   "/>
+                                    <input type="hidden" id="memberId">
+                                    <span class="icon_search" id="searchKeyBtn"></span>
+                                </div>
+						<a class="ifa-add-button" href="${base}/front/crm/proposal/createProposalSetOne.do">[@lang_res k='clients.proposal.createProposal'/]</a>  
+					</div>
+					<div class="strategies_list">
+						<table class="funds_search_information strategies_List">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                    <th class="funds_tables_fnames">
+                                        [@lang_res k='clients.proposal.table.client'/]
+                                    </th>
+                                    <th class="funds_tables_header">
+                                        [@lang_res k='clients.proposal.table.name'/]   
+                                    </th>
+                                    <!--<th  class="funds_tables_header">
+                                        Objective
+                                    </th>
+                                    --><th  class="funds_tables_header">
+                                        [@lang_res k='clients.proposal.table.inv.amount'/]
+                                        <p class="funds_arrow_wraps">
+                                            	<span class="arrow_top_inv_amount arrow_top"></span>
+                                            	<span class="arrow_down_inv_amount arrow_down"></span>
+                                        </p>
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        [@lang_res k='clients.proposal.status'/]
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        [@lang_res k='clients.proposal.table.last.modified'/]
+                                        <p class="funds_arrow_wraps">
+                                           	<span class="arrow_top_last_modified arrow_top"></span>
+                                           	<span class="arrow_down_last_modified arrow_down down_active"></span>
+                                        </p>
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res k='clients.proposal.table.actions'/]
+                                    </th>
+                                </tr>
+                                
+                           </tbody>
+                        </table>
+                        <div class="wmes-nodata-tips no_list_tips">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                        </div>
+					</div>
+	 				<ul id="pagination" class="ifa_list_paging">
+	 				</ul>
+        	</div>
+    </div>
+<div class="selectnamelistbox" style="display:none;top:0;left:0;background:rgba(0,0,0,0.3);">
+		<!-- 选择用户控件 -->
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var globalProp = [@load_prop k='global'/]; 
+	 var _checkList='${checkList!}';
+var _accountType="${accountType!}";
+var _currency="${currency!}";
+    seajs.use('${base}/res/web/ifa/crm/proposalManagement.js');
+    function callbackloginresult(json){
+	 	 seajs.use('jquery', function($){
+		 	//console.log(json);
+		 	var count=0;
+		 	$.each(json,function(i,n){
+			 	if(n.status="1"){
+			 	count++;
+		 	    }
+		 	})
+		 	if(count>0){
+		 	 setTimeout(function(){
+		       window.location.url= window.location.url;
+		     },1000);
+		    }
+	    });
+ 	}
+    
+</script>

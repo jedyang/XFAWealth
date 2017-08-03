@@ -1,0 +1,51 @@
+package com.fsll.core.service;
+
+import com.fsll.common.util.JsonPaging;
+import com.fsll.core.entity.AccessoryFile;
+
+public interface AccessoryFileService {
+
+	/**
+	 * 获取附件列表
+	 * @author mqzou
+	 * @date 2016-08-04
+	 * @param jsonPaging
+	 * @param accessoryFile
+	 * @return
+	 */
+	public JsonPaging findAllAccessoryFile(JsonPaging jsonPaging,AccessoryFile accessoryFile);
+	
+	/**
+	 * 获取附件详细信息
+	 * @author mqzou
+	 * @date 2016-08-04
+	 * @param Id
+	 * @return
+	 */
+	public AccessoryFile findAccessoryFileById(String id);
+	
+	/**
+	 * 获取附件详细信息
+	 * @author Yan
+	 * @param Id
+	 * @return
+	 */
+	public AccessoryFile findByRelateId(String relateId);
+	
+	/**
+	 * 保存/更新
+	 * @author Yan
+	 * @param accessoryFile
+	 * @return
+	 */
+	public AccessoryFile saveOrUpdate(AccessoryFile accessoryFile);
+	
+	/**
+	 * 获取附件地址
+	 * @author wwluo
+	 * @date 2016-12-07
+	 * @param 
+	 * @return
+	 */
+	public AccessoryFile getAccessoryFile(String relateId,String moduleType,String fileName,String langCode);
+}

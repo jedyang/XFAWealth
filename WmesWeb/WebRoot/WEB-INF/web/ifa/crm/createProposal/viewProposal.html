@@ -1,0 +1,46 @@
+[#include "../../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <style>
+    	#viewPdf{border: 1px solid #cdcdcd;}
+    </style>
+    <div class="wmes-content">
+        <div class="proposal-view-wrap">
+            <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='proposal.view.proposal.title'/]</p>
+            <input id="hidProposal" type="hidden" value="${(proposal.id)!''}">
+            <div class="proposal-view-inf">
+                <div class="proposal-view-portrait">
+                    <a href="${base}/front/community/space/investorSpace.do?id=${(member.id)?if_exists}"> <img class="proposal-view-portrait-img" src="${base}${iconUrl!}"></a>
+                    <p class="proposal-view-portrait-name">${(member.nickName)!''}</p>
+                </div>
+                <p class="proposal-view-phone">[@lang_res k='proposal.view.proposal.phone'/]: <span>[#if (member.mobileCode)?? || (member.mobileNumber)??]+[/#if]${(member.mobileCode)!''} ${(member.mobileNumber)!''}</span></p>
+                <p class="proposal-view-email">[@lang_res k='proposal.view.proposal.Email'/]: <span>${(member.email)!''}</span></p>
+            </div>
+            <div class="proposal-view-button">
+                <a class="proposal-view-print" href="javascript:;">[@lang_res k='proposal.view.proposal.print'/]</a>
+                <a class="proposal-view-export" href="javascript:;">[@lang_res k='proposal.view.proposal.export'/]</a>
+            </div>
+             <iframe id="viewPdf" name="viewPdf" src="${base}/front/crm/proposal/proposalPreview.do?id=${(proposal.id)!''}&language=${lang!}" width="100%" height="800px"></iframe>
+        </div>
+    </div>
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('jquery', function($){
+		//print
+		$('.proposal-view-print').click(function(){
+			$("#viewPdf").contents().find("#print")[0].click();
+		});
+		
+		//export
+		$('.proposal-view-export').click(function(){
+			var proposalId = $('#hidProposal').val();
+			var iframe = $("<iframe>");
+			iframe.attr("style","display:none");
+			iframe.attr("name","downPdf");
+			iframe.attr("method","post");
+			iframe.attr('frameborder','0');
+			iframe.attr("src",base_root + '/front/crm/proposal/downPdf.do?proposalId=' + proposalId+'&language='+lang);
+			$("body").append(iframe);
+		});
+		
+	});
+</script>

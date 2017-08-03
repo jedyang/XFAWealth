@@ -1,0 +1,91 @@
+[#include "../../inc/head_v2.html"/]    
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<div class="wmes-content">
+    <div class="white_background">
+    <p class="wmes-wrap-title">[@lang_res k='member.changePassword.title'/]</p>
+    	<!-- <div class="register_background_pic"> -->
+        	<div class="register_div">
+               <!-- <div class="funds_title_wrap">
+                <h2 class="funds_title">[@lang_res k='member.changePassword.title'/]</h2>
+              </div> -->
+            	<form id="frm" name="frm" action="" >
+            	<input type="hidden" id="id" name="id" value="${id}"/>
+              	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+                    <tbody>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                        	<span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.changePassword.oldPwd'/]</span>
+                        </td>
+                        <td class="register_table_right">
+                        	<input class="register_input" id="oldpsw" name="oldpsw" type="password" maxlength="20">
+                          <span class="Wrong_tips"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                        	<span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.changePassword.newPwd'/]</span>
+                        </td>
+                        <td><input class="register_input"  type="password" name="password" id="password" maxlength="20">
+                        <span class="Wrong_tips"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                        	<span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.changePassword.strength'/]</span>
+                        </td>
+                        <td>
+                        	<div class="register_strength">
+                          	<ul>
+                              	  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                              </ul>
+                          </div>
+                          <span class="register_strength_font">[@lang_res k='member.changePassword.strength'/]</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.changePassword.cfmPwd'/]</span>
+                        </td>
+                        <td><input class="register_input" type="password" id="confirmpsw" name="confirmpsw" maxlength="20">
+                        <span class="Wrong_tips"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                        	<span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.changePassword.verCode'/]</span>
+                        </td>
+                        <td>
+                          <input class="register_input_102" id="checkCode"  type="text" maxlength="10">
+                          <img class="register_yanzhengma"  onclick="this.src=this.src+'?'" src="${base}/authImg.svl" /> 
+                          <span class="Wrong_tips"></span>
+                          <br><br><br>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+              </form>
+
+            	<div class="btn_next_div2">
+                	<a id="saveButton" class="btn_next" href="javascript:;">[@lang_res k='global.save'/]</a>
+                    <a id="cancelButton" class="btn_next" href="javascript:;">[@lang_res k='global.cancel'/]</a>
+                </div>
+            
+            	<div class="clear"></div>
+           </div> 
+        <!-- </div> -->
+    </div>
+</div>
+[#include "../../inc/foot_v2.html"/] 
+
+<script type="text/javascript">
+var _root_ = '${base}';
+seajs.use('${base}/res/web/member/regist/strength.js');
+seajs.use('${base}/res/web/member/personal/changepsw.js');
+</script>

@@ -1,0 +1,76 @@
+	<link rel="stylesheet" href="${base}/res/css/wmes_en.css">  
+	<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+				<div class="rpqContent">
+				<form id="rqpForm" name="rqpForm" action="" method="post">
+                  <span id="questionGrid">
+                    <p class="rpqIntroduction">介绍</p>
+                    [#if rpqList?exists && rpqList?size gt 0 ]
+                    <div id="pageGen" class="rpqPageRemark" pageId="${rpqList[0].rpqPageid!}">
+                      ${rpqList[0].rpqPageRemark}
+                    </div>
+                    [#list rpqList as rpq]
+                    <div class="wenti">
+                      	<strong >${rpq.questTitle}</strong>
+                      <div class="wenti_xuanzhe">
+                              <ul class="BasicInfo_radio" questId="${rpq.questId!}" >
+                              [#if examId??]
+                              <!-- 问卷修改，加载原问卷与已选答案 -->
+                              [#if rpq.rqpExamItemList?exists && rpq.rqpExamItemList?size gt 0]
+                              	[#list rpq.rqpExamItemList as examItem]
+                              		<li>
+                                    <input type="radio" class="regular-radio validate[required]" id="${examItem.id!}" data-prompt-target="rpqErrorMsg${rpq.questId!}" name="${rpq.questId!}" value="${examItem.id!}" scoreValue="${examItem.scoreValue!}"  [#if examItem.checkFlag?exists && examItem.checkFlag=='1']checked[/#if]>
+                                    <label for="${examItem.id!}"></label>
+                                    <span class="font_gray_left">${examItem.title!}</span>
+                                    </li>
+                              	[/#list]
+                              	<li>
+				                      <span id="rpqErrorMsg${rpq.questId!}"></span><!-- 表单验证信息 -->
+				                </li>      
+                              [/#if]
+                              [#else]
+                              <!-- 首次进入问卷，加载rqpQuestion -->
+                                [#if rpq.rpqQuestItemList?exists && rpq.rpqQuestItemList?size gt 0 ]
+                                [#list rpq.rpqQuestItemList as item]
+                                    <li>
+                                    <input type="radio" class="regular-radio validate[required]" id="${item.id}" name="${rpq.questId}" value="${item.id}" scoreValue="${item.scoreValue}" data-prompt-target="rpqErrorMsg${rpq.questId!}">
+                                    <label for="${item.id}"></label>
+                                    <span class="font_gray_left">${item.title}</span>
+                                    </li>
+                                [/#list]
+				                <li>
+				                      <span id="rpqErrorMsg${rpq.questId!}"></span><!-- 表单验证信息 -->
+				                </li>      
+                                [/#if]
+                              [/#if]
+                              </ul>
+                        </div>                   
+                    </div>
+                    [/#list]
+                    [/#if]
+					</form> 
+                    </span>
+                    <div class="rpqSummary" [#if examId??]style="display:block"[/#if]>
+                      <p class="rpqSummaryTitle">Risk Profiling Result</p>
+                      <div class="rpqSummaryMain">
+                          <div class="rpqSummaryLeft">
+                              <p class="rpaSummarW">You are a <span class="rpqSummaryType">[#if level??]Level:${level.riskLevel!}&nbsp;${level.result!}[/#if]</span> </p>
+                          </div>
+                          <div class="rpqSummeryRight">
+                              <p class="rpqRightTitle">Description:</p>
+                              <p class="rpqRightContent">
+                                As a balanced investor, you prefer the best of both worlds. Not too much risk, but not too shabby returns either. Your portfolio would probably consist of a large proportion of equity funds, balanced against an almost equal or larger proportion of less risky funds.
+                                <br>
+                                <br>
+                                In general, one or more of these points apply to you.
+                                You want slightly higher than average returns, yet are aware that your rates of returns are restricted due to the "safer" funds you hold.
+                                 <br>
+                                 <br>
+                                You generally have some money saved up, although you wished that it were a little more, so that you could afford to take a little bit more risk in your investments.
+                                 <br>
+                                 <br>
+                                You are very contented with your standard of living now. Your investments are meant to enable you to maintain this lifestyle, rather than to dramatically enhance it. (Although you wouldn't mind having a nicer car to drive though!)
+                              </p>
+                          </div>
+                      </div>
+                    </div>
+                  </div>

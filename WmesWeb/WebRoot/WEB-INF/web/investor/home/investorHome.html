@@ -1,0 +1,657 @@
+[#include "../../inc/head_v2.html"/]
+		<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+		<link rel="stylesheet" href="${base}/res/css/ifa.css">  
+		<link rel="stylesheet" href="${base}/res/css/Funds.css">  
+		<style type="text/css">
+			.swiper-button-next, .swiper-button-prev {position: absolute;top: 45%;width: 50px;height: 45%;opacity: 0.7;margin-top: -22px;z-index: 10;cursor: pointer;background-position: center;background-repeat: no-repeat;display: none;}
+			.swiper-button-disabled{display: none!important;}
+			.swiper-button-prev{background: url('${base}/res/images/ifa/left_ico.png') no-repeat;background-size: 100% 100%;left: 0px;}
+			.swiper-button-next{background: url('${base}/res/images/ifa/right_ico.png') no-repeat;background-size: 100% 100%;right: 0px;}
+			.region-service-now { background-color: #4ba6de;color: white;}
+		 .page_left {opacity: 0.7;display: none;background:rgba(0, 0, 0, 0) url("${base}/res/images/ifa/left_ico.png") no-repeat scroll 0 0;		 					width: 60px;height: 60px;float:left;cursor:pointer;font-size:18px;text-align:center;background-color: #ccc;color: white;line-height: 60px;border-radius: 10%;position: absolute;top: 85px;z-index: 99;left: 0px;background-size: 100% 100%;}
+		 .page_right {opacity: 0.7;display: none;background:rgba(0, 0, 0, 0) url("${base}/res/images/ifa/right_ico.png") no-repeat scroll 0 0;	width: 60px;height: 60px;float:right;cursor:pointer;font-size:18px;text-align:center;background-color: #ccc;color: white;
+			line-height: 60px;border-radius: 10%; position: absolute;top: 85px;z-index: 99; right: 0px;background-size: 100% 100%;}
+			.ifa-space-popup .page_left,.ifa-space-popup .page_right{display: block;}
+			.following-images-wrap .page_left , .following-images-wrap .page_right {top: 45px;}
+			.ifa-trending-discussing  .page_left , .ifa-trending-discussing  .page_right {top: 55px;}
+			html, body{overflow: visible!important;}
+		</style>
+		<div class="wmes-top">
+			<a href="javascript:;" class="header-over">Home</a>
+		</div>
+        <div class="wmes-content" ng-controller="homeCtrl" ng-app="investorHome">
+        	
+            <div class="ifa-mid-investor" style="margin-top:0px;background:#ecf0f5;">
+            	<div class="mid-investor-left">
+            		<div class="mid-investor-cart" style="margin-bottom:0;border-bottom:20px solid #ecf0f5;">
+            			<div class="world-markets-title">[@lang_res k='investor.zone.title'/]
+            				<div class="investor-choose-left">
+		                        <p class="investor-xiala-title">[@lang_res k='investor.zone.cur'/]: </p>
+		                        <div class="investor-xiala">
+		                            <input type="text" id="txtCurrency" value="USD" placeholder="USD" readonly="">
+		                            <span class="icon_xiala"></span>
+		                            <ul class="xiala-list">
+		                            [#if sysParamList?exists &&sysParamList?size gt 0]
+										[#list sysParamList as each]
+							             <li data-name="defCurrency" data-key="${each.name!}" data-value="${each.code!}">${each.name!}</li>
+										[/#list]
+										[/#if]
+		                                
+		                            </ul>
+		                        </div>
+		                    </div>
+            			</div>
+            			<div class="investor-zone-wrap">
+					    <div class="investor-zone-left" style="display:none">
+						<div class="investor-portfolio-wrap" >
+
+							<div ng-repeat="items in portfolioList" ng-if="items.sort==0" id="sort-{{items.sort}}" dataList='{{items.dataList}}' class="investor-portfolio-rows investor-portfolio-active">
+								<div class="investor-zone-choose">
+									 [@lang_res k='investor.zone.allPortfolio'/]
+								</div>
+								<div class="investor-portfolio-content" style="display: block;">
+									<ul class="inv-portfolio-ul">
+										<li>
+											<p class="inv-portfolio-word ">
+												[@lang_res k='investor.zone.totalAssets'/]
+											</p>
+											<p class="inv-portfolio-price">
+												<span class="inv-portfolio-number  inv-num-hide" data-num="{{items.totalAssets | formatCurrency:''}}">{{items.totalAssets | formatCurrency:''}}</span>
+												<span class="my-assets-cur">${currency!}</span>
+												<img class="inv_eve_ico" src="${base}/res/images/ifa/eves_ico.png">
+											</p>
+										</li>
+										<li>
+											<p class="inv-portfolio-word " >
+												[@lang_res k='investor.zone.cash'/]
+											</p>
+											<p class="inv-portfolio-price">
+												<span class="inv-portfolio-number inv-num-hide" data-num="{{items.totalCash  | formatCurrency:''}}">{{items.totalCash  | formatCurrency:''}}</span>
+												<span class="my-assets-cur">${currency!}</span>
+											</p>
+										</li>
+									</ul>
+									<div class="inv-portfolio-return">
+										<p class="inv-portfolio-reword">
+											<span class="inv-num-hide" data-num="{{items.marketValue  | formatCurrency:''}}">{{items.marketValue  | formatCurrency:''}}</span>
+											<span class="my-assets-cur">${currency!}</span><br> (
+											<span class="inv-num-hide inv-portfolio-main-num" data-num="{{items.returnRate  | formatCurrency:'%'}}">{{items.returnRate  | formatCurrency:'%'}}</span>)
+										</p>
+										<p class="inv-portfolio-reacc">
+											[@lang_res k='investor.zone.accReturn'/] 
+										</p>
+									</div>
+								</div>
+
+							</div>
+							<div ng-repeat="items in portfolioList" ng-if="items.sort!=0" id="sort-{{items.sort}}" dataList='{{items.dataList}}' class="investor-portfolio-rows">
+								<div class="investor-zone-choose">
+									{{items.portfolioName}}
+								</div>
+								<div class="investor-portfolio-content" style="display: none;">
+									<ul class="inv-portfolio-ul">
+										<li>
+											<p class="inv-portfolio-word">
+												[@lang_res k='investor.zone.totalAssets'/] 
+											</p>
+											<p class="inv-portfolio-price">
+												<span class="inv-portfolio-number inv-num-hide" data-num="{{items.totalAssets | formatCurrency:''}}">{{items.totalAssets | formatCurrency:''}}</span>
+												<span class="my-assets-cur">${currency!}</span>
+												<img class="inv_eve_ico" src="${base}/res/images/ifa/eves_ico.png">
+											</p>
+										</li>
+										<li>
+											<p class="inv-portfolio-word">
+												[@lang_res k='investor.zone.cash'/]
+											</p>
+											<p class="inv-portfolio-price">
+												<span class="inv-portfolio-number inv-num-hide" data-num="{{items.totalCash  | formatCurrency:''}}">{{items.totalCash  | formatCurrency:''}}</span>
+												<span class="my-assets-cur">${currency!}</span>
+											</p>
+										</li>
+									</ul>
+									<div class="inv-portfolio-return">
+										<p class="inv-portfolio-reword">
+											<span class="inv-num-hide" data-num="{{items.marketValue  | formatCurrency:''}}">{{items.marketValue  | formatCurrency:''}}</span>
+											<span class="my-assets-cur">${currency!}</span> <br> (
+											<span class="inv-num-hide" data-num="{{items.returnRate  | formatCurrency:'%'}}">{{items.returnRate  | formatCurrency:'%'}}</span>)
+										</p>
+										<p class="inv-portfolio-reacc">
+											[@lang_res k='investor.zone.accReturn'/] 
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="investor-zone-right" style="display:none">
+						<div class="investor-zone-chart" id="investor-zone-chart">
+
+						</div>
+					</div>
+					
+					<div class="investor-nodata-zone" style="display:none;">
+            					<img class="investor-nodata-img" src="${base}/res/images/investor_zone_logo.png">
+            					<div class="investor-nodata-wwrap">
+            						<div class="investor-nodata-bg">
+	            						<p class="investor-nodata-title">No Data</p>
+	            						<p class="investor-nodata-word"></p>
+            						</div>
+            						
+            					</div>
+            				</div>
+                   </div>
+                  </div>
+					<div class="mid-investor-cart" style="margin-bottom:0;border-bottom:20px solid #ecf0f5;">
+            			<div class="world-markets-title">[@lang_res k='investor.zone.topPerform'/] 
+            				<div class="investor-choose-left">
+		                        <p class="investor-xiala-title">[@lang_res k='investor.zone.timeperiod'/] : </p>
+		                        <div id="investor-period-xiala" class="investor-xiala">
+		                            <input type="text" value="All"  readonly="">
+		                            <span class="icon_xiala"></span>
+		                            <ul>
+		                            	<li data-value="return_period_code_LAUNCH">All</li>
+		                                <li data-value="return_period_code_1M">1 Mth</li>
+		                                <li data-value="return_period_code_3M">3 Mth</li>
+		                                <li data-value="return_period_code_1Y">1 Yr</li>
+		                            </ul>
+		                        </div>
+		                    </div>
+            			</div>
+            			<div class="inv-top-performance">
+            				<p id="p-portfolio" class="inv-active">[@lang_res k='investor.zone.portfolio'/]</p>
+            				<p id="p-funds">[@lang_res k='investor.zone.funds'/]</p>
+            			</div>
+            			<div class="inv-performance-wrap">
+	            			<div class="inv-performance-contnts" id="div-topperformance-portfolio" style="display:block;">
+	            			[#if topPerformancePortfolioOne??]
+	            				<div class="inv-performance-main">
+	            					<div class="inv-per-num">1</div>
+	        						<div class="inv-per-contents">
+	        							<p class="inv-per-title"><a class="ifa-a-href" href="${base}/front/portfolio/arena/detail.do?id=${topPerformancePortfolioOne.portfolioId!}">[#if topPerformancePortfolioOne??]${topPerformancePortfolioOne.portfolioName!}[/#if]</a></p>
+	        							<div class="inv-per-main">
+	        							<span class="lump-equity-grade funds_leveal_${topPerformancePortfolioOne.riskLevel!}" style="margin-right:30px" title="Risk Level ${topPerformancePortfolioOne.riskLevel!}">${topPerformancePortfolioOne.riskLevel!}</span>
+	        								
+	        								<p class="inv-per-con-title">[#if topPerformancePortfolioOne??][@num_color s='${topPerformancePortfolioOne.increasePercent!}' c='${defDisplayColor!}'/][/#if]</p>
+	        								<p class="inv-per-con-word"><span class="inv-per-con-date">[#if topPerformancePortfolioOne??]${topPerformancePortfolioOne.period!}[/#if]</span> Return</p>
+	        							</div>
+	    							</div>
+	            				</div>
+	            				[#else]
+	            				<div class="wmes-nodata-tips portfolioTips" style="display:block;padding-top:50px;">
+			                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+			                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+			                      </div>
+	            				[/#if]
+	            				<ul class="inv-performance-list">
+	            				[#if topPerformancePortfolioOther?exists && topPerformancePortfolioOther?size gt 0]
+								[#list topPerformancePortfolioOther as each]
+									<li>
+	            						<div class="inv-per-num">${each.titleNum!}</div>
+	            						<div class="inv-per-contents">
+	            							<p class="inv-per-title"><a class="ifa-a-href" href="${base}/front/portfolio/arena/detail.do?id=${each.portfolioId!}">${each.portfolioName!}</a></p>
+	            							<div class="inv-per-main">
+	            							<span class="lump-equity-grade funds_leveal_${each.riskLevel!}" style="margin-right:30px" title="Risk Level ${each.riskLevel!}">${each.riskLevel!}</span>
+	            								<!--<img class="inv-per-img" src="${base}/res/images/ifa/inv_index_img.png">
+	            								--><p class="inv-per-con-title">[@num_color s='${each.increasePercent!}' c='${defDisplayColor!}'/]</p>
+	            								<p class="inv-per-con-word"><span class="inv-per-con-date">${each.period!}</span> Return</p>
+	            							</div>
+	            						</div>
+	            					</li>
+								  [/#list]
+								[/#if]
+	            					
+	            					
+	            				</ul>
+	            			</div>
+	            			<div class="inv-performance-contnts inv-performance-funds" id="div-topperformance-funds">
+	            			[#if topPerformanceFundsOne??]
+	            				<div class="inv-performance-main">
+	            					<div class="inv-per-num">1</div>
+	        						<div class="inv-per-contents">
+	        							<p class="inv-per-title"><a class="ifa-a-href" href="${base}/front/fund/info/fundsdetail.do?id=${topPerformanceFundsOne.fundId!}">[#if topPerformanceFundsOne??]${topPerformanceFundsOne.fundName!}[/#if] </a></p>
+	        							<div class="inv-per-main">
+	        							<span class="lump-equity-grade funds_leveal_${topPerformanceFundsOne.riskLevel!}" style="margin-right:30px" title="Risk Level ${topPerformanceFundsOne.riskLevel!}">${topPerformanceFundsOne.riskLevel!}</span>
+	        								
+	        								<p class="inv-per-con-title">[#if topPerformanceFundsOne??][@num_color s='${topPerformanceFundsOne.increase!}' c='${defDisplayColor!}'/][/#if]</p>
+	        								<p class="inv-per-con-word"><span class="inv-per-con-date">[#if topPerformanceFundsOne??]${topPerformanceFundsOne.period!}[/#if]</span> Return</p>
+	        							</div>
+	    							</div>
+	            				</div>
+	            				[#else]
+	            				<div class="wmes-nodata-tips portfolioTips" style="display:block;padding-top:50px;">
+			                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+			                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+			                      </div>
+	            				[/#if]
+
+	            				<ul class="inv-performance-list">
+	            					[#if topPerformanceFundsOther?exists && topPerformanceFundsOther?size gt 0]
+									[#list topPerformanceFundsOther as each]
+										<li>
+	            						<div class="inv-per-num">${each.titleNum!}</div>
+	            						<div class="inv-per-contents">
+	            							<p class="inv-per-title"><a class="ifa-a-href" href="${base}/front/fund/info/fundsdetail.do?id=${each.fundId!}" >${each.fundName!}</a></p>
+	            							<div class="inv-per-main">
+	            								<span class="lump-equity-grade funds_leveal_${each.riskLevel!}" style="margin-right:30px" title="Risk Level ${each.riskLevel!}">${each.riskLevel!}</span>
+	            								<p class="inv-per-con-title">[@num_color s='${each.increase!}' c='${defDisplayColor!}'/]</p>
+	            								<p class="inv-per-con-word"><span class="inv-per-con-date">${each.period!}</span> [@lang_res k='investor.zone.return'/]</p>
+	            							</div>
+	            						</div>
+	            					</li>
+									  [/#list]
+									[/#if]
+	            				</ul>
+	            			</div>
+	            		</div>	
+            		</div>
+            		<div class="mid-investor-cart">
+            			<p class="world-markets-title">[@lang_res k='investor.zone.mostSelected'/]</p>
+        				<ul class="inv-select-funds-list">
+        					[#if mostSelectedFunds?exists && mostSelectedFunds?size gt 0]
+							[#list mostSelectedFunds as each]
+							<li>
+        						<div class="inv-select-top">
+        							<p class="inv-select-number">${each.titleNum!}</p>
+        							<p class="inv-select-top-title" data-ellipsis="true"  data-ellipsis-max-line="3" ><a class="ifa-a-href" href="${base}/front/fund/info/fundsdetail.do?id=${each.fundId!}">${each.fundName!}</a></p>
+        						</div>
+        						<p class="inv-risk-title">Risk ${each.riskValue!}</p>
+        						<div class="inv-select-contents">
+        							<p class="inv-select-title">[@lang_res k='investor.zone.totalPortfolio'/]</p>
+        							<p class="inv-select-msg">${each.rankingNum!}</p>
+        						</div>
+        						<div class="inv-select-line">
+        							<img src="${base}/res/images/ifa/inv-funds-line.png">
+        						</div>
+        					</li>
+							  [/#list]
+							[/#if]
+        				</ul>
+            		</div>
+            	</div>
+            	<div class="mid-investor-right">
+            		<div class="investor-right-content">
+            			<p class="world-markets-title"> [@lang_res k='investor.zone.linkingTo'/]</p>
+            			<div class="investor-ifa">
+            			<p class="investor-ifa-title">[@lang_res k='investor.zone.ifa'/]</p>
+            			[#if ifaList?exists && ifaList?size gt 0]
+							[#list ifaList as each]
+							<div class="investor-left-ifa-rows">
+				           		<a href="${base}/front/community/space/ifaSpace.do?id=${each.member.id!}">
+		            				<div class="investor-ifa-img">
+		            					<img src="${base}[@user_head u='${each.member.iconUrl!}' gender='${each.gender!}'/]">
+		            					<p class="inv-ifa-names">${each.member.firstName!} ${each.lastName!}</p>
+		            				</div>
+	            				</a>
+	            				<a class="inv-view-corner-title" href="${base}/front/ifa/info/cornerDetail.do?memberId=${each.member.id!}">[@lang_res k='investor.zone.viewCorner'/]</a>
+            				</div>
+				            [/#list]
+						[/#if]
+			
+			
+            				
+            			</div>
+            			<!-- <div class="investor-ifa">
+            				<p class="investor-ifa-title">Corner</p>
+            				<div class="investor-ifa-conrner">
+            					<img class="ifa-conrner-tou" src="${base}/res/images/ifa/	linshi_ifa_06.png">
+            					<p class="ifa-conrner-name"><a class="ifa-a-href" href="${base}/front/ifa/info/connerDetail.do">Jennifer</a></p>
+            					<p class="ifa-conrner-fan">Followers 8930</p>
+            					<p class="ifa-conrner-img">
+            						<img src="${base}/res/images/weixin_ico.png" title="wechat">
+							        <img src="${base}/res/images/iphone_ico.png" title="phone">
+							        <img src="${base}/res/images/line_ico.png" title="line">
+            					</p>
+            				</div>
+            			</div> -->
+            			<!-- <div class="investor-ifa">
+            				<p class="investor-ifa-title">Topic</p>
+            				<ul class="investor-ifa-topic">
+								<li>
+									<p class="topic-title"><a class="ifa-a-href" href="${base}/front/ifa/info/discover.do?type=topic">How's your Funds Portfolio doing</a></p>
+									<p class="topic-from">From Jerry's Community 67 Posts</p>
+								</li>
+								<li>
+									<p class="topic-title"><a class="ifa-a-href" href="${base}/front/ifa/info/discover.do?type=topic">What could surprise on the upside or the downside ?</a></p>
+									<p class="topic-from">From Jerry's Community 67 Posts</p>
+								</li>            					
+            				</ul>
+            			</div> -->
+            			<div class="investor-ifa">
+            				<p class="investor-ifa-title">[@lang_res k='investor.zone.live'/]</p>
+            				<div class="investor-live-wrap" id="investor-live-wrap"> 	
+            					[#if notLiveDisplay='none']
+            					<div class="wmes-nodata-tips portfolioTips" style="display:block;padding-top:50px;">
+			                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+			                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+			                      </div>
+            					[#else]
+            					
+	            				<ul class="ifa-live-wrap" >
+						            <li class="ifa-live">
+						                <div class="ifa-live-date">
+						                    <p class="live-date">${topOneLiveBeginTime!}</p>
+						                    <p class="live-date-playing">[@lang_res k='investor.zone.playing'/]</p>
+						                </div>
+						                <span class="ifa-live-dian ifa-live-nowdian"></span>
+						                <img src="${base}/res/images/ifa/live.png">
+						                <div class="ifa-live-content">
+						                    <p class="ifa-live-title">${topOneLiveTitle!}</p>
+						                    <p class="ifa-live-word">${topOneLiveContent!}</p> 
+						                </div>
+						            </li>
+						            [#if notTopWillLiveList?exists && notTopWillLiveList?size gt 0]
+										[#list notTopWillLiveList as each]
+										 <li class="ifa-live">
+						                <div class="ifa-live-date">
+						                    <p class="live-date">${each.liveScheduler.beginTime!}</p>
+						                </div>
+						                <p class="ifa-live-title">${each.title!}</p>
+						                <span class="ifa-live-dian"></span>
+						            </li>
+							            [/#list]
+									[/#if]
+						        </ul>
+						        [/#if]
+					        </div>
+            			</div>
+            		</div>	
+            	</div>
+            </div>
+            <div class="ifa-investor-row" style="display:none;">
+                <p class="world-markets-title ifa-center">Recommend</p>
+                <div class="ifa-his-map">
+			        <p class="ifa-his-map-title">Location</p>
+			        <ul>
+			            <li data-value="All">
+			                <p class="ifa-chioce-count"><span class="ifa-his-country">All</span></p>
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">China</span></p>
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">EU</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Germany</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">HK</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Korea</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Malaysia</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Portugal</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Russia</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Thailand</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">America</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Turkey</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">NK</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Maldives</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Italy</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">France</span></p> 
+			            </li>
+			        </ul>            
+			        <div class="ifa-his-xiala"></div>
+			    </div>
+			    <div class="ifa-his-map">
+			        <p class="ifa-his-map-title">Sector</p>
+			        <ul>
+			            <li data-value="All">
+			                <p class="ifa-chioce-count"><span class="ifa-his-country">All</span></p>
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Mining</span></p>
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Energy</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Health Science</span></p> 
+			            </li>
+			            <li>
+			               <p class="ifa-chioce-count"><span class="ifa-his-country">Bonds</span></p> 
+			            </li>
+			        </ul>            
+			        <div class="ifa-his-xiala"></div>
+			    </div>
+                <div class="ifa-trending-row">
+                	<p class="ifa-trending-title"><span class="blue-box"></span><a  class="ifa-trendinga-href" href="${base}/front/ifa/info/strategies.do">Strategies
+                	 </a><span class="ifa-more-ico"></span></p>
+                	<div class="ifa-trending-content swiper-container">
+	                	
+	                 		<ul class="trending-strategies-ul swiper-wrapper" id="ul_strategies_list" style="">
+	                			 
+	                		</ul>
+	                		<div type="strategies" class="page_left swiper-slide">&nbsp;</div>
+                			<div type="strategies" class="page_right swiper-slide">&nbsp;</div>
+                	</div>
+                </div>
+                <div class="ifa-trending-row">
+                	<p class="ifa-trending-title"><span class="blue-box"></span><a class="ifa-trendinga-href" href="${base}/front/ifa/info/porfolios.do">Portfolios</a><span class="ifa-more-ico"></span></p>
+                	<div class="ifa-trending-content  swiper-container">
+                		<ul class="ifa-trending-ul swiper-wrapper" id="ul_portfolios_list">
+                		
+                		</ul>
+                		<div type="portfolios" class="page_left swiper-slide">&nbsp;</div>
+                		<div type="portfolios" class="page_right swiper-slide">&nbsp;</div>
+                	</div>
+                </div>
+                <div class="ifa-trending-row">
+                	<p class="ifa-trending-title"><span class="blue-box"></span><a class="ifa-trendinga-href" href="${base}/front/ifa/info/fundslist.do">Funds</a><span class="ifa-more-ico"></span></p>
+                	<div class="ifa-trending-content  swiper-container">
+                		<ul class="ifa-trending-ul swiper-wrapper" id="ul_funds_list">
+                			
+                		</ul>
+                		<div type="funds" class="page_left swiper-slide">&nbsp;</div>
+                		<div type="funds" class="page_right swiper-slide">&nbsp;</div>
+                	</div>
+                </div>
+                <div class="ifa-trending-row">
+                	<p class="ifa-trending-title"><span class="blue-box"></span>News
+                	<span class="ifa-more-ico"></span>
+                	</p>
+                	<div class="ifa-trending-news">
+                		<ul class="trending-news-ul">
+                			<li>
+                				<img class="trending-news-img" src="${base}/res/images/ifa/inv-news.png">
+                				<div class="trending-news-content">
+                					<p class="trending-news-title"><a class="trending-news-a ifa-a-href" href="${base}/front/ifa/info/discover.do?type=news"">China to resolutely implement supply-side structural</a></p>
+                					<p class="trending-news-word">As China's economy faces continued downward pressure and settles into a "new normal" stage, supply-side structural reform becomes ever more important.</p>
+                					<div class="trending-news-ico">
+                						<p><img src="${base}/res/images/ifa/big_liao.png" height="13" width="20">Repost 65</p>
+                						<p><img src="${base}/res/images/ifa/news_repost_ico.png">Comments 50</p>	
+                					</div>
+                				</div>
+                			</li>
+                			<li>
+                				<img class="trending-news-img" src="${base}/res/images/ifa/newsimg.png">
+                				<div class="trending-news-content">
+                					<p class="trending-news-title"><a class="trending-news-a ifa-a-href" href="${base}/front/ifa/info/discover.do?type=news"">World Bank raises 2016 oil price forecast on supply outages, robust demand</a></p>
+                					<p class="trending-news-word">World Bank on Tuesday raised its forecast for crude oil prices in view of the supply disruptions and strong demand in the second quarter.</p>
+                					<div class="trending-news-ico">
+                						<p><img src="${base}/res/images/ifa/big_liao.png" height="13" width="20">Repost 65</p>
+                						<p><img src="${base}/res/images/ifa/news_repost_ico.png">Comments 50</p>	
+                					</div>
+                				</div>
+                			</li>
+                		</ul>
+                	</div>
+                </div>
+                <div class="ifa-trending-row">
+                	<p class="ifa-trending-title"><span class="blue-box"></span>Following 
+                		<span class="ifa-more-ico"></span>
+                	</p>
+                	<div class="following-images-wrap swiper-container">
+                		<ul class="following-images-list swiper-wrapper">
+                			<li class="following-images-rows swiper-slide">
+                				<img class="following-personal-img" src="${base}/res/images/ifa/ifa1.png">
+                				<p class="following-personal-name">Kelly Ng</p>
+                			</li>
+                			<li class="following-images-rows swiper-slide">
+                				<img class="following-personal-img" src="${base}/res/images/ifa/ifa2.png">
+                				<p class="following-personal-name">Jacky Kay</p>
+                			</li>
+                			<li class="following-images-rows swiper-slide">
+                				<img class="following-personal-img" src="${base}/res/images/ifa/ifa3.png">
+                				<p class="following-personal-name">Shirley Lu</p>
+                			</li>
+                			<li class="following-images-rows swiper-slide">
+                				<img class="following-personal-img" src="${base}/res/images/ifa/ifa4.png">
+                				<p class="following-personal-name">Karen Chen</p>
+                			</li>
+                			<li class="following-images-rows swiper-slide">
+                				<img class="following-personal-img" src="${base}/res/images/ifa/ifa.png">
+                				<p class="following-personal-name">Edson He</p>
+                			</li>
+                			<li class="following-images-rows swiper-slide">
+                				<img class="following-personal-img" src="${base}/res/images/ifa/iaftouxiang.png">
+                				<p class="following-personal-name">Wenle Yu</p>
+                			</li>
+                			<li class="following-images-rows swiper-slide">
+                				<img class="following-personal-img" src="${base}/res/images/ifa/linshi_ifa_04.png">
+                				<p class="following-personal-name">Candy Clerk</p>
+                			</li>
+                			<li class="following-images-rows swiper-slide">
+                				<img class="following-personal-img" src="${base}/res/images/ifa/linshi_ifa_03.png">
+                				<p class="following-personal-name">Helen Chow</p>
+                			</li>
+                			<li class="following-images-rows swiper-slide">
+                				<img class="following-personal-img" src="${base}/res/images/ifa/linshi_ifa_02.png">
+                				<p class="following-personal-name">Hui Chen</p>
+                			</li>
+                			<li class="following-images-rows swiper-slide">
+                				<img class="following-personal-img" src="${base}/res/images/ifa/linshi_ifa_01.png">
+                				<p class="following-personal-name">Fiona Liu</p>
+                			</li>
+                		</ul>
+                		<div class="page_left swiper-slide following-left"></div>
+            			<div class="page_right swiper-slide following-right"></div>
+                	</div>
+                </div>
+                 
+                <div class="ifa-trending-row">
+                	<p class="ifa-trending-title"><span class="blue-box"></span><a class="ifa-trendinga-href" href="${base}/front/ifa/info/discover.do?type=topic">Hot discussions</a>
+                	<span class="ifa-more-ico"></span>
+                	</p>
+                	<div class="ifa-trending-discussing swiper-container">
+                		<ul class="ifa-discussing-ul swiper-wrapper">
+                			<li class="swiper-slide">
+                				<a href="${base}/front/ifa/info/discover.do?type=topic">
+	                				<img class="discussing-img" src="${base}/res/images/ifa/big_liao.png">
+	                				<p class="discussing-title">How's your Funds Portfolio doing?</p>
+	                				<p class="discussing-word">From Jerry's Corner</p>
+	                				<p class="discussing-posts">35 Posts</p>
+	                			</a>
+                			</li>
+                			<li class="swiper-slide">
+                				<a href="${base}/front/ifa/info/discover.do?type=topic">
+	                				<img class="discussing-img" src="${base}/res/images/ifa/big_liao.png">
+	                				<p class="discussing-title">You login to the web of GPIPE now.</p>
+	                				<p class="discussing-word">From Leo</p>
+	                				<p class="discussing-posts">43 Posts</p>
+	                			</a>
+                			</li>
+                			<li class="swiper-slide">
+                				<a href="${base}/front/ifa/info/discover.do?type=topic">
+	                				<img class="discussing-img" src="${base}/res/images/ifa/big_liao.png">
+	                				<p class="discussing-title">aHang Seng(HK) opened highe 23000.94</p>
+	                				<p class="discussing-word">From Keeny</p>
+	                				<p class="discussing-posts">58 Posts</p>
+                				</a>
+                			</li>
+                		</ul>
+                		<div class="page_left swiper-slide discussing-left"></div>
+            			<div class="page_right swiper-slide discussing-right"></div>
+                	</div>
+                </div>
+            </div>
+            
+        [#include "../../inc/foot_v2.html"/]
+        <!-- 弹出层 -->
+		<div class="ifa-space-popup">
+		    <div class="ifa-space-mask"></div>
+		    <div class="space-mask-wrap">
+		        <div class="space-mask">
+		            <a href="javascript:;" class="space-mask-close"></a>
+		             <ul style="width:100%;" class="">
+		                  <li style="">
+		                  	<div id="btn_trurnleft"  class="page_left" style="top: 10px;left: 70px;"></div>
+		                  </p>
+		                  <p id="p_cur_zs_num" number="0" class="space-mask-title">NASQAD</p>
+		                   <div id="btn_trurnright" class="page_right" style="top: 10px;right: 70px;"></div>
+		                  </li>
+		              </ul>
+		            <div class="space-mask-ifo" style="clear:both;">
+		             <p id="data-1" class="space-mask-content" style="float:left;font-size:28px;color:#00b920; padding: 20px 0px 20px 10px;">3069.82</p>
+		             <p style="float:left;  padding: 20px 10px 20px 10px;margin-top: 30px;background: url('${base}/res/images/world-market-up.png') no-repeat;" class="space-mask-content"></p>
+		             <p id="data-2"  style="float: left;  padding: 20px 0px;font-size:20px;color:#00b920;" class="space-mask-content">+10.49(+0.09%)</p>
+		             <ul class="mask-ifo-left" style="clear:both;width:100%">
+		                    <li style="width:100%;">
+								<div id="mian-chart" style="width:850px; height:350px;"></div>
+							</li>
+		                </ul>
+		                <ul class="mask-ifo-right" style="width:100%">
+		                    <li style="border-bottom: 1px solid #f0f0f0;padding:5px 0px 5px 0px;font-size:15px;margin-bottom:10px;"><p class="mask-ifo-title" style="width:50%; text-align:center;">今开</p><p id="data-3"  class="mask-ifo-work" style="color:#00b920;">3698.00</p></li>
+		                    <li style="border-bottom: 1px solid #f0f0f0;padding:5px 0px 5px 0px;font-size:15px;margin-bottom:10px;"><p class="mask-ifo-title" style="width:50%; text-align:center;">昨收</p><p id="data-4"  class="mask-ifo-work" >3708.00</p></li>
+		                    <li style="border-bottom: 1px solid #f0f0f0;padding:5px 0px 5px 0px;font-size:15px;margin-bottom:10px;"><p class="mask-ifo-title" style="width:50%; text-align:center;">最高</p><p id="data-5"  class="mask-ifo-work" style="color:#00b920;">3891.00</p></li>
+		                    <li style="border-bottom: 1px solid #f0f0f0;padding:5px 0px 5px 0px;font-size:15px;margin-bottom:10px;"><p class="mask-ifo-title" style="width:50%; text-align:center;">最低</p><p id="data-6" class="mask-ifo-work" style="color:Red;">3098.00</p></li>
+		                    <li style="border-bottom: 1px solid #f0f0f0;padding:5px 0px 5px 0px;font-size:15px;margin-bottom:10px;"><p class="mask-ifo-title" style="width:50%; text-align:center;">成交量</p><p id="data-7" class="mask-ifo-work" >123.67亿</p></li>
+		                    <li style="border-bottom: 1px solid #f0f0f0;padding:5px 0px 5px 0px;font-size:15px;margin-bottom:10px;"><p class="mask-ifo-title" style="width:50%; text-align:center;">成交额</p><p id="data-8" class="mask-ifo-work" >1024.89亿</p></li>
+		                    <li style="border-bottom: 1px solid #f0f0f0;padding:5px 0px 5px 0px;font-size:15px;margin-bottom:10px;"><p class="mask-ifo-title" style="width:50%; text-align:center;">市值</p><p id="data-9" class="mask-ifo-work" >31347亿</p></li>
+		                </ul>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		<input   type="hidden" id="hidloginresult" value="" />
+
+<script type="text/javascript">
+
+var _dateList='${dateList!}';
+var _checkList='${checkList!}';
+var _accountType="${accountType!}";
+
+	//验证登录后回调事件
+function callbackloginresult(json){
+	 	 seajs.use('jquery', function($){
+		 //	console.log(json);
+		 	var count=0;
+		 	$.each(json,function(i,n){
+			 	if(n.status="1"){
+			 	count++;
+		 	    }
+		 	})
+		 	if(count>0){
+		 	 setTimeout(function(){
+		       window.location.url= window.location.url+"&check="+1;
+		     },1000);
+		    }
+	    });
+ 	}
+ 	
+ 	var MEMBER_DEFDISPLAYCOLOR = "${defDisplayColor!}";
+	var DEFFORMATDATE = "${defFormatDate!}";
+    var IFASPACE_LANG_NODATA_TIPS = "[@lang_res k='global.nodata.tips'/]";
+     seajs.use('${base}/res/web/ifa/ifaInvestor.js');
+</script>

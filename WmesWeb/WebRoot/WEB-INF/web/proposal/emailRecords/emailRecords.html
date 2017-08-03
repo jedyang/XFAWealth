@@ -1,0 +1,101 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/community.css">
+<link rel="stylesheet" href="${base}/res/css/swiper.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<style>
+.myzone-notice-list{width:100%;}
+.myzone-notice-list li{margin-bottom:15px;border-bottom:1px dashed #e3e5e6;padding-bottom:15px;}
+.tble{width:100%;border-collapse: collapse;border-spacing: 0;display: table;margin-top:25px;}
+.tble td{padding:0 10px;height:66px;}
+.tble_th{background:#f6fafe;border-bottom:2px solid #c7e7fe;height:66px;}
+.weight{text-align: center;}
+.tble .funds{padding-left:4%;}
+.dialog-notice{
+    position: fixed;
+    top: 0px;
+    z-index: 999999;
+    padding-left: 100px;
+    margin-left: 70px;
+}
+.selectSector-title-sub{
+	float:left;
+	font-size: 14px;
+    padding-bottom: 15px;
+    color:#b7b5b5;
+    margin-left:25px;
+}
+.dispaly-active{
+	height: 100%;
+ 	width: calc(100% - 110px);
+}
+.wmes-ruturn{display:block};	
+</style>
+<div class="wmes-content">
+	<div ng-app="emailRecords" ng-controller="emailRecordsCtrl" class="wmes-notice-list-con ng-cloak">
+		<div class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='proposal.email.record.title'/]</div>
+		<table class="tble">
+			<tr class="tble_th">
+				<th style="width:25%;text-align: center;font-weight: bold;font-size: 14px;">[@lang_res k='proposal.email.record.table.th.sendedTime'/]</th>
+				<th style="width:25%;text-align: center;font-weight: bold;font-size: 14px;">[@lang_res k='proposal.email.record.table.th.from'/]</th>
+				<th style="width:25%;text-align: center;font-weight: bold;font-size: 14px;">[@lang_res k='proposal.email.record.table.th.to'/]</th>
+				<th style="width:25%;text-align: center;font-weight: bold;font-size: 14px;">[@lang_res k='proposal.email.record.table.th.title'/]</th>
+			</tr>
+			<tr id="{{items.id}}" ng-repeat="items in emailRecords">
+				<td style="text-align: center;" ng-bind="items.sendedTimeStr"></td>
+				<td style="text-align: center;" ng-bind="items.creator"></td>
+                <td style="text-align: center;">{{items.toMemberName}} <span ng-if="items.toEmailAddr!=null&&items.toEmailAddr!=''">( {{items.toEmailAddr}} )</span></td>
+                <td style="text-align: center;">
+                <a style="color:#2d80ce;" class="email-preview" data-to-email="{{items.toEmailAddr}}" data-content="{{items.toEmailContent}}" href="javascript:void(0)">
+                	{{items.toEmailTitle}} <span ng-if="items.proposalCreateTime!=null&&items.proposalCreateTime!=''">( {{items.proposalCreateTime}} )</span>
+                </a>
+                </td>
+			</tr>
+			<tr ng-if="emailRecords==null||emailRecords.length==0">
+				 <td colspan="4">
+				 	<div class="wmes-nodata-tips" style="display: block;">
+				 		<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+						<span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+				 	</div>
+				 </td>
+			</tr>
+		</table>
+		<div class="wmes-page">
+			<wmespage conf="emailRecordsConf"></wmespage>
+        </div>
+	</div>
+</div>
+<!-- preview email -->
+<div id="previewNoticeDialog" class="wmes-content-position dialog-notice" style="background: rgba(0,0,0,0.3);display:none;width:100%">
+	<div class="selectSector" style="left: 8%;box-shadow:0px 0px 8px rgba(255, 255, 255, 0);">
+		<div class="investment-wrap investment-hide" style="display:block">
+			<div class="investment-plan-wrap">
+			<p class="wmes-wrap-title tanchutitle schedule-add-title" style="text-align: left;">[@lang_res k='proposal.email.record.dialog.title'/]</p>
+				<div class="wmes-close"></div>
+				<div class="stepOne-rows-fillin">
+					<p style="width: 120px;" class="stepOne-rows-input-title">[@lang_res k='proposal.email.record.dialog.input.address'/] :</p>
+					<div style="margin-left: 140px;" class="stepOne-rows-text-wrap">
+                        <input class="stepOne-rows-input100 email-record-to-email" value="" readonly="readonly">
+                    </div>
+				</div>
+				<div class="stepOne-rows-fillin">
+					<p style="width: 120px;" class="stepOne-rows-input-title">[@lang_res k='proposal.email.record.dialog.input.title'/] :</p>
+					<div style="margin-left: 140px;" class="stepOne-rows-text-wrap">
+                        <input class="stepOne-rows-input100 email-dialog-title" value="" readonly="readonly">
+                    </div>
+				</div>
+				<div class="stepOne-rows-fillin">
+					<p style="width: 120px;" class="stepOne-rows-input-title">[@lang_res k='proposal.email.record.dialog.input.body'/] :</p>
+					<div style="margin-left: 140px;" class="stepOne-rows-text-wrap">
+                        <div class="notice-content dialog-notice-content" style="height: 350px;overflow: auto;padding: 10px;border-radius: 4px;border: 2px solid #d8d8d8;"></div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+var props = [@load_prop k=''/];
+	seajs.use('${base}/res/web/proposal/emailRecords/emailRecords.js');
+</script>

@@ -1,0 +1,203 @@
+[#include "../../../inc/head_v2.html"/]
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <style>
+        .wmes-logo {
+            height: 60px;
+            padding: 5px;
+            margin: 0 auto;
+            top: 0px;
+            background: #464342;
+            text-align: center;
+            position: fixed;
+            width: 80px;
+            z-index: 1000000;
+        }
+        .wmes-contentbox {
+            background: #ffffff;
+            padding-top: 5px;
+        }
+    </style>
+
+
+<div class="wmes-content">
+<div class="ifa_choose_condition" style="height::800px;">
+    <div class="container-fluid pd0" id="wmes_wraper">
+        <div class="r-side-container" style="margin-left:0px;">
+            <ul class="tab" id="tab-search">
+                <li id="tab-li-fixed" class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res  k='console.inverstor.account.list.tab.title'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+	                    <div class="row pd10">
+	                        <div class="col-md-4">
+	                        	<label for="txtKeyword">[@lang_res  k='console.inverstor.account.list.search.keyword'/]</label>
+	                        	<input type="text"  class="form-control" id="txtKeyword">
+	                        </div>
+	                        <div class="col-md-4">
+	                        	<button type="button" id="btnSearch" class="btn btn-primary">
+	                    			[@lang_res  k='global.query'/]</button>
+	               			</div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20">
+                        <button type="button" class="btn btn-blue-s" id="btnAdd">
+                            [@lang_res k='global.add'/]
+                        </button>
+                    </div>
+                    <div>
+                        <table id="tableList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+	                           <tr>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.nickName'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.accountNo'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.fromType'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.accountType'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.investType'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.baseCurrency'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.createBy'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.createTime'/]</th>
+	                            </tr>                                
+                            </tbody>
+                        </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+ </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var grid_selector = "#tableList";
+var pageSize = 10;
+</script>
+<script type="text/javascript">
+	$(function(){
+	
+	    //绑定查询按钮事件
+	    $("#btnSearch").click(function () {                
+	    	bindList(0);
+	    });
+	    bindList(0);
+	    
+	    //"增加"按钮事件 
+	    $('#btnAdd').click(function (){
+	        var url = '${base}/console/investor/account/input.do?datestr='+ new Date().getTime();
+	        showform("account-input","[@lang_res k='member.add'/]",url);
+	    });
+	    
+	});
+
+  
+	//分页绑定Table数据
+	function bindList(curPage){
+        $.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/investor/account/listJson.do?datestr='+new Date().getTime(),
+			data : {
+				'keyword': $("#txtKeyword").val(),'page':curPage+1,'rows':pageSize,'sort':'','order':''
+			},
+			success : function(json) {
+				var total = json.total;
+				var table = json.rows;
+								
+				$("#tableList tbody tr:gt(0)").empty();
+			  var tr = "";
+              var list = json.rows;
+              $.each(list, function (index, array) { //遍历json数据列					
+                  var id = array['id'] == null ? "" : array['id'];
+                  
+                  var nickName = array['nickName'] == null ? "" : array['nickName'];   
+                                                                
+                  var accountNo = (array['accountNo'] == null || array['accountNo'] == '' )? "[[@lang_res k='error.unrecorded' /]]" : array['accountNo'];    
+                                 
+                  var fromType = array['fromType'] == null ? "" : array['fromType'];                  
+                  if(fromType == "ifa"){
+                  	fromType = "[@lang_res  k='console.inverstor.account.options.fromType.ifa'/]";
+                  }else if(fromType == "self"){
+                  	fromType = "[@lang_res  k='console.inverstor.account.options.fromType.self'/]";
+                  }
+                  var accType = array['accType'] == null ? "" : array['accType'];
+                  if(accType == "I"){
+                  	accType = "[@lang_res  k='console.inverstor.account.options.accType.I'/]";
+                  }else if(accType == "J"){
+                  	accType = "[@lang_res  k='console.inverstor.account.options.accType.J'/]";
+                  }
+                  
+                  //alert(fromType); 
+                  var investType = array['investType'] == null ? "" : array['investType'];
+                  if(investType == "F"){
+                  	investType = "[@lang_res  k='console.inverstor.account.options.investType.F'/]";
+                  }else if(investType == "P"){
+                  	investType = "[@lang_res  k='console.inverstor.account.options.investType.P'/]";
+                  }
+                  
+                  var baseCurrency = array['baseCurrency'] == null ? "" : array['baseCurrency'];
+                  var creator = array['createByName'] == null ? "" : array['createByName'];
+                  var createTime = array['createTime'] == null ? "" : array['createTime'];
+                  
+                  var infoUrl = '${base}/console/investor/account/input.do?datestr='+ new Date().getTime() + "&id=" + id;
+                  
+                  tr += "<tr>"
+                      + "<td>" + nickName + "</td>"
+                      + "<td><a href='#' onclick='showform(\"inverstoraccount-"+id+"\",\""+accountNo+"\",\""+infoUrl+"\")'>" + accountNo + "</a></td>"
+                      + "<td>" + fromType + "</td>"
+                      + "<td>" + accType + "</td>"
+                      + "<td>" + investType + "</td>"
+                      + "<td>" + baseCurrency + "</td>"
+                      + "<td>" + creator + "</td>"
+                      + "<td>" + createTime + "</td>"                                        
+                      + "</tr>";
+                      
+                      //alert(tr);
+              });
+              $("#tableList tbody").append(tr);
+				
+				 $("#pagination").pagination(total, {
+                        callback: pageselectCallback,
+                        numDetail: '',
+                        items_per_page: pageSize,
+                        num_display_entries: 4,
+                        current_page: curPage,
+                        num_edge_entries: 2
+                    });
+			}
+		})
+		 //回调
+        function pageselectCallback(page_id, jq) {
+            bindList(page_id);
+        }
+	}
+	
+	function substring(str,len){
+		var rst = str;
+		if(str.length>len){
+			rst = str.substring(0,len) + '...';
+		}
+		return rst;
+	}
+
+</script>
+

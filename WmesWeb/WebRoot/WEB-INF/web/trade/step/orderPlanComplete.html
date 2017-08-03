@@ -1,0 +1,43 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+    <div class="wmes-content">
+        <div class="proposal-wrap">
+        	<p class="wmes-wrap-title" style="padding-bottom: 20px;">[@lang_res k='order.plan.create.portfolio.title'/]</p>
+			<ul class="createflow createflow_new">
+				<li class="prev"><span>1</span>[@lang_res k='order.plan.step.one.title'/]</li>
+				<div class=createflow_new_prev></div>
+				<li class="prev"><span>2</span>[@lang_res k='order.plan.step.two.title'/]</li>
+				<div class="createflow_new_prev" style="position: absolute;left: calc(66% - 17.5px);"></div>
+				<li class="now"><span>3</span>[@lang_res k='order.plan.step.three.title'/]</li>
+			</ul>
+            <div class="rebalance-summit-wrap">
+                <p class="rebalance-summit-title">
+                [#if memberType?? && memberType == 2 && orderPlan?? && orderPlan.authorized?? && orderPlan.authorized == '0']
+                	[@lang_res k='order.plan.rebalance.complate.submitted.1'/]
+                [#elseif memberType?? && memberType == 2 && orderPlan?? && orderPlan.authorized?? && orderPlan.authorized == '1']
+                	[@lang_res k='order.plan.rebalance.complate.submitted.3'/]
+                [#elseif memberType?? && memberType == 1 && orderPlan?? && orderPlan.finishStatus?? && orderPlan.finishStatus == '1']
+                	[@lang_res k='order.plan.rebalance.complate.submitted.2'/]
+                [#elseif memberType?? && memberType == 1 && orderPlan?? && orderPlan.finishStatus?? && orderPlan.finishStatus == '4']
+                	[@lang_res k='order.plan.rebalance.complate.submitted.0'/]
+                [/#if]
+                </p>
+                <div class="rebalance-summit-href">
+                    <p class="rebalance-summit-back">[@lang_res k='order.plan.rebalance.complate.backTo'/]  :</p>
+                    <a class="rebalance-summit-order" href="${base}/front/tradeRecord/orderPlanList.do">[@lang_res k='order.plan.rebalance.complate.orderInProcess'/]</a>
+                   [#if memberType?? && memberType == 2]
+                   		<a class="rebalance-summit-order" href="${base}/front/ifa/info/ifahome.do">[@lang_res k='order.plan.rebalance.complate.home'/]</a>
+                   [#elseif memberType?? && memberType == 1]
+                   		<a class="rebalance-summit-order" href="${base}/front/investor/home.do">[@lang_res k='order.plan.rebalance.complate.home'/]</a>
+                   [/#if]
+                </div>
+            </div>
+        </div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+seajs.use('jquery', function($){
+});
+</script> 

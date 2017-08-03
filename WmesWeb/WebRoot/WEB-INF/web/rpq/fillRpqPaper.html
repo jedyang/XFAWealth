@@ -1,0 +1,86 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<div class="wmes-content">
+	<div class="wmes-content-rpq">
+		<div class="ifa_choose_condition">
+			<a href="javascript:history.go(-1)">
+          		<span class="wmes-ruturn"></span>
+          	</a>
+			<p class="wmes-wrap-title">[@lang_res k='kyc.rpq.paper.title'/]</p>
+		</div>
+    <div class="fill-rpq-wrap">
+        <div class="fill-rpq-information">
+            <div class="fill-rpq-portrait">
+                <img src="${base}${(rpqPaper.iconUrl)!}">
+                <p class="fill-rpq-name">${(rpqPaper.name)!}</p>
+            </div>
+            <p class="fill-rpq-phone">[@lang_res k='kyc.rpq.paper.mobile.phone'/]: <span>[#if rpqPaper?? && rpqPaper.mobilePhone?? && rpqPaper.mobilePhone!='']${(rpqPaper.mobilePhone)!}[#else]-[/#if]</span></p>
+            <p class="fill-rpq-email">[@lang_res k='kyc.rpq.paper.email'/]: <span>${(rpqPaper.email)!'-'}</span></p>
+        </div>
+        <div class="OpenAccount_liucheng">
+          <ul class="fill-rpq-liucheng">
+              <li class="liucheng_kuai liucheng_orange"><div class="font_height">[@lang_res k='kyc.rpq.paper.step.one'/]</div></li>
+              <li>
+                <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_05.png"></div>
+              </li>
+              <li class="liucheng_kuai"><div class="font_height">[@lang_res k='kyc.rpq.paper.step.two'/]</div></li>
+              <li>
+                <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"></div>
+              </li>
+              <li class="liucheng_kuai"><div class="font_height">[@lang_res k='kyc.rpq.paper.step.three'/]</div></li>
+          </ul>
+        </div>
+        <div class="rpqContent">
+            <div class="rpqPageRemark">
+            	[#if rpqExam?exists && rpqExam.rpqPageRemark?exists] ${rpqExam.rpqPageRemark} [/#if]
+            </div>
+            [#if rpqExam?? && rpqExam.questionList?? && rpqExam.questionList?size gt 0]
+            <div class="rpqContentsRows" id="rpq_list">
+            	[#list rpqExam.questionList as quest]
+                <div class="wenti">
+                    <p>${quest.questTitle!''}<span class="alert_complete_quest" style="display:none;margin-left:20px;color:red">( [@lang_res k='kyc.rpq.paper.alert.complete.quest'/] )</span></p>
+                    <div class="wenti_xuanzhe">
+                        <ul class="BasicInfo_radio">
+                        	[#if quest.rqpExamItemList?exists && quest.rqpExamItemList?size gt 0 ]
+                        	[#list quest.rqpExamItemList as item]
+                            <li>
+                            	[#if item.checkFlag?? && item.checkFlag == '1']
+                            		<input type="radio" checked="checked" class="regular-radio" name="${quest.questId!}" id="${item.id!}" value="${item.scoreValue!}">
+                            	[#else]
+                            		<input type="radio" class="regular-radio" name="${quest.questId!}" id="${item.id!}" value="${item.scoreValue!}">
+                            	[/#if]
+                              <label for="${item.id}"></label>
+                              <span class="font_gray_left">${item.title!''} </span>
+                            </li>
+                            [/#list]
+                            [/#if]
+                        </ul>
+                    </div>     
+                </div>
+                [/#list]
+            </div>
+            [#else]
+            <div class="norpq_exam">[@lang_res k='kyc.rpq.paper.tips.not.found.exam'/]</div>
+            [/#if]
+        </div>
+        [#if rpqExam?exists]
+        <div class="rpq-button-wrap">
+            <a href="javascript:;" id="rpq_fill_cancel" pIndex="1" class="rpq-button-cancel">[@lang_res k='global.cancel'/]</a>
+            <a href="javascript:;" id="rpq_fill_next" class="rpq-button-next">[@lang_res k='global.next'/]</a>
+        </div>
+        <form id="form_fillrpq">
+	       	<input type="hidden" name="pageId" value="${rpqExam.rpqPageid!''}"/>
+	       	<input type="hidden" name="examId" value="${rpqExam.examId!''}"/>
+	       	<input id="rpq_score" type="hidden" name="score" value=""/>
+        </form>
+        [/#if]
+    </div>
+	</div>
+</div>
+    [#include "../inc/foot_v2.html"/] 
+<script type="text/javascript">
+	var base_root = '${base}';
+	var props = [@load_prop k=''/];
+	seajs.use('${base}/res/web/rpq/fillRpqPaper.js');
+</script>
+

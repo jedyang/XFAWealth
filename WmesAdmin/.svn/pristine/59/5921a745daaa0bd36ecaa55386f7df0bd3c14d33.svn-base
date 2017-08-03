@@ -1,0 +1,82 @@
+package com.fsll.wmes.group.service;
+
+import java.util.Map;
+
+import com.fsll.common.util.JsonPaging;
+import com.fsll.core.entity.SysAdmin;
+import com.fsll.wmes.entity.MemberGroup;
+
+public interface MemberGroupService {
+
+	/**
+	 *  客户分组数据获取
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param jsonPaging
+	 * @param langCode
+	 */
+	public JsonPaging getGroups(JsonPaging jsonPaging, String langCode);
+	
+	/**
+	 *  客户分组实体获取
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param id member_group.id
+	 */
+	public MemberGroup findById(String id);
+
+	/**
+	 *  客户分组实体保存
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param group member_group 实体
+	 */
+	public MemberGroup save(MemberGroup group);
+
+	/**
+	 *  客户组成员数据获取
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param jsonPaging
+	 * @param groupId member_group.id
+	 * @param keyWord 关键字模糊查询（客户名称，投资账户）
+	 * @param langCode
+	 */
+	public JsonPaging getGroupDetails(JsonPaging jsonPaging, String groupId, String keyWord, String langCode);
+
+	/**
+	 *  客户分组信息保存
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param group member_group 实体
+	 * @param admin sys_admin 当前管理员
+	 */
+	public Map<String, Object> saveGroup(MemberGroup group, SysAdmin admin);
+
+	/**
+	 *  客户分组状态修改
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param id member_group.id
+	 * @param isValid member_group.is_valid
+	 */
+	public Map<String, Object> updateGroup(String id, String isValid);
+
+	/**
+	 *  客户分组删除成员
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param id member_group_detail.id
+	 */
+	public Boolean delete(String id);
+
+	/**
+	 *  客户组添加成员
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param ids member_base.id字符串
+	 * @param groupId member_group.id
+	 */
+	public Map<String, Object> addMember(String ids, String groupId);
+
+}

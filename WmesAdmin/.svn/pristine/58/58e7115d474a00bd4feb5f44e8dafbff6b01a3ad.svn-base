@@ -1,0 +1,615 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>todo</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    	<link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	   <style type="text/css">
+	       .labelCss{width:100px;text-align:right;}
+	       .inputCss{width:200px;}
+	   </style>
+	</head>
+
+	<body>
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="right-side container-fluid">
+				<div class="r-side-container">
+					<ul class="tab" id="tab-search">
+						<li class="tab-li-crr">
+							<a href="javascript:;">[@lang_res k='console.todo.list.title'/]</a>
+						</li>
+						<!--<li>
+							<a href="javascript:;">[@lang_res k='console.todo.list.tab.myTitle'/]</a>
+						</li>-->
+					</ul>
+					<div class="clear"></div>
+					<div class="tab_wrap">
+						<!-- tab 1 -->
+						<form class="form-inline" style="display: block;">
+							<div>
+								<div class="row pd10">
+									<!-- 标题 -->
+									<div class="col-md-4">
+										<label for="txtTitle" class="labelCss">
+											[@lang_res k='console.todo.list.table.title.title'/]
+										</label>
+										<input type="text" class="form-control todoSearch inputCss" id="txtTitle">
+									</div>
+									<!-- 接收人，属于谁的待办待阅 -->
+									<div class="col-md-4">
+										<label for="txtToDoOwnerName" class="labelCss">
+											[@lang_res k='console.todo.list.table.title.owner'/]
+										</label>
+										<input type="text" class="form-control todoSearch inputCss" id="txtToDoOwnerName">
+									</div>
+									<!-- 对应模块 -->
+									<div class="col-md-4">
+										<label for="txtModuleType" class="labelCss">
+											[@lang_res k='console.todo.list.table.title.moduleType'/]
+										</label>
+										<input type="text" class="form-control todoSearch inputCss" id="txtModuleType">
+									</div>
+								</div>
+								<div class="row pd10">
+									<!-- 消息类型 -->
+									<div class="col-md-4">
+										<label for="selType" class="labelCss">
+											[@lang_res k='console.todo.list.table.title.type'/]
+										</label>
+										<select id="selType" class="inputCss form-control todoSearch">
+											<option value='' selected="selected">[@lang_res k='global.all'/]</option>
+											<option value='1'>
+												[@lang_res k='console.todo.list.table.title.type.1'/]
+											</option>
+											<option value='2'>
+												[@lang_res k='console.todo.list.table.title.type.2'/]
+											</option>
+											<option value='3'>
+												[@lang_res k='console.todo.list.table.title.type.3'/]
+											</option>
+										</select>
+									</div>
+									<!-- 阅读状态 -->
+									<div class="col-md-4">
+										<label for="selIsRead" class="labelCss">
+											[@lang_res k='console.todo.list.table.title.isRead'/]
+										</label>
+										<select id="selIsRead" class="form-control todoSearch inputCss">
+											<option value='' selected="selected">[@lang_res k='global.all'/]</option>
+											<option value='1'>
+												[@lang_res k='console.todo.options.isread.1'/]
+											</option>
+											<option value='0'>
+												[@lang_res k='console.todo.options.isread.0'/]
+											</option>
+										</select>
+									</div>
+									<!-- 查询按钮 -->
+									<div class="col-md-2">
+										<button type="button" id="btnToDoSearch" class="btn btn-primary">
+											 [@lang_res k='console.todo.list.btn.search'/]
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="clear"></div>
+							<div class="pdt20">
+							</div>
+							<div>
+								<table id="todoList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+									<tbody>
+										<tr>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.title'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.from'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.owner'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.type'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.moduleType'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.isRead'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.createTime'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='global.operate'/]
+											</th>
+										</tr>
+									</tbody>
+								</table>
+
+								<nav class="pull-right">
+									<!-- log分页 -->
+									<ul id='todoPagination' class="pagination pagination-sm">
+
+									</ul>
+								</nav>
+								<div class="clear"></div>
+							</div>
+						</form>
+						
+						<!-- myTodoToread -->
+						<!--<form class="form-inline" style="display: none;">
+							<div>
+								<div class="row pd10">
+									 标题 
+									<div class="col-md-4">
+										<label for="txtMyTitle" class="labelCss">
+											[@lang_res k='console.todo.list.table.title.title'/]
+										</label>
+										<input type="text" class="form-control toMySearch inputCss" id="txtMyTitle">
+									</div>
+									 接收人，属于谁的待办待阅 
+									<div class="col-md-4">
+										<label for="txtToDoOwnerName" class="labelCss">
+											[@lang_res k='console.todo.list.table.title.owner'/]
+										</label>
+										<input type="text" class="form-control toMySearch inputCss" id="txtToDoOwnerName">
+									</div>
+									 对应模块 
+									<div class="col-md-4">
+										<label for="txtMyModuleType" class="labelCss">
+											[@lang_res k='console.todo.list.table.title.moduleType'/]
+										</label>
+										<input type="text" class="form-control toMySearch inputCss" id="txtMyModuleType">
+									</div>
+								</div>
+								<div class="row pd10">
+									 消息类型 
+									<div class="col-md-4">
+										<label for="selMyType" class="labelCss">
+											[@lang_res k='console.todo.list.table.title.type'/]
+										</label>
+										<select id="selMyType" class="form-control toMySearch inputCss">
+											<option value='' selected="selected"></option>
+											<option value='1'>
+												[@lang_res k='console.todo.list.table.title.type.1'/]
+											</option>
+											<option value='2'>
+												[@lang_res k='console.todo.list.table.title.type.2'/]
+											</option>
+											<option value='3'>
+												[@lang_res k='console.todo.list.table.title.type.3'/]
+											</option>
+										</select>
+									</div>
+									 阅读状态 
+									<div class="col-md-4">
+										<label for="selMyIsRead" class="labelCss">
+											[@lang_res k='console.todo.list.table.title.isRead'/]
+										</label>
+										<select id="selMyIsRead" class="form-control toMySearch inputCss">
+											<option value='' selected="selected"></option>
+											<option value='1'>
+												[@lang_res k='console.todo.options.isread.1'/]
+											</option>
+											<option value='0'>
+												[@lang_res k='console.todo.options.isread.0'/]
+											</option>
+										</select>
+									</div>
+									 查询按钮 
+									<div class="col-md-2">
+										<button type="button" id="btnToMySearch" class="btn btn-primary">
+											 [@lang_res k='console.todo.list.btn.search'/]
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="clear"></div>
+							<div class="pdt20">
+							</div>
+							<div>
+								<table id="myList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+									<tbody>
+										<tr>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.title'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.from'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.owner'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.type'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.moduleType'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.isRead'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.todo.list.table.title.createTime'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='global.operate'/]
+											</th>
+										</tr>
+									</tbody>
+								</table>
+
+								<nav class="pull-right">
+									 log分页 
+									<ul id='myPagination' class="pagination pagination-sm">
+
+									</ul>
+								</nav>
+								<div class="clear"></div>
+							</div>
+						</form>
+						--><!-- tab 2 
+						<form class="form-inline" style="display: none;">
+							<div>
+								<div class="row pd10">
+									<div class="col-md-4">
+										<label for="txtToReadOwnerId">
+											[@lang_res k='console.toread.list.search.owner'/]
+										</label>
+										<input type="text" class="form-control toreadSearch" id="txtToReadOwnerId">
+									</div>
+									<div class="col-md-4">
+										<label for="selToReadStatus">
+											[@lang_res k='console.toread.list.search.status'/]
+										</label>
+										<select id="selToReadStatus" class="form-control toreadSearch">
+											<option value='1'>
+												[@lang_res k='console.todo.options.status.1'/]
+											</option>
+											<option value='2'>
+												[@lang_res k='console.todo.options.status.2'/]
+											</option>
+											<option value='3'>
+												[@lang_res k='console.todo.options.status.3'/]
+											</option>
+										</select>
+									</div>
+									<div class="col-md-4">
+										<button type="button" id="btnToReadSearch" class="btn btn-primary">
+											 [@lang_res k='console.toread.list.btn.search'/]
+										</button>
+									</div>
+								</div>
+
+							</div>
+							<div class="clear"></div>
+							<div class="pdt20">
+							</div>
+							<div>
+								<table id="toreadList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+									<tbody>
+										<tr>
+											<th class="table-head">
+												[@lang_res k='console.toread.list.table.title.title'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.toread.list.table.title.from'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.toread.list.table.title.owner'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.toread.list.table.title.createTime'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.toread.list.table.title.status'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='global.operate'/]
+											</th>
+										</tr>
+									</tbody>
+								</table>
+
+								<nav class="pull-right">
+									
+									<ul id='toreadPagination' class="pagination pagination-sm">
+
+									</ul>
+								</nav>
+								<div class="clear"></div>
+							</div>
+						</form>-->
+					</div>
+				</div>
+			</div>
+		</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script type="text/javascript">
+var grid_selector = "#todoList";
+var pageSize = 10;
+</script>
+<script type="text/javascript">
+var myType="0";
+$(function() {
+
+	//绑定查询按钮事件
+	$("#btnToDoSearch").click(function() {
+		bindToDoList(0);
+	});
+
+	//绑定查询按钮事件
+	$("#btnToMySearch").click(function() {
+		bindToMyList(0);
+	});
+	
+	setAutoSearch('.todoSearch', bindToDoList, 0);
+	setAutoSearch('.toMySearch', bindToMyList, 0);
+	bindToDoList(0);
+	bindToMyList(0);
+});
+
+//分页绑定Table数据
+function bindToDoList(curPage) {
+	myType = "0";
+	var title = $("#txtTitle").val();
+	var ownerName = $("#txtToDoOwnerName").val();
+	var moduleType = $("#txtModuleType").val();
+	var type = $("#selType").val();
+	var isRead = $("#selIsRead").val();
+	$.ajax({
+		type : 'post',
+		datatype : 'json',
+		url : '${base}/console/webread/listJson.do?datestr=' + new Date().getTime(),
+		data : {
+			'title' : title,
+			'ownerName' : ownerName,
+			'moduleType' : moduleType,
+			'type' : type,
+			'isRead' : isRead,
+			'myType' : myType,
+			'page' : curPage + 1,
+			'rows' : pageSize,
+			'sort' : '',
+			'order' : ''
+		},
+		success : function(json) {
+			var total = json.total;
+			var table = json.rows;
+
+			$("#todoList tbody tr:gt(0)").empty();
+			var tr = "";
+			var list = json.rows;
+
+			$.each(list, function(index, array) { //遍历json数据列
+				var url = '${base}/console/webread/detail.do?id='+array['id'];
+				var title = array['title'] == null ? "" : array['title'];
+				var fromMemberName = array['fromMemberName'] == null ? "" : array['fromMemberName'];
+				var ownerName = array['ownerName'] == null ? "" : array['ownerName'];
+				var createTime = array['createTime'] == null ? "" : array['createTime'];
+				var isRead = "";
+				var type = array['type'] == null ? "" : array['type'];
+				var moduleType = array['moduleType'] == null ? "" : array['moduleType'];
+				if (array['isRead'] == 1) {
+					isRead = "[@lang_res k='console.todo.options.isread.1'/]";
+				} else if (array['isRead'] == 0) {
+					isRead = "[@lang_res k='console.todo.options.isread.0'/]";
+				}  else {
+					isRead = "";
+				}
+				if(type == 1){
+					type = "[@lang_res k='console.todo.list.table.title.type.1'/]";
+				}else if(type == 2){
+					type = "[@lang_res k='console.todo.list.table.title.type.2'/]";
+				}else if(type == 3){
+					type = "[@lang_res k='console.todo.list.table.title.type.3'/]";
+				}
+				var url = '${base}/console/webread/detail.do?isAll=1&id=' + array['id'];
+				tr += "<tr><td>" + title + "</td><td>" 
+					+ fromMemberName + "</td><td>" 
+					+ ownerName + "</td><td>" 
+					+ type + "</td><td>" 
+					+ moduleType + "</td><td>" 
+					+ isRead + "</td><td>"
+					+ createTime + "</td><td>"
+					+ "<a href='#' onclick='showform(\"" + array['id'] + "\",\"" + title + "\",\"" + url + "\")'>"
+					+ "<i class='glyphicon glyphicon-eye-open'></i>&nbsp;[@lang_res k='global.view'/]</a></td></tr>";
+			});
+			$("#todoList tbody").append(tr);
+
+			$("#todoPagination").pagination(total, {
+				callback : pageselectCallback,
+				numDetail : '',
+				items_per_page : pageSize,
+				num_display_entries : 4,
+				current_page : curPage,
+				num_edge_entries : 2
+			});
+		}
+	})
+	//回调
+	function pageselectCallback(page_id, jq) {
+		bindToDoList(page_id);
+	}
+}
+	
+//分页绑定Table数据
+function bindToMyList(curPage) {
+	myType = "1";
+	var title = $("#txtMyTitle").val();
+//	var ownerName = $("#txtToDoOwnerName").val();
+	var moduleType = $("#txtMyModuleType").val();
+	var type = $("#selMyType").val();
+	var isRead = $("#selMyIsRead").val();
+	$.ajax({
+		type : 'post',
+		datatype : 'json',
+		url : '${base}/console/webread/listJson.do?datestr=' + new Date().getTime(),
+		data : {
+			'title' : title,
+//			'ownerName' : ownerName,
+			'moduleType' : moduleType,
+			'type' : type,
+			'isRead' : isRead,
+			'myType' : myType,
+			'page' : curPage + 1,
+			'rows' : pageSize,
+			'sort' : '',
+			'order' : ''
+		},
+		success : function(json) {
+			var total = json.total;
+			var table = json.rows;
+
+			$("#myList tbody tr:gt(0)").empty();
+			var tr = "";
+			var list = json.rows;
+
+			$.each(list, function(index, array) { //遍历json数据列
+				var url = '${base}/console/webread/detail.do?id='+array['id'];
+				var title = array['title'] == null ? "" : array['title'];
+				var fromMemberName = array['fromMemberName'] == null ? "" : array['fromMemberName'];
+				var ownerName = array['ownerName'] == null ? "" : array['ownerName'];
+				var createTime = array['createTime'] == null ? "" : array['createTime'];
+				var isRead = "";
+				var type = array['type'] == null ? "" : array['type'];
+				var moduleType = array['moduleType'] == null ? "" : array['moduleType'];
+				if (array['isRead'] == 1) {
+					isRead = "[@lang_res k='console.todo.options.isread.1'/]";
+				} else if (array['isRead'] == 0) {
+					isRead = "[@lang_res k='console.todo.options.isread.0'/]";
+				}  else {
+					isRead = "";
+				}
+				if(type == 1){
+					type = "[@lang_res k='console.todo.list.table.title.type.1'/]";
+				}else if(type == 2){
+					type = "[@lang_res k='console.todo.list.table.title.type.2'/]";
+				}else if(type == 3){
+					type = "[@lang_res k='console.todo.list.table.title.type.3'/]";
+				}
+				var url = '${base}/console/webread/detail.do?isAll=1&id=' + array['id'];
+				tr += "<tr><td>" + title + "</td><td>" 
+					+ fromMemberName + "</td><td>" 
+					+ ownerName + "</td><td>" 
+					+ type + "</td><td>" 
+					+ moduleType + "</td><td>" 
+					+ isRead + "</td><td>"
+					+ createTime + "</td><td>"
+					+ "<a href='#' onclick='showform(\"" + array['id'] + "\",\"" + title + "\",\"" + url + "\")'>"
+					+ "<i class='glyphicon glyphicon-eye-open'></i>&nbsp;[@lang_res k='global.view'/]</a></td></tr>";
+			});
+			$("#myList tbody").append(tr);
+
+			$("#myPagination").pagination(total, {
+				callback : pageselectCallback,
+				numDetail : '',
+				items_per_page : pageSize,
+				num_display_entries : 4,
+				current_page : curPage,
+				num_edge_entries : 2
+			});
+		}
+	})
+	//回调
+	function pageselectCallback(page_id, jq) {
+		bindToDoList(page_id);
+	}
+}
+
+	//分页绑定Table数据
+/*	function bindToReadList(curPage) {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/toread/listJson.do?datestr=' + new Date().getTime(),
+			data : {
+				'ownerId' : $("#txtToReadOwnerId").val(),
+				'status' : $("#selToReadStatus").val(),
+				'page' : curPage + 1,
+				'rows' : pageSize,
+				'sort' : '',
+				'order' : ''
+			},
+			success : function(json) {
+				var total = json.total;
+				var table = json.rows;
+
+				$("#toreadList tbody tr:gt(0)").empty();
+				var tr = "";
+				var list = json.rows;
+				$.each(list, function(index, array) { //遍历json数据列
+
+					var title = array['title'] == null ? "" : array['title'];
+					var fromMemberName = array['fromMemberName'] == null ? "" : array['fromMemberName'];
+					var ownerName = array['ownerName'] == null ? "" : array['ownerName'];
+					var createTime = array['createTime'] == null ? "" : array['createTime'];
+					var status = "";
+					if (array['status'] == 1) {
+						status = "[@lang_res k='console.todo.options.status.1'/]";
+					} else if (array['status'] == 2) {
+						status = "[@lang_res k='console.todo.options.status.2'/]";
+					} else if (array['status'] == 3) {
+						status = "[@lang_res k='console.todo.options.status.3'/]";
+					} else {
+						status = "";
+					}
+					var url = '${base}/console/toread/detail.do?isAll=1&id=' + array['id'];
+					tr += "<tr><td>" + title + "</td>" + "<td>" + fromMemberName + "</td>" + "<td>" + ownerName + "</td>" + "<td>" + createTime + "</td>" + "<td>" + status + "</td><td><a href='#' onclick='showform(\"" + array['id'] + "\",\"" + title + "\",\"" + url + "\")'><i class='glyphicon glyphicon-eye-open'></i>&nbsp;查看</a><td/></tr>";
+				});
+				$("#toreadList tbody").append(tr);
+
+				$("#toreadPagination").pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : pageSize,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+			}
+		})
+		//回调
+		function pageselectCallback(page_id, jq) {
+			bindToDoList(page_id);
+		}
+	}*/			
+
+	function showform(id) {
+		BootstrapDialog.show({
+			title : "[@lang_res k='console.todo.list.table.title.title'/]",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="no" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="${base}/console/webread/detail.do?id='+id+'"></iframe></div>').load(),
+			buttons : [{
+					label : "[@lang_res k='global.close'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+			}]
+		});
+		
+		//window.location.href = '${base}/console/webread/detail.do?id='+id;
+	}
+</script>
+	</body>
+</html>

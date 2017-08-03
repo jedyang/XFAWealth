@@ -1,0 +1,261 @@
+<!-- 
+功能名：基金列表选择窗
+用途： 投资策略、组合的基金选择
+弹出窗尺寸：1200x600
+
+调用前提：
+1）父窗口定义ids对象，用于保存所选的基金id值
+2）父窗口定义popupWinReturn的隐藏对象，用于选择了新基金后，回调父窗口的基金列表刷新函数
+3）父窗口定义popupWinReturn的click事件，父窗口的基金列表刷新函数
+
+输入：
+view    - true|false    只读模式
+select  - true|false    选择模式（目前固定为false）
+regions - 地区编码列表，用逗号分隔
+sectors - 领域编码列表，用逗号分隔
+types   - 基金类型编码列表，用逗号分隔
+
+输出：
+1）把所选的基金id值追加到父窗口的ids对象
+
+调用例子：
+http://localhost/wmes/front/fund/info/getFundListForAllocation.do?view=true&select=true&regions=Region_Asia_01,Region_China,Region_BRIC&sectors=fund_sector_02,fund_sector_03,fund_sector_04,fund_sector_07
+ -->
+<script>
+    var base_root = '${base}';
+    var lang = '${Session["_LANG_CODE_"]!}';
+    var lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+    if(lang=='en'){
+        lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_EN.js";  
+    }else if(lang=='tc'){
+        lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_TC.js";
+    }else if(lang=='sc'){
+        lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+    }    
+</script>
+<script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+<script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+<script type="text/javascript" src="${base}/res/third/layer/layer.js"></script>
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<style type="text/css">
+.w {width:6%;white-space:nowrap;padding:0px 5px 0px 5px;text-align:center;}
+.w2 {width:6%;padding:0px 5px 0px 5px;text-align:center;}
+.action_w {width:7%;white-space:nowrap;padding:0px 0px 0px 0px;text-align:center;}
+td {
+text-align:center; /*设置水平居中*/
+vertical-align:middle;/*设置垂直居中*/
+}
+.btn_middle_div{ clear:both; text-align:center;}
+.btn_middle{ width:100px; height:35px;z-index: 13; line-height:35px; color:#fff; font-size:16px; text-align:center; background:#2d80ce; border-radius:3px; display:inline-block;text-decoration:none;}
+
+.cart {position:fixed;z-index:10; bottom:100px; right:100px; cursor:pointer; background-color:#3a87ad; color:white; width:100px;height:100px;border-radius:50px;text-align:center;font-weight:bold;}
+.cart p{font-size:35px;margin:20 0 0 0px}
+.cart span{font-size:14px;}
+</style>
+	<table class="funds_search_information" style="width:100%;position:relative;z-index:1;">
+		<tbody>
+			<tr class="funds_search_th" style="width:25%;">
+			    [#if (select?? && select=="true") ]<th class="w"></th>[/#if]
+				<th class="w" style="width:15%;text-align:center;">[@lang_res k='fund.info.fundName'/] </th>
+				<th class="w">[@lang_res k='fund.info.riskrating'/]</th>
+				<th class="w">[@lang_res k='fund.info.currency'/]</th>
+                <th class="w">[@lang_res k='fund.info.RevalationDate'/]</th>
+				<th class="w2">[@lang_res k='fund.info.LastNAV'/]</th>
+				<th class="w2">[@lang_res k='fund.info.cumPerMon_1'/]</th>
+                <th class="w2">[@lang_res k='fund.info.cumPerMon_3'/]</th>
+                <th class="w2">[@lang_res k='fund.info.cumPerMon_6'/]</th>
+                <th class="w">[@lang_res k='fund.info.YTD'/]</th>
+                <th class="w2">[@lang_res k='fund.info.cumPerYr_1'/]</th>
+                <!-- <th class="w2">[@lang_res k='fund.info.cumPerYr_3'/]</th>
+                <th class="w2">[@lang_res k='fund.info.cumPerYr_5'/]</th>
+                <th class="w">[@lang_res k='fund.info.Launch'/]</th> -->
+                <th class="action_w" style="text-align:center;">[@lang_res k='global.action'/]</th>
+			</tr>
+            [#if fundInfoList?? && fundInfoList?size gt 0]
+			[#list fundInfoList as fundList]
+			[#if fundList?? && fundList.fundInfo??]
+			<tr>
+			    [#if (select?? && select=="true") ]
+			    <td><input type="checkbox" name="selFund" value="${fundList.fundInfo.id}"></td>
+			    [/#if]
+				<td class="funds_search_name">
+				<!-- <a href="javascript:void(0)" onclick="fundDetail('${base}/front/fund/info/fundsdetail.do?id=[#if fundList?? && fundList.fundInfo??]${fundList.fundInfo.id!}[/#if]')" style="color:#000000"> -->
+				<a class="viewRec" style="display:inline-block;overflow:hidden;" href="${base}/front/fund/info/fundsdetail.do?id=${fundList.fundInfo.id}" data-id="${fundList.fundInfo.id}">
+				${fundList.fundName!""}
+				</a>
+				</td>
+				<td>${fundList.fundInfo.riskLevel!"-"}</td><!-- 风险评级 -->
+				<td>${fundList.fundCurrency!""}</td>
+                <td class="w">[@date_fmt  s=fundList.fundInfo.lastNavUpdate /]</td>
+				<td>[@num_fmt s=fundList.fundInfo.lastNav /]</td>
+                <td class="w"><span class="">[@num_color  s=fundList.fundReturnOneMonth /]</span></td>
+                <td class="w"><span class="">[@num_color  s=fundList.fundReturnThreeMonth /]</span></td>
+                <td class="w"><span class="">[@num_color  s=fundList.fundReturnSixMonth /]</span></td>
+                <td class="w"><span class="">[@num_color  s=fundList.fundReturnYTD /]</span></td>
+                <td class="w"><span class="">[@num_color  s=fundList.fundReturnOneYear /]</span></td>
+                <!-- <td class="w"><span class="[#if fundList.fundReturnThreeYear lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList.fundReturnThreeYear!"-"}</span></td>
+                <td class="w"><span class="[#if fundList.fundReturnFiveYear lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList.fundReturnFiveYear!"-"}</span></td>
+                <td class="w"><span class="[#if fundList.fundReturnLaunch lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList.fundReturnLaunch!"-"}</span></td> -->
+                <td style="padding-left:0px;" nowrap>
+                    [#if !(view?? && view=="true") ]
+                    <!-- <a class="deleteRec" href="javascrpit:;"><img style="width:21px;height:21px;" src="${base}/res/images/fund/delete_ico.png" /></a>
+                    <span class="deleteRec funds_delete" title="[@lang_res k='fund.info.delete'/]"></span> -->
+                    [/#if]
+                    [#if showCart?? && showCart=="true" ] 
+                    <span class="addCart funds_cart2" title="[@lang_res k='fund.info.shoppingCart'/]"></span>
+                    [/#if]
+                    [#if fundList.followStatus?? && fundList.followStatus == '1']
+                    <span class="funds_heart funds_heart_active funds_heart${fundList.fundId!}"  followFlag="Delete" fundId="${fundList.fundId!}" productId="${fundList.productId!}" title="[@lang_res k='fund.info.favourites'/]"></span>
+                    [#else]
+                    <span class="funds_heart funds_heart${fundList.fundId!}"  followFlag="Follow" fundId="${fundList.fundId!}" productId="${fundList.productId!}" title="[@lang_res k='fund.info.favourites'/]"></span>
+                    [/#if]
+                    <!-- <span class="viewRec funds_view" title="[@lang_res k='fund.info.view'/]" data-id="${fundList.fundInfo.id}"></span> -->
+                </td>
+			</tr>
+			[/#if]
+			[/#list]
+			[/#if]
+			[#if (select?? && select=="true") ]
+			<tr>
+			    <td colspan="15">
+			      <div class="btn_middle_div">
+			          <a href="javascript:;" id="btnOK" class="btn_middle" style="color:#fff;">[@lang_res k='global.confirm'/]</a>
+			          <a href="javascript:window.close();" id="btnCancel" class="btn_middle" style="color:#fff;">[@lang_res k='global.cancel'/]</a>
+			      </div>
+			    </td>
+			</tr>
+			[/#if]
+		</tbody>
+	</table>
+	
+<div id="cart" class="cart" style="display:none;">
+    <p>+</p>
+    <span>Portfolio</span>
+</div>
+<script  type="text/javascript">
+seajs.use(['jquery','layer'], function($){
+    //require('layer');
+    var base_root = '${base}';
+    /*
+    $(".viewRec").on("click",function(){
+        var id=$(this).attr("data-id");
+        var url = base_root+"/front/fund/info/fundsdetail.do?id="+id;
+        openResWin(url,1000,600,"fundSelector");
+    });*/
+    $(".deleteRec").on("click",function(){
+        $(this).parent().parent().remove();
+    });
+	function deleteTr(nowTr){ 
+	    //多一个parent就代表向前一个标签, 
+	    // 本删除范围为<td><tr>两个标签,即向前两个parent 
+	    //如果多一个parent就会删除整个table 
+	    $(nowTr).parent().parent().remove(); 
+	}
+	
+	function openResWin(url,width,height,id){ 
+       var myw = screen.availWidth;   //定义一个myw，接受到当前全屏的宽    
+       var myh = screen.availHeight;  //定义一个myw，接受到当前全屏的高   
+       if (width>myw) width = myw;
+       if (height>myh) height = myh;
+       
+       var top = (myh-height)/2-(window.screen.height-myh)/2;
+       if (top<0) top = 0;
+       
+       var left = (myw-width)/2-(window.screen.width-myw)/2;
+       if (left<0) left = 0;
+       //window.open(url,id,"height="+height+", width="+width+", top="+top+", left="+left+",location=no,menubar=no,toolbar=no,status=no,resizable=yes,scrollbars=yes");
+       var winid = parseInt(Math.random()*10000000000)+"";
+       window.open(url,winid,"height="+height+", width="+width+", top="+top+", left="+left+",location=no,menubar=no,toolbar=no,status=no,resizable=yes,scrollbars=yes");   
+    }
+    
+    $(".addCart").on("click",function(){
+        alert("Add to cart.");
+    });
+    $("#cart").on("click",function(){
+        $("#btnOK").click();
+    });
+    $("#btnOK").on("click",function(){
+        var id = "";
+        $("input:checkbox[name='selFund']:checked").each(function() {
+            if (id.length>0) id += ",";
+                id += $(this).attr("value");
+　　　　});
+        
+        if (!id){
+            //alert("Please select a fund.");
+            layer.alert("[@lang_res k='fund.selector.pleaseSelect'/]");
+            return;
+        }
+        if (!window.opener){
+            //alert("Getting opener unsuccessfully.\nThe result can not be return:\n"+id);
+            layer.alert("[@lang_res k='fund.selector.openerError'/]"+id);
+            return;
+        }
+        
+        //获取父窗口的id对象，添加新id值
+        var parent_parm_ids = window.opener.document.getElementById("ids");
+        if (!parent_parm_ids){
+            //alert("Getting opener object unsuccessfully.\nThe result can not be return:\n"+id);
+            layer.alert("[@lang_res k='fund.selector.openerObjError'/]"+id);
+            return;
+        } 
+        var _ids_ = "";
+        try{
+            _ids_ = parent_parm_ids.value;
+        }catch(e){
+            _ids_ = "";
+        }
+        if (_ids_.length>0)
+            _ids_ += ","+id;
+        else _ids_ = id;
+        //alert(_ids_);
+        parent_parm_ids.value=_ids_;
+        
+        //alert(parent_parm_ids.value);
+        //调用父窗口的基金列表刷新方法
+        window.opener.document.getElementById("popupWinReturn").click();
+        window.close();
+    });
+    
+    // 收藏
+    $("body").on("click",".funds_heart",function(){
+        var loginVal = "${Session["_FRONT_USER_LOGIN_"]!}",
+            _this = $(this),
+            status  = _this.attr("followFlag"),
+            fundId = _this.attr("fundId"),
+            productId = _this.attr("productId");
+        //alert(loginVal);
+        if(loginVal && loginVal.length>1){
+            $.ajax({
+                url:base_root+"/front/fund/info/setFoundCollection.do?r="+Math.random(),
+                //data:{opType:status,fundId:fundId},
+                data:{opType:status,productId:productId},
+                dataType:"json",
+                type:"get",
+                success:function(data){
+                    if(data.result){
+                        if(status == 'Delete'){
+                            $(".funds_heart" + fundId).removeClass("funds_heart_active");
+                            $(".funds_heart" + fundId).attr("followFlag",'Follow');
+                            layer.msg("[@lang_res k='favour.remove'/]");
+                        }else{
+                            $(".funds_heart" + fundId).addClass("funds_heart_active");
+                            $(".funds_heart" + fundId).attr("followFlag",'Delete');
+                            layer.msg("[@lang_res k='favour.add'/]");
+                        }
+                    }
+                },
+                error:function(){
+                    //alert("error!");
+                    layer.alert("[@lang_res k='error.errorMessage'/]");
+                }
+            })
+        }else{
+            //alert('Please login first.');
+            layer.alert("[@lang_res k='error.noLogin'/]");
+            //window.parent.location.href=base_root+"/front/viewLogin.do?r="+Math.random();
+            return;
+        }       
+    })
+});
+</script>

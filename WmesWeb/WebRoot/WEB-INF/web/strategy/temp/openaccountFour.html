@@ -1,0 +1,44 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/openaccount.css">
+    <div class="wmes-top">
+        <a href="javascript:;" class="header-over">Open Account</a>
+    </div>
+    <div class="wmes-content">
+        <img src="${base}/res/images/allimg/openaccount/04.png" style="width:100%;">
+        <div class="OpenAccount_tab" style="background:white;margin:0px;width:80%;    margin-top: -5px;    padding: 0px 10%;">
+              <ul>
+                  <li>
+                  	<a class="now" href="javascript:;">Account details</a>
+                  </li>
+                  <li>
+                  	<a href="javascript:;">Main applicant's info</a>
+                  </li>
+                  <li>
+                  	<a href="javascript:;">Bank account detail</a>
+                  </li>
+              </ul>
+        </div>
+        <div class="contents">
+        	<div>
+        		<a href="${base}/front/strategy/info/openaccountFive.do"><img src="${base}/res/images/allimg/openaccount/04-01.png" style="width:100%;"></a>
+        	</div>
+        	<div style="display:none;">
+        		<a href="${base}/front/strategy/info/openaccountFive.do"><img src="${base}/res/images/allimg/openaccount/04-02.png" style="width:100%;"></a>
+        	</div>
+        	<div style="display:none;">
+        		<a href="${base}/front/strategy/info/openaccountFive.do"><img src="${base}/res/images/allimg/openaccount/04-03.png" style="width:100%;"></a>
+        	</div>
+        </div>  
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">;
+seajs.use('jquery', function($){
+		$(".OpenAccount_tab li").on("click",function(){
+			$(this).siblings().find("a").removeClass("now");
+			$(this).find("a").addClass("now");
+			$(".contents div").hide().eq($(this).index()).show();
+		});
+
+
+  });
+</script>

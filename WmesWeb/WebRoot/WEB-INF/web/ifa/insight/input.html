@@ -1,0 +1,470 @@
+[#include "../../inc/head_v2.html"/]
+		<link rel="stylesheet" href="${base}/res/js/library/ueditor/themes/default/css/umeditor.css">  
+		<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+        <link rel="stylesheet" href="${base}/res/css/ifa.css">  
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css"> 
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+       	<!--<link href="${base}/res/third/laydate/need/laydate.css" rel="stylesheet">
+		<link href="${base}/res/third/laydate/skins/yalan/laydate.css" rel="stylesheet">-->
+        <style>
+			.dialog-myAllocation{
+			    position: fixed;
+			    top: 0px;
+			    z-index: 9999;
+			    padding-left: 100px;
+			    margin-left: 70px;
+			}
+			.dispaly-active{
+				height: 100%;
+			 	width: calc(100% - 110px);
+			}
+			.insight-channel-ul li {
+		    	width: 120px;
+		    	text-align: -webkit-center;
+		    }
+		    .stepOne-rows-half-fillin {
+		    	width: 100%;
+		    }
+		    .stepOne-rows-text{
+		    	height:80px;
+		    }
+        </style>
+        <script type="text/javascript" src="${base}/res/js/jquery.min.js"></script>
+        <div class="wmes-content">
+        	<div class="ifa_choose_condition">
+        	<p class="wmes-wrap-title">New Insight</p><!--
+            <p class="insight-top-title">New Insight</p>
+            --><div class="insight-tab-content">
+            	<form action="" method="POST" id="insightForm" name="insightForm">
+		            <input type="hidden" value="${insight.id!}" id="inSightId" name="id"/>
+	                <div class="insight-left-content ">
+	                    <div class="insight-row">
+	                        <p class="insight-row-title"><span>*</span>Title</p>
+	                        <input class="insight-input-title" type="text" name="title" value="${insight.title!}" required="required">
+	                    </div>
+	                    <div class="insight-row">
+	                        <p class="insight-row-title"><span>*</span>Issued Date</p>
+	                        <input class="laydate-icon" id="insight-date" readonly type="text" name="pubDateStr" value="${(insight.pubDate?string('yyyy-MM-dd hh:mm:ss'))!.now?string('yyyy-MM-dd hh:mm:ss')}" required="required">
+	                    </div>
+	                    <div class="insight-row OpenAccount_summit_row docController">
+	                    	<p class="insight-row-title"><span>*</span>Thumbnail</p>
+	                    	<input type="hidden" name="thumbnail" value="${insight.thumbnail!}" id="insight_thumb"/>
+	                    	<input id="thumbType1" type="radio" name="thumbType" value="1" class="insight_thumb" [#if (insight.thumbnail)?? && (insight.thumbnail)!=''][#else]checked="checked"[/#if]/>use the 1st pictures in article（if there is）
+	                    	<input id="thumbType0" type="radio" name="thumbType" value="0" class="insight_thumb" [#if (insight.thumbnail)?? && (insight.thumbnail)!='']checked="checked"[/#if]/>Let me specify
+	                    	<ul class="filelist" style="display:[#if (insight.thumbnail)?? && (insight.thumbnail)!='']block[#else]none[/#if];">
+	                               <li>
+	                                   <a href="javascript:void(0);" class="picker" id="pickerUpload">
+	                                   <img src="${base}/res/images/docadd.png"/>
+	                                   </a>
+	                               </li>
+	                               [#if (insight.thumbnail)?? && (insight.thumbnail)!='']
+	                               <li id="img_li_${insight.id!}" class="img_li">
+	                               	<p class="imgWrap">
+		                               	<img src="${base}/loadImgSrcByPath.do?filePath=${insight.thumbnail!}" width="100px"/>
+	                               	</p>
+	                               	<p class="progress"><span></span></p>
+	                               </li>
+	                               <div id="imgPreview" class="file-panel div_btn">
+	                               	<span class="cancel">删除</span>&nbsp;<span class="thumb">预览</span>
+	                               </div>
+	                               <script>
+	                               		$(".filelist li").eq(0).hide();
+	                               </script>
+	                               [/#if]
+	                        </ul>
+	                    </div>
+	                    <!--
+	                    <div class="insight-row">
+	                        <p class="insight-row-title"><span>*</span>Insight Channel</p>
+	                        <ul class="insight-channel-ul">
+	                            <li class="insight-channel-choose">Market</li>
+	                            <li class="insight-choose-add" id="insight-channel-add">+</li>
+	                        </ul>
+	                    </div>
+	                    -->
+	                    <div class="insight-row">
+	                        <p class="insight-row-title"><span>*</span>Relate Sector</p>
+	                        <ul class="insight-channel-ul selected-li-mySector">
+	                        	[#if mySector?? && mySector?size gt 0]
+	                        	[#list mySector as s]
+	                            <li class="insight-relate-choose" style="margin-bottom: 5px;">[#if s.name?length>7]${s.name?substring(0,6)}...[#else]${s.name!}[/#if]</li>
+	                            [/#list]
+	                            [/#if]
+	                            <li class="insight-choose-add" id="insight-sector-add">+</li>
+	                        </ul>
+	                    </div> 
+	                    <div class="insight-row">
+	                        <p class="insight-row-title"><span>*</span>Relate Geographic Allocation</p>
+	                        <ul class="insight-channel-ul selected-li-myAllocation">
+	                            [#if myAllocation?? && myAllocation?size gt 0]
+	                        	[#list myAllocation as al]
+	                            <li class="insight-relate-choose" style="margin-bottom: 5px;">[#if al.name?length>7]${al.name?substring(0,6)}...[#else]${al.name!}[/#if]</li>
+	                            [/#list]
+	                            [/#if]
+	                            <li class="insight-choose-add" id="insight-allocation-add">+</li>
+	                        </ul>
+	                    </div>
+	                    <!-- 
+	                    <div class="insight-row">
+	                    	<p class="insight-row-title"><span>*</span>Abstract</p>
+	                    	<textarea  class="insight-textarea"  name="abstract"></textarea>
+	                    </div>
+	                     -->
+	                    <div class="insight-row">
+	                        <p class="insight-row-title"><span>*</span>Content</p>
+	                        <!-- 加载编辑器的容器 -->
+	                        <div class="uedWrap" style="width:auto;padding-right:30px;padding-bottom:0px;">
+	                           <script id="container" type="text/plain" style="width:100%;min-height:250px"></script> 
+	                        </div>
+	                        <input type="hidden" value="" name="content" id="insightContent" required="required"/>
+	                        <div style="display:none;" id="preContent">
+	                        	${insight.content!}
+	                        </div>
+	                    </div> 
+						<div class="stepOne-rows">
+			            	<ul class="view_permissions_setting">
+								<li>[@lang_res k='strategy.info.release.permission.view'/]:</li>
+								<li>
+									<input type="radio"  name="permit" id="permit0" value="1" [#if (webView.scopeFlag)?? && (webView.scopeFlag)!='' && (webView.scopeFlag)=='1']checked="checked"[/#if]>[@lang_res k='strategy.info.release.permission.onlyme'/]
+								</li>
+								<li>
+									<input type="radio" name="permit" id="permit1" value="2" [#if (webView.scopeFlag)?? && (webView.scopeFlag)!='' && (webView.scopeFlag)=='2'] checked='checked' [/#if]>[@lang_res k='strategy.info.release.permission.public'/]
+								</li>
+								<li>
+									<input type="radio" name="permit" id="permit2" value="3" [#if (webView.scopeFlag)?? && (webView.scopeFlag)!='' && (webView.scopeFlag)=='3'] checked='checked' [/#if]>[@lang_res k='strategy.info.release.permission.specify'/]
+								</li>
+							</ul>
+							<div id="permit_ext" class="pushToSettingmenu pushToSettingmenu1" style="[#if webView?? && webView.scopeFlag == '3']display:block[/#if]">
+								<ul>
+									<li data-id="permit_clients" class="[#if webView?? && (webView.clientFlag == '1' || webView.clientFlag == '-1')]setting_active[/#if]">
+										<div class="pushToSettingCheckbox">
+											<input type="checkbox" [#if webView?? && (webView.clientFlag == '1' || webView.clientFlag == '-1')]checked="checked"[/#if]  class="setting" id="permit_client" name="permit_client" value="">[@lang_res k='strategy.info.release.specify.myClient'/]
+										</div>
+										[#if existings?? && existings?size gt 0]
+											[#list existings as item]
+											    [#if item.fullName?length gt 9]
+											    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+											    [#else]
+											    	[#assign fullName=item.fullName/]
+											    [/#if]
+												[#if item_index gt 2]
+													<p class="pushToSettingName" style="margin-right:30px">...</p>
+													[#break]
+												[/#if]
+												[#if item_index == 2]
+													<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+												[#else]
+													<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if existings?size == 1][#else]<span> ,</span>[/#if]</p>
+												[/#if]
+											[/#list]
+										[#else]
+												<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+										[/#if]
+										<a data-user-type="client" type="existing" class="j-permitASetting a-permit-clients" href="javascript:;"></a>
+										<input type="hidden" id="existingNames">
+									</li>
+									<li data-id="permit_prospects" class="[#if webView?? && (webView.prospectFlag == '1' || webView.prospectFlag == '-1')]setting_active[/#if]">
+										<div class="pushToSettingCheckbox">
+											<input type="checkbox" [#if webView?? && (webView.prospectFlag == '1' || webView.prospectFlag == '-1')]checked="checked"[/#if] class="setting" id="permit_prospect" name="permit_prospect" value=""/>[@lang_res k='strategy.info.release.specify.myProspect'/]
+										</div>
+										[#if prospects?? && prospects?size gt 0]
+											[#list prospects as item]
+											    [#if item.fullName?length gt 9]
+											    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+											    [#else]
+											    	[#assign fullName=item.fullName/]
+											    [/#if]
+												[#if item_index gt 2]
+													<p class="pushToSettingName" style="margin-right:30px">...</p>
+													[#break]
+												[/#if]
+												[#if item_index == 2]
+													<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+												[#else]
+													<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if prospects?size == 1][#else]<span> ,</span>[/#if]</p>
+												[/#if]
+											[/#list]
+										[#else]
+												<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+										[/#if]
+										<a data-user-type="prospect" type="prospect" class="j-permitASetting a-permit-prospects" href="javascript:;"></a>
+										<input type="hidden" id="prospectNames">
+									</li>
+									<li data-id="permit_buddies" class="[#if webView?? && (webView.buddyFlag == '1' || webView.buddyFlag == '-1')]setting_active[/#if]">
+										<div class="pushToSettingCheckbox">	
+											<input [#if webView?? && (webView.buddyFlag == '1' || webView.buddyFlag == '-1')]checked="checked"[/#if] type="checkbox" class="setting" id="permit_buddy" name="permit_buddy" value=""/>[@lang_res k='strategy.info.release.specify.myBuddy'/]
+										</div>
+										[#if buddies?? && buddies?size gt 0]
+											[#list buddies as item]
+											    [#if item.fullName?length gt 9]
+											    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+											    [#else]
+											    	[#assign fullName=item.fullName/]
+											    [/#if]
+												[#if item_index gt 2]
+													<p class="pushToSettingName" style="margin-right:30px">...</p>
+													[#break]
+												[/#if]
+												[#if item_index == 2]
+													<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+												[#else]
+													<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if buddies?size == 1][#else]<span> ,</span>[/#if]</p>
+												[/#if]
+											[/#list]
+										[#else]
+												<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+										[/#if]
+										<a data-user-type="buddy" type="buddy" class="j-permitASetting a-permit-buddies" href="javascript:;"></a>
+										<input type="hidden" id="buddyNames">
+									</li>
+									<li data-id="permit_colleagues" class="[#if webView?? && (webView.colleagueFlag == '1' || webView.colleagueFlag == '-1')]setting_active[/#if]">
+										<div class="pushToSettingCheckbox">
+											<input [#if webView?? && (webView.colleagueFlag == '1' || webView.colleagueFlag == '-1')]checked="checked"[/#if] type="checkbox" class="setting" id="permit_colleague" name="permit_colleague" value=""/>[@lang_res k='strategy.info.release.specify.myTeamMember'/]
+										</div>
+										[#if colleagues?? && colleagues?size gt 0]
+											[#list colleagues as item]
+											    [#if item.fullName?length gt 9]
+											    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+											    [#else]
+											    	[#assign fullName=item.fullName/]
+											    [/#if]
+												[#if item_index gt 2]
+													<p class="pushToSettingName" style="margin-right:30px">...</p>
+													[#break]
+												[/#if]
+												[#if item_index == 2]
+													<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+												[#else]
+													<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if colleagues?size == 1][#else]<span> ,</span>[/#if]</p>
+												[/#if]
+											[/#list]
+										[#else]
+												<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+										[/#if]
+										<a data-user-type="colleague" type="colleague" class="j-permitASetting a-permit-colleagues" href="javascript:;"></a>
+										<input type="hidden" id="colleagueNames">
+									</li>
+								</ul>
+								<input type="hidden" id="permitSetting" name="permitSetting" value="">
+								
+								<input name="permit_clients" id="existingIds" type="hidden" value="${existingIds!}">
+							    <input name="permit_prospects" id="prospectIds" type="hidden" value="${prospectIds!}">
+							    <input name="permit_buddies" id="buddyIds" type="hidden" value="${buddyIds!}">
+							    <input name="permit_colleagues" id="colleagueIds" type="hidden" value="${colleagueIds!}">
+							</div>
+			            </div>
+						<div class="creatlistbn" style="margin-top:40px;">
+							<div id="btn_cancle" class="craetbnCancel">Cancel</div>
+							<div id="btn_save" class="craetbnPublish">Publish</div>
+							<div id="btn_draft" class="craetbnSave" style="margin-right:18px">Save</div>
+						</div>
+					</div> 
+	                <!--
+	                <div class="ifa_option_btn" >
+	                    <a id="btn_save" class="wenti_btn_bule" href="javascript:;">Save</a>
+	                    <a id="btn_draft" class="wenti_btn_bule" href="javascript:;">Draft</a>
+	                    <a id="btn_cancle" class="wenti_btn_LightBlue" href="javascript:;">Cancel</a>
+	                </div>
+	                -->
+	                </div>
+	                <input type="hidden" name="click" value="${insight.click!}"/>
+		        	<input type="hidden" name="upCounter" value="${insight.upCounter!}"/>
+		        	<input type="hidden" name="downCounter" value="${insight.downCounter!}"/>
+		        	<input type="hidden" name="creator.id" value="[#if insight.creator??]${insight.creator.id!}[/#if]"/>
+		        	<input type="hidden" name="createTimeStr" value="${(insight.createTime?string('yyyy-MM-dd HH:mm:ss'))!}"/>
+		        	<input type="hidden" name="overhead" value="${insight.overhead!}"/>
+		        	<input type="hidden" name="overheadTimeStr" value="${(insight.overheadTime?string('yyyy-MM-dd HH:mm:ss'))!}"/>
+		        	<input type="hidden" name="status" value="${insight.status!}" id="hidStatus"/>
+		        	<input type="hidden" name="sector" value="${insight.sector!}" id="insight_sector"/>
+		        	<input type="hidden" name="geoAllocation" value="${insight.geoAllocation!}" id="insight_location"/>
+		        	<input type="hidden" name="repostedTimeStr" value="${(insight.repostedTime?string('yyyy-MM-dd HH:mm:ss'))!}"/>
+		        	<input type="hidden" name="reposted" value="${insight.reposted!}"/>
+		        	<input type="hidden" name="relateId" value="${insight.relateId!}"/>
+		        	<input type="hidden" name="author.id" value="[#if insight.creator??]${insight.creator.id!}[/#if]"/>
+		        	<!-- 选人控制 -->
+		        	<input id="hidIfPublish" name="ifPublish" type="hidden" value="">
+		        	<input id="hidPermit" name="permit" type="hidden" value="">
+		        	<input id="hidPush" name="push" type="hidden" value="">
+		        	
+		        	<input id="hidPermit_client" name="permit_client" type="hidden" value="">
+				    <input id="hidPermit_prospect" name="permit_prospect" type="hidden" value="">
+				    <input id="hidPermit_buddy" name="permit_buddy" type="hidden" value="">
+				    <input id="hidPermit_colleague" name="permit_colleague" type="hidden" value="">
+				    
+				    <input id="hidPush_client" name="push_client" type="hidden" value="">
+				    <input id="hidPush_prospect" name="push_prospect" type="hidden" value="">
+				    <input id="hidPush_buddy" name="push_buddy" type="hidden" value="">
+				    <input id="hidPush_colleague" name="push_colleague" type="hidden" value="">
+				    
+		        	<input id="permit_clients" name="permit_clients" type="hidden" value="">
+				    <input id="permit_prospects" name="permit_prospects" type="hidden" value="">
+				    <input id="permit_buddies" name="permit_buddies" type="hidden" value="">
+				    <input id="permit_colleagues" name="permit_colleagues" type="hidden" value="">
+				    
+				    <input id="push_clients" name="push_clients" type="hidden" value="">
+				    <input id="push_prospects" name="push_prospects" type="hidden" value="">
+				    <input id="push_buddies" name="push_buddies" type="hidden" value="">
+				    <input id="push_colleagues" name="push_colleagues" type="hidden" value="">
+				    
+		        	<input id="refreshSelection" type="hidden" value="">
+				    <input id="cnt_clients" type="hidden" value="">
+				    <input id="cnt_prospects" type="hidden" value="">
+				    <input id="cnt_buddies" type="hidden" value="">
+				    <input id="cnt_colleagues" type="hidden" value="">
+                </form>
+            </div>
+		</div>
+	<!-- 擅长领域 -->
+	<div id="dialog-mySector" class="wmes-content-position dialog-myAllocation" style="display:none;width:90%;background: rgba(0, 0, 0, 0.3);">
+		<div class="selectSector">
+			<div id="CharacterSetting" style="background: #fff;padding: 20px;" class="investment-wrap investment-hide">
+				<div class="investment-plan-wrap">
+					<p class="selectSector-title">[@lang_res k='create.portfolio.step.two.select.0'/]</p>
+					<div class="wmes-close"></div>
+					<div class="character-setting-rows">
+						<div class="character-setting-contents">
+							<p class="character-setting-title">[@lang_res k='create.portfolio.step.two.select.selected'/]:</p>
+							<ul class="character-setting-list ul-mySector">
+		                    [#if mySector??]
+		                         [#list mySector as x]
+		                         <li data-id="${x.itemCode!''}" title="${x.name!''}" style="width: 120px;text-align: -webkit-center;">
+		                            [#if x.name?? && x.name?length>7] 
+			                           ${x.name?substring(0,6)}...
+			                        [#else]
+			                           ${x.name!""}
+			                        [/#if]
+		                            <span class="character-list-close"></span>
+		                         </li>
+		                         [/#list]
+		                    [/#if]
+							</ul>
+							<!--<input type="text" value="" class="character-setting-add">
+						--></div>			
+						<div class="character-setting-choose" style="height: 200px;overflow-y: auto;">
+							<p class="character-choose-title">[@lang_res k='create.portfolio.step.two.select.pleaceSelect'/]:</p>
+							<ul class="character-choose-list">
+		                    [#if notMySector??]
+		                        [#list notMySector as x]
+		                        <li data-id="${x.itemCode!''}" title="${x.name!''}" style="width: 120px;text-align: -webkit-center;"> 
+		                           [#if x.name?? && x.name?length>7] 
+			                           ${x.name?substring(0,6)}...
+			                       [#else]
+			                           ${x.name!""}
+			                       [/#if]
+		                        </li>
+		                        [/#list]
+		                    [/#if]
+							</ul>
+						</div>
+					</div>
+					<div class="character-button-rows">
+						<a class="character-button-save mySector-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+						<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 所属区域 -->
+	<div id="dialog-myAllocation" class="wmes-content-position dialog-myAllocation" style="display:none;width:90%;background: rgba(0, 0, 0, 0.3);">
+		<div class="selectSector">
+			<div id="CharacterSetting" style="background: #fff;padding: 20px;" class="investment-wrap investment-hide">
+				<div class="investment-plan-wrap">
+					<p class="selectSector-title">[@lang_res k='create.portfolio.step.two.select.1'/]</p>
+					<div class="wmes-close"></div>
+					<div class="character-setting-rows">
+						<div class="character-setting-contents">
+							<p class="character-setting-title">[@lang_res k='create.portfolio.step.two.select.selected'/]:</p>
+							<ul class="character-setting-list ul-myAllocation">
+							[#if myAllocation??]
+		                         [#list myAllocation as x]
+		                         <li data-id="${x.itemCode!''}" title="${x.name!''}" style="width: 120px;">
+		                            [#if x.name?? && x.name?length>7] 
+			                           ${x.name?substring(0,6)}...
+			                        [#else]
+			                           ${x.name!""}
+			                        [/#if]
+		                            <span class="character-list-close"></span>
+		                         </li>
+		                         [/#list]
+		                    [/#if]
+							</ul>
+							<!--<input type="text" value="" class="character-setting-add">
+						--></div>			
+						<div class="character-setting-choose" style="height: 200px;overflow-y: auto;">
+							<p class="character-choose-title">Please Select:</p>
+							<ul class="character-choose-list">
+							[#if notMyAllocation??]
+		                        [#list notMyAllocation as x]
+		                        <li data-id="${x.itemCode!''}" title="${x.name!''}" style="width: 120px;">
+		                        [#if x.name?? && x.name?length>7] 
+		                           ${x.name?substring(0,6)}...
+		                        [#else]
+		                           ${x.name!""}
+		                        [/#if]
+		                        </li>
+		                        [/#list]
+		                    [/#if]
+							</ul>
+						</div>
+					</div>
+					<div class="character-button-rows">
+						<a class="character-button-save myAllocation-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+						<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="selectnamelistbox" style="z-index: 1000;display:none;position: absolute;top:0;left:0;background:rgba(0,0,0,0.3)">
+		<!-- 选择用户控件 -->
+	</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var globalProp = [@load_prop k='global'/]; 
+	var insightid='${insightId!}';
+	var thumbNail = '${insight.thumbnail!}'
+	/**
+	 * 语言设置，用于umeditor
+	 */
+	[#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']
+	    var lang="en";
+	[#elseif Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']
+		var lang="zh-tc";
+	[#else]
+		var lang="zh-cn";
+	[/#if]
+    seajs.use('${base}/res/web/ifa/insight/input.js');
+	seajs.use('jquery', function($){
+		//擅长领域取消，临时保存
+	   $("body").on("click",".sector_item",function(){
+		   var myCode = $(this).attr("data-id");
+		   var myName = $(this).html();
+		   $(".layui-layer-content .sectorTemp").append('<li class="unsector_item" data-id="'+myCode+'">'+myName+'</li>');
+		   $(this).remove();
+	   });
+		//擅长领域添加，临时保存
+	   $("body").on("click",".unsector_item",function(){
+		   var sectorCode = $(this).attr("data-id");
+		   var sectorName = $(this).html();
+		   $(".layui-layer-content .mysectorTemp").append('<li class="sector_item" data-id="'+sectorCode+'">'+sectorName+'</li>');
+		   $(this).remove();
+	   }) ;
+		//所属区域取消，临时保存
+	   $("body").on("click",".location_item",function(){
+		   var mylocation = $(this).attr("data-id");
+		   var myname = $(this).html();
+		   $(".layui-layer-content .locationTemp").append('<li class="unlocation_item" data-id="'+mylocation+'">'+myname+'</li>');
+		   $(this).remove();
+		   
+	   });
+	   //所属区域选择，临时保存
+	   $("body").on("click",".unlocation_item",function(){
+		   var locationCode = $(this).attr("data-id");
+		   var locationName = $(this).html();
+		   $(".layui-layer-content .mylocationTemp").append('<li class="location_item" data-id="'+locationCode+'">'+locationName+'</li>');
+		   $(this).remove();
+	   })
+	});
+	   
+</script>        

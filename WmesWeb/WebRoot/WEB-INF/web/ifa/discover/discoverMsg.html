@@ -1,0 +1,96 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/discover.css">
+     <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+    <style>.wmes-content{min-height:729px;}</style>
+    <div class="wmes-top">
+        <a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+        <a href="javascript:;" class="header-over">Messages</a>
+    </div>
+    <div class="wmes-content">
+         <div class="messages-wrapper">
+         [#if typeCode='1']
+          <p class="wmes-wrap-title">
+          	<a href="javascript:history.go(-1)">
+          		<span class="wmes-ruturn"></span>
+          	</a>
+          [@lang_res k='ifa.corner.deals'/]
+          </p>
+          [/#if]
+          [#if typeCode='2']
+          <p class="wmes-wrap-title">
+          	<a href="javascript:history.go(-1)">
+          		<span class="wmes-ruturn"></span>
+          	</a>
+         [@lang_res k='ifa.corner.notes'/]
+          </p>
+          [/#if]
+          [#if typeCode='3']
+          <p class="wmes-wrap-title">
+          	<a href="javascript:history.go(-1)">
+          		<span class="wmes-ruturn"></span>
+          	</a>
+          [@lang_res k='ifa.corner.alerts'/]
+          </p>
+          [/#if]
+          <div style="overflow: hidden;margin-bottom:20px;">
+            		<div style="float:left;margin-top:8px">
+            			<div class="account-checkbox">
+    						<input type="checkbox"  name="spaceShowAum" [#if details?? && details.spaceShowAum?? && details.spaceShowAum=="1"]checked="checked"[/#if] id="spaceShowAum" class="discoverMsg-allchoose">
+    						<label for="spaceShowAum"></label>
+    					</div>
+    					<p class="account-checkbox-font">[@lang_res k='global.selectall'/]</p>
+            		</div>
+            		<ul class="discoverMsg-regulation">
+            			<div style="float:left;margin-top:8px;margin-right:6px;">[@lang_res k='discover.msg.show'/]：</div>
+            			<li status="" id="li_status_all" >[@lang_res k='global.all'/]</li>
+            			<li status="0" id="li_status_not_read" class="discoverMsg-regulationac">[@lang_res k='discover.msg.unread'/]</li>
+            			<li status="1" id="li_status_haved_read">[@lang_res k='discover.msg.read'/]</li>
+            		</ul>
+            		<div class="funds_keyserach">
+						<input type="text"  id="fundName" placeholder="[@lang_res k='global.search.keyword'/]" >
+						<span class="icon_search" id="searchKeyBtn"></span>
+					</div>
+            	</div>
+            <div id="div_loading"></div>
+            <ul id="ul_data" class="messages-wrapper-list">
+            </ul>
+            <div class="wmes-nodata-tips portfolioTips" style="display:block;">
+                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                      </div>
+            <p id="ifa_more" pageid="" sumpage="" class="ifa_list_more">[@lang_res k=''/]</p>
+            <!-- <div class="messages-empty-wrap">
+                <img class="messages-empty-img" src="${base}/res/images/discover/notes_ico.png">
+                <p class="messages-empty-title">没有消息</p>
+            </div> -->
+         </div>
+         <ul class="choosebox">
+         	<li class="choosedelete">[@lang_res k='global.delete'/]</li>
+         		<div class="register_xiala_long" style="margin-left:0;">
+					<div class="register_xiala_long_menu">[@lang_res k='discover.msg.markas'/]</div>
+	               		<ul class="regiter_xiala_ul">
+	                    	<li value="0">[@lang_res k='discover.msg.markasunread'/]</li>
+	                    	<li value="1">[@lang_res k='discover.msg.markasread'/]</li>
+	                	</ul>
+	            	<span class="register_xiala_ico"></span>
+	           	</div>
+	        
+	     </ul>
+         </div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var __clickmore__ = '[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.clickmore'/]';
+	var __nomoredata__ = '[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.nomoredata'/]';
+	var SURETOADDFRIEND = "[@lang_res k='ifalist.list.suretoaddfriendmsg'/]";
+	var SURETOADDFRIEND_BUTTON_YES = "[@lang_res k='global.true'/]";
+	var SURETOADDFRIEND_BUTTON_NO = "[@lang_res k='global.false'/]";
+	var  ADDFRIENDTITLE = "[@lang_res k='ifalist.list.addfriendtitle'/]";
+	var GLOBAL_SUCCESS = "[@lang_res k='global.success'/]";
+	var GLOBAL_FAILD = "[@lang_res k='global.failed'/]";
+	var GLOBAL_CONFIRM_DELETE = "[@lang_res k='global.confirm.delete'/]";
+	var GLOBAL_CONFIRM = "[@lang_res k='global.confirm'/]";
+	
+	
+		seajs.use('${base}/res/web/ifa/discoverMsg.js');
+</script> 

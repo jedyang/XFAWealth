@@ -1,0 +1,16 @@
+package com.fsll.wmes.group.service;
+
+import com.fsll.common.util.JsonPaging;
+
+public interface MemberGroupService {
+
+	/**
+	 *  客户分组数据获取
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param jsonPaging
+	 * @param langCode
+	 */
+	public JsonPaging getGroups(JsonPaging jsonPaging, String langCode);
+
+}

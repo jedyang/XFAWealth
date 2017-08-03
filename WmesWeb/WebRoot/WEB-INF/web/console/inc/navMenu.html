@@ -1,0 +1,133 @@
+﻿<div class="left-side" id="wmes_left_menu">
+   <ul class="l-side-menu" ></ul>
+</div>
+<script>
+window.onload = function(){
+	loadMenu(getUrlParam('menu'));	
+	//工作台首次进入显示页面
+	menuClick('000001000','${base}/console/todo/mylist.do');
+};
+
+/*
+ * 加载左菜单    wwluo 160722
+ */
+function loadMenu(code){
+	if(null == code || '' == code)
+		code = menu;
+	$.ajax({
+		type : 'get',
+		url : '${base}/console/menu/list.do',
+		data : { code : code },
+		success : function(data) {
+			if(data.result){
+				var menu = eval('(' + data.menuJson + ')');
+				//返回menu HTML
+				var htmlObj = assembleMenu(menu);
+				$('.l-side-menu').hide();	
+				$('.l-side-menu').append(htmlObj);
+				$('.l-side-sub').hide();
+				//保持menu高亮状态   modify wwluo 0729
+				var liId = $('#'+code);
+				var isUl = liId.find('ul');
+				var parentLi = liId.parent().parent();
+				if(parentLi.is('li') && parentLi.find('span').length > 0){
+					parentLi.siblings().find('.l-sub-icon').removeClass('ico');
+					parentLi.find('.l-sub-icon').toggleClass('ico');
+					parentLi.find('.l-side-sub').show();
+					liId.removeClass('l-side-sub-crr');
+					liId.addClass('l-side-sub-crr');
+					liId.find('a').trigger('click');
+				}else if(liId.is('li') && !isUl.is('ul')){
+					liId.addClass('l-side-sub-crr');
+					liId.find('a').trigger('click');
+				}
+				//显示menu
+				$('.l-side-menu').show();
+				$('.l-side-menu > li').click(function(){		 
+					$(this).siblings().find('.l-sub-icon').removeClass('ico');
+					$(this).siblings().find('.l-sub-icon').removeClass('l-side-sub-crr');
+				 	$(this).siblings().find('.l-side-sub').slideUp('fast');
+					$(this).find('.l-sub-icon').toggleClass('ico');
+					$(this).find('.l-side-sub').slideToggle('fast');
+					var isUl = $(this).find('ul');
+					if(!isUl.is('ul')){
+					   $('.l-side-sub > li').removeClass('l-side-sub-crr');
+					   $('.l-side-menu > li').removeClass('l-side-sub-crr');
+					   $(this).addClass('l-side-sub-crr');
+		            }
+					 });
+				$('.l-side-sub > li').click(function(){	
+					$('.l-side-menu > li').removeClass('l-side-sub-crr');
+					$('.l-side-sub > li').removeClass('l-side-sub-crr');
+					$(this).addClass('l-side-sub-crr');
+				});
+				$('.l-side-sub li').click(function(event){
+				 	event.stopPropagation(); 
+				 });
+			}
+		}
+	});
+}
+
+/*
+ * 组装menu HTML modify wwluo 160804
+ */
+var temp = '';
+function assembleMenu(menu){
+	var html = '';
+	$.each(menu, function(i, n) {
+	    if(n.webUrl.indexOf('?') > -1)
+	      var href = '${base}' + n.webUrl + '&menu=' + n.code;
+	    else 
+	      var href = '${base}' + n.webUrl + '?menu=' + n.code;
+		html += '<li id="'+ n.code +'">';
+		  if(null != n.childMenu){
+			  html += '<a href="#">';
+		  }else{
+			  html += '<a href="#" onclick="menuClick(\'' + n.code + '\',\'' + href + '\')">';
+		  }
+			if('${Session["_LANG_CODE_"]!}' == 'en'){
+				html += n.nameEn;
+			}else if('${Session["_LANG_CODE_"]!}' == 'tc'){
+				html += n.nameTc;
+			}else{
+				html += n.nameSc;
+			}
+			if(null != n.childMenu){
+				html += '<span class="l-sub-icon pull-right"></span></a>';
+				html += '<ul class="l-side-sub">';
+				temp = html;
+				//迭代组装子类
+				var htmlObj = assembleMenu(n.childMenu);
+				html = temp;
+				html += htmlObj;
+				html += '</ul>';
+			}else{
+				html += '</a>';
+			}
+			html += '</li>';
+	});
+	return html;
+}
+
+
+function menuClick(menuCode,url){
+	var iframe = $( '<iframe></iframe>' );
+	    iframe.attr( 'width', '100%');
+	    iframe.attr( 'name','right-side-iframe' );
+	    iframe.attr( 'frameborder','0' );
+	    iframe.attr( 'src',url );
+	    iframe.attr( 'scrolling','auto' );
+	$('#right-side-iframe').empty().append(iframe);
+	var bHeight= $('iframe[name="right-side-iframe"]').context.body.scrollHeight;
+	var dHeight= $('iframe[name="right-side-iframe"]').context.documentElement.scrollHeight;
+    var outerHeight= $('iframe[name="right-side-iframe"]')[0].contentWindow.outerHeight;
+    var height = Math.max(bHeight, dHeight); 
+    iframe.attr( 'height',height );
+    //更新菜單編碼
+    $.post('${base}/console/menu/updateMenuCode.do',{menuCode:menuCode});
+}
+
+
+
+</script>

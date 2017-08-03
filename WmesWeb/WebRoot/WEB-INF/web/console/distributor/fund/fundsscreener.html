@@ -1,0 +1,767 @@
+[#include "../../inc/head_v2.html"/]
+<!-- 
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res  k='fund.info.fundsScreener'/]</a>
+</div> -->
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/animate.css">
+<link href="${base}/res/console/css/pagination.css" rel="stylesheet">
+<style>
+	.funds_search_information{width:750px;}
+	.funds_search_partOne{width:802px;}
+	.ifa_list_paging{text-align: center;}
+.ifa_list_paging > li{display: inline-block;}
+.ifa_pagint_some{}
+.ifa_pagint_num{cursor: pointer;width: 35px;height: 35px;line-height: 35px;background-color: white;border-radius: 50%;margin: 0px 1px;border: 1px solid #e4e4e4;}
+.ifa_pagint_now{background-color: #2d80ce;color: white;}
+.ifa_pagint_now a{color: white;}
+.no_list_tips{width:50%;margin:0 auto;display: none;text-align: center;}
+.notipswrap{display: inline-block;}
+.noResult{text-align: left;color: #00385a;height: 45px;margin: 80px auto 0;padding-left: 50px;}
+.noResultText{text-align:left;color: #00385a;margin: 20px auto 80px;}
+.ifa_list_more{background-color: #ebebeb;color: #999999;text-align: center;padding: 10px 0;margin-top: 20px;cursor: pointer;}
+.ifa_list_more:hover{color: #4f7395;box-shadow: 1px 4px 12px #ccc7c7;}
+</style>
+[#if Session["_FRONT_USER_LOGIN_"]?exists == true]
+    <input type="hidden" name="" id="loginCode" value="true">
+[#else]
+   	<input type="hidden" name="" id="loginCode" value="false">
+[/#if]
+<div class="wmes-content">
+        <div class="kaihu_div">
+            <div class="white_background funds_background" style="padding-bottom:40px;">   
+                
+                    <div class="wmes-wrap-title" style="margin-bottom:0">
+                    	[@lang_res k='fund.info.fundsScreener'/]
+                    	<p class="funds_title_more">
+					[#if Session["_FRONT_USER_LOGIN_"]?exists == true]
+						<a href="${base}/front/ifa/info/fundsscreener.do">[@lang_res k='fund.info.screener.advancedSearch'/]</a>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						[#if Session["role"]?exists &&(Session["role"]=='IFA' ||Session["role"]=='investor')]
+							<a href="${base}/front/ifa/info/myfavorites.do?jp=1">[@lang_res k='fund.info.screener.myWatchlist'/]</a>
+						[/#if]
+					[#else]
+						<a href="${base}/front/viewLogin.do">[@lang_res k='fund.info.screener.advancedSearch'/]</a>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="${base}/front/viewLogin.do">[@lang_res k='fund.info.screener.myWatchlist'/]</a>					
+					[/#if]
+					</p>
+                    </div>
+				<!-- <p class="funds_title">[@lang_res k='fund.info.fundsScreener'/]</p> -->
+                <!-- 
+				<div class="funds_choice_wrap">
+					<p class="funds_choice_title">[@lang_res k='fund.info.distributor'/]</p>
+					<ul class="funds_choice">
+						<li data-name="Distributor" data-key="" data-value="" class="funds_all fund_choice_active" >[@lang_res k='fund.info.searchAll'/]</li>
+						<li data-name="Distributor" data-key="Distributor : Ageas" data-value="Ageas">Ageas</li>
+					</ul>
+				</div>
+				 -->
+				<div class="client-more-screen-wrap">
+				<div class="funds_choice_wrap">
+					<p class="funds_choice_title">[@lang_res k='fund.info.fundHouse'/]</p>
+					<ul class="funds_choice funds_logo_b" id="funds_logo_choice">
+						<li data-letter="" class="funds_all fund_choice_active fund_choice_active2" data-name="FundHouse">[@lang_res k='fund.info.searchAll'/]</li>
+						<li data-letter="A,B,C,D,E">A - E</li>
+                        <li data-letter="F,G,H,I,J">F - J</li>
+                        <li data-letter="K,L,M,N,O">K - O</li>
+                        <li data-letter="P,Q,R,S,T">P - T</li>
+                        <li data-letter="U,V,W,S,Y,Z">U - Z</li>
+					</ul>
+					<ul class="funds_logo_choice" id="funds_logo">
+					[#if fundHouseList?exists && fundHouseList?size gt 0 ]
+					[#list fundHouseList as houseList]
+					<li style="display:none;" title="${houseList.houseName}" data-letter="${houseList.pinYin!}" data-key="${houseList.houseName}" data-name="FundHouse" data-value="${houseList.id}" >
+						<img src="${base}${houseList.logoUrl!}" alt=""> </li>
+					[/#list]
+					[/#if]
+					</ul>
+				</div>
+				<div class="funds_choice_wrap" style="display:none;">
+					<p class="funds_choice_title">[@lang_res k='fund.info.fundSize'/]</p>
+					<ul class="funds_choice">
+						<li data-name="Fundsize" data-key=""class="funds_all fund_choice_active fund_choice_active2">[@lang_res k='fund.info.searchAll'/]</li>
+						<li data-name="Fundsize" data-key="[@lang_res k='fund.info.fundSize'/] : <10B" data_to="10"><10B</li>
+						<li data-name="Fundsize" data-key="[@lang_res k='fund.info.fundSize'/] : 10B ~ 30B" data_from="10" data_to="30">10B ~ 30B</li>
+						<li data-name="Fundsize" data-key="[@lang_res k='fund.info.fundSize'/] : 30B ~ 50B" data_from="30" data_to="50">30B ~ 50B</li>
+						<li data-name="Fundsize" data-key="[@lang_res k='fund.info.fundSize'/] : 50B ~ 100B" data_from="50" data_to="100">50B ~ 100B</li>
+						<li data-name="Fundsize" data-key="[@lang_res k='fund.info.fundSize'/] : >100B" data_from="100">>100B</li>
+
+					</ul>
+				</div>
+				<div class="funds_choice_wrap" style="display:none;">
+					<p class="funds_choice_title">[@lang_res k='fund.info.per'/]</p>
+					<p data-name="Per" id="per_all" data-key="" class="funds_all fund_choice_active per_active fund_choice_active2">[@lang_res k='fund.info.searchAll'/]</p>
+					<ul class="funds_xiala_choice" id="funds_per_choice">
+						<li>[@lang_res k='fund.info.mon'/]</li>
+						<li>[@lang_res k='fund.info.mon_3'/]</li>
+						<li>[@lang_res k='fund.info.mon_6'/]</li>
+						<li>[@lang_res k='fund.info.YTD'/]</li>	
+						<li>[@lang_res k='fund.info.yr_1'/]</li>
+						<li>[@lang_res k='fund.info.yr_3'/]</li>	
+						<li>[@lang_res k='fund.info.yr_5'/]</li>			
+					</ul>
+					<ul class="funds_xiala_content" id="funds_per_content">
+						<li class="fund_xiala_active">
+							<ul class="funds_choice">
+								<li data-name="1Mon" data-key="" class="funds_all fund_choice_active per_child">[@lang_res k='fund.info.searchAll'/]</li>
+								<li data-name="1Mon" data-key="[@lang_res k='fund.info.mon'/] : 0% - 5%" data_from="0" data_to="5" data-value="pref">0% - 5%</li>
+								<li data-name="1Mon" data-key="[@lang_res k='fund.info.mon'/] : 5% - 10%" data_from="5" data_to="10" data-value="pref">5% - 10%</li>
+								<li data-name="1Mon" data-key="[@lang_res k='fund.info.mon'/] : 10% - 20%" data_from="10" data_to="20" data-value="pref">10% - 20%</li>	
+								<li data-name="1Mon" data-key="[@lang_res k='fund.info.mon'/] : 20% - 30%" data_from="20" data_to="30" data-value="pref">20% - 30%</li>			
+							</ul>
+						</li>
+						<li class="fund_xiala_active">
+							<ul class="funds_choice">
+								<li data-name="3Mon" data-key="" class="funds_all fund_choice_active per_child">[@lang_res k='fund.info.searchAll'/]</li>
+								<li data-name="3Mon" data-key="[@lang_res k='fund.info.mon_3'/] : 0% - 5%" data_from="0" data_to="5">0% - 5%</li>
+								<li data-name="3Mon" data-key="[@lang_res k='fund.info.mon_3'/] : 5% - 10%" data_from="5" data_to="10">5% - 10%</li>
+								<li data-name="3Mon" data-key="[@lang_res k='fund.info.mon_3'/] : 10% - 20%" data_from="10" data_to="20">10% - 20%</li>	
+								<li data-name="3Mon" data-key="[@lang_res k='fund.info.mon_3'/] : 20% - 30%" data_from="20" data_to="30">20% - 30%</li>			
+							</ul>
+						</li>
+						<li class="fund_xiala_active">
+							<ul class="funds_choice">
+								<li data-name="6Mon" data-key="" class="funds_all fund_choice_active per_child">[@lang_res k='fund.info.searchAll'/]</li>
+								<li data-name="6Mon" data-key="[@lang_res k='fund.info.mon_6'/] : 0% - 5%" data_from="20" data_to="30" data-value="pref">0% - 5%</li>
+								<li data-name="6Mon" data-key="[@lang_res k='fund.info.mon_6'/] : 5% - 10%" data_from="5" data_to="10" data-value="pref">5% - 10%</li>
+								<li data-name="6Mon" data-key="[@lang_res k='fund.info.mon_6'/] : 10% - 20%" data_from="10" data_to="20" data-value="pref">10% - 20%</li>	
+								<li data-name="6Mon" data-key="[@lang_res k='fund.info.mon_6'/] : 20% - 30%" data_from="20" data_to="30" data-value="pref">20% - 30%</li>					
+							</ul>
+						</li>
+						<li class="fund_xiala_active">
+							<ul class="funds_choice">
+								<li data-name="YTD" data-key="" class="funds_all fund_choice_active per_child">[@lang_res k='fund.info.searchAll'/]</li>
+								<li data-name="YTD" data-key="[@lang_res k='fund.info.YTD'/] : 0% - 5%" data_from="0" data_to="5" data-value="pref">0% - 5%</li>
+								<li data-name="YTD" data-key="[@lang_res k='fund.info.YTD'/] : 5% - 10%" data_from="5" data_to="10" data-value="pref">5% - 10%</li>
+								<li data-name="YTD" data-key="[@lang_res k='fund.info.YTD'/] : 10% - 20%" data_from="10" data_to="20" data-value="pref">10% - 20%</li>	
+								<li data-name="YTD" data-key="[@lang_res k='fund.info.YTD'/] : 20% - 30%" data_from="20" data_to="30" data-value="pref">20% - 30%</li>			
+							</ul>
+						</li>
+						<li class="fund_xiala_active">
+							<ul class="funds_choice">
+								<li data-name="1Yr" data-key="" class="funds_all fund_choice_active per_child">[@lang_res k='fund.info.searchAll'/]</li>
+								<li data-name="1Yr" data-key="[@lang_res k='fund.info.yr_1'/] : 0% - 5%" data_from="0" data_to="5" data-value="pref">0% - 5%</li>
+								<li data-name="1Yr" data-key="[@lang_res k='fund.info.yr_1'/] : 5% - 10%" data_from="5" data_to="10" data-value="pref">5% - 10%</li>
+								<li data-name="1Yr" data-key="[@lang_res k='fund.info.yr_1'/] : 10% - 20%" data_from="10" data_to="20" data-value="pref">10% - 20%</li>	
+								<li data-name="1Yr" data-key="[@lang_res k='fund.info.yr_1'/] : 20% - 30%" data_from="20" data_to="30" data-value="pref">20% - 30%</li>			
+							</ul>
+						</li>
+						<li class="fund_xiala_active">
+							<ul class="funds_choice">
+								<li data-name="3Yr" data-key="" class="funds_all fund_choice_active per_child">[@lang_res k='fund.info.searchAll'/]</li>
+								<li data-name="3Yr" data-key="[@lang_res k='fund.info.yr_3'/] : 0% - 5%" data_from="0" data_to="5" data-value="pref">0% - 5%</li>
+								<li data-name="3Yr" data-key="[@lang_res k='fund.info.yr_3'/] : 5% - 10%"  data_from="5" data_to="10" data-value="pref">5% - 10%</li>
+								<li data-name="3Yr" data-key="[@lang_res k='fund.info.yr_3'/] : 10% - 20%" data_from="10" data_to="20" data-value="pref">10% - 20%</li>	
+								<li data-name="3Yr" data-key="[@lang_res k='fund.info.yr_3'/] : 20% - 30%" data_from="20" data_to="30" data-value="pref">20% - 30%</li>			
+							</ul>
+						</li>
+						<li class="fund_xiala_active">
+							<ul class="funds_choice">
+								<li data-name="5Yr" data-key="" class="funds_all fund_choice_active per_child">[@lang_res k='fund.info.searchAll'/]</li>
+								<li data-name="5Yr" data-key="[@lang_res k='fund.info.yr_5'/] : 0% - 5%" data_from="0" data_to="5" data-value="pref">0% - 5%</li>
+								<li data-name="5Yr" data-key="[@lang_res k='fund.info.yr_5'/] : 5% - 10%"  data_from="5" data_to="10" data-value="pref">5% - 10%</li>
+								<li data-name="5Yr" data-key="[@lang_res k='fund.info.yr_5'/] : 10% - 20%" data_from="10" data_to="20" data-value="pref">10% - 20%</li>	
+								<li data-name="5Yr" data-key="[@lang_res k='fund.info.yr_5'/] : 20% - 30%" data_from="20" data_to="30" data-value="pref">20% - 30%</li>			
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="funds_choice_wrap" style="display:none;">
+					<p class="funds_choice_title">[@lang_res k='fund.info.mgtFee'/]</p>
+					<ul class="funds_choice">
+						<li data-name="MgtFee" data-key=""  class="funds_all fund_choice_active fund_choice_active2">[@lang_res k='fund.info.searchAll'/]</li>
+						<li data-name="MgtFee" data-key="[@lang_res k='fund.info.mgtFee'/] : [@lang_res k='fund.info.lessThan'/] 0.5%" data-value="0.5">
+							[@lang_res k='fund.info.lessThan'/] 0.5%
+						</li>
+						<li data-name="MgtFee" data-key="[@lang_res k='fund.info.mgtFee'/] : [@lang_res k='fund.info.lessThan'/] 1.5%" data-value="1.5">
+							[@lang_res k='fund.info.lessThan'/] 1.5%
+						</li>			
+						<li data-name="MgtFee" data-key="[@lang_res k='fund.info.mgtFee'/] : [@lang_res k='fund.info.lessThan'/] 2%" data-value="2">
+							[@lang_res k='fund.info.lessThan'/] 2%
+						</li>
+						<li data-name="MgtFee" data-key="[@lang_res k='fund.info.mgtFee'/] : [@lang_res k='fund.info.lessThan'/] 3%" data-value="3">
+							[@lang_res k='fund.info.lessThan'/] 3%
+						</li>
+					</ul>
+				</div>
+				</div>
+				<!-- 
+				<div class="fund_more_content">
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">[@lang_res k='fund.info.lipperCR'/]</p>
+						<ul class="funds_starts">
+							<li data-name="LipperCr" data-key="" class="funds_all fund_choice_active">[@lang_res k='fund.info.searchAll'/]</li>
+							<li data-name="LipperCr" data-key="[@lang_res k='fund.info.lipperCr'/]" data-value="1" >
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+							</li>
+							<li data-name="LipperCr" data-key="[@lang_res k='fund.info.lipperCr'/]" data-value="2" >
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+							</li>
+							<li data-name="LipperCr" data-key="[@lang_res k='fund.info.lipperCr'/]" data-value="3" >
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+							</li>
+							<li data-name="LipperCr" data-key="[@lang_res k='fund.info.lipperCr'/]" data-value="4">
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+							</li>				
+							<li data-name="LipperCr" data-key="[@lang_res k='fund.info.lipperCr'/]" data-value="5" >
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+								<span class="Necessary"></span>
+							</li>
+						</ul>
+					</div>
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">[@lang_res k='fund.info.fitch'/]</p>
+						<ul class="funds_choice">
+							<li data-name="Fitch" data-key=""  class="funds_all fund_choice_active" >[@lang_res k='fund.info.searchAll'/]</li>
+							<li data-name="Fitch" data-key="[@lang_res k='fund.info.fitch'/] : AAA" data-value="9" >
+								AAA
+							</li>
+							<li data-name="Fitch" data-key="[@lang_res k='fund.info.fitch'/] : AA" data-value="8" >
+								AA
+							</li>
+							<li data-name="Fitch" data-key="[@lang_res k='fund.info.fitch'/] : A" data-value="7" >
+								A
+							</li>
+							<li data-name="Fitch" data-key="[@lang_res k='fund.info.fitch'/] : BBB" data-value="6" >
+								BBB
+							</li>				
+							<li data-name="Fitch" data-key="[@lang_res k='fund.info.fitch'/] : BB" data-value="5" >
+								BB
+							</li>
+							<li data-name="Fitch" data-key="[@lang_res k='fund.info.fitch'/] : B" data-value="4" >
+								B
+							</li>
+							<li data-name="Fitch" data-key="[@lang_res k='fund.info.fitch'/] : CCC" data-value="3" >
+								CCC
+							</li>
+							<li data-name="Fitch" data-key="[@lang_res k='fund.info.fitch'/] : CC" data-value="2" >
+								CC
+							</li>
+							<li data-name="Fitch" data-key="Fitch : C" data-value="1" >
+								C
+							</li>
+						</ul>
+					</div>
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">[@lang_res k='fund.info.citywire'/]</p>
+						<ul class="funds_choice">
+							<li data-name="Citywire" data-key=""  class="funds_all fund_choice_active">[@lang_res k='fund.info.searchAll'/]</li>
+							<li data-name="Citywire" data-key="[@lang_res k='fund.info.citywire'/] : AAA" data-value="9" >
+								AAA
+							</li>
+							<li data-name="Citywire" data-key="[@lang_res k='fund.info.citywire'/] : AA" data-value="8" >
+								AA
+							</li>
+							<li data-name="Citywire" data-key="[@lang_res k='fund.info.citywire'/] : A" data-value="7" >
+								A
+							</li>
+							<li data-name="Citywire" data-key="[@lang_res k='fund.info.citywire'/] : BBB" data-value="6" >
+								BBB
+							</li>				
+							<li data-name="Citywire" data-key="[@lang_res k='fund.info.citywire'/] : BB" data-value="5" >
+								BB
+							</li>
+							<li data-name="Citywire" data-key="[@lang_res k='fund.info.citywire'/] : B" data-value="4" >
+								B
+							</li>
+							<li data-name="Citywire" data-key="[@lang_res k='fund.info.citywire'/] : CCC" data-value="3" >
+								CCC
+							</li>
+							<li data-name="Citywire" data-key="[@lang_res k='fund.info.citywire'/] : CC" data-value="2" >
+								CC
+							</li>
+							<li data-name="Citywire" data-key="[@lang_res k='fund.info.citywire'/] : C" data-value="1" >
+								C
+							</li>
+						</ul>
+					</div>
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">[@lang_res k='fund.info.minInitialInv'/]</p>
+						<ul class="funds_choice">
+							<li data-name="MinInitialInv" class="funds_all fund_choice_active">[@lang_res k='fund.info.searchAll'/]</li>
+							<li data-name="MinInitialInv" data-key="[@lang_res k='fund.info.minInitialInv'/] : [@lang_res k='fund.info.notLessThan'/] [@lang_res k='fund.info.thousand'/]" data-value="1000">
+								[@lang_res k='fund.info.notLessThan'/] [@lang_res k='fund.info.thousand'/]
+							</li>
+							<li data-name="MinInitialInv" data-key="[@lang_res k='fund.info.minInitialInv'/] : [@lang_res k='fund.info.notLessThan'/] [@lang_res k='fund.info.10thousand'/]" data-value="10000">
+								[@lang_res k='fund.info.notLessThan'/] [@lang_res k='fund.info.10thousand'/]
+							</li>
+							<li data-name="MinInitialInv" data-key="[@lang_res k='fund.info.minInitialInv'/] : [@lang_res k='fund.info.notLessThan'/] [@lang_res k='fund.info.100thousand'/]" data-value="100000">
+								[@lang_res k='fund.info.notLessThan'/] [@lang_res k='fund.info.100thousand'/]
+							</li>				
+							<li data-name="MinInitialInv" data-key="[@lang_res k='fund.info.minInitialInv'/] : [@lang_res k='fund.info.notLessThan'/] [@lang_res k='fund.info.million'/]" data-value="1000000">
+								[@lang_res k='fund.info.notLessThan'/] [@lang_res k='fund.info.million'/]
+							</li>
+							<li data-name="MinInitialInv" data-key="[@lang_res k='fund.info.minInitialInv'/] : [@lang_res k='fund.info.notLessThan'/] [@lang_res k='fund.info.10million'/]" data-value="10000000">
+								[@lang_res k='fund.info.notLessThan'/] [@lang_res k='fund.info.10million'/]
+							</li>
+							<li data-name="MinInitialInv" data-key="[@lang_res k='fund.info.minInitialInv'/] : [@lang_res k='fund.info.moreThan'/] [@lang_res k='fund.info.10million'/]" data-value="100000000">
+								[@lang_res k='fund.info.moreThan'/]  [@lang_res k='fund.info.10million'/]
+							</li>
+
+						</ul>
+					</div>
+					
+				</div>
+				<div class="funds_more_wrap" id="funds_more_wrap">
+					<p id="yfunds_hidde_title"><span style="display:inline-block;">[@lang_res k='fund.info.moreSelectors'/]</span><span  style="display:none;">[@lang_res k='fund.info.moreSelectorsUp'/]</span> <span class="funds_xia_ico"></span></p>
+				</div>
+				 -->
+				<div class="wmes-menu-hide" ><div class="wmes-menu-hidecon"><b>[@lang_res k='global.screen'/]</b><span></span></div></div>
+            </div>
+    		<div class="white_background funds_selected_wrap" ng-controller="Searchctrl"  ng-app="mySearch">   
+                <div class="funds_selected">
+	                <p class="funds_selected_title">[@lang_res k='fund.info.selectedCondition'/] </p>
+					<ul class="selection_criteria">
+					<p class="funds_title_selection">[@lang_res k='fund.info.resetFilter'/] </p>
+					</ul>
+                </div>
+				<div class="funds_keyserach_wrap">
+					<p class="funds_currency_title">[@lang_res k='fund.info.calculatedIn'/] </p>
+					<div class="funds_currency_xiala">
+						<input type="hidden" id="hdSelectedCurrency" name="hdSelectedCurrency" value="${defCurrency!}" curCode="Original">
+						<input type="text" placeholder="[@lang_res k='fund.info.fundCurrency'/]" readonly>
+						<span class="icon_xiala"></span>
+						<ul class="conversion_select">
+							<li data-conversion="Original">[@lang_res k='fund.info.fundCurrency'/]</li>
+							[#if currencyList?exists && currencyList?size gt 0]
+							[#list currencyList as cList]
+							<li data-conversion="${cList.itemCode!}">${cList.name!}</li>
+							[/#list]
+							[/#if]
+						</ul>
+					</div>
+					<div class="funds_keyserach">
+						<input type="text"  id="fundName" placeholder="[@lang_res k='fund.info.keyWord'/]" >
+						<span class="icon_search" id="searchKeyBtn"></span>
+					</div>
+				</div>
+                <div class="funds_serach_results">
+                        <p class="funds_serach_sum">
+                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchTip'/] 
+                        <span class="funds_serach_digital" ng-bind="{{'datatotal'}}"></span> [@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchTip_2'/]</p>
+                        <ul class="funds_switch_tab">
+                            <li class="funds_sort" data-type="risk_level">
+                                <p class="funds_switch_tab_title">[@lang_res k='fund.info.riskrating'/]</p>
+                                <p class="funds_arrow_wraps">
+                                    <span class="arrow_top"></span>
+                                    <span class="arrow_down"></span>
+                                </p>        
+                            </li>
+                             <li class="funds_sort" data-type="last_nav">
+                                <p class="funds_switch_tab_title">[@lang_res k='fund.info.lastNAVprice'/]</p>
+                                <p class="funds_arrow_wraps">
+                                    <span class="arrow_top"></span>
+                                    <span class="arrow_down"></span>
+                                </p>        
+                            </li>
+                             <li class="funds_sort" data-type="r.increase">
+                                <p class="funds_switch_tab_title">[@lang_res k='fund.info.screener.performance.3MonthReturn'/](%)</p>
+                                <p class="funds_arrow_wraps">
+                                    <span class="arrow_top"></span>
+                                    <span class="arrow_down"></span>
+                                </p>        
+                            </li>
+                            <li class="funds_sort" data-type="c.views">
+                                <p class="funds_switch_tab_title">[@lang_res k='fund.info.list.popularity'/]</p>
+                                <p class="funds_arrow_wraps">
+                                    <span class="arrow_top"></span>
+                                    <span class="arrow_down"></span>
+                                </p>        
+                            </li>
+                            <!-- 
+                             <li class="funds_sort" data-type="fundReturnYTD">
+                                <p class="funds_switch_tab_title">YTD(%)</p>
+                                <p class="funds_arrow_wraps">
+                                    <span class="arrow_top"></span>
+                           .         <span class="arrow_down"></span>
+                                </p>        
+                            </li>
+                             -->
+                            <div class="funds_view_list_ico" [#if Session["role"]?exists &&(Session["role"]=='IFA_FIRM' ||Session["role"]=='distributor')]style="display:none;"[/#if]></div>
+                        </ul>
+                                                
+                    </div>
+                    
+                    <div class="funds-views-lump">
+                        <ul class="views-lump-ul">
+                            <li ng-repeat="items in dataList"  ng-init="checkLast($last)"  class="ng-cloak">
+                                <div>
+                                    <input class="lump_comparison_check" type="checkbox" name="funds_comparison" productId="{{items.productId}}" value="{{items.fundId}}">
+                                	<p class="funds-lump-title" title="{{items.fundName}}">
+                                <a href="${base}/front/fund/info/fundsdetail.do?id={{items.fundId}}&source=dis">{{items.fundName | characters:40:false}}</a></p>	
+                                	
+									<span title="{{items.fundInfo.riskLevel}}" class="funds_leveal_{{items.fundInfo.riskLevel}}" title="{{items.fundInfo.riskLevel}}"></span>
+                                </div>
+                                <div class="funds-lump-equity">
+                                    <span class="lump-equity-title"  title="{{items.sectorType}}">{{items.sectorType | characters:25:false}}</span>
+                                </div>
+                                <div data-original="{{items.fundInfo.lastNav}}" data-exchange="{{items.fundCurrencyCode}}" data-name="{{items.fundCurrency}}"  class="lump-last-wrap Currency_conversion">
+                                    <p class="lump-last-title">[@lang_res k='fund.info.LastNAV'/]
+                                    <span class="lump-nav-num">
+				                	<span class="conversion_Num" ng-bind="{{'items.fundInfo.lastNav'}}" ></span>
+                                    <span class="conversion_Type lump-growth-currency-color" ng-bind="{{'items.fundCurrency'}}"></span>
+                                    </span>
+                                    
+                                    </p>
+                                    <p class="lump-growth-title">[@lang_res k='fund.info.screener.performance.3MonthReturn'/]
+                                          <span class="lump-growth-num" ng-bind-html="items.fundReturnThreeMonth | percentColor:'%':${displayColor!}"></span>
+                                   </p>                      
+                                </div>
+                                <img class="lump-cart-img" src="${base}/loadImgSrcByPath.do?filePath={{items.fundReturnYTDMiddleImg}}" alt="">
+                                [#if Session["role"]?exists &&(Session["role"]=='IFA' ||Session["role"]=='investor')]
+                                <div>
+                                	<p class="lump-list-date"><img src="${base}/res/images/client/time_ico.png">{{items.fundInfo.lastNavUpdate|date:dateFormat}}</p>
+                                	<span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}" productId="{{items.productId}}"></span>
+									<span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}" productId="{{items.productId}}" title="[@lang_res k='fund.info.favourites'/]"></span>
+                                </div> 
+                                [/#if]    
+                            </li> 
+                        </ul>
+                    </div>
+                    <div class="funds-views-list">
+                        <table class="funds_search_information">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                 	<th class="funds_sort" data-type="fund_name">
+                                        		[@lang_res k='console.productdistributor.symbol'/]
+                                        <p class="funds_arrow_wraps">
+                                            <span class="arrow_top"></span>
+                                            <span class="arrow_down"></span>
+                                        </p> 
+                                    </th>
+                                    <th class="funds_tables_fnames funds_sort" data-type="fund_name">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.fundName'/] 
+                                        <p class="funds_arrow_wraps">
+                                            <span class="arrow_top"></span>
+                                            <span class="arrow_down"></span>
+                                        </p> 
+                                    </th>
+                                    <th  class="funds_tables_header funds_sort" data-type="isin_code">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.ISIN'/] 
+                                        <p class="funds_arrow_wraps">
+                                            <span class="arrow_top"></span>
+                                            <span class="arrow_down"></span>
+                                        </p> 
+                                    </th>
+                                    <th class="funds_tables_header funds_sort" data-type="risk_level">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.riskrating'/]
+                                        <p class="funds_arrow_wraps">
+                                            <span class="arrow_top"></span>
+                                            <span class="arrow_down"></span>
+                                        </p>        
+                                    </th>
+                                    <th  class="funds_tables_header funds_sort" data-type="fund_currency">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.currency'/]
+                                        <p class="funds_arrow_wraps">
+                                            <span class="arrow_top"></span>
+                                            <span class="arrow_down"></span>
+                                        </p> 
+                                    </th>
+                                    
+                                </tr>
+                                <tr ng-repeat="items in dataList" ng-init="checkLast($last)" class="animated flipInX">
+                                 	<td ng-bind="{{'items.symbolCode'}}"></td>
+                                    <td class="tdleft funds_tables_fnames">
+                                    [#if Session["role"]?exists &&(Session["role"]=='IFA' ||Session["role"]=='investor')] 
+                                    	<div class="account-checkbox" style="transform:scale(0.8);margin-top:4px">
+    										<input class="funds_comparison_check" type="checkbox"  name="funds_comparison{{items.productId}}" id="funds_comparison{{items.productId}}" productId="{{items.productId}}" value="{{items.fundId}}">
+    										<label for="funds_comparison{{items.productId}}"></label>
+    									</div>
+							 		[/#if]
+                                        <a style="color:#4ba6de;" href="${base}/front/fund/info/fundsdetail.do?id={{items.fundId}}" ng-bind="{{'items.fundName'}}"></a>
+                                    </td>
+                                    <td ng-bind="{{'items.fundInfo.isinCode'}}"></td>
+                                    <td ng-bind="{{'items.fundInfo.riskLevel'}}"></td>
+                                    <td ng-bind="{{'items.fundCurrency'}}"></td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="funds_search_wrap">     
+                            <div class="funds_search_content">
+                                <table class="funds_search_Part funds_search_partOne" style="display: table;">
+                                    <tbody>
+                                        <tr class="funds_tables_th">
+                                            <!--  <th class="funds_tables_header">[@lang_res k='fund.info.screener.performance.3MonthReturn'/]</th>-->
+                                            <th class="funds_tables_header">[@lang_res k='fund.info.LastNAV_rating'/]</th>
+                                            <th class="funds_tables_header">[@lang_res k='fund.info.price_date'/]</th>
+                                            <!--  <th class="funds_tables_header">[@lang_res k='fund.info.dailyReturn'/]</th>
+                                            <th class="funds_tables_header">[@lang_res k='fund.info.IssueDate'/]</th>-->
+                                            <th class="funds_tables_header">[@lang_res k='console.productdistributor.transactionFeeRate'/]</th>
+                                            <th class="funds_tables_header">[@lang_res k='console.productdistributor.transactionFeeMini'/]</th>
+                                            <th class="funds_tables_header">[@lang_res k='console.productdistributor.transactionFeeCur'/]</th>
+                                        </tr>
+                                        <tr ng-repeat="items in dataList" ng-init="checkLast($last)" class="animated flipInX">
+                                            <!--  <td>
+                                                <img src="${base}/loadImgSrcByPath.do?filePath={{items.fundReturnYTDSmallImg}}">
+                                            </td>     -->                                       
+                                            <td data-original="{{items.fundInfo.lastNav}}" data-exchange="{{items.fundCurrencyCode}}" data-name="{{items.fundCurrency}}" class="Currency_conversion">
+                                                <span class="conversion_Num" ng-bind="{{'items.fundInfo.lastNav'}}"></span>
+                                                <span class="conversion_Type" ng-bind="{{'items.fundCurrency'}}"></span>
+                                            </td>
+                                            
+                                            <td>
+                                               {{items.fundInfo.lastNavUpdate|date:dateFormat}}
+                                            </td>
+                                            <td>
+                                               {{items.transactionFeeRate |decimal:2}}%
+                                            </td>
+                                            <td>
+                                               {{items.transactionFeeMini |decimal:2}}
+                                            </td>
+                                            <td>
+                                               {{items.transactionFeeCurCurrency}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="funds_search_Part funds_search_partTwo">
+                                    <tbody>
+                                        <tr class="funds_tables_th">
+                                            <th class="funds_tables_date" style="width:80px;"> [@lang_res k='fund.info.mon'/]
+                                                <div class="funds_cumulative_title">[@lang_res k='fund.info.per'/]</div>
+                                            </th>
+                                            <th class="funds_tables_date" style="width:80px;">[@lang_res k='fund.info.mon_3'/]</th>
+                                            <th class="funds_tables_date" style="width:80px;">[@lang_res k='fund.info.mon_6'/]</th>
+                                            <th class="funds_tables_date" style="width:80px;">[@lang_res k='fund.info.YTD'/]</th>
+                                            <th class="funds_tables_date" style="width:80px;">[@lang_res k='fund.info.yr_1'/]</th>
+                                            <th class="funds_tables_date" style="width:80px;">[@lang_res k='fund.info.yr_3'/]</th>
+                                            <th class="funds_tables_date" style="width:80px;">[@lang_res k='fund.info.yr_5'/]</th>
+                                            <th class="funds_tables_date" style="width:80px;">[@lang_res k='fund.info.launch'/]</th>
+                                            <th align="center" style="width:60px;"  class="funds_search_like">[@lang_res k='global.action'/]</th>
+                                        </tr>
+                                        <tr ng-repeat="items in dataList" ng-init="checkLast($last)" class="animated flipInX">
+                                            <td>
+                                                <span ng-bind-html="items.fundReturnOneMonth | percentColor:'%':${displayColor!}"></span>
+                                            </td>
+                                            <td>
+                                                <span ng-bind-html="items.fundReturnThreeMonth | percentColor:'%':${displayColor!}"></span>
+                                            </td>
+                                            <td>
+                                                <span ng-bind-html="items.fundReturnSixMonth | percentColor:'%':${displayColor!}"></span>
+                                            </td>
+                                            <td>
+                                                <span ng-bind-html="items.fundReturnYTD | percentColor:'%':${displayColor!}"></span>
+                                            </td>
+                                            <td>
+                                                <span ng-bind-html="items.fundReturnOneYear | percentColor:'%':${displayColor!}"></span>
+                                            </td>
+                                            <td>
+                                                <span ng-bind-html="items.fundReturnThreeYear | percentColor:'%':${displayColor!}"></span>
+                                            </td>
+                                            <td>
+                                                <span ng-bind-html="items.fundReturnFiveYear | percentColor:'%':${displayColor!}"></span>
+                                            </td>
+                                            <td>
+                                                <span ng-bind-html="items.fundReturnLaunch | percentColor:'%':${displayColor!}"></span>
+                                            </td>
+											<td nowrap>
+											
+												<!-- 
+												<span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}"  productId="{{items.productId}}"></span>
+												<span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}"  productId="{{items.productId}}" title="[@lang_res k='fund.info.favourites'/]"></span>
+												<span class="funds_cart" title="[@lang_res k='fund.info.shoppingCart'/]"></span> 
+												-->
+											</td>
+                                        </tr>
+                                    </tbody>
+                                </table>  
+                                <table class="funds_search_Part funds_search_partThree">
+                                    <tbody>
+                                        <tr class="funds_tables_th">
+                                            <th class="funds_tables_header funds_tables_w120" >
+                                                [@lang_res k='fund.info.lipperCR'/]                
+                                            </th>
+                                            <th class="funds_tables_header funds_tables_w120">
+                                                [@lang_res k='fund.info.fitch'/]                       
+                                            </th>
+                                            <th class="funds_tables_header funds_tables_w120">
+                                                [@lang_res k='fund.info.citywire'/]                      
+                                            </th>
+                                            <th align="center">[@lang_res k='global.action'/]</th>
+                                        </tr>
+                                        <tr ng-repeat="items in dataList"  ng-init="checkLast($last)" class="animated flipInX">
+                                            <td>
+                                                <img ng-if="items.lipperCR > 0" ng-repeat="imglist in counter(items.lipperCR) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+                                                <span ng-if="items.lipperCR <= 0" >N/A</span>
+                                            </td>
+                                            <td>
+                                                <img ng-if="items.fitch > 0" ng-repeat="imglist in counter(items.fitch) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+                                                <span ng-if="items.fitch <= 0" >N/A</span>
+                                            </td>
+                                            <td>
+                                                <img ng-if="items.citywire > 0" ng-repeat="imglist in counter(items.citywire) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+                                                <span ng-if="items.citywire <= 0" >N/A</span>
+                                            </td>
+                                            <td>
+                                                [#if showCart?? && showCart=="true" ] 
+                                                <!--<span class="addCart funds_cart2" title="[@lang_res k='fund.info.shoppingCart'/]"></span>-->
+                                                [/#if]
+                                                <!-- <span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}"  productId="{{items.productId}}"></span>
+                                                <span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}"  productId="{{items.productId}}" title="[@lang_res l=Session["_LANG_CODE_"] k='fund.info.favourites'/]"></span>
+                                                <span class="funds_cart" title="[@lang_res l=Session["_LANG_CODE_"] k='fund.info.shoppingCart'/]"></span> -->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>   
+                                  
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="no_list_tips">
+						<div class="notipswrap">
+
+							<div class="noResult">
+								<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+								<span class="funds-nodata-tips">[@lang_res k='fund.info.noFund.sorry'/]</span>
+							</div>
+							<p class="noResultText"></p>
+						</div>
+					</div>
+				<ul class="ifa_list_paging"><wmespage conf="transactionConf"></wmespage></ul>
+				<!--<div class="screener-attributes-button">
+                    <a class="attributes-button" id="comparison" href="${base}/front/fund/info/fundscomparison.do"><span id="comparison-num">0</span> [@lang_res k='fund.info.list.comparison'/]</a>
+                </div>-->
+            </div>
+        </div>
+        [#if Session["role"]?exists &&(Session["role"]=='IFA' ||Session["role"]=='investor')]
+        <div class="fund_float_menubox" >
+        	<div class="fund_float_menu">
+        		<p class="fund_float_menu_title">[@lang_res k='fund.info.list.floatMenu.title'/]</p>
+        		<p class="fund_float_menu_num">0</p>
+        		<input type="hidden" id="individualId" name="individualId" value="${individualId!}" />
+        	</div>
+        	<a id="jump_compare" href="${base}/front/fund/info/fundscomparison.do">
+        		<div class="fund_float_menucon_comparebox" title="[@lang_res k='fund.info.list.floatMenu.compare'/]">
+        			<div class="fund_float_menucon_compare"></div>
+        		</div>
+        	</a>
+        	<div class="fund_float_menucon_purchasebox" title="[@lang_res k='fund.info.list.floatMenu.purchas'/]">
+        		<div class="fund_float_menucon_purchase"></div>
+        	</div>
+        	<!--<div class="fund_float_menucon">
+        		<ul>
+        			<li>
+        				<a id="jump_compare" href="${base}/front/fund/info/fundscomparison.do">
+        					<div class="fund_float_menuconlibg">
+        					<div class="fund_float_menucon_compare"></div>
+        					</div>
+        					<p>Compare</p>
+        				</a>
+        			</li>
+        			<li class="fund_float_menucon_purchasebuy">
+        				<div class="fund_float_menuconlibg">
+        					<div class="fund_float_menucon_purchase"></div>
+        				</div>
+        				<p>Purchase</p>
+        			</li>
+        		</ul>
+        	</div>-->
+        </div>
+        [/#if]
+        
+</div>
+<div class="fund-space-mask-wrap">
+	<div class="fund_float_menu_menu_addbox">
+		<div class="wmes-close"></div>
+		<div class="wmes-wrap-title">[@lang_res k='fund.info.list.purchas.title'/]</div>
+		<div style="width:60%;min-height:75px;margin:0 auto;">
+			<p style="margin-bottom:8px;margin-top:15px;">[@lang_res k='fund.info.list.purchas.label'/]</p>
+			<div class="register_xiala_long">
+	       	 <input type="text" readonly placeholder="" class="value_show" value="" readonly="readonly" UNSELECTABLE='on'>
+	        	<input id="portfolioHoldId" name="portfolioHoldId" type="hidden" class="value_hidden" value="">
+	        	<ul class="regiter_xiala_ul">
+					[#if portfolioHoldList?exists && portfolioHoldList?size gt 0]
+							[#list portfolioHoldList as cList]
+							<li value="${cList.id!}">${cList.portfolioName!}</li>
+							[/#list]
+							[/#if]
+					<li value="newPortfolio" >[@lang_res k='fund.info.list.purchas.newPortfolio'/]</li>
+	        	</ul>
+	        	<span class="register_xiala_ico"></span>
+	    	</div> 
+		</div>
+		<div style="margin:40px 0 20px 30%;overflow: hidden;">
+			<form id="addFundToPortfolio" method ="post" action="${base}/front/tradeMain/createPorfolioByProducts.do">
+				<input type="hidden" id="holdId" name="holdId" value="" />
+				<input type="hidden" id="products" name="products" value="" />
+			</form>
+			<a class="fund_float_attributes-button">[@lang_res k='global.add'/]</a>
+			<a class="fund_float_attributes-buttoncancel">[@lang_res k='global.cancel'/]</a>
+		</div>
+	</div>
+</div>
+
+				
+
+<form id="listForm" name="listForm" >
+<input type="hidden" name="keyword" value="" id="keyword"/>
+<input type="hidden" name="fundHouseIds" value="" id="fundHouseIds"/>
+<input type="hidden" name="fundName" value="" id="fundName"/>
+<input type="hidden" name="fundSizeFrom" value="" id="fundSizeFrom"/>
+<input type="hidden" name="fundSizeTo" value="" id="fundSizeTo"/>
+<input type="hidden" name="domicile" value="" id="domicile"/>
+<input type="hidden" name="currency" value="" id="currency"/>
+<input type="hidden" name="fundType" value="" id="fundType"/>
+<input type="hidden" name="sectorType" value="" id="sectorType"/>
+<input type="hidden" name="geoAllocation" value="" id="geoAllocation"/>
+<input type="hidden" name="riskLevel" value="" id="riskLevel"/>
+<input type="hidden" name="perfLaunchFrom" value="" id="perfLaunchFrom" class="perfClean"/>
+<input type="hidden" name="perfLaunchTo" value="" id="perfLaunchTo" class="perfClean"/>
+<input type="hidden" name="perfYTDFrom" value="" id="perfYTDFrom" class="perfClean"/>
+<input type="hidden" name="perfYTDTo" value="" id="perfYTDTo" class="perfClean"/>
+<input type="hidden" name="perfOneWeekFrom" value="" id="perfOneWeekFrom" class="perfClean"/>
+<input type="hidden" name="perfOneWeekTo" value="" id="perfOneWeekTo" class="perfClean"/>
+<input type="hidden" name="perfOneMonthFrom" value="" id="perfOneMonthFrom" class="perfClean"/>
+<input type="hidden" name="perfOneMonthTo" value="" id="perfOneMonthTo" class="perfClean"/>
+<input type="hidden" name="perfThreeMonthFrom" value="" id="perfThreeMonthFrom" class="perfClean"/>
+<input type="hidden" name="perfThreeMonthTo" value="" id="perfThreeMonthTo" class="perfClean"/>
+<input type="hidden" name="perfSixMonthFrom" value="" id="perfSixMonthFrom" class="perfClean"/>
+<input type="hidden" name="perfSixMonthTo" value="" id="perfSixMonthTo" class="perfClean"/>
+<input type="hidden" name="perfOneYearFrom" value="" id="perfOneYearFrom" class="perfClean"/>
+<input type="hidden" name="perfOneYearTo" value="" id="perfOneYearTo" class="perfClean"/>
+<input type="hidden" name="perfThreeYearFrom" value="" id="perfThreeYearFrom" class="perfClean"/>
+<input type="hidden" name="perfThreeYearTo" value="" id="perfThreeYearTo" class="perfClean"/>
+<input type="hidden" name="perfFiveYearFrom" value="" id="perfFiveYearFrom" class="perfClean"/>
+<input type="hidden" name="perfFiveYearTo" value="" id="perfFiveYearTo" class="perfClean"/>
+<input type="hidden" name="lipperCrId" value="" id="lipperCrId"/>
+<input type="hidden" name="lipperCr" value="" id="lipperCr"/>
+<input type="hidden" name="fitchId" value="" id="fitchId"/>
+<input type="hidden" name="fitch" value="" id="fitch"/>
+<input type="hidden" name="citywireId" value="" id="citywireId"/>
+<input type="hidden" name="citywire" value="" id="citywire"/>
+<input type="hidden" name="minInitialInv" value="" id="minInitialInv"/>
+<input type="hidden" name="mgtFee" value="" id="mgtFee"/>
+<input type="hidden" name="fundID" value="${fundIds}" id="fundID"/>	
+<input type="hidden" name="distributorId" value="${distributor.id}" id="distributorId"/>	
+</form>	
+
+<style>
+
+.cart {position:fixed;z-index:10; bottom:100px; right:100px; cursor:pointer; background-color:#3a87ad; color:white; width:100px;height:100px;border-radius:50px;text-align:center;font-weight:bold;}
+.cart p{font-size:35px;margin:25px 0px 0px 0px}
+
+</style>
+<div id="cart" class="cart" [#if !(select?? && select=="true") ]style="display:none;"[/#if]>
+    <p>+</p>
+    <p style="font-size:14px;margin-top:15px">Portfolio</p>
+</div>
+
+
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+	var sessionRole = "${Session["role"]!}";
+    seajs.use('${base}/res/web/console/distributor/fundsscreener.js');
+</script>

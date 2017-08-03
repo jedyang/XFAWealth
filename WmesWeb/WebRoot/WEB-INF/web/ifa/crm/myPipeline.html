@@ -1,0 +1,583 @@
+[#include "../../inc/head_v2.html"/]
+		<link href="${base}/res/third/fullcalendar/css/fullcalendar.print.css" rel="stylesheet" media="print">
+		<link href="${base}/res/third/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+		<link href="${base}/res/third/laydate/need/laydate.css" rel="stylesheet">
+		<link href="${base}/res/third/laydate/skins/yalan/laydate.css" rel="stylesheet">
+		<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css"> 
+         <link rel="stylesheet" href="${base}/res/css/client.css"> 
+        <style type="text/css">
+        .page_left {background: url('${base}/res/images/ifa/left_ico.png') no-repeat;;position: absolute;top: 45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;left: -10px;opacity: 0.7;right: auto;cursor: pointer;}
+		.page_right {background: url('${base}/res/images/ifa/right_ico.png') no-repeat;position: absolute;top:45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;right: -10px;opacity: 0.7;left: auto;cursor: pointer;}
+			/*swiper 重写*/
+		.swiper-button-next, .swiper-button-prev {position: absolute;top: 80px;width: 50px;height: 50px;opacity: 0.7;margin-top: -22px;z-index: 10;cursor: pointer;background-position: center;background-repeat: no-repeat;display: none;
+					}
+		.swiper-button-disabled{display: none!important;}
+		.swiper-button-prev{background: url('${base}/res/images/ifa/left_ico.png') no-repeat;background-size: 100% 100%;left: 0px;}
+		.swiper-button-next{background: url('${base}/res/images/ifa/right_ico.png') no-repeat;background-size: 100% 100%;right: 0px;}
+/*			.pipelin-list-swiper{height: 477px;z-index: 0;}
+		.pipelin-list{margin-top: -290px;}*/
+		.pipelin-list:first-of-type{margin-top: 0px;}
+		.space-mask-wrap {left: 15%;}
+        </style>
+        <div class="wmes-top">
+            <a href="javascript:;" class="header-over">[@lang_res  k='pipeline.formTitle'/]</a>
+        </div>
+        <div class="wmes-content">
+        <p class="wmes-wrap-title" style="padding: 20px 15px;background-color:white;margin-bottom:0px;">[@lang_res  k='pipeline.formTitle'/]</p>
+            <div class="noline_tab_wrap">
+                <ul class="noline_tab_tab">
+					<li class="now">[@lang_res  k='pipeline.tab.prospect'/]<span></span></li>
+					<li>[@lang_res  k='pipeline.tab.existing'/]<span></span></li>
+				</ul>
+				<input type="hidden" name="hdClientType" value="0" id="hdClientType"/>
+            </div>
+    		<div class="my-pipeline-wrap">
+				<div class="pipelin-top-ico">
+					<div class="pipelin-button-wrap">
+						<a class="pipelin-button" id="pipelin-bless" href="javascript:;">[@lang_res  k='pipeline.btn.greet'/]</a>
+						<a class="pipelin-button" id="pipelin-schedule" href="javascript:;">[@lang_res  k='pipeline.btn.schedule'/]</a>
+						<a class="pipelin-button" href="${base}/front/crm/proposal/createProposalSetOne.do">[@lang_res  k='pipeline.btn.proposal'/]</a>
+						<a class="pipelin-button" target="_self" href="${base}/front/strategy/info/communicationRecord.do">Communication Record</a>
+					</div>
+					<div class="pipelin-bell">
+						<img id="pipelin-bell-ico" src="${base}/res/images/ifa/Small_bell.png">
+						<div class="pipelin-bell-wrap">
+							<p class="pipelin-bell-name">[@lang_res  k='pipeline.remind'/]</p>
+							<ul class="pipelin-bell-tab"> 
+								<li data-name="period" data-value="1day" >[@lang_res  k='pipeline.remind.today'/]</li>
+								<li data-name="period" data-value="1week" class="bell-tab-active">[@lang_res  k='pipeline.remind.oneweek'/]</li>
+								<li data-name="period" data-value="2week">[@lang_res  k='pipeline.remind.twoweek'/]</li>
+								<li data-name="period" data-value="1month">[@lang_res  k='pipeline.remind.onemonth'/]</li>
+							</ul>
+							<ul class="pipelin-bell-contents">
+								<li style="display:block;">
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_cake_ico.png"></div><p class="pipelin-bell-word">Birthday</p><p id="BirthdayRemindNum" class="pipelin-bell-num"></p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_email_ico.png"></div><p class="pipelin-bell-word">Message</p><p class="pipelin-bell-num">2</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_appo_ico.png"></div><p class="pipelin-bell-word">Appointment</p><p id="AppointmentRemindNum" class="pipelin-bell-num"></p></div>
+								</li>
+								<li>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_cake_ico.png"></div><p class="pipelin-bell-word">Birthday</p><p id="BirthdayRemindNum_Existing" class="pipelin-bell-num"></p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_email_ico.png"></div><p class="pipelin-bell-word">Message</p><p id="MessageRemindNum_Existing" class="pipelin-bell-num">2</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_appo_ico.png"></div><p class="pipelin-bell-word">Appointment</p><p id="AppointmentRemindNum_Existing" class="pipelin-bell-num"></p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_review_ico.png"></div><p class="pipelin-bell-word">Porfolio Review</p><p id="PorfolioRemindNum_Existing" class="pipelin-bell-num"></p></div>
+									<div class="pipelin-bell-mesWrap" data-type="kyc"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_kyc_ico.png"></div><p class="pipelin-bell-word">KYC Review</p><p id="KYCRemindNum_Existing" class="pipelin-bell-num"></p></div>
+								</li>
+							</ul>
+							<input type="hidden" name="hdPeriod" value="1week" id="hdPeriod"/>
+							<div class="pipelin-bell-line"></div>
+						</div>
+					</div>	
+					<p class="pipelin-bell-title">Remind</p>				
+				</div>
+				<div class="pipelin-top-search">
+					<div class="plipelin-imporatant-ico">
+						<div class="plipelin-checkbox-ico"></div>
+						<p class="plipelin-checkbox-title">[@lang_res  k='pipeline.search.important'/]</p>
+					</div>
+					
+					<div class="pipelin_xiala">
+                        <input type="text"  placeholder="Show All" readonly>
+                        <span class="icon_xiala"></span>
+                        <ul id="pipelin-choice">
+                        	<li class="pipelin-show-all">Show All</li>
+                            <li class="pipelin-choice-group">Asian clients</li>
+                            <li class="pipelin-choice-group">European clients</li>
+                            <li class="pipelin-new-group">New Group</li>
+                        </ul>
+                    </div>
+               		
+               		<div class="wmes_keyserach">
+                        <input type="text" id="txtKeyword" placeholder="[@lang_res  k='pipeline.search.keyword'/]">
+                        <span class="wmes_icon_search" ></span>
+                    </div>
+                    <div class="my-group-wrapper">
+						<div class="my-group-title">
+							<p class="group-title">管理客户分组</p>
+							<span class="group-title-close"></span>
+						</div>
+						<div class="group-list-wrapper" id="group-list-wrapper">
+							<ul class="my-group-list" id="my-group-list">
+								<li class="my-group-li">
+									<input type="text" maxlength="18" readonly="" class="group-list-word" value="Asian clients">
+									<div class="group-list-ico">
+										<span class="group-list-edit"></span>
+										<span class="group-list-close"></span>
+									</div>
+								</li>
+								<li class="my-group-li">
+									<input type="text" maxlength="18" readonly="" class="group-list-word" value="European clients">
+									<div class="group-list-ico">
+										<span class="group-list-edit"></span>
+										<span class="group-list-close"></span>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<a class="group-list-button" href="javascript:;">新建客户分组</a>
+					</div>
+                    	
+				</div>
+    			<div class="pipeline-prospect pipeline-div pipeline-div-active">
+    				<div class="pipelin-list-wrap">
+    					<div class="pipelin-list-rows">
+    						<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<!--<p class="pipelin-date-day">01</p> -->
+	    							<p class="pipelin-date-title" saleStageId="sales_new">[@lang_res  k='pipeline.prospect.list.type.new'/]<!--  <span class="pipelin-date-num">(2)</span> --></p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+	    							<ul class="swiper-wrapper sales_new">
+	    								<!-- New阶段的客户 -->	
+	    							</ul>
+	    							<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>	    					
+	    						</li>
+	    					</ul>	
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title" saleStageId="sales_contact">[@lang_res  k='pipeline.prospect.list.type.contact'/]</p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+									<ul class="swiper-wrapper sales_contact">
+			    						<!-- Contact阶段的客户 -->
+									</ul>
+									<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+	    						</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title" saleStageId="sales_proposal">[@lang_res  k='pipeline.prospect.list.type.proposal'/]</p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+	    							<ul class="swiper-wrapper sales_proposal">
+			    						<!-- Proposal阶段的客户 -->
+			    					</ul>
+		    						<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title" saleStageId="sales_negotiating">[@lang_res  k='pipeline.prospect.list.type.negotiating'/]</p>
+	    							<!-- <div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div> -->
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+	    							<ul class="swiper-wrapper sales_negotiating">
+	    								<!-- Negotiating阶段的客户 -->
+			    					</ul>
+			    					<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title" saleStageId="sales_close">[@lang_res  k='pipeline.prospect.list.type.close'/]</p>
+	    							<!-- <div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div> -->
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+		    						<ul class="swiper-wrapper sales_close">    						
+			    						<!-- Closed阶段的客户 -->
+			    					</ul>
+			    					<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+    					</div>  					
+    				</div>
+    			</div>
+    			<div class="pipeline-existing pipeline-div">
+    				<div class="pipelin-list-wrap">
+    					<div class="pipelin-list-rows">
+    						<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title" clientStatus="customer-care">[@lang_res  k='pipeline.existing.list.type.customercare'/]</p>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+		    						<ul class="swiper-wrapper customer-care">
+			    						<!-- customercare阶段的客户 -->
+		    						</ul>
+    								<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+    						<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title" clientStatus="open-account">[@lang_res  k='pipeline.existing.list.type.openaccount'/]</p>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+	    							<ul class="swiper-wrapper open-account">
+			    						<!-- openaccount阶段的客户 -->
+			    					</ul>
+			    					<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title" clientStatus="proposal">[@lang_res  k='pipeline.existing.list.type.proposal'/]</p>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+		    						<ul class="swiper-wrapper proposal">
+			    						<!-- Proposal阶段的客户 -->
+	        						</ul>
+	        						<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title" clientStatus="portfolio">[@lang_res  k='pipeline.existing.list.type.portfolio'/]</p>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+		    						<ul class="swiper-wrapper portfolio">
+			    						<!-- Portfolio阶段的客户 -->
+        							</ul>
+    								<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title" clientStatus="not-yet-invest">[@lang_res  k='pipeline.existing.list.type.notyetinvest'/]</p>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+		    						<ul class="swiper-wrapper not-yet-invest">
+			    						<!-- notyetinvest阶段的客户 -->
+			    					</ul>
+	    							<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+    					</div>  					
+    				</div>
+    			</div>
+    			<div class="pipelin-search-mask"></div>
+				<div class="pipelin-list-search">
+    						<div class="pipelin-search-wrap">
+    							<a href="javascript:;" class="space-mask-close" id="pipelin-search-close"></a>
+    							<div class="pipelin-search-keys">
+    								<div class="wmes_keyserach">
+			                            <input type="text" id="pipelinKeyWord" placeholder="Please enter keyword search">
+			                            <span class="wmes_icon_search" id="btnSearch"></span>
+			                        </div>
+    							</div>
+    							<div class="wmes_choice_wrap">
+									<p class="wmes_choice_title pipelin_choice_title">select</p>
+									<ul class="wmes_choice">
+										<li  class="wmes_choice_active">All</li>
+										<li data-letter="A">A</li>
+										<li data-letter="B">B</li>
+										<li data-letter="C">C</li>
+										<li data-letter="D">D</li>
+										<li data-letter="E">E</li>
+										<li data-letter="F">F</li>
+										<li data-letter="G">G</li>
+										<li data-letter="H">H</li>
+										<li data-letter="I">I</li>
+										<li data-letter="J">J</li>
+										<li data-letter="K">K</li>
+										<li data-letter="L">L</li>
+										<li data-letter="M">M</li>
+										<li data-letter="N">N</li>
+										<li data-letter="O">O</li>
+										<li data-letter="P">P</li>
+										<li data-letter="Q">Q</li>
+										<li data-letter="R">R</li>
+										<li data-letter="S">S</li>
+										<li data-letter="T">T</li>
+										<li data-letter="U">U</li>
+										<li data-letter="V">V</li>
+										<li data-letter="W">W</li>
+										<li data-letter="S">S</li>
+										<li data-letter="Y">Y</li>
+										<li data-letter="Z">Z</li>
+									</ul>
+								</div>
+								<ul class="pipelin_choice-contents">
+									<!-- li  分类的全部客户 -->
+								</ul>
+    						</div>
+				</div>
+            </div>
+        </div>
+        <!-- 弹出层 -->
+		<div class="ifa-space-popup" id="ifa-pipeline-search">
+		    <div class="ifa-space-mask"></div>
+		    <div class="space-mask-wrap">
+		        <div class="space-mask">
+		            <a href="javascript:;" class="space-mask-close" id="pipeline-search-close"></a>
+		            <img style="width:100%;" src="${base}/res/images/allimg/client/message_01.png">
+		        </div>
+		    </div>
+		</div>
+		<!-- 弹出层 -->
+		<div class="ifa-space-popup" id="ifa-pipeline-date">
+		    <div class="ifa-space-mask"></div>
+		    <div class="space-mask-wrap">
+		        <div class="space-mask" style="margin:auto;">
+		            <a href="javascript:;" class="space-mask-close" id="pipelin-date-close"></a>
+		            <!--<img style="width:100%;" src="${base}/res/images/allimg/fullcander.png">-->
+		            <div class="ifa-home-calendar" style="margin:50px;"></div>
+	            </div>
+		    </div>
+		</div>
+
+		<!-- 弹出层 -->
+		<div class="ifa-space-popup" id="ifa-pipeline-investors">
+		    <div class="ifa-space-mask"></div>
+		    <div class="space-mask-wrap">
+		        <div class="space-mask space-mask-investors">
+		            <a href="javascript:;" class="space-mask-close" id="pipelin-investors-close"></a>
+		            <div class="ifa-home-contents">
+                    <p class="ifa-home-title">Find Investors</p>
+                    <div class="mid-inverstor-left">
+                        <div class="home-investor-left">
+                                <p class="home-investors-total">A total of <span class="home-investors-sum">17</span> investors to meet your requirements</p>
+                               <ul class="home-investor-list">
+                                   
+                               </ul> 
+                        </div>
+                    </div>
+                    <div class="home-investor-right">
+                       <ul class="investor-chioce">
+                            <li class="investor-chioce-list" type="language">
+                                <a class="investor-chioce-button  investor-chioce-white" href="javascript:;">Language</a>
+                                <p class="investor-region-list" code="en" ><span class="investor-chioce-condition">English</span></p>
+                                <p class="investor-region-list" code="sc" ><span class="investor-chioce-condition">Simplified Chinese</span></p>
+                                <p class="investor-region-list" code="tc" ><span class="investor-chioce-condition">Traditional Chinese</span></p>                 
+                            </li>
+                            <li class="investor-chioce-list"  type="style">
+                            	<a class="investor-chioce-button investor-chioce-white" href="javascript:;">Inv. Style</a>
+                            	[#if styleList?exists && styleList?size gt 0][#list styleList as list]
+                                <p class="investor-region-list" code="${list.code!}"><span class="investor-chioce-condition">${list.name!}</span></p>
+                                 [/#list][/#if]
+                                <!--<p class="investor-region-list"><span class="investor-chioce-condition">Steady</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Growth</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Radical</span></p>
+                            --></li>
+                            <li class="investor-chioce-list" type="interest">
+                            	<a class="investor-chioce-button investor-chioce-white" href="javascript:;">Interest</a>
+                            	  [#if intresteList?exists && intresteList?size gt 0][#list intresteList as list]
+                                <p class="investor-region-list" code="${list.code!}" ><span class="investor-chioce-condition">${list.name!}</span></p>
+                                 [/#list][/#if]
+                                <!--<p class="investor-region-list"><span class="investor-chioce-condition">Run</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Mountaineering</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Swimming</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Other</span></p>
+                            --></li>
+                            <li class="investor-chioce-list" type="region">
+                                <a id="Country-btn" class="investor-chioce-button investor-chioce-white" href="javascript:;">Region</a>
+                                 [#if regionList?exists && regionList?size gt 0][#list regionList as list]
+                                <p class="investor-region-list" code="${list.code!}" ><span class="investor-chioce-condition">${list.name!}</span></p>
+                                 [/#list][/#if]
+                                <!--<p class="investor-region-list"><span class="investor-chioce-condition">North America</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">South America</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Asia</span></p>
+                            --></li>
+                            <li><p class="investor-chioce-button investor-chioce-white">Read My Insights</p></li>
+                            <li class="investor-list-line"></li>
+                            <li><a class="investor-chioce-button investor-chioce-white investor-noyet" href="javascript:;">No IFA Yet</a></li>
+                        </ul>
+                    </div>   
+                    <ul class="ifa_list_paging">
+	 					<li class="ifa_pagint_num">1</li>
+	 					<li class="ifa_pagint_num">2</li>
+	 					<li class="ifa_pagint_num ifa_pagint_now">3</li>
+	 					<li class="ifa_pagint_some">...</li>
+	 					<li class="ifa_pagint_num">10</li>
+	 				</ul>
+                   
+                </div>
+		        </div>
+		    </div>
+		</div>
+		<div class="investment-wrap investment-hide">
+			<!-- investment 浮动的框 -->
+			<div class="investment-plan-wrap">
+				<p class="investment-plan-title">Member Information</p>
+				<img class="investment-close-ico" src="${base}/res/images/discover/chat_01.png">
+				<div class="information-plan-rows">
+					<div class="information-plan-left">
+						<img class="information-plan-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="information-topper-name">Lam</p>
+					</div>
+					<div class="information-plan-right">
+						<div class="information-date-rows">
+							<p class="information-date-title ">Registration Date</p>
+							<p class="information-date-time registrationDate">2016-10-25 14:33:45</p>
+						</div>
+						<div class="information-date-rows">
+							<p class="information-date-title ">Last Login Date</p>
+							<p class="information-date-time loginDate">2016-10-24 16:19:22</p>
+						</div>
+					</div>
+				</div>
+				<div class="information-plan-rows">
+					<p class="information-plan-title">Contact Information <span class="information-more-ico"></span></p>
+					<ul class="information-contact-list">
+						<li class="information-contact-li">
+							<img class="information-contact-ico" src="${base}/res/images/ifa/small_phone_ico.png">
+							<p class="information-contact-word mobile">+0085 **** 3440</p>
+						</li>
+						<li class="information-contact-li">
+							<img class="information-contact-ico" src="${base}/res/images/ifa/small_email_ico.png">
+							<p class="information-contact-word email">Rlee@gmail.com</p>
+						</li>
+					</ul>
+					<ul class="information-contact-list">
+						<li class="information-contact-li">
+							<img class="information-contact-ico" src="${base}/res/images/client/wetchat_ico.png">
+							<p class="information-contact-word wetchat">******df</p>
+						</li>
+						<li class="information-contact-li">
+							<img class="information-contact-ico" src="${base}/res/images/client/weibo_ico.png">
+							<p class="information-contact-word line">****y</p>
+						</li>
+						<li class="information-contact-li">
+							<img class="information-contact-ico" src="${base}/res/images/client/facebook_ico.png">
+							<p class="information-contact-word facebook">N/A</p>
+						</li>
+					</ul>
+				</div>
+				<div class="information-plan-rows">
+					<p class="information-plan-title">Investment related <span class="information-more-ico"></span></p>
+					<div class="information-paragraph-rows">
+						<p class="information-paragraph-title">Investment Style</p>
+						<ul class="information-paragraph-list style">
+							<li class="information-describe-yellow">Steady</li>
+							<li class="information-describe-yellow">Value</li>
+						</ul>			
+					</div>
+					<div class="information-paragraph-rows">
+						<p class="information-paragraph-title">Favorite Investment Field</p>
+						<ul class="information-paragraph-list field">
+							<li class="information-describe-blue">Gold</li>
+							<li class="information-describe-blue">Energy</li>
+							<li class="information-describe-blue">Healthcare</li>
+							<li class="information-describe-blue">Commodity Futures</li>
+						</ul>
+					</div>
+				</div>
+				<div class="information-plan-rows">
+					<p class="information-plan-title">Basic Information <span class="information-more-ico"></span></p>
+					<div class="information-basic-top">
+						<div class="information-basic-rows">
+							<p class="information-paragraph-title">Residence</p>
+							<p class="information-basic-word residence">China, HongKong</p>
+						</div>
+						<div class="information-basic-rows">
+							<p class="information-paragraph-title">Nationality</p>
+							<p class="information-basic-word nationality">China</p>
+						</div>
+					</div>
+					<div class="information-basic-top">
+						<div class="information-basic-rows">
+							<p class="information-paragraph-title">Level of Education</p>
+							<p class="information-basic-word education">University or above</p>
+						</div>
+						<div class="information-basic-rows">
+							<p class="information-paragraph-title">Occupation</p>
+							<p class="information-basic-word occupation">***</p>
+						</div>
+					</div>
+					<div class="information-basic-wrap">
+						<p class="information-paragraph-title">Personal introduction</p>
+						<p class="information-basic-word introduction">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.</p>
+					</div>
+				</div>
+				<div class="information-plan-rows">
+					<p class="information-plan-title">Additional Information <span class="information-more-ico"></span></p>
+					<div class="information-paragraph-rows">
+						<p class="information-paragraph-title">Hobby</p>
+						<ul class="information-paragraph-list hobby">
+							<li class="information-describe-red">Swimming</li>
+							<li class="information-describe-red">Tennis</li>
+							<li class="information-describe-red">Classical music</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- investment 浮动的框 -->
+		</div>
+		<!-- CharacterSetting -->
+		<div id="CharacterSetting"  class="investment-wrap" style="display:none">
+			<div class="investment-plan-wrap">
+				<p class="investment-plan-title">Character Setting</p>
+				<img class="character-close-ico" src="${base}/res/images/discover/chat_01.png">
+				<div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title">Character</p>
+						<ul id="character-selected-option" class="character-setting-list">
+							<!--<li data-value="Optimistic">Optimistic <span class="character-list-close"></span></li>
+						--></ul>
+						<input type="text" value="" class="character-setting-add">
+					</div>			
+					<div class="character-setting-choose">
+						<p class="character-choose-title">Please Select:</p>
+						<ul id="character-choose-list" class="character-choose-list">
+							<!--<li data-value="lively">lively <span class="character-list-close"></span></li>
+							<li data-value="Silent">Silent <span class="character-list-close"></span></li>
+							<li data-value="Melancholy">Melancholy <span class="character-list-close"></span></li>
+						--></ul>
+					</div>
+				</div>
+				<div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title">Hobby</p>
+						<ul id="hobby-selected-option" class="character-setting-list">
+							<!--<li data-value="Reading">Reading <span class="character-list-close"></span></li>
+						--></ul>
+						<input type="text" value="" class="character-setting-add">
+					</div>
+					<div class="character-setting-choose">
+						<p class="character-choose-title">Please Select:</p>
+						<ul id="hobbytypes-choose-list" class="character-choose-list">
+							<!--<li data-value="Climbing">Climbing  <span class="character-list-close"></span></li>
+							<li data-value="Swimming">Swimming  <span class="character-list-close"></span></li>
+							<li data-value="Travel">Travel  <span class="character-list-close"></span></li>
+						--></ul>
+					</div>
+				</div>
+				<div class="character-text-list">
+					<div class="character-text-rows">
+						<p class="character-text-title">Special</p>
+						<input id="txtSpecial" class="character-text-input" type="text">
+					</div>
+					<div class="character-text-rows">
+						<p class="character-text-title">Dislike</p>
+						<input id="txtDislike" class="character-text-input" type="text">
+					</div>
+				</div>
+				<div class="character-button-rows">
+					<a class="character-button-save" href="javascript:;">Save</a>
+					<a class="character-button-close" href="javascript:;">Close</a>
+				</div>
+			</div>
+		</div>
+[#include "../../inc/foot_v2.html"/]
+<script src="${base}/res/console/js/jquery-1.11.2.min.js"
+		type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js"
+	type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/laydate/laydate.js" type="text/javascript"></script>
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/crm/myPipeline.js');
+     //seajs.use('${base}/res/web/ifa/crm/clientList.js');     
+     seajs.use('${base}/res/web/ifa/crm/schedule.js');     
+</script>

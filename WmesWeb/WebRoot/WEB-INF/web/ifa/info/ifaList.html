@@ -1,0 +1,200 @@
+[#include "../../inc/head_v2.html"/]
+
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+ <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+ <link href="${base}/res/console/css/pagination.css" rel="stylesheet">
+ <style>
+	.ifa_social_fans a{color:#333} 
+	.ifa_social_fans a:hover{text-decoration:none} 
+	.ifa_social_fans a i { background: url(${base}/res/images/ifa/fansjia.png) no-repeat; display: block; width: 15px; height: 15px;    margin: 7px 15px 0px 15px; position: relative; z-index: 10; float:left; 
+	    -webkit-transition: -webkit-transform 0.4s ease-out; 
+	    -moz-transition: -moz-transform 0.4s ease-out; 
+	    transition: transform 0.4s ease-out; 
+	} 
+	.ifa_social_fans a:hover i { 
+	    -webkit-transform: rotate(240deg); 
+	    -moz-transform: rotate(240deg); 
+	    transform: rotate(240deg); 
+	} 
+	.ifa_list_matching1 {margin: 0 auto;-webkit-border-radius: 110px;border-radius: 110px;-webkit-transition: -webkit-transform 0.2s ease-out;-moz-transition: -moz-transform 0.2s ease-out;-o-transition: -o-transform 0.2s ease-out;-ms-transition: -ms-transform 0.2s ease-out;}
+	.ifa_list_matching1:hover {-webkit-transform: rotateZ(180deg);-moz-transform: rotateZ(180deg);-o-transform: rotateZ(180deg);-ms-transform: rotateZ(180deg);transform: rotateZ(180deg);}
+	.ifa_pagint_now span{ color:black;}
+	.ifa_touxiang{opacity:1; cursor: pointer;  transition: all 0.6s; width: 77px;height: 80px;border-radius: 50%;}
+	.ifa_list_ul li:hover .ifa_touxiang{ transform: scale(1.2);width: 77px;height: 80px;border-radius: 50%;}
+	@-webkit-keyframes fadeIn {0% {opacity: 0; /*初始状态 透明度为0*/}50% {opacity: 0; /*中间状态 透明度为0*/}100% {opacity: 1; /*结尾状态 透明度为1*/}}
+	.ifa-fadein{-webkit-animation-name: fadeIn; /*动画名称*/-webkit-animation-duration: 2s; /*动画持续时间*/-webkit-animation-iteration-count: 1; /*动画次数*/-webkit-animation-delay: 0s; /*延迟时间*/}
+	.ifa_list_paging > li a{color:#000000;}
+	.ifa_list_paging .ifa_pagint_now  a{color:#ffffff;}
+	.spinner { margin: 10px auto 0;}
+ </style>
+        <div class="wmes-top">
+            <a href="javascript:;" class="header-over">IFA List</a>
+        </div>
+        <div class="wmes-content">
+        		<div class="ifa_choose_condition">
+        			<div class="wmes-wrap-title" style="margin-bottom:0">
+        				IFA List
+        			</div>
+        			<div class="funds_choice_wrap" style="position: relative">
+						<p class="funds_choice_title">[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.serviceregion'/]<!-- 服务区域 --></p>
+						<ul class="funds_choice" data-name="ServiceRegion">
+							<li data-name="ServiceRegion" class="funds_all fund_choice_active per_child">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+							[#if serviceRegionList?exists && serviceRegionList?size gt 0]
+							[#list serviceRegionList as rList]
+							<li data-name="ServiceRegion" data-key="[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.serviceregion'/] : ${rList.name}" data-value="${rList.itemCode}">${rList.name!}</li>
+							[/#list]
+							[/#if]
+						</ul>
+						<div class="funds_more_wrap" id="funds_more_wrap" isopen="0" style="position: absolute;right:0;top:0;padding:10px 0 0 0">
+							<p id="yfunds_hidde_title"><span style="display:inline-block;">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.moreSelectors'/]</span><span  style="display:none;">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.moreSelectorsUp'/]</span> <span class="funds_xia_ico"></span></p>
+						</div>
+					</div>
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.expertise'/]<!-- 擅长领域 --></p>
+						<ul class="funds_choice" data-name="Expertise">
+							<li data-name="Expertise"  class="funds_all fund_choice_active per_child">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+							[#if expertiseList?exists && expertiseList?size gt 0]
+							[#list expertiseList as eList]
+							<li data-name="Expertise" data-key="[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.expertise'/] : ${eList.name}" data-value="${eList.itemCode}">${eList.name!}</li>
+							[/#list]
+							[/#if]
+						</ul>
+					</div>
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.investmenttype'/]<!-- 投资风格 --></p>
+						<ul class="funds_choice" data-name="InvestmentType">
+							<li data-name="InvestmentType"  class="funds_all fund_choice_active per_child">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+							[#if investmentList?exists && investmentList?size gt 0]
+							[#list investmentList as cList]
+							<li data-name="InvestmentType" data-key="[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.investmenttype'/] : ${cList.name}" data-value="${cList.itemCode}">${cList.name!}</li>
+							[/#list]
+							[/#if] 
+						</ul>
+					</div>
+					<div class="fund_more_content">
+						<div class="funds_choice_wrap">
+							<p class="funds_choice_title">[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.servicelanguage'/]<!-- 服务语言 --></p>
+							<ul class="funds_choice" data-name="ServiceLanguage">
+								<li data-name="ServiceLanguage" class="funds_all fund_choice_active per_child">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+								[#if serviceLanguageList?exists && serviceLanguageList?size gt 0]
+								[#list serviceLanguageList as sList]
+								<li data-name="ServiceLanguage" data-key="[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.servicelanguage'/] : ${sList.name}" data-value="${sList.itemCode}">${sList.name!}</li>
+								[/#list]
+								[/#if]
+							</ul>
+						</div>						
+						<div class="funds_choice_wrap">
+							<p class="funds_choice_title">[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.workingyears'/]<!-- 从业年限--></p>
+							<ul class="funds_choice" data-name="WorkingYears">
+								<li data-name="WorkingYears" class="funds_all fund_choice_active per_child">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+								<li data-name="WorkingYears" data-key="[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.workingyears'/] : 1-10年" data_from="1" data_to="10">1-10[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.year'/]</li>
+								<li data-name="WorkingYears" data-key="[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.workingyears'/] : 11-20年" data_from="11" data_to="20">11-20[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.year'/]</li>
+								<li data-name="WorkingYears" data-key="[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.workingyears'/] : 21-30年" data_from="21" data_to="30">21-30[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.year'/]</li>
+								<li data-name="WorkingYears" data-key="[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.workingyears'/] : 30年以上" data_from="30" data_to="100">>30[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.year'/]</li>
+							</ul>
+						</div>
+						<div class="funds_choice_wrap">
+							<p class="funds_choice_title">[@lang_res l=Session["_LANG_CODE_"] k='member.ifafirm'/]<!-- 投资顾问公司 --></p>
+							<ul class="funds_logo_choice" data-name="IfafirmName">
+								[#if ifafirmList?exists && ifafirmList?size gt 0 ]
+								[#list ifafirmList as firmList]
+								<li title="${firmList.companyName}" data-key="[@lang_res l=Session["_LANG_CODE_"] k='member.ifafirm'/] : ${firmList.companyName}" data-name="IfafirmName" data-value="${firmList.id}"><img src="${base}${firmList.logoFilePath!}" alt=""> </li>
+								[/#list]
+								[/#if]
+							</ul>
+						</div>
+					</div>
+					
+        		</div>
+        		<div class="ifa_choose_condition">
+	    			<div class="funds_list_selected">
+		                <p class="funds_selected_title">[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.selectedcondition'/]<!-- [@lang_res k='global.screen'/]--> </p>
+						<ul class="selection_criteria">
+							<p class="funds_title_selection">[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.clearall'/] </p>
+						</ul>
+					</div>
+					<div class="ifa_keyserach_wrap">
+						<p class="ifa_serach_sum" id="p_meet_total">
+							A total of 					
+							<span class="funds_serach_digital ng-binding" ng-bind="datatotal" id="sp_meet_total">0</span> funds to meet your requirements</p>
+						<div class="funds_keyserach ifa_keyserach">
+							<input type="text" id="ifaName" placeholder="Please enter keyword search">
+							<span class="icon_search" id="searchKeyBtn"></span>
+						</div>
+					</div>
+					<ul class="funds_ifalist_sorting">
+						<li class="funds_active">
+							<p id="p_funds_arrow_matching">[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.matchingdegree'/]<!-- 按匹配度--></p>					
+							<p>
+								<span class="funds_arrow_top funds_arrow_top_matching"></span>
+								<span class="funds_arrow_down funds_down_active funds_arrow_down_matching" ></span>
+							</p>
+						</li>
+						<li>
+							<p>[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.numberofyears'/]<!-- 按从业年限--></p>					
+							<p>
+								<span class="funds_arrow_top funds_arrow_top_year"></span>
+								<span class="funds_arrow_down funds_arrow_down_year"></span>
+							</p>
+						<li>
+							<p>[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.popularityranking'/]<!-- 按人气排行--></p>					
+							<p>
+								<span class="funds_arrow_top funds_arrow_top_popularity"></span>
+								<span class="funds_arrow_down funds_arrow_down_popularity"></span>
+							</p>
+						</li>
+					</ul>
+					<div id="div_loading"></div>
+					<div class="ifa_list" ng-controller="Searchctrl"  ng-app="mySearch">
+						<ul class="ifa_list_ul" id="ul_ifa_list">
+							
+						</ul>
+						<div class="wmes-nodata-tips portfolioTips" >
+                          <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                          <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                   	</div>
+					</div>
+					<!-- <ul id='pagination' class="ifa_list_paging">  </ul> -->
+					<p id="ifa_more" class="ifa_list_more">[@lang_res k=''/]</p>
+			                	
+        </div>
+       </div>
+        <form id="listForm" name="listForm" >
+        	<input id="hidloginMemberId" value="${loginMemberId!''}" type="hidden">
+			<input type="hidden" name="keyword" value="" id="keyword"/>
+			<input type="hidden" name="ifaFirmIds" value="" id="hidIfaFirmIds"/><!-- 存储选择公司 -->
+			<input type="hidden" name="InvestmentType" value="" id="hidInvestmentType"/><!-- 投资风格 -->
+			<input type="hidden" name="serviceRegion" value="" id="hidServiceRegion"/><!-- 服务国家地区 -->
+			<input type="hidden" name="serviceLanguage" value="" id="hidServiceLanguage"/> <!-- 服务语言 -->
+			<input type="hidden" name="expertise" value="" id="hidExpertise"/><!-- 投资领域 -->
+			<input type="hidden" name="workingYearsFrom" value="" id="hidWorkingYearsFrom" /><!-- 从业年限开始 -->
+			<input type="hidden" name="workingYearsTo" value="" id="hidWorkingYearsTo" /><!-- 从业年限 结束-->
+			<input type="hidden" name="belongCountry" value="" id="hidBelongCountry"/><!-- 所属国籍 -->
+			<input type="hidden" name="sort" value="" id="hidSort"/><!--  -->
+</form>	
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var __clickmore__ = '[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.clickmore'/]';
+	var __nomoredata__ = '[@lang_res l=Session["_LANG_CODE_"] k='ifalist.list.nomoredata'/]';
+	var IFALIST_LIST_MATCHING_5 = "[@lang_res k='ifalist.list.match5'/]";
+	var IFALIST_LIST_MATCHING_4 = "[@lang_res k='ifalist.list.match4'/]";
+	var IFALIST_LIST_MATCHING_3 = "[@lang_res k='ifalist.list.match3'/]";
+	var IFALIST_LIST_MATCHING_2 = "[@lang_res k='ifalist.list.match2'/]";
+	var IFALIST_LIST_MATCHING_1 = "[@lang_res k='ifalist.list.match1'/]";
+	var IFALIST_LIST_MATCHING_0 = "[@lang_res k='ifalist.list.match0'/]";
+	var IFALIST_LIST_NOTMATCHING = "[@lang_res k='ifalist.list.notmatching'/]";
+	var IFALIST_LIST_ONEYEARRETURN = "[@lang_res k='ifalist.list.oneyearreturn'/]";
+	var IFALIST_LIST_EXPERTISE = "[@lang_res k='ifalist.list.expertise'/]";
+	var IFALIST_LIST_YEARS = "[@lang_res k='ifalist.list.years'/]";
+    var IFALIST_LIST_WORKEXPERIENCE = "[@lang_res k='ifalist.list.workexperience'/]";
+	var IFASPACE_LANG_NoRecommendation = "[@lang_res k='ifaspace.info.noRecommendation'/]";
+	var IFASPACE_LANG_CannotAddYourself = "[@lang_res k='ifaspace.info.cannotAddYourself'/]";
+	var IFASPACE_LANG_LoginToAddFriends = "[@lang_res k='ifaspace.info.loginToAddFriends'/]";
+	var IFASPACE_LANG_SureToAddFriends = "[@lang_res k='ifaspace.info.sureToAddFriends'/]";
+	var IFASPACE_LANG_WaitToAddFriends = "[@lang_res k='ifaspace.info.waitToAddFriends'/]";
+	var IFASPACE_LANG_Alert = "[@lang_res k='layer.alert'/]";
+	var IFASPACE_LANG_YES = "[@lang_res k='global.true'/]";
+	var IFASPACE_LANG_NO = "[@lang_res k='global.false'/]";
+	
+     seajs.use('${base}/res/web/ifa/ifaList.js');
+</script>

@@ -1,0 +1,120 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	 sysMenuReload();
+});
+/**获取菜单*/
+function sysMenuReload(){
+	var url = "${base}/sysMenuJson.do?r="+Math.random();
+	$.ajax({
+		url:url,
+		dataType:"json",
+		type:"get",
+		success:function(data){
+			if(data.result){
+				menuJson = eval("("+data.menuJson+")");
+				mainSysMenu();
+			}
+		},
+		error:function(){
+		}
+	})
+}	
+
+//系统菜单
+function mainSysMenu(){
+	var menuStr = "";
+	for(var x=0;x<menuJson.menus.length;x++){
+		var menu = menuJson.menus[x];
+		var menuId = menu.menuId;
+		var menuIcon = menu.icon;
+		var menuName = menu.menuName;
+		var url = menu.url;
+		var subMenu = menu.menus
+		//alert(menuName+";"+ulr);
+		if(!subMenu){
+			menuStr += "<li class=''><a href='${base}"+url+"' >"+menuName;
+			menuStr += "</a><b class='arrow'></b></li>";
+			if('line'== menuIcon){
+				menuStr += "<li class='divider'>&nbsp</li>";
+			}	
+		}else{
+			menuStr += " <li class='dropdown'><a class='dropdown-toggle' data-toggle='dropdown' href='#'>"+menuName;
+			menuStr += " <b class='caret'></b></a>";
+			menuStr += "<ul class='dropdown-menu'>";
+			menuStr += findSubMenu(subMenu);
+			menuStr += "</ul></li>"
+		}
+	}
+	$("#top_nav").html(menuStr);
+}
+//子菜单
+function findSubMenu(subJson){
+	//alert(subJson.length+"=="+subJson[0].menuId);
+	var subStr = "";
+	for(var y=0;y<subJson.length;y++){
+		var childMenu = subJson[y];
+		var childId = childMenu.menuId;
+		var childIcon = childMenu.icon;
+		var childName = childMenu.menuName;
+		var childUlr = childMenu.url;
+		var subSubMenu = childMenu.menus
+		if(!subSubMenu){
+			/*
+			subStr += "<li class=''><a href='javascript:void(0)' onclick='openMainFrame(\""+childUlr+"\")'>"
+			subStr += "<i class='menu-icon fa fa-caret-right'></i><span class='menu-text'> "+childName+" </span>";
+			subStr += "</a><b class='arrow'></b></li>";
+			*/
+			subStr += "<li class=''><a href='${base}"+childUlr+"' >"+childName;
+			subStr += "</a><b class='arrow'></b></li>";
+			if('line'==childIcon){
+				subStr += "<li class='divider'></li>";
+			}
+		}else{
+			subStr += " <li class='dropdown'><a class='dropdown-toggle' data-toggle='dropdown' href='#'>"+childName;
+			subStr += " <b class='caret'></b></a>";
+			subStr += "<ul class='dropdown-menu'>";
+			subStr += findSubMenu(subSubMenu);
+			subStr += "</ul></li>"
+			
+			/**
+			subStr += "<li  class='dropdown'><a href='javascript:void(0)' class='dropdown-toggle'><i class='menu-icon fa fa-list'></i>";
+			subStr	+= "<span class='menu-text'>"+childName+"</span><b class='arrow fa fa-angle-down'></b>";
+			subStr += "</a><b class='arrow'></b><ul class='submenu'>";
+			subStr += findSubMenu(subSubMenu);
+			subStr += "</ul></li>"
+			*/
+		}
+	}
+	return subStr;
+}
+  
+</script>
+
+     <p class="text-center">&nbsp;</p>
+     <p class="text-center">Copyright
+        &copy;
+        2015
+        <a href="http://www.fsll.cn" target="_self">广州飞卓</a>
+        , All Rights Reserved</p>
+        
+	<!-- Modal -->
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="editPsw" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" 
+	               data-dismiss="modal" aria-hidden="true">
+	                  &times;
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">
+	               	修改密码
+	            </h4>
+	         </div>
+	         <div class="modal-body">
+	         
+	         </div>
+	      </div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>        

@@ -1,0 +1,273 @@
+ [#include "../../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<div class="wmes-content">
+	<div class="account-wrap">
+        <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='console.kyc'/]</p>
+        <!-- 
+		<div class="conservative-choice-wrap">
+			<p class="conservative-choice-title">
+				[@lang_res k='member.register.ifafirm'/]
+			</p>
+			<ul class="conservative-choice">
+				<li class=" conservative_all conservative-choice-active" data-name="ifafirm">
+					[@lang_res k='fund.info.searchAll'/]
+				</li>
+				[#if ifafirmList?exists && ifafirmList?size gt 0 ] [#list ifafirmList as ifafirm]
+				<li data-name="ifafirm" data-key="${ifafirm.companyName}" data-value="${ifafirm.id}">
+					${ifafirm.companyName}
+				</li>
+				[/#list] [/#if]
+			</ul>
+		</div>
+		 -->
+		<div class="conservative-choice-wrap">
+				<p class="conservative-choice-title">[@lang_res k='account.list.kycPeriod'/]</p>
+				<ul class="conservative-choice">
+					<li class="conservative_all conservative-choice-active" data-name="period" >[@lang_res k='fund.info.searchAll'/]</li>
+                    <li data-name="period" data-key="7 [@lang_res k='account.list.day'/]" data-value="7">7 [@lang_res k='account.list.day'/]</li>
+                    <li data-name="period" data-key="14 [@lang_res k='account.list.day'/]" data-value="14">14 [@lang_res k='account.list.day'/]</li>
+                    <li data-name="period" data-key="30 [@lang_res k='account.list.day'/]" data-value="30">30 [@lang_res k='account.list.day'/]</li>
+                    <li data-name="period" data-key="60 [@lang_res k='account.list.day'/]" data-value="60">60 [@lang_res k='account.list.day'/]</li>
+                    <li data-name="period" data-key="90 [@lang_res k='account.list.day'/]" data-value="90">90 [@lang_res k='account.list.day'/]</li>
+				</ul>
+			</div>
+		<div class="conservative-choice-wrap">
+			<p class="conservative-choice-title">
+				[@lang_res k='account.list.clientName'/]
+			</p>
+			<!-- 
+			<input class="conservative-choice-input" type="" name="" id="txtKeyWord">
+			<a class="conservative-choice-button" href="javascript:;">[@lang_res k='global.search'/]</a>
+			 -->
+			<ul>
+               <li>
+                   <div class="search-condition">
+                       <input type="text" id="txtKeyWord" placeholder="[@lang_res k='account.list.client.placeholder'/]">
+                       <input type="hidden" id="memberId">
+                       <span class="icon_search" id="searchKeyBtn"></span>
+                   </div>
+               </li>
+           </ul>
+		</div>
+	</div>
+		
+		<div class="account-wrap" ng-controller="Searchctrl" ng-app="mySearch">
+            <ul class="noline_tab_tab strategy_client_tab">
+                <li class="now" status="1">[@lang_res k='account.list.status.complete'/]<span></span></li>
+                <li status="1">[@lang_res k='account.list.status.uncomplete'/]<span></span></li>
+            </ul>
+            <div class="account-list-wrapper-rows listCompleted" style="display:block;">          
+                <div class="account-list-choose">
+                    <p class="account-checkbox-title">[@lang_res k='account.list.show'/] :</p>
+                <div class="account-checkbox">
+    				<input type="checkbox" value="" [#if in_use?exists & in_use='1']checked="true"[/#if] id="Active">
+    				<label for="Active"></label>
+    			</div>
+    			<p class="account-checkbox-font">[@lang_res k='account.list.active'/]</p>
+
+                <div class="account-checkbox">
+    				<input type="checkbox" value="" [#if cancellation?exists & cancellation='1']checked="true"[/#if] id="Cancel">
+    				<label for="Cancel"></label>
+    			</div>
+    			<p class="account-checkbox-font">[@lang_res k='account.list.canceled'/]</p>
+                </div>    
+                <div class="builder-title">
+                    <ul class="recommend-switch-tab client-list-tab">
+    					<li class="funds_sort recommend-sort-active">
+    						<p class="funds_switch_tab_title">[@lang_res k='assets.totalAsset'/]</p>
+    						<p class="funds_arrow_wraps">
+    							<span class="arrow_top" sort="totalAssets" order="asc"></span>
+    							<span class="arrow_down down_active" sort="totalAssets" order="desc"></span>
+    						</p>
+    					</li>
+    					<li class="funds_sort ">
+    						<p class="funds_switch_tab_title">[@lang_res k='assets.marketValue'/]</p>
+    						<p class="funds_arrow_wraps">
+    							<span class="arrow_top" sort="marketValue" order="asc"></span>
+    							<span class="arrow_down " sort="marketValue" order="desc"></span>
+    						</p>
+    					</li>
+    					<li class="funds_sort">
+    						<p class="funds_switch_tab_title">[@lang_res k='assets.cash'/]</p>
+    						<p class="funds_arrow_wraps">
+    							<span class="arrow_top" sort="cash" order="desc"></span>
+    							<span class="arrow_down" sort="cash" order="asc"></span>
+    						</p>
+    					</li>
+    				</ul>
+                    <div class="account-choose-left">
+                        <p class="account-xiala-title">
+                            [@lang_res k='account.list.cur'/]
+                        </p>
+                        <div class="proposal_xiala">
+                            <input type="text"  [#if cur?exists & cur!='']value="${cur}"[#else]placeholder="USD"[/#if] readonly="" id="currency" >
+                            <span class="icon_xiala"></span>
+                            <ul>
+                               [#if currencyType?exists && currencyType?size gt 0]
+                                [#list currencyType as list]
+                                    <li>${list.itemCode!}</li>
+                                    [/#list]
+                                    [/#if]
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="account_list">
+                    <div class="listContent ng-cloak"  ng-repeat="list in dataList" ng-init="checkLast($last)" class="animated flipInX" >
+                        <div class="client-list-contsnts" ng-if="list.openStatus=='3' && list.isValid=='1'" >
+                        		<div class="client-list-cleft">
+                        			<div class="client-list-nwrap">
+                        				<p class="client-list-name"><span>
+                        				<a class="proposal-a-href" href="${base}/console/ifafirm/client/kycInfo.do?id={{list.id}}" ng-if="list.openStatus=='3' && (list.subFlag=='0' || list.subFlag=='')">{{list.accountNo}}</a>
+                        				<a class="proposal-a-href" href="#" ng-if="list.openStatus=='3' && list.subFlag=='1'">{{list.accountNo}}</a>
+                        				&nbsp;</span>{{list.customerName}}</p>
+                        				<ul class="client-list-describe">
+                        					<li ng-if="list.subFlag=='0'">[@lang_res k='account.list.masterAccount'/]</li>
+                        					<li ng-if="list.subFlag=='1'">[@lang_res k='account.list.subAccount'/]</li>
+                        					<li>[@lang_res k='account.list.risk'/] {{list.riskLevel}} </li>
+                        					<li ng-if="list.cies!='' && list.cies!=null">{{list.cies}}</li>
+                        					<li ng-if="list.faca!='' && list.faca!=null">{{list.faca}}</li>
+                                            <li ng-if="list.baseCurrency!='' && list.baseCurrency!=null">{{list.baseCurrency}}</li> 
+                        				</ul>
+                                        <div class="client-total-wrap">
+                                            <p class="client-total-word">[@lang_res k='assets.totalAsset'/]</p>
+                                            <p class="client-total">{{list.totalAssest}} {{currency}}</p>
+                                        </div>                           
+                        			</div>
+                        		</div>
+                        		<div class="client-list-cright"> 			
+                                    <div class="client-list-days">
+                                        <div class="client-half-day">
+                                            <div >
+                                                <p class="client-half-word" ng-if="list.openStatus=='3' && list.nextRPQDate!='0'" >{{list.nextRPQDate}} <span>Days</span></p>
+                                                <p class="client-half-word" ng-if="list.openStatus=='3' && list.nextRPQDate=='0'" >-- <span>Days</span></p>
+                                                <p class="client-half-time">[@lang_res k='account.list.nextRPQDate'/]</p>
+                                            </div>
+                                            <div >
+                                                <p class="client-half-word" ng-if="list.openStatus=='3' && list.nextDCDate!='0' && list.nextDCDate!=0">{{list.nextDCDate}} <span>Days</span></p>
+                                                <p class="client-half-word" ng-if="list.openStatus=='3' && (list.nextDCDate=='0' || list.nextDCDate==0)">-- <span> Days</span></p>
+                                                <p class="client-half-time">[@lang_res k='account.list.nextDocumentCheckDate'/]</p>
+                                            </div>
+                                        </div>
+                                        <img title="{{list.distributor}}" class="client-invest-ico" src="${base}{{list.distributorIcon}}">
+                                    </div>
+                        		</div>
+                    	</div>
+                    	
+                    	<div class="client-list-approval" ng-if="list.isValid!='1'">
+                    		<div class="client-list-cleft">
+                    			<div class="client-list-nwrap">
+                    				<p class="client-list-name"><span>
+                    				<a style="color: #cccccc;" ><span>{{list.accountNo}}</span></a>
+                    				</span> {{list.customerName}}</p>
+                    				<ul class="client-list-describe">
+                    					<li ng-if="list.subFlag=='0'">[@lang_res k='account.list.masterAccount'/]</li>
+                    					<li ng-if="list.subFlag=='1'">[@lang_res k='account.list.subAccount'/]</li>
+                    					<li>[@lang_res k='account.list.risk'/] {{list.riskLevel}}</li>
+                    					<li ng-if="list.cies!='' && list.cies!=null">{{list.cies}}</li>
+                    					<li ng-if="list.faca!='' && list.faca!=null">{{list.faca}}</li>
+                                        <li ng-if="list.baseCurrency!='' && list.baseCurrency!=null">{{list.baseCurrency}}</li> 
+                    				</ul>
+                    			</div>
+                    			<div class="client-list-days">
+                    				<img title="{{list.distributor}}" class="client-invest-ico" src="${base}{{list.distributorIcon}}">
+                    				<div class="client-half-day">
+                    				</div>
+                    			</div>
+                    		</div>
+                    		<!--<img class="account-list-old"  ng-if="list.openStatus=='-1' || list.openStatus=='-2'" src="${base}/res/images/client/processing_ico.png"  >
+                    		--><img class="account-list-old" src="${base}/res/images/client/canceled_ico.png"  >
+                    	</div>
+                	</div>
+    				<div class="wmes-nodata-tips tips1">
+                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                    </div>
+                </div>
+            </div>	
+            <div class="account-list-wrapper-rows listUnCompleted">   
+                <div class="builder-title"><div class="account-choose-left">
+                        <p class="account-xiala-title">
+                            [@lang_res k='account.list.cur'/]
+                        </p>
+                        <div class="proposal_xiala">
+                            <input type="text"  [#if cur?exists & cur!='']value="${cur}"[#else]placeholder="USD"[/#if] readonly="" id="currency" >
+                            <span class="icon_xiala"></span>
+                            <ul>
+                               [#if currencyType?exists && currencyType?size gt 0]
+                                [#list currencyType as list]
+                                    <li>${list.itemCode!}</li>
+                                    [/#list]
+                                    [/#if]
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="account_list">
+                    <div class="listContent ng-cloak">
+                        <div class="client-list-approval" ng-repeat="list in dataList1" ng-init="checkLast($last)" class="animated flipInX" >
+                            <div class="client-list-cleft">
+                                <div class="client-list-nwrap">
+                                    <p class="client-list-name"><span>
+                                    <a style="color: #cccccc;" href="${base}/front/investor/accountRPQ.do?accountId={{list.id}}" ng-if="list.openStatus=='-1' || list.openStatus=='0' "><span>N/A</span></a>
+                                    <a style="color: #cccccc;" href="${base}/front/investor/accountApprove.do?accountId={{list.id}}" ng-if="list.openStatus=='1'  "><span>N/A</span></a>
+                                    <a style="color: #cccccc;" href="${base}/front/investor/accountProgress.do?id={{list.id}}"  ng-if="list.openStatus=='2' || list.openStatus=='4'  "><span>N/A</span></a>
+                                    </span>{{list.customerName}}</p>
+                                    <ul class="client-list-describe">
+                                       <li ng-if="list.subFlag=='0'">[@lang_res k='account.list.masterAccount'/]</li>
+                    					<li ng-if="list.subFlag=='1'">[@lang_res k='account.list.subAccount'/]</li>
+                    					<li>[@lang_res k='account.list.risk'/] {{list.riskLevel}}</li>
+                    					<li ng-if="list.cies!='' && list.cies!=null">{{list.cies}}</li>
+                    					<li ng-if="list.faca!='' && list.faca!=null">{{list.faca}}</li>
+                                        <li ng-if="list.baseCurrency!='' && list.baseCurrency!=null">{{list.baseCurrency}}</li> 
+                                    </ul>
+                                </div>
+                                <div class="client-list-days">
+                                    <img title="{{list.distributor}}" class="client-invest-ico" src="${base}{{list.distributorIcon}}">
+                                    <div class="client-half-day">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <img class="account-list-old" ng-if="list.openStatus=='2'" src="${base}/res/images/client/processing_ico.png"  >
+                            <img class="account-list-old" ng-if="list.openStatus=='0'" src="${base}/res/images/client/draft_ico.png"  >
+                             <img class="account-list-old" ng-if="list.openStatus=='-1'" src="${base}/res/images/client/reject_ico.png"  >
+                            <img class="account-list-old" ng-if="list.openStatus=='1'" src="${base}/res/images/client/tobefill_ico.png"  >
+                            <img class="account-list-old" ng-if="list.openStatus=='4'" src="${base}/res/images/client/refused_ico.png"  >
+                            
+                            
+                        </div>
+                         <div class="wmes-nodata-tips tips2 ">
+                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                    </div>
+                    </div>
+                   
+                </div>
+            </div>
+</div>
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var _checkList='${checkList!}';
+	var _accountType="${accountType!}";
+    seajs.use('${base}/res/web/console/kyc/distributorKyc.js');
+     
+   //验证登录后回调事件
+     function callbackloginresult(json){
+   	 	 seajs.use('jquery', function($){
+   		 //	console.log(json);
+   		 	var count=0;
+   		 	$.each(json,function(i,n){
+   			 	if(n.status="1"){
+   			 	count++;
+   		 	    }
+   		 	})
+   		 	if(count>0){
+   		 	 setTimeout(function(){
+   		       window.location.url= window.location.url;
+   		     },1000);
+   		    }
+   	    });
+   	}
+</script>

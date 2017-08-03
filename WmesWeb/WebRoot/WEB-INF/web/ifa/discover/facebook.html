@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>facebook.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+     <script type="text/javascript" src="${base}/res/third/easyui/jquery.min.js"></script>
+      <script type="text/javascript" src="${base}/res/third/easyui/sdk.js"></script>
+	<script>
+    $(document).ready(function() {
+       FB.init({
+      appId: '151500971989032',
+      version: 'v2.8' // or v2.0, v2.1, v2.2, v2.3
+    });     
+    ///$('#loginbutton,#feedbutton').removeAttr('disabled');
+    //FB.getLoginStatus(updateStatusCallback);
+    $('#btnfb').click(function(){
+    	FB.ui({
+	 method: 'share',
+	 href: 'https://www.facebook.com/mizuiren/',
+	 }, function(response){
+	 	console.log(response);//[]
+	 });
+    });
+    
+ 
+    });
+  </script>
+  </head>
+  
+  <body>
+    This is my HTML page. <br>
+    <input type="button" value="test" id="btnfb" >
+
+  </body>
+</html>

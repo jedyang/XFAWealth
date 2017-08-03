@@ -1,0 +1,670 @@
+[#include "../inc/head_v2.html"/]
+
+<link rel="stylesheet" href="${base}/res/css/discover.css">
+<link rel="stylesheet" href="${base}/res/css/ifa.css"> 
+<link rel="stylesheet" href="${base}/res/css/community.css">
+<link rel="stylesheet" href="${base}/res/css/other.css">
+<link rel="stylesheet" href="${base}/res/css/news/css/style.css"> 
+<link href="${base}/res/css/client.css" rel="stylesheet" type="text/css" />
+<link href="${base}/res/css/Funds.css" rel="stylesheet" type="text/css" />
+
+<style>
+	.ifa-his-type-list{margin-left:0;margin-right:0;width:100%;}
+	.ifa-his-type-list li{margin:0;width:31%;}
+	.ifa-his-type-list li:nth-child(2){margin:0 3%;}
+	.ifa-type-title span{color: white!important;background-color: #ff9019;padding: 5px 10px;border-radius: 10px;margin-left: 15px;}
+	.community-popularity-wrap{border-bottom:1px dashed #dedede;padding-bottom:12px}
+	.ifa-news-contents li{margin-bottom:0;margin-top:20px;}
+	.gray-box{margin-top:12px;}
+	.type-portfolios-left{margin:0;}
+	
+	.space-mask-wrap{top:0;}
+	.investment-plan-wrap{margin-top:0;}
+	.recommendnews-list-li .wmes-community-news-title{font-size:16px;font-weight:100;}
+	.recommendnews-list-li .ifa-news-word{margin:12px 0 8px 0;font-size:19px;}
+	.recommendnews-list-li .insights-time{margin-bottom:4px;}
+	.abstract{height:64px;line-height:16px;}
+	.space-ifa-word{font-size:16px;}
+	.space-ifa-word span{color:#000;}
+</style>
+<div class="wmes-content" ng-controller="ifaSpaceCtrl"  ng-app="ifaSpace">
+	<div class="wmes-space-row">
+		<div class="wmes-space-row-left">
+			<div class="wmes-space-information-top">
+				<img src="${base}${info.iconUrl!}"/>
+				<div class="wmes-space-information">
+					<div memberid="${memberId!}" class="wmes-space-name" id="ifaName">${info.nickName!}<span></span></div>
+					<div class="wmes-ifa_label">
+					 	[#if info.characterList?exists && info.characterList?size gt 0]
+					    [#list info.characterList as list]
+					 	[#if list?? && list!='']<p>${list}</p>[/#if]
+					 	[/#list]
+					 	[/#if]
+                	</div>
+                	<p class="space-ifa-word">[@lang_res k='community.space.topic'/]<span> ${info.topciCount!}</span></p><p class="space-ifa-word">[@lang_res k='community.space.followers'/]<span> ${info.followCount!}</span></p>
+				</div>
+			</div>
+			<ul class="wmes-space-information-bottom">
+				
+				[#if  loginMemberType?? && loginMemberType==1 ]<li><span class="wmes-space-information-bottom-img3 askbtn"></span>[@lang_res k='community.space.ask'/]</li>[/#if]
+				
+				[#if isShowAddFriendBtn??]
+            	[#if isShowAddFriendBtn?string('true','false')='true']
+            	[#if isFriend?? && !isFriend]
+	            <li id="addFriend"><span class="wmes-space-information-bottom-img2"></span>[@lang_res k='community.space.addBuddy'/]</li>
+	            [#else]
+				<li><img class=" layim-pop-chat" layim-pop-id="${info.memberId!}" src="${base}/res/images/ifa/top_chat.png"/></li>
+			
+	            [/#if]
+             	[/#if]
+             	[/#if]
+             	
+				[#if myself?? && myself=='0']
+				[#if focused??][#if focused=='0']<li><span class="wmes-space-information-bottom-img1 addFocus"></span><span>[@lang_res k='community.space.addFocus'/]</span></li>
+				[#elseif focused=='1' ]
+				<li><span class="wmes-space-information-bottom-img1 wmes-space-information-bottom-img0 cancelFocus"></span><span>[@lang_res k='community.space.cancelFocus'/]</span></li>
+				[/#if][/#if]
+				
+				[/#if]
+			</ul>
+		</div>
+		<div class="wmes-space-row-right zone-edit">
+			<p class="wmes-space-row-right-title">[@lang_res k='community.space.highlight'/]</p>
+			<textarea id="txtHightLight" class="ifa-thehight-word" readonly="" type="text" name="" style="width:90%;height:50px;color:#999;">[#if info?? && info.hightlight?exists]${info.hightlight!}[#else][@lang_res k='ifaspace.info.noContent'/][/#if]</textarea>
+		[#if myself?? && myself=='1']	<span class="ifa-thehigt-edit" style="position: initial;float:right;"></span>[/#if]
+			
+			<p class="wmes-space-row-right-title">[@lang_res k='community.space.performance'/]</p>
+			<div class="wmes-spance-row-right-performancecon">
+				<div class="performancecon-left">
+					[#if info.aum?? ]
+                    [#if info.aum=0]
+                    	<div>N/A</div>
+						<p>[@lang_res k='ifaspace.info.AuM'/](${info.baseCurrencyName!})
+						
+						[#if viewerIsSpaceOwner??]
+							[#if  viewerIsSpaceOwner?string('true','false')='true']
+								[#if info.isShowAumNum??]
+			                 <!-- 已设置是否显示aumNum -->
+			                 [#if  info.isShowAumNum?string('true','false')='true']
+			                 <span field="1" id="aum_setting_eye" class="setting_eye setting_eyeac" ></span>
+			                 [#else]
+			                 <span field="0" id="aum_setting_eye" class="setting_eye" ></span>
+			                 [/#if]
+			              [/#if]
+			              [/#if]  
+			              [/#if]      
+						
+						</p>
+                    [#else]
+                    	[#if  viewerIsSpaceOwner?string('true','false')='true']
+                    		<div>[@num_fmt s='${info.aum!""}' f='#,###'/]</div>
+							<p>[@lang_res k='ifaspace.info.AuM'/](${info.baseCurrencyName!})
+                    	[#else]
+                    		[#if  info.isShowAumNum?string('true','false')='true']
+                    		<div>[@num_fmt s='${info.aum!""}' f='#,###'/]</div>
+							<p>[@lang_res k='ifaspace.info.AuM'/](${info.baseCurrencyName!})
+							[#else]
+							<div>N/A</div>
+							<p>[@lang_res k='ifaspace.info.AuM'/](${info.baseCurrencyName!})
+                    		[/#if]
+                    	[/#if]
+
+						[#if viewerIsSpaceOwner??]
+							[#if  viewerIsSpaceOwner?string('true','false')='true']
+								[#if info.isShowAumNum??]
+			                 <!-- 已设置是否显示aumNum -->
+			                 [#if  info.isShowAumNum?string('true','false')='true']
+			                 <span field="1" id="aum_setting_eye" class="setting_eye setting_eyeac" ></span>
+			                 [#else]
+			                 <span field="0" id="aum_setting_eye" class="setting_eye" ></span>
+			                 [/#if]
+			              [/#if]
+			              [/#if]  
+			              [/#if]     
+						
+						</p>
+                    [/#if]
+					[/#if]
+				</div>
+				<div class="performancecon-right">
+					<div class="price_positive">
+						[#if info??] 
+							[#if  viewerIsSpaceOwner?string('true','false')='true']
+								
+								[#if info.totalReturn=0]
+				                     	[@num_fmt s='${info.totalReturn!}'   /]%
+				                     [#else]
+				                    	[@num_color s='${info.totalReturn!}' c='${defDisplayColor!}'  /]
+				                     [/#if]
+							[#else]
+								[#if  info.isSpaceShowPerformance?string('true','false')='true']
+		                    		[#if info.totalReturn=0]
+				                     	[@num_fmt s='${info.totalReturn!}'   /]%
+				                     [#else]
+				                    	[@num_color s='${info.totalReturn!}' c='${defDisplayColor!}'  /]
+				                     [/#if]
+								[#else]
+									N/A
+	                    		[/#if]
+								
+							[/#if]
+							
+							
+		                     
+		                [/#if]
+					</div>
+					<p>[@lang_res k='assets.totalReturn'/]
+					
+					[#if viewerIsSpaceOwner??]
+							[#if  viewerIsSpaceOwner?string('true','false')='true']
+								[#if info.isSpaceShowPerformance??]
+			                 [#if  info.isSpaceShowPerformance?string('true','false')='true']
+			                    <span field="1" id="topporflio_setting_eye" class="setting_eye setting_eyeac" ></span>
+			                 [#else]
+			                 <span field="0" id="topporflio_setting_eye" class="setting_eye" ></span>
+			                 [/#if]
+			              [/#if]
+			              [/#if]  
+			              [/#if]      
+					
+					</p>
+				</div>
+			</div>
+		</div>
+		<a href="javascript:history.go(-1)" style="position:absolute;top:20px;left:25px;"><span class="wmes-ruturn"></span></a>
+	</div>
+	<div class="wmes-space-recommendation">
+		<div class="wmes-wrap-title">[@lang_res k='community.space.recommendation'/]</div>
+		<!--  <div class="wmes-space-screencon">
+			<ul class="wmes-space-screen-title">
+				<li>Location selection</li>
+				<li>Setor selection</li>
+			</ul>
+			<ul class="wmes-space-screen-content">
+				<li class="wmes-space-screen-contentliac">China</li>
+				<li>EU</li>
+				<li>Germany</li>
+				<li>Korea</li>
+			</ul>
+		</div>-->
+		<ul class="ifa-his-type-list">
+        	<li>
+            <p class="ifa-type-title">
+           [#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				<a href="${base}/front/strategy/info/myList.do">
+				[#else]
+				<a href="${base}/front/ifa/space/viewStrategiesList.do?id=${memberId!''}">
+				[/#if]
+            [/#if]
+            [@lang_res k='strategy.title'/] [#if IfaSpaceStrategyInfoListCount=0]<span class="ifa-type-num" id="sp_strategyinfolistcount" style="background-color:transparent;display:none;">[#else]<span class="ifa-type-num"  id="sp_strategyinfolistcount" style="display:none;">[/#if]${IfaSpaceStrategyInfoListCount!}</span></a>
+            </p>
+            <p class="ifa-type-word" style="text-align: center;padding: 0px 10px 0px 10px;line-height: 120%;"><a id="a_lateststrategybame" class="ifa-a-href" href="${base}/front/strategy/info/strategiesdetail.do?id=${latestStrategyId!}">${latestStrategyName!}</a></p>
+            <div class="ifa-type-content">
+            [#if IfaSpaceStrategyInfoListCount = 0]
+            	<!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         		[#if viewerIsSpaceOwner??]
+					<div class="wmes-nodata-tips portfolioTips" style="display:block;padding: 0px 0;">
+                          <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                          <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                   	</div>
+				[/#if]
+            [#else]
+               <p id="p_lateststrategyproductcount" class="ifa-type-parsent ifa-type-black">${latestStrategyProductCount!}</p>
+                <p class="ifa-type-date">[@lang_res k='ifaspace.info.fund'/]</p> 
+             [/#if]
+            </div>
+            <!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         		[#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				 <a href="${base}/front/strategy/info/myList.do"><span class="ifa-thehigt-edit"></span></a>
+				[#else]
+				
+				[/#if]
+            [/#if]    
+                          
+        </li>
+        	 <li>
+            <p class="ifa-type-title" style="background:#50adf5">
+            [#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				<a href="${base}/front/portfolio/arena/myList.do">
+				[#else]
+				<a href="${base}/front/ifa/space/viewPofolioList.do?id=${memberId!''}">
+				[/#if]
+            [/#if]
+            	[@lang_res k='portfolio.title'/] [#if IfaSpacePortfoliosCount=0]<span class="ifa-type-num" id="sp_IfaSpacePortfoliosCount" style="background-color:transparent;color:#000000;display:none;">[#else]<span class="ifa-type-num" id="sp_IfaSpacePortfoliosCount" style="display:none;">[/#if]${IfaSpacePortfoliosCount!}</span></a>
+            </p>
+            <p class="ifa-type-word" style="text-align: center;padding: 0px 10px 0px 10px;line-height: 120%;">
+            <a id="a_latestPortfoliosName" class="ifa-a-href" href="${base}/front/portfolio/arena/detail.do?id=${latestPortfoliosId!}">${latestPortfoliosName!}</a>
+            </p>
+            <div class="ifa-type-content">
+            [#if IfaSpacePortfoliosCount = 0]
+            	[#if viewerIsSpaceOwner??]
+					<div class="wmes-nodata-tips portfolioTips" style="display:block;padding: 0px 0;">
+                          <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                          <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                   	</div>
+				[/#if]
+            [#else]
+               <div class="type-portfolios-left">
+                    <span class="funds_leveal_6"></span>
+                </div>
+                <div class="type-portfolios-right">
+                    <p id="p_latestPortfoliosRate" class="ifa-type-parsent">[@num_color s='${latestPortfoliosRate!}' c='${defDisplayColor!}'  /]</p>
+                    <p class="ifa-type-date">[@lang_res k='ifaspace.info.cumOneMon'/]</p>
+                </div>           
+             [/#if] 
+            </div> 
+            <!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         		[#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				 <a href="${base}/front/portfolio/arena/myList.do"><span class="ifa-thehigt-edit"></span></a>
+				[#else]
+				
+				[/#if]
+            [/#if]    
+            
+        </li>
+        	<li>
+            <p class="ifa-type-title"  style="background:#2a8cd8">
+            [#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				<a href="${base}/front/ifa/info/ifarecommendfund.do">
+				[#else]
+				<a href="${base}/front/ifa/space/viewFundList.do?id=${memberId!''}">
+				[/#if]
+            [/#if]
+            [@lang_res k='ifaspace.info.funds'/] [#if recommendedFundCount=0]<span class="ifa-type-num" id="sp_recommendedFundCount" style="background-color:transparent;color:#000000;display:none;">[#else][/#if]</span></a></p>
+            <p class="ifa-type-word" style="text-align: center;padding: 0px 10px 0px 10px;line-height: 120%;"><a id="a_latestFundName" class="ifa-a-href" href="${base}/front/fund/info/fundsdetail.do?id=${latestFundId!}">${latestFundName!}</a></p>
+            <div class="ifa-type-content">
+             [#if recommendedFundCount = 0]
+             	<!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         		[#if viewerIsSpaceOwner??]
+				<div class="wmes-nodata-tips portfolioTips" style="display:block;padding: 0px 0;">
+                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                 	</div>
+            [/#if]      
+            	
+            [#else]
+              	<p id="p_latestFundincreaseRate" class="ifa-type-parsent">[@num_color s='${latestFundincreaseRate!}' c='${defDisplayColor!}'  /]<!-- ${latestFundincreaseRate!}% --></p>
+                <p id="p_latestPeriodName" class="ifa-type-date">${latestPeriodName!}</p>
+             [/#if]
+            </div>         
+            <!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         		[#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				 <a href="${base}/front/ifa/info/ifarecommendfund.do"><span class="ifa-thehigt-edit"></span></a>
+				[#else]
+				
+				[/#if]
+            [/#if]      
+        </li>
+    	</ul>
+		<div class="wmes-community-news-con-tabcut">
+			<ul class="wmes-community-tab">
+				<li class="wmes-community-tabac">[@lang_res k='community.space.insight'/]</li>
+				<li>[@lang_res k='community.space.news'/]</li>
+			</ul>
+			<div class="wmes-community-news-con" style="margin-bottom:20px;">
+			
+			[#if insightList?exists && insightList?size gt 0]
+					[#list insightList as each]
+					 	<div class="wmes-community-news-wrap">
+					<a href="${base}/front/community/info/topicDetail.do?id=${each.id}&type=t"><div class="wmes-community-news-title">${each.title}</div></a>
+					<p class="wmes-community-news-text" >${each.content!}</p>
+					<div class="wmes-community-news-message">
+						<div class="wmes-community-news-message-left">
+							<div class="wmes-community-news-type">${each.sectionName!}<span>${each.publishTimeFormat!}</span></div>
+						</div>
+						<div class="wmes-community-news-message-right">
+							<div class="wmes-community-news-message-right-relycon">
+								<div class="wmes-community-news-message-right-rely"></div><span>${each.commentCount!}</span>
+							</div>
+							<div class="wmes-community-news-message-right-eyecon">
+								<div class="wmes-community-news-message-right-eye"></div><span>${each.readCount!}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+		 	[/#list]
+		 	<div class="more-and-more">
+			[#if myself?? && myself=='1']
+			<a href="${base}/front/community/info/insihtList.do?id=${memberId!}"><img class="space-news-edit" src="${base}/res/images/ifa/zonedit.png"></a>
+			[#else]
+			<a href="${base}/front/community/info/insihtList.do?id=${memberId!}">>>[@lang_res k='community.space.more'/]</a>
+			[/#if]
+			</div>
+			[#else]
+			<div class="wmes-nodata-tips " style="display:block;">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+             </div>
+		 	[/#if]
+				
+			</div>
+			<div class="wmes-community-news-con" style="margin-bottom:20px;">
+			[#if newsList?exists && newsList?size gt 0]
+				<ul class="ifa-news-contents">
+					[#list newsList as each]
+					 	<li class="recommendnews-list-li">
+                		<p class="insights-content space-word-show"><span class="gray-box"></span><a class="wmes-community-news-title" href="${base}/front/news/info/newsContent.do?id=${each.newsId!}" target="_self">[@lang_res k='community.space.reason'/]：${each.content!}</a></p>
+                		<div class="news-word-wrap">
+                    		<a class="ifa-news-img" href="javascript:;">
+                        		<img src="${each.newsUrl!}">
+                    		</a>
+                    		<div class="news-wrap">
+                         		<p class="ifa-news-word">${each.title}</p>
+                        		<p class="insights-time">${each.dateTime!}</p>
+                        		<p class="abstract">${each.description!}</p>
+                    		</div>  
+                    		<!--<p class="recommended-reason"></p>-->
+                		</div>
+            		</li>
+					 	[/#list]
+        		</ul>
+        		<div class="more-and-more">
+			[#if myself?? && myself=='1']
+			<a href="${base}/front/community/space/newsManage.do"><img class="space-news-edit" src="${base}/res/images/ifa/zonedit.png"></a>
+			[#else]
+			<a href="${base}/front/community/space/recommendNews.do?id=${memberId!}">>>[@lang_res k='community.space.more'/]</a>
+			[/#if]
+			</div>
+			[#else]
+			<div class="wmes-nodata-tips " style="display:block;">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+             </div>
+        		
+        		[/#if]
+        		
+			</div>
+			
+		</div>
+		<div class="wmes-community-content">
+			<div class="wmes-community-content-left">
+				<ul class="wmes-community-tab">
+				  [#if myself?? && myself=='1']<li class="wmes-community-tabac">[@lang_res k='community.space.dynamic'/]</li>[/#if]
+					<li [#if myself?? && myself=='0']class="wmes-community-tabac[/#if]">[@lang_res k='community.space.topic'/]</li>
+					<li>[@lang_res k='community.space.question'/]</li>
+					[#if myself?? && myself=='1']<li>[@lang_res k='community.space.favourite'/]</li>[/#if]
+				</ul>
+				[#if myself?? && myself=='1']
+				<div class="wmes-community-news-con">
+				<div class="wmes-community-news-wrap"  ng-repeat="each in dynamicList">
+						<div class="wmes-community-news-title topicTitle" id="{{each.id}}">{{each.title}}</div>
+						<p class="wmes-community-news-text" ng-bind="each.content | cutHmtl:true:150:'...'"></p>
+						<div class="wmes-community-news-message">
+							<div class="wmes-community-news-message-left">
+								<div class="wmes-community-news-type">{{each.sectionName}}<span>{{each.publishTimeFormat}}</span></div>
+							</div>
+							<div class="wmes-community-news-message-right">
+								<div class="wmes-community-news-message-right-relycon">
+									<div class="wmes-community-news-message-right-rely"></div><span>{{each.commentCount}}</span>
+								</div>
+								<div class="wmes-community-news-message-right-eyecon">
+									<div class="wmes-community-news-message-right-eye"></div><span>{{each.readCount}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="clickmore moredynamic" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+					<div class="wmes-nodata-tips dynamic-tips" style="display:none;">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  	</div>
+				</div>
+				[/#if]
+				<div class="wmes-community-news-con">
+					 	<div class="wmes-community-news-wrap"  ng-repeat="each in topicList">
+						<div class="wmes-community-news-title topicTitle" id="{{each.id}}">{{each.title}}</div>
+						<p class="wmes-community-news-text" ng-bind="each.content | cutHmtl:true:150:'...'"></p>
+						<div class="wmes-community-news-message">
+							<div class="wmes-community-news-message-left">
+								<div class="wmes-community-news-type">{{each.sectionName}}<span>{{each.publishTimeFormat }}</span></div>
+							</div>
+							<div class="wmes-community-news-message-right">
+								<div class="wmes-community-news-message-right-relycon">
+									<div class="wmes-community-news-message-right-rely"></div><span>{{each.commentCount}}</span>
+								</div>
+								<div class="wmes-community-news-message-right-eyecon">
+									<div class="wmes-community-news-message-right-eye"></div><span>{{each.readCount}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+			       <div class="clickmore moretopic" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+			        <div class="wmes-nodata-tips topic-tips" style="display:none;">
+	                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+	                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                     	</div>
+				</div>
+				<div class="wmes-community-news-con">
+					<div class="wmes-community-news-wrap" ng-repeat='each in questionList'>
+						<div class="wmes-community-news-message-namecon">
+							<img class="wmes-community-news-headPortrait  headPortrait" memberId='{{each.memberId}}' memberType='{{each.memberType}}' src="${base}{{each.memberUrl | userhead:memberGender:''}}">
+							<div class="wmes-community-news-message-name ng-binding">{{each.memberName}}</div>
+							<div class="wmes-community-news-message-investorsign ng-scope" ng-if="items.memberType==1"></div><!-- end ngIf: items.memberType==1 -->
+						</div>
+						<a href="${base}/front/community/info/topicDetail.do?id={{each.id}}&type=q">
+						<p class="wmes-community-news-qa" ng-bind-html="each.content | emotion:base_root"></p>
+						</a>
+						<p class="wmes-community-news-qa-flex">[@lang_res k='community.space.showAllContent'/]</p>
+						<div class="wmes-community-news-message" questionId="{{each.id}}" type="q" >
+							<div class="wmes-community-news-message-left">
+								<div class="wmes-community-news-qa-repltime">{{each.createDateStr | datetime:dateTimeFmt}}</div>
+							</div>
+							<div class="wmes-community-news-message-right">
+								<div class="wmes-community-news-message-right-caicon">
+									<div class="wmes-community-news-message-right-cai comment-topper-caied" ng-if="each.isUnlike==1" ></div>
+									<div class="wmes-community-news-message-right-cai" ng-if="each.isUnlike!=1" ></div>
+									<span class="ng-binding">{{each.unlikeCount}}</span>
+									
+								</div>
+								<div class="wmes-community-news-message-right-nicecon" >
+									<div  type="q" class="wmes-community-news-message-right-nice comment-topper-niceed" ng-if="each.isLike==1"></div>
+									<div  type="q" class="wmes-community-news-message-right-nice " ng-if="each.isLike!=1"></div>
+									<span class="ng-binding">{{each.likeCount}}</span>
+								</div>
+								<div class="wmes-community-news-message-right-relycon"  >
+									<div class="wmes-community-news-message-right-rely" ></div><span class="ng-binding">{{each.commentCount}}</span>
+								</div>
+							</div>
+						</div>
+						
+						<div class="wmes-community-news-qa-replycon" ng-if="each.answerList.length>0" >
+						<div class="wmes-community-news-qa-replyname">[@lang_res k='topic.detail.reply'/]：</div>
+							<div class="answer-list" ng-repeat="items in each.answerList" >
+							
+							<div class="wmes-community-news-qa-repltext" ng-bind-html="items.content | emotion:base_root">
+							</div>
+							<div class="wmes-community-news-message"  commentId="{{items.id}}"  type="a"  style="margin-top:4px;">
+								<div class="wmes-community-news-message-left">
+									<div class="wmes-community-news-qa-repltime">{{items.dateTime | datetime:dateTimeFmt}}</div>
+									<div class="wmes-community-news-message-right-caicon" >
+										<div class="wmes-community-news-message-right-cai comment-topper-caied" ng-if="items.isUnlike==1" ></div>
+										<div class="wmes-community-news-message-right-cai" ng-if="items.isUnlike!=1" ></div>
+										<span>{{items.unlikeCount}}</span>
+									</div>
+									<div class="wmes-community-news-message-right-nicecon"  >
+										<div class="wmes-community-news-message-right-nice comment-topper-niceed" ng-if="items.isLike==1" ></div>
+										<div class="wmes-community-news-message-right-nice" ng-if="items.isLike!=1" ></div>
+										<span>{{items.likeCount}}</span>
+									</div>
+									<div class="wmes-community-news-message-right-relycon">
+										<div class="wmes-community-news-message-right-rely"></div><span>{{items.commentCount}}</span>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						</div>
+							
+						</div>
+						 <div class="clickmore morequestion" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+						 <div class="wmes-nodata-tips quetion-tips" style="display:none;">
+	                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+	                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                     	</div>
+				    </div>
+				<div class="wmes-community-news-con">
+					<div class="wmes-community-news-wrap" ng-repeat="each in favouriteList">
+						<div class="wmes-community-news-title topicTitle" id={{each.id}}>{{each.title}}</div>
+						<p class="wmes-community-news-text" ng-bind="each.content | cutHmtl:true:150:'...'"></p>
+						<div class="wmes-community-news-message">
+							<div class="wmes-community-news-message-left">
+								<div class="wmes-community-news-type">{{each.sectionName}}<span>{{each.publishTimeFormat | datetime:dateTimeFmt}}</span></div>
+							</div>
+							<div class="wmes-community-news-message-right">
+								<div class="wmes-community-news-message-right-relycon">
+									<div class="wmes-community-topic-collect news-collectionac" id='{{each.id}}'  ng-if="each.isFavourite==1"></div>
+									<div class="wmes-community-topic-collect" id='{{each.id}}'   ng-if="each.isFavourite!=1"></div>
+								</div>
+								<div class="wmes-community-news-message-right-relycon">
+									<div class="wmes-community-news-message-right-rely"></div><span>{{each.commentCount}}</span>
+								</div>
+								<div class="wmes-community-news-message-right-eyecon">
+									<div class="wmes-community-news-message-right-eye"></div><span>{{each.readCount}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="clickmore morefavourite" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+					
+					<div class="wmes-nodata-tips favourite-tips" style="display:none;">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  	</div>
+				</div>
+			</div>
+			<div class="wmes-community-content-right" style="margin-top:24px;">
+				<ul class="wmes-community-tab">
+					<li class="wmes-community-tabac">[#if myself?? && myself=='1'][@lang_res k='community.space.followers'/][#elseif info.gender=='F'][@lang_res k='community.space.herfollowers'/][#else][@lang_res k='community.space.hisfollowers'/][/#if]</li>
+					<li>[#if myself?? && myself=='1'][@lang_res k='community.space.focus'/][#elseif info.gender=='F'][@lang_res k='community.space.herfocus'/][#else][@lang_res k='community.space.hisfocus'/][/#if]</li>
+					[#if myself?? && myself=='1']<li><a href='${base}/front/ifa/info/mybuddy.do'>[@lang_res k='member.front.MyBuddy'/]</a></li>[/#if]
+				</ul>
+				<div class="community-popularity-wrapcon">
+				[#if followersList?exists && followersList?size gt 0]
+				[#list followersList as list]
+					<div class="community-popularity-wrap">
+						<img class="community-popularity-wrap-img headPortrait" memberId='${list.memberId!}' memberType='${list.memberType!}'  src="${base}[@user_head u=list.iconUrl g=list.gender/]"/>
+						<div class="community-popularity-wrap-mes">
+							<div class="community-popularity-wrap-mes-name"><p>${list.nickName!}</p>[#if list.memberType?? && list.memberType==1]<span class="wmes-community-news-message-investorsign"></span>[#elseif list.memberType?? && list.memberType==2]<span class="wmes-community-news-message-ifasign"></span>[/#if]</div>
+							<div class="community-popularity-wrap-mes-content">
+								<div class="community-popularity-wrap-mes-followers"><p>[@lang_res k='community.space.followers'/]</p><span>${list.followerCount!}</span></div>
+								<div class="community-popularity-wrap-mes-topic"><p>[@lang_res k='community.space.topic'/]</p><span>${list.topicCount!}</span></div>
+							</div>
+							[#if myself?? && myself=='1']
+							[#if list.isFocused?? && list.isFocused==1]
+							<div class="wmes-space-add-attention" memberId='${list.memberId!}'  type="cancel"><span class="wmes-space-information-bottom-img1 wmes-space-information-bottom-img0"></span><span>[@lang_res k='community.space.cancelFocus'/]</span></div>
+							[#elseif list.isFocused?? && list.isFocused==0 ]
+							<div class="wmes-space-add-attention" memberId='${list.memberId!}' type="add"><span class="wmes-space-information-bottom-img1"></span><span>[@lang_res k='community.space.addFocus'/]</span></div>
+							[/#if]
+							[/#if]
+						</div>
+					</div>
+					[/#list]
+					[#else]
+					<div class="wmes-nodata-tips" style="display:block;">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  	</div>
+					<!-- <div style="    text-align: center;margin-top: 20px;"><span>该ifa暂无粉丝</span></div> -->
+					[/#if]
+				</div>
+				<div class="community-popularity-wrapcon">
+				[#if focusList?exists && focusList?size gt 0]
+				[#list focusList as list]
+					<div class="community-popularity-wrap">
+						<img class="community-popularity-wrap-img headPortrait" memberId='${list.memberId!}' memberType='${list.memberType!}' src="${base}[@user_head u=list.iconUrl g=list.gender/]"/>
+						<div class="community-popularity-wrap-mes">
+							<div class="community-popularity-wrap-mes-name"><p>${list.nickName!}</p>[#if list.memberType?? && list.memberType==1]<span class="wmes-community-news-message-investorsign"></span>[#elseif list.memberType?? && list.memberType==2]<span class="wmes-community-news-message-ifasign"></span>[/#if]</div>
+							<div class="community-popularity-wrap-mes-content">
+								<div class="community-popularity-wrap-mes-followers"><p>[@lang_res k='community.space.followers'/]</p><span>${list.followerCount!}</span></div>
+								<div class="community-popularity-wrap-mes-topic"><p>[@lang_res k='community.space.topic'/]</p><span>${list.topicCount!}</span></div>
+							</div>
+							[#if myself?? && myself=='1']
+							[#if list.isFocused?? && list.isFocused==1]
+							<div class="wmes-space-add-attention" memberId='${list.memberId!}' type="cancel" ><span class="wmes-space-information-bottom-img1 wmes-space-information-bottom-img0"></span><span>[@lang_res k='community.space.cancelFocus'/]</span></div>
+							[#elseif list.isFocused?? && list.isFocused==0 ]
+							<div class="wmes-space-add-attention" memberId='${list.memberId!}' type="add"><span class="wmes-space-information-bottom-img1"></span><span>[@lang_res k='community.space.addFocus'/]</span></div>
+							[/#if]
+							[/#if]
+							
+						</div>
+					</div>
+					[/#list]
+					[#else]
+					<div class="wmes-nodata-tips" style="display:block;">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  	</div>
+					<!-- <div style="    text-align: center;margin-top: 20px;"><span>该ifa暂无关注人</span></div> -->
+					[/#if]
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div id="askQuestion"  class="ifa-space-popup" >
+		<div class="ifa-space-mask"></div>
+		<div class="space-mask-wrap"> 
+			<div class="investment-plan-wrap" >
+				<div class="wmes-close character-close-ico"></div>
+				<p class="investment-plan-title">[@lang_res k='community.space.ask'/]</p>
+				<div class="character-setting-rows">
+					<div class="comment-topper-contents">
+						<div class="member-comment-topper">
+							<p class="member-comment-title">
+								
+							</p>
+							<p class="member-number-words">
+								0/500
+							</p>
+						</div>
+						<textarea class="member-comment-text"></textarea>
+						<div class="member-comment-reply">
+							<img class="comment-expression-ico" src="${base}/res/images/discover/expression_ico.png">
+						</div>
+						<div class="comment-expression"></div>
+					</div>
+				</div>
+					<div class="character-button-rows">
+						<a class="character-button-save sendQuestion" href="javascript:;">[@lang_res k='global.submit'/]</a>
+						<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+				  </div>
+				</div>
+			</div>
+		</div>
+
+</div>
+<input id="hidloginMemberId" value="${loginMemberId!''}" type="hidden">
+[#include "../inc/foot_v2.html"/]
+<script type="text/javascript"> 
+var IFASPACE_LANG_NoRecommendation = "[@lang_res k='ifaspace.info.noRecommendation'/]";
+	var IFASPACE_LANG_CannotAddYourself = "[@lang_res k='ifaspace.info.cannotAddYourself'/]";
+	var IFASPACE_LANG_LoginToAddFriends = "[@lang_res k='ifaspace.info.loginToAddFriends'/]";
+	var IFASPACE_LANG_SureToAddFriends = "[@lang_res k='ifaspace.info.sureToAddFriends'/]";
+	var IFASPACE_LANG_WaitToAddFriends = "[@lang_res k='ifaspace.info.waitToAddFriends'/]";
+	var IFASPACE_LANG_Alert = "[@lang_res k='layer.alert'/]";
+	var IFASPACE_LANG_NODATA_TIPS = "[@lang_res k='global.nodata.tips'/]";
+	var COMMUNITY_SPACE_SURETOADDFOCUS = "[@lang_res k='community.space.sureToAddFocus'/]";
+	var COMMUNITY_SPACE_SURETOCANCELFOCUS = "[@lang_res k='community.space.sureToCancelFocus'/]";
+	var COMMUNITY_SPACE_YES = "[@lang_res k='global.true'/]";
+	var COMMUNITY_SPACE_NO = "[@lang_res k='global.false'/]";
+	
+	var MEMBER_MEMBERTYPE_1 = "[@lang_res k='member.memberType.1'/]";
+	var MEMBER_MEMBERTYPE_2 = "[@lang_res k='member.memberType.2'/]";
+	var MEMBER_MEMBERTYPE_3 = "[@lang_res k='member.memberType.3'/]";
+	var GLOBAL_CLOSEWINDOW = "[@lang_res k='global.close'/]";
+	
+	var _myself=${myself!}
+	var _curMemberId='${memberId!}'
+	var _myself=${myself!}
+	var _curMemberId='${loginMemberId!}'
+	var _memberType='${loginMemberType!}'
+	var _dateFormt='${dateFormt!}'
+	seajs.use('${base}/res/web/community/space.js');
+</script>

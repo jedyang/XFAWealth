@@ -1,0 +1,214 @@
+package com.fsll.wmes.entity;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
+@Table(name = "notice")
+public class Notice implements java.io.Serializable {
+	@GenericGenerator(name = "generator", strategy = "uuid.hex")
+	@Id
+	@GeneratedValue(generator = "generator")
+	@Column(name = "id")
+	private String id;
+	
+	@Column(name = "subject")
+	private String subject;
+	
+	@Column(name = "content")
+	private String content;
+	
+	@Column(name = "scope")
+	private String scope;
+	
+	@Column(name = "target")
+	private String target;
+
+	@Column(name = "send_mode")
+	private String sendMode;
+
+	@Column(name = "send_terminal")
+	private String sendTerminal;
+
+	@Column(name = "is_pic")
+	private String isPic;
+
+	@Column(name = "web_pic")
+	private String webPic;
+
+	@Column(name = "app_pic")
+	private String appPic;
+
+	@Column(name = "type")
+	private String type;
+
+	@Column(name = "source_type")
+	private String sourceType;
+
+	@Column(name = "source")
+	private String source;
+
+	@Column(name = "create_time")
+	private Date createTime;
+
+	@Column(name = "create_by")
+	private String createBy;
+
+	@Column(name = "last_update")
+	private Date lastUpdate;
+
+	@Column(name = "update_by")
+	private String updateBy;
+
+	@Column(name = "release_date")
+	private Date releaseDate;
+
+	@Column(name = "release_by")
+	private String releaseBy;
+
+	@Column(name = "expried_date")
+	private Date expriedDate;
+
+	@Column(name = "status")
+	private String status;
+
+	public String getId() {
+		return this.id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getSubject() {
+    	return subject;
+    }
+	public void setSubject(String subject) {
+    	this.subject = subject;
+    }
+	public String getScope() {
+    	return scope;
+    }
+	public void setScope(String scope) {
+    	this.scope = scope;
+    }
+	public String getTarget() {
+    	return target;
+    }
+	public void setTarget(String target) {
+    	this.target = target;
+    }
+	public String getSendMode() {
+    	return sendMode;
+    }
+	public void setSendMode(String sendMode) {
+    	this.sendMode = sendMode;
+    }
+	public String getSendTerminal() {
+    	return sendTerminal;
+    }
+	public void setSendTerminal(String sendTerminal) {
+    	this.sendTerminal = sendTerminal;
+    }
+	public String getIsPic() {
+    	return isPic;
+    }
+	public void setIsPic(String isPic) {
+    	this.isPic = isPic;
+    }
+	public String getWebPic() {
+    	return webPic;
+    }
+	public void setWebPic(String webPic) {
+    	this.webPic = webPic;
+    }
+	public String getAppPic() {
+    	return appPic;
+    }
+	public void setAppPic(String appPic) {
+    	this.appPic = appPic;
+    }
+	public String getType() {
+    	return type;
+    }
+	public void setType(String type) {
+    	this.type = type;
+    }
+	public String getSourceType() {
+    	return sourceType;
+    }
+	public void setSourceType(String sourceType) {
+    	this.sourceType = sourceType;
+    }
+	public String getSource() {
+    	return source;
+    }
+	public void setSource(String source) {
+    	this.source = source;
+    }
+	public Date getCreateTime() {
+    	return createTime;
+    }
+	public void setCreateTime(Date createTime) {
+    	this.createTime = createTime;
+    }
+	public Date getLastUpdate() {
+    	return lastUpdate;
+    }
+	public void setLastUpdate(Date lastUpdate) {
+    	this.lastUpdate = lastUpdate;
+    }
+	public Date getReleaseDate() {
+    	return releaseDate;
+    }
+	public void setReleaseDate(Date releaseDate) {
+    	this.releaseDate = releaseDate;
+    }
+	public Date getExpriedDate() {
+    	return expriedDate;
+    }
+	public void setExpriedDate(Date expriedDate) {
+    	this.expriedDate = expriedDate;
+    }
+	public String getStatus() {
+    	return status;
+    }
+	public void setStatus(String status) {
+    	this.status = status;
+    }
+	public String getCreateBy() {
+		return createBy;
+	}
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+	public String getUpdateBy() {
+		return updateBy;
+	}
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+	public String getReleaseBy() {
+		return releaseBy;
+	}
+	public void setReleaseBy(String releaseBy) {
+		this.releaseBy = releaseBy;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	
+
+}

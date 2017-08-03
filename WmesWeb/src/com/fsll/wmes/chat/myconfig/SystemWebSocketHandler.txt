@@ -1,0 +1,112 @@
+/*
+ * Copyright (c) 2016-2019 by fsll
+ * All rights reserved.
+ */
+package com.fsll.wmes.chat.myconfig;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.WebSocketMessage;
+import org.springframework.web.socket.WebSocketSession;
+
+/**
+ * 服务端的消息接受和推送
+ * @author 黄模建 E-mail:mjhuang@fsll.cn
+ * @version 1.0.0
+ * Created On: 2016-9-18
+ */
+@Component
+public class SystemWebSocketHandler implements WebSocketHandler{
+	private static final ArrayList<WebSocketSession> users;
+	static{
+		users = new ArrayList<WebSocketSession>();
+	}
+	
+	public SystemWebSocketHandler(){
+		
+	}
+	
+	/***
+	 * 断开连接
+	 */
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status)throws Exception {
+		users.remove(session);
+	}
+
+	/***
+	 * 建立连接
+	 */
+	@Override
+	public void afterConnectionEstablished(WebSocketSession session)throws Exception {
+		users.add(session);
+	}
+
+	/**
+	 * 接受消息处理
+	 */
+	@Override
+	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message)throws Exception {
+		TextMessage tm = new TextMessage(message.getPayload()+"");
+		session.sendMessage(tm);
+	}
+
+	/**
+	 * 链接出错,关闭链接
+	 */
+	@Override
+	public void handleTransportError(WebSocketSession session, Throwable throwable)throws Exception {
+		if (session.isOpen()) {
+			session.close();
+		}
+		users.remove(session);
+	}
+
+	
+	@Override
+	public boolean supportsPartialMessages() {
+		return false;
+	}
+
+	/**
+	 * 给所有在线用户发送消息
+	 * @param message
+	 */
+	public void sendMessageToUsers(TextMessage message) {
+		for (WebSocketSession user : users) {
+			if (user.isOpen()) {
+				try {
+					user.sendMessage(message);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 给指定的用户发送消息
+	 * @param username
+	 * @param message
+	 */
+	public void sendMessageToUser(String username,TextMessage message) {
+		for (WebSocketSession user : users) {
+			if (user.getAttributes().get("sendUserName").equals(username)) {
+				try {
+					if (user.isOpen()) {
+						user.sendMessage(message);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			}
+		}
+	}
+	
+}

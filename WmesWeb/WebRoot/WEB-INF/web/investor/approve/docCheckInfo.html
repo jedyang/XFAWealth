@@ -1,0 +1,38 @@
+	<link rel="stylesheet" href="${base}/res/css/wmes_en.css"> 
+	<link rel="stylesheet" href="${base}/res/css/openaccount.css">				
+				<div class="OpenAccount_rpa_table">
+                    <table width="99%" border="0">
+                      <tbody>
+                        <tr>
+                          <th width="30%"></th>
+                          <th width="70%"></th>
+                        </tr>
+
+                      [#if contactDocList?exists && contactDocList?size gt 0 ]
+                      [#list contactDocList as contractDoc]
+                        <tr investDocId="${contractDoc.id!}" class="doc_tr">
+                          <td>
+                            <p class="doc_name">${contractDoc.docName!}</p>
+                            <p updateCycle="${contractDoc.updateCycle}"></p>
+                            <p class="doc_forow">Update Period: ${contractDoc.updateCycle!}M</p>
+                            <p class="doc_forow">IsNecessary: ${contractDoc.isNecessary!}</p>
+                            <p></p>
+                          </td>
+                          <td class="docController">
+	                          <ul class="filelist" style="float:left;margin-right:10px">
+	                       		[#if contractDoc.fileList?exists && contractDoc.fileList?size gt 0]
+	                       		[#list contractDoc.fileList as fileList]
+	                       			<li class="img_li" fileid="${fileList.id!}" id="img_li_${fileList.id!}">
+	                       				<p class="imgWrap"><img src="${base}/loadImgSrcByPath.do?filePath=${fileList.filePath!}" with="110px" height="110px"/></p>
+	                       				<p class="progress"><span></span></p>
+	                       			</li>
+	                       		[/#list]
+	                       		[/#if]
+	                          </ul>
+                          </td>
+                        </tr>
+                      [/#list]
+                      [/#if]
+                      </tbody>
+                    </table>
+                  </div>

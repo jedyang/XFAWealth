@@ -1,0 +1,94 @@
+[#include "../../inc/head.html"/]
+
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<div class="blue_background">
+        <div class="kaihu_div">
+            <div class="white_background" >   
+                <div class="OpenAccount_big_title">
+                  <h2>[@lang_res  k='member.front.MyBacklog'/]</h2>
+                </div>
+
+                <div class="OpenAccount_liucheng_content">
+                  <div class="tab_list_tab">
+                          <ul>
+                              <li class="now"><a href="javascirpt:;">[@lang_res  k='member.front.MyBacklog.Todo'/]</a></li>
+                              <li><a href="javascirpt:;">[@lang_res  k='member.front.MyBacklog.Toread'/]</a></li>
+                          </ul>
+                    </div>
+                    <div class="account_list_div">
+
+                        <div style="display:block">
+                          <table id="toDoTable" class="account_list_table">
+                            <tbody>
+                              <tr class="account_list_th">
+                                <th width="15%">From</th>
+                                <th width="50%">Subject</th>
+                                <th width="20%">Date</th>
+                                <th width="15%">Type</th>
+                              </tr>
+
+[#if toDolist?exists && toDolist?size gt 0 ]
+[#list toDolist as record]
+                              <tr id="${record.id!}" url="${record.url!}">
+                                <td>${record.fromMember.nickName!}</td>
+                                <td><a href='${record.url!}'>${record.title!}</a></td>
+                                <td>[#if record.createTime??]${record.createTime?string("yyyy-MM-dd HH:mm:ss")}[/#if]</td>
+                                <td>${record.toDoToReadType!}</td>
+                              </tr>
+[/#list]
+[/#if]
+
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <div>
+                          <table id="toReadTable" class="account_list_table">
+                            <tbody>
+                              <tr class="account_list_th">
+                                <th width="15%">From</th>
+                                <th width="50%">Subject</th>
+                                <th width="20%">Date</th>
+                                <th width="15%">Type</th>
+                              </tr>
+
+[#if toReadlist?exists && toReadlist?size gt 0 ]
+[#list toReadlist as record]
+                              <tr id="${record.id}" url="${record.url}">
+                                <td>${record.fromMember.nickName}</td>
+                                <td>${record.title}</td>
+                                <td>${record.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+                                <td>${record.toDoToReadType}</td>
+                              </tr>
+[/#list]
+[/#if]
+
+                            </tbody>
+                          </table>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+</div>
+[#include "../../inc/foot.html"/] 
+<script type="text/javascript">
+var base = "${base}";
+    seajs.use('jquery', function($){
+
+      $(".tab_list_tab li").on("click",function(){
+        $(".tab_list_tab li").removeClass("now").eq($(this).index()).addClass("now");
+        $(".account_list_div > div").hide().eq($(this).index()).show();
+      });
+
+      $("#toReadTable tr").on("click",function(){
+        window.open( $(this).attr("url") );
+        var id = $(this).attr("id");
+        $.post(  base + "/front/member/personal/setToReadDone.do" , {"id": id }, function(ret){
+
+        });
+      });
+
+  });
+</script>

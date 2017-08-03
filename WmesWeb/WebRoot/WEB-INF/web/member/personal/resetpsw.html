@@ -1,0 +1,119 @@
+[#include "../../inc/head_no_menu.html"/]
+<link rel="stylesheet" href="${base}/res/css/member.css">
+<link rel="stylesheet" href="${base}/res/third/formValidator/css/validationEngine.jquery.css"/>
+<style>
+.registrationcon{background:#fff;display:none;position:absolute;left:20%;top:20%;width:60%;border-radius:15px;border:1px solid #999;padding:40px 10px 40px 10px;text-align: left;}
+</style>
+[#include "../../inc/regist_head.html"/]  
+<div class="wmes-content wmes-content-position" style="margin-left:0px;">
+    <div class="regist-bg">
+	<div class="member-contents">
+            <p class="wmes-wrap-title">[@lang_res k='member.resetPassword.title'/]</p>
+            <div class="member-step-wrap">
+                  <div class="member-step member-step-old">[@lang_res k='member.resetPassword.1'/]</div>
+                  <div class="member-step-ico">></div>
+                  <div class="member-step member-step-active">[@lang_res k='member.resetPassword.2'/]</div>
+                  <div class="member-step-ico">></div>
+                  <div class="member-step">[@lang_res k='member.resetPassword.3'/]</div>
+            </div>
+            <div class="member-resetpsw-notice">
+                <p class="member-resetpsw-notice-title"><img src="${base}/res/images/client/product_war_ico.png">[@lang_res k='global.notice'/]:</p>
+                <p class="member-resetpsw-notice-word">[@lang_res k='member.resetPassword.notice1'/]</p>
+            </div>
+            <form action="" id="resetpswForm" style="padding-left: 100px;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+                    <tbody>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.resetPassword.email'/]:</span>
+                        </td>
+                        <td class="register_table_right">
+                          <input  style="background-color: #E2E3E5;"  class="register_input" readonly="readonly" value="${email!''}" type="text" name="email" id="email" maxlength="60">
+                          <span class="Wrong_tips"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.resetPassword.tempPwd'/]:</span>
+                        </td>
+                        <td class="register_table_right">
+                          <input  class="register_input validate[required]" type="text" id="tmpPass" maxlength="20" autocomplete="off" data-prompt-position="inline" data-prompt-target="tmpPassError">
+                          <p class="member-resetpsw-right-tips">[@lang_res k='member.resetPassword.tempPwd.tips'/]</p>
+                          <span id="tmpPassError"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.resetPassword.newPwd'/]:</span>
+                        </td>
+                        <td class="register_table_right">
+                          <input class="register_input j-password-input validate[required,minSize[7],maxSize[20],custom[pswRuleCustome]]"  type="password"  id="newPass" maxlength="20" autocomplete="off" data-prompt-position="inline" data-prompt-target="pswError">
+                          <p class="member-resetpsw-right-tips">[@lang_res k='member.register.password.tips'/]</p>
+                          <span id="pswError"></span>
+                        </td>
+                      </tr>  
+                      <tr>
+                        <td align="right" class="register_table_left">
+                          <span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.resetPassword.strength'/]:</span>
+                        </td>
+                        <td class="register_table_right">
+                          <div class="register_strength">
+                            <ul>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                              </ul>
+                          </div>
+                          <span class="register_strength_font">[@lang_res k='member.resetPassword.strength'/]</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.resetPassword.cfmPwd'/]:</span>
+                        </td>
+                        <td class="register_table_right">
+                          <input  class="register_input  validate[required,minSize[7],maxSize[20],equals[newPass]]" type="password"" id="confirmpsw" maxlength="20" autocomplete="off" data-prompt-position="inline" data-prompt-target="cfmPasswordError">
+                          <span id="cfmPasswordError"></span>
+                        </td>
+                      </tr>               
+                      <tr>
+                        <td align="right" class="register_table_left">
+                          <span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.resetPassword.verCode'/]:</span>
+                        </td>
+                        <td class="register_table_right">
+                          <input class="register_input_102 validate[required]" id="checkCode"  type="text" maxlength="10" autocomplete="off" data-prompt-position="inline" data-prompt-target="verCodeError">
+                          <img class="register_yanzhengma" onclick="this.src=this.src+'?'" src="${base}/authImg.svl" alt=""/>
+                          <!-- <p class="member-resetpsw-change">Change</p>-->
+                          <span id="verCodeError"></span>
+                          <br><br><br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                           
+                        </td>
+                        <td class="register_table_right">
+                          <a id="btn_next" class="member-input-next" href="javascript:;">[@lang_res k='global.next'/]</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </form>
+       </div> 
+    </div>        
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+    var _root_ = '${base}';
+    var langMutilForJs = [@load_prop k='member.resetPassword'/]
+    seajs.use('${base}/res/web/member/regist/strength.js');
+    seajs.use('${base}/res/web/member/personal/resetpsw.js');
+</script>

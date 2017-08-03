@@ -1,0 +1,245 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+	<style>
+	.dialog-myAllocation{
+	    position: fixed;
+	    top: 0px;
+	    z-index: 999999;
+	    padding-left: 100px;
+	    margin-left: 80px;
+	}
+	.dispaly-active{
+		height: 100%;
+	 	width: calc(100% - 110px);
+	}
+	.insight-channel-ul li {
+    	width: 120px;
+    	text-align: -webkit-center;
+    }
+    .stepOne-rows-half-fillin {
+    	width: 100%;
+    }
+    .stepOne-rows-text{
+    	height:80px;
+    }
+	</style>
+    <div class="wmes-top">
+        <a href="javascript:;" class="header-over">[@lang_res k='create.portfolio.title'/]</a>
+    </div>
+    <div class="wmes-content">
+    	<div class="proposal-wrap">
+    		<p class="wmes-wrap-title">
+    		[#if edit?? && edit=='1']
+    		[@lang_res k='portfolio.info.form.editPortfolio'/]
+    		[#else]
+    		[@lang_res k='create.portfolio.title'/]
+    		[/#if]
+    		</p>
+    		<div class="createflow">
+                <div class="Straegy_Old" style="width: 20%;">[@lang_res k='create.portfolio.step.selectCreateMethod'/]</div>
+                <div class="createflownext" style="width: 6.5%;">></div>
+                <div class="Straegy_Define" style="width: 20%;">[@lang_res k='create.portfolio.step.overView'/]</div>
+                <div class="createflownext" style="width: 6.5%;">></div>
+                <div class="Release" style="width: 20%;">[@lang_res k='create.portfolio.step.allocationMethod'/]</div>
+                <div class="createflownext" style="width: 6.5%;">></div>
+                <div class="Release" style="width: 20%;">[@lang_res k='create.portfolio.step.release'/]</div>
+			</div>
+    		<form id="overview-form" method="post">
+    		 <!-- 策略 id -->
+			 <input id="hidStrategyId" type="hidden" value="${(strategyId)?if_exists}" name="strategyId">
+			 <!-- portfolio id -->
+			 <input id="hidPortfolioId" type="hidden" value="${(portfolioId)?if_exists}" name="portfolioId">
+    			<div class="stepOne-rows">
+	    			<div class="stepOne-rows-fillin">
+	    				<div class="stepOne-rows-half-fillin">
+	    					<p class="stepOne-rows-input-title"><span style="color:red">*&nbsp;</span>[@lang_res k='create.portfolio.step.two.input.title.0'/]:</p>
+	    					<div class="stepOne-rows-text-wrap">
+	    						<input id="txtPortfolioName" class="stepOne-rows-input50" type="text" name="portfolioName" value="${(portfolioArena.portfolioName)?if_exists}"> 	
+	    					</div>
+	    				</div>
+	    			</div>
+	    		</div>
+	    		<div class="stepOne-constrains-rows">
+	    				<p class="stepOne-rows-input-title"><span style="color:red">*&nbsp;</span>[@lang_res k='create.portfolio.step.two.input.title'/]:</p>
+	    				<div class="stepOne-rows-text-wrap">
+	    					<textarea style="height:30px" class="stepOne-rows-text" name="reason" id="txtReason" maxLength="150">${(portfolioArena.reason)?if_exists}</textarea>
+	    				</div>
+	                    <p class="stepOne-rows-total">[@lang_res k='create.portfolio.step.two.input.prefix'/] 150 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="txtReason-inputed" class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="txtReason-left" class="left">150</span> [@lang_res k='create.portfolio.step.two.input.suffix'/] </p>
+	    		</div>
+	    		<div class="stepOne-rows">
+	    			<div class="stepOne-rows-fillin">
+			    		<div class="stepOne-rows-half-fillin">
+		                     <p class="stepOne-rows-input-title"><span style="color:red">*&nbsp;</span>[@lang_res k='create.portfolio.step.two.input.title.1'/]:</p>
+		                     <ul style="padding-top: 8px;height:47px;" class="insight-channel-ul selected-li-mySector">
+		                     	[#if mySector?? && mySector?size gt 0]
+		                     	[#list mySector as s]
+		                         <li class="setting-other-bn" title="${s.name!''}">[#if s.name?length>15]${s.name?substring(0,14)}...[#else]${s.name!}[/#if]</li>
+		                         [/#list]
+		                         [/#if]
+		                         <li class="setting-other-add" id="insight-sector-add">+</li>
+		                     </ul>
+		                     <input id="hidSector" name="sector" type="hidden" value="${(portfolioArena.sector)?if_exists}"/>
+		                 </div> 
+	                 </div>
+                 </div>
+                 <div class="stepOne-rows">
+	    			<div class="stepOne-rows-fillin">
+		                 <div class="stepOne-rows-half-fillin">
+		                     <p class="stepOne-rows-input-title"><span style="color:red">*&nbsp;</span>[@lang_res k='create.portfolio.step.two.input.title.2'/]:</p>
+		                     <ul style="padding-top: 8px;height:47px;" class="insight-channel-ul selected-li-myAllocation">
+		                         [#if myAllocation?? && myAllocation?size gt 0]
+		                     	[#list myAllocation as al]
+		                         <li class="setting-other-bn" title="${al.name!''}">[#if al.name?length>15]${al.name?substring(0,14)}...[#else]${al.name!}[/#if]</li>
+		                         [/#list]
+		                         [/#if]
+		                         <li class="setting-other-add" id="insight-allocation-add">+</li>
+		                     </ul>
+		                     <input id="hidGeoAllocation" name="geoAllocation" type="hidden" value="${(portfolioArena.geoAllocation)?if_exists}"/>
+		                 </div>
+	                 </div>
+                 </div>
+	    		<div class="stepOne-rows">
+	    			<div class="stepOne-constrains-rows">
+	    				<p class="stepOne-rows-input-title"><span style="color:red">*&nbsp;</span>[@lang_res k='create.portfolio.step.two.input.title.3'/]:</p>
+	    				<div class="stepOne-rows-text-wrap">
+	    					<textarea class="stepOne-rows-text" name="investmentGoal" id="txtInvestmentGoal" maxLength="500">${(portfolioArena.investmentGoal)?if_exists}</textarea>
+	    				</div>
+	                    <p class="stepOne-rows-total">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="txtInvestmentGoal-inputed" class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="txtInvestmentGoal-left" class="left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/] </p>
+	    			</div>
+	    			<div class="stepOne-constrains-rows">
+	    				<p class="stepOne-rows-input-title"><span style="color:red">*&nbsp;</span>[@lang_res k='create.portfolio.step.two.input.title.4'/]:</p>
+	    				<div class="stepOne-rows-text-wrap">
+	    					<textarea class="stepOne-rows-text" name="suitability" id="txtSuitability" maxLength="500">${(portfolioArena.suitability)?if_exists}</textarea>
+	    				</div>
+	                    <p class="stepOne-rows-total">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="txtSuitability-inputed" class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="txtSuitability-left" class="left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/] </p>
+	    			</div>
+	    			<!--<div class="stepOne-constrains-rows">
+	    				<p class="stepOne-rows-input-title">[@lang_res k='create.portfolio.step.two.input.title.5'/]:</p>
+	    				<div class="stepOne-rows-text-wrap">
+	    					<textarea class="stepOne-rows-text" name="reason" id="txtReason">${(portfolioArena.reason)?if_exists}</textarea>
+	    				</div>
+	                    <p class="stepOne-rows-total">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="txtReason-inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="txtReason-left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/] </p>
+	    			</div>
+	    		--></div>
+	    		<button style="display:none" id="btnSubmit" type="submit"></button>
+    		</form>
+    		<div class="proposal-button-wrap">
+    			[#if edit?? && edit=='1']
+	    		[#else]
+	    		 <a id="btnNextOne" class="proposal-button" href="javascript:void(0)">[@lang_res k='global.previous'/]</a>
+	    		[/#if]
+    			<a id="btnNextThree" class="proposal-button" href="javascript:void(0)">[@lang_res k='global.next'/]</a>
+    			<a id="btnSave" class="proposal-button" href="javascript:;">[@lang_res k='global.save'/]</a>
+    		</div>
+    	</div>
+    </div>
+    
+     <!-- 擅长领域 -->
+	<div id="dialog-mySector" class="wmes-content-position dialog-myAllocation" style="background: rgba(0,0,0,0.3);display:none;width:90%">
+		<div class="selectSector">
+			<div id="CharacterSetting"  class="investment-wrap investment-hide">
+				<div class="investment-plan-wrap">
+					<div class="wmes-close"></div>
+					<p class="selectSector-title">[@lang_res k='create.portfolio.step.two.select.0'/]（[@lang_res k='create.portfolio.step.two.select.selectUpToThree'/]）</p>
+					<div class="character-setting-rows">
+						<div class="character-setting-contents">
+							<p class="character-setting-title">[@lang_res k='create.portfolio.step.two.select.selected'/]:</p>
+							<ul class="character-setting-list ul-mySector">
+		                    [#if mySector??]
+		                         [#list mySector as x]
+		                         <li data-id="${x.itemCode!''}" title="${x.name!''}" style="width: 120px;text-align: -webkit-center;">
+		                            [#if x.name?? && x.name?length>15] 
+			                           ${x.name?substring(0,14)}...
+			                        [#else]
+			                           ${x.name!""}
+			                        [/#if]
+		                            <span class="character-list-close"></span>
+		                         </li>
+		                         [/#list]
+		                    [/#if]
+							</ul>
+							<!--<input type="text" value="" class="character-setting-add">
+						--></div>			
+						<div class="character-setting-choose" style="height: 200px;overflow-y: auto;">
+							<p class="character-choose-title">[@lang_res k='create.portfolio.step.two.select.pleaceSelect'/]:</p>
+							<ul class="character-choose-list">
+		                    [#if notMySector??]
+		                        [#list notMySector as x]
+		                        <li data-id="${x.itemCode!''}" title="${x.name!''}" style="width: 120px;text-align: -webkit-center;"> 
+		                           [#if x.name?? && x.name?length>15] 
+			                           ${x.name?substring(0,14)}...
+			                       [#else]
+			                           ${x.name!""}
+			                       [/#if]
+		                        </li>
+		                        [/#list]
+		                    [/#if]
+							</ul>
+						</div>
+					</div>
+					<div class="character-button-rows">
+						<a class="character-button-save mySector-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+						<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 所属区域 -->
+	<div id="dialog-myAllocation" class="wmes-content-position dialog-myAllocation" style="background: rgba(0,0,0,0.3);display:none;width:90%">
+		<div class="selectSector">
+			<div id="CharacterSetting"  class="investment-wrap investment-hide">
+				<div class="investment-plan-wrap">
+					<div class="wmes-close"></div>
+					<p class="selectSector-title">[@lang_res k='create.portfolio.step.two.select.1'/]（[@lang_res k='create.portfolio.step.two.select.selectUpToThree'/]）</p>
+					<div class="character-setting-rows">
+						<div class="character-setting-contents">
+							<p class="character-setting-title">[@lang_res k='create.portfolio.step.two.select.selected'/]:</p>
+							<ul class="character-setting-list ul-myAllocation">
+							[#if myAllocation??]
+		                         [#list myAllocation as x]
+		                         <li data-id="${x.itemCode!''}" title="${x.name!''}" style="width: 120px;">
+		                            [#if x.name?? && x.name?length>15] 
+			                           ${x.name?substring(0,14)}...
+			                        [#else]
+			                           ${x.name!""}
+			                        [/#if]
+		                            <span class="character-list-close"></span>
+		                         </li>
+		                         [/#list]
+		                    [/#if]
+							</ul>
+							<!--<input type="text" value="" class="character-setting-add">
+						--></div>			
+						<div class="character-setting-choose" style="height: 200px;overflow-y: auto;">
+							<p class="character-choose-title">Please Select:</p>
+							<ul class="character-choose-list">
+							[#if notMyAllocation??]
+		                        [#list notMyAllocation as x]
+		                        <li data-id="${x.itemCode!''}" title="${x.name!''}" style="width: 120px;">
+		                        [#if x.name?? && x.name?length>15] 
+		                           ${x.name?substring(0,14)}...
+		                        [#else]
+		                           ${x.name!""}
+		                        [/#if]
+		                        </li>
+		                        [/#list]
+		                    [/#if]
+							</ul>
+						</div>
+					</div>
+					<div class="character-button-rows">
+						<a class="character-button-save myAllocation-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+						<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var globalProp = [@load_prop k='global'/]; 
+	 var props = [@load_prop k=''/]; 
+     seajs.use('${base}/res/web/portfolio/createPortfolio/createPortfolioTwo.js');
+</script>

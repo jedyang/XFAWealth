@@ -1,0 +1,68 @@
+package com.fsll.wmes.company.action.console;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fsll.common.util.JsonUtil;
+import com.fsll.core.vo.MenuTreeVO;
+import com.fsll.wmes.base.WmesBaseAct;
+import com.fsll.wmes.company.service.MemberCompanyMenuService;
+
+@Controller
+@RequestMapping("/console/memberCompanyMenu")
+public class ConsoleMemberCompanyMenuAct extends WmesBaseAct{
+
+	@Autowired
+	private MemberCompanyMenuService memberCompanyMenuService;
+	
+	/**
+	 * 跳转菜单页
+	 * @author wwluo
+	 * @date 2017-06-23
+	 * @param id company_info.id
+	 */
+	@RequestMapping(value = "/list")
+	public String menu(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		model.put("id", request.getParameter("id"));
+		return "console/company/company_menu";
+	}
+	
+	/**
+	 * 菜单数据获取
+	 * @author wwluo
+	 * @date 2017-06-23
+	 * @param id company_info.id
+	 */
+	@RequestMapping(value = "/getMenus", method = RequestMethod.POST)
+	public void getMenuTree(String id, String roleCode, HttpServletRequest request, HttpServletResponse response){
+		String langCode = getLoginLangFlag(request);
+		Map<String, Object> obj = new HashMap<String, Object>();
+		List<MenuTreeVO> menus = memberCompanyMenuService.getMenus(id, roleCode, langCode);
+		obj.put("menus", menus);
+		JsonUtil.toWriter(obj,response);
+	}
+	
+	/**
+	 * 保存菜单权限
+	 * @author wwluo
+	 * @date 2017-06-23
+	 * @param id company_info.id
+	 */
+	@RequestMapping(value = "/saveMenu", method = RequestMethod.POST)
+	public void saveMenu(String id, HttpServletRequest request, HttpServletResponse response){
+		Boolean flag = false;
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("flag", flag);
+		JsonUtil.toWriter(result, response);
+	}
+}

@@ -1,0 +1,253 @@
+[#include "../../inc/head_v2.html"/]
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">    
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <style>
+	<!--
+	.search-condition-input{border: 1px solid #e0dfdf;height: 28px;padding-left: 5px;width: 45%;}
+	.search-condition-button{background: #0098e1;color: white;padding: 7px 15px;margin-left: 15px;border-radius: 4px;}
+	.search-condition{border: 1px solid #e0dfdf;border-radius: 4px;float: left;height: 30px;width: 450px;}
+	.search-condition input{border: 0 none;height: 28px;padding-left: 5px;width:410px;}
+	
+	.icon_search{width: 16px;height: 16px;background: url('${base}/res/images/icon_search.png') no-repeat;float: right;  margin: 7px 7px;cursor: pointer;}
+	-->
+	.btn_add{background: #ef6a41;color: white;padding: 0px 22px;height:32px;line-height:32px;margin-top: 15px;border-radius: 4px;float: right;}
+	/*
+    .wmes-logo {
+        height: 60px;
+        padding: 5px;
+        margin: 0 auto;
+        top: 0px;
+        background: #464342;
+        text-align: center;
+        position: fixed;
+        width: 80px;
+        z-index: 1000000;
+    }
+    .wmes-contentbox {
+        background: #ffffff;
+        padding-top: 5px;
+    }*/
+    /* 因引入了bootstrap-3.3.4.css来实现弹出层，须修改两个样式，不然信息卡片样式会变样  */
+    * {
+        -webkit-box-sizing: initial; 
+        -moz-box-sizing: border-box;
+        box-sizing: initial; 
+    }
+    
+    /*调整弹出页面的宽度*/
+    .modal-lg {
+        width: 1200px !important;
+        margin-left:120px !important;
+    }
+	</style>
+    <div class="wmes-content" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+ 		<div class="ifa_choose_condition" style="margin-bottom:0;padding-bottom:40px;">
+ 			<div class="wmes-wrap-title" style="margin-bottom:0">[@lang_res k='client.list.title'/]
+                [#if Session["role"]?exists && Session["role"]=='IFA_FIRM']
+                [/#if]
+            </div>
+ 			<div class="client-more-screen-wrap">
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">[@lang_res k='client.name'/]</p>
+                    <ul class="funds_choice client_name_choice">
+                        <li class="fund_choice_active funds_all fund_choice_active2"  data-key="All">[@lang_res k='global.all'/]</li>
+                        <li data-key="A,B,C,D,E,F,G">A~G</li>
+                        <li data-key="H,I,J,K,L,M,N">H~N</li>
+                        <li data-key="O,P,Q,R,S,T">O~T</li>
+                        <li data-key="U,V,W,X,Y,Z">U~Z</li>
+                    </ul>
+                    <ul class="funds_choice" id="client-name-wrap">
+                    [#if crmList?exists && crmList?size gt 0]
+                    [#list crmList as list]
+                        <li data-name="ClientName" data-letter="${list.key!}" data-value="${list.value!}">${list.name!}</li>
+                    [/#list]
+                    [/#if]
+                    </ul>
+                </div>
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">[@lang_res k='client.totalReturn'/]</p>
+                    <ul class="funds_choice">
+                        <li class="fund_choice_active funds_all fund_choice_active2" data-name="Total Return" data-key="" data-value="TotalReturn Level_00">[@lang_res k='global.all'/]</li>
+                        <li data-name="Total Return" data-key="<0" data-value="TotalReturn Level_01"><0</li>
+                        <li data-name="Total Return" data-key="0 ~ 10%" data-value="TotalReturn Level_02">0-10%</li>
+                        <li data-name="Total Return" data-key="10% ~ 20%" data-value="TotalReturn Level_03">10%-20%</li>
+                        <li data-name="Total Return" data-key="20% ~ 30%" data-value="TotalReturn Level_04">20%-30%</li>
+                        <li data-name="Total Return" data-key="30% ~ 40%" data-value="TotalReturn Level_04">30%-40%</li>
+                        <li data-name="Total Return" data-key=">50%" data-value="TotalReturn Level_04">>50%</li>
+                    </ul>
+                </div>
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">[@lang_res k='client.aum'/]</p>
+                    <ul class="funds_choice">
+                        <li class="fund_choice_active funds_all fund_choice_active2" data-name="AuM" data-key="" data-value="AuM Level_00">[@lang_res k='global.all'/]</li>
+                        <li data-name="AuM" data-key="<0.1M" data-value="AuM Level_01"><0.1M</li>
+                        <li data-name="AuM" data-key="0.1M ~ 1M" data-value="AuM Level_02">0.1M ~ 1M</li>
+                        <li data-name="AuM" data-key="1M ~ 9M" data-value="AuM Level_03">1M ~ 9M</li>
+                        <li data-name="AuM" data-key=">10M" data-value="AuM Level_04">>10M</li>
+                    </ul>
+                </div>
+                <!-- <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">[@lang_res k='client.group'/]</p>
+                    <ul class="funds_choice">
+                        <li class="fund_choice_active funds_all" data-name="Client Type" data-key="" data-value="ClientType Level_00">[@lang_res k='global.all'/]</li>
+                        [#if groupList?exists && groupList?size gt 0]
+                        [#list groupList as list]
+                        <li data-name="group" data-key="${list.id!}" data-value="${list.id!}">${list.groupName!}</li>
+                        [/#list]
+                        [/#if]
+                        <!--<li data-name="Client Type" data-key="H~N" data-value="ClientType Level_02">Silver</li>
+                        <li data-name="Client Type" data-key="O~T" data-value="ClientType Level_03">Gold</li>
+                        <li data-name="Client Type" data-key="U~Z" data-value="ClientType Level_04">>10m</li>
+                    </ul>
+                </div> -->
+                [#if Session["role"]?exists && Session["role"]=='distributor'] 
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">[@lang_res k='member.ifafirm'/]</p>
+                    <ul>
+                        <li>
+                            <div class="search-condition">
+                                <input type="text" placeholder="Please enter keyword search" id="ifaFirm" name="ifaFirm"/>
+                                <span class="icon_search ifaFirmName" id="searchKeyBtn"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                [/#if]
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">[@lang_res k='member.ifa'/]</p>
+                    <ul>
+                        <li>
+                            <div class="search-condition">
+                                <input type="text" placeholder="Please enter keyword search" id="ifa" name="ifa"/>
+                                <span class="icon_search ifaName" id="searchKeyBtn"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>                      
+            </div>
+            <div class="wmes-menu-hide"><div class="wmes-menu-hidecon"><b>[@lang_res k='global.screen'/]</b><span></span></div></div>
+ 		</div>
+        <div class="ifa_choose_condition" style="padding-top:0;border-bottom:0;">
+            <div class="client-list-xiala">
+            	<div style="float:left;padding-top:5px">
+            	[#if Session["role"]?exists && Session["role"]=='IFA_FIRM']
+                <p class="client-list-number-title">[@lang_res k='client.list.clientNumber'/] :</p>
+                <span class="client-list-number-sum">[#if baseNumber??]${baseNumber.totalNum!}[/#if]&nbsp;</span>
+                <p class="client-list-number-brackets">( [@lang_res k='client.list.profit'/] : <span>[#if baseNumber??]${baseNumber.profitNum!}[/#if]&nbsp;</span> , [@lang_res k='client.list.loss'/] : <span>[#if baseNumber??]${baseNumber.lossNum!}[/#if]&nbsp;</span> )</p>
+                <p class="client-list-number-aum">[@lang_res k='client.list.totalAum'/] : <span>[#if baseNumber??][@num_fmt s=baseNumber.aum f='#,##0.00' /][/#if]&nbsp;</span> ${curName!}</p>
+            	[#elseif Session["role"]?exists && Session["role"]=='distributor']
+                <p class="client-list-number-title">[@lang_res k='client.list.clientNumber'/] :</p>
+                <span class="client-list-number-sum">[#if crmList?? ]${crmList?size}[/#if]&nbsp;</span>
+            	[/#if]
+            	</div>
+                <div class="client-cur-xiala-wrap">
+                    <p class="client-cur-title">[@lang_res k='fund.info.currency'/]</p>
+                    <select class="client-cur-choose">
+                        <!-- <option value="HKD" [#if currency?? && currency='HKD']selected="selected"[/#if]>HKD</option>
+                        <option  value="USD" [#if currency?? && currency='USD']selected="selected"[/#if]>USD</option>
+                        <option  value="CNY" [#if currency?? && currency='CNY']selected="selected"[/#if]>CNY</option> -->
+                        <option ng-repeat="currency in currencys" id="{{currency.id}}" value="{{currency.code}}" ng-bind="currency.name" ng-if="currency.code=='${currency!}'" selected="selected">{{currency.name}}</option>
+                        <option ng-repeat="currency in currencys" id="{{currency.id}}" value="{{currency.code}}" ng-bind="currency.name" ng-if="currency.code!='${currency!}'">{{currency.name}}</option>
+                    </select>
+                </div>
+                <div class="client-statistic-xiala-wrap">
+                    <p class="client-statistic-title">[@lang_res k='client.statistic'/]</p>
+                    <select class="client-statistic-choose">
+                        <option value="total">[@lang_res k='client.totalReturn'/]</option>
+                        <option value="1M">[@lang_res k='fund.info.screener.performance.1MonthReturn'/]</option>
+                        <option value="3M">[@lang_res k='fund.info.screener.performance.3MonthReturn'/]</option>
+                        <option value="6M">[@lang_res k='fund.info.screener.performance.6MonthReturn'/]</option>
+                        <option value="1Y">[@lang_res k='fund.info.screener.performance.1YearReturn'/]</option>
+                        <option value="3Y">[@lang_res k='fund.info.screener.performance.3YearReturn'/]</option>
+                        <option value="5Y">[@lang_res k='fund.info.screener.performance.5YearReturn'/]</option>
+                    </select>
+                </div>
+            </div>
+            <div class="btn_add">
+            	<a id="btn_add_client" href="javascript:;" style="color:#ffffff">[@lang_res k='global.add'/]</a>
+            	<input type="hidden" id="btnCloseIframe" />
+            	<input type="hidden" id="btnSearch">
+            </div>
+     		<div class="clear"></div>
+            <div class="client-list-wrap" style="margin-top:5px;">
+                <ul class="recommend-switch-tab client-list-tab">
+                    <li class="funds_sort recommend-sort-active">
+                        <p class="funds_switch_tab_title">[@lang_res k='client.sort.return'/]</p>
+                        <p class="funds_arrow_wraps">
+                            <span class="arrow_top" sort="total_return_rate" order="asc" ></span>
+                            <span class="arrow_down down_active" sort="total_return_rate" order="desc" ></span>
+                        </p>
+                    </li>
+                    <li class="funds_sort">
+                        <p class="funds_switch_tab_title">[@lang_res k='client.sort.aum'/]</p>
+                        <p class="funds_arrow_wraps">
+                            <span class="arrow_top" sort="totalAuM" order="asc"></span>
+                            <span class="arrow_down" sort="totalAuM" order="desc"></span>
+                        </p>
+                    </li>
+                    <li class="funds_sort">
+                        <p class="funds_switch_tab_title">[@lang_res k='client.sort.inv.days'/]</p>
+                        <p class="funds_arrow_wraps">
+                            <span class="arrow_top" sort="create_time" order="asc"></span>
+                            <span class="arrow_down " sort="create_time" order="desc"></span>
+                        </p>
+                    </li>
+                </ul>
+                <input type="hidden" id="defColor" value="${defColor!}">
+                <input type="hidden" id="currency" value="${curName!}">
+                <div class="client_list" style="display:none"> 
+                    <ul class="client-list-contents" >
+	                    <li class="client-list-rows dataListTr ng-cloak"  ng-repeat="items in dataList" ng-init="checkLast($last)">
+	                        <p class="client-list-rows-title" cusId="{{items.id}}" cusMemberId="{{items.memberId}}">{{items.nickName}}</p>
+	                        <img class="client-list-rows-ico" style=" float: left;margin-left:5px;" ng-if="items.isBirthDay=='1'" src="${base}/res/images/ifa/Small_cake_ico.png">
+	                        <img class="client-list-rows-ico" ng-if="items.hasSchedule=='1'" src="${base}/res/images/ifa/list_date_ico.png">
+	                        <div class="client-list-rows-describe">
+	                            <span ng-if="items.faca=='1'">FATCA</span>
+	                            <span ng-if="items.cies=='1'">CIES</span>
+	                        </div>
+	                        <div class="client-list-main-chart">
+	                            <img class="client-list-index" ng-if="items.riskLevel!=null && items.riskLevel!=''" src="${base}/res/images/strategy/risk_level_0{{items.riskLevel}}.png">
+	                            <img class="client-list-index" ng-if="items.riskLevel==null || items.riskLevel==''" src="${base}/res/images/strategy/risk_level_00.png">
+	                            <div class="client-list-chart"  data-value="{{items.productProJson}}"></div>
+	                        </div>
+	                        <p class="client-list-ifaname">{{items.ifaName}}</p>
+	                        <p class="client-list-total">{{statistic}}</p>
+	                        <p class="client-list-number client-positive" cusId="{{items.id}}" cusMemberId="{{items.memberId}}" ng-if="(items.totalReturnRate<0 && defColor=='2') || (items.totalReturnRate>0 && defColor!='2')">{{items.totalReturnRateStr}}%</p>
+	                        <p class="client-list-number client-negative" cusId="{{items.id}}" cusMemberId="{{items.memberId}}" ng-if="(items.totalReturnRate<0 && defColor=='1') || (items.totalReturnRate>0 && defColor!='1')">{{items.totalReturnRateStr}}%</p>
+	                        <p class="client-list-number " ng-if="items.totalReturnRate==0" cusId="{{items.id}}" cusMemberId="{{items.memberId}}">{{items.totalReturnRateStr}}%</p>
+	                        <p class="client-list-per" ng-if="statisticValue=='total'">( 
+	                        <span class="client-positive" ng-if="(items.totalReturn<0 && defColor=='2') || (items.totalReturn>0 && defColor!='2')">{{items.totalReturnStr}}</span>
+	                        <span class="client-negative" ng-if="(items.totalReturn<0 && defColor=='1') || (items.totalReturn>0 && defColor!='1')">{{items.totalReturnStr}}</span>
+	                        <span class="" ng-if="items.totalReturn==0">{{items.totalReturnStr}}</span>  {{currency}})</p>
+	                        <div class="client-list-bottom">
+	                            <div class="client-list-aum">
+	                                <p class="client-aum-title">[@lang_res k='client.sort.aum'/] ( {{currency}} )</p>
+	                                <p class="client-aum-num client-positive" cusId="{{items.id}}" cusMemberId="{{items.memberId}}" ng-if="(items.aum<0 && defColor=='2') || (items.aum>0 && defColor!='2')">{{items.aumStr}}</p>
+	                                <p class="client-aum-num client-negative" cusId="{{items.id}}" cusMemberId="{{items.memberId}}" ng-if="(items.aum<0 && defColor=='1') || (items.aum>0 && defColor!='1')">{{items.aumStr}}</p>
+	                                <p class="client-aum-num" ng-if="items.aum==0" cusId="{{items.id}}" cusMemberId="{{items.memberId}}">{{items.aumStr}}</p>
+	                            </div>
+	                            <div class="client-list-inv">
+	                                <p class="client-inv-title">[@lang_res k='client.sort.inv.days'/]</p>
+	                                <p class="client-inv-word">{{items.days}}</p>
+	                            </div>
+	                        </div>
+	                    </li>
+                    
+                    </ul>
+                    <div class="wmes-nodata-tips no_list_tips">
+                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                    </div>
+                    <div class="clickmore" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifafirm/clientsList.js');
+</script>

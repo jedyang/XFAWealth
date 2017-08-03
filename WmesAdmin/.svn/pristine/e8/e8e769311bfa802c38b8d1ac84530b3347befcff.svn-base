@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>代理商管理用户列表（工作台）</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="${base}/res/css/wmesupload.css">
+	<script type="text/javascript">var base_root = '${base}';</script>
+	</head>
+	<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+	      <div class="tab-side container-fluid">
+	        <div class="tab-side-container">
+	            <div class="clear"></div>
+					<div class="tab_wrap" id="tab_wrap">
+					   <!-- 用户列表  -->   
+		                <form class="form-inline" style="display:block;">
+		                	<input type="hidden" id="hidId" name="id" value="${(id)?if_exists}">
+		                    <div>
+		                        <table border="0" id="userList" cellpadding="0" cellspacing="0" class="table table-hover " >
+		                        		   <thead>
+		                        		   <tr>
+		                                      <th class="table-head">账号</th>
+		                                      <th class="table-head">用户名</th>
+		                                      <th class="table-head">邮箱</th>
+		                                      <th class="table-head">手机号码</th>
+		                                      <th class="table-head">状态</th>
+		                                      <th class="table-head">[@lang_res k='ifafirm.list.operation'/]</th>
+		                                    </tr>
+		                                    </thead>
+		                                <tbody>
+		                                </tbody>
+		                         </table>
+		                   
+				           		<nav  class="pull-right">
+					                <!-- log分页 -->
+					                <ul id='userPagination' class="pagination pagination-sm">  
+					                	
+					                </ul>
+					            </nav>
+		           				<div class="clear"></div>                      
+		                    </div>	
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script type="text/javascript">
+	function ShowFirmDialog(id) {
+		BootstrapDialog.show({
+			title : "用户详情",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="yes" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="${base}/console/member/admin/disAdminDetail.do?id='+id+'"></iframe></div>').load(),
+			buttons : [{
+				label : "[@lang_res  k='global.close'/]",
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			}]
+	  	});
+	}
+</script>
+</script>
+<script type="text/javascript">
+$(function() {
+	bindDistributorAdmin(0);
+	//新增distributor
+    $("#btnAdd2").on("click", function() {
+        closeTabByName("addDistributor");
+        showform("addDistributor","[@lang_res k='global.add'/][@lang_res k='member.distributor'/]","${base}/console/member/admin/input.do");
+    });
+	
+	//启用
+	$("#member_admin_abled1,#member_admin_abled2").on("click", function() {
+		var tip = "[@lang_res k='param.status.1'/]";
+		validOperate(this,"1",tip);
+	});
+	//禁用
+	$("#member_admin_enabled1,#member_admin_enabled2").on("click", function() {
+		var tip = "[@lang_res k='param.status.0'/]";
+		validOperate(this,"0",tip);
+	});
+	//删除
+	$("#mul_delete1,#mul_delete2").on("click", function() {
+		deleteMember(this);
+	});
+	//自动查询
+
+	setAutoSearch("#txtkeyword2",bindDistributorAdmin,0);
+	setAutoSearch("#txtIsValid2",bindDistributorAdmin,0);
+	
+	//按下回车键搜索
+	document.onkeydown = function(e) {
+	var ev = document.all ? window.event : e;
+		if (ev.keyCode == 13) {
+			if ($("#tab-search li:eq(0)").hasClass("tab-li-crr")) {
+				//bindFirmAdmin(0);
+			} else if ($("#tab-search li:eq(1)").hasClass("tab-li-crr")) {
+				bindDistributorAdmin(0);
+			} 
+		}
+	};
+		
+	//代理商admin
+	function bindDistributorAdmin(curPage) {
+		var isValid = $("#txtIsValid2").find("option:selected").val();
+		var disId = $('#hidId').val();
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/member/admin/disAdminListJson.do?id=' + disId,
+			data : {
+				"keyword" : $("#txtkeyword2").val(),
+				"isValid":isValid,
+				"type" : "2",
+				"page" : curPage + 1,
+				"rows" : 10
+			},
+			success : function(json) {
+				var html = "";
+				var total = json.total;
+				var table = json.rows;
+				var isValid = "";
+				$.each(table, function(i, n) {
+					var type = n.type;
+					var typeValue = "";
+					var eidtUrl ='${base}/console/member/admin/input.do?id='+ n.id;
+					if (type == 0) {
+						typeValue = "[@lang_res k='member.admin.type.platform'/]";
+					} else if (type == 1) {
+						typeValue = "[@lang_res k='member.admin.type.ifa'/]";
+					} else if (type == 2) {
+						typeValue = "[@lang_res k='member.admin.type.distributor'/]";
+					}
+					if(n.isValid=="1"){
+						isValid = "有效";
+					}else{
+						isValid = "无效";
+					}
+					html += "<tr><td>"
+							+ n.loginCode
+							+ "</td><td>" 
+							+ n.nickName  
+							+ "</td><td>" 
+							+ n.email 
+							+ "</td><td>" 
+							+ n.mobileNumber 
+							+"</td><td>" 
+							+ isValid + 
+							"</td><td>" 
+							//+ "<a href='javascript:showform(\"editDistributorAdmin\",\"[@lang_res k='global.edit'/][@lang_res k='member.distributor'/]\",\""+eidtUrl+"\")' onclick='closeTabByName(\"editDistributorAdmin\");'>查看详情<a/></tr>";
+							+ "<a href='#' onclick='ShowFirmDialog(\""+n.id+"\")'>" + '查看详情' + "</a></td></tr>";
+				});
+
+				$('#userList tbody').empty().append(html);
+				$("#userPagination").pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 10,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+				//绑定单项删除del_member
+				$("#disAdminList .del_member").on("click", function() {
+					var rel = $(this).attr("rel");
+					deleteMember(this,rel);
+				});
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+			bindDistributorAdmin(page_id);
+		}
+	}
+	
+	//删除
+	function deleteMember(obj,rel) {
+		layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			//批量删除
+			var ids="";
+			if(rel==null || rel==undefined){
+				var selected = $(obj).parents(".form-inline").find(":checkbox:checked");
+				$.each(selected, function(i, n) {
+					var rel = $(n).attr("rel");
+					ids += rel + ",";
+				});
+			}else{
+				ids = rel;
+			}
+			$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/member/admin/delete.do?datestr=" + new Date().getTime(),
+				data : {"ids":ids},
+				success : function(json) {
+					if (json != undefined && json.result == true) {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]");
+						if ($("#tab-search li:eq(0)").hasClass("tab-li-crr")) {
+							//bindFirmAdmin(0);
+						} else if ($("#tab-search li:eq(1)").hasClass("tab-li-crr")) {
+							bindDistributorAdmin(0);
+						} 
+					} else {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]");
+					}
+				}
+			});
+		});
+	}
+	
+	//启用禁用操作
+	function validOperate(obj,isValid,tip){
+		var ids = "";
+		var selected = $(obj).parents(".form-inline").find(":checkbox:checked");
+		$.each(selected, function(i, n) {
+			var mid = $(n).attr("mid");
+			ids += mid + ",";
+		});
+		setTimeout(function(){
+			$.ajax({
+				type : 'post',
+				datatype : 'json',
+				url : "${base}/console/member/validOperate.do?datestr=" + new Date().getTime(),
+				data : {"memberIds":ids,"isValid":isValid},
+				success : function(data) {
+					if (data.result) {
+						layer.msg(tip+"[@lang_res k='global.success'/]");
+						if ($("#tab-search li:eq(0)").hasClass("tab-li-crr")) {
+							//bindFirmAdmin(0);
+						} else if ($("#tab-search li:eq(1)").hasClass("tab-li-crr")) {
+							bindDistributorAdmin(0);
+						} 
+					} else {
+						layer.msg(tip+"[@lang_res k='global.failed'/]");
+					}
+				}
+			});
+		},200);
+	}
+				
+});
+	
+</script>
+
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

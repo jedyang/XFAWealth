@@ -1,0 +1,321 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" >
+    <style type="text/css">
+    	#menuList .fixwidth{max-width:150px;overflow: hidden; text-overflow:ellipsis; white-space: nowrap;}
+    	.btn-primary{padding: 5px 20px;}
+    </style>
+</head>
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container">
+            <ul class="tab" id="tab-search">
+                <li id="tab-li-fixed" class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res k='member.group.title'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <form class="form-inline" style="display:block;">
+                    <div class="clear"></div>
+                    <div class="pdt20">
+                        <button type="button" class="btn btn-blue-s" id="btnAdd">
+							 [@lang_res k='global.add'/]
+						</button>
+						<input id="btnSearch" type="hidden">
+                    </div>
+                    <div>
+                        <table id="menuList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+                            	<tr>
+	                               <th class="table-head">[@lang_res k='member.group.th.group.name'/]</th>
+	                               <th class="table-head">[@lang_res k='member.group.th.description'/]</th>
+	                               <th class="table-head">[@lang_res k='member.group.th.status'/]</th>
+	                               <th class="table-head">[@lang_res k='member.group.th.create.time'/]</th>
+	                               <th class="table-head">[@lang_res k='member.group.th.creator'/]</th>
+	                               <th class="table-head">[@lang_res k='global.operation'/]</th>
+	                            </tr>  
+                            </tbody>
+                        </table>
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm"></ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/js/base.js" type="text/javascript"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script type="text/javascript">
+	var pageSize = 10;
+	$(function(){
+        bindList(0);
+		$('#btnAdd').click(function() {});
+		$('#btnSearch').click(function() {
+			bindList(0);
+		});
+	});
+  	//分页绑定Table数据
+	function bindList(curPage){
+  		var url = '${base}/console/memberGroup/listJson.do?datestr=' + new Date().getTime();
+  		var data = {
+			page : curPage + 1,
+			rows : pageSize
+  		};
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : url,
+			data : data,
+			success : function(re) {
+				var total = re.total;
+                var list = re.rows;
+                var tr = '';
+                if(list != null){
+                	$.each(list, function(i, n){
+                		var id = n.id;
+                		var groupName = n.groupName == null ? '' : n.groupName;
+                		var remark = n.remark == null ? '' : n.remark;
+                		var statusDisplay = n.statusDisplay == null ? '' : n.statusDisplay;
+                		var createTimeStr = n.createTimeStr == null ? '' : n.createTimeStr;
+                		var creator = n.creator == null ? '' : n.creator;
+                		var actionHtml = '';
+                		var statusHtml = '';
+                		var url = '${base}/console/memberGroup/detail/list.do?id='+id
+                		if(n.isValid == '1'){
+                			actionHtml = "<a class='action-delete' data-status='-1' href='javascript:void(0)'\">[@lang_res k='global.delete'/]</a>&nbsp;&nbsp;&nbsp;&nbsp;" 
+                					   + "<a class='action-update' data-status='0' href='javascript:void(0)'\">[@lang_res k='global.disable'/]</a>&nbsp;&nbsp;&nbsp;&nbsp;" 
+                                	   + "<a href='javascript:void(0)' onclick='showform(\""+ id + "\",\""+ groupName +"\",\"" + url + "\")' \>[@lang_res k='global.member'/]</a>";
+                			statusHtml = "<span style='color:blue;'>" + statusDisplay + "</sapn>"
+                		}else{
+                			actionHtml = "<a class='action-delete' data-status='-1' href='javascript:void(0)'\">[@lang_res k='global.delete'/]</a>&nbsp;&nbsp;&nbsp;&nbsp;" 
+                					   + "<a class='action-update' data-status='1' href='javascript:void(0)'\">[@lang_res k='global.restore'/]</a>&nbsp;&nbsp;&nbsp;&nbsp;" 
+                                       + "<a href='javascript:void(0)' onclick='showform(\""+ id + "\",\""+ groupName +"\",\"" + url + "\")'\>[@lang_res k='global.member'/]</a>";
+                			if(n.isValid == '0'){
+                				statusHtml = "<span style='color:red;'>" + statusDisplay + "</sapn>"
+                			}else if(n.isValid == '-1'){
+                				statusHtml = "<span style='color:#bdbdbd;'>" + statusDisplay + "</sapn>"
+                			}
+                		}
+                		tr += "<tr id='"+id+"'>"
+                        + "<td><a class='list-edit' href='javascript:void(0)'>" + groupName + "</a></td>"
+                        + "<td>" + remark + "</td>"
+                        + "<td>" + statusHtml + "</td>"
+                        + "<td>" + createTimeStr + "</td>"
+                        + "<td>" + creator + "</td>"
+                        + "<td nowrap>" 
+        				+ actionHtml
+                        + "</td>"
+                        + "</tr>"; 
+                	});
+                }
+                $("#menuList tbody tr:gt(0)").empty();
+                $("#menuList tbody").append(tr);
+			    $("#pagination").pagination(total, {
+	                 callback: pageselectCallback,
+	                 numDetail: '',
+	                 items_per_page: pageSize,
+	                 num_display_entries: 4,
+	                 current_page: curPage,
+	                 num_edge_entries: 2
+                });
+			}
+		});
+        function pageselectCallback(page_id, jq) {
+            bindList(page_id);
+        }
+	}
+	 $(document).on('click','.action-delete',function(){
+		 var id = $(this).closest('tr').attr('id');
+		 var status = $(this).data('status');
+		 layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/memberGroup/update.do?datestr="+new Date().getTime(),
+				data : {
+					id:id,
+					isValid:status,
+				},
+				success : function(json) {
+					if (json.flag) {
+						layer.msg("[@lang_res k='global.success'/]", {
+							icon : 1,
+							time : 1000
+						});
+					} else {
+						layer.msg("[@lang_res k='global.failed'/]", {
+							icon : 5,
+							time : 1000
+						});
+					}
+					bindList(0);
+				}
+			});
+		});
+    });
+    $(document).on('click','.action-update',function(){
+    	var id = $(this).closest('tr').attr('id');
+    	var status = $(this).data('status');
+    	$.ajax({
+			type : "post",
+			datatype : "json",
+			url : "${base}/console/memberGroup/update.do?datestr="+new Date().getTime(),
+			data : {
+				id:id,
+				isValid:status,
+			},
+			success : function(json) {
+				if (json.flag) {
+					layer.msg("[@lang_res k='global.success'/]", {
+						icon : 1,
+						time : 1000
+					});
+				} else {
+					layer.msg("[@lang_res k='global.failed'/]", {
+						icon : 5,
+						time : 1000
+					});
+				}
+				bindList(0);
+			}
+		});
+    });
+    $(document).on('click','.list-edit',function(){
+    	edit($(this).closest('tr').attr('id'));
+    });
+    $(document).on('click','#btnAdd',function(){
+    	edit();
+    });
+    function edit(id){
+    	var title = typeof id == 'undefined' ? "[@lang_res k='member.group.label.add'/]" : "[@lang_res k='member.group.label.edit'/]";
+    	id = typeof id == 'undefined' ? '' : id;
+    	BootstrapDialog.show({
+			title : title,
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="no" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="${base}/console/memberGroup/input.do?id='+id+'"></iframe></div>').load(),
+			buttons : [{
+				label : "[@lang_res  k='global.save'/]",
+				cssClass: 'btn-blue-s',
+				action : function(dialogItself) {
+					var id = $(window.frames["Info1"].document).find("#hidId").val();
+					var groupName = $(window.frames["Info1"].document).find("#txtGroupName").val();
+					var remark = $(window.frames["Info1"].document).find("#txtRemark").val();
+					var isValid = $(window.frames["Info1"].document).find("input[name='isValid']:checked").val();
+					if(!groupName || groupName.length == 0){
+						layer.msg("[@lang_res k='member.group.alert.group.name.empty.tips'/]",{icon:5});
+						return;
+					}
+					$.ajax({
+						type : "post",
+						datatype : "json",
+						url : "${base}/console/memberGroup/save.do?datestr=" + new Date().getTime(),
+						data : {
+							id:id,
+							groupName:groupName,
+							remark:remark,
+							isValid:isValid
+						},
+						success : function(json) {
+							if (json.flag) {
+								layer.msg("[@lang_res k='global.success'/]", {
+									icon : 1,
+									time : 1000
+								});
+							} else {
+								layer.msg("[@lang_res k='global.failed'/]", {
+									icon : 5,
+									time : 1000
+								});
+							}
+							bindList(0);
+							dialogItself.close();
+						}
+					});
+				}
+			},{
+				label : "[@lang_res  k='global.close'/]",
+				cssClass: 'btn-primary',
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			}]
+	  	});
+    }
+    function addMember(id){
+    	var dialog = BootstrapDialog.show({
+			title : "[@lang_res k='member.group.label.add.members'/]",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe id="addMemberFrame" scrolling="no" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="${base}/console/memberGroup/detail/add.do?id='+id+'"></iframe></div>').load(),
+			buttons : [{
+				label : "[@lang_res  k='global.save'/]",
+				cssClass: 'btn-blue-s',
+				action : function(dialogItself) {
+					var ids = $(window.frames["Info1"].document).find("#hidChekedMember").val();
+					$.ajax({
+						type : "post",
+						datatype : "json",
+						url : "${base}/console/memberGroup/detail/addMember.do?datestr=" + new Date().getTime(),
+						data : {
+							groupId:id,
+							ids:ids
+						},
+						success : function(json) {
+							if (json.flag) {
+								layer.msg("[@lang_res k='global.success'/]", {
+									icon : 1,
+									time : 1000
+								});
+							} else {
+								layer.msg("[@lang_res k='global.failed'/]", {
+									icon : 5,
+									time : 1000
+								});
+							}
+							$(window.frames[id])[0].bindList(0);
+							dialogItself.close();
+						}
+					});
+				}
+			},{
+				label : "[@lang_res  k='global.close'/]",
+				cssClass: 'btn-primary',
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			}]
+	  	});
+    }
+</script>
+</body>
+</html>

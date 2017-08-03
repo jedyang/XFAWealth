@@ -1,0 +1,29 @@
+package com.fsll.wmes.community.service;
+
+import com.fsll.common.util.JsonPaging;
+import com.fsll.wmes.community.vo.NewsCommentVO;
+
+public interface NewsCommentService {
+
+	/**
+	 *  新闻评论数据获取
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param jsonPaging
+	 * @param newsCommentVO 过滤条件
+	 * @param langCode 多语言标识
+	 * @return JsonPaging
+	 */
+	public JsonPaging getNewsComments(JsonPaging jsonPaging,
+			NewsCommentVO newsCommentVO, String langCode);
+
+	/**
+	 *  删除新闻评论数据（物理删除）
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param ids 删除id,可批量删除
+	 * @return true:成功，false：失败
+	 */
+	public Boolean deleteNewsComments(String ids);
+
+}

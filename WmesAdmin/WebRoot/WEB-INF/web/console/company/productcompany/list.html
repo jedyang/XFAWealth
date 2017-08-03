@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product company</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+</head>
+
+<body>
+
+<input id="btnCloseIframe" type="hidden" />
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container">
+            <ul class="tab" id="tab-search">
+                <li id="tab-li-fixed" class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res k='console.productcompany.title'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+	                    <div class="row pd10">
+	                        <div class="col-md-4">
+	                        	<label for="txtCompanyName">[@lang_res k='console.productcompany.companyname'/]</label>
+	                        	<input type="text"  class="form-control searchCondition" id="txtCompanyName">
+	                        </div>
+	                        <!-- <div class="col-md-4">
+	                        	<label for="txtDistributorName">[@lang_res k='console.productcompany.distributorname'/]</label>
+	                        	<input type="text"  class="form-control searchCondition" id="txtDistributorName">
+	                        </div> -->
+	                        <div class="col-md-4">
+	                        	<label for="txtProductName">[@lang_res k='console.product.info.name'/]</label>
+	                        	<input type="text"  class="form-control searchCondition" id="txtProductName">
+	                        </div>
+	                        <div class="col-md-3">
+	                        	<label for="selType">[@lang_res k='console.product.type'/]</label>
+	                        	<select class="form-control searchCondition" id="selType">
+	                        		<!-- <option value''>
+	                        			[@lang_res k='global.pleaseSelect'/]
+	                        		</option> -->
+	                        		<option value='fund' selected="selected">
+										[@lang_res k='console.product.type.fund'/]
+									</option>
+									<option value='stock'>
+										[@lang_res k='console.product.type.stock'/]
+									</option>
+									<option value='bond'>
+										[@lang_res k='console.product.type.bond'/]
+									</option>
+									<!--<option value='futures'>
+										[@lang_res k='console.productcompany.type.futures'/]
+									</option>-->
+	                        	</select>
+	                        </div>
+	                        <div class="col-md-1">
+	                        	<button type="button" id="btnSearch" class="btn btn-primary">
+	                    			 [@lang_res k='global.query'/]</button>
+	               			</div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20" style="padding-top: 5px;">
+                    	<a id="btnAddInfoForm" href="javascript:void(0);" class="btn-blue-s"> [@lang_res k='global.add'/]</a>
+                    </div>
+                    
+                    <div>
+                        <table id="infoList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+								<tr>
+									<th hidden class="table-head">ID</th>
+									<th class="table-head">[@lang_res k='console.productcompany.companyname'/]</th>
+									<!-- <th class="table-head">[@lang_res k='console.productcompany.distributorname'/]</th> -->
+									<th class="table-head">[@lang_res k='console.product.info.name'/]</th>
+									<!-- <th class="table-head">[@lang_res k='console.productcompany.code'/]</th> -->
+									<th class="table-head">[@lang_res k='console.product.type'/]</th>
+									<!-- <th class="table-head">[@lang_res k='global.publish'/]</th> -->
+									<th class="table-head">[@lang_res k='global.createTime'/]</th>
+									<th class="table-head">[@lang_res k='global.operate'/]</th>
+	                            </tr>                                
+                            </tbody>
+                        </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+ 
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+
+<script type="text/javascript">
+var grid_selector = "#infoList";
+var pageSize = 10;
+</script>
+<script type="text/javascript">
+$(function(){
+	//跳转表单页面
+	$('#btnAddInfoForm').on('click',function(){
+		infoFormDialog("","");	
+	});
+	//绑定查询按钮事件
+	$("#btnSearch").click(function () {                
+		bindList(0);
+	});
+	
+	bindList(0);
+ 	setAutoSearch('.searchCondition',bindList,0);
+	//关闭iframe
+	$('#btnCloseIframe').click(function() {
+	 	$(".close").click();			
+	});
+});
+
+//分页绑定Table数据
+function bindList(curPage){
+	var companyName = $('#txtCompanyName').val();
+	//var distributorName = $('#txtDistributorName').val();
+	var productName = $('#txtProductName').val();
+	var type = $('#selType').val();
+	
+	$.ajax({
+		type : 'post',
+		datatype : 'json',
+		url : '${base}/console/productcompany/listJson.do?',
+		data : {
+			'companyName' : companyName,
+			//'distributorName' : distributorName,
+			'productName' : productName,
+			'type' : type,
+			'page' : curPage+1,
+			'rows' : pageSize,
+			'order' : 'desc'
+		},
+		success : function(json) {
+			var total = json.total;
+			var table = json.rows;
+			$('#infoList tbody tr:gt(0)').empty();
+			  var tr = "";
+              var list = json.rows;
+              $.each(list, function (index, array) { //遍历json数据列					
+                  var id = array['id'] == null ? "" : array['id'];
+              	  var companyName = array['companyName'] == null ? "" : array['companyName'];
+              	  //var distributorName = array['distributor']['companyName'] == null ? "" : array['distributor']['companyName'];
+              	  var productName = array['productName'] == null ? "" : array['productName'];
+              	  //数据库字段已删
+              	  //var code = array['code'] == null ? "" : array['code'];
+                  var type = array['product']['type'] == null ? "" : array['product']['type'];
+                  var typeName = '';
+                  if('fund' == type){
+                	  typeName = '[@lang_res k='console.product.type.fund'/]'
+                  } else if('stock' == type){
+                	  typeName = '[@lang_res k='console.product.type.stock'/]'
+                  } else if('bond' == type){
+                	  typeName = '[@lang_res k='console.product.type.bond'/]'
+                  }
+                  
+                  //数据库字段已删
+              	  /*var isPublish = array['isPublish'] == null ? "" : array['isPublish'];
+              	  if('1' == isPublish){
+              	  	  isPublish = '已发布';
+              	  } else if ('0' == isPublish){
+              		  isPublish = '待发布';
+              	  } else {
+              		  isPublish = '';
+              	  }*/
+              	  var createTime = array['createTime'] == null ? "" : array['createTime'];
+              	  
+            	  var button = '<a id="'+id+'" pageid="' + id 
+            	  	+ '" class="btnedit" href="javascript:infoFormDialog(\''+id+'\',\''+type+'\')" >'
+            	  	+ ' '
+            	  	+ "[@lang_res  k='global.edit'/]" + '</a>&nbsp;&nbsp;&nbsp;&nbsp;'
+            	  	+ '<a classlayer="1" pageid="' + id 
+            	  	+ '" class="btndel" href="javascript:void(0);">' 
+            	  	+ ' '
+            	  	+ "[@lang_res  k='global.delete'/]" + '</a>';
+            	  	
+                  var url = '${base}/console/productcompany/detail.do?id=' + id;
+                  
+                  tr += '<tr><td>'
+                  	  + '<a href="#" onclick="showform(\'' + id + '\',\''+ companyName + '\',\'' + url + '\')">' 
+                  	  + companyName + '</a></td><td>'
+                  	  //+ '<a href="#" onclick="showform(\'' + id + '\',\''+ distributorName + '\',\'' + url + '\')">' 
+                      //+ distributorName + '</a></td><td>'
+                      + '<a href="#" onclick="showform(\'' + id + '\',\''+ productName + '\',\'' + url + '\')">' 
+                      + productName 
+                      + '</a></td><td>'
+                      //+ code + '</td><td>'
+                      + typeName + '</td><td>'
+                      //+ isPublish + '</td><td>'
+                      + createTime + '</td><td>'
+                      + button +'</td></tr>';
+              });
+             $("#infoList tbody").append(tr);
+			
+		  $("#pagination").pagination(total, {
+                 callback: pageselectCallback,
+                 numDetail: '',
+                 items_per_page: pageSize,
+                 num_display_entries: 4,
+                 current_page: curPage,
+                 num_edge_entries: 2
+             });
+		}
+	})
+	//回调
+    function pageselectCallback(page_id, jq) {
+        bindList(page_id);
+    }
+}
+ 	
+//弹出编辑页面
+function infoFormDialog(id,type){
+	BootstrapDialog.show({
+		title : "[@lang_res k='console.membercompany.title'/]",
+		cssClass : 'login-dialog',
+		type : BootstrapDialog.TYPE_PRIMARY,
+		size : BootstrapDialog.SIZE_WIDE,
+		draggable : true,
+		message : $('<div><iframe scrolling="no" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="${base}/console/productcompany/detail.do?id='+id+'&type='+type+'"></iframe></div>').load(),
+		buttons : [{
+				label : "[@lang_res k='global.close'/]",
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+		}]
+	});
+}
+ 	
+//点击删除
+$("body").on('click', '.btndel', '', function () {
+    //获取前个节点
+    var pageid = $(this).parent().find('a').attr('pageid');
+    delquest(pageid);
+});
+   
+function delquest(id){ 
+	layer.confirm("你确认要删除该信息吗？"
+ 		, { title:"[@lang_res  k='global.prompt'/]"
+ 		, btn:["[@lang_res  k='global.confirm'/]","[@lang_res  k='global.cancel'/]"]
+ 		, icon: 3   },function () {	
+ 		layer.closeAll();
+ 		//删除节点的数据库
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/productcompany/del.do?datestr="
+					+ new Date().getTime(),
+			data : {'id':id  },
+		         	error:function(){layer.msg("删除失败！", { icon: 0, time: 2000 }, function () {  });},
+			success : function(json) {
+				json = JSON.parse(json);
+				var result = json.result;
+				if(result==true||result=='true'){
+					layer.msg("删除成功！", { icon: 1, time: 2000 }, function () { bindList(0); });
+				} else
+				{
+					layer.msg("删除失败！", { icon: 0, time: 2000 }, function () {  });
+				}
+			}
+		});
+	});
+}
+</script>
+</body>
+</html>

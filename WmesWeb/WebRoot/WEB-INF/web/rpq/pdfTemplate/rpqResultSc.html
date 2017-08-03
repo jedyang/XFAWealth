@@ -1,0 +1,102 @@
+<div class="rpqContent">
+	  <!-- answer Page -->
+      <p class="rpqIntroduction" style="font-size: 18px;margin-bottom: 15px;font-weight: bold;">投资取向分析</p>
+      <div class="rpqContentsRows">
+      	<#list rpqExam.questionList as quest> 
+          <div class="wenti" style="width:99%; border-bottom:#eef0f2 1px solid; padding: 10px 0;">
+              <p>${quest.questTitle}</p>
+              <div class="wenti_xuanzhe">
+                  <ul class="BasicInfo_radio">
+                  	<#list quest.rqpExamItemList as item> 
+                      <li style="float:none!important;float: left;margin-right: 45px;overflow: hidden;margin-bottom: 5px;padding-top: 10px;">
+                        <#if item.checkFlag?? && item.checkFlag == '1'>
+                      		<input type="radio" disabled="disabled" class="regular-radio" name="${quest.questId}" id="${item.id}" value="${item.scoreValue}" examid="${rpqExam.examId}" style="display: none;"/>
+                      		<label for="${item.id}" style="cursor:pointer;-webkit-appearance: none;background-color: #fafafa;border: 1px solid #cdcccc;box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);padding: 8px;border-radius: 50px;float: left;position: relative;vertical-align: middle;margin-right: 8px;">
+	                        	<span style="content: ' ';width: 10px;height: 10px;border-radius: 50px;position: absolute;top: 3px;background: #21a1f3;box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);text-shadow: 0px;left: 3px;font-size: 32px;"></span>
+	                        </label>
+                      		<#else>
+                      		<input type="radio" class="regular-radio" disabled="disabled" name="${quest.questId}" id="${item.id}" value="${item.scoreValue}" examid="${rpqExam.examId}" style="display: none;"/>
+                      		<label for="${item.id}" style="cursor:pointer;-webkit-appearance: none;background-color: #fafafa;border: 1px solid #cdcccc;box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);padding: 8px;border-radius: 50px;float: left;position: relative;vertical-align: middle;margin-right: 8px;">
+	                        </label>
+                      	</#if>
+                        <span class="font_gray_left" style="float:none;margin: 0px;display: block;">${item.title} </span>
+                      </li>
+                      </#list>
+                  </ul>
+              </div>     
+          </div>
+          </#list>
+     </div>
+     <!-- confirmPage -->
+     <p class="rpq-investment-topt" style="font-size: 22px;margin-bottom: 40px;">投资取向分析</p>
+     <div class="rpqPageRemark" style="margin-bottom: 40px;overflow: hidden;">
+         <p class="rpq-investment-title" style="float: left;line-height: 20px;width: 210px;text-align: right;margin-right: 15px;font-size: 16px;">
+         	根据您提供的答案，您已获得通知您的投资风险取向属于:
+         </p>
+         <p class="rpq-investment-word" style="float: left;padding: 2px 5px;color: #ff9b19;border: 1px solid #ff9b19;margin-right: 15px;margin-bottom: 5px;cursor: pointer;margin-left: 15px;"> 
+         	${rpqLevel.result!}
+         </p>
+     </div>
+     <div class="rpq-investment-brief" style="overflow: hidden;margin-bottom: 35px;">
+         <p class="rpq-brief-title" style="float: left;font-weight: bold;margin-right: 15px;">
+         	${rpqLevel.result!}:
+         </p>
+	     <p class="rpq-brief-word" style="display: block;float: left;width: 85%;word-break:break-word;">
+	     	${rpqLevel.remark!}
+	     </p>
+     </div>
+     <div class="rpq-confirm-contents" style="float:none;margin: 0px;display: block;color: #000000;">
+         <p class="rpq-confirm-confirmation" style="font-size: 18px;">客户确认</p>
+         <div class="rpq-confirm-rows">
+             <p class="rpq-confirm-title" style="overflow: hidden;background: #f8f8f8;padding: 0px 10px;line-height: 40px;font-size: 15px;border: 1px solid #e4e4e4;margin-bottom: 30px;">
+             	第一部份（请于以下二者选其一）:
+             </p>
+             <div class="rpq-confirm-radio" style="margin-bottom: 15px;overflow: hidden;padding-left: 15px;">
+               <#if rpqExam.userRiskLevel??>
+	               	<input type="radio" class="regular-radio" disabled="disabled" name="rpq_change_level" id="rpq_change_level" style="display: none;"/>
+	               	<label for="rpq_change_level" style="cursor:pointer;-webkit-appearance: none;background-color: #fafafa;border: 1px solid #cdcccc;box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);padding: 8px;border-radius: 50px;float: left;position: relative;vertical-align: middle;margin-right: 8px;">
+               			<span style="content: ' ';width: 10px;height: 10px;border-radius: 50px;position: absolute;top: 3px;background: #21a1f3;box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);text-shadow: 0px;left: 3px;font-size: 32px;"></span>
+               		</label>
+               		<span class="font_gray_left" style="float:none;margin: 0px;display: block;color: #000000;">
+	               		本人谨此声明根据本人所知的全部，为本问题提供真实，正确及全面的资料，并同意及确认上述已正确显示本人的投资风险取向。
+	                </span>
+               	<#else>	
+	               	<input type="radio" class="regular-radio" disabled="disabled" name="rpq_change_level" id="rpq_change_level" style="display: none;" />
+	               	<label for="rpq_change_level" style="cursor:pointer;-webkit-appearance: none;background-color: #fafafa;border: 1px solid #cdcccc;box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);padding: 8px;border-radius: 50px;float: left;position: relative;vertical-align: middle;margin-right: 8px;">
+               			<span style="content: ' ';width: 10px;height: 10px;border-radius: 50px;position: absolute;top: 3px;background: #21a1f3;box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);text-shadow: 0px;left: 3px;font-size: 32px;"></span>
+               		</label>
+               		<span class="font_gray_left" style="float:none;margin: 0px;display: block;color: #000000;">
+	               		本人认为以下由本人自行选定更为保守的投资风险取向，更能反映本人的实际情况（请选取适合者）。
+	                </span>
+               </#if>
+             </div>
+         </div>
+         <div class="rpq-orientation-rows" style="padding-left: 38px;">
+         	 <#if lessRpqLevels?exists && lessRpqLevels?size gt 0>
+             <#list lessRpqLevels as lev>
+             <div class="rpq-confirm-radio" style="margin-bottom: 15px;overflow: hidden;padding-left: 15px;">
+               <#if rpqExam.userRiskLevel?? && rpqExam.userRiskLevel==lev.riskLevel>
+               	<input type="radio" checked="checked"  disabled="disabled" class="regular-radio" name="rpq_level" id="${lev.id}" style="display: none;" />
+               	<label for="${lev.id}" style="cursor:pointer;-webkit-appearance: none;background-color: #fafafa;border: 1px solid #cdcccc;box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);padding: 8px;border-radius: 50px;float: left;position: relative;vertical-align: middle;margin-right: 8px;">
+               		<span style="content: ' ';width: 10px;height: 10px;border-radius: 50px;position: absolute;top: 3px;background: #21a1f3;box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);text-shadow: 0px;left: 3px;font-size: 32px;"></span>
+               	</label>
+               	<span class="rpq-orientation-gray" style="color: #000000;float: left;width: 10%;">${lev.result}.</span>
+            	<p class="rpq-orientation-word" style="float: left;width: 80%;color: #999999;margin:0px;">${lev.remark}</p>
+               </#if>
+             </div>
+             </#list>
+             </#if>
+         </div>
+          <p class="rpq-introduction-word" style="color: #0000CC;margin-top: 25px;">
+         	本人谨此的全部，为本问题提供真实，正确及全面的资料，并同意及确认上述的投资风险取向已正正显示本人的投资风险取向本人同意此投资风险取向将存于 银行记录，及银行将采取本问卷结果，或本人自行选定的投资风险取向，两者的较保守者作产品合适性评估。
+         </p>
+         <div class="rpq-confirm-rows">
+         	 <p class="rpq-confirm-title" style="overflow: hidden;background: #f8f8f8;padding: 0px 10px;line-height: 40px;font-size: 15px;border: 1px solid #e4e4e4;margin-bottom: 30px;">
+	         	第二部份（客户对投资产品/服务的兴趣）
+	         </p>
+	          <p class="rpq-interested-word" style="margin-bottom: 35px;">
+	         	本人对投资产品/服务（包括但不限于基金，债券，票据，股票挂钩票据及其他结构性产品）感兴趣，并乐意于日后以任何方式收到银行提供的有关资料，而银行职员亦可随时 联络本人，以提供有关资料。
+	         </p>
+         </div>
+     </div>
+ </div>

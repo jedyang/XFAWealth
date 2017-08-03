@@ -1,0 +1,675 @@
+package com.fsll.wmes.member.service.impl;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fsll.common.base.service.BaseService;
+import com.fsll.common.util.JsonPaging;
+import com.fsll.wmes.entity.MemberAdmin;
+import com.fsll.wmes.entity.MemberBase;
+import com.fsll.wmes.entity.MemberCompany;
+import com.fsll.wmes.entity.MemberCorporate;
+import com.fsll.wmes.entity.MemberFi;
+import com.fsll.wmes.entity.MemberIfa;
+import com.fsll.wmes.entity.MemberIfaIfafirm;
+import com.fsll.wmes.entity.MemberIfafirm;
+import com.fsll.wmes.entity.MemberIndividual;
+import com.fsll.wmes.ifa.service.IfaManageService;
+import com.fsll.wmes.ifafirm.service.IfafirmManageService;
+import com.fsll.wmes.member.service.MemberManageServiceForConsole;
+import com.fsll.wmes.member.vo.FiVO;
+import com.fsll.wmes.member.vo.IfaVO;
+import com.fsll.wmes.member.vo.IndividualVO;
+import com.fsll.wmes.member.vo.MemberAdminVO;
+import com.fsll.wmes.member.vo.MemberBaseVO;
+
+/***
+ * 业务接口实现类：用户管理接口类
+ * 
+ * @author mqzou
+ * @date 2016-06-30
+ */
+@Service("memberManageServiceImpl")
+//@Transactional
+public class MemberManageServiceImplForConsole extends BaseService implements MemberManageServiceForConsole {
+	
+	@Autowired
+	private IfafirmManageService ifafirmService;
+	
+	@Autowired
+	private IfaManageService ifaManageService;
+
+	//Individual列表查询
+	@Override
+	public JsonPaging findAllIndividual(JsonPaging jsonpaging,MemberBaseVO memberVo, String langCode) {
+		StringBuilder hql = new StringBuilder();
+		hql.append(" from MemberIndividual r where 1=1 ");
+		List<String> params = new ArrayList<String>();
+		if (null != memberVo) {
+			if(StringUtils.isNoneBlank(memberVo.getKeyWord())){
+				hql.append(" and (r.member.loginCode like ? or r.member.nickName like ? or r.member.email like ? or r.firstName like ? or r.lastName like ? or r.nameChn like ?) ");
+				params.add("%"+memberVo.getKeyWord()+"%");
+				params.add("%"+memberVo.getKeyWord()+"%");
+				params.add("%"+memberVo.getKeyWord()+"%");
+				params.add("%"+memberVo.getKeyWord()+"%");
+				params.add("%"+memberVo.getKeyWord()+"%");
+				params.add("%"+memberVo.getKeyWord()+"%");
+			}
+			if(StringUtils.isNoneBlank(memberVo.getIsValid())){
+				hql.append(" and r.member.isValid = ? ");
+				params.add(memberVo.getIsValid());
+			}
+		}
+		jsonpaging = this.baseDao.selectJsonPaging(hql.toString(),params.toArray(), jsonpaging, false);
+		List<IndividualVO> list = new ArrayList<IndividualVO>();
+		if (null!=jsonpaging.getList()){
+			Iterator<MemberIndividual> it = jsonpaging.getList().iterator();
+			while (it.hasNext()) {
+				MemberIndividual individual = it.next();
+				IndividualVO vo = new IndividualVO(individual);
+				vo.setCountry(individual.getCountry()==null?"":individual.getCountry().getCountryName(langCode));
+				vo.setNationality(individual.getNationality()==null?"":individual.getNationality().getCountryName(langCode));
+				list.add(vo);
+			}
+			jsonpaging.setList(list);
+		}
+		return jsonpaging;
+	}
+	//根据id获取一条数据 Individual
+	@Override
+	public MemberIndividual findIndividualById(String id) {
+		if(StringUtils.isBlank(id)){
+			return null;
+		}
+		MemberIndividual vo = (MemberIndividual) baseDao.get(MemberIndividual.class, id);
+		return vo;
+	}
+	//保存Individual信息
+	@Override
+	public MemberIndividual saveIndividual(MemberIndividual memberIndividual) {
+		if(memberIndividual == null || memberIndividual.getMember() == null){
+			return null;
+		}
+		MemberBase memberBase = memberIndividual.getMember();
+		memberBase = (MemberBase) baseDao.saveOrUpdate(memberBase);
+		if(memberBase != null){
+			memberIndividual.setMember(memberBase);
+			memberIndividual = (MemberIndividual) baseDao.saveOrUpdate(memberIndividual);
+			return memberIndividual;
+		}
+		return null;
+	}
+	
+	@Override
+	public MemberIndividual saveIndividual(MemberIndividual memberIndividual, MemberBase memberBase) {
+		// TODO Auto-generated method stub
+		if (null == memberIndividual.getId() || "".equals(memberIndividual.getId())) {
+			if (null == memberBase.getId() || "".equals(memberBase.getId())) {
+				memberBase.setId(null);
+				memberBase.setCreateTime(new Date());
+				memberBase = (MemberBase) baseDao.create(memberBase);
+				memberBase.setIsValid("1");
+			}
+			memberIndividual.setMember(memberBase);
+			memberIndividual.setId(null);
+			memberIndividual.setCreateTime(new Date());
+			memberIndividual = (MemberIndividual) baseDao.create(memberIndividual);
+		} else {
+			memberIndividual = (MemberIndividual) baseDao.update(memberIndividual);
+			memberBase = (MemberBase) baseDao.update(memberBase);
+
+		}
+		return memberIndividual;
+	}
+	
+	/**
+	 * 删除individual 信息(物理删除)
+	 * 
+	 */
+	@Override
+	public boolean delteIndividual(String id) {
+		MemberIndividual individual = findIndividualById(id);
+		if (null != individual) {
+			MemberBase base = individual.getMember();
+			if(base != null){
+				baseDao.delete(base);
+			}
+			baseDao.delete(individual);
+			return true;
+		}
+		return false;
+	}
+	
+	//-----  end Individual -----------
+	//fi列表查询
+	@Override
+	public JsonPaging findallFi(JsonPaging jsonPaging,MemberBaseVO memberVo, String langCode) {
+		StringBuilder hql = new StringBuilder();
+		hql.append(" from MemberFi r where  1=1 ");
+		List<String> params = new ArrayList<String>();
+		if (null != memberVo) {
+			if(StringUtils.isNoneBlank(memberVo.getKeyWord())){
+				hql.append(" and (r.member.loginCode like ? or r.member.nickName like ? )");
+				params.add("%"+memberVo.getKeyWord()+"%");
+				params.add("%"+memberVo.getKeyWord()+"%");
+			}
+			if(StringUtils.isNoneBlank(memberVo.getIsValid())){
+				hql.append(" and r.member.isValid = ? ");
+				params.add(memberVo.getIsValid());
+			}
+		}
+		jsonPaging = this.baseDao.selectJsonPaging(hql.toString(),params.toArray(), jsonPaging, false);
+		List<FiVO> list = new ArrayList<FiVO>();
+		Iterator<MemberFi> it = jsonPaging.getList().iterator();
+		while (it.hasNext()) {
+			MemberFi obj = it.next();
+			FiVO vo = new FiVO(obj);
+			vo.setId(obj.getId());
+			vo.setCountry(obj.getCountry()==null?"":obj.getCountry().getCountryName(langCode));
+			list.add(vo);
+		}
+		jsonPaging.setList(list);
+		return jsonPaging;
+	}
+	//fi获取一条数据
+	@Override
+	public MemberFi findFiById(String id) {
+		if(StringUtils.isBlank(id)){
+			return null;
+		}
+		MemberFi vo = (MemberFi) this.baseDao.get(MemberFi.class, id);
+		return vo;
+	}
+	
+	//fi保存信息
+	@Override
+	public MemberFi saveFi(MemberFi memberFi) {
+		if(memberFi==null || memberFi.getMember()==null){
+			return null;
+		}
+		MemberBase memberBase = memberFi.getMember();
+		memberBase = (MemberBase) baseDao.saveOrUpdate(memberBase);
+		if(memberBase != null){
+			memberFi.setMember(memberBase);
+			memberFi = (MemberFi) baseDao.saveOrUpdate(memberFi);
+			return memberFi;
+		}
+		return null;
+	}
+
+	//删除fi 信息(物理删除)
+	@Override
+	public boolean deleteMemberFi(String id) {
+		MemberFi fi = findFiById(id);
+		if (null != fi) {
+			MemberBase base = fi.getMember();
+			if(base != null){
+				baseDao.delete(base);
+			}
+			baseDao.delete(fi);
+			return true;
+		}
+		return false;
+	}
+	//-------end Fi---------
+	
+	//Corporate列表查询
+	@Override
+	public JsonPaging findallCoporate(JsonPaging jsonPaging,MemberBaseVO memberVo, String langCode) {
+		StringBuilder hql = new StringBuilder();
+		hql.append(" from MemberCorporate r where 1=1 ");
+		List<String> params = new ArrayList<String>();
+		if (null != memberVo) {
+			if(StringUtils.isNoneBlank(memberVo.getKeyWord())){
+				hql.append(" and (r.member.loginCode like ? or r.member.nickName like ? )");
+				params.add("%"+memberVo.getKeyWord()+"%");
+				params.add("%"+memberVo.getKeyWord()+"%");
+			}
+			if(StringUtils.isNoneBlank(memberVo.getIsValid())){
+				hql.append(" and r.member.isValid = ? ");
+				params.add(memberVo.getIsValid());
+			}
+		}
+		jsonPaging = this.baseDao.selectJsonPaging(hql.toString(), params.toArray(), jsonPaging, false);
+		List<FiVO> list = new ArrayList<FiVO>();
+		Iterator<MemberCorporate> it = jsonPaging.getList().iterator();
+		while (it.hasNext()) {
+			MemberCorporate obj = (MemberCorporate) it.next();
+			FiVO vo = new FiVO();
+			vo.setId(obj.getId());
+			if(null != obj.getMember()){
+				vo.setMemberId(obj.getMember().getId());
+				vo.setEmail(obj.getMember().getEmail());
+				vo.setLoginCode(obj.getMember().getLoginCode());
+				vo.setNickName(obj.getMember().getNickName());
+				vo.setIsValid(obj.getMember().getIsValid());
+			}
+			vo.setCompanyName(obj.getCompanyName());
+			vo.setCountry(obj.getCountry()==null?"":obj.getCountry().getCountryName(langCode));
+			list.add(vo);
+		}
+		jsonPaging.setList(list);
+		return jsonPaging;
+	}
+	
+	//Corporate获取一条数据
+	@Override
+	public MemberCorporate findCorporateById(String id) {
+		if(StringUtils.isBlank(id)){
+			return null;
+		}
+		MemberCorporate vo = (MemberCorporate) this.baseDao.get(MemberCorporate.class, id);
+		return vo;
+	}
+	
+	// Corporate保存信息
+	@Override
+	public MemberCorporate savecCorporate(MemberCorporate memberCorporate) {
+		if(memberCorporate == null || memberCorporate.getMember()==null){
+			return null;
+		}
+		MemberBase memberBase = memberCorporate.getMember();
+		memberBase = (MemberBase) baseDao.saveOrUpdate(memberBase);
+		if(memberBase != null){
+			memberCorporate.setMember(memberBase);
+			memberCorporate = (MemberCorporate) baseDao.saveOrUpdate(memberCorporate);
+			return memberCorporate;
+		}
+		return null;
+	}
+	//删除coporate 信息(物理删除)
+	@Override
+	public boolean delelteCorporate(String id) {
+		MemberCorporate corporate = findCorporateById(id);
+		if (null != corporate) {
+			MemberBase base = corporate.getMember();
+			if(base != null){
+				baseDao.delete(base);
+			}
+			baseDao.delete(corporate);
+			return true;
+		}
+		return false;
+	}
+	//-------end Corporate---------
+	
+	//获取ifa所有列表
+	@Override
+	public JsonPaging findAllIfa(JsonPaging jsonPaging,MemberBaseVO memberVo, String langCode) {
+		StringBuilder hql = new StringBuilder();
+		hql.append(" from MemberIfa r where 1=1 ");
+		List<String> params = new ArrayList<String>();
+		if (null != memberVo) {
+			if(StringUtils.isNoneBlank(memberVo.getKeyWord())){
+				hql.append(" and (r.member.loginCode like ? or r.member.nickName like ? )");
+				params.add("%"+memberVo.getKeyWord()+"%");
+				params.add("%"+memberVo.getKeyWord()+"%");
+			}
+			if(StringUtils.isNoneBlank(memberVo.getIsValid())){
+				hql.append(" and r.member.isValid = ? ");
+				params.add(memberVo.getIsValid());
+			}
+		}
+		jsonPaging = this.baseDao.selectJsonPaging(hql.toString(), params.toArray(), jsonPaging, false);
+		List<IfaVO> list = new ArrayList<IfaVO>();
+		Iterator<MemberIfa> it = jsonPaging.getList().iterator();
+		while (it.hasNext()) {
+			MemberIfa obj = it.next();
+			IfaVO vo = new IfaVO(obj, langCode);
+			String companyType = obj.getCompanyType();
+			vo.setCompanyTypeValue(companyType == "2" ? "Ifafirm" : "Individual");
+			
+			List<MemberIfaIfafirm> firmRelateArray =  ifaManageService.findIfaIfaFirm(obj.getId(), "1", "1", null, langCode);
+			if(!firmRelateArray.isEmpty()){
+				MemberIfafirm firm = firmRelateArray.get(0).getIfafirm();
+				vo.setCompanyIfafirm(null==firm?"":firm.getCompanyName());
+				vo.setCompanyIfafirmId(null==firm?"":firm.getId());
+			}
+			
+			vo.setAppellation(obj.getAppellation());
+			vo.setCeNumber(obj.getCeNumber());
+			vo.setCfaNumber(obj.getCfaNumber());
+			vo.setCfpNumber(obj.getCfpNumber());
+			list.add(vo);
+		}
+		jsonPaging.setList(list);
+		return jsonPaging;
+	}
+	//根据Id获取ifa信息
+	@Override
+	public MemberIfa finIfaById(String id) {
+		if(StringUtils.isBlank(id)){
+			return null;
+		}
+		MemberIfa vo = (MemberIfa) baseDao.get(MemberIfa.class, id);
+		return vo;
+	}
+	//保存ifa信息
+	@Override
+	public MemberIfa saveIfa(MemberIfa memberIfa) {
+		if(memberIfa == null || memberIfa.getMember() == null){
+			return null;
+		}
+		MemberBase memberBase = memberIfa.getMember();
+		memberBase = (MemberBase) baseDao.saveOrUpdate(memberBase);
+		if(memberBase != null){
+			memberIfa.setMember(memberBase);
+			memberIfa = (MemberIfa) baseDao.saveOrUpdate(memberIfa);
+			return memberIfa;
+		}
+		return null;
+	}
+	
+
+	private String getMapObject(Map map, String key) {
+		return map.get(key) == null ? "" : map.get(key).toString();
+	}
+	
+	@Override
+	public JsonPaging findAllAdminMemberPro(JsonPaging jsonPaging, MemberAdmin memberAdmin,String langCode) {
+		int pageIndex=(jsonPaging.getPage()-1)*jsonPaging.getRows();
+		int pageSize=jsonPaging.getRows();
+		String keyWord="";
+		String id="";
+		if (null != memberAdmin && null != memberAdmin.getMember() && null != memberAdmin.getMember().getLoginCode()) {
+			keyWord=memberAdmin.getMember().getLoginCode();
+		}
+		if(null!=memberAdmin && null!= memberAdmin.getId()){
+			id=memberAdmin.getId();
+		}
+		
+		String sql="CALL  pro_getchildadmin('"+id+"',"+pageIndex+","+pageSize+",'"+keyWord+"','"+langCode+"')";
+
+		//jsonPaging = this.baseDao.selectJsonPaging(hql, params.toArray(), jsonPaging, false);
+		//List resultList=this.baseDao.find(sql, params.toArray(), false);
+		List resultList=springJdbcQueryManager.springJdbcQueryForList(sql);
+		List list = new ArrayList();
+		Iterator it = (Iterator) resultList.iterator();
+
+		while (it.hasNext()) {
+			HashMap entity = (HashMap) it.next();
+			MemberAdminVO vo = new MemberAdminVO();
+			vo.setId(getMapObject(entity,"id"));
+			vo.setParentId(getMapObject(entity,"parent_id"));
+			vo.setParentName(getMapObject(entity,"parent_name"));
+			String company = "";
+			if (null != getMapObject(entity,"ifafirm") && !"".equals(getMapObject(entity,"ifafirm")))
+				company = getMapObject(entity,"ifafirm");
+			else if (null != getMapObject(entity,"distributor" ) && !"".equals(getMapObject(entity,"distributor"))) {
+				company = getMapObject(entity,"distributor");
+			}
+			vo.setCompanyName(company);
+			vo.setLoginCode(getMapObject(entity,"login_code"));
+			vo.setMemberId(getMapObject(entity,"member_id"));
+			vo.setType(getMapObject(entity,"type"));
+			vo.setNickName(getMapObject(entity,"nick_name"));
+			list.add(vo);
+		}
+		jsonPaging.setList(list);
+
+		return jsonPaging;
+	}
+	
+
+
+	/**
+	 * 获取memberBase实体
+	 * 
+	 * @author mqzou
+	 * @date 2016-07-20
+	 * @param id
+	 * @return
+	 */
+	private MemberBase findMemberbaseById(String id) {
+		MemberBase vo = (MemberBase) this.baseDao.get(MemberBase.class, id);
+		return vo;
+	}
+	
+	//删除ifa 信息
+	@Override
+	public boolean deleteIfa(String id) {
+		MemberIfa ifa = finIfaById(id);
+		if (null != ifa) {
+			MemberBase base = ifa.getMember();
+			if(base != null){
+				baseDao.delete(base);
+			}
+			baseDao.delete(ifa);
+			return true;
+		}
+		return false;
+	}
+	//-------end MemberIfa---------
+	/**
+	 * 获取ifaFime(或者Distributor)管理员历表
+	 * type:1:ifafrim,2:distributor
+	 * @author qgfeng
+	 * @date 2016-12-2
+	 */
+	@Override
+	public JsonPaging findMemberAdmin(JsonPaging jsonPaging, MemberAdminVO memberAdmin,String langCode) {
+		String hql = " from MemberAdmin r where 1=1";
+		//String hql = " from MemberAdmin r where r.distributor.id='13' ";
+		
+		List<String> params = new ArrayList<String>();
+		if (null != memberAdmin) {
+			if(StringUtils.isNotBlank(memberAdmin.getType())){
+				hql += " and r.type = ? ";
+				params.add(memberAdmin.getType());
+			}
+			if(StringUtils.isNotBlank(memberAdmin.getKeyword())){
+				hql += " and (r.member.loginCode like ? or r.member.nickName like ?)";
+				params.add("%"+memberAdmin.getKeyword()+"%");
+				params.add("%"+memberAdmin.getKeyword()+"%");
+			}
+			if(StringUtils.isNotBlank(memberAdmin.getIsValid())){
+				hql += " and r.member.isValid = ? ";
+				params.add(memberAdmin.getIsValid());
+			}
+		}
+		jsonPaging = this.baseDao.selectJsonPaging(hql, params.toArray(), jsonPaging, false);
+		List<MemberAdminVO> list = new ArrayList<MemberAdminVO>();
+		if (null!=jsonPaging.getList()){
+			Iterator<MemberAdmin> it = (Iterator) jsonPaging.getList().iterator();
+			while (it.hasNext()) {
+				MemberAdmin entity = (MemberAdmin) it.next();
+				if(entity.getMember()!=null){
+					MemberAdminVO vo = new MemberAdminVO();
+					vo.setId(entity.getId());
+					vo.setMemberId(entity.getMember().getId());
+					vo.setParentId(null!=entity.getParent()?entity.getParent().getId():"");
+					vo.setParentName(null!=entity.getParent()?entity.getParent().getMember().getNickName():"");
+					String company = "";
+					if (null != entity.getIfafirm()){
+						MemberIfafirm firm = ifafirmService.findById(entity.getIfafirm().getId(), langCode);
+						vo.setIfafirmId(firm.getId());
+						company = firm.getCompanyName();
+					}
+					if(null != entity.getDistributor()){
+						company = entity.getDistributor().getCompanyName();
+						vo.setDistributorId(entity.getDistributor().getId());
+					}
+					vo.setCompanyName(company);
+					vo.setLoginCode(entity.getMember().getLoginCode());
+					vo.setMemberId(entity.getMember().getId());
+					vo.setType(entity.getType());
+					vo.setIsValid(entity.getMember().getIsValid());
+					vo.setNickName(entity.getMember().getNickName());
+					list.add(vo);
+				}
+			}
+		}
+		jsonPaging.setList(list);
+		return jsonPaging;
+	}
+	
+	/**
+	 * 根据Id获取管理员信息
+	 * @author mqzou
+	 * @date 2016-07-19
+	 */
+	@Override
+	public MemberAdmin findAdminById(String id) {
+		if(StringUtils.isBlank(id)){
+			return null;
+		}
+		MemberAdmin vo = (MemberAdmin) this.baseDao.get(MemberAdmin.class, id);
+		return vo;
+	}
+	/**
+	 * 更新或保存管理员信息
+	 * @author qgfeng
+	 * @date 2016-12-7
+	 */
+	@Override
+	public MemberAdmin saveOrUpdateAdmin(MemberAdmin memberAdmin) {
+		MemberBase member = (MemberBase) baseDao.saveOrUpdate(memberAdmin.getMember());
+		if(member != null){
+			memberAdmin.setMember(member);
+			memberAdmin = (MemberAdmin) baseDao.saveOrUpdate(memberAdmin);
+		}
+		return memberAdmin;
+	}
+	/**
+	 * 根据memberId获取memberadmin
+	 * @author mqzou
+	 * @date 2016-07-19
+	 */
+	@Override
+	public MemberAdmin findAdminByMemberId(String memberId) {
+		String hql = " from MemberAdmin r where r.member.id='" + memberId + "'";
+		List list = this.baseDao.find(hql, null, false);
+		if (null != list && !list.isEmpty()) {
+			MemberAdmin memberAdmin = (MemberAdmin) list.get(0);
+			return memberAdmin;
+		}
+		return null;
+	}
+	
+	/**
+	 * 删除MemberAdmin(物理删除)
+	 * @author qgfeng
+	 * @date 2016-12-12
+	 */
+	@Override
+	public void deleteMemberAdmin(String id) {
+		MemberAdmin admin= findAdminById(id);
+		if(admin != null){
+			MemberBase base = admin.getMember();
+			if(base!=null){
+				baseDao.delete(base);
+			}
+			baseDao.delete(admin);
+		}
+	}
+	//-------公共---------
+	
+	//根据id查找memberBase
+	@Override
+	public MemberBase findMemberBaseById(String id) {
+		if(StringUtils.isNotBlank(id)){
+			MemberBase vo = (MemberBase) this.baseDao.get(MemberBase.class, id);
+			return vo;
+		}
+		return null;
+	}
+	
+	//删除一条用户（逻辑删除公共）
+	@Override
+	public boolean deleteMember(String memberId) {
+		MemberBase memberBase = findMemberbaseById(memberId);
+		if (null != memberBase) {
+			memberBase.setIsValid("0");
+			memberBase.setLastUpdate(new Date());
+			this.baseDao.update(memberBase);
+			return true;
+		}
+		return false;
+	}
+	//检测登录账号的唯一性(公共)
+	@Override
+	public boolean checkLoginCode(String loginCode, String memberId) {
+		String hql = " from MemberBase r where loginCode='" + loginCode + "'";
+		if (StringUtils.isNotBlank(memberId)) {
+			hql += " and id<>'" + memberId + "'";
+		}
+		List<MemberBase> list = this.baseDao.find(hql, null, false);
+		if (null == list || list.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 根据distributorId或ifaFirmId获取memberadmin
+	 * @author rqwang
+	 * @date 2016-06-07
+	 */
+	@Override
+	public JsonPaging disFindMemberAdmin(JsonPaging jsonPaging, String id,
+			MemberAdminVO memberAdmin, String langCode) {
+		String hql = " from MemberAdmin r where 1=1 ";
+		List<String> params = new ArrayList<String>();
+		if (null != memberAdmin) {
+			String type = memberAdmin.getType();
+			if(StringUtils.isNotBlank(type)){
+				if(type.equalsIgnoreCase("2")){//代理商
+					hql += " and r.distributor.id=? ";
+					params.add(id);
+				}else if(type.equalsIgnoreCase("1")){//投资顾问公司
+					hql += " and r.ifafirm.id=? ";
+					params.add(id);
+				}
+			}
+		}
+		
+		jsonPaging = this.baseDao.selectJsonPaging(hql, params.toArray(), jsonPaging, false);
+		List<MemberAdminVO> list = new ArrayList<MemberAdminVO>();
+		if (null!=jsonPaging.getList()){
+			Iterator<MemberAdmin> it = (Iterator) jsonPaging.getList().iterator();
+			while (it.hasNext()) {
+				MemberAdmin entity = (MemberAdmin) it.next();
+				if(entity.getMember()!=null){
+					MemberAdminVO vo = new MemberAdminVO();
+					vo.setId(entity.getId());
+					vo.setMemberId(entity.getMember().getId());
+					vo.setParentId(null!=entity.getParent()?entity.getParent().getId():"");
+					vo.setParentName(null!=entity.getParent()?entity.getParent().getMember().getNickName():"");
+					String company = "";
+					if (null != entity.getIfafirm()){
+						MemberIfafirm firm = ifafirmService.findById(entity.getIfafirm().getId(), langCode);
+						vo.setIfafirmId(firm.getId());
+						company = firm.getCompanyName();
+					}
+					if(null != entity.getDistributor()){
+						company = entity.getDistributor().getCompanyName();
+						vo.setDistributorId(entity.getDistributor().getId());
+					}
+					vo.setCompanyName(company);
+					vo.setLoginCode(entity.getMember().getLoginCode());
+					vo.setMemberId(entity.getMember().getId());
+					vo.setType(entity.getType());
+					vo.setIsValid(entity.getMember().getIsValid());
+					vo.setNickName(entity.getMember().getNickName());
+					
+					vo.setEmail(entity.getMember().getEmail());
+					vo.setMobileCode(entity.getMember().getMobileCode());
+					vo.setMobileNumber(entity.getMember().getMobileNumber());
+					
+					list.add(vo);
+				}
+			}
+		}
+		jsonPaging.setList(list);
+		return jsonPaging;
+	}
+}

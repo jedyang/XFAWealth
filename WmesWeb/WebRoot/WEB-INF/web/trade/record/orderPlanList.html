@@ -1,0 +1,250 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+<style>
+.plan_status_image{height:22px;}
+</style>
+<div class="wmes-content" ng-controller="transactionRecordCtrl" ng-app="transactionRecord">
+	<div class="ifa_choose_condition">
+		<p class="wmes-wrap-title">[@lang_res k='order.plan.list.title'/]</p>
+		<div class="funds_choice_wrap">
+			<p class="funds_choice_title">[@lang_res k='order.plan.list.period'/]</p>
+			<ul class="funds_choice">
+				<li class="fund_choice_active funds_all" data-name="Period Date" data-key="" data-value="Issue Date_00">[@lang_res k='ifaspace.info.all'/]</li>
+				<li data-name="Period Date" data-key="1 Week" data-type="D" data-value="-7">[@lang_res k='order.plan.list.period.week.1'/]</li>
+				<li data-name="Period Date" data-key="1 Month" data-type="M" data-value="-1">[@lang_res k='order.plan.list.period.month.1'/]</li>
+				<li data-name="Period Date" data-key="2 Month" data-type="M" data-value="-2">[@lang_res k='order.plan.list.period.month.2'/]</li>
+				<li data-name="Period Date" data-key="3 Month" data-type="M"  data-value="-3">[@lang_res k='order.plan.list.period.month.3'/]</li>
+				<li data-name="Period Date" data-key="6 Month" data-type="M" data-value="-6">[@lang_res k='order.plan.list.period.month.6'/]</li>
+				<li data-name="Period Date" data-key="1 Year" data-type="Y" data-value="-1">[@lang_res k='order.plan.list.period.year.1'/]</li>
+				<li class="recommend-date-li recommend-date-choice" data-name="Period Date" data-key="" data-value="Period Date_07">
+					<p class="recommend-other">[@lang_res k='order.plan.list.period.other'/]</p>
+					<div class="recommend-other-wrap">
+						<div class="recom-input-wrap">
+							<input id="fromDate" readonly class="laydate-icon" type="" name="">
+						</div>
+						<span class="recommend-to-word">[@lang_res k='order.plan.list.period.to'/]</span>
+						<div class="recom-input-wrap">
+							<input id="toDate" readonly class="laydate-icon" type="" name="">
+						</div>
+						<a data-name="Period Date" class="recommend-date-ok" href="javascript:;">[@lang_res k='sys.role.saveButton'/]</a>
+					</div>	
+				</li>
+			</ul>
+		</div>
+    </div>
+    <div class="strategies_list_wrap">       			
+		<div class="funds_list_selected">
+            <p class="funds_selected_title">[@lang_res k='clients.proposal.selected.condition'/]</p>
+			<ul class="selection_criteria">
+				<p class="funds_title_selection">[@lang_res k='fund.info.resetFilter'/]</p>
+			</ul>
+		</div>
+		<div class="funds_keyserach_wrap">
+            <p class="funds_currency_title">[@lang_res k='order.plan.list.currency'/] </p>
+            <div class="funds_currency_xiala">
+                <input id="toCurrency" type="text" placeholder="Fund Currency" value="${currencyName!}" data-code="${currencyCode!}" readonly="">
+                <span class="icon_xiala"></span>
+                <ul class="conversion_select">
+                    <li ng-repeat="currency in currencys" id="{{currency.id}}" data-code="{{currency.code}}" ng-bind="currency.name" ng-click="conversionSelect()"></li>
+                </ul>
+            </div>
+            <div class="funds_keyserach">
+                <input type="text" id="fundName" placeholder="[@lang_res k='order.plan.list.search.keyWord'/]">
+                <span class="icon_search" id="searchKeyBtn" ng-click="searchKeyBtn()"></span>
+            </div>
+        </div>
+        <div class="funds_keyserach_wrap">
+			<p class="ifa_serach_sum">
+				[@lang_res k='clients.proposal.total.prefix'/]				
+				<span class="funds_serach_digital ng-binding" ng-bind="orderplanConf.totalItems">0</span> [@lang_res k='clients.proposal.total.suffix'/]
+			</p> 
+        </div>
+		<ul class="funds_search_tab funds_viewList_tab" style="display:block;margin-bottom: 20px;">
+            <li class="now" data-value="-1,0,1,3">[@lang_res k='order.plan.list.tab.processing'/]</li>
+            <li data-value="2,4,5">[@lang_res k='order.plan.list.tab.completed'/]</li>
+            <!-- <li data-value="aip">[@lang_res k='order.plan.list.tab.aipTask'/]</li> -->
+        </ul>
+		<div class="strategies_list">
+			<table class="funds_search_information strategies_List" style="display:table;">
+                <tbody>
+                    <tr class="funds_tables_th">
+	                    [#if memberType?? && memberType==1]
+	                    	<th class="funds_tables_header">
+	                            [@lang_res k='order.plan.list.table.th.ifa'/]
+	                        </th>
+	                    [#elseif memberType?? && memberType==2]
+	                    	<th class="funds_tables_header">
+	                            [@lang_res k='order.plan.list.table.th.0'/]
+	                        </th>
+	                    [/#if]
+                        <th class="funds_tables_header">
+                            [@lang_res k='order.plan.list.table.th.1'/]  
+                        </th>
+                        <th  class="funds_tables_header">
+                           	[@lang_res k='order.plan.list.table.th.2'/]
+                        </th>
+                        <th  class="funds_tables_header">
+                            [@lang_res k='order.plan.list.table.th.3'/]
+                        </th>
+                        <th  class="funds_tables_header">
+                            [@lang_res k='order.plan.list.table.th.4'/] 
+                        </th>
+                        <th class="funds_tables_header">
+                        	[@lang_res k='order.plan.list.table.th.lastUpdate'/]
+                        </th>
+                        <th class="funds_tables_header">
+                        	[@lang_res k='order.plan.list.table.th.5'/]
+                        </th>
+                        <th class="funds_tables_header">
+                        	[@lang_res k='order.plan.rebalance.table.actions'/]
+                        </th>
+                    </tr>
+                    <tr ng-repeat="items in dataList" class="ng-cloak" id="{{items.orderPlanId}}">
+                        <td ng-if="items.memberType==1" width="14%" class="tdleft funds_search_tdcenter">
+                            <img ng-if="items.ifaIconUrl!=null&&items.ifaIconUrl!=''" class="kyc-managment-img" style="width: 25%; height:39px;border-radius: 50%;" ng-src="${base}{{items.ifaIconUrl}}" alt="">
+                            <p style="width: 65%;"" data-customer="{{items.customerId}}" class="kyc-managment-word" ng-bind="items.ifaName"></p>
+                            <p ng-if="(items.ifaIconUrl==null||items.ifaIconUrl=='')&&items.ifaName==null" style="width: 65%;text-align: -webkit-center;" data-customer="{{items.customerId}}" class="kyc-managment-word">-</p>
+                        </td>
+                        <td ng-if="items.memberType==2" width="14%" class="tdleft funds_search_tdcenter">
+                            <img class="kyc-managment-img" style="width: 25%; height:39px;border-radius: 50%;" ng-src="${base}{{items.iconUrl}}" alt="">
+                            <p style="width: 65%;"" data-customer="{{items.customerId}}" class="kyc-managment-word" ng-bind="items.nickName"></p>
+                        </td>
+                        <td width="13%" class="funds_search_tdcenter">
+                        	<a ng-if="items.status==-1" href="${base!}/front/tradeMain/orderPlan.do?planId={{items.orderPlanId}}"  ng-bind="items.portfolioName"></a>
+                        	<a ng-if="items.status==0" href="${base!}/front/tradeMain/orderPlan.do?planId={{items.orderPlanId}}"  ng-bind="items.portfolioName"></a>
+                        	<a ng-if="items.status==1" href="${base!}/front/tradeStep/confirmOrderPlan.do?id={{items.orderPlanId}}"  ng-bind="items.portfolioName"></a>
+                        	<a ng-if="items.status==2" href="${base!}/front/tradeMain/orderPlan.do?planId={{items.orderPlanId}}"  ng-bind="items.portfolioName"></a>
+                        	<a ng-if="items.status==3" href="${base!}/front/tradeStep/confirmOrderPlan.do?id={{items.orderPlanId}}"  ng-bind="items.portfolioName"></a>
+                        	<a ng-if="items.status==4" href="${base!}/front/tradeMain/previewOrderPlan.do?id={{items.orderPlanId}}"  ng-bind="items.portfolioName"></a>
+                        	<a ng-if="items.status==5" href="${base!}/front/tradeMain/previewOrderPlan.do?id={{items.orderPlanId}}"  ng-bind="items.portfolioName"></a>
+                        </td>
+                        <td width="15%" class="funds_search_tdcenter">
+                        	<span ng-if="items.totalBuy==null || items.totalBuy==0">-</span>
+                        	<span ng-if="items.totalBuy!=null && items.totalBuy!=0" class="conversion-flag" ng-bind="items.totalBuy | formatCurrency"></span>
+                        	<span ng-if="items.totalBuy!=null && items.totalBuy!=0" class="to-currency" ng-bind="items.currencyName"></span>
+                        </td>
+                        <td width="15%" class="funds_search_tdcenter">
+                        	<span ng-if="items.totalSell==null || items.totalSell==0">-</span>
+                        	<span ng-if="items.totalSell!=null && items.totalSell!=0" class="conversion-flag" ng-bind="items.totalSell | formatCurrency"></span>
+                        	<span ng-if="items.totalSell!=null && items.totalSell!=0" class="to-currency" ng-bind="items.currencyName"></span>
+                        </td>
+                        <td width="13%" class="funds_search_tdcenter">
+                        	<p ng-bind="items.issuedDateStr | date:'yyyy-MM-dd'"></p>
+                        </td>
+                        <td width="13%" class="funds_search_tdcenter">
+                        	<p ng-bind="items.lastUpdateStr | date:'yyyy-MM-dd'"></p>
+                        </td>
+                        <td width="11%" class="funds_search_tdcenter">
+                         	<span ng-if="items.status==-1 || items.status==0">
+	                         	<img class="plan_status_image" title="[@lang_res k='order.plan.list.finish.status.0'/]" src="${base!}/res/images/transaction/ico_draft.png">
+                         	</span>
+                            <span ng-if="items.status==1">
+	                            <img class="plan_status_image" title="[@lang_res k='order.plan.list.finish.status.1'/]" src="${base!}/res/images/transaction/ico_approval.png">
+                            </span>
+                            <span ng-if="items.status==2">
+	                            <img class="plan_status_image" title="[@lang_res k='order.plan.list.finish.status.2'/]" src="${base!}/res/images/transaction/ico_reject.png">
+                            </span>
+                            <span ng-if="items.status==3">
+	                            <img class="plan_status_image" title="[@lang_res k='order.plan.list.finish.status.3'/]" src="${base!}/res/images/transaction/ico_to_be_traded.png">
+                            </span>
+                            <span ng-if="items.status==4">
+	                            <img class="plan_status_image" title="[@lang_res k='order.plan.list.finish.status.4'/]" src="${base!}/res/images/transaction/ico_trading.png">
+                            </span>
+                            <span ng-if="items.status==5">
+	                            <img class="plan_status_image" title="[@lang_res k='order.plan.list.finish.status.5'/]" src="${base!}/res/images/transaction/ico_completed.png">
+                            </span>
+                        </td>
+                        <td width="6%" class="funds_search_tdcenter">
+                        	<img class="portfolio-del action-delete" ng-if="items.status==0 || items.status==-1" src="${base!}/res/images/ifa/garbage_ico.png">
+                        	<span title="[@lang_res k='order.plan.table.actions.not.applicable'/]" ng-if="items.status!=0 && items.status!=-1">N/A</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="wmes-nodata-tips no_list_tips">
+                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+            </div>
+		</div>
+		<div class="aip_task_list" style="display:none;">
+			<table class="funds_search_information strategies_List" style="display:table;">
+                <tbody>
+                    <tr class="funds_tables_th">
+                        <th class="funds_tables_header">
+                            [@lang_res k='order.plan.list.table.th.0'/]
+                        </th>
+                        <th class="funds_tables_header">
+                            [@lang_res k='order.plan.list.table.th.1'/]  
+                        </th>
+                        <th class="funds_tables_header">
+                        	[@lang_res k='order.plan.list.table.th.aip.amount'/]
+                        </th>
+                        <th  class="funds_tables_header">
+                           	[@lang_res k='order.plan.list.table.th.aip.total.count'/]
+                        </th>
+                        <th  class="funds_tables_header">
+                            [@lang_res k='order.plan.list.table.th.aip.total.amount'/]
+                        </th>
+                        <th  class="funds_tables_header">
+                            [@lang_res k='order.plan.list.table.th.aip.next.time'/]
+                        </th>
+                        <th class="funds_tables_header">
+                        	[@lang_res k='order.plan.list.table.th.4'/] 
+                        </th>
+                        <th class="funds_tables_header">
+                        	[@lang_res k='order.plan.list.table.th.5'/]
+                        </th>
+                    </tr>
+                    <tr ng-repeat="items in dataList" class="ng-cloak">
+                        <td width="15%" class="tdleft funds_search_tdcenter">
+                            <img class="kyc-managment-img" style="width: 39px; height:39px;border-radius: 50%;" ng-src="${base}{{items.iconUrl}}" alt="">
+                            <p class="kyc-managment-word" ng-bind="items.nickName"></p>
+                        </td>
+                        <td width="13%" class="funds_search_tdcenter">
+                        	<a href="${base!}/front/tradeMain/aipDetail.do?planId={{items.planId}}" target="_self" ng-bind="items.portfolioName"></a>
+                        </td>
+                        <td width="14%" class="funds_search_tdcenter">
+                        	<span ng-if="items.aipAmount==null">-</span>
+                        	<span ng-if="items.aipAmount!=null">
+                        		<span ng-bind="items.aipAmount"></span>
+                        		<span ng-bind="items.currencyName"></span>
+                        	</span>
+                        </td>
+                        <td width="10%" class="funds_search_tdcenter">
+                        	<span ng-if="items.aipCount==null">-</span>
+                        	<span ng-bind="items.aipCount"></span>
+                        </td>
+                        <td width="14%" class="funds_search_tdcenter">
+                        	<span ng-if="items.aipTotalAmount==null">-</span>
+                        	<span ng-if="items.aipTotalAmount!=null">
+                        		<span ng-bind="items.aipTotalAmount"></span>
+                        	<span ng-bind="items.currencyName"></span>
+                        	</span>
+                        </td>
+                        <td width="12%" class="funds_search_tdcenter">
+                        	<p ng-bind="items.aipNextTimeStr | date:'yyyy-MM-dd'"></p>
+                        </td>
+                        <td width="12%" class="funds_search_tdcenter">
+                        	<p ng-bind="items.createTimeStr | date:'yyyy-MM-dd'"></p>
+                        </td>
+                        <td width="10%" class="funds_search_tdcenter">
+                        	<span ng-bind="items.aipStateDisplay"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="wmes-nodata-tips no_list_tips">
+                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+            </div>
+		</div>
+        <wmespage conf="orderplanConf"></wmespage>
+    </div>
+ </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript ">
+     var props = [@load_prop k=''/];
+     seajs.use('${base}/res/web/trade/record/orderPlanList.js');
+</script>

@@ -1,0 +1,130 @@
+[#include "../../inc/head_no_menu.html"/]   
+
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+ [#include "../../inc/regist_head.html"/]
+<style>
+.regist-head-right{display:none;}
+</style> 
+<div class="wmes-content" style="margin-left:0px;">
+    <div class="regist-bg">
+    	<div class="register_div">
+    		<p class="regist-big-title">[@lang_res k='member.register.title'/]</p>
+            <!--<h2 class="register_title">[@lang_res k='member.register.title'/]</h2>-->
+            <div class="register_liucheng">
+                <ul>
+                    <li>
+                        <span class="circle_yellow">1</span>
+                        <span class="font_yellow">[@lang_res k='member.register.step1'/]</span>
+                    </li>
+                    <li class="jiantou_width">
+                    	<span class="register_jiantou"></span>
+                    </li>
+                    <li>
+                        <span class="circle_yellow">2</span>
+                        <span class="font_yellow">[@lang_res k='member.register.step2'/]</span>
+                    </li>
+                    <li class="jiantou_width">
+                    	<span class="register_jiantou"></span>
+                    </li>
+                    <li>
+                        <span class="circle_yellow">3</span>
+                        <span class="font_yellow">[@lang_res k='member.register.step3'/]</span>
+                    </li>
+                    <li class="jiantou_width">
+                    	<span class="register_jiantou"></span>
+                    </li>
+                    <li>
+                        <span class="circle_orange">4</span>
+                        <span class="font_orange">[@lang_res k='member.register.step4'/]</span>
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+        
+        	<div class="register_text">
+                <div id="WMESCode" style="display:none;">
+                	<!--
+                    [@lang_res k='global.admin.welcome'/]：-->
+                    <p id="NickName" style="display:none;">
+                    [#if ifa??]
+                    ${ifa.lastName!} ${ifa.firstName}：
+                    [#elseif individual??]
+                     ${individual.lastName!} ${individual.firstName}：
+                     [#else]
+                     ${memBase.nickName!}
+                     [/#if]
+                    </p>
+                	<p id="Email" style="display:none;">Email:${memBase.email!}</p>
+                    <span class="font_blue" id="emailContent"></span>
+                    <br><br>
+                    <p id="Msg" style="display:none;">${message!}</p>
+                </div>
+                <br><br>
+                <p id="WMESteam" style="display:none;">[@lang_res k='member.register.wmesteam'/]</p>
+                
+                <br><br>
+                <p id="Individual" style="display:none;">[@lang_res k='member.register.thankforregist'/]</p>
+                
+            </div>
+        	<div class="btn_next_div2">
+            	<a class="btn_next" href="${base}/index.do">[@lang_res k='member.register.home'/]</a>
+            	<!--
+            	[#if result?exists && result]
+	        		<a href="${base}/front/regist/memActive.do?memId=${memBase.id!}&valiCode=${activeCode!}" class="btn_next">[@lang_res k='member.register.activation'/]</a>
+	        	[/#if]
+            	-->
+            </div>
+        
+        
+        	<div class="clear"></div>
+       </div> 
+    </div>
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+function getCompleteCookie(name, code) {
+    var result = '',
+        reg = new RegExp('(^|; )' + name + '=([^;]+)(;|$)'),
+        text = document.cookie,
+        match = [];
+
+    match = text.match(reg);
+
+    if (match) {
+        result = code ? decodeURIComponent(match[2]) : match[2];
+    }
+
+    return result;
+}
+function GetQueryString(name) {
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = decodeURI(window.location.search).substr(1).match(reg);
+     //原始地址没有参数，返回all
+     if(r!=null)return  unescape(r[2]); return "";
+}
+
+var emailContent = document.getElementById("emailContent"),
+    Individual = document.getElementById("Individual"),
+    WMESCode = document.getElementById("WMESCode"),
+    WMESteam = document.getElementById("WMESteam"),
+	Msg = document.getElementById("Msg"),
+	NickName = document.getElementById("NickName"),
+	Email = document.getElementById("Email");    	
+
+emailContent.innerHTML  = GetQueryString('email') ;
+if( getCompleteCookie('registerType') == "Individual"){
+    Individual.style.display = "block";
+    WMESCode.style.display = "block";
+    NickName.style.display = "block";
+    Msg.style.display = "block";
+}else if(getCompleteCookie('registerType') == "IFA User"){
+    WMESCode.style.display = "block";
+    Email.style.display = "block";
+	Msg.style.display = "block";
+}else {
+    WMESteam.style.display = "block";
+}
+
+</script>

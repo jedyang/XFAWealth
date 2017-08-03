@@ -1,0 +1,1204 @@
+.ifa-a-href{color: #000000;}
+.ifa-a-href:hover{color: #159aea;}
+.ifa-zone-row-hide{height: 10px;overflow: hidden;}
+
+.ifa-more-ico{float: right;cursor: pointer;width: 30px;height: 30px; background: url('../images/fund/xiala_ico.png') no-repeat;}
+.ifa-more-ico:hover{background: url('../images/fund/xiala_ico_11.png') no-repeat;}
+.ifa-more-icoactive{background: url('../images/fund/xiala_ico_2.png') no-repeat}
+.ifa-more-icoactive:hover{background: url('../images/fund/xiala_ico_22.png') no-repeat}
+/*.ifa-more-ico:hover{background: url('../images/fund/xiala_ico_1.png') no-repeat}*/
+.ifa-more-ico-hidden{display:none !important;}
+.funds_background,.white_background{min-height: 100%;}
+.wmes-content .funds_background{margin-bottom:12px;position: relative;overflow: visible;}
+.funds_title_wrap{padding: 0px 0px 10px 0;border-bottom: 1px solid #eef0f2;overflow: hidden;}
+.wmes-wrap-title .funds_title_more a{font-size:14px;line-height:14px;}
+.wmes-wrap-title .funds_title_more{line-height:34px;}
+.funds_title_more a{color: #299cfd;}
+.funds_title_more a:hover{color: #2977c0;}
+.wmes-wrap-title-favourite{font-size:14px;color:#4ba6de;}
+.funds_title{color: #3876b4;display: inline-block;font-size: 18px;font-weight: bold;}
+.funds_title_more{float: right;color:#419dec;cursor: pointer;}
+.ifa-add-button{background: #ef6a41;color: white;padding: 0px 22px;height:32px;line-height:32px;margin-right: 15px;border-radius: 4px;float: right;}
+.ifa-add-button:hover{background:#e0633d;}
+.funds_choice_wrap{padding: 5px 25px 0px 25px;margin-bottom:5px;border-bottom: 2px dotted #eef0f2;}
+.funds_choice_wrap:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+.funds_choice_wrap_hidden{max-height:30px;overflow: hidden;position: relative;padding-bottom:5px;}
+.funds_choice li:hover,#funds_logo li:hover{background:#4ba6de;color:#fff !important;}
+.funds_choice .funds-notchange{background:white!important;color: black!important;}
+#funds_logo li{border-radius: 3px;}
+.funds_choice_wrap_hiddenclick{width:32px;height:18px;position: absolute;right:0px;top:16px;cursor: pointer;background:#fff;text-align: center;}
+.funds_choice_wrap_showclick{transform:rotate(180deg);-ms-transform:rotate(180deg);-moz-transform:rotate(180deg); -webkit-transform:rotate(180deg);-o-transform:rotate(180deg);}
+.funds_choice_wrap_hiddenclick:hover{background:#f1f1f1;}
+.funds_choice_title{color: #606060;width: 140px;line-height: 30px;float: left;}
+.funds_choice{margin-left: 140px;}
+.funds_choice:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;}
+.funds_choice li{color: #000000;  cursor: pointer;  display: inline-block;height: 30px;line-height: 30px;min-width: 10px;padding: 0px 4px;text-align: center;margin: 0px 4px;margin-bottom: 5px;border-radius: 3px;}
+.funds_choice li:nth-child(1){min-width: 50px;}
+.funds_choice_sector li{height:30px;line-height: 30px;padding: 0px 4px;}
+.fund_float_menubox{display:none;position: fixed;right:10px;top:300px;height:122px;width:150px;}
+.fund_float_menu{z-index:999;cursor: pointer;position: absolute;bottom:0px;right:0px;width:73px;height:73px;background:#458fd4;border-radius:50%;border:6px solid #c4dbf0;}
+.fund_float_menu_title{text-align: center;font-size:14px;color:#fff;margin-top:18px;}
+.fund_float_menu_num{text-align: center;margin-top:10px;font-size:16px;color:#fff;font-weight: bold;}
+.fund_float_menucon_compare{height:40px;width:40px;background:url('../images/application/fundcompare.png') no-repeat;position: absolute;left:11px;top:11px;}
+.fund_float_menucon_comparebox{cursor: pointer;border-radius:50%;height:48px;width:48px;background:#75b2ec;position: absolute;left:70px;top:50px;transition:left 0.7s,top 0.7s;-moz-transition:left 0.7s,top 0.7s;-webkit-transition:left 0.7s,top 0.7s;-o-transition:left 0.7s,top 0.7s;}
+.fund_float_menucon_purchase{height:40px;width:40px;background:url('../images/application/fundpurchase.png') no-repeat;position: absolute;left:9px;top:14px;}
+.fund_float_menucon_purchasebox{cursor: pointer;border-radius:50%;height:48px;width:48px;background:#75b2ec;position: absolute;left:70px;top:50px;transition:left 0.7s,top 0.7s;-moz-transition:left 0.7s,top 0.7s;-webkit-transition:left 0.7s,top 0.7s;-o-transition:left 0.7s,top 0.7s;}
+.fund_float_menucon_comparebox:hover,.fund_float_menucon_purchasebox:hover{background:#2a8eec;}
+.fund_float_menuboxac .fund_float_menucon_comparebox{left:15px;top:0px;}
+.fund_float_menuboxac .fund_float_menucon_purchasebox{left:0px;top:73px;}
+
+.fund_float_menu_menu_addbox{border-radius:10px;box-shadow: 2.5px 4.33px 35px 0px #000;min-height:200px;width:50%;background-color: white;padding: 1% 1.5%;position: relative;min-width:300px;left:20%;top:10%;}
+.fund-space-mask-wrap{display:none;width:100%;height:100%;position: absolute;top:0;left:0;background:rgba(0,0,0,0.3);}
+.fund-space-mask-wrapac{display:block;}
+.fund_float_attributes-button{cursor: pointer;height:30px;line-height:30px;background: #2d80ce;color: white;padding:0px 30px;margin-right: 15px;border-radius: 4px;float: left;}
+.fund_float_attributes-buttoncancel{cursor: pointer;height:30px;line-height:30px;background: #e5e5e5;padding:0px 30px;margin-right: 15px;border-radius: 4px;float: left;}
+.fund_float_attributes-button:hover{background:#0976dc;}
+.fund_float_attributes-buttoncancel:hover{background:#cdcdcd;}
+
+/*.funds_choice .recommend-date-choice{display:none;}*/
+
+.funds_choice .fund_choice_active{color: rgb(75, 166, 222);}
+.funds_choice .fund_choice_active2{background-color: #4ba6de;color: white !important;}
+
+.sort_choice:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;}
+.sort_choice li{color: #000000;  cursor: pointer;  display: inline-block;height: 30px;line-height: 30px;min-width: 10px;padding: 0px 5px;text-align: center;margin: 0px 5px;margin-bottom: 5px;border-radius: 3px;}
+.sort_choice li:nth-child(1){min-width: 50px;}
+.sort_choice .sort_choice_active{background-color: #4ba6de;color: white;}
+
+.funds-nodata-tips{margin-left: 15px;}
+.funds_starts{overflow: hidden;}
+.funds_starts li{color: #00588e;  cursor: pointer;  display: inline-block;height: 30px;line-height: 30px;min-width: 10px;padding: 0px 5px;text-align: center;margin: 0px 5px;margin-bottom: 5px;border-radius: 3px;}
+.funds_starts li:nth-child(1){min-width: 50px;}
+.funds_starts .fund_choice_active{background-color: #4ba6de;color: white;}
+
+.funds_logo_choice{font-size:0;margin-left: 130px;overflow: hidden;}
+.funds_logo_choice li{position: relative;cursor: pointer;display: inline-block;width: 182px;text-align: center;padding: 0px 0px;border: 1px solid transparent;margin-right: 1px;margin-bottom: 1px;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+.funds_logo_choice img{width:180px;height:70px;} 
+.funds_logo_choice .fund_logo_active{border: 1px solid #4ba6de;color: white;}
+.funds_logo_choice .fund_logo_active1{color: rgb(75, 166, 222);border-radius: 3px;;}
+.funds_logo_choice_amend li{width:auto;height:30px;color:#000;font-size:14px;border:none;text-align:center;margin:7px 5px 5px 0px;padding:0 5px;line-height:30px;}
+.funds_logo_choice_amend{padding-left:16px;}
+
+.funds_xiala_choice li{ color: #000000;cursor: pointer;display: inline-block;height: 50px;line-height: 50px;min-width: 20px;padding-right:25px;padding-left: 15px;text-align: center;margin-right: 20px;border-radius: 3px;background: url('../images/ico_07.png') no-repeat 97%;}
+.funds_xiala_choice .fund_xiala_active{background: url('../images/ico_08.png') no-repeat 97%;border:1px solid #a8d5ef;border-bottom: 1px solid white;}
+#funds_per_content > li{display: none;}
+.funds_xiala_content{margin-top: -1px;}
+.funds_xiala_content .funds_choice{margin:0px;}
+.funds_xiala_content .funds_choice{padding: 10px 0px; padding-left: 20px;border: 1px solid #a8d5ef;}
+.funds_xia_ico{width: 24px;height: 18px;background: url('../images/ico_07.png') no-repeat;display: inline-block;}
+.funds_hidde_title{text-align: center;}
+
+.funds_selected_wrap{padding:0px 15px 10px 15px;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+.funds_selected{padding:5px 0px;border-bottom: 1px solid #eef0f2;overflow: hidden;}
+.selection_criteria{margin-left:180px;overflow: hidden;}
+.selection_criteria li{font-size: 14px; background-color: #4ba6de;color: white;display: inline-block;height: 30px;line-height: 30px;min-width: 10px;padding: 0px 5px;text-align: center;margin: 5px 5px;border-radius: 3px;}
+.funds_selected_title{  color: #606060;width: 180px;height: 40px;line-height: 40px;float: left;}
+.funds_title_selection{ display: inline-block;color: #419dec;cursor: pointer;margin-left:15px;  height: 30px;line-height: 30px; display: none;}
+.selection_delete{cursor: pointer;float: right;position: relative;background: 0 0;height: 30px;width: 15px;margin-left: 10px;}
+.selection_delete:after{position: absolute;bottom: 8px;left: 0;content: '';height: 2px;width: 15px;background: white;-moz-transform: translate(0,-6px) rotate(45deg);-ms-transform: translate(0,-6px) rotate(45deg);-webkit-transform: translate(0,-6px) rotate(45deg);transform: translate(0,-6px) rotate(45deg);}
+.selection_delete:before{position: absolute;top: 8px;left: 0;content: '';height: 2px;width: 15px;background: white;-moz-transform: translate(0,6px) rotate(-45deg);-ms-transform: translate(0,6px) rotate(-45deg);-webkit-transform: translate(0,6px) rotate(-45deg);transform: translate(0,6px) rotate(-45deg);}
+
+.funds_keyserach_wrap{margin:10px 0px;height: 32px;}
+.funds_keyserach{border: 1px solid #e0dfdf;height: 30px;width: 250px;float: right;border-radius: 4px;}
+.funds_keyserach input{margin:2px 0 0 2px;border: 0px ;height: 25px;width: 210px;padding-left: 5px;}
+.icon_search{width: 16px;height: 16px;background: url('../images/icon_search.png') no-repeat;float: right;  margin: 7px 7px;cursor: pointer;}
+
+.funds_more_wrap{padding: 15px 25px;overflow: hidden;color: #2196f3;text-align: center;}
+.funds_more_wrap_show .funds_xia_ico{  background: url('../images/ico_08.png') no-repeat;}
+.fund_more_content{height: 0px;overflow: hidden;}
+#yfunds_hidde_title{display: inline-block;cursor: pointer;}
+
+.funds_serach_sum{color: #b7b5b5;margin-bottom:15px;}
+.funds_serach_digital{color: red;}
+
+.funds_search_tab{padding-left: 20px;font-weight:700;height:49px;  border-bottom: 1px solid #eef0f2;background-color: #f9f9f9;}
+.funds_search_tab li{border-top:3px solid #f9f9f9;border-left:1px solid #f9f9f9;border-right:1px solid #f9f9f9;cursor: pointer;float:left; font-size:14px;height: 46px; line-height:44px; display:inline-block; padding:0 15px;}
+.funds_search_tab .now{border-top:3px #ffa13d solid;border-right: 1px #e6e6e6 solid;border-left: 1px #e6e6e6 solid;border-bottom: 1px solid #ffffff;background-color:#ffffff;}
+.funds_fixed{position: fixed;z-index: 1;}
+
+.funds_search_th{font-weight:bold;background-color: #f6fafe;height: 60px;color: #000000;border-bottom: 2px solid #c7e7fe;text-align: left;}
+.funds_search_information td{  color: #000000;word-break:break-all;height:65px;padding: 0px 10px;border-bottom: 1px solid #eff1f3;}
+/*.funds_search_information tr:hover{background:#f4f8fd;}*/
+.funds_search_th th{height: auto;text-align: left;cursor: pointer;}
+.funds_search_information tr:nth-child(2n+3), .funds_search_Part tr:nth-child(2n+3){background-color: #f9fafb;}
+.funds_search_th .funds_search_active{color:#ff2c3c; }
+.funds_search_th .th_paixu:hover{color: #ff2c3c;}
+.funds_search_information .funds_search_name{width: 230px;text-align: left;padding-left: 10px;}
+.funds_search_information .funds_search_tdcenter{text-align: center;}
+.funds_search_half{width: 86px;text-align: center;}
+.funds_search_left{/*width: 75px;*/height: 50px;line-height: 49px;}
+.funds_search_ACC{width: 50px;}
+.funds_search_lastNav{width: 60px;float: left;padding-top: 10px;}
+.funds_search_NAV{width: 75px;text-align: center;}
+.funds_search_Growth{width: 110px;text-align: center;}
+.funds_search_left_Growth{float: left;height: 51px;line-height: 49px;/*width: 103px;*/}
+.funds_search_th .funds_search_data{width: 145px;text-align: center;}
+.funds_search_like{width: 100px;}
+.funds_search_lastest{width: 80px;}
+.funds_search_lastest_right {width: 70px;float: left;    padding-top: 10px;}
+.funds_search_rating{width:40px;}
+.funds_search_rating_left{width: 70px;float: left;padding-top: 17px;}
+.funds_search_fitch{width: 50px;}
+.funds_search_fitch_left{width: 40px;float: left;padding-top: 17px;}
+.funds_search_like img{margin: 0 5px;cursor: pointer;}
+.funds_search_information .funds_search_data_td{color: #000000;text-align: center;}
+.funds_search_information .funds_search_IsIn{width: 80px;text-align: right;padding-right: 25px;}
+.funds_search_lastest_one .funds_search_lastest_right {width: 56px;float: left;}
+.funds_search_lastest_one .funds_arrow_top {  top: 0px;}
+.funds_search_lastest_one .funds_arrow_down {  bottom: -15px;}
+.funds_arrow_down {cursor: pointer;position: absolute;bottom: 18px;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #a7a7a7;}
+.funds_arrow_top {cursor: pointer;position: absolute;top: 20px;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:4px solid #a7a7a7;}
+.funds_top_active{ border-bottom: 4px solid #fd9947;}
+.funds_down_active{ border-top: 4px solid #fd9947;}
+
+/*new table*/
+.funds-views-list:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+.funds_selected_wrap td{ text-align: center;color: #000000;word-break:break-all;height:65px;padding: 0px 10px;border-bottom: 1px solid #eff1f3;}
+.funds_search_information{float: left;position: relative;width: 550px;}
+.funds_search_information a{color: #000000;}
+.tdleft{text-align: left!important;}
+.funds_tables_th{background-color: #f6fafe;height: 59px;color: #000000;border-bottom: 2px solid #c7e7fe;}
+.funds_tables_th th{height: 59px;font-weight: bold;}
+.funds_tables_th_amend th{border-right:1px solid #fff;}
+.funds_tables_th_amend th:nth-child(6),.funds_tables_th_amend th:nth-child(7),.funds_tables_th_amend th:nth-child(9){border:none;}
+
+.funds_tables_caption{display: table-caption;}
+
+.funds_tables_fnames{width: 250px;text-align: left;padding-left: 10px;}
+.funds_tables_header{width: auto;padding: 0px 15px;text-align: center;position: relative;z-index: 4;}
+
+.funds_tables_w120{width: 190px;}
+.funds_tables_w210{width: 210px;}
+
+.funds_sort{cursor: pointer;}
+.funds_active_sort,.funds_sort:hover{color: #fd9947;}
+
+.funds_search_Part{display: none;min-width: 100%;float: left;position: relative;}
+.funds_search_partOne{width: 651px;}
+.funds_search_partTwo{width: 771px;}
+.funds_search_partThree{width: 460px;}
+.funds_search_partFour{width: 590px;}
+.funds_search_Part .funds_no_announcemts{width: 60px;text-align: center;}
+.funds_search_wrap{overflow:hidden;margin-bottom: 40px;position: relative;}
+.funds_search_content{width: auto;position: relative;}
+
+/*三角型排序*/
+.funds_arrow_wraps{display: inline-block;position: relative;}
+.arrow_down {cursor: pointer;position: absolute;bottom: -1px;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #a7a7a7;}
+.arrow_top {cursor: pointer;position: absolute;top:-9px;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:4px solid #a7a7a7;}
+.top_active{ border-bottom: 4px solid #fd9947;}
+.down_active{ border-top: 4px solid #fd9947;}
+
+.funds_tables_fixed{    position: fixed;top: 89px;}
+/*new table*/
+.funds_search_lastest .fund_per_width{width:54px;}
+.Necessary{background: url('../images/unNecessary.png') no-repeat;width: 13px;height: 14px;padding: 0px 0px;display: inline-block; }
+.funds_starts .fund_choice_active .Necessary ,.selection_criteria .Necessary{background: url('../images/Necessary.png') no-repeat;}
+.funds_search_left{float: left;}
+.funds_search_right{float: left;position: relative;height: 50px;margin-right: 10px;width:10px; }
+
+#listForm tr:nth-child(2n){background-color: #f9fafb;}
+.funds_currency_xiala{border: 1px solid #b4d0ea;height: 30px;width: 120px;float: left;border-radius: 4px;position: relative;}
+.funds_currency_xiala input{border: 0px ;height: 25px;width: 80px;padding-left: 5px;color: #4c5373;cursor: pointer;}
+.funds_currency_xiala ul{ z-index: 2;display: none; position: absolute;border: 1px solid #e0dfdf;width: 120px;overflow-x: hidden;overflow-y: auto;max-height: 200px;}
+.funds_currency_xiala li{  padding: 10px 5px;background: white;cursor: pointer;  color: #606060;}
+.funds_currency_xiala li:hover{  background-color: #0255C0;color: white;}
+.funds_currency_title{  float: left;height: 28px;margin-right: 10px;line-height: 28px;  color: #606060;}
+
+
+.funds_search_chart{width: 60px;height: 60px;}
+.funds_search_negative{color: red !important;}
+.funds_search_positive{color: #24b31d;}
+
+
+.funds_heart{cursor: pointer;background: url('../images/icon-herat-1.png') no-repeat;width: 26px;height: 26px;margin: 5px 0px 0 10px;float: right;}
+.funds_heart:hover{background: url('../images/icon-herat-11.png') no-repeat;}
+.funds_cart1{cursor: pointer;background: url('../images/icon-herat-1.png') no-repeat;width: 26px;height: 26px;margin-right: 5px;float: left;margin-left:35%;}
+.funds_cart{display: none;cursor: pointer;background: url('../images/icon-herat-3.png') no-repeat;width: 26px;height: 26px;  margin: 0 5px;float: right;}
+.funds_cart1hover{background: url('../images/icon-herat-02.png') no-repeat;}
+.funds_heart_active{background: url('../images/icon-herat-11.png') no-repeat;}
+.funds_cart_active{background: url('../images/icon-herat-11.png') no-repeat;}
+
+.funds_delete{cursor: pointer;background: url('../images/fund/delete_ico.png') no-repeat;width: 26px;height: 26px;  margin: 10px 0px 0 10px;float: right;display:inline-block;overflow:hidden;}
+.funds_view{cursor: pointer;background: url('../images/icon_search.png') no-repeat;width: 32px;height: 32px;  margin: 14px -10px 0 10px;float: left;display:inline-block;overflow:hidden;}
+.funds_cart2{cursor: pointer;background: url('../images/icon-cart-1.png') no-repeat;width: 26px;height: 26px;  margin: 7px 0px 0 10px;float: right;}
+.funds_cart2_active{background: url('../images/icon-cart-2.png') no-repeat;margin-top:9px;}
+
+.funds_tables_th .funds_tables_date{height: 60px;padding-top: 35px;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+.funds_cumulative_title{z-index: 99;position: absolute;width: 100%;text-align: center;font-weight: bold;padding-bottom: 9px;top: 8px;}
+
+/*基金详细页面*/
+.funds_per_choice{display: inline-block;}
+#per_all{color: #000000;cursor: pointer;display: inline-block;height: 30px;line-height: 30px;min-width: 50px;padding: 0px 5px;text-align: center;margin: 0px 5px;margin-bottom: 1px;border-radius: 3px;}
+.per_active{background-color: #4ba6de!important;color: white!important;}
+#funds_per_choice{display: inline-block;}
+#funds_per_content .per_child{visibility:hidden;width: 70px;}
+
+.funds_details_title_wrap{padding: 20px 25px;overflow: hidden;}
+.funds_details_wrap{padding:10px 0px;margin: 0px 25px;overflow: hidden;  border-bottom: 2px dotted #eef0f2;}
+.funds_details_title{font-weight: bold;font-size: 16px;}
+.funds_details_icon_wrap{float: right ;}
+.funds_details_icon{margin:0px 15px;cursor: pointer;}
+
+.funds_right_table{padding: 20px 0px;overflow: hidden;text-align: center;width: 100%;float: left;margin-right: 2%;}
+.funds_right_table .funds_price_table ,.funds_right_table .funds_title_price{margin:0px;}
+
+/*detail 分栏*/
+.funds_details_inct{width: 100%;}
+.funds_details_inct:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+.funds_details_left{float: left;width: 68%;padding-right: 2%;border-right: 1px solid #ebebeb;}
+.funds_details_right{float: right;width: 28%;}
+.funds_table_div{padding-bottom: 10px;border-bottom: 1px solid #eef0f2;}
+.funds_information_rating{  color: #828282;margin-top: 10px; margin-bottom: 15px;}
+.funds_information_rating span{  color: white;padding: 3px 5px;border-radius: 3px;margin-left: 10px;}
+.funds_table_ul{width: 100%;overflow: hidden;}
+.funds_table_ul li {float: left;background-color: #f6fafe; font-weight: bold; height: 50px; line-height: 50px;color: #000000; border-bottom: 2px solid #c7e7fe;}
+.funds_tul_name{width: 37%;text-align: left;padding-left: 3%;color: #333333;}
+.funds_tul_num{width: 30%;text-align: center!important;}
+.funds_table_div p{color: #333333;text-align: left;padding: 10px 0px;padding-left: 3%;}
+.funds_table_div ul{overflow: hidden;width: 100%;}
+.funds_table_div ul li{float: left;}
+.funds_tableul_name{color: #828282;margin-right: 10px;}
+.funds_ctul{display: table;width: 100%;}
+.funds_ctul li{display: table-cell;vertical-align: middle;padding: 10px 0px;padding-left: 3%;border-bottom: 1px solid #eef0f2;}
+.funds_right_table > .funds_price_table{margin-bottom: 30px;}
+/*等级颜色*/
+/*
+.funds_leveal_1{background-color: #388e2a;}
+.funds_leveal_2{background-color: #5aa422;}
+.funds_leveal_3{background-color: #7ebc19;}
+.funds_leveal_4{background-color: #a1d210;}
+.funds_leveal_5{background-color: #c8e106;}
+.funds_leveal_6{background-color: #e1c800;}
+.funds_leveal_7{background-color: #e19a00;}
+.funds_leveal_8{background-color: #e16400;}
+.funds_leveal_9{background-color: #e13c00;}
+.funds_leveal_10{background-color: #e10f00;}
+*/
+.funds_leveal_{cursor: pointer;background: url('../images/fund/fund_risk_00.png');background-repeat: no-repeat;background-size: 100% 100%;width: 46px;height: 22px;margin: 12px 0px 0 10px;float: right;}
+.funds_leveal_1{cursor: pointer;background: url('../images/fund/fund_risk_01.png');background-repeat: no-repeat;background-size: 100% 100%;width: 46px;height: 22px;margin: 12px 0px 0 10px;float: right;}
+.funds_leveal_2{cursor: pointer;background: url('../images/fund/fund_risk_02.png');background-repeat: no-repeat;background-size: 100% 100%;width: 46px;height: 22px;margin: 12px 0px 0 10px;float: right;}
+.funds_leveal_3{cursor: pointer;background: url('../images/fund/fund_risk_03.png');background-repeat: no-repeat;background-size: 100% 100%;width: 46px;height: 22px;margin: 12px 0px 0 10px;float: right;}
+.funds_leveal_4{cursor: pointer;background: url('../images/fund/fund_risk_04.png');background-repeat: no-repeat;background-size: 100% 100%;width: 46px;height: 22px;margin: 12px 0px 0 10px;float: right;}
+.funds_leveal_5{cursor: pointer;background: url('../images/fund/fund_risk_05.png');background-repeat: no-repeat;background-size: 100% 100%;width: 46px;height: 22px;margin: 12px 0px 0 10px;float: right;}
+.funds_leveal_6{cursor: pointer;background: url('../images/fund/fund_risk_06.png');background-repeat: no-repeat;background-size: 100% 100%;width: 46px;height: 22px;margin: 12px 0px 0 10px;float: right;}
+.funds_leveal_7{cursor: pointer;background: url('../images/fund/fund_risk_07.png');background-repeat: no-repeat;background-size: 100% 100%;width: 46px;height: 22px;margin: 12px 0px 0 10px;float: right;}
+.funds_leveal_8{cursor: pointer;background: url('../images/fund/fund_risk_08.png');background-repeat: no-repeat;background-size: 100% 100%;width: 46px;height: 22px;margin: 12px 0px 0 10px;float: right;}
+.funds_leveal_9{cursor: pointer;background: url('../images/fund/fund_risk_09.png');background-repeat: no-repeat;background-size: 100% 100%;width: 46px;height: 22px;margin: 12px 0px 0 10px;float: right;}
+.funds_leveal_10{cursor: pointer;background: url('../images/fund/fund_risk_09.png');background-repeat: no-repeat;background-size: 100% 100%;width: 46px;height: 22px;margin: 12px 0px 0 10px;float: right;}
+
+
+.funds_information_lastNav{float: left;width: 17%;}
+.funds_information_lastNav .funds_information_title{margin: 10px 0px;}
+
+.funds_detail_price{padding: 7px 0px;color: #a2a2a2;}
+.funds_details_information{margin: 0px 25px;overflow: hidden;}
+.funds_information_risk{overflow: hidden;padding: 10px 0px;}
+.funds_information_risk li{float: left;margin-right: 90px;}
+.funds_information_risk li p{float: left;}
+.funds_information_title{color:#828282;width: 35%;margin-right: 5%; }
+.funds_information_word{color: #333;width: 60%;}
+.funds_information_risk .funds_information_word{margin-left: 30px;}
+.funds_information_usd{line-height: 20px;font-size: 23px;margin: 9px 0px;}
+.funds_lastNav_percentage{color: #5dc94f;float: left;font-size: 16px;}
+.funds_information_percentage{  color: #5dc94f;text-align: left;}
+.funds_information_unpercentage{  color: #fe4724;text-align: left;}
+.funds_information_date{color: #d0d0d0;}
+
+.funds_information_contents{overflow: hidden;margin-bottom: 10px;border-left: 1px dotted #c9c9c9;padding-left: 1%;}
+.funds_information_contents li{width: 32%;float: left;}
+.funds_information_contents li div{overflow: hidden;padding: 7px 0px;}
+.funds_information_contents li p{float: left;}
+.funds_information_contents .funds_information_title{text-align: right;}
+.funds_details_contents{margin-top: 30px;}
+.funds_details_tab_wrap{padding: 0px 25px;padding-top: 10px;overflow: hidden;}
+.funds_details_tab{background-color: #f9f9f9;height: 50px;margin-bottom: 15px;color: #91a3a8;  border-bottom: 1px solid #eef0f2;}
+.funds_details_tab li{border-top:2px solid #f9f9f9;border-left:1px solid #f9f9f9;border-right:1px solid #f9f9f9;position: relative;cursor: pointer;float:left;font-size:14px;height: 46px;color: #5e5e5e;line-height:44px;display:inline-block;padding:0 15px;font-weight: bold;}
+.funds_details_tab .now{  color:#000000; border-top:2px #ffa13d solid;border-right: 1px #e6e6e6 solid;border-left: 1px #e6e6e6 solid;border-bottom: 1px solid #ffffff;background-color:#ffffff;}
+.funds_details_tab .now span{ position: absolute;width: 100%;height: 3px;background-color: white;bottom: -3px;left: 0px;}
+.funds_details_xiala{border: 1px solid #e0dfdf;height: 30px;width: 120px;float: right;border-radius: 4px;}
+.funds_details_xiala input{border: 0px ;height: 28px;width: 80px;padding-left: 5px;color: #4c5373;}
+
+.funds_details_price_time{float: left;padding: 20px 10px;margin-left: 10px;color: black;}
+.funds_details_price_wrap{overflow: hidden;background-color: #edf7fc;margin: 0px 25px;}
+.funds_details_price{overflow: hidden;padding: 10px 0px;margin: 0px 25px;/* float: left; */margin-left: 75px;}
+.funds_details_price div{float: left;margin: 0px 10px;color: black;cursor: pointer;padding: 9px 10px;border-radius: 4px;}
+.funds_details_price .funds_price_active{ color: rgb(75, 166, 222);}
+
+#funds_details_price_chart{width: 95%;height: 400px;margin:0 auto;}
+#funds_details_price_chart2{width: 95%;height: 400px;margin:0 auto;margin-top: 30px;}
+
+.funds_title_price{  padding-bottom: 15px;border-bottom: 1px solid #eef0f2;overflow: hidden;    text-align: left;margin-bottom: 10px;}
+.funds_title_bold{font-weight: bold;color: #3876b4;display: inline-block;}
+.funds_cumper{padding: 20px 0px;overflow: hidden;text-align: center;width: 48%;float: left;margin-right: 2%;}
+.funds_price_table{width: 100%;margin: 0px 1%;margin-bottom: 20px;}
+.funds_table_th th{background-color: #f6fafe;font-weight: bold;height: 50px;color: #000000;border-bottom: 2px solid #c7e7fe;text-align: left;}
+.funds_price_table td{  word-break: break-all;height: 50px;padding: 0px 10px;border-bottom: 1px solid #eff1f3;}
+.funds_price_peiod{width: 50%;color: #3e3e3e;text-align: left;padding-left: 10px;}
+.funds_price_Increase{  width: 50%;}
+
+.funds_details_part > div{display: none;/* overflow: hidden; */}
+.funds_facts_information{overflow: hidden;  border-bottom: 1px solid #eef0f2;padding-bottom: 20px;}
+.funds_facts_information li { width: 45%;}
+.funds_facts_information_list li{width: 100%;}
+.funds_facts_information_rows{width: 45%;float: left;}
+.funds_facts_information p{width: 45%;}
+.funds_facts_information_left > div{overflow: hidden;  padding: 10px 0px;}
+.funds_facts_information .funds_information_title{margin-right: 5%;text-align: right;float: left;}
+.funds_facts_information .funds_information_word{text-align: left;float: left;}
+.funds_facts_information_left{float: left;margin-left: 5%;}
+.funds_facts_information_right{float: right;margin-right: 5%;}
+.funds_facts_mainword{padding: 0px 5%;margin: 15px 0px;color: #606060;line-height: 30px;border-bottom: 1px solid #eef0f2;}
+#funds_facts_industrial_chart,#funds_facts_regional_chart{height: 400px;}
+#funds_facts_industrial_chart >div ,#funds_facts_regional_chart > div{overflow: visible!important;}
+.funds_title_fees{padding: 10px 25px;overflow: hidden;}
+
+.funds_details_contents_fees .funds_title{font-weight: bold;}
+
+.funds_fees_table{width: 96%;margin:0px 2%;margin-bottom: 60px;}
+.funds_fees_table th{background-color: #f6fafe;height: 30px;color: #000000;border-bottom: 2px solid #c7e7fe;text-align: left;}
+.funds_price_fees{width: 25%; height: 50px;border-bottom: 1px solid #eff1f3; line-height: 30px;color: #606060;padding: 5px 0px;padding-left: 1%;padding-right: 10%;}
+.funds_price_instructions{height: 50px;border-bottom: 1px solid #eff1f3; line-height: 30px;color: #606060;padding: 5px 0px;padding-left: 1%;}
+.funds_title_doc{padding:0px;margin-top:25px;margin-bottom: 20px;}
+
+.funds_dividend_table{width: 96%;margin:0px 2%;margin-bottom: 60px;}
+.funds_dividend_table th{text-align: center;}
+.funds_dividend_table td{word-break: break-all;height: 50px;border-bottom: 1px solid #eff1f3; line-height: 30px;color: #606060;text-align: center;}
+
+.funds_announcemts_table{width: 96%;margin:0px 2%;margin-bottom: 60px;}
+.funds_announcemts_table th{text-align: center!important;}
+.funds_announcemts_table td{word-break: break-all;height: 40px;border-bottom: 1px solid #eff1f3; line-height: 30px;color: #606060;padding: 5px 0px;;text-align: center;}
+
+.funds_announcemts_table .funds_no_announcemts{width: 10%;text-align: center;}
+.funds_announcemts_table .funds_title_announcemts{width: 70%;text-align: left;}
+.funds_announcemts_table .funds_time_announcemts{width: 20%;text-align: center;}
+
+.funds_talk_wrap{  padding: 0px 25px;overflow: hidden;}
+.funds_talk_content{width: 100%;resize: none;border: #e5e4e4 1px solid;margin-bottom: 25px;}
+
+.funds_talk_public{  color: #9e9e9e}
+#funds_talk_add{width: 140px;font-size: 1.1em;background-color: #018bd4;margin-top: 10px;border-radius: 3px;border: #018bd4 1px solid;float: right;  color: #fff;padding:7px 0px;cursor: pointer;}
+
+.funds_title_talk{padding: 20px 0px;margin: 20px 0px;margin-top:45px;border-bottom: 1px solid #eef0f2;overflow: hidden;color: #4c5373;}
+.funds_talk_touxiang,.funds_talk_key{float: left;}
+.funds_talk_touxiang img{width: 45px; height: 45px;float: left;margin-right: 15px;border-radius: 50%;border: 3px solid white;}
+
+.funds_talk_comments_div{overflow: hidden;}
+.funds_talk_comments_div p {display: inline-block;}
+.funds_talk_name{ color: #56aaf0;font-size: 15px;}
+.funds_talk_data{color: #cecece;font-size: 15px;margin-left: 15px;}
+.funds_talk_discuss{color: #494949;padding: 10px 0px;}
+.funds_talk_comments_repost{color: #b6b5b5}
+.funds_talk_comments_repost img{margin-right: 15px;  padding-top: 3px;float: left;}
+
+.funds_talk_comments li{padding: 20px 0px;overflow: hidden;border-bottom: 2px dotted #eef0f2;}
+.funds_talk_comments .funds_talk_revert{  padding-left: 40px;}
+
+.funds_comparison_wrap{padding: 10px 25px;overflow: hidden;}
+.funds_comparison_title{color: #606060;width: 150px;height: 30px;line-height: 30px;float: left;text-align: right;}
+
+.funds_keyword{float: left;margin-left: 20px;margin-right: 10px;}
+.funds_keyword_div{position: relative;cursor: pointer;padding-right: 25px;border: 0px;float: left;background: url('../images/xiala_ico.png') right no-repeat;border: #dcdadb 1px solid;border-radius: 3px;}
+.funds_keyword_div input{cursor: pointer;color: #606060;outline: none;height: 24px;line-height: 25px;width: 327px;border: 0px;padding-left: 5px;}
+.funds_keyword_xiala{display: none;border-right: 1px solid #e0dfdf;border-left: 1px solid #e0dfdf;border-bottom:  1px solid #e0dfdf;z-index: 9;width: 357px;color: black;position: absolute;}
+.funds_keyword_xiala li{background-color: white;height: 30px;line-height: 30px; padding-left: 5px;   color: #606060;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.funds_keyword_xiala li:hover{  background-color: #4ba6de;color: white;}
+.funds_comparison_xiala_wrap{padding: 10px 25px;}
+
+.funds_keyword_search{float: left;margin-left: 15px;padding-left: 10px;}
+
+.funds_keyword_search{float: left;margin-left: 15px;padding-left: 10px;}
+
+.funds_keyword_input{ padding-left: 5px; color: #606060;  width: 270px; border: #dcdadb 1px solid;border: #dcdadb 1px solid;height: 25px;line-height: 25px;border-radius: 3px;}
+.funds_keyword_search ul{display: none; border-right: 1px solid #e0dfdf;  border-left: 1px solid #e0dfdf; border-bottom:  1px solid #e0dfdf;  z-index: 9;width: 275px;color: black;position: absolute;}
+.funds_keyword_search ul li{cursor: pointer; padding-left: 5px;  color: #606060;background-color: white;height: 30px;line-height: 30px;padding-left: 5px;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.funds_keyword_search li:hover{  background-color:#4ba6de;color: white;}
+
+.funds_comparison_name{float: left;padding-left: 15px;width: 80%;}
+.funds_comparison_name li{padding: 10px 10px;border: 1px solid #97d1f5;  margin-bottom: 15px;margin-right: 15px;float: left;}
+.fundName_left{float: left;}
+.funds_comparison_name_deldete{cursor: pointer;float: right;position: relative;background: 0 0;height: 17px;width: 15px;margin-left: 10px;}
+.funds_comparison_name_deldete:after{position: absolute;bottom: 2px;left: 0;content: '';height: 2px;width: 15px;background: #4ba6de;  -moz-transform: translate(0,-6px) rotate(45deg);-ms-transform: translate(0,-6px) rotate(45deg);-webkit-transform: translate(0,-6px) rotate(45deg);transform: translate(0,-6px) rotate(45deg);}
+.funds_comparison_name_deldete:before{position: absolute;top: 1px;left: 0;content: '';height: 2px;width: 15px;background: #4ba6de;  -moz-transform: translate(0,6px) rotate(-45deg);-ms-transform: translate(0,6px) rotate(-45deg);-webkit-transform: translate(0,6px) rotate(-45deg);transform: translate(0,6px) rotate(-45deg);}
+
+#funds_comparison_chart{margin-top: 20px;border-top: 1px solid #eef0f2;width: 90%;height: 500px;}
+.funds_comparison_duoxuan{margin: 0px 2%;padding: 0px 3%;padding-top: 30px;padding-bottom: 15px;overflow: hidden;border-bottom: 1px solid #c4e5fe;}
+.funds_duoxuan_div{margin-bottom:20px;float: left;width: 25%;}
+.funds_fundname_wrap{overflow: hidden;margin: 0px 3%;margin-top: 15px;}
+.funds_fundname{float: left;color: #6ca0c8;font-weight: bold;}
+.funds_fundname_collection{float: left;margin-bottom: 10px;position: relative;}
+.funds_fundname_collection p{color: #606060;margin-bottom: 5px;padding-right: 20%;}
+.funds_fundname_collection img{margin-right: 15px;}
+.funds_fundname_collection_wrap{overflow: hidden;float: left;width: 100%;min-height: 57px;}
+.funds_fundname_collection .funds_heart{position: absolute;top:0;right:20px;}
+
+.funds_fundname_li_1{width: 50%;}
+.funds_fundname_li_2{width: 33%;}
+.funds_fundname_li_3{width: 25%;}
+.funds_fundname_li_4{width: 20%;}
+.funds_fundname_li_5{width: 16%;}
+
+.funds_fundname_li_2 .funds_heart{right:40px;}
+
+.funds_comparison_word{color: #6ca0c8;font-weight: bold;  padding: 0px 1%;margin: 0px 2%;height: 40px;line-height: 40px;margin-bottom: 15px;background: #f5fafe;}
+.funds_comparison_table{width: 96%;margin: 0 auto;}
+.funds_comparison_table tr{}
+.funds_comparison_table td{padding: 15px 0px;color: #333;}
+.funds_comparison_table .comparison_title{text-align: left;color: #828282;padding-left: 5%;}
+.funds_comparison_table .funds_market_rises{color:#fe4724;}
+.funds_comparison_table .funds_market_fell{color: #5dc94f;}
+
+.funds_checkbox {width: 20px;position: relative; float:left; margin-right:10px;}
+.funds_checkbox label {cursor: pointer; position: absolute; width: 20px; height: 20px; top: 0; left: 0; background: #fff; border:1px solid #dcdadb; border-radius:3px;}
+.funds_checkbox label:after {opacity: 0.2;content: '';position: absolute;width: 9px;height: 5px;background: transparent;top:4px;left:4px;border: 3px solid #fda316;border-top: none;border-right: none;-webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);-o-transform: rotate(-45deg);-ms-transform: rotate(-45deg);transform: rotate(-45deg);}
+/*.funds_checkbox label:hover::after {border: 3px solid #fda316;border-top: none;border-right: none;-webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);-o-transform: rotate(-45deg);-ms-transform: rotate(-45deg);transform: rotate(-45deg); opacity:1;}*/
+.funds_checkbox input[type=checkbox]:checked + label:after {opacity: 1;}
+.funds_box_active label:after {border: 3px solid #fda316;border-top: none;border-right: none;-webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);-o-transform: rotate(-45deg);-ms-transform: rotate(-45deg);transform: rotate(-45deg); opacity:1;}
+.funds_checkbox_font{  color: #9e9e9e;  display: block;margin-top: 4px;}
+
+
+/*chart*/
+.funds_chart_left{width: 69%;float: left;margin-left: 2%;}
+.funds_chart_right{width: 25%;float: right;margin-right: 2%;}
+
+#funds_main_chart{width: 100%;height: 500px;}
+
+#indicators_one{width: 100%;height:150px;}
+#indicators_two{width: 100%;height:150px;}
+#indicators_three{width: 100%;height:150px;}
+
+.funds_chart_choice_title{padding-left: 10px;margin-top: 25px;height: 30px;line-heightht: 30px;border-bottom: 2px solid #c7e7fe;color: #75a5cb;background-color: #f6fafe;}
+.funds_chart_right_xiala{float: right;  height: 46px;line-height: 46px;}
+.funds_chart_right_xiala select{width: 120px;}
+.chart_li_word{float: left;width: 25%;color: #444;}
+.funds_chart_choice > li{padding-left: 10px;  border-bottom: 1px solid #eef0f2;overflow: hidden;padding-top: 10px;}
+.chart_ul{overflow: hidden;float: left;width: 75%;}
+.chart_ul li{float: left;color: #006aaa;margin-right: 10px;margin-bottom: 10px;}
+.funds_chart_choice .chart_li_title{  height: 30px;color: #91a3a8;  line-height: 30px;padding-top: 0px;}
+.chart_ul a:visited, .chart_ul a:link{color:#006aaa;font-size: 13px;}
+.funds_chart_xiala{float: left;width: 100%;}
+.funds_chart_input input{width: 15%;text-align: center;}
+.funds_chart_button{padding: 15px 0px;  border-bottom: 1px solid #eef0f2;text-align: right;}
+.funds_chart_button button{cursor: pointer;background-color: #DBDBDB;}
+
+.funds_ifalist_sorting{overflow: hidden;margin-bottom:15px;  color: #3e3e3e;border-bottom: 1px solid #eef0f2;background-color: #f9f9f9;}
+.funds_ifalist_sorting li{cursor: pointer;float: left;font-size: 14px;padding: 0 17px;margin: 5px 0px;}
+.funds_ifalist_sorting li:nth-child(2n){border-left: 1px solid #dfe1e2;border-right: 1px solid #dfe1e2;}
+.funds_ifalist_sorting .funds_active{color: #fd9947;}
+.funds_ifalist_sorting li:hover{color: #fd9947;}
+.funds_ifalist_sorting p{float: left;position: relative;}
+.funds_ifalist_sorting p:nth-child(2n){margin-left: 5px;}
+.funds_ifalist_sorting .funds_arrow_down{  bottom: -14px;}
+.funds_ifalist_sorting .funds_arrow_top{  top: 4px;}
+.funds_ifalist_sorting .funds_top_active{ border-bottom: 5px solid #fd9947;}
+.funds_ifalist_sorting .funds_down_active{ border-top: 5px solid #fd9947;}
+
+
+/*ifalist*/
+.ifa_choose_condition{position: relative;background-color: white;width: 100%;padding:20px 30px 40px 25px;border-bottom:12px solid #ecf0f5;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+.ifa_choose_condition:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;}
+.ifa_list_ul{overflow: hidden;width: 100%;text-align: center;}
+.ifa_list_ul > li{cursor:pointer;display: inline-block;width: 32%;border: 1px solid #e6e6e6;background-color: white;position: relative;padding-top: 30px;margin-bottom: 10px;height:266px;}
+.ifa_list_ul .jumpintobox{height:auto;position: absolute;top:0;left:0;width:100%;background:#fff;}
+.ifa_list_ul .jumpintobox .jumpinto{position:relative;top:29px;}
+.ifa_list_ul li:hover .ifa_label{height:auto !important;min-height:81px;}
+.ifa_list_ul li:hover .jumpintobox{border:1px solid #e6e6e6;z-index:20;height:auto;padding-bottom:30px;border-top:0;margin-top:-1;margin-left:-1px;box-shadow: 1px 4px 12px #ccc7c7;}
+
+.ifa_list_ul > li:nth-child(3n+2){margin: 0px 1%;top:-10px;}
+.ifa_list_ul > li:hover{box-shadow: 1px 4px 12px #ccc7c7;position:relative;z-index:999999;}
+/*.ifa_list_ul > li:hover .aaa{height:280px;}*/
+.ifa_list_ul > li:hover .ifa_label{height:81px;background:#fff;}
+.ifa_wrap{overflow: hidden;width: 96%;margin:0 auto;padding: 25px 0px;border-bottom: 1px solid #eef0f2;}
+.ifa_touxiang_wrap{float: left;width: 10%;text-align: center;}
+.ifa_touxiang{width: 77px;height: 80px;border-radius: 50%;border: 3px solid white;float: left;}
+.ifalist_ico{overflow: hidden;margin-top: 10px;}
+.funds_small_home{cursor: pointer;background: url('../images/ico-small-home.png') no-repeat;background-size: 100% 100%;width: 15px;height: 15px;margin: 0 5px; display: inline-block;}
+.funds_samll_heart{cursor: pointer;background: url('../images/ico-small-heart.png') no-repeat;background-size: 100% 100%;width: 15px;height: 15px;;margin: 0 5px;display: inline-block;}
+.ifa_contents_wrap{float: left;width: 90%;}
+.ifa_contents_left{float: left;width: 45%;}
+.ifa_contents{overflow: hidden;}
+.ifa_list_name{font-weight: bold;font-size: 18px;margin-bottom: 5px;}
+.ifa_list_name > a{color: #000000;}
+.chat_ico{float: left;}
+.chat_arrow{float: left;border-left: 5px solid transparent;border-right: 5px solid transparent;border-top: 5px solid #51acf5;float: left;margin-top: 4px;margin-left:8px;}
+.chat_wrap{cursor: pointer;float: left;margin-left: 15px;position: relative;}
+.chat_select{;display: none;width: 100px;height: 40px;line-height: 45px;border: 1px solid #dbdcdd;position: absolute;top: 30px;left: -30px;background-color: white;}
+.chat_select em{display: block;border-width: 10px;position: absolute;top: -20px;left: 40px;border-style: solid;border-color: transparent transparent #dbdcdd transparent;font-size: 0;line-height: 0;}
+.chat_select span{    display: block;border-width: 10px;position: absolute;top: -18px;left: 40px;border-style: solid dashed dashed;border-color: transparent transparent white transparent;font-size: 0;line-height: 0;}   
+.chat_select img{cursor: pointer;margin-left: 9px;}
+.ifa_fans{color: #ddb992;margin-bottom: 10px;display: block;}
+.ifa_list_ifo{overflow: hidden;margin-bottom: 5px;padding: 15px 10px;text-align: left;}
+.ifa_list_form{color: #b8b8b8;font-size: 13px;margin: 7px 0px;}
+.ifa_list_information{float: left;margin-left: 10px;padding-top: 10px;}
+.ifa_matching_wrap{overflow: hidden;float: right;text-align: center;position: absolute;right: 8px;top: 7px;}
+.ifa_list_firm{color: #828282;padding: 0px 25px;margin-bottom: 20px;}
+.ifa_firm_img{float: right;margin-bottom: 5px;margin-right: 5px;width: 130px;}
+.list_frim_word{color: #000000;margin-left: 10px;}
+.ifa_list_matchingWord{color: #b8b8b8;font-size: 13px;}
+.ifa_list_matching{cursor: pointer;width: 30px;}
+.ifa_list_social{line-height: 31px;height: 29px;background-color: #4f7395;position: absolute;top: 0px;left: 0px;overflow: hidden;}
+.ifa_list_xie_bian{float: right;height: 29px;margin-left: 10px;}
+.ifa_social_fans{float: left;color: white;}
+.ifa_list_people_ocp{margin-left: 15px;padding: 10px 0px;float: left;margin-right: 7px;}
+.ifa_social_line{float: left;height: 16px;margin: 7px 0px;width: 1px;background: #8ca4ba;margin-left: 15px;}
+.ifa_label{overflow: hidden;margin-bottom: 5px;padding: 0px 25px;height: 81px;}
+.ifa_label p{float: left;padding:2px 5px;color: #ff9b19;border: 1px solid #ff9b19;margin-right: 10px;margin-bottom: 5px;cursor: pointer;}
+.ifa_describe{color: #939292;width: 95%;  line-height: 23px;}
+.ifa_list_portfolio{text-align: center;background: #f9f9f9;padding: 15px 0px;}
+.ifa_list_return{text-align: center;margin-bottom: 15px;}
+.ifa_return_title{display: inline-block;font-size: 18px;}
+.ifa_list_pornum{color: #fe4619;font-size: 24px;margin: 0px 10px;display: inline-block;}
+.ifa_list_fanjia{    float: left;padding: 7px 0px;margin-left: 10px;}
+.chat_ico_01{   float: left;padding: 7px 0px;margin-left: 15px;}
+.ifa_contents_right{float: left;  margin-left: 30%;}
+.ifa_contents_right p {text-align: center;color: #cecece;}
+.ifa_serach_sum{color: #b7b5b5;float: left;}
+.ifa_keyserach_wrap{margin:10px 0;overflow: hidden;line-height:32px;}
+.funds_list_selected{padding:5px 0px;border-bottom: 1px solid #d7dce4;overflow: hidden;}
+.ifa_more_wrap{padding: 15px 25px;overflow: hidden;color: #2196f3;text-align: center;}
+.ifa_keyserach{background-color: white;}
+.ifa_list_paging{text-align: center;}
+.ifa_list_paging > li{display: inline-block;}
+.ifa_pagint_some{}
+.ifa_pagint_num{cursor: pointer;width: 35px;height: 35px;line-height: 35px;background-color: white;border-radius: 50%;margin: 0px 1px;border: 1px solid #e4e4e4;}
+.ifa_pagint_now{background-color: #2d80ce;color: white;}
+.ifa_pagint_now a{color: white;}
+.no_list_tips{width:50%;margin:0 auto;display: none;text-align: center;}
+.notipswrap{display: inline-block;}
+.noResult{text-align: left;color: #00385a;margin: 80px auto 0;margin-bottom: 20px;}
+.noResultText{text-align:left;color: #00385a;margin: 20px auto 80px;}
+.ifa_list_more{background-color: #ebebeb;color: #999999;text-align: center;padding: 10px 0;margin-top: 20px;cursor: pointer;}
+.ifa_list_more:hover{color: #4f7395;box-shadow: 1px 4px 12px #ccc7c7;}
+
+/*滚动条*/
+.ps-container .ps-scrollbar-x-rail {position: absolute;bottom: 0px;height: 8px;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;}
+/*.ps-container:hover .ps-scrollbar-x-rail,
+.ps-container.hover .ps-scrollbar-x-rail {opacity: 0.6;filter: alpha(opacity = 60);}
+.ps-container .ps-scrollbar-x-rail:hover,
+.ps-container .ps-scrollbar-x-rail.hover {background-color: #eee;opacity: 0.9;filter: alpha(opacity = 90);}
+.ps-container .ps-scrollbar-x-rail.in-scrolling {background-color: #eee;opacity: 0.9;filter: alpha(opacity = 90);}*/
+.ps-container .ps-scrollbar-y-rail {position: absolute;right: 3px;width: 8px;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;opacity: 0;filter: alpha(opacity = 0);-o-transition: background-color .2s linear, opacity .2s linear;-webkit-transition: background-color .2s linear, opacity .2s linear;-moz-transition: background-color .2s linear, opacity .2s linear;transition: background-color .2s linear, opacity .2s linear;}
+.ps-container:hover .ps-scrollbar-y-rail,
+.ps-container.hover .ps-scrollbar-y-rail {opacity: 0.6;filter: alpha(opacity = 60);}
+.ps-container .ps-scrollbar-y-rail:hover,
+.ps-container .ps-scrollbar-y-rail.hover {background-color: #eee;opacity: 0.9;filter: alpha(opacity = 90);}
+.ps-container .ps-scrollbar-y-rail.in-scrolling {background-color: #eee;opacity: 0.9;filter: alpha(opacity = 90);}
+.ps-container .ps-scrollbar-x {position: absolute; bottom: 0;height: 8px;background-color: #aaa;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;-o-transition: background-color .2s linear;-webkit-transition: background-color.2s linear;-moz-transition: background-color .2s linear;transition: background-color .2s linear;}
+.ps-container.ie6 .ps-scrollbar-x {font-size: 0;}
+.ps-container .ps-scrollbar-x-rail:hover .ps-scrollbar-x,
+.ps-container .ps-scrollbar-x-rail.hover .ps-scrollbar-x {background-color: #999;}
+.ps-container .ps-scrollbar-y {position: absolute;right: 0;width: 8px;background-color: #aaa;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;-o-transition: background-color .2s linear;-webkit-transition: background-color.2s linear;-moz-transition: background-color .2s linear;transition: background-color .2s linear;}
+.ps-container.ie6 .ps-scrollbar-y {font-size: 0;}
+.ps-container .ps-scrollbar-y-rail:hover .ps-scrollbar-y,
+.ps-container .ps-scrollbar-y-rail.hover .ps-scrollbar-y {background-color: #999;}
+.ps-container.ie .ps-scrollbar-x,
+.ps-container.ie .ps-scrollbar-y {visibility: hidden;}
+.ps-container.ie:hover .ps-scrollbar-x,
+.ps-container.ie:hover .ps-scrollbar-y,
+.ps-container.ie.hover .ps-scrollbar-x,
+.ps-container.ie.hover .ps-scrollbar-y {visibility: visible;}
+/*strategies*/
+@media screen and  (max-width: 1280px){
+    .strategies_list_fund{float:none !important;height:21px;display: inline-block;margin-top:8px;}
+    /*.strategies_list_ul li{height:328px !important;}*/
+}
+.strategies_list_wrap{background-color: white;padding:0px 30px 20px 30px;overflow:hidden;min-height:655px;}
+.strategies_list_wrap:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;}
+.strategies_list_ul{overflow: hidden;width: 100%;}
+.strategies_list_ul > li{width: 32%;float: left;margin-right: 1%;overflow: hidden;border: 1px solid #e3e3e3;margin-bottom: 20px;color:#fff;}
+.strategies_list_ul > li:hover{border:1px solid #1897cc;}
+.strategies_list_ul > li:hover .strategies_list_name{color:#4ba6de;}
+.strategies_list_ico{overflow: hidden;width: 100%;line-height: 15px;padding-top: 14px;position:relative;}
+.strategies_eve_num{display: inline-block;padding-top: 3px;margin-right: 10px;color: #cccccc;font-size: 13px;}
+.strategies_fav_img{float: right;cursor: pointer;position: absolute;right:20px;top:14px;}
+.strategies_fav_imghover{background: url('../images/icon-herat-01.png') no-repeat;}
+.strategies_word_wrap{overflow: hidden;margin-bottom: 10px;margin-top:11px;}
+.amend-type{float:left;width:20px;height:20px;background: url('../images/header/setting_01.png') no-repeat;background-size:100%;cursor:pointer;margin-top:5px;}
+.strategies_list_ptos{width:100%;height:126px;}
+.strategies_list_name{font-size: 16px;color: black;height:30px;line-height: 24px;padding:0 20px;width:70%;font-weight: 600;white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.strategies_list_fund{height:19px;text-align: center;font-size: 14px;color: #ff9900;border:1px solid #feb557;float:right;padding:0 8px;line-height:20px;}
+.strategies_list_goal{color: #b8b8b8;float:left;line-height:19px;font-size:14px;min-height: 20px;}
+.strategies_list_word{height:41px;line-height: 20px;margin-top: 5px;font-size: 14px;color:#000;padding:0 20px;overflow: hidden;}
+.strategies_list_inf{background: #1897cc;overflow: hidden;padding: 4px 15px 10px 15px;line-height: 32px;height:24px;margin-top:10px;}
+.strategies_inf_img{width: 24px;height: 24px;border-radius: 50%;float: left;margin-right: 10px;margin-top:3px;}
+.strategies_list_ifaname{float: left;color: #fff;font-size: 13px;font-weight:200;max-width:calc(100% - 177px);}
+.strategies_list_ifaname_amend{margin:0;}
+.strategies_time_img{float: right;padding: 7px 0px;margin-right: 5px;}
+.strategies_time_word{float: right;font-size: 13px;font-weight:200;color:#fff;}
+.strategies_time_word_amend{margin:0;}
+.strategies_detail_fav{text-align: right;}
+.strategies_detail_title{font-size: 22px;}
+.strategies_detail_inf{overflow: hidden;margin-top: 10px;padding-bottom: 15px;border-bottom: 1px solid #e7e9ed;line-height: 32px;}
+.strategies_inf_left{float: left;overflow: hidden;}
+.strategies_inf_right{float: right;overflow: hidden;}
+.strategies_date_Issued{color: #cccccc;float: right;margin-right: 10px;}
+.strategies_inf_right .strategies_eve_num{padding-top: 0px;}
+.strategies_top_word{overflow: hidden;margin-top: 15px;line-height: 21px;font-size:14px}
+.strategies_inf_goal{float: left;width: 49%;}
+.strategies_inf_reason{float: right;width: 49%;}
+.strategies_inf_subitability{margin-bottom: 30px;}
+.strategies_inf_title{color: #5c89b1;font-size: 16px;margin-bottom: 10px;font-weight: 600;}
+.strategies_inf_word{overflow: hidden;padding-top: 20px;margin-bottom: 30px;}
+.strategies_detail_sum{background-color: #ffac2f;color: white;padding: 3px 6px;border-radius: 7px;margin-left: 15px;font-size: 14px;}
+.strategies_detail_list{overflow: hidden;height:40px;width: 100%;line-height: 40px;border-bottom: 1px solid #e7e9ed;    margin-bottom: 20px;}
+.strategies_detail_list_amend{padding-top:20px;}
+.strategies_detail_product{float: left;font-size: 18px;position:relative;z-index:4;}
+.strategies_detail_product_amend{font-size: 18px;font-weight: 900;}
+.strategies_more{float: right;cursor: pointer;}
+.strategies_List{width: 100%;float: none;margin-bottom: 40px;}
+.strategies_more, .strategies_word_more{float: right;cursor: pointer;width: 30px;height: 30px; background: url('../images/fund/xiala_ico.png') no-repeat;}
+.strategies_narrow .strategies_more, .strategies_brief_active .strategies_word_more{ background: url('../images/fund/xiala_ico_2.png') no-repeat}
+.strategies_narrow{min-height: 20px;height:20px}
+.strategies_word_brief{padding-top: 15px;overflow: hidden;}
+.strategies_brief_active{height: 31px;}
+#strategies_list{overflow: hidden;padding:20px 30px}
+.conservative-time-choose_amend{overflow: visible;border:none;background:#eff7ff;padding:0;height:42px;line-height:42px;margin-bottom:36px;}
+.conservative-time-title_amend{margin-left:27px;}
+.line-add-label{position: absolute;padding-bottom: 10px;background-color: white;width: 130px;left: 52%;top: 40px;border: 1px solid #e4e4e4;box-shadow: 0px 0px 2px #ccc7c7;padding-left: 10px;}
+.line-add-label:before{content: "";display: block;border-color: transparent;border-right-color: #ebebeb;border-width: 8px;border-style: solid;width: 0;height: 0;position: absolute;top: 3px;left: -17px;}
+.line-add-label:after{content: "";display: block;border-color: transparent;border-right-color: #ffffff;border-width: 8px;border-style: solid;width: 0;height: 0;position: absolute;top: 3px;left: -14px;}
+.clickmore{text-align: center;height:30px;line-height:30px;background-color: #ebebeb;color: #999999;text-align: center;padding: 5px 0;margin-top: 20px;cursor: pointer;}
+.clickmore:hover a{color: #4f7395;}
+.clickmore:hover{box-shadow: 1px 4px 12px #ccc7c7;}
+
+/*portfolio*/
+.wmes-detail-title{font-size:26px;overflow:hidden;line-height:32px;margin-bottom:10px;}
+.portfolio_list_wrap{background-color: white;padding: 20px 30px;margin-bottom: 30px;}
+.portfolio_list_wrap:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;}
+.portfolio_list_ul{overflow: hidden;width: 100%;}
+.portfolio_list_ul li:hover{border:1px solid #1e7dde;}
+.portfolio_list_ul li:hover .portfolio_name{color:#4ba6de;}
+.portfolio_list_ul > li{width: 32%;float: left;position: relative;margin-right: 1%;overflow: hidden;border: 1px solid #e6e6e6;margin-bottom: 20px;}
+.portfolio_fav_img{float: right;cursor: pointer;position: absolute;top: 10px;right: 10px;}
+.portfolio_fav_img_amend{height:21px;width:23px;background: url('../images/icon-herat-1.png') no-repeat;float: right;cursor: pointer;position: absolute;top: 14px;right: 10px;}
+.portfolio_fav_img_amend1{height:21px;width:23px;background: url('../images/icon-herat-1.png') no-repeat;float: right;cursor: pointer;position: absolute;top:4px;right:9px;}
+.portfolio_fav_img_amendhover{background: url('../images/icon-herat-01.png') no-repeat;}
+.myProposalList .portfolio_fav_img_amend1active{background: url('../images/icon-herat-11.png') no-repeat;}
+.portfolio_fav_img_amend1active{background: url('../images/icon-herat-11.png') no-repeat;}
+.portfolio_list_contents{padding: 15px 25px 0 25px;margin-bottom:32px;}
+.portfolio_name{font-size: 20px;line-height: 20px;height:40px}
+.portfolio_name a{color: #000000;}
+.portfolio_list_contents_amend{padding:14px 12px 0 12px;margin-bottom:0;}
+.portfolio_name_amend{font-size:16px;font-weight:900;height:30px;margin:0;width:90%;white-space:nowrap; overflow:hidden;text-overflow: ellipsis}
+.portfolio_list_ul .strategies_list_inf{margin-top:0;background:#1e7dde;margin-top: 16px;}
+.portfolio_list_ul .strategies_list_fund{padding:0;margin:0;padding:0 8px;font-size:10px;line-height:21px;}
+.portfolio_list_ul .strategies_word_wrap{padding:0;margin:0;min-height:60px;}
+.portfolio_list_ul .strategies_list_goal{font-size:14px;margin:0;}
+.funds_choice_select{width:265px;height:32px;color:#404;border:1px solid #e3e3e3;float:left;}
+.funds_choice_Performance{float:left;height:30px;line-height:30px;margin-left:76px;color:#999999;}
+.portfolio_total{margin: 15px 0px;text-align: center;}
+.portfolio_total_amend{height:109px;overflow: hidden;}
+.portfolio_total:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;}
+.portfolio_index_wrap{position: relative;height: 38px;width: 68px;display: inline-block;margin-right: 45px;}
+.portfolio_index_wrap_amend{width:69%;height:100px;float:left;margin-right:1%;font-size:14px;color:#333333;}
+.portfolio_index_wrap_amendcon{min-height:36px;max-height:54px;background:#f4f9fd;box-shadow: 3px 3px 5px #e4e3e3;border-radius:4px;padding:12px;line-height:21px;overflow: hidden;text-align: left;}
+.portfolio_porimg{position: absolute;left: 0px;}
+.portfolio_pointer{position: absolute;left: 19px;top: 12px;}
+.portfolio_return{display: inline-block;text-align: center;}
+.portfolio_return_amend{width:30%;float:left;}
+.portfolio_percent{color: #5dc94f;font-size: 27px;padding: 5px 0px;}
+.my-cassets-tab{overflow: hidden;background-color: #edf7fc;padding: 15px 20px;line-height: 25px;/*margin:31px 7% 35px 39px;*/}
+.period-time{float: left;margin-right: 25px;}
+.my-period-list > li{float: left;padding: 0px 13px;border-radius: 3px;text-align: center;cursor: pointer;}
+.my-period-list .period-active{background-color: #36b0fd;color: white;}
+#porfolios-chart{width:100%;}
+.Allocation_Overview_con{width:100%;height:400px;}
+#Allocation_Overview_left{height:400px;float:left;width:33%}
+#Allocation_Overview_center{height:400px;float:left;width:33%}
+#Allocation_Overview_right{height:400px;float:left;width:33%}
+.funds_search_tdcenter_percent{width:100%;height:65px}
+.subscribe{cursor: pointer;width:91px;height:39px;border-radius:2px;background:#2977c0;color:#fff;text-align: center;line-height:39px;float:right;margin-bottom:50px;margin-right:10px;}
+.subscribe:hover{background:#2d80ce;}
+
+.portfolio_percent_amend{/* color: #5dc94f; */font-size: 19px;padding: 5px 0px;margin-top:35px;margin-bottom:0;padding-left:9px;}
+.portfolio_return_word{color: #adadad;font-size: 13px;padding-left:9px;padding-top:8px;}
+.portfolio_return_amend .portfolio_return_word{margin:0;}
+.porfolios_invest{float: left;width: 170px;}
+.porfolios_total_right{float: right;width: 100%;}
+.porfolios_risk_type{float: right;margin-right: 10px;margin-left: 40px;}
+.porfolios_riskimg{float: left;width: 70px;}
+.porfolios_total_return{float: right;margin-right: 10px;color: #33CC00;font-size: 22px;}
+.porfolios_return{float: right;margin-right: 10px;margin-left: 30px;}
+#porfolios-chart{width: 90%;margin: 0 auto;height: 400px;}
+
+.modify_ico{float: left;margin-right: 10px;}
+.garbage_ico{margin-top: -3px;float: left;}
+
+.risk-analysis-right {float: left;width: 49%;}
+.risk-analysis-left {float: left;width: 49%;}
+.risk-analysis-rows {float: left;margin-right: 0.5%;text-align: center;width: 49.5%;}
+.risk-analysis-title {font-weight: bold;padding: 10px;}
+.risk-analysis-lword {padding: 10px;}
+.risk-analysis-lword:nth-child(2n) {background-color: #f3f3f3;}
+
+.client-list-number-wrap{background-color: #f2f9ff;padding: 0px 0 0px 10px;line-height: 40px;height: 40px;}
+.client-list-number-title{display: inline-block; color: #606060; }
+.client-list-number-sum{display: inline-block; font-size: 16px; margin=: 5px; margin: 0 5px;}
+.client-list-number-brackets{display: inline-block; color: #333333; }
+.client-list-number-brackets > span{color: black; font-size: 16px; }
+.client-list-number-aum{display: inline-block; margin-left: 40px; color: #606060; }
+.client-list-number-aum > span{color: black; font-size: 16px; margin: 0px 3px; }
+.client-list-more-choice{float: right;position: relative;padding: 0px 20px;border: 1px solid #eef0f2;cursor: pointer;height: 25px;line-height: 25px;margin: 7px 10px;}
+.client-more-screen-ico{cursor: pointer;position: absolute;top: 11px;right: 8px;width: 0;height: 0;border-left: 4px solid transparent;border-right: 4px solid transparent;border-top: 4px solid #a7a7a7;}
+.client-list-more-active .client-more-screen-ico{border-left: 4px solid transparent;border-right: 4px solid transparent;border-top: 4px solid transparent;border-bottom: 4px solid #a7a7a7;top: 6px;}
+.client-more-screen-wrap{height:0;overflow:hidden;width:100%;}
+
+@media screen and  (max-width: 1280px){
+    .portfolio_percent_amend{margin-top:15px;}
+    .portfolio_list_ul .strategies_list_fund{margin-top:4px;}
+    .fund_xiala_active .funds_choice{margin-left:0;}
+/*  #funds_per_choice{margin-left:40px;margin-top:8px;}*/
+}
+/*基金*/
+.funds-screnner-rows{background-color: white;padding: 15px 15px;margin-bottom: 20px;}
+#j-criteria{width: 180px;}
+.screener-a-title{padding-bottom: 10px;text-align: right;float: right;}
+.screener-list-edit{margin: 8px 0;margin-right: 5px;width: 16px;height: 16px;background: url('../images/ifa/modify_ico.png') no-repeat;float: left;cursor: pointer;background-size: 100% 100%;}
+.screener-group-edit .screener-list-edit{background: url('../images/ifa/save.png') no-repeat;background-size: 100% 100%;}
+.screener-group-edit .srenner-criteria-input {border: 1px solid #d8d8d8; }
+.screener-list-close{margin: 6px 0;margin-right: 5px;width: 18px;height: 18px;background: url('../images/ifa/garbage_ico.png') no-repeat;float: left;cursor: pointer;background-size: 100% 100%;}
+.screener-a-title a{color: #299cfd;padding-right: 20px;text-align: center;display: block;}
+.screener-a-title a:hover{color: #2977c0;}
+.srenner-a-rows{position: relative;float: left;}
+.srenner-criteria{overflow: hidden;background-color: white;box-shadow: 1px 1px 5px #909090;position: absolute;top: 25px;display: none;z-index: 1;right: 0px;}
+.srenner-criteria-show .srenner-criteria{display: block;}
+.srenner-criteria-rows{text-align: center;overflow:hidden;width: 185px;}
+.srenner-criteria-input{cursor: pointer;float: left;border: 1px solid transparent;width: 120px;line-height: 30px;padding-left: 5px;margin: 0px 10px 0px 0px;float: left;}
+.screener-sum-wrap{line-height: 30px;}
+.screener-sum-wrap:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+.screener-title{font-size: 18px;padding-left: 5px;float: left;}
+.screener-matches-wrap{float: right;overflow: hidden;}
+.screener-matches-pad{padding-right: 100px}
+.screener-matches{float: left;margin-left: 100px;}
+.screener-matches{color: #828282;}
+.screener-matches-sum{margin-left: 15px;font-size: 18px;color: black;}
+.screnner-title-ranking{color: #ff8106;margin-right: 15px;}
+.screener_narrow{height: 30px;}
+.screener-xiala{float: left;margin-left: 65px;cursor: pointer;width: 30px;height: 30px; background: url('../images/fund/xiala_ico.png') no-repeat;}
+.screener_narrow .screener-xiala{ background: url('../images/fund/xiala_ico_2.png') no-repeat}
+.funds-screener-choose{margin-top: 15px;border-top: 1px solid #ebebeb;overflow: hidden;}
+.screener-choose-left{float: left;width: 300px;margin-right: 25px;overflow: hidden;background-color: #f8f8f8;}
+.screener-condition li{padding: 15px 0px;padding-left: 15px;cursor: pointer;}
+.screener-condition-num{float: right;margin-right: 15px;color: #8c8c8c;}
+.screener-condition .now{color: white;background-color: #70bdfe;}
+.screener-condition .now .screener-condition-num{color: white;}
+/*.choose-already-top .now{color: #ff8106;}*/
+.choose-already-bottom{overflow: hidden;position: relative;}
+.screener-choose-right{overflow: hidden;}
+.attributes-house-ul{    margin-top: 15px;}
+.attributes-house-ul li{color: #000000;cursor: pointer;display: inline-block;height: 30px;line-height: 30px;min-width: 30px;padding: 0px 5px;text-align: center;margin: 0px 5px;margin-bottom: 5px;border-radius: 3px;}                 
+.attributes-house-ul .attributes-house-active {background-color: #4ba6de;color: white;}
+.choose-already{padding-top: 20px;display: none;}
+.choose-already:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+.choose-already-active{display: block;}
+.choose-already-li{float: left;text-align: left;width: 22%;margin-right: 2%;margin-bottom: 20px;padding: 13px 0px;}
+.choose-already-top{overflow: hidden;padding: 20px 0px;border-bottom: 1px solid #ebebeb;}
+.choose-already-top p{color: #299cfd;}
+.choose-already-top p:hover{color: #2977c0;}
+.choose-already-select , .choose-already-remove{float: left;margin-left: 5px;margin-right: 35px;color: #000000}
+.choose-already-word{height: 29px;cursor: pointer;overflow: hidden;position: relative;padding-left: 15px;border-radius: 5px;padding-right: 35px;}
+.choose-already-close{display: none;position: absolute;background: 0 0;right: 30px;cursor: pointer;height: 30px;width: 20px;top: 0px;right: 10px;}
+.choose-already-close:after, .choose-already-close:before {content: '';background: white;height: 2px;width: 20px;}
+.choose-already-close:after{-moz-transform: translate(0,-6px) rotate(45deg);-ms-transform: translate(0,-6px) rotate(45deg);-webkit-transform: translate(0,-6px) rotate(45deg);transform: translate(0,-6px) rotate(45deg);position: absolute;bottom: 0px;left: -1px;}
+.choose-already-close:before{-moz-transform: translate(0,6px) rotate(-45deg);-ms-transform: translate(0,6px) rotate(-45deg);-webkit-transform: translate(0,6px) rotate(-45deg);transform: translate(0,6px) rotate(-45deg);position: absolute;top: 16px;left: -1px;}
+.choose-already .unchoose{ border:1px solid #ebebeb;}
+.choose-already .now {border:1px solid #ebebeb;background-color: #4ba6de;color: white;}
+.choose-already-top p {padding:6px;cursor:pointer; border-radius: 3px;}
+.choose-already .now .choose-already-close{display: block;}
+.choose-house-li{  color: #000000;cursor: pointer;display: inline-block;height: 30px;line-height: 30px;min-width: 10px;padding: 0px 5px;text-align: center;margin: 0px 5px;margin-bottom: 5px;border-radius: 3px;}
+.choose-house-active{background-color: }
+.attributes-title{font-size: 16px;float: left;}
+.attributes-logo-choice li{position: relative;cursor: pointer;display: inline-block;  width: 130px;text-align: center;padding: 0px 0px;border: 1px solid #dddddd;margin-right:-1px;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+.attributes-logo-choice img{width: 90px;height: 40px;  padding-top: 10px;} 
+.attributes-logo-choice .attributes-logo-active{border: 3px solid #ffb657;color: white;}
+.screener-attributes-wrap{margin-top: 25px;border-top: 1px solid #ebebeb;padding-top: 10px;position: relative;}
+.screener-attributes-wrap > li{display: none;border-bottom: 1px solid #d9d9d9;margin: 10px 0px;}
+.screener-attributes-wrap > .screener-attributes-show{display: block;}
+.attributes-wrap{border: 5px solid #f5f5f5;padding: 20px 15px;position: relative;padding-right: 90px;}
+.attributes-close{position: absolute;right: 0px;top: 0px;height: 100%;width: 50px;background: #f5f5f5;}
+.attributes-close-ico{position: absolute;background: 0 0;right: 30px;cursor: pointer;height: 26px;width: 30px;top: 43%;left: 13px;}
+.attributes-close-ico:after, .attributes-close-ico:before {content: '';background: #fd4b20;height: 2px;width: 26px;}
+.attributes-close-ico:after{-moz-transform: translate(0,-6px) rotate(45deg);-ms-transform: translate(0,-6px) rotate(45deg);-webkit-transform: translate(0,-6px) rotate(45deg);transform: translate(0,-6px) rotate(45deg);position: absolute;bottom: 8px;left: 0px;}
+.attributes-close-ico:before{-moz-transform: translate(0,6px) rotate(-45deg);-ms-transform: translate(0,6px) rotate(-45deg);-webkit-transform: translate(0,6px) rotate(-45deg);transform: translate(0,6px) rotate(-45deg);position: absolute;top: 4px;left: 0px;}
+.attributes-close-ico:hover:after, .attributes-close-ico:hover:before{background: #f3c334;}
+.screener-add-contains{overflow: hidden;border: 1px solid #e0e0e0;}
+.screener-contains-left{float:left;width: 300px;margin-bottom: 20px;border-right: 1px solid #e0e0e0;}
+.screener-contains-left > li{cursor: pointer;padding: 15px 0px;padding-left: 5px;border-bottom: 1px solid #e0e0e0;margin-bottom: -1px;text-align: left;}
+.screener-contains-left > .screener-contains-active{background: #efeeeb;}
+.screener-contains-right{float: left;overflow: hidden;width: 350px;}
+.screener-add-attributes{display: none;position: fixed;top: 30%;z-index: 9999;text-align: center;width: 100%;}
+.screenr-criteria-ul{display: none;margin-bottom: 20px;margin-left: -1px;height: 282px;overflow-y: auto;}
+.screenr-criteria-ul > li{overflow: hidden;border-bottom: 1px solid #e0e0e0;padding: 10px 5px;margin-bottom: -1px;}
+.screenr-criteria-title{float: left;margin-right: 15px;line-height: 22px;width: 180px;text-align: left;}
+.screener-criteria-button{display: none;background: #4781aa;color: white;width: 100px;padding: 8px 0px;margin-right: 15px;border-radius: 3px;float: right;}
+.screener-criteria-button:hover{background: #2d80ce;}
+.screener-hide-button{display: none;background: #737373;color: white;width: 100px;padding: 8px 0px;margin-right: 15px;border-radius: 3px;float: right;}
+.screener-hide-button:hover{background: #7d7d7d;}
+.screener-block-button{display: inline-block;}
+.screener-attributes-button-acitve{position: fixed;bottom: 10px;}
+.fundsadd-space-mask{display: none;position: fixed;top: 0px;left: 0px;background-color: black;height: 100%;width: 100%;opacity: 0.6;z-index: 99;}
+.fund-criteria-close{position: absolute;background: 0 0;right: 30px;cursor: pointer;height: 26px;width: 30px;top: 4px;right: 11px;}
+.fund-criteria-close:after, .fund-criteria-close:before{content: '';background: #fd4b20;height: 2px;width: 26px;}
+.fund-criteria-close:after{-moz-transform: translate(0,-6px) rotate(45deg);-ms-transform: translate(0,-6px) rotate(45deg);-webkit-transform: translate(0,-6px) rotate(45deg);transform: translate(0,-6px) rotate(45deg);position: absolute;bottom: 6px;left: 3px;}
+.fund-criteria-close:before{-moz-transform: translate(0,6px) rotate(-45deg);-ms-transform: translate(0,6px) rotate(-45deg);-webkit-transform: translate(0,6px) rotate(-45deg);transform: translate(0,6px) rotate(-45deg);position: absolute;top: 5px;left: 3px;}
+.attributes-draw-wrap{overflow: hidden;}
+.attributes-draw-wrap input{border:1px solid #e3e3e3;width: 90px;height: 30px;margin-right: 5px;float: left;padding-left: 10px;}
+.attributes-draw{float: left;}
+.screener-wrap-attributes{display: inline-block;background: #fffdfd;border: 5px solid #f5f5f5;padding: 20px 15px;position: relative;padding-right: 90px;}
+.attributes-draw-wrap span{float: left;line-height: 34px;}
+.attributes-date-ul{overflow: hidden;text-align: center;width: 100%;margin-top: 15px;}
+.attributes-date-ul > li{cursor: pointer;float: left;background: #ebf7fc;padding: 15px 0px;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+.attributes-date-ul > .attributes-date-active{background-color: #4ba6de;color: white;position: relative;}
+.attributes-date-active .choose-already-close{display: block;}
+.attributes-date-active .choose-already-close:before{}
+.attributes-date-active .choose-already-close:after{}
+.screener-attributes-button{margin: 25px 0px;overflow: hidden;}
+.attributes-button{background: #2d80ce;color: white;padding: 13px 30px;margin-right: 15px;border-radius: 4px;float: left;}
+.attributes-button:hover{background:#2977c0;}
+#view-matches{float: right;}
+.screener-watchlist{overflow: hidden;width: 100%;margin-top: 20px;}
+.screener-watchlist > li{float: left;width: 25%;border:1px solid #dddcdc;padding: 25px 2%;margin-right: 4%;min-height: 189px;}
+.watchlist-title{font-size: 18px;margin-bottom: 22px;line-height: 22px;}
+.watchlist-word{color: #a7a7a7;line-height: 18px;}
+.watchlist-view{text-align: right;margin-top: 35px;color: #0b9bff;cursor:pointer}
+.tchlist-view{text-align: right;margin-top: 35px;color: #0b9bff;cursor:pointer}
+
+/*基金列表*/
+.views-lump-ul .funds_lump_active{border: 1px solid #187ee7;}
+.funds_lump_active:before{position: absolute;top: 0px;right: 1px;content: url('../images/fund/funds_active2.png');width: 30px;height: 30px;}
+.funds_comparison_check{float: left;margin-right: 10px;}
+.lump_comparison_check{position: absolute;top: 0px;right: 0px;display: none;}
+.funds-screnner-rows{position: relative;}
+.funds_facts_alinleft .funds_information_title{text-align: right;width: 30%;}
+.funds_screen_msg{margin-top: 30px;}
+.funds_view_list_ico{cursor: pointer;float: right;width: 23px;height: 24px;background: url('../images/fund/show_ico_03.png') no-repeat;margin: 12px 0px;margin-right: 15px;}
+.funds_view_switch_ico{cursor: pointer;float: right;width: 23px;height: 24px;background: url('../images/fund/show_ico_02.png') no-repeat;margin: 12px 0px;margin-right: 15px;}
+.funds-views-list, .funds_search_tab{display: none;}
+.funds_switch_tab{background-color: #f9f9f9;overflow: hidden;}
+.funds_switch_tab > li{float: left;padding: 5px 15px;margin: 10px 0px;border-right: 1px solid #dfe1e2;}
+.funds_switch_tab > li:nth-last-child(2){border-right: 0px;}
+.funds_switch_tab_title{float: left;}
+.funds_switch_tab .funds_arrow_wraps{width: 20px;margin-left: 5px;}
+.views-lump-ul{overflow: hidden;padding-top: 15px;}
+.views-lump-ul > li{cursor: pointer;display: inline-block;position: relative;width: 28%;padding: 15px 2%;margin: 5px 0.5%;border: 1px solid #e6e6e6;}
+.views-lump-ul > li:hover{box-shadow: 1px 4px 12px #ccc7c7;}
+.views-lump-ul .funds-lump-title a:hover{color:#4ba6de;}
+.funds_search_information .funds_tables_fnames a:hover{color:#4ba6de;}
+.funds_right_table  a:hover{color:#4ba6de;}
+.funds-lump-title{font-weight: bold;font-size: 17px;cursor:pointer;height: 40px;overflow: hidden;line-height: 20px;}
+.funds-lump-equity{overflow: hidden;padding: 8px 0px;line-height: 23px;min-height: 50px;}
+.lump-equity-title{float: left;color: #333333;margin-right: 10px;overflow: hidden;}
+.lump-equity-country{float: left;color: #ff9900;border: 1px solid #ff9900;padding: 0px 10px;border-radius: 3px;margin: 0px 10px;}
+.lump-equity-grade{color: white;padding: 3px 0px;border-radius: 3px;margin-left: 10px;float: right;width: 49px;text-align: center;min-height:22px}
+.lump-last-wrap{overflow: hidden;padding:5px 0px;}
+.lump-last-title{float: left;color: #828282;margin-bottom: 10px;line-height: 20px;width: 60%;}
+.lump-last-num{font-size: 20px;color: #5dc94f;display: block;margin-top: 5px;}
+.lump-growth-title{ line-height: 20px;float: right;color: #828282;width: 40%;}
+.lump-growth-num{font-size: 18px;color: #5dc94f;display: block;margin-top: 5px;}
+.lump-nav-num{font-size: 18px;color: black;display: block;margin-top: 5px;}
+.lump-list-date{float: left;color: #d2d1ca;padding: 10px 0;}
+.lump-list-date img{vertical-align: middle;margin-right: 5px;}
+.lump-cart-img{width: 100%;}
+.lump-growth-currency-color{color: black!important;font-size: 15px;}
+/*Transaction Record*/
+.record-choice-left{float: left;width: 50%;}
+.record-select{border: 1px solid #e0dfdf;height: 30px;width: 100px;padding-left: 10px;}
+.record_selected_wrap{    border: 0px;background-color: #f7f7f7;padding-left: 20px;}
+.record-table-wrap{margin-top: 30px;}
+.record_List{width: 100%;float: none;}
+.record-List-title{background-color: #dcf1ff;padding: 15px 10px;margin-top: 15px;}
+.record-list-img{float: right;margin: 5px 0;cursor: pointer;}
+.record_List_iof tr:nth-child(2n+x3){background-color: transparent;}
+.record_List_iof tr:nth-child(2n){background-color: #f9fafb;}
+.record-table-rows{margin-bottom: 40px;}
+
+/*my Recommend funds*/
+.recommend-table-wrap{width: 100%;}
+.recommend-list-wrap td{text-align: center;}
+.recommend-other-wrap{display: none;float: right;}
+.recommend-other-block{display: block;}
+.recommend-date-li{background-color: white!important;}
+.recommend-other{color: #000000; cursor: pointer;display: inline-block; height: 30px; line-height: 30px; min-width: 10px; padding: 0px 5px; text-align: center; margin: 0px 5px; margin-bottom: 5px; border-radius: 3px; }
+.fund_choice_active .recommend-other{background-color: #4ba6de;color: white;}
+.recommend-date{width: 100px;height: 26px;border: #dcdadb 1px solid;border-radius: 3px;font-size: 14px;padding-left: 5px;background-image: url('../images/ico_date01.png');background-position: 95%;background-repeat: no-repeat;}
+.recommend-date-name{float: left;line-height: 29px;margin: 0px 15px;color: black;}
+.funds_choice .recommend-date-button{float: left; width: 16px; height: 19px; background: url('../images/icon_search.png') no-repeat; cursor: pointer; margin-left: 15px; margin-top: 5px; }
+.recommend-list-wrap{background-color: white;padding: 20px 30px;margin-bottom: 30px;overflow:hidden}
+.recommend-switch-tab{background-color: #f9f9f9;overflow: hidden;}
+.recommend-switch-tab > li{float: left;padding: 0px 15px;margin: 10px 0px;border-right: 1px solid #dfe1e2;}
+.recommend-switch-tab > li:nth-last-child(1){border-right: 0px;}
+.recommend-sort-active{color: #fd9947;}
+.recommend-list-contents .recommend-switch-tab{margin-bottom: 25px;padding: 5px 0px;}
+.recommend-switch-tab .funds_arrow_wraps{width: 20px; margin-left: 15px; }
+.recommend-list-date{margin-top: 10px;}
+.recommend-list-ico{padding-top: 13px;display: inline-block;}
+.recommend-list-eve{float: left;margin-top: 4px;}
+.recommend-list-evename{float: left;line-height: 10px;margin-top: 4px;margin-left: 2;}
+.recommend-list-msg{position: relative;float: left;margin-left: 20px;}
+.recommend-msg-ico{float: left;}
+.recommend-msg-num{position: absolute;top: -12px;width: 22px;right: -14px;padding: 3px 0px;text-align: center;color: white;background-color: red;border-radius: 10px;font-size: 13px;}
+.recommend-ico{display: inline-block;cursor: pointer;margin: 3px 3px;}
+.recommend-ico-down{  display: inline-block;margin: 3px 3px;cursor: pointer;width: 16px;height: 20px;background: url('../images/fund/down_ico.png') no-repeat;}
+.recommend-ico-down-active{background: url('../images/fund/down_ico02.png') no-repeat;}
+.recommend-list-contents .funds_selected_wrap{padding: 0px;}
+.recommend-list-contents .funds_search_partOne{width: 701px;}
+.recom-input-wrap{display: block;position: relative;float: left;}
+.recommend-date-ok{cursor: pointer; display: inline-block; height: 30px; line-height: 30px; min-width: 10px; padding: 0px 5px; text-align: center; margin: 0px 5px; margin-bottom: 5px; border-radius: 3px; background-color: #4ba6de; color: white; }
+.recommend-to-word{float: left;margin:0px 5px;color: #4ba6de!important;}
+.recommend-other-wrap .laydate-icon{padding: 3px 12px!important;}
+
+
+.account-wrap .client-list-tab{float: left;}
+.account-wrap .client-list-tab li{margin: 0px;}
+/*fund Switch Setting*/
+.fund-switch-wrap{background-color: white;width: 100%;padding: 20px 30px;margin-bottom: 30px;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+.fund-switch-top{overflow: hidden;padding-top: 30px;}
+.fund-switch-left{float: left;width: 40%;}
+.fund-swicth-right{float: right;width: 40%;}
+.switch-top-title{font-size: 17px;font-weight: bold;margin-bottom: 15px;padding-bottom: 10px;border-bottom: 1px solid #e3e3e3;}
+.switch-top-select{width: 100%;border: 1px solid #cccccc;padding: 8px 0px;font-size: 16px;margin-bottom: 25px;}
+.switch-top-select option{width: 100%;padding: 5px 0px;}
+.switch-rows-written{overflow: hidden;}
+.switch-written{overflow: hidden;margin-bottom: 5px;}
+.switch-written-title{float: left;color: #999999;width: 90px;margin-right: 30px;text-align: right;line-height: 35px;}
+.switch-written-word{float: left;line-height: 35px;}
+.switch-written-input{padding: 8px 0px;border: 1px solid #e3e3e3;font-size: 16px;width: 80px;padding-left: 5px;float: left;}
+.switch-written-ul{float: left;overflow: hidden;margin-left: 15px;color: #0f7fd5;line-height: 35px;}
+.switch-written-ul li{float: left;margin-right: 20px;cursor: pointer;}
+.fund-switch-main{float: left;width: 20%;text-align: center;padding-top: 65px;}
+.fund-switch-img{cursor: pointer;margin-bottom: 15px;}
+.fund-switch-button{display: block;background: #ff9900;color: white;padding: 10px 0px;margin: 0 auto;border-radius: 4px;width: 100px;}
+.fund-switch-title{background: #f8f8f8;padding: 8px 10px;overflow: hidden;line-height: 30px;margin-bottom: 15px;font-weight: bold;border-bottom: 1px solid #e8e8e8;margin-top: 40px;}
+.switch-ico{cursor: pointer;}
+.switch-button-wrap{text-align: right;margin-top: 15px;margin-bottom: 60px;}
+.switch-button-blue{background: #2d80ce;color: white;padding: 8px 35px;margin: 0 auto;border-radius: 4px;}
+.switch-button-red{background: #ea3a3a;color: white;padding: 8px 35px;margin: 0 auto;margin-left: 15px;border-radius: 4px;}
+
+/*my recommend news*/
+.recommend-news-list > li{padding: 10px 5px 20px 5px;margin-bottom: 25px;overflow: hidden;border-bottom: 1px solid #e3e3e3;}
+.recommend-news-img{width: 180px;height: 110px;float: left;}
+.recommend-news-list-right{overflow: hidden;float: right;}
+.recommend-news-main{overflow: hidden;padding-left: 15px;}
+.recommend-news-contents{width: calc(100% - 300px);float: left;}
+.recommend-news-title{font-size: 17px;font-weight: bold;color: #333333;line-height: 18px;margin-bottom: 10px;}
+.recommend-news-word{font-size: 13px;overflow: hidden;}
+.recommend-news-contents-bottom:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+.recommend-news-bottom-left{float: left;color: #999999;margin-top: 20px;}
+.recommend-news-bottom-right{float: right;margin-top: 20px;}
+.recommend-news-bottom-ico{float: left;position: relative;margin-right: 25px;}
+.recommend-news-bottom-img{float: left;margin-top: 3px;}
+.recommend-news-bottom-num{float: left;margin-left: 5px;}
+.recommend-news-eve-num{background-color: #ff0f0f;color: white;top: -13px;right: -12px;padding: 2px 0px;text-align: center;width: 19px;border-radius: 50%;position: absolute;font-size: 12px;}
+.recommend-news-bottom-like{float: left;margin-left: 15px;}
+.recommend-news-like-ico{float: left;cursor: pointer;}
+.recommend-news-like-num{float: left;margin-left: 5px;}
+.recommend-news-date-contents{float: left;width: 200px;text-align: center;}
+.recommend-news-list-date{color: #333333;margin-bottom: 40px;}
+.recommend-news-date-time{color: #999999;}
+.recommend-news-action-contents{float: left;width: 90px;}
+.recommend-news-list-action{text-align: center;color: #333333;margin-bottom: 35px;}
+
+/*strategiesdetail*/
+.strategies-wrap-title{text-align: center;border:none;background:#1897cc;height:60px;padding-bottom:0;color:#fff;line-height:60px;padding-top:0px;filter:alpha(opacity=85);-moz-opacity:0.85;-khtml-opacity: 0.85;opacity: 0.85;}
+.strategies-wrap-title .wmes-ruturn{position:absolute;top:13px;left:20px;}
+.strategiesdetail_list_ifaname{color:#a0a0a0;}
+.strategiesdetail_time_word{color:#a0a0a0;margin-left:30px;}
+.strategiesdetail_detail_inf{padding-bottom: 8px;border-bottom: 1px dashed #e3e3e3;}
+.collectcon{width:40px;height:32px;position: relative;float: right;}
+.strategiesdetail_word_wrap{text-align: center;padding-bottom:25px;padding-top:2px;}
+.strategiesdetail_list_goal{float:none;}
+.strategiesdetail_list_fund{float:none;}
+.strategiesdetail_inf_Abstractcon{overflow:hidden;min-height:36px;background:#effaff;width:100%;margin:21px 0 13px 0;}
+.strategiesdetail_inf_Abstractcon div{float:left;text-align: center;}
+.strategiesdetail_inf_Abstractcon div:nth-child(1){line-height:36px;min-height:36px;width:93px;}
+.strategiesdetail_inf_Abstractcon div:nth-child(2){line-height:18px;text-align:left;margin:10px 0;width:calc(100% + (-105PX));}
+.strategiesdetail_inf_Abstract{width:93px;color:#fff;margin-right:12px;}
+.strategiesdetail_inf_title{height:27px;border-bottom:1px solid #e8e8e8;font-weight:600;font-size:16px;}
+.strategiesdetail_inf_title_amend{height:27px;font-weight:600;font-size:16px;line-height:23px;}
+.strategiesdetail_inf_goal{width:100%;min-height:88px;border-bottom:1px solid #e8e8e8;padding:15px 0;font-size:13px;margin-bottom:11px;}
+.strategiesdetail_inf_word{margin-bottom:25px;}
+.strategiesdetail_top_word{font-size:14px;}
+.strategiesdetail_inf_trapezoidcon{height:406px;margin-top:29px;overflow: hidden;}
+.strategiesdetail_inf_trapezoidnav{height:32px;cursor: default;}
+.strategiesdetail_inf_trapezoidnav .strategiesdetail_inf_trapezoidnav1active{border:3px solid red;}
+.strategiesdetail_inf_trapezoidnav1:hover{filter:alpha(opacity=80);-moz-opacity:0.8;   -khtml-opacity: 0.8;   opacity: 0.8;  }
+.strategiesdetail_inf_trapezoidnav div{float:left;text-align: center;line-height: 32px;color:#fff;border-box;-webkit-box-sizing: border-box;}
+.strategiesdetail_inf_trapezoidfirst{border-top:251px solid #e3534b;border-right:158.5px solid transparent;border-left:158.5px solid transparent;width:65px;}
+.strategiesdetail_inf_trapezoidsecond{border-top:202px solid #e9b06d;border-right:126.5px solid transparent;border-left:126.5px solid transparent;width:65px;position: absolute;top:89px;margin-left:31.5px;}
+.strategiesdetail_inf_trapezoidthird{border-top:153px solid #64c28f;border-right:95px solid transparent;border-left:95px solid transparent;width:65px;position: absolute;top:139px;margin-left:63px;}
+.strategiesdetail_inf_trapezoidfour{border-top:104px solid #679ec9;border-right:63px solid transparent;border-left:63px solid transparent;width:65px;position: absolute;top:189px;margin-left:94.5px;}
+.strategiesdetail_inf_trapezoidfifth{border-top:55px solid #7c6390;border-right:32px solid transparent;border-left:32px solid transparent;width:65px;position: absolute;top:239px;margin-left:126px;}
+.strategiesdetail_inf_trapezoidboard{float:left;width:50%;padding:39px 0 0 6%;position: relative;font-size:9px;color:#fff;min-height:245px;}
+.trapezoid_link{width:54%;height:3px;position: absolute;right:0;background:#e3534b;z-index: 5;top:73.3px;}
+.strategiesdetail_inf_trapezoidboard .strategiesdetail_inf_trapezoid_link{background:#e3534b;top:73px;display: block;}
+#strategiesdetail_inf_trapezoidright{float:left;width:39%;height:242px;margin-top:43px;border:1px solid #e3534b;position:relative;z-index: 5;}
+.strategiesdetail_inf_lc{cursor: pointer;text-align: center;color:#fff;line-height: 50px;font-size:14px;width:382px;position: relative;z-index: 2;}
+.strategiesdetail_inf_lchover{filter:alpha(opacity=90);-moz-opacity:0.9;-khtml-opacity: 0.9;opacity: 0.9;}
+.strategiesdetail_inf_lclick{font-size:16px;}
+.strategiesdetail_inf_lc p{width:150px;margin-left:31%;line-height:16px;position: absolute;top:30%;}
+.strategiesdetail_inf_lc:nth-child(3) p{top:20%;}
+.strategiesdetail_inf_barriersL{width:400px;height:200px;background:#fff;position: absolute;top:39px;transform-origin:left top;transform:rotate(60deg);z-index:3;}
+.strategiesdetail_inf_barriersR{width:400px;height:200px;background:#fff;position: absolute;top:39px;transform-origin:right top;z-index:3;transform:rotate(-60deg);margin-left:-18px;}
+.strategiesdetail_inf_lc:nth-child(1){background:#e3534b;}
+.strategiesdetail_inf_lc:nth-child(2){background:#e9b06d;}
+.strategiesdetail_inf_lc:nth-child(3){background:#64c28f;}
+.strategiesdetail_inf_lc:nth-child(4){background:#679ec9;}
+.strategiesdetail_inf_lc:nth-child(5){background:#7c6390;}
+
+/*accountsWaiforProcess-table*/
+.accountsWaiforProcess-table a{color:#2987df;cursor: pointer;}
+.accountsWaiforProcess-table .funds_tables_fnames{text-align: center;}
+.accountsWaiforProcess-table img{cursor: pointer;}
+.accounttable-img div img{width:30px;height:30px;border-radius: 50%;margin-right:5px}
+.accounttable-img div{float:left;line-height:30px;text-align: left !important;}
+
+.builder-tab{font-weight:700;border-bottom: 1px solid #e3e3e3;padding: 0px 15px;margin-bottom: 30px;font-weight: bold;}
+.builder-tab:after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;}
+.builder-tab li{border-left:1px solid #fff;border-right:1px solid #fff;border-top:3px solid #fff;float: left;padding: 10px 15px;margin-right: 15px;position: relative;cursor: pointer;}
+.builder-tab .tab-active{border: 1px solid #ebebeb;border-bottom: 1px solid white;border-top: 3px solid #ff9900;}
+.builder-tab .tab-active span{position: absolute;width: 100%;height: 3px;background-color: white;bottom: -2px;left: 0px;}
+
+/*myProposalList*/
+.myProposalList img{cursor: pointer;}
+.myProposalList tr:hover{background:#f4f8fd;}
+.myProposalList .tdleft{padding-top:15px;padding-bottom:6px;}
+.myProposalList .tdleft a{font-weight: 700;line-height:26px;}
+.myProposalList .tdleft span{color:#666;}
+.myProposalList_time span{float: left;height:24px;line-height:24px;margin-right:8px;}
+.myProposalList .myProposalList_time{text-align:left;}
+.myProposalList_time b{float: left;height:24px;width:24px;line-height:24px;background:red;border-radius: 50%;color:#fff;line-height: 24px;text-align: center;}
+.myProposalList_time p{margin-bottom:6px;}
+.myProposalList_time img{float: left;height:24px;}
+.visited{float: left;height:24px;cursor: pointer;}
+.wmes-content-position{position: relative;}
+.visitedconlayer{display: none;width:100%;height:100%;position: absolute;;background:#000;z-index:9;left:0;top:0;filter:alpha(opacity=50);-moz-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;  }
+.visitedcon{display: none;overflow: hidden;padding:2% 0 2% 5%;height:240px;width:700px;background: white;position: absolute;z-index: 10;top:300px;left:calc(50% - 350px - 17px - 40px);border-radius:4px;box-shadow: 2.5px 4.33px 35px 0px #000;}
+.visitedcon .visitedcontitle{font-weight: 600;line-height:16px;height:16px;margin-bottom:25px;}
+.visitedcon ul{height:218px;float:left;width:700px;}
+.visitedcon .visitedbox{width:1600px;height:218px;position: relative;}
+.visitedcon li img{float:left;}
+.visitedcon li{width:170px;height:32px;float:left;margin-bottom:40px;}
+.visitedcon li .visitedinformation{float:left;height:32px;font-size:13px;margin-left:6px;}
+.visitedinformation p:nth-child(2){color:#999;line-height:18px;}
+.visitedleft{width:31px;height:31px;position:absolute;left:0;top:45%;z-index:11;cursor: pointer;}
+.visitedright{width:31px;height:31px;position:absolute;right:0;top:45%;z-index:11;cursor: pointer;}
+.mylist-new-bn{float:left;display:inline-block;padding:0 30px;height:32px;line-height: 32px;background:#2d80ce;border-radius:3px;color:#fff;margin-left:15px;cursor: pointer;}
+.mylist-new-bn:hover{background:#2977c0;}
+.myProposalList .funds_tables_fnames_amend{padding-right:60px;}
+
+/*selectNamelist*/
+.myfavourite{width:32px;height:32px;position: absolute;top:0;left:0;background:url('../images/application/myfavorite.png') no-repeat;}
+.selectedchecked{z-index: 1;width:21px;height:14px;position:absolute;bottom:9px;right:9px;background:url('../images/application/selectchecked.png') no-repeat;}
+.selectnamelistbox{height:100%;background:#fff;position: fixed;width:100%;z-index: 10;}
+.selectnamelistcon{border:1px solid #efeeee;width:83%;padding:14px 13px 14px 25px;position: absolute;top:3%;left:100px;border-radius:4px;box-shadow: 2.5px 4.33px 35px 0px #000;}
+.selectnameltitle{font-size:24px;height:30px;}
+.removelist{height:13px;cursor: pointer;}
+.removelist img{float:right;}
+.myClient .myClienttittle{background:#f0f0f0;font-size:14;border-bottom:1px solid #e8e8e8;margin-bottom:22px;}
+.myClient .myClienttittle p{padding-left:12px;}
+.selectedtext{height:14px;line-height: 14px;}
+.selectedtextleft{height:14px;float:left;margin-left:1.8%;}
+.selectedtextleft span{color:#ff0000;margin-right:3px;}
+.selectedtextright{height:14px;float:right;margin-right:9%;}
+.selectedtextright li{float:left;margin-left:30px;}
+.selectedtextright li:nth-child(1){color:#999;}
+.selectedtextright li:nth-child(2){cursor: pointer;}
+.selectedtextright li:nth-child(3){color:#2d80ce;cursor: pointer;}
+.selectedtextright li p{float:left;}
+.selectedlist{padding-left:1.8%;padding-top:20px}
+.selectedlist ul{overflow:auto;height:272px;}
+.selectedlist li{cursor: pointer;position: relative;width:22%;height:55px;background:#cee7fc;float:left;margin-right:10px;margin-bottom: 13px;overflow: hidden;}
+.selectedlist li img{float:left;width:32px;height:32px;border-radius: 50%;margin-left:14px;margin-right:9px;margin-top:13px;}
+.selectedlist li p{float:left;height:32px;line-height:32px;margin-top:13px;font-size:13px;}
+.selectedshadow{display:none;position: absolute;height:55px;width:100%;background:#000;filter:alpha(opacity=40);-moz-opacity:0.4;-khtml-opacity: 0.4;opacity: 0.4; }
+.selectedshadow1{display:block;position: absolute;height:55px;width:100%;background:#000;filter:alpha(opacity=40);-moz-opacity:0.4;-khtml-opacity: 0.4;opacity: 0.4; }
+.selectnamelistbox .strategies_detail_product{font-size:16px;font-weight: bold;}
+
+.strategieslist_inf_img{width: 64px;height: 64px;border-radius: 50%;float: left;margin-right: 10px;margin-top:3px;}
+.strategieslist_list_ifaname{color:#a0a0a0;font-size: 16px;font-family: "微软雅黑";font-weight:400;height:64px;line-height: 75px;}
+
+
+/*myRecommendNews*/
+.RecommendNewscon{border:1px solid #999;display: none;width:50%;height:auto;background:#fff;position: absolute;top:20%;left:13%;padding:33px 9% 0 9%;box-shadow: 4px 4px 4px #999;}
+.RecommendNewstitle{font-size:18px;font-weight: bold;height:33px;}
+.RecommendNewscontent{height:120px;margin-bottom: 38px;}
+.RecommendNewscontentleft{float:left;height:120px;width:25%;margin-right:3%;}
+.RecommendNewscontentleft img{width:100%;height:100%}
+.RecommendNewscontentright{float:left;height:120px;width:70%;position: relative;}
+.RecommendNewscontentright p:nth-child(1){font-size: 16px;font-weight: bold;margin-bottom:18px;}
+.RecommendNewscontentright p:nth-child(2){height:auto;}
+.RecommendNewscontentright p:nth-child(3){color:#999;font-weight: bold;height:28px;position: absolute;bottom:0;line-height: 38px;}
+.recommendreasontitle{height:26px;font-size:16px;}
+.pushToSetting{margin-top:30px;height:217px;}
+.pushToSetting div{float: left;}
+.pushToSetting ul li{float: left;margin-left:50px;}
+.pushToSettingmenu{visibility:hidden;position: relative;padding-top: 20px;padding-bottom: 20px;margin-top:10px;width: 620px;background:url('../images/application/settingbackground.png') no-repeat;background-size: 100% 100%;margin-left: 30%;}
+.pushToSettingmenu ul li{margin-left:18px;margin-bottom: 15px;margin-top: 20px;overflow: hidden;min-height: 20px;}
+.j-permitASetting{display: none;background: url('../images/fund/change_ico.png') no-repeat;margin-right: 30px;margin-left: 10px;width: 20px;height: 20px;cursor: pointer;float: left;}
+.setting-ok-bn{width:108px;height:39px;line-height:39px;background:#2d80ce;color:#fff;float:right;border-radius: 4px;text-align: center;cursor: pointer;margin-right:18px;}
+.setting-bncon{height:39px;margin-bottom:43px;}
+.pushToSettingmenu1{visibility:visible;display:none;}
+.pushToSettingName{color: #2977c0;display: inline-block;display: none;float: left;}
+.myrecommendFundlist_fav_img{height:21px;width:23px;background: url('../images/icon-herat-1.png') no-repeat;cursor: pointer;margin-left:30%;}
+.myrecommendFundlist_fav_img:hover{background: url('../images/icon-herat-01.png') no-repeat;}
+.pushToSettingCheckbox{width: 200px;float: left;}
+
+/*ifaManage*/
+.ifa_manage-screen{height:60px;}
+.ifa_manage-screen li{float:left;height:60px;line-height: 60px;font-size:18px;width:25%;margin-right:8%;}
+.ifa_manage-screen li select{width:60%;height:40px;padding-left:10%;}
+.ifa_manage-screen li input{margin-left:10px;width:60%;height:40px;}
+.ifa_indexof{width:120px;text-align:center;background:#2977c0;height:40px;line-height:40px;border-radius: 4px;color:#fff;cursor: pointer;margin-top:10px;}
+.ifa_btn{height:60px;margin-bottom:20px;margin-top:30px;}
+.ifa_btn li{float:left;margin-right:20px;}
+.ifa_startUsing{width:120px;text-align:center;background:#2977c0;height:40px;line-height:40px;border-radius: 4px;color:#fff;cursor: pointer;margin-top:10px;}
+.ifa_stopUsing{width:120px;text-align:center;background:#2977c0;height:40px;line-height:40px;border-radius: 4px;color:#fff;cursor: pointer;margin-top:10px;}
+.ifa_returned{width:120px;text-align:center;background:#2977c0;height:40px;line-height:40px;border-radius: 4px;color:#fff;cursor: pointer;margin-top:10px;}
+.ifa_approve{width:120px;text-align:center;background:#2977c0;height:40px;line-height:40px;border-radius: 4px;color:#fff;cursor: pointer;margin-top:10px;}
+.ifa_save{margin-left:20%;width:120px;text-align:center;background:#2977c0;height:40px;line-height:40px;border-radius: 4px;color:#fff;cursor: pointer;margin-top:10px;}
+.ifa_return{width:120px;text-align:center;background:#2977c0;height:40px;line-height:40px;border-radius: 4px;color:#fff;cursor: pointer;margin-top:10px;}
+.ifa_startUsing:hover,.ifa_stopUsing:hover,.ifa_returned:hover,.ifa_approve:hover,.ifa_save:hover,.ifa_return:hover,.ifa_indexof:hover{background:#2d80ce;}
+.setting_active .pushToSettingName , .setting_active .j-permitASetting{display: inline-block;}
+
+/*selectSector*/
+.selectSector{height:auto;position: absolute;width:70%;padding:26px 33px 0 33px;box-shadow: 0px 0px 8px #ccc7c7;background:#fff;top:10%;left:2%;border-radius: 4px;box-shadow: 2.5px 4.33px 35px 0px #000;}
+.selectSector-title{padding-bottom: 15px;margin-bottom: 20px;font-size: 18px;font-weight: bold;margin: 15px 0;text-align: left;border-bottom: 1px solid #eef0f2;}
+.investment-close-ico, .character-close-ico{position: absolute;top: 8px;right: 14px;cursor: pointer;}
+.character-setting-rows{line-height: 33px;margin-bottom: 30px;}
+.character-setting-contents{overflow: hidden;margin-left:15px;width:100%;min-height:43px;}
+.character-setting-title{float: left; color: #999999; width: 90px; text-align: left; }
+.character-setting-list{float: left; }
+.character-setting-list > li{position: relative;background-color: #ff9900;color: white;padding: 0px 18px;margin-right: 15px;margin-bottom: 10px;min-width: 80px;float: left;text-align: center;}
+.character-setting-add{outline:none;padding:8px 0;border: 1px dotted #f0c078;color: #f0c078;float: left;width: 100px;text-align: center;cursor: pointer;}
+.character-setting-choose{background-color:#f0f0f0;padding: 5px 15px; margin-top: 10px; }
+.character-choose-title{color: #a6a6a6; line-height: 5px; margin-top: 10px; margin-bottom: 15px; width:100%;}
+.character-choose-list{overflow: hidden; }
+.character-choose-list > li{position: relative;cursor: pointer;float: left; background-color: #73bdba; color: white; min-width: 80px; text-align: center; margin-right: 15px; margin-bottom: 5px; padding: 0px 15px; }
+.character-choose-list .character-choose-active{background-color: #ff9900}
+.character-text-rows{margin-bottom: 10px; line-height: 32px; color: #999999; }
+.character-text-title{float: left;width: 80px;}
+.character-text-input{width: calc(100% - 88px); border: 1px solid #e3e3e3; line-height: 30px; padding-left: 5px; }
+.character-button-rows{text-align: right; margin-top: 40px;height:60px;}
+.character-button-save{cursor:pointer;display:inline-block;background-color: #2d80ce; color: white; padding: 0px 22px; border-radius: 3px;height:30px;line-height:30px;}
+.character-button-save:hover{background:#0976dc;}
+.character-button-close:hover{background:#cdcdcd;}
+.character-button-close{cursor:pointer;display:inline-block;background-color: #e5e5e5; padding:0px 22px; border-radius: 3px; margin-left: 15px;height:30px;line-height:30px;}
+.character-list-close{display: none;position: absolute;background: 0 0;right: 30px;cursor: pointer;height: 25px;width: 15px;top: 6px;right: 0px;}
+.character-list-close:after, .character-list-close:before {content: '';background: #945d0b;height: 2px;width: 15px;}
+.character-list-close:after{-moz-transform: translate(0,-6px) rotate(45deg);-ms-transform: translate(0,-6px) rotate(45deg);-webkit-transform: translate(0,-6px) rotate(45deg);transform: translate(0,-6px) rotate(45deg);position: absolute;bottom: 6px;left: -2px;}
+.character-list-close:before{-moz-transform: translate(0,6px) rotate(-45deg);-ms-transform: translate(0,6px) rotate(-45deg);-webkit-transform: translate(0,6px) rotate(-45deg);transform: translate(0,6px) rotate(-45deg);position: absolute;top: 5px;left: -2px;}
+.character-setting-list:hover .character-list-close{display: block;}
+
+/*viewIfaInfo*/
+.AccountInfo > p{height:30px;font-size:16px;font-weight: bold;border-bottom: 1px solid #999;margin:0 5% 0 5%;}
+
+.account-checkbox {width: 20px;position: relative; float:left; margin-right:10px;}
+.account-checkbox label {cursor: pointer; position: absolute; width: 20px; height: 20px; top: 0; left: 0; background: #fff; border:1px solid #999; border-radius:3px;}
+.account-checkbox label:after {opacity: 0.2;content: '';position: absolute;width: 9px;height: 5px;background: transparent;top:4px;left:4px;border: 3px solid #fda316;border-top: none;border-right: none;-webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);-o-transform: rotate(-45deg);-ms-transform: rotate(-45deg);transform: rotate(-45deg);}
+.account-checkbox input[type=checkbox]:checked + label:after {opacity: 1;}
+.account-checkbox input[type=radio]:checked + label:after {opacity: 1;}
+
+/*基金明细公告弹出层*/
+.selectSector-title-sub {float: left;font-size: 14px;padding-bottom: 15px;color: #b7b5b5;margin-left: 25px;}
+.notice-content{clear: both;margin: 0 2%;font-size: 19px;line-height: 30px;}
+

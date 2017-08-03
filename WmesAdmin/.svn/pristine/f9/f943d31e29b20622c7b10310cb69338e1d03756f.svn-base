@@ -1,0 +1,315 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet"  >
+    <style>
+           .login-dialog .modal-dialog {width: 1000px;}
+            .firminfo-dialog .modal-dialog{width: 900px;}
+            .teaminfo-dialog .modal-dialog{width: 700px;}
+            .btneditnode{text-decoration:underline;}
+    </style>
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+        <div class="tab-side-container">
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <!-- 代理商  -->   
+                <form class="form-inline" style="display:block;">
+	                <input type="hidden"  class="form-control" id="txtSelectedCompanyName" companyid="${(ifafirmId)?if_exists}" value="${(companyName)?if_exists}">
+                    <!--<div class="page-header mt-10">
+						<h4>
+							<b>${(companyName)?if_exists} [@lang_res k='member.distributor'/]</b>
+						</h4>
+					</div>
+                    <div class="clear"></div>
+                    <div class="pdt20" style="padding-top: 5px;">
+                    	<a id="btnShowDisList" href="javascript:void(0);" class="btn-blue-s">[@lang_res k='global.add'/]</a>
+               			<a id="btnCloseTab" href="javascript:closeTab();" class="btn-blue-s">[@lang_res k='global.close'/]</a>
+                    </div>-->
+                    
+                    <div>
+                        <table border="0" id="disdata" cellpadding="0" cellspacing="0" class="table table-hover " >
+                                <tbody>
+                                    <tr>
+                                      <th class="table-head">LOGO</th>
+                                      <th class="table-head">[@lang_res k='ifafirm.list.distributorName'/]</th>
+                                      <th class="table-head">公司类型</th><!--
+                                      <th class="table-head">[@lang_res k='ifafirm.list.registerNo'/]</th>
+                                      <th class="table-head">[@lang_res k='ifafirm.list.incorporationDate'/]</th>
+                                      --><th class="table-head">所属国家</th>
+                                      <th class="table-head">公司网站</th>
+                                      <th class="table-head">[@lang_res k='ifafirm.list.operation'/]</th>
+                                    </tr>
+                                    
+                                </tbody>
+                               
+                         </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='dispagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>	
+				</form>            
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+<script type="text/javascript">
+	function ShowFirmDialog(id) {
+	
+		BootstrapDialog.show({
+			title : "代理商详情",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="yes" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="${base}/console/distributor/form.do?id='+id+'"></iframe></div>').load(),
+			buttons : [{
+				label : "[@lang_res  k='global.close'/]",
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			}]
+	  	});
+	}
+</script>
+<script type="text/javascript">
+
+$(function() {	
+	bindMyDisList(0);
+	//delete l
+    $(document).on('click', '#disdata .dellink', function() { 
+		var rel = $(this).attr("rel");
+		dellink(rel);
+	});
+	//获取我的代理商数据
+	function bindMyDisList(pageid){
+		var ifafirmid = $('#txtSelectedCompanyName').attr('companyid');
+		if(ifafirmid==''||ifafirmid==null||ifafirmid==undefined){ 
+			layer.msg("[@lang_res  k='ifafirm.message.promptNotSelectedIfafirm'/]", { icon: 0, time: 1000 }, function () { }); 
+			return false;
+		}
+		$.ajax({
+				type : 'post',
+				datatype : 'json',
+				url : "${base}/console/ifafirm/distributorListJson.do?datestr="+ new Date().getTime(),
+				data : {
+					ifafirmid : ifafirmid,
+					page : pageid + 1,
+					rows : 8
+				},
+				beforeSend: function () {
+                       indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptGetDistributorListLoading'/]", { time: 500000 });
+                   },
+				success : function(json) {
+					layer.close(indexmsg);
+					var total = json.total;
+					var ifajson = json.rows;
+					$("#disdata tbody tr:gt(0)").empty();
+					if(total=='0'){
+						layer.msg("[@lang_res  k='ifafirm.message.promptEmptyDistributor'/]", { time: 5000 }, function () { }); 
+						var top = $('#btnShowDisList').offset().top; 
+						var msgtop = top +100;
+						$('.layui-layer-msg').css({'top':msgtop}); 
+						return false;
+					}
+					var html = '';
+					$("#disdata tbody tr:gt(0)").empty();
+					for(var i=0;i<ifajson.length;i++){ 
+						var IfafirmDistributorid = ifajson[i][0]; //供用于删关联
+						var companyName = ifajson[i][1]; 
+						var id=ifajson[i][2]; 
+						var logoUrl='${base}'+ifajson[i][3]; 
+						var wensite=ifajson[i][4]; 
+						var registerNo = ifajson[i][5]; 
+						var incorporationDate = ifajson[i][6]; 
+						var incorporationPlace = ifajson[i][7]; 
+						//var url="\/wmesAdmin\/console\/distributor\/form.do?id="+id;
+						var isFinancial = ifajson[i][7];
+								if (isFinancial == '1')
+									isFinancial = '[@lang_res k='global.true'/]';
+								else
+									isFinancial = '[@lang_res k='global.false'/]';
+									
+								var entityType = ifajson.entityType;
+								if (entityType == '1')
+									entityType = '[@lang_res k='entityType.option.1'/]';
+								if(entityType == '2');
+									entityType = '[@lang_res k='entityType.option.2'/]';
+								if(entityType == '3')
+									entityType = '[@lang_res k='entityType.option.3'/]';
+								if(entityType == '4')
+									entityType = '[@lang_res k='entityType.option.4'/]';
+								if(entityType == '5')
+									entityType = '[@lang_res k='entityType.option.5'/]';
+								html += '<tr><td>'
+										+'<img style="width:45px;height:45px;"  src='+logoUrl+' />'
+										+'</td><td>'
+										+ companyName  
+										+ '</td><td>'
+										+ entityType
+										+ '</td>'/*<td>'
+										+ registerNo
+										+ '</td><td>'
+										+ incorporationDate
+										+ '</td>*/
+										+'<td>'+incorporationPlace+'</td><td>'
+										+wensite
+										+'</td><td>'
+										//+ '<a href="javascript:showform('+id+','+companyName+','+url+')" > 查看详情</a> '	
+										//+'<a class="aaaa" href="javascript:void(0);">查看详情</a>'	
+										+"<a href=\"javascript:void(0);\" onclick=\"ShowFirmDialog('"+id+"')\">"+ '查看详情' +"</a></td></tr>";
+										+ '</td></tr>';    
+					}
+					
+					$('#disdata').append(html);
+
+					$("#dispagination").pagination(total, {
+						callback : pageselectCallback,
+						numDetail : '',
+						items_per_page : 8,
+						num_display_entries : 4,
+						current_page : pageid,
+						num_edge_entries : 2
+					});
+				}
+			});
+			//回调
+			function pageselectCallback(page_id, jq) {
+				bindMyDisList(page_id);
+			}
+			
+			
+			
+	}
+	//add 添加
+    $('#btnShowDisList').on('click',function(){
+   		var checkifafirmid = $('#txtSelectedCompanyName').attr('companyid');
+		if(checkifafirmid==''||checkifafirmid==null||checkifafirmid==undefined){
+			layer.msg("[@lang_res  k='ifafirm.message.promptNotSelectedIfafirm'/]", { icon: 0, time: 1000 }, function () { });
+			return false;
+		}
+   		 BootstrapDialog.show({
+			title : '[@lang_res  k='ifaFirm.distributor.add.title'/]',
+			cssClass : 'login-dialog',
+			type:BootstrapDialog.TYPE_PRIMARY,
+			size:BootstrapDialog.SIZE_NORMAL,
+           	draggable: true,
+			message : $('<div></div>').load('selectDistributor.do?procedureid='),
+			onshow:function(){},
+			buttons : [  {
+				label : "[@lang_res  k='global.confirm'/]",
+				cssClass : 'btn-primary',
+				action : function(dialogItself) {
+					 var selected = $('#id_irm_selected2');
+					 var selectedid = selected.attr('companyid');
+					 var selectedname = selected.attr('companyname');
+					 if(selectedid == undefined || selectedid == '')
+					 {
+					 	layer.alert("[@lang_res  k='ifafirm.list.selectDistributor'/]", {icon: 0 });
+					 	return;
+					 }
+					 
+					 layer.confirm("[@lang_res  k='ifafirm.message.promptIsSaveSelectedDistributor'/]", 
+					 { 
+                		title:"[@lang_res  k='global.prompt'/]",
+                		offset: '100px',
+                		shadeClose: true,
+   	            		btn:["[@lang_res  k='global.confirm'/]","[@lang_res  k='global.cancel'/]"], icon: 3   
+   	        		 },function () {
+					 	 $.ajax({
+								type : 'post',
+								datatype : 'json',
+								url : "${base}/console/ifafirm/addIfafirmDistributor.do?datestr="+ new Date().getTime(),
+								data : {'distributorid':selectedid,'ifafirmid': checkifafirmid },
+								beforeSend: function () {
+		                        indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", { time: 500000 });
+		                    },
+		                    complete: function () {
+								layer.close(indexmsg);
+		                    },
+								success : function(json) {
+									json = JSON.parse(json);
+									var result = json.result;
+									if(result==true||result=='true'){
+										layer.msg("[@lang_res  k='global.success.save'/]");
+										bindMyDisList(0);
+									}
+								}
+							});
+					 	 
+					 	 dialogItself.close();
+					 	 layer.closeAll();
+					 });
+					 
+					
+				}
+			},  {
+				label : "[@lang_res  k='global.back'/]",
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			} ]
+		});
+   	
+   	});
+   	//移除关联
+  	function dellink(ifafirmDistributorid){
+		layer.confirm("[@lang_res  k='ifafirm.message.promptIsDelLink'/]", { title:"[@lang_res  k='global.prompt'/]",btn:["[@lang_res  k='global.confirm'/]","[@lang_res  k='global.cancel'/]"], icon: 3  },function () {
+			 $.ajax({
+				type : 'post',
+				datatype : 'json',
+				url : "${base}/console/ifafirm/delIfafirmDistributorid.do?datestr="+ new Date().getTime(),
+				data : {'id':ifafirmDistributorid  },
+				beforeSend: function () {
+                      indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", {  time: 500000 });
+                },
+                complete: function () {
+					layer.close(indexmsg);
+                },
+			   success : function(json) {
+					json = JSON.parse(json);
+					var result = json.result;
+					if(result==true||result=='true'){
+						layer.msg("[@lang_res k='global.delete'/][@lang_res k='global.success'/]");
+						bindMyDisList(0);
+					}else{
+						layer.msg("[@lang_res k='global.delete'/][@lang_res k='global.failed'/]");
+					}
+				}
+			});
+		});
+	}
+	
+	
+	
+	
+});
+</script>
+</body>
+</html>

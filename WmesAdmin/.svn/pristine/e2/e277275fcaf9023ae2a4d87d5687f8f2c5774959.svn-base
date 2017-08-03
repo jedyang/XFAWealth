@@ -1,0 +1,202 @@
+/**
+ * 
+ */
+package com.fsll.wmes.web.action.console;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fsll.common.util.JsonUtil;
+import com.fsll.wmes.base.WmesBaseAct;
+import com.fsll.wmes.common.CommonConstantsWeb;
+import com.fsll.wmes.entity.MemberMenu;
+import com.fsll.wmes.role.service.MemberRoleService;
+import com.fsll.wmes.web.service.FrontMenuService;
+
+/**
+ * @author scshi_u330p
+ *	前台菜单
+ */
+@Controller
+@RequestMapping("/console/frontMenu")
+public class FrontMenuAct extends WmesBaseAct  {
+	
+	@Autowired
+	private FrontMenuService frontMenuService;
+	@Autowired
+	private MemberRoleService memberRoleService;
+	
+	/**
+	 * 前台菜单列表
+	 * @author scshi_u330p
+	 * @date 20161102
+	 * */
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String loadFrontMenuList(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		return "console/frontMenu/list";
+	}
+	
+	/**
+	 * 列表查询
+	 * */
+	@RequestMapping(value = "/listJson", method = RequestMethod.POST)
+	public void frontMenuListJson(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		String keyword=request.getParameter("keyword");
+		MemberMenu frontMenu = new MemberMenu();
+		if(null!=keyword&&!"".equals(keyword)){
+			try {
+				keyword=URLDecoder.decode(keyword, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		frontMenu.setNameSc(keyword);
+		jsonPaging = this.getJsonPaging(request);
+		jsonPaging = frontMenuService.findAll(jsonPaging,frontMenu);
+		this.toJsonString(response, jsonPaging);
+	}
+	
+	/**
+	 * 新增菜单
+	 * @author scshi_u330p
+	 * @date20161103
+	 * modify by rqwang 20170517
+	 * */
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String add(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		String langCode = this.getLoginLangFlag(request);
+		MemberMenu menu = new MemberMenu();
+		List<MemberMenu> list = frontMenuService.findAllMenu();
+
+	    String parentId = request.getParameter("parentId");
+	    MemberMenu parentMenu = frontMenuService.findMenuById(parentId);
+	    if(null != parentMenu){
+	    	menu.setParent(parentMenu);
+	    }
+	    model.addAttribute("langCode",langCode);
+		model.addAttribute("menu", menu);
+		model.addAttribute("menuList", list);
+		return "console/frontMenu/input";
+	}
+	
+	
+	/**
+	 * 菜单编辑
+	 * @author scshi_u330p
+	 * @date 20161103
+	 * */
+	@RequestMapping(value = "/input", method = RequestMethod.GET)
+	public String frontMenuEdit(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		
+		List<MemberMenu> list = frontMenuService.findAllMenu();
+	    String id=request.getParameter("id");
+	    String roleType = request.getParameter("roleType");
+	    MemberMenu menu = frontMenuService.findMenuById(id);
+	   
+	    model.addAttribute("menu", menu);
+	    model.addAttribute("roleType", roleType);
+		model.addAttribute("menuList", list);
+		return "console/frontMenu/input";
+	}
+
+	/**
+	 * 菜单保存
+	 * @author scshi_u330p modify qgfeng
+	 * @date20161103
+	 * */
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public void saveFrontMenu(MemberMenu menu,HttpServletRequest request,HttpServletResponse response){
+		Map<String, Object> obj = new HashMap<String, Object>();
+		boolean result = false;
+		try {
+			String parentId = request.getParameter("parentId");
+			String roleCode = request.getParameter("roleCode");
+			String oldRoleCode = request.getParameter("oldRoleCode");
+			MemberMenu parent = frontMenuService.findMenuById(parentId);
+			if(null != parent){
+				menu.setParent(parent);
+			}
+			MemberMenu updateparam = frontMenuService.findMenuById(menu.getId());
+			if(null!=updateparam){
+				updateparam.setParent(menu.getParent());
+				updateparam.setNameSc(menu.getNameSc());
+				updateparam.setNameTc(menu.getNameTc());
+				updateparam.setNameEn(menu.getNameEn());
+				updateparam.setOrderBy(menu.getOrderBy());
+				updateparam.setWebUrl(menu.getWebUrl());
+				updateparam.setIsValid(menu.getIsValid());
+				updateparam.setCode(menu.getCode());
+				updateparam=frontMenuService.saveOrUpdate(updateparam,false);
+				memberRoleService.saveMemberRoleMenu(updateparam.getId(), oldRoleCode, roleCode);
+			}else{
+				menu.setId(null);
+				menu=frontMenuService.saveOrUpdate(menu,true);
+				memberRoleService.saveMemberRoleMenu(menu.getId(), oldRoleCode, roleCode);
+			}
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			obj.put("result",result);
+			JsonUtil.toWriter(obj, response);
+		}
+	}
+	
+	/**
+	 * 菜单删除
+	 * @author scshi_u330p modify qgfeng
+	 * @date20161103
+	 * */	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public void deleteFrontMenu(HttpServletRequest request,HttpServletResponse response){
+		Map<String, Object> obj = new HashMap<String, Object>();
+		boolean result = false;
+		try {
+			String menuId = request.getParameter("id");
+			result = frontMenuService.deleteMenuInfo(menuId);//逻辑删除
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			obj.put("result",result);
+			JsonUtil.toWriter(obj, response);
+		}
+	}
+
+	/**
+	 * 前台菜单列表页面
+	 * @author wwluo
+	 * @date 2017-05-26
+	 */
+	@RequestMapping(value = "/frontList", method = RequestMethod.GET)
+	public String frontMenu(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		return "console/frontMenu/front_list";
+	}
+	
+	/**
+	 * 前台菜单列表查询
+	 * @author wwluo
+	 * @date 2017-05-26
+	 */
+	@RequestMapping(value = "/getFrontMenus", method = RequestMethod.POST)
+	public void getFrontMenus(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		String keyWord = toUTF8String(request.getParameter("keyWord"));
+		String roleCode = request.getParameter("roleCode");
+		jsonPaging = this.getJsonPaging(request);
+		jsonPaging = frontMenuService.getFrontMenus(jsonPaging, roleCode, keyWord);
+		this.toJsonString(response, jsonPaging);
+	}
+}

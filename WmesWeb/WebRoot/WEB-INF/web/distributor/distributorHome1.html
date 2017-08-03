@@ -1,0 +1,664 @@
+[#include "../inc/head_v2.html"/]
+<style>.swiper-container {width: 100%;height: 100%;}</style>
+<link href="${base}/res/third/fullcalendar/css/fullcalendar.print.css"
+		rel="stylesheet" media="print">
+<link href="${base}/res/third/fullcalendar/css/fullcalendar.min.css"
+		rel="stylesheet">
+<link href="${base}/res/third/laydate/need/laydate.css"
+		rel="stylesheet">
+<link href="${base}/res/third/laydate/skins/yalan/laydate.css"
+			rel="stylesheet">
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<style>
+.swiper-pagination{position: absolute;top:20px;height: 13px;} 
+.swiper-pagination-bullet{    margin: 0px 5px;}
+.investor-chioce-li-ss{height:50px;}
+.home-investor-right .investor-chioce .p-selected { color:#ffffff; background-color: #70bdfe;cursor:pointer;}
+.page_left {background: url('${base}/res/images/ifa/left_ico.png') no-repeat;;position: absolute;top: 45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;left: -10px;opacity: 0.7;right: auto;cursor: pointer;}
+.page_right {background: url('${base}/res/images/ifa/right_ico.png') no-repeat;position: absolute;top:45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;right: -10px;opacity: 0.7;left: auto;cursor: pointer;}
+.swiper-pagination-bullet{width: 12px;height: 12px;}
+</style>
+<div class="wmes-top">
+        <a href="javascript:;" class="header-over">Home</a>
+    </div>
+<div class="wmes-notop-content" >
+     <div class="swiper-container ifa-home-wrap">
+        <div class="swiper-wrapper ifa-home-contents-list">
+            <div class="swiper-slide ifa-home-rows">
+                <div class="ifa-home-contents">
+                    <p class="ifa-home-title">Top5</p>
+                    <ul class="ifa-topfive-tab">
+                        <li class="now">Gain portfolio</li>
+                        <li>Loss portfolio</li>
+                    </ul>
+                    <div class="ifa-topfive-wrap">
+                        <div id="ifa-topfive-content-up" class="ifa-topfive-content ifa-topfive-active">
+                            <div class="top5-content-l">
+                                <div class="ifa-home-cart-rows">
+                                    <div class="ifa-home-cart-wrap">
+                                        <div class="ifa-home-cart swiper-no-swiping"></div>
+                                    </div> 
+                                    <div class="swiper-container ifa-home-world-list  swiper-no-swiping">
+                                        <div class="swiper-wrapper ifa-home-world">
+                                            <div class="swiper-slide ifa-home-world-rows">
+                                                <p class="home-world-title">BlackRock Global Multi-Asset Income Fund (CAD) A8 Hedged</p>
+                                                <div class="home-world-contents">
+                                                    <div class="home-world-number">
+                                                        28<span>%</span>
+                                                    </div>
+                                                    <div class="home-world-acc">
+                                                        <p class="home-acc-bi">70.3<span>%</span></p>
+                                                        <p class="home-acc-word">Acc.Return</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-slide ifa-home-world-rows">
+                                                <p class="home-world-title">Fidelity Funds - Japan Smaller Companies Fund A-Acc-JPY</p>
+                                                <div class="home-world-contents">
+                                                    <div class="home-world-number">
+                                                        22<span>%</span>
+                                                    </div>
+                                                    <div class="home-world-acc">
+                                                        <p class="home-acc-bi">62<span>%</span></p>
+                                                        <p class="home-acc-word">Acc.Return</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-slide ifa-home-world-rows">
+                                                <p class="home-world-title">Baring ASEAN Frontiers Fund (USD) Y-Inc</p>
+                                                <div class="home-world-contents">
+                                                    <div class="home-world-number">
+                                                        20<span>%</span>
+                                                    </div>
+                                                    <div class="home-world-acc">
+                                                        <p class="home-acc-bi">61.3<span>%</span></p>
+                                                        <p class="home-acc-word">Acc.Return</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-slide ifa-home-world-rows">
+                                                <p class="home-world-title">JPM Global Financials (USD)</p>
+                                                <div class="home-world-contents">
+                                                    <div class="home-world-number">
+                                                        18<span>%</span>
+                                                    </div>
+                                                    <div class="home-world-acc">
+                                                        <p class="home-acc-bi">53.2<span>%</span></p>
+                                                        <p class="home-acc-word">Acc.Return</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-slide ifa-home-world-rows">
+                                                <p class="home-world-title">BNP Paribas L1 World Commodities Classic Cap (USD)</p>
+                                                <div class="home-world-contents">
+                                                    <div class="home-world-number">
+                                                        12<span>%</span>
+                                                    </div>
+                                                    <div class="home-world-acc">
+                                                        <p class="home-acc-bi">87<span>%</span></p>
+                                                        <p class="home-acc-word">Acc.Return</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                                
+                            </div>
+                            <div class="top5-content-r">
+                                <div class="top5-bar">
+                                    <ul class="top5-bar-ul">
+                                        <li class="top5-bar-lie top5-bar-active" data-acc="301.3%" data-name="Conservative Portfolio" data-title="Kenny Wo">
+                                            <div class="top5-bar-text">
+                                                <div number="1" class="bar-bg">
+                                                    <span class="top5-bar-num top5-bar-num1">1</span>
+                                                    <div class="bar top5-w100"></div>
+                                                </div>
+                                                <div class="top5-portfolio-mc">
+                                                    <p class="top5-mc-title">Conservative Portfolio</p>
+                                                    <p class="top5-mc-word">301.3<span>%</span></p>
+                                                </div>
+                                                <div class="top5-portfolio-contents">
+                                                    <div class="top5-bar-tx1">
+                                                        <p number="1" data-name="Conservative Portfolio" class="top5-bar-title"><a class="home-acc-word-href" href="${base}/front/ifa/info/porfoliosdetail.do">Conservative Portfolio</a></p>
+                                                    </div>
+                                                    <div class="top5-portfolio-wrap">
+                                                        <div class="top5-portfolio-left">
+                                                           <div class="top5-portfolio-img">
+                                                                <img class="top5-portfolio-porimg" src="${base}/res/images/ifa/porimg.png">
+                                                                <img class="top5-portfolio-pointer" src="${base}/res/images/ifa/propointer.png">
+                                                            </div> 
+                                                            <p class="top5-portfolio-num">12,00.32 <span>USD</span></p>
+                                                            <p class="top5-portfolio-word">Aum</p>
+                                                        </div>
+                                                        <div class="top5-portfolio-right">
+                                                            <p class="top5-portfolio-name">Kenny Wo <img src="${base}/res/images/ifa/investor_liaotian02.png"></p>
+                                                            <p class="top5-portfolio-date">2016-08-12</p>
+                                                            <p class="top5-portfolio-tn">301.30<span>%</span></p>
+                                                            <p class="top5-portfolio-word">Acc.Return</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="top5-portfolio-hodings">10 Hodings</p>
+                                                </div>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                        <li class="top5-bar-lie" data-acc="200%" data-name="Moderate Growth Portfolio" data-title="Davil Tang">
+                                            <div class="top5-bar-text">
+                                                <div number="2" class="bar-bg">
+                                                    <span class="top5-bar-num top5-bar-num2">2</span>
+                                                    <div class="bar top5-w72" style="width:72%;"></div>
+                                                </div>
+                                                <div class="top5-portfolio-mc">
+                                                    <p class="top5-mc-title">Moderate Growth Portfolio</p>
+                                                    <p class="top5-mc-word">200<span>%</span></p>
+                                                </div>
+                                                <div class="top5-portfolio-contents">
+                                                    <div class="top5-bar-tx1">
+                                                        <p number="2" data-name="Moderate Growth Portfolio" class="top5-bar-title"><a class="home-acc-word-href" href="${base}/front/ifa/info/porfoliosdetail.do">Moderate Growth Portfolio</a></p>
+                                                    </div>
+                                                    <div class="top5-portfolio-wrap">
+                                                        <div class="top5-portfolio-left">
+                                                           <div class="top5-portfolio-img">
+                                                                <img class="top5-portfolio-porimg" src="${base}/res/images/ifa/porimg.png">
+                                                                <img class="top5-portfolio-pointer" src="${base}/res/images/ifa/propointer.png">
+                                                            </div> 
+                                                            <p class="top5-portfolio-num">24,31.01 <span>USD</span></p>
+                                                            <p class="top5-portfolio-word">Aum</p>
+                                                        </div>
+                                                        <div class="top5-portfolio-right">
+                                                            <p class="top5-portfolio-name">Davil Tang <img src="${base}/res/images/ifa/investor_liaotian02.png"></p>
+                                                            <p class="top5-portfolio-date">2016-08-16</p>
+                                                            <p class="top5-portfolio-tn">200<span>%</span></p>
+                                                            <p class="top5-portfolio-word">Acc.Return</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="top5-portfolio-hodings">14 Hodings</p>
+                                                </div>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                        <li class="top5-bar-lie" data-acc="150%" data-name="Anstone Portfolio" data-title="Ozil">
+                                            <div class="top5-bar-text">
+                                                <div number="3" class="bar-bg">
+                                                    <span class="top5-bar-num top5-bar-num3">3</span>
+                                                    <div class="bar top5-w58" style="width:58%;"></div>
+                                                </div>
+                                                <div class="top5-portfolio-mc">
+                                                    <p class="top5-mc-title">Anstone Portfolio</p>
+                                                    <p class="top5-mc-word">150<span>%</span></p>
+                                                </div>
+                                                <div class="top5-portfolio-contents">
+                                                    <div class="top5-bar-tx1">
+                                                        <p number="3" data-name="Anstone Portfolio" class="top5-bar-title"><a class="home-acc-word-href" href="${base}/front/ifa/info/porfoliosdetail.do">Anstone Portfolio</a></p>
+                                                    </div>
+                                                    <div class="top5-portfolio-wrap">
+                                                        <div class="top5-portfolio-left">
+                                                           <div class="top5-portfolio-img">
+                                                                <img class="top5-portfolio-porimg" src="${base}/res/images/ifa/porimg.png">
+                                                                <img class="top5-portfolio-pointer" src="${base}/res/images/ifa/propointer.png">
+                                                            </div> 
+                                                            <p class="top5-portfolio-num">12,44.21 <span>USD</span></p>
+                                                            <p class="top5-portfolio-word">Aum</p>
+                                                        </div>
+                                                        <div class="top5-portfolio-right">
+                                                            <p class="top5-portfolio-name">Ozil<img src="${base}/res/images/ifa/investor_liaotian02.png"></p>
+                                                            <p class="top5-portfolio-date">2016-08-22</p>
+                                                            <p class="top5-portfolio-tn">150<span>%</span></p>
+                                                            <p class="top5-portfolio-word">Acc.Return</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="top5-portfolio-hodings">12 Hodings</p>
+                                                </div>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                        <li class="top5-bar-lie" data-acc="80%" data-name="Low-Cost Expert Inverstment Portfolio" data-title="William Mo">
+                                            <div class="top5-bar-text">
+                                                <div number="4" class="bar-bg">
+                                                    <span class="top5-bar-num top5-bar-num4">4</span>
+                                                    <div class="bar top5-w42" style="width:42%;"></div>
+                                                </div>
+                                                <div class="top5-portfolio-mc">
+                                                    <p class="top5-mc-title">Low-Cost Expert Inverstment Portfolio</p>
+                                                    <p class="top5-mc-word">80<span>%</span></p>
+                                                </div>
+                                                <div class="top5-portfolio-contents">
+                                                    <div class="top5-bar-tx1">
+                                                        <p number="4" data-name="Low-Cost Expert Inverstment Portfolio" class="top5-bar-title"><a class="home-acc-word-href" href="${base}/front/ifa/info/porfoliosdetail.do">Low-Cost Expert Inverstment Portfolio</a></p>
+                                                    </div>
+                                                    <div class="top5-portfolio-wrap">
+                                                        <div class="top5-portfolio-left">
+                                                           <div class="top5-portfolio-img">
+                                                                <img class="top5-portfolio-porimg" src="${base}/res/images/ifa/porimg.png">
+                                                                <img class="top5-portfolio-pointer" src="${base}/res/images/ifa/propointer.png">
+                                                            </div> 
+                                                            <p class="top5-portfolio-num">34,89.21 <span>USD</span></p>
+                                                            <p class="top5-portfolio-word">Aum</p>
+                                                        </div>
+                                                        <div class="top5-portfolio-right">
+                                                            <p class="top5-portfolio-name">William Mo<img src="${base}/res/images/ifa/investor_liaotian02.png"></p>
+                                                            <p class="top5-portfolio-date">2016-08-28</p>
+                                                            <p class="top5-portfolio-tn">80<span>%</span></p>
+                                                            <p class="top5-portfolio-word">Acc.Return</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="top5-portfolio-hodings">9 Hodings</p>
+                                                </div>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                        <li class="top5-bar-lie" data-acc="60%" data-name="Aggressive Portfolio" data-title="Martin Fang">
+                                            <div class="top5-bar-text">
+                                                <div number="5" class="bar-bg">
+                                                    <span class="top5-bar-num top5-bar-num5">5</span>
+                                                    <div class="bar top5-w32" style="width:32%;"></div>
+                                                </div>
+                                                <div class="top5-portfolio-mc">
+                                                    <p class="top5-mc-title">Aggressive Portfolio</p>
+                                                    <p class="top5-mc-word">60<span>%</span></p>
+                                                </div>
+                                                <div class="top5-portfolio-contents">
+                                                    <div class="top5-bar-tx1">
+                                                        <p number="5" data-name="Aggressive Portfolio" class="top5-bar-title"><a class="home-acc-word-href" href="${base}/front/ifa/info/porfoliosdetail.do">Aggressive Portfolio</a></p>
+                                                    </div>
+                                                    <div class="top5-portfolio-wrap">
+                                                        <div class="top5-portfolio-left">
+                                                           <div class="top5-portfolio-img">
+                                                                <img class="top5-portfolio-porimg" src="${base}/res/images/ifa/porimg.png">
+                                                                <img class="top5-portfolio-pointer" src="${base}/res/images/ifa/propointer.png">
+                                                            </div> 
+                                                            <p class="top5-portfolio-num">5,32.64 <span>USD</span></p>
+                                                            <p class="top5-portfolio-word">Aum</p>
+                                                        </div>
+                                                        <div class="top5-portfolio-right">
+                                                            <p class="top5-portfolio-name">Martin Fang<img src="${base}/res/images/ifa/investor_liaotian02.png"></p>
+                                                            <p class="top5-portfolio-date">2016-09-02</p>
+                                                            <p class="top5-portfolio-tn">60<span>%</span></p>
+                                                            <p class="top5-portfolio-word">Acc.Return</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="top5-portfolio-hodings">13 Hodings</p>
+                                                </div>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>   
+                        </div>
+                        <div id="ifa-topfive-content-down" class="ifa-topfive-content">
+                            <div class="top5-content-l">
+                                <div class="ifa-home-cart-rows">
+                                    <div class="ifa-home-cart-wrap">
+                                        <div class="ifa-home-cart swiper-no-swiping"></div>
+                                    </div> 
+                                    <div class="swiper-container ifa-home-world-list  swiper-no-swiping">
+                                        <div class="swiper-wrapper ifa-home-world">
+                                            <div class="swiper-slide ifa-home-world-rows">
+                                                <p class="home-world-title">BlackRock Global Multi-Asset Income Fund (CAD) A8 Hedged</p>
+                                                <div class="home-world-contents">
+                                                    <div class="home-world-number">
+                                                        28<span>%</span>
+                                                    </div>
+                                                    <div class="home-world-acc">
+                                                        <p class="home-acc-bi ifa-home-acc-down">-70.3<span>%</span></p>
+                                                        <p class="home-acc-word">Acc.Return</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-slide ifa-home-world-rows">
+                                                <p class="home-world-title">Fidelity Funds - Japan Smaller Companies Fund A-Acc-JPY</p>
+                                                <div class="home-world-contents">
+                                                    <div class="home-world-number">
+                                                        22<span>%</span>
+                                                    </div>
+                                                    <div class="home-world-acc">
+                                                        <p class="home-acc-bi ifa-home-acc-down">-62<span>%</span></p>
+                                                        <p class="home-acc-word">Acc.Return</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-slide ifa-home-world-rows">
+                                                <p class="home-world-title">Baring ASEAN Frontiers Fund (USD) Y-Inc</p>
+                                                <div class="home-world-contents">
+                                                    <div class="home-world-number">
+                                                        20<span>%</span>
+                                                    </div>
+                                                    <div class="home-world-acc">
+                                                        <p class="home-acc-bi ifa-home-acc-down">-61.3<span>%</span></p>
+                                                        <p class="home-acc-word">Acc.Return</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-slide ifa-home-world-rows">
+                                                <p class="home-world-title">JPM Global Financials (USD)</p>
+                                                <div class="home-world-contents">
+                                                    <div class="home-world-number">
+                                                        18<span>%</span>
+                                                    </div>
+                                                    <div class="home-world-acc">
+                                                        <p class="home-acc-bi ifa-home-acc-down">-53.2<span>%</span></p>
+                                                        <p class="home-acc-word">Acc.Return</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-slide ifa-home-world-rows">
+                                                <p class="home-world-title">BNP Paribas L1 World Commodities Classic Cap (USD)</p>
+                                                <div class="home-world-contents">
+                                                    <div class="home-world-number">
+                                                        12<span>%</span>
+                                                    </div>
+                                                    <div class="home-world-acc">
+                                                        <p class="home-acc-bi ifa-home-acc-down">-87<span>%</span></p>
+                                                        <p class="home-acc-word">Acc.Return</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                                
+                            </div>
+                            <div class="top5-content-r">
+                                <div class="top5-bar">
+                                    <ul class="top5-bar-ul">
+                                        <li class="top5-bar-lie top5-bar-active" data-acc="301.3%" data-name="Conservative Portfolio" data-title="Kenny Wo">
+                                            <div class="top5-bar-text">
+                                                <div number="1" class="bar-bg">
+                                                    <span class="top5-bar-num top5-bar-num1">1</span>
+                                                    <div class="bar top5-w100"></div>
+                                                </div>
+                                                <div class="top5-portfolio-mc">
+                                                    <p class="top5-mc-title">Conservative Portfolio</p>
+                                                    <p class="top5-mc-word">301.3<span>%</span></p>
+                                                </div>
+                                                <div class="top5-portfolio-contents">
+                                                    <div class="top5-bar-tx1">
+                                                        <p number="1" data-name="Conservative Portfolio" class="top5-bar-title"><a class="home-acc-word-href" href="${base}/front/ifa/info/porfoliosdetail.do">Conservative Portfolio</a></p>
+                                                    </div>
+                                                    <div class="top5-portfolio-wrap">
+                                                        <div class="top5-portfolio-left">
+                                                           <div class="top5-portfolio-img">
+                                                                <img class="top5-portfolio-porimg" src="${base}/res/images/ifa/porimg.png">
+                                                                <img class="top5-portfolio-pointer" src="${base}/res/images/ifa/propointer.png">
+                                                            </div> 
+                                                            <p class="top5-portfolio-num ifa-home-acc-down">-12,00.32 <span>USD</span></p>
+                                                            <p class="top5-portfolio-word">Aum</p>
+                                                        </div>
+                                                        <div class="top5-portfolio-right">
+                                                            <p class="top5-portfolio-name">Kenny Wo <img src="${base}/res/images/ifa/investor_liaotian02.png"></p>
+                                                            <p class="top5-portfolio-date">2016-08-12</p>
+                                                            <p class="top5-portfolio-tn">301.30<span>%</span></p>
+                                                            <p class="top5-portfolio-word">Acc.Return</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="top5-portfolio-hodings">10 Hodings</p>
+                                                </div>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                        <li class="top5-bar-lie" data-acc="200%" data-name="Moderate Growth Portfolio" data-title="Davil Tang">
+                                            <div class="top5-bar-text">
+                                                <div number="2" class="bar-bg">
+                                                    <span class="top5-bar-num top5-bar-num2">2</span>
+                                                    <div class="bar top5-w72" style="width:72%;"></div>
+                                                </div>
+                                                <div class="top5-portfolio-mc">
+                                                    <p class="top5-mc-title">Moderate Growth Portfolio</p>
+                                                    <p class="top5-mc-word">200<span>%</span></p>
+                                                </div>
+                                                <div class="top5-portfolio-contents">
+                                                    <div class="top5-bar-tx1">
+                                                        <p number="2" data-name="Moderate Growth Portfolio" class="top5-bar-title"><a class="home-acc-word-href" href="${base}/front/ifa/info/porfoliosdetail.do">Moderate Growth Portfolio</a></p>
+                                                    </div>
+                                                    <div class="top5-portfolio-wrap">
+                                                        <div class="top5-portfolio-left">
+                                                           <div class="top5-portfolio-img">
+                                                                <img class="top5-portfolio-porimg" src="${base}/res/images/ifa/porimg.png">
+                                                                <img class="top5-portfolio-pointer" src="${base}/res/images/ifa/propointer.png">
+                                                            </div> 
+                                                            <p class="top5-portfolio-num  ifa-home-acc-down">-24,31.01 <span>USD</span></p>
+                                                            <p class="top5-portfolio-word">Aum</p>
+                                                        </div>
+                                                        <div class="top5-portfolio-right">
+                                                            <p class="top5-portfolio-name">Davil Tang <img src="${base}/res/images/ifa/investor_liaotian02.png"></p>
+                                                            <p class="top5-portfolio-date">2016-08-16</p>
+                                                            <p class="top5-portfolio-tn">200<span>%</span></p>
+                                                            <p class="top5-portfolio-word">Acc.Return</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="top5-portfolio-hodings">14 Hodings</p>
+                                                </div>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                        <li class="top5-bar-lie" data-acc="150%" data-name="Anstone Portfolio" data-title="Ozil">
+                                            <div class="top5-bar-text">
+                                                <div number="3" class="bar-bg">
+                                                    <span class="top5-bar-num top5-bar-num3">3</span>
+                                                    <div class="bar top5-w58" style="width:58%;"></div>
+                                                </div>
+                                                <div class="top5-portfolio-mc">
+                                                    <p class="top5-mc-title">Anstone Portfolio</p>
+                                                    <p class="top5-mc-word">150<span>%</span></p>
+                                                </div>
+                                                <div class="top5-portfolio-contents">
+                                                    <div class="top5-bar-tx1">
+                                                        <p number="3" data-name="Anstone Portfolio" class="top5-bar-title"><a class="home-acc-word-href" href="${base}/front/ifa/info/porfoliosdetail.do">Anstone Portfolio</a></p>
+                                                    </div>
+                                                    <div class="top5-portfolio-wrap">
+                                                        <div class="top5-portfolio-left">
+                                                           <div class="top5-portfolio-img">
+                                                                <img class="top5-portfolio-porimg" src="${base}/res/images/ifa/porimg.png">
+                                                                <img class="top5-portfolio-pointer" src="${base}/res/images/ifa/propointer.png">
+                                                            </div> 
+                                                            <p class="top5-portfolio-num  ifa-home-acc-down">-12,44.21 <span>USD</span></p>
+                                                            <p class="top5-portfolio-word">Aum</p>
+                                                        </div>
+                                                        <div class="top5-portfolio-right">
+                                                            <p class="top5-portfolio-name">Ozil<img src="${base}/res/images/ifa/investor_liaotian02.png"></p>
+                                                            <p class="top5-portfolio-date">2016-08-22</p>
+                                                            <p class="top5-portfolio-tn">150<span>%</span></p>
+                                                            <p class="top5-portfolio-word">Acc.Return</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="top5-portfolio-hodings">12 Hodings</p>
+                                                </div>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                        <li class="top5-bar-lie" data-acc="80%" data-name="Low-Cost Expert Inverstment Portfolio" data-title="William Mo">
+                                            <div class="top5-bar-text">
+                                                <div number="4" class="bar-bg">
+                                                    <span class="top5-bar-num top5-bar-num4">4</span>
+                                                    <div class="bar top5-w42" style="width:42%;"></div>
+                                                </div>
+                                                <div class="top5-portfolio-mc">
+                                                    <p class="top5-mc-title">Low-Cost Expert Inverstment Portfolio</p>
+                                                    <p class="top5-mc-word">80<span>%</span></p>
+                                                </div>
+                                                <div class="top5-portfolio-contents">
+                                                    <div class="top5-bar-tx1">
+                                                        <p number="4" data-name="Low-Cost Expert Inverstment Portfolio" class="top5-bar-title"><a class="home-acc-word-href" href="${base}/front/ifa/info/porfoliosdetail.do">Low-Cost Expert Inverstment Portfolio</a></p>
+                                                    </div>
+                                                    <div class="top5-portfolio-wrap">
+                                                        <div class="top5-portfolio-left">
+                                                           <div class="top5-portfolio-img">
+                                                                <img class="top5-portfolio-porimg" src="${base}/res/images/ifa/porimg.png">
+                                                                <img class="top5-portfolio-pointer" src="${base}/res/images/ifa/propointer.png">
+                                                            </div> 
+                                                            <p class="top5-portfolio-num  ifa-home-acc-down">-34,89.21 <span>USD</span></p>
+                                                            <p class="top5-portfolio-word">Aum</p>
+                                                        </div>
+                                                        <div class="top5-portfolio-right">
+                                                            <p class="top5-portfolio-name">William Mo<img src="${base}/res/images/ifa/investor_liaotian02.png"></p>
+                                                            <p class="top5-portfolio-date">2016-08-28</p>
+                                                            <p class="top5-portfolio-tn">80<span>%</span></p>
+                                                            <p class="top5-portfolio-word">Acc.Return</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="top5-portfolio-hodings">9 Hodings</p>
+                                                </div>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                        <li class="top5-bar-lie" data-acc="60%" data-name="Aggressive Portfolio" data-title="Martin Fang">
+                                            <div class="top5-bar-text">
+                                                <div number="5" class="bar-bg">
+                                                    <span class="top5-bar-num top5-bar-num5">5</span>
+                                                    <div class="bar top5-w32" style="width:32%;"></div>
+                                                </div>
+                                                <div class="top5-portfolio-mc">
+                                                    <p class="top5-mc-title">Aggressive Portfolio</p>
+                                                    <p class="top5-mc-word">60<span>%</span></p>
+                                                </div>
+                                                <div class="top5-portfolio-contents">
+                                                    <div class="top5-bar-tx1">
+                                                        <p number="5" data-name="Aggressive Portfolio" class="top5-bar-title"><a class="home-acc-word-href" href="${base}/front/ifa/info/porfoliosdetail.do">Aggressive Portfolio</a></p>
+                                                    </div>
+                                                    <div class="top5-portfolio-wrap">
+                                                        <div class="top5-portfolio-left">
+                                                           <div class="top5-portfolio-img">
+                                                                <img class="top5-portfolio-porimg" src="${base}/res/images/ifa/porimg.png">
+                                                                <img class="top5-portfolio-pointer" src="${base}/res/images/ifa/propointer.png">
+                                                            </div> 
+                                                            <p class="top5-portfolio-num  ifa-home-acc-down">-5,32.64 <span>USD</span></p>
+                                                            <p class="top5-portfolio-word">Aum</p>
+                                                        </div>
+                                                        <div class="top5-portfolio-right">
+                                                            <p class="top5-portfolio-name">Martin Fang<img src="${base}/res/images/ifa/investor_liaotian02.png"></p>
+                                                            <p class="top5-portfolio-date">2016-09-02</p>
+                                                            <p class="top5-portfolio-tn">60<span>%</span></p>
+                                                            <p class="top5-portfolio-word">Acc.Return</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="top5-portfolio-hodings">13 Hodings</p>
+                                                </div>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide ifa-home-rows">
+                <div class="ifa-home-contents">
+                    <p class="ifa-home-title">Find Investors</p>
+                    <div class="mid-investor-left">
+                            <div class="home-investor-left">
+                                    <p class="home-investors-total">A total of <span class="home-investors-sum">17</span> investors to meet your requirements</p>
+                                   <ul class="home-investor-list">
+                                       
+                                   </ul> 
+                            </div>
+                    </div>
+                    <div  class="home-investor-right">
+                       <ul class="investor-chioce">
+                            <li isopen="0" number="1">
+                                <a class="investor-chioce-button  investor-chioce-white" href="javascript:;">Language</a>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">English</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Chinese</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Spanish</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">French</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">German</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Japanese</span><span class="investor-choice-x">x</span></p>                  
+                            </li>
+                            <li  isopen="0" number="2"><a class="investor-chioce-button investor-chioce-white" href="javascript:;">Inv. Style</a>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Conservative</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Steady</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Growth</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Radical</span><span class="investor-choice-x">x</span></p>
+                            </li>
+                            <li isopen="0" number="3"><a class="investor-chioce-button investor-chioce-white" href="javascript:;">Interest</a>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Golf</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Run</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Mountaineering</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Swimming</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Other</span><span class="investor-choice-x">x</span></p>
+                            </li>
+                            <li isopen="0" number="4">
+                                <a id="Country-btn" class="investor-chioce-button investor-chioce-white" href="javascript:;">Region</a>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Europe</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">North America</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">South America</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Asia</span><span class="investor-choice-x">x</span></p>
+                            </li>
+                            <li><p class="investor-chioce-button investor-chioce-white">Read My Insights</p></li>
+                            <li class="investor-list-line"></li>
+                            <li><a class="investor-chioce-button investor-chioce-white" href="javascript:;">No IFA Yet</a></li>
+                        </ul>
+                    </div>  
+                </div>
+            </div>
+            <div id="swiper-slide3" class="swiper-slide ifa-home-rows">
+                <div class="ifa-home-contents" style="min-height:1000px;*+height:100%;_height:1000px;">
+                   <p class="ifa-home-title">Task List</p>
+                   <p class="tasklist-date-ico">
+
+                       <span id="fullcalendar-show" class="take_list_date"></span>
+                   </p>
+                   <div class="tasklist-header">
+                       <div class="tasklist-events">
+                           <input class="tasklist-events-checkbox" id="events-checkbox" type="checkbox" name=""> 
+                           <p class="tasklist-events-title">Recurrent Events</p>
+                       </div>  
+                       <div class="tasklist-date-choice">
+                           <p class="date-active">Target Date</p>
+                           <p>Create Date</p>
+                       </div>
+                       <!-- 下拉列表 -->
+                       <div class="tasklist-metting">
+                           <p class="tasklist-metting-title" style="line-height: 2px;"><span id="tasklist-title">Choose group</span>&nbsp;&nbsp;<img src="${base}/res/images/ifa/ifa_more_ico.png"></p>
+                           <div class="tasklist-metting-color" style="background-color: transparent ;"></div>
+                           <ul class="tasklist-metting-choice">
+                           </ul>
+                       </div>
+                   </div>
+                   <div id="schedule-view" class="line-wrap">
+                        <!--
+                        <ul class="line-add-label" style="display:none;">
+                           <li data-color="#438ec8" class="metting-list-choice" style="background-color:#438ec8">KYC</li>
+                           <li data-color="#7dd536" class="metting-list-choice" style="background-color:#7dd536">Create Proposal</li>
+                           <li data-color="#f37317" class="metting-list-choice" style="background-color:#f37317">Make Appointment</li>
+                        </ul>
+                  		-->
+                   </div>
+                   <div class="ifa-home-calendar" style="margin:auto 50px;">
+                        <!--<a href="${base}/front/strategy/info/clientDetailKyc.do">
+                            <img style="width:100%;" src="${base}/res/images/allimg/fullcander.png" alt="">
+                        </a>
+                        -->
+                   </div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination" id="ifa-home-page"></div>
+    </div>  
+    
+</div>
+        
+[#include "../inc/foot_v2.html"/]
+<script src="${base}/res/console/js/jquery-1.11.2.min.js"
+		type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js"
+	type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/laydate/laydate.js" type="text/javascript"></script>
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/ifaHome.js');
+</script>

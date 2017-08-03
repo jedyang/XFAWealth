@@ -1,0 +1,227 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选项信息</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+			<ul class="tab" id="dialog_tab-search">
+                <li class="tab-li-crr">
+                    <a href="javascript:;">简体选项信息</a>
+                </li>
+                 <li class="tab-li">
+                    <a href="javascript:;">繁体选项信息</a>
+                </li>
+                 <li class="tab-li">
+                    <a href="javascript:;">英文选项信息</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap dialog_tab_wrap">
+                <!-- tab一 -->
+                <form class="form-horizontal" style="display:block;">
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtItemTitleSC" class="label-control">选项内容</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtItemTitleSC" class="form-control " rows="3"></textarea>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtItemRemarkSC" class="label-control">选项说明</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtItemRemarkSC" class="form-control " rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="selType" class="label-control">选项类型</label>
+                        </div>
+                        <div class="col-md-7">
+                            <select id="selType" class="form-control">
+                   				<option value='radio'>[@lang_res  k='global.radio'/]</option>
+                          		<option value='select'>[@lang_res  k='global.select'/]</option>
+                          		<option value='checkbox'>[@lang_res  k='global.checkbox'/]</option>
+                          		<option value='text'>[@lang_res  k='global.text'/]</option>
+                          		<option value='texearea'>[@lang_res  k='global.textarea'/]</option>
+                           </select> 
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtScoreValue" class="label-control">选项分值</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input id=txtScoreValue type="text" class="form-control " value="${(WfProcedureInfoVO.procedureName)?if_exists}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtOrderBy" class="label-control">选项序号</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input id=txtOrderBy type="text" class="form-control " value="${(WfProcedureInfoVO.procedureName)?if_exists}">
+                        </div>
+                    </div>   
+                </form>   
+                 <form class="form-horizontal" style="display:none;">
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtItemTitleTC" class="label-control">选项内容</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtItemTitleTC" class="form-control " rows="3"></textarea>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtItemRemarkTC" class="label-control">选项说明</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtItemRemarkTC" class="form-control " rows="5"></textarea>
+                        </div>
+                    </div>
+                </form>  
+                <form class="form-horizontal" style="display:none;">
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtItemTitleEN" class="label-control">选项内容</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtItemTitleEN" class="form-control " rows="3"></textarea>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtItemRemarkEN" class="label-control">选项说明</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtItemRemarkEN" class="form-control " rows="5"></textarea>
+                        </div>
+                    </div>
+                </form>  
+				      
+            </div>  
+
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		//弹出选项窗体
+		//tab
+	    $("#dialog_tab-search li").click(function(){
+			 $(this).addClass("tab-li-crr").siblings().removeClass();
+			 $(".dialog_tab_wrap").children().hide().eq($(this).index()).show()
+		 });
+		
+		function showQuestItemForm1()
+    	{
+    		var checkifafirmid = $('#txtSelectedCompanyName2').attr('companyid');
+			//if(checkifafirmid==''||checkifafirmid==null||checkifafirmid==undefined)
+			//{ layer.msg("[@lang_res  k='ifafirm.message.promptNotSelectedIfafirm'/]", { icon: 0, time: 1000 }, function () { }); return false;}
+			
+    		 BootstrapDialog.show({
+				title : "[@lang_res  k='global.confirm'/]",
+				cssClass : 'login-dialog',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('quest_item_form.do?procedureid='),
+				onshow:function(){},
+				buttons : [  {
+					label : "[@lang_res  k='rpq.question.items.managerMentTitle'/]",
+					cssClass : 'btn-primary',
+					action : function(dialogItself) {
+						 var title = $('#txtTitle').val();
+						 var remark = $('#txtRemark').val();
+						 var type = $('#selType').val()==null?"":$('#selType').val();
+						 //if(type='n') type="[@lang_res  k='rpq.question.items.options'/]";
+						 //else if(type='o') type="[@lang_res  k='rpq.question.items.otherTextInput'/]";
+						 
+						 if('radio'==type){
+							 type="[@lang_res  k='global.radio'/]"
+						 }else if('select'==type){
+							 type="[@lang_res  k='global.select'/]"
+						 }else if('checkbox'==type){
+							 type="[@lang_res  k='global.checkbox'/]"
+						 }else if('text'==type){
+							 type="[@lang_res  k='global.text'/]"
+						 }else if('texearea'==type){
+							 type="[@lang_res  k='global.textarea'/]"
+						 }
+						 
+						 var score = $('#txtScoreValue').val();
+						 var orderno = $('#txtOrderBy').val();//alert(type);
+						 //console.log(selectedid);console.log(selectedname);
+						 if(selectedid == undefined || selectedid == '')
+						 {
+						 	//layer.alert("[@lang_res  k='ifafirm.list.selectDistributor'/]", {icon: 0 });
+						 	return;
+						 }
+						 //$('#txtSelectedCompanyName2').val(selectedname);
+						 //$('#txtSelectedCompanyName2').attr('companyid',selectedid);
+						 layer.confirm("[@lang_res  k='ifafirm.message.promptIsSaveSelectedDistributor'/]", {  icon: 3  },function () {
+						 	 
+						 	 $.ajax({
+									type : 'post',
+									datatype : 'json',
+									url : "${base}/console/ifafirm/addIfafirmDistributorid.do?datestr="
+											+ new Date().getTime(),
+									data : {'distributorid':selectedid,'ifafirmid': checkifafirmid },
+									 beforeSend: function () {
+			                        indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", { time: 500000 });
+			                    },
+			                    complete: function () {
+									layer.close(indexmsg);
+			                    },
+									success : function(json) {
+										console.log(json);
+										json = JSON.parse(json);
+										var result = json.result;
+										if(result==true||result=='true'){
+											layer.msg("[@lang_res  k='global.success.save'/]", { icon: 1, time: 1000 }, function () { bindMyDisList(0);});
+										}
+									}
+								});
+						 	 
+						 	 dialogItself.close();
+						 	 layer.closeAll();
+						 });
+						 
+						
+					}
+				},  {
+					label : "[@lang_res  k='global.back'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
+    	}
+		
+		
+	});
+
+	
+</script>
+</body>
+</html>

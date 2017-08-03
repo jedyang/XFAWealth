@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fund info</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<input id="btnCloseIframe" type="hidden" />
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container">
+            <ul class="tab" id="tab-search">
+                <li id="tab-li-fixed" class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res  k='console.product.info.title'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+	                    <div class="row pd10">
+	                        <div class="col-md-4">
+	                        	<label for="txtProName">[@lang_res  k='param.list.name'/]</label>
+	                        	<input type="text"  class="form-control searchCondition" id="txtProName" value="">
+	                        </div>
+	                        <div class="col-md-4">
+	                        	<label for="selDistributor">[@lang_res  k='console.fund.info.list.table.oper.viewDistributorList'/]</label>
+	                        	<select class="form-control searchCondition" id="distributorId"  name="distributorId">
+	                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+	                               [#if distributorList?exists && distributorList?size gt 0]
+	                                 [#list distributorList as md]
+	                                   <option value="${md.id}">${md.companyName}</option>
+	                                 [/#list]
+	                               [/#if]
+	                            </select>
+	                        </div>
+	                        <div class="col-md-3">
+	                        	<label for="selType">[@lang_res  k='console.product.info.type'/]</label>
+	                        	<select class="form-control searchCondition" id="selType"  name="selType">
+	                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+	                                <option value="fund">[@lang_res  k='global.fund'/]</option>
+	                                <option value="bond">[@lang_res  k='global.bond'/]</option>
+	                                <option value="stock">[@lang_res  k='global.stock'/]</option>
+	                            </select>
+	                        </div>                        
+	                        <div class="col-md-1">
+	                        	<button type="button" id="btnSearch" class="btn btn-primary" style="margin-left: -10px;">
+	                    			<!--  --> [@lang_res k='console.fund.info.list.btn.search'/]</button>
+	               			</div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20">
+                    	<a id="btnAddInfoForm" href="javascript:void(0);" class="btn-blue-s">
+                    		<!--  -->
+                    		[@lang_res k='global.add'/]
+                    	</a>
+                    </div>
+                    <div>
+                        <table id="productList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+	                           <tr>
+	                               <th class="table-head">[@lang_res  k='console.product.info.isinCode'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.product.info.name'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.productdistributor.distributorname'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.product.info.type'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.product.info.currency'/]</th>
+	                               <th class="table-head">[@lang_res  k='global.createTime'/]</th>
+	                               <th class="table-head">[@lang_res  k='global.status'/]</th>
+	                               <th width="12%" class="table-head">[@lang_res  k='param.action'/]</th>
+	                            </tr>                                
+                            </tbody>
+                        </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+ 
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/js/util.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<!-- <script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script> -->
+
+<script type="text/javascript">
+var grid_selector = "#productList";
+var pageSize = 10;
+</script>
+<script type="text/javascript">
+//seajs.use('layer',function(){
+	$(function(){	
+		//跳转表单页面
+		$('#btnAddInfoForm').on('click',function(){
+			layer.confirm("[#lang_res k='console.product.list.addConfirm'/]", { 
+				btn:['[@lang_res  k="global.confirm"/]'] 
+				}, function(index){
+					layer.close(index);
+					infoFormDialog('','fund');
+				});
+		});
+		//触发弹窗关闭
+		$('#btnCloseIframe').click(function() {
+			$(".close").click();			
+		});
+	    //绑定查询按钮事件
+	    $("#btnSearch").click(function () {                
+	    	bindList(0);
+	    });
+	    //自动触发查询事件
+	    setAutoSearch('.searchCondition',bindList,0);
+	    bindList(0);
+	});
+	
+
+	//弹出编辑页面
+	function infoFormDialog(id,type){
+		var src = "";
+		var fundUrl = "${base}/console/fund/info/detail.do?id="+id;
+		if('fund'==type){
+			src = fundUrl;
+		}else if('bond'==type){
+			layer.msg("[#lang_res k='console.product.list.bondDetailMiss'/]");
+			return ;
+		}else{
+			layer.msg("[#lang_res k='console.product.list.functionMiss'/]");
+			return;
+		}
+		BootstrapDialog.show({
+			title : "[@lang_res k='console.fund.info.list.tab.title'/]",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="no" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="'+src+'"></iframe></div>').load(),
+			buttons : [{
+				label : "[@lang_res k='global.close'/]",
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			}]
+		});
+	}
+	
+	//分页绑定Table数据
+	function bindList(curPage){
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/product/info/listJson.do?datestr='+new Date().getTime(),
+			data : {
+				'proName': $('#txtProName').val(),
+				'distributor': $('#distributorId').val(),
+				'type': $('#selType').val(),
+				'page':curPage+1,
+				'rows':pageSize,
+				'sort':'',
+				'order':''
+			},
+			success : function(json) {
+				var total = json.total;
+				var table = json.rows;
+								
+				$("#productList tbody tr:gt(0)").empty();
+			  	var tr = "";
+	            var list = json.rows;
+	            $.each(list, function (index, array) { //遍历json数据列					
+					var id = array['id'] == null ? "" : array['id'];	//对应的产品的ID，如fundId、bondId、stockId
+					var productId = array['productId'] == null ? "" : array['productId'];	//产品ID备用
+		            var isinCode = array['isinCode'] == null ? "" : array['isinCode'];
+		            var name = array['name'] == null ? "" : array['name'];
+		            var distributorId = array['distributorId'] == null ? "" : array['distributorId'];
+		            var distributorName = array['distributorName'] == null ? "" : array['distributorName'];
+		            var currency = array['currency'] == null ? "" : array['currency'];
+		            var createTime = array['createTime'] == null ? "" : array['createTime'];
+		            var isValid = array['isValid'] == null ? "" : array['isValid'];
+		            var type = array['type'] == null ? "" : array['type'];
+		            var typeName = "";
+		            if('fund'==type){
+		           	 typeName = "[@lang_res  k='global.fund'/]";
+		            }else if('bond'==type){
+		           	 typeName = "[@lang_res  k='global.bond'/]";
+		            }else if('stock'==type){
+		           	 typeName = "[@lang_res  k='global.stock'/]";
+		            }
+		            if('1'==isValid){
+		           	 isValid = "[@lang_res k='global.status.valid'/]";
+		            }else{
+		           	 isValid = "[@lang_res k='global.status.invalid'/]";
+		            }
+		            
+		            //var fundInfoUrl = '${base}/console/fund/fees/detail.do?fundId='+array[0]['id'];
+		            //var feesItemUrl = '${base}/console/fund/fees/list.do?fundId='+array[0]['id'];
+		            //var distributorUrl = '${base}/console/fund/distributor/list.do?fundId='+array[0]['id'];
+		            
+		            tr += "<tr><td>" + isinCode + "</td><td>" 
+		            	 + name + "</td><td>" 
+		            	 + distributorName + "</td><td>" 
+		            	 + typeName + "</td><td>" 
+		            	 + currency + "</td><td>" 
+		            	 + createTime + "</td><td>" 
+		            	 + isValid + "</td><td>"
+		            	 //操作
+		            	 + "<a href='#' onclick='infoFormDialog(\""+id+"\",\""+type+"\")'>[@lang_res  k='console.product.info.productInfo'/]</a>&nbsp;&nbsp;"
+		                 //+ "<a classlayer='1' id='" + id + "' class='btndelinfo' href='javascript:void(0);'>" 
+		        	  	 //+ "<i  class='glyphicon glyphicon-remove text-bold'></i> "
+		        	  	 //+ "[@lang_res  k='global.delete'/]</a>"
+		                + "</td></tr>";
+	        	});
+	            $("#productList tbody").append(tr);
+			
+			 	$("#pagination").pagination(total, {
+	                callback: pageselectCallback,
+	                numDetail: '',
+	                items_per_page: pageSize,
+	                num_display_entries: 4,
+	                current_page: curPage,
+	                num_edge_entries: 2
+	            });
+			}
+		});
+		//回调
+	    function pageselectCallback(page_id, jq) {
+	        bindList(page_id);
+	    }
+	}
+	
+	
+	//点击删除
+	$("body").on('click', '.btndelinfo', '', function () {
+	    //获取当前节点
+	    //var id = $(this).parent().find('a').attr('id');
+	    var id = $(this).attr('id');
+	    delfun(id);
+	});
+	
+	/*
+	function delfun(id){ 
+		layer.confirm("你确认要删除该信息吗？"
+			, { title:"[@lang_res  k='global.prompt'/]"
+			, btn:["[@lang_res  k='global.confirm'/]","[@lang_res  k='global.cancel'/]"]
+			, icon: 3   },function () {	
+			layer.closeAll();
+			//删除节点的数据库
+		    $.ajax({
+				type : 'post',
+				datatype : 'json',
+				url : "${base}/console/fund/info/del.do?datestr=" + new Date().getTime(),
+				data : {'id':id  },
+				beforeSend: function () {
+		        	indexmsg = layer.msg("你确认要删除该信息吗？", { time: 500000 });
+		        },
+		        complete: function () {
+					layer.close(indexmsg);
+		        },
+		       	error:function(){layer.msg("删除失败！", { icon: 0, time: 2000 }, function () {  });},
+				success : function(json) {
+					console.log(json);
+					json = JSON.parse(json);
+					var result = json.result;
+					if(result==true||result=='true'){
+						layer.msg("删除成功！", { icon: 1, time: 2000 }, function () { bindList(0); });
+					} else {
+						layer.msg("删除失败！", { icon: 0, time: 2000 }, function () {  });
+					}
+				}
+			});
+		});
+	}*/
+//});
+</script>
+</body>
+</html>

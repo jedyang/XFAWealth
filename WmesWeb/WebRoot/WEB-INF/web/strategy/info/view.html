@@ -1,0 +1,96 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<!-- <div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='strategy.title'/]</a>
+</div> -->
+<div class="wmes-content personalWrap">
+    <div class="white_background funds_background">   
+    <p class="wmes-wrap-title">[@lang_res k='strategy.info.form.viewStrategy'/]</p>
+		<!-- <div class="zhongxin_right">
+            <div class="OpenAccount_big_title">
+                <h2>[@lang_res k='strategy.info.form.viewStrategy'/]</h2>
+            </div> -->
+            <div class="insight-left-content">
+                <form id="addForm">
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>[@lang_res k='strategy.info.form.strategyName'/]</p>
+                            <p>${(strategyVO.strategyName)?if_exists}</p>
+                    </div>      
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>[@lang_res  k='strategy.info.form.goal'/]</p>
+                            <p>${(strategyVO.investmentGoal)?if_exists}</p>
+                    </div>
+                    <div class="insight-row">
+                            <p class="insight-row-title">[@lang_res k='strategy.info.form.investor'/]</p>
+                            <p>${(strategyVO.suitability)?if_exists}</p>
+                    </div>
+
+                    <div class="gary_title">Product List</div>
+                    <div class="insight-row" style="padding:0px 0px 20px 0px;">
+                        <div id="tableList" style="overflow: hidden;text-align: center;">
+                        </div>
+                        <input type="hidden" id="ids" name="ids" value="${fundIds}">
+                    </div>
+                    <div class="gary_title">Additional setting</div>
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>View permit setting:</p>
+                            <input type="radio" name="permit" id="permit0" value="0" [#if webViewVO.scopeFlag?? && webViewVO.scopeFlag=='0']checked="checked"[/#if]>Only me
+                            <input type="radio" name="permit" id="permit1" value="1" [#if webViewVO.scopeFlag?? && webViewVO.scopeFlag=='1']checked="checked"[/#if]>Public
+                            <input type="radio" name="permit" id="permit2" value="2" [#if webViewVO.scopeFlag?? && webViewVO.scopeFlag=='2']checked="checked"[/#if]>Let me specify
+                            <a id="permitASetting" href="javascript:;">Advance setting</a>
+                            <input type="hidden" id="permitSetting" name="permitSetting" value="${webViewVO.scopeFlag!}">
+                    </div>
+                    <div id="permit_ext" class="insight-row" style="padding-left:110px;display:none;">
+                        <input type="checkbox" id="permit_client" name="permit_client" value="${webViewVO.clientFlag!}" [#if webViewVO.clientFlag?? && webViewVO.clientFlag=='1']checked="checked"[/#if]>My Client
+                        <input type="checkbox" id="permit_prospect" name="permit_prospect" value="${webViewVO.prospectFlag!}" [#if webViewVO.prospectFlag?? && webViewVO.prospectFlag=='1']checked="checked"[/#if]>My Prospect
+                        <input type="checkbox" id="permit_buddy" name="permit_buddy" value="${webViewVO.buddyFlag!}" [#if webViewVO.buddyFlag?? && webViewVO.buddyFlag=='1']checked="checked"[/#if]>My Buddy
+                        <input type="checkbox" id="permit_colleague" name="permit_colleague" value="${webViewVO.colleagueFlag!}" [#if webViewVO.colleagueFlag?? && webViewVO.colleagueFlag=='1']checked="checked"[/#if]>My Colleague
+                    </div>      
+                    
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>Push to setting:</p>
+                            <input type="radio" name="push" id="push0" value="0" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag=='0']checked="checked"[/#if]>None
+                            <input type="radio" name="push" id="push1" value="1" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag=='1']checked="checked"[/#if]>All
+                            <input type="radio" name="push" id="push2" value="2" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag=='2']checked="checked"[/#if]>Let me specify
+                            <a id="pushASetting" href="javascript:;">Advance setting</a>
+                            <input type="hidden" id="pushSetting" name="pushSetting" value="${webPushVO.scopeFlag!}">
+                    </div>      
+                    <div id="push_ext" class="insight-row" style="padding-left:110px;display:none;">
+                        <input type="checkbox" id="push_client" name="push_client" value="${webPushVO.clientFlag!}" [#if webPushVO.clientFlag?? && webPushVO.clientFlag=='1']checked="checked"[/#if]>My Client
+                        <input type="checkbox" id="push_prospect" name="push_prospect" value="${webPushVO.prospectFlag!}" [#if webPushVO.prospectFlag?? && webPushVO.prospectFlag=='1']checked="checked"[/#if]>My Prospect
+                        <input type="checkbox" id="push_buddy" name="push_buddy" value="${webPushVO.buddyFlag!}" [#if webPushVO.buddyFlag?? && webPushVO.buddyFlag=='1']checked="checked"[/#if]>My Buddy
+                        <input type="checkbox" id="push_colleague" name="push_colleague" value="${webPushVO.colleagueFlag!}" [#if webPushVO.colleagueFlag?? && webPushVO.colleagueFlag=='1']checked="checked"[/#if]>My Colleague
+                    </div>      
+
+                    <input type="hidden" name="id" id="id" value="${strategyVO.id}">
+                    <input type="hidden" name="permit_clients" id="permit_clients" value="${webViewVO.clients!}">
+                    <input type="hidden" name="permit_prospects" id="permit_prospects" value="${webViewVO.prospects!}">
+                    <input type="hidden" name="permit_buddies" id="permit_buddies" value="${webViewVO.buddies!}">
+                    <input type="hidden" name="permit_colleagues" id="permit_colleagues" value="${webViewVO.colleagues!}">
+                    <input type="hidden" name="push_clients" id="push_clients" value="${webPushVO.clients!}">
+                    <input type="hidden" name="push_prospects" id="push_prospects" value="${webPushVO.prospects!}">
+                    <input type="hidden" name="push_buddies" id="push_buddies" value="${webPushVO.buddies!}">
+                    <input type="hidden" name="push_colleagues" id="push_colleagues" value="${webPushVO.colleagues!}">
+                    <input type="hidden" name="view" id="view" value="true">
+                </form>
+                <div class="btn_middle_div">
+                    <a href="${base}/front/strategy/info/myList.do" id="btnClose" class="btn_middle">[@lang_res k='global.back'/]</a>
+                    
+                    <a id="popupWinReturn" href="javascript:;" style="display:none;"></a>
+                    <input type="hidden" id="cnt_clients" value="${cnt_clients!}">
+                    <input type="hidden" id="cnt_prospects" value="cnt_prospects">
+                    <input type="hidden" id="cnt_buddies" value="cnt_buddies">
+                    <input type="hidden" id="cnt_colleagues" value="cnt_colleagues">
+	                <a id="refreshSelection" href="javascript:;" style="display:none;"></a>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        <!-- </div> -->
+    </div>
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+seajs.use('${base}/res/web/strategy/info/form.js');
+</script>

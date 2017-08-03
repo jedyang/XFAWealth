@@ -1,0 +1,254 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" >
+    <style type="text/css">
+    	#menuList .fixwidth{max-width:150px;overflow: hidden; text-overflow:ellipsis; white-space: nowrap;}
+    </style>
+</head>
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container">
+            <ul class="tab" id="tab-search">
+                <li id="tab-li-fixed" class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res k='notice.sys.title'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div class="col-md-7" style="margin-bottom: 10px;">
+						<label for="s-1" style="width:70px">
+							标题
+						</label>
+						<input id='txtTitle' type="text" class="form-control searchCondition">
+					</div>
+                    <div class="col-md-5" style="margin-bottom: 10px;">
+						<label for="s-1" style="width:70px">
+							内容
+						</label>
+						<input id='txtContent' type="text" class="form-control searchCondition">
+					</div>
+					<div class="col-md-7" style="margin-bottom: 10px;">
+						<label for="s-1" style="width:70px">
+							[@lang_res k='console.emaillog.list.tab.timeLimit'/]
+						</label>
+						<input id='startTime' type="text" class="form-control laydate-icon" style="height: 34px;" readonly="readonly">
+						<label for="s-1">
+							~
+						</label>
+						<input id='endTime' type="text" class="form-control laydate-icon" style="height: 34px;" readonly="readonly">
+					</div>
+					<div class="col-md-5" style="margin-bottom: 10px;">
+						<label for="s-1" style="width:70px">
+								Status
+						</label>
+						<select id="selStatus" class="form-control searchCondition" style="width:207px" name="selEntityType">
+							<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+							<option value="0">
+								[@lang_res k='notice.status.0'/]
+							</option>
+							<option value="1">
+								[@lang_res k='notice.status.1'/]
+							</option>
+							<option value="2">
+								[@lang_res k='notice.status.2'/]
+							</option>
+							<option value="3">
+								[@lang_res k='notice.status.3'/]
+							</option>
+						</select>
+					</div>
+					<div class="clear"></div>
+                    <div class="pdt20">
+                        <button type="button" class="btn btn-blue-s" id="btnAdd">
+							 [@lang_res k='global.add'/]
+						</button>
+						<button type="button" class="btn btn-primary" id="btnSearch">
+							 [@lang_res k='global.query'/]
+						</button>
+                    </div>
+					<div class="clear"></div>
+                    <div>
+                        <table id="menuList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+                            	<tr>
+	                               <th class="table-head">标题</th>
+	                               <th class="table-head">内容</th>
+	                               <th class="table-head">发布时间</th>
+	                               <th class="table-head">状态</th>
+	                               <th class="table-head">[@lang_res k='global.operation'/]</th>
+	                            </tr>  
+                            </tbody>
+                        </table>
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm"></ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/js/base.js" type="text/javascript"></script>
+<script src="${base}/res/third/laydate/laydate.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var pageSize = 10;
+	$(function(){
+        bindList(0);
+		$('#btnDelete').click(function() {
+			var ids = '';
+		    $('.news-checked-flag').each(function(){
+		    	if($(this).is(':checked')){
+		    		var id = $(this).closest('tr').attr('id');
+		    		if(typeof id != 'undefined'){
+		    			ids += id + ',';
+		    		}
+		    	}
+		    });
+		    if(ids != ''){
+		    	deleteSection(ids);
+		    }
+		});
+		$('#btnSearch').click(function() {
+			var startTime = $("#startTime").val();
+			var endTime =$("#endTime").val();
+			if(startTime && endTime){
+				var start = new Date(startTime).getTime();
+				var end = new Date(endTime).getTime();
+				if(start > end){
+					layer.msg("[@lang_res k='global.dateNotstart'/]");
+				}
+			}
+			bindList(0);
+		});
+		setAutoSearch('.searchCondition',bindList,0);
+	});
+  	//分页绑定Table数据
+	function bindList(curPage){
+		var title = $("#txtTitle").val();
+		var content = $("#txtContent").val();
+		var startTime = $("#startTime").val();
+		var endTime = $("#endTime").val();
+		var status = $("#selStatus").val();
+  		var data = {
+  				filterTitle : title,
+  				filterContent : content,
+  				filterStartTime : startTime,
+  				filterEndTime : endTime,
+  				filterStatus : status,
+				page : curPage + 1,
+				rows : pageSize
+	  		};
+  		var url = '${base}/console/notice/getNotices.do?datestr=' + new Date().getTime();
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : url,
+			data : data,
+			success : function(re) {
+				var total = re.total;
+				$("#menuList tbody tr:gt(0)").empty();
+                var list = re.rows;
+                var tr = '';
+                if(list != null && list.length > 0){
+                	$.each(list, function (index, array) { 				
+                        var id = array['id'];
+                        if(id == null){
+                        	return true;
+                        }
+                        var title = array['subject'] == null ? "" : array['subject'];
+                        var titleSub = title;
+                        if(title != '' && title.length > 15){
+                        	titleSub = title.substring(0, 15) + '...';
+                        }
+                        var content = array['content'] == null ? "" : array['content'];
+                        var contentSub = content;
+                        if(content != '' && content.length > 15){
+                        	contentSub = content.substring(0, 15) + '...';
+                        }
+                        var releaseDateStr = array['releaseDateStr'] == null ? "" : array['releaseDateStr']; 
+                        var status = array['status'] == null ? "" : array['status'];
+                        var statusDisplay = '';
+                        if('1' == status){
+                        	statusDisplay = '<span style="color:blue;padding:0;">[@lang_res k='notice.status.1'/]</span>';
+                        }else if('0' == status){
+                        	statusDisplay = '<span style="color:blue;padding:0;">[@lang_res k='notice.status.0'/]</span>';
+                        }else if('3' == status){
+                        	statusDisplay = '<span style="color:red;padding:0;">[@lang_res k='notice.status.3'/]</span>';
+                        }else if('2' == status){
+                        	statusDisplay = '<span style="color:#bdbdbd;padding:0;">[@lang_res k='notice.status.2'/]</span>';
+                        } 
+                        var editTopicCommentUrl = '${base}/sys/notice/input.do?id=' + id + '&datestr=' + new Date().getTime();
+                        tr += "<tr id='"+id+"'>"
+                            + "<td title='"+title+"'>" + titleSub + "</td>"
+                            + "<td title='"+content+"'>" + contentSub + "</td>"
+                            + "<td>" + releaseDateStr + "</td>"
+                            + "<td data-status='"+status+"'>" + statusDisplay + "</td>"
+                            + "<td nowrap>" 
+            				+ "<a href='javascript:void(0)' onclick=\"editSection('"+id+"','[@lang_res k='notice.sys.title'/]&nbsp;[@lang_res  k='global.edit'/]','"+editTopicCommentUrl+"')\">[@lang_res  k='global.edit'/]</a>&nbsp;&nbsp;&nbsp;&nbsp;" 
+                            + "</td>"
+                            + "</tr>"; 
+                    });
+                }
+                $("#menuList tbody").append(tr);
+			    $("#pagination").pagination(total, {
+	                 callback: pageselectCallback,
+	                 numDetail: '',
+	                 items_per_page: pageSize,
+	                 num_display_entries: 4,
+	                 current_page: curPage,
+	                 num_edge_entries: 2
+                });
+			}
+		});
+	 	//回调
+        function pageselectCallback(page_id, jq) {
+            bindList(page_id);
+        }
+	}
+	function editSection(id,title,url) {
+		$(window).scrollTop("0")
+		showform(id,title,url);
+	}
+    $("#startTime").click(function(){
+		laydate({
+			istime: true,
+			istoday: true,
+			isclear: true,
+			elem: "#startTime",
+			format: 'YYYY-MM-DD hh:mm:ss',
+			choose:function(){}
+		});
+	});
+	$("#endTime").click(function(){
+		laydate({
+			istime: true,
+			istoday: true,
+			isclear: true,
+			elem: "#endTime",
+			format: 'YYYY-MM-DD hh:mm:ss',
+			choose:function(){}
+		});
+	});
+</script>
+</body>
+</html>

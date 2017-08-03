@@ -1,0 +1,314 @@
+[#include "../../../inc/head_v2.html"/]
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Express News Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script src="${base}/res/css/news/js/jquery.min.js"></script>
+<!-- Custom Theme files -->
+
+<link href="${base}/res/css/news/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="${base}/res/css/news/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script type="text/javascript" src="${base}/res/css/news/js/bootstrap.js"></script>
+
+<!--
+
+//-->
+
+<style type="text/css">
+	.article-left{    width: 150px;
+    height: 120px;}
+    a.title{font-size: 1.4em;}
+</style>
+<script src="${base}/res/css/news/js/responsiveslides.min.js"></script>
+	<script>
+		$(function () {
+		  $("#slider").responsiveSlides({
+			auto: true,
+			nav: true,
+			speed: 500,
+			namespace: "callbacks",
+			pager: true,
+		  });
+		});
+	</script>
+	<script type="text/javascript" src="${base}/res/css/news/js/move-top.js"></script>
+<script type="text/javascript" src="${base}/res/css/news/js/easing.js"></script>
+<!--/script-->
+<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},900);
+				});
+			});
+</script>
+	<div class="wmes-content"   ng-controller="newsTableCtrl"  ng-app="newsTable">
+		<!-- header-section-starts-here -->
+	<div class="header">
+		<div class="header-bottom">
+			<div class="logo">
+				<a href="javascript:;"><p class="wmes-big-title">News</p></a>
+			</div>
+			<div class="navigation">
+				<nav class="navbar navbar-default" role="navigation">
+		   <div class="wrap">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				
+			</div>
+			<!--/.navbar-header-->
+		
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					
+					
+					<li><a href="newsList.do">政策</a></li>
+					<li><a href="newsList.do">经济</a></li>
+					<li class="dropdown">
+						<a href="javascirpt:;" class="dropdown-toggle" data-toggle="dropdown">市场<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="newsList.do">基金</a></li>
+							<li class="divider"></li>
+							<li><a href="newsList.do">股票</a></li>
+							<li class="divider"></li>
+							<li><a href="newsList.do">债卷</a></li>
+						</ul>
+					</li>
+				    <li class="dropdown">
+						<a href="javascirpt:;" class="dropdown-toggle" data-toggle="dropdown">产业<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="newsList.do">能源</a></li>
+							<li class="divider"></li>
+							<li><a href="newsList.do">原料</a></li>
+							<li class="divider"></li>
+							<li><a href="newsList.do">制造业</a></li>
+							<li class="divider"></li>
+							<li><a href="newsList.do">金融</a></li>
+							<li class="divider"></li>
+							<li><a href="newsList.do">金融</a></li>
+						</ul>
+					</li>
+					<li><a href="list.html">国际</a></li>
+					<li><a href="list.html">深度分析</a></li>
+					<li><a href="list.html">编辑推荐</a></li>
+					<div class="clearfix"></div>
+				</ul>
+				<div class="search">
+					<!-- start search-->
+				    <div class="search-box">
+					    <div id="sb-search" class="sb-search">
+							<form>
+								<input class="sb-search-input" placeholder="Enter your search term..." type="search" name="search" id="search">
+								<input class="sb-search-submit" type="submit" value="">
+								<span class="sb-icon-search"> </span>
+							</form>
+						</div>
+				    </div>
+					<!-- search-scripts -->
+					<script src="${base}/res/css/news/js/classie.js"></script>
+					<script src="${base}/res/css/news/js/uisearch.js"></script>
+						<script>
+							new UISearch( document.getElementById( 'sb-search' ) );
+						</script>
+					<!-- //search-scripts -->
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<!--/.navbar-collapse-->
+	 <!--/.navbar-->
+			</div>
+		</nav>
+		</div>
+	</div>
+	<div class="main-body"  >
+		<div class="wrap" >
+		<ol class="breadcrumb">
+			  <li><a href="index.html">[@lang_res k='news.category.home'/]</a></li>
+			  <li class="active">我的收藏</li>
+			</ol>
+			<div class="col-md-8 content-left">
+			<div class="articles sports newsList">
+					<header>
+						<h3 class="title-head">我的收藏</h3>
+					</header>
+					<!--<div class="article" ng-repeat="items in dataList">
+						<div class="article-left" ng-if="items.url!=''">
+							<a href="newsContent.do"><img src="{{items.url}}></a>
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>{{items.lastUpdate}}</p>
+								<a class="title" href="newsContent.do?id={{items.id}}"> {{items.title}}</a>
+							</div>
+							<div class="article-text">
+								<p>{{items.descripton}}</p>
+								<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					-->
+					<!--<div class="article">
+						<div class="article-left">
+							<a href="newsContent.do"><img src="${base}/res/css/news/images/business2.jpg"></a>
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>On Jun 21, 2015</p>
+								<a class="title" href="newsContent.do">There are many variations that focuses on presenting</a>
+							</div>
+							<div class="article-text">
+								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.....</p>
+								<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="article">
+						<div class="article-left">
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>On Jan 17, 2015</p>
+								<a class="title" href="newsContent.do">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a>
+							</div>
+							<div class="article-text">
+								<p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born.....</p>
+								<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="article">
+						<div class="article-left">
+							<a href="newsContent.do"><img src="${base}/res/css/news/images/business3.jpg"></a>
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>On Apr 11, 2015</p>
+								<a class="title" href="newsContent.do">Contrary to popular belief, Lorem Ipsum is not simply random</a>
+							</div>
+							<div class="article-text">
+								<p>It is a long established fact that a reader will be distracted by the readable.....</p>
+								<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="article">
+						<div class="article-left">
+							<a href="newsContent.do"><img src="${base}/res/css/news/images/business4.jpg"></a>
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>On Apr 11, 2015</p>
+								<a class="title" href="newsContent.do">Contrary to popular belief, Lorem Ipsum is not simply random</a>
+							</div>
+							<div class="article-text">
+								<p>It is a long established fact that a reader will be distracted by the readable.....</p>
+								<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="article">
+						<div class="article-left">
+							<a href="newsContent.do"><img src="${base}/res/css/news/images/tech1.jpg"></a>
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>On Apr 11, 2015</p>
+								<a class="title" href="newsContent.do">Lorem ipsum dolor sit amet, consectetur </a>
+									<p>Nulla quis lorem neque, mattis venenatis lectus. In interdum ullamcorper dolor eu mattis.</a>
+							</div>
+							<div class="article-text">
+								<p>It is a long established fact that a reader will be distracted by the readable.....</p>
+								<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="article">
+						<div class="article-left">
+							<a href="newsContent.do"><img src="${base}/res/css/news/images/tech5.jpg"></a>
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>On Apr 11, 2015</p>
+								<a class="title" href="newsContent.do">Contrary to popular belief, Lorem Ipsum is not simply random</a>
+							</div>
+							<div class="article-text">
+								<p>It is a long established fact that a reader will be distracted by the readable.....</p>
+								<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="article">
+						<div class="article-left">
+							<a href="newsContent.do"><img src="${base}/res/css/news/images/tech6.jpg"></a>
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>On Apr 11, 2015</p>
+								<a class="title" href="newsContent.do">Contrary to popular belief, Lorem Ipsum is not simply random</a>
+							</div>
+							<div class="article-text">
+								<p>It is a long established fact that a reader will be distracted by the readable.....</p>
+								<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					-->
+					<div class="article">
+						<div class="article-left">
+							<a href="newsContent.do?id=091a7501-8e7a-4a82-9d6b-5dfd4daf73a7"><img src="http://en.xfafsll.com/uploads/allimg/160325/1_03251K132D28.jpg"></a>
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<p>2015-11-04 16:52:53</p><a class="title" href="newsContent.do?id=091a7501-8e7a-4a82-9d6b-5dfd4daf73a7">Private players differentiat cooperation resource,public service industries</a>
+							</div>
+							<span class="post-collection-acitve"></span>
+							<div class="article-text">
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<p id="ifa_more" class="ifa_list_more" style="">Click for more data</p>
+			</div>
+			</div>
+			[#include "right.html"/] 
+	</div>
+		<!-- footer-section-ends-here -->
+	</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		$().UItoTop({ easingType: 'easeOutQuart' });
+		});
+		</script>
+<a href="#to-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+<!---->
+[#include "../../../inc/foot_v2.html"/]
+
+<script type="text/javascript" >
+   seajs.use("${base}/res/web/ifa/newsList.js");
+</script> 
+

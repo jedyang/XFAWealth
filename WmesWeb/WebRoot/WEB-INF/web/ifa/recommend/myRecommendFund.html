@@ -1,0 +1,303 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<style>
+	.fundlist_littletitle{font-weight: 700;margin-bottom:10px}
+	.fundlist_wrap{overflow: hidden;width:70%;margin-bottom:8px}
+	.fundlist_wrapleft{float:left}
+	.fundlist_wrapright{float:right}
+	.wmes-content .funds_keyword_div input{width:187px;}
+	.wmes-content .funds_keyword_input{width:170px;}
+	.view_permissions_setting{padding-left:40px;}
+	.view_permissions_setting li:nth-child(1){width:130px;}
+	.pushToSettingmenu{margin-left:150px !important;}
+	.recommend-list-wrap{padding-top:0;}
+</style>
+<div class="wmes-top">
+	<a href="javascript:;" class="header-over">[@lang_res k='recommend.fund.mylist.title'/]</a>
+</div>
+<div class="wmes-content" ng-controller="Searchctrl"  ng-app="mySearch">
+	<div class="ifa_choose_condition">
+		<p class="wmes-wrap-title">My Recommend Funds</p>
+		<div class="funds_choice_wrap">
+			<p class="funds_choice_title">
+				[@lang_res k='recommend.date'/]
+			</p>
+			<ul class="funds_choice">
+				<li class="fund_choice_active fund_choice_active2 funds_all" data-name="Recommend Date" data-key="" data-value="Issue Date_00">
+					[@lang_res k='fund.info.searchAll'/]
+				</li>
+				<li data-name="Recommend Date" data-key="[@lang_res k='search.period.1w'/]" data-value="1W">
+					[@lang_res k='search.period.1w'/]
+				</li>
+				<li data-name="Recommend Date" data-key="[@lang_res k='search.period.1m'/]" data-value="1M">
+					[@lang_res k='search.period.1m'/]
+				</li>
+				<li data-name="Recommend Date" data-key="[@lang_res k='search.period.2m'/]" data-value="2M">
+					[@lang_res k='search.period.2m'/]
+				</li>
+				<li data-name="Recommend Date" data-key="[@lang_res k='search.period.3m'/]" data-value="3M">
+					[@lang_res k='search.period.3m'/]
+				</li>
+				<li data-name="Recommend Date" data-key="[@lang_res k='search.period.6m'/]" data-value="6M">
+					[@lang_res k='search.period.6m'/]
+				</li>
+				<li data-name="Recommend Date" data-key="[@lang_res k='search.period.1y'/]" data-value="1Y">
+					[@lang_res k='search.period.1y'/]
+				</li>
+				<li data-name="Recommend Date" data-key="Other" data-value="Other">
+					<p class="recommend-other">[@lang_res k='global.other'/]</p>
+					
+				</li> 
+				<div class="recommend-date-li recommend-date-choice " data-name="Recommend Date" data-key="Optional" data-value="Recommend Date_07" style="vertical-align:middle;display:none">
+					<div class="recom-input-wrap">
+					   <input id="recommend-date-from" readonly="" class="laydate-icon" type="" name="" style="width: 150px;padding:3px 12px;">
+					</div>
+					<p class="recommend-date-name">
+						[@lang_res k='global.to'/]
+					</p>
+					<div class="recom-input-wrap">
+					<input id="recommend-date-to" readonly="" class="laydate-icon" type="" name="" style="width: 150px;padding:3px 12px;">
+					</div>
+					<a data-name="Recommend Date" class="recommend-date-button" href="javascript:"></a>
+				</div>
+			</ul>
+		</div>
+		<div class="funds_choice_wrap">
+			<p class="funds_choice_title">[@lang_res k='list.search.geoAllo'/]</p>
+			<ul class="funds_choice funds_logo_b" id="funds_logo_choice">
+				<li data-letter="" class="funds_all fund_choice_active fund_choice_active2" data-name="regions">[@lang_res k='fund.info.searchAll'/]</li>
+				<li data-letter="A,B,C,D,E">A-E</li>
+				<li data-letter="F,G,H,I,J">F-J</li>
+				<li data-letter="K,L,M,N,O">K-O</li>
+				<li data-letter="P,Q,R,S,T">P-T</li>
+				<li data-letter="U,V,W,X,Y,Z">U-Z</li>
+			</ul>
+			<ul class="funds_choice funds_logo_choice funds_logo_choice_amend" id="funds_logo">
+				[#if regionList?exists && regionList?size gt 0] [#list regionList as list]
+				<li style="display:none;" title="${list.name!}" data-letter="${list.key!}" data-key="${list.name!}" data-name="regions" data-value="${list.itemCode!}">${list.name!}</li>
+				[/#list] [/#if]
+			</ul>
+		</div>
+		<div class="funds_choice_wrap">
+			<p class="funds_choice_title">
+				[@lang_res k='fund.info.detail.Sector'/]:
+			</p>
+			<ul class="funds_choice">
+				<li class="fund_choice_active fund_choice_active2 funds_all" data-name="Relate Level" data-key="" data-value="Relate Level_00">
+					[@lang_res k='fund.info.searchAll'/]
+				</li>
+				[#if sectorList?exists && sectorList?size gt 0][#list sectorList as list]
+				<li data-name="sector" data-key="${list.name}" data-value="${list.itemCode}">
+					${list.name}
+				</li>
+				[/#list] [/#if]
+			</ul>
+		</div>
+	</div>
+	<div class="recommend-list-wrap" >
+		<div class="funds_list_selected">
+			<p class="funds_selected_title">
+				[@lang_res k='clients.proposal.selected.condition'/]
+			</p>
+			<ul class="selection_criteria">
+				<p class="funds_title_selection">
+					[@lang_res k='clients.proposal.reset'/]
+				</p>
+			</ul>
+		</div>
+		<div class="recommend-list-contents">
+			<div class="funds_keyserach_wrap">
+				<p class="funds_serach_sum" style="float: left;">
+					[@lang_res k='fund.info.searchTip'/]
+					<span class="funds_serach_digital" ng-bind="{{'datatotal'}}"></span> [@lang_res k='fund.info.searchTip_2'/]
+				</p>
+				<div class="funds_keyserach">
+					<input type="text" id="fundName" placeholder="[@lang_res l=Session[" _LANG_CODE_ "] k='fund.info.keyWord'/]">
+					<span class="icon_search" id="searchKeyBtn"></span>
+				</div>
+			</div>
+			<div class="mylist-new-bn" style="float:none;margin-bottom:10px;">[@lang_res k='global.new'/]</div>
+			<input type="hidden" id="displayColor" value="${displayColor!}">
+			<div  class="funds_search_wrap">
+				<table class="funds_search_information strategies_List" style="display:block">
+                        <tbody>
+                            <tr class="funds_tables_th funds_tables_th_amend">
+                                <th class="funds_tables_header" style="width: 22%;text-align: left;">
+                                    	[@lang_res k='fund.info.fundName'/]
+                                </th>
+                                <th class="funds_tables_header" style="width:5%;">
+                                    	[@lang_res k='fund.info.riskrating'/]
+                                </th>
+                                <th  class="funds_tables_header" style="width:5%">
+                                    	[@lang_res k='fund.info.currency'/]
+                                </th>
+                                <th  class="funds_tables_header" style="width:10%;">
+                                    	[@lang_res k='fund.info.RevalationDate'/]
+                                </th>
+                                <th  class="funds_tables_header" style="width:10%;">
+                                    	[@lang_res k='fund.info.LastNAV'/]
+                                </th>
+                                <th class="funds_tables_header" style="width:8%;">[@lang_res k='fund.info.cumPerMon_1'/]</th>                  
+                                <th class="funds_tables_header" style="width:8%;">
+                                    	[@lang_res k='fund.info.cumPerMon_3'/]
+                                </th>
+                                <th class="funds_tables_header" style="width:8%;">
+                                    	[@lang_res k='fund.info.cumPerMon_6'/]
+                                </th>
+                                <th class="funds_tables_header" style="width:8%;">
+                                    	[@lang_res k='fund.info.YTD'/]
+                                </th>
+                                <th class="funds_tables_header" style="width:8%;">
+                                    	[@lang_res k='fund.info.cumPerYr_1'/]
+                                </th>
+                                <th class="funds_tables_header" style="width:10%;">[@lang_res k='global.action'/]</th>
+                            </tr>
+                            <tr  ng-repeat="items in dataList" ng-init="checkLast($last)" >
+                                <td class="tdleft funds_tables_fnames">
+                                    <a href="${base}/front/fund/info/fundsdetail.do?id={{items.fundId}}">{{items.fundName}}</a>
+                                </td>
+                                <td class="funds_search_tdcenter">{{items.fundInfo.riskLevel}}</td>
+                                <td class="funds_search_tdcenter">{{items.fundCurrency}}</td>
+                                <td class="funds_search_tdcenter">{{items.fundInfo.lastNavUpdate}}</td>
+                                <td class="funds_search_tdcenter">{{items.fundInfo.lastNav}}</td>
+                                <td class="funds_search_tdcenter" ng-bind-html="items.fundReturnOneMonth | percentColor:'%':'${displayColor!}'">
+                                   
+                                </td>
+                                <td class="funds_search_tdcenter" ng-bind-html="items.fundReturnThreeMonth | percentColor:'%':'${displayColor!}'">
+                                </td>
+                                <td class="funds_search_tdcenter"  ng-bind-html="items.fundReturnSixMonth | percentColor:'%':'${displayColor!}'">
+                                </td>
+                                <td class="funds_search_tdcenter"  ng-bind-html="items.fundReturnYTD | percentColor:'%':'${displayColor!}'">
+                                </td>
+                                <td class="funds_search_tdcenter" ng-bind-html="items.fundReturnYear1 | percentColor:'%':'${displayColor!}'">
+                                </td>
+                                <td>
+                                	<img src="${base}/res/images/fund/delete_ico.png" style="width:21px;height:21px;cursor:pointer" recommendId="{{items.recommendInfo.id}}"  class="btnDel"/>
+									<img src="${base}/res/images/fund/down_ico.png" style="width:16px;height:20px;cursor:pointer" ng-if="items.recommendInfo.overhead=='0'"  recommendId="{{items.recommendInfo.id}}" class="btnUp"/>
+								</td>
+                            </tr> </tbody>
+                    </table>
+                    <div class="wmes-nodata-tips no_list_tips" style="display: none;">
+                                <img class="wmes-nodata-img" src="/wmes/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                        </div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="recommendfunlistmasklayer" style="background:rgba(0,0,0,0.5);position:absolute;left:0;top:0;width:100%;height:100%;display:none">
+		<div style="background:#fff;position: absolute;left:10%;top:5%;width:70%;z-index: 99999;padding:20px 35px;box-shadow: 2.5px 4.33px 35px 0px #000;">
+			<div class="wmes-close"></div>
+			<div class="wmes-wrap-title" style="height:32px;padding-bottom:0;">
+				[@lang_res k='fund.recommend.title'/]
+			</div>
+			<div class="funds_comparison_xiala_wrap" style="height:40px;">
+				<p class="funds_comparison_title">[@lang_res k='fund.info.comparison.addFund'/]</p>
+				<div class="funds_keyword">
+					<div class="funds_keyword_div" style="position: absolute;z-index: 9">
+						<input type="text" placeholder="[@lang_res k='fund.info.comparison.fundHouseSearch'/]" readonly>
+						<ul class="funds_keyword_xiala">
+                            [#if houseList?exists && houseList?size gt 0]
+                            [#list houseList as list]
+                             <li title="${list.name!""}" data-id='${list.id!""}'>${list.name!""}</li>
+                            [/#list]
+                            [/#if]
+						</ul>
+					</div>
+					<div class="funds_keyword_search" style="position: absolute;right:20%;z-index: 9">
+						<input type="text" id="funds_keyword_input" class="funds_keyword_input" placeholder="[@lang_res k='fund.info.keyWord'/]">
+						<ul class="funds_keyword_xiala_search">
+
+						</ul>
+					</div>
+
+				</div>
+			</div>
+			<div class="fundchooseactive" style="display:block">
+				<div class="fundlist_littletitle">
+				
+			</div>
+			<div class="fundlist_wrap">
+				<div class="fundlist_wrapleft ">[@lang_res k='fund.info.ISIN'/]:  <span class="isin"> </span></div>
+				<div class="fundlist_wrapright">[@lang_res k='fund.info.lastNAVprice'/]: <span class="lastnav"></span></div>
+			</div>
+			<div class="fundlist_wrap">
+				<div class="fundlist_wrapleft">[@lang_res k='fund.info.riskrating'/]：  <span class="risklevel"></span></div>
+				<div class="fundlist_wrapright">[@lang_res k='fund.info.currency'/]：   <span class="currency"></span></div>
+			</div>
+			<p class="createflowtitle" style="margin-bottom:5px;margin-top:20px">[@lang_res k='recommend.reason'/]</p>
+			<div class="training-contentarea">
+				<textarea class="member-comment-text2 comtent_text" id="reason" maxLength="150" name="reason">${(strategyVO.reason)?if_exists}</textarea>
+				<div class="member-comment-topper">
+					<p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 150 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">150</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+				</div>
+			</div>
+			<div class="tabcut">
+			<div class="ifa_keyserach_wrap">
+				<ul class="view_permissions_setting">
+					<li>[@lang_res k='create.portfolio.step.four.remindToRead'/]:</li>
+					<li><input type="radio" name="choose2"  value="1" />[@lang_res k='strategy.info.release.push.none'/]</li>
+					<li><input type="radio" name="choose2"  value="2"/>[@lang_res k='strategy.info.release.push.all'/]</li>
+					<li><input type="radio" name="choose2"  value="3" class="letmespecify" />[@lang_res k='strategy.info.release.permission.specify'/]</li>
+				</ul>
+				<div class="pushToSettingmenu pushToSettingmenu1" style="margin-left:31%;">
+					<ul>
+						<li>
+							<div class="pushToSettingCheckbox">
+								<input type="checkbox" class="setting" id="pushClient"/>[@lang_res k='strategy.info.release.specify.myClient'/]
+							</div>
+							<p class="pushToSettingName client_name" id="clientNames">[@lang_res k='global.all'/]</p>
+							<a class="j-permitASetting" type="client" href="javascript:;"></a>
+						</li>
+						<li>
+							<div class="pushToSettingCheckbox">
+								<input type="checkbox" class="setting" id="pushProspect"/>[@lang_res k='strategy.info.release.specify.myProspect'/]
+							</div>
+							<p class="pushToSettingName client_name" id="prospectNames">[@lang_res k='global.all'/]</p>
+							<a class="j-permitASetting" type="prospect" href="javascript:;"></a>
+						</li>
+						<li>
+							<div class="pushToSettingCheckbox">
+								<input type="checkbox" class="setting" id="pushBuddy"/>[@lang_res k='strategy.info.release.specify.myBuddy'/]
+							</div>
+							<p class="pushToSettingName client_name" id="buddyNames">[@lang_res k='global.all'/]</p>
+							<a class="j-permitASetting" type="buddy" href="javascript:;"></a>
+						</li>
+						<li>
+							<div class="pushToSettingCheckbox">
+								<input type="checkbox" class="setting" id="pushTeam"/>[@lang_res k='strategy.info.release.specify.myTeamMember'/]
+							</div>
+							<p class="pushToSettingName client_name" id="colleagueNames">[@lang_res k='global.all'/]</p>
+							<a class="j-permitASetting" type="colleague" href="javascript:;"></a>
+						</li>
+					</ul>
+				</div>
+				<div class="creatlistbn" style="margin-top:50px;">
+					<a class="createCancel" id="btnCancelRe" style="margin-left:30%">[@lang_res k='global.cancel'/]</a>
+					<a class="craetbnSave" id="btnRecommend" style="float:left;margin-left:40px;">[@lang_res k='global.save'/]</a>
+					
+					<input type="hidden" name="push_client" id="push_client" value="">
+				     <input type="hidden" name="push_prospect" id="push_prospect" value="">
+				     <input type="hidden" name="push_buddy" id="push_buddy" value="">
+				     <input type="hidden" name="push_colleague" id="push_colleague" value="">
+			        <input type="hidden" name="push_clients" id="push_clients" value="">
+					<input type="hidden" name="push_prospects" id="push_prospects" value="">
+					<input type="hidden" name="push_buddies" id="push_buddys" value="">
+					<input type="hidden" name="push_colleagues" id="push_colleagues" value="">
+			  </div>
+			</div>
+		</div>
+			</div>
+			
+		</div>
+		<div class="selectnamelistbox" style="display:none;position: absolute;top:0;left:0;background:rgba(0,0,0,0.3);z-index: 999999;">
+		<!-- 选择用户控件 -->
+	   </div>
+	   
+	   
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('${base}/res/web/ifa/myRecommendfund.js');
+</script>

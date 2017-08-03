@@ -1,0 +1,108 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+<form id="paramsForm" ng-app="proposal" ng-controller="proposalCtrl" name="paramsForm" action="" method="post" onkeydown="if(event.keyCode==13){return false;}">
+    <div class="wmes-content">
+        <div class="ifa_choose_condition">
+        	<p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='console.crm.proposal.list.tab.title'/]</p>
+			<div class="funds_choice_wrap">
+				<p class="funds_choice_title">[@lang_res k='search.period'/] </p>
+				<ul class="funds_choice">
+					<li class="fund_choice_active  funds_all fund_choice_active2" data-name="period" data-key="" data-value="">[@lang_res k='global.all'/]</li>
+					<li data-name="period" data-key="[@lang_res k='criteria.period.week.1'/]" data-type="D" data-value="-7">[@lang_res k='criteria.period.week.1'/]</li>
+					<li data-name="period" data-key="[@lang_res k='criteria.period.month.1'/]" data-type="M" data-value="-1">[@lang_res k='criteria.period.month.1'/]</li>
+					<li data-name="period" data-key="[@lang_res k='criteria.period.month.3'/]" data-type="M" data-value="-3">[@lang_res k='criteria.period.month.3'/]</li>
+					<li data-name="period" data-key="[@lang_res k='criteria.period.month.6'/]" data-type="M" data-value="-6">[@lang_res k='criteria.period.month.6'/]</li>
+					<li data-name="period" data-key="[@lang_res k='criteria.period.year.1'/]" data-type="M" data-value="-1">[@lang_res k='criteria.period.year.1'/]</li>
+					<li data-name="period" data-key="[@lang_res k='criteria.period.year.3'/]" data-type="M" data-value="-3">[@lang_res k='criteria.period.year.3'/]</li>
+				</ul>
+			</div>   
+            <div class="funds_choice_wrap">
+                <p class="funds_choice_title">[@lang_res k='console.crm.proposal.list.table.title.status'/] </p>
+                <ul class="funds_choice">
+                    <li class="fund_choice_active funds_all fund_choice_active2" data-name="status" data-key="" data-value="">[@lang_res k='global.all'/]</li>
+                    <li data-name="status" data-key="[@lang_res k='console.crm.proposal.list.table.title.status.1'/]" data-value="1">[@lang_res k='console.crm.proposal.list.table.title.status.1'/]</li>
+                    <li data-name="status" data-key="[@lang_res k='console.crm.proposal.list.table.title.status.2'/]" data-value="2">[@lang_res k='console.crm.proposal.list.table.title.status.2'/]</li>
+                    <li data-name="status" data-key="[@lang_res k='console.crm.proposal.list.table.title.status.-1'/]" data-value="-1">[@lang_res k='console.crm.proposal.list.table.title.status.-1'/]</li>
+                    <li data-name="status" data-key="[@lang_res k='console.crm.proposal.list.table.title.status.-2'/]" data-value="-2">[@lang_res k='console.crm.proposal.list.table.title.status.-2'/]</li>
+                </ul>
+            </div>
+  		</div>
+   		<div class="strategies_list_wrap">       			
+  			<div class="funds_list_selected">
+               <p class="funds_selected_title">[@lang_res k='global.selectedCondition'/]</p>
+			   <ul class="selection_criteria">
+			   		<p class="funds_title_selection">[@lang_res k='fund.info.resetFilter'/] </p>
+			   </ul>
+			</div>
+		<div class="ifa_keyserach_wrap">
+			<p class="ifa_serach_sum">
+				[@lang_res k='search.list.total1'/] 		
+				<span class="funds_serach_digital" id="datatotal" ng-bind="total">
+				</span> [@lang_res k='search.list.total2'/]
+			</p>
+			<div class="funds_keyserach">
+				<input type="text" id="txtKeyWord" title="[@lang_res k='console.crm.proposal.search.keyWord.placeholder'/]" placeholder="[@lang_res k='console.crm.proposal.search.keyWord.placeholder'/]">
+				<span id="btnKeyWord" class="icon_search" ng-click="searchKeyBtn()"></span>
+			</div>
+		</div>
+		<div class="strategies_list ng-cloak">
+			<table class="funds_search_information strategies_List" id="proposalList">
+				<thead>
+					<tr class="funds_tables_th">
+                         <th style="width:15%;" class="funds_tables_header">
+                             [@lang_res k='console.crm.proposal.list.table.title.customer'/]
+                         </th>
+                         <th style="width:20%;" class="funds_tables_header">
+                             [@lang_res k='console.crm.proposal.list.table.title.proposalName'/]
+                         </th>
+                         <th style="width:15%;" class="funds_tables_header">
+                             [@lang_res k='console.crm.proposal.form.createTime'/]
+                         </th>
+                         <th style="width:15%;" class="funds_tables_header">
+                         	 [@lang_res k='member.ifa'/]
+                         </th>
+                         <th style="width:20%;" class="funds_tables_header">
+                             [@lang_res k='console.crm.proposal.list.table.title.initialInvestAmount'/]
+                         </th>
+                         <th style="width:15%;" class="funds_tables_header">
+                             [@lang_res k='console.crm.proposal.list.table.title.status'/]
+                         </th>
+                     </tr>
+				</thead>
+                <tbody>
+                    <tr ng-repeat="items in dataList">                                   
+                        <td class="funds_search_tdcenter" ng-bind="items.clientName"></td>
+                        <td class="funds_search_tdcenter">
+                        	<a style="color:blue;" target="_blank" href="${base!}/loadImgSrcByPath.do?filePath={{items.proposalDocPath}}">{{items.proposalName}}</a>
+                        </td>
+                        <td class="funds_search_tdcenter" ng-bind="items.createTimeStr"></td>
+                        <td class="funds_search_tdcenter" ng-bind="items.ifaName"></td>
+                        <td class="funds_search_tdcenter">
+	                        <span>{{items.initialInvestAmount|formatCurrency:''}}</span>
+	                        <span>{{items.baseCurrencyName}}</span>
+                        </td>
+                        <td class="funds_search_tdcenter" ng-bind="items.statusDisplay"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no_list_tips">
+				<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+	            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+			</div>
+            <ul class="ifa_list_paging">
+	            <wmespage conf="proposalConf"></wmespage>
+			</ul>
+		</div>
+	  </div>
+    </div>
+    <input id="hidPeriod" type="hidden" />
+    <input id="hidPeriodType" type="hidden" />
+    <input id="hidStatus" type="hidden" />
+ </form>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var props = [@load_prop k=""/];
+	 var proposalStatus = [@load_prop k="console.crm.proposal.list.table.title.status"/];
+     seajs.use('${base}/res/console/web/ifa/proposals.js');
+</script>

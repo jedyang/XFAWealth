@@ -1,0 +1,517 @@
+[#include "../../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <div class="wmes-top">
+        <a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+        <a href="javascript:;" class="header-over">Client Detail</a>
+    </div>
+    <div class="wmes-content">
+            <div class="client-top-rows">
+                <img class="client-top-heart" src="${base}/res/images/client/heart_ico.png">
+                 <img class="client-top-portrait" src="${base}/res/images/discover/Jennifer.png">
+                 <div class="client-top-left">
+                    <div class="client-top-nwrap">
+                        <p class="client-top-name">Shirley Lu (Ms)</p>
+                        <img class="client-top-date" src="${base}/res/images/ifa/exclamatory_ico.png">
+                        <p class="client-top-level">1</p>
+                    </div>
+                    <p class="client-top-from">HongKong, China</p>
+                    <div class="client-top-wico">
+                        <p class="client-top-ico"><img src="${base}/res/images/client/phone_ico.png">( +852 ) 6554 3433</p>
+                        <p class="client-top-ico"><img src="${base}/res/images/client/email_ico.png">rainylee102@giaml.com</p>
+                        <p class="client-top-ico"><img src="${base}/res/images/client/time_ico.png">One Week</p>
+                    </div>
+                    <!-- <div class="client-top-contact">
+                        <div class="client-contact-xiala">
+                            <p>Contact</p>
+                            <img src="${base}/res/images/client/xiala_ico.png">
+                        </div>
+                        <div class="client-bullet-wrap">
+                            <span class="client-bullet client-bullet-active"></span>
+                            <span class="client-bullet client-bullet-active"></span>
+                            <span class="client-bullet client-bullet-active"></span>
+                            <span class="client-bullet"></span>
+                            <span class="client-bullet"></span>
+                        </div>
+                    </div> -->
+                 </div>
+                <!-- <img class="client-top-boxico" src="${base}/res/images/client/box_ico.png"> -->
+            </div>
+            <div class="client-wrap">
+                <ul class="tab_list_tab">
+                    <li id="detail-portfolio">Portfolio<span></span></li>
+                    <li id="detail-schedule">Schedule<span></span></li>
+                    <li id="detail-account">Account<span></span></li>
+                    <li>Proposal<span></span></li>
+                    <li id="detail-transaction">Transaction<span></span></li>
+                    <li>Info<span></span></li>
+                    <li id="detail-analysis">Behavior Analysis<span></span></li>
+                </ul>
+                <div class="client-detail-contents">
+                    <div>
+                        <div class="client-proposal-rows">
+                            <p class="client-proposal-title"><a class="client-a-href" href="${base}/front/strategy/info/portfolioDetail.do">Mining Fidelity Portfolio </a><span>To review</span></p>
+                            <div class="client-proposal-contents">
+                                <div class="client-proposal-left">
+                                    <img class="client-portfolio-index" src="${base}/res/images/client/index_img_ico.png">
+                                    <div class="client-portfolio-apr"><img src="${base}/res/images/client/time_ico.png"> 2016-09-05</div>
+                                    <div class="client-portfolio-raum">
+                                        <p class="client-portfolio-rise">100,000</p>
+                                        <p class="client-portfolio-word">AuM</p>
+                                    </div>
+                                </div>
+                                <div class="client-proposal-right">
+                                    <div class="client-portfolio-laum">
+                                        <p class="client-portfolio-rise">20%</p>
+                                        <p class="client-portfolio-word">Acc.Return</p>
+                                    </div>
+                                    <p class="client-portfolio-accept">Accept</p>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="client-proposal-rows">
+                            <p class="client-proposal-title"><a class="client-a-href" href="${base}/front/strategy/info/portfolioDetail.do">Mining Conservative Portfolio</a></p>
+                            <div class="client-proposal-contents">
+                                <div class="client-proposal-left">
+                                    <img class="client-portfolio-index" src="${base}/res/images/client/index_img_ico.png">
+                                    <div class="client-portfolio-apr"><img src="${base}/res/images/client/time_ico.png"> 2016-09-06</div>
+                                    <div class="client-portfolio-raum">
+                                        <p class="client-portfolio-drop">-134,000</p>
+                                        <p class="client-portfolio-word">AuM</p>
+                                    </div>
+                                </div>
+                                <div class="client-proposal-right">
+                                    <div class="client-portfolio-laum">
+                                        <p class="client-portfolio-drop">-8%</p>
+                                        <p class="client-portfolio-word">Acc.Return</p>
+                                    </div>
+                                    <p class="client-portfolio-accept">Draft</p>
+                                    <img class="client-portfolio-edit" src="${base}/res/images/client/portfolio_edit_ico.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                       <div class="tasklist-header">
+                           <div class="tasklist-events">
+                               <input class="tasklist-events-checkbox" id="events-checkbox" type="checkbox" name=""> 
+                               <p class="tasklist-events-title">Recurrent Events</p>
+                           </div>  
+                           <div class="tasklist-date-choice">
+                               <p class="date-active">Target Date</p>
+                               <p>Create Date</p>
+                           </div>
+                           <div class="tasklist-metting">
+                               <p class="tasklist-metting-title">Meeting <img src="${base}/res/images/ifa/ifa_more_ico.png"></p>
+                               <div class="tasklist-metting-color"></div>
+                               <ul class="tasklist-metting-choice">
+                                   <li data-color="#438ec8" class="metting-list-choice" style="">
+                                        <p><span style="display:inline-block;width:18px;height:18px;margin-right:10px;background-color:#438ec8;">&nbsp;</span>KYC<p>
+                                   </li>
+                                   <li data-color="#7dd536" class="metting-list-choice" >
+                                        <p><span style="display:inline-block;width:18px;height:18px;margin-right:10px;background-color:#7dd536;">&nbsp;</span>Create Proposal<p>
+                                   </li>
+                                   <li data-color="#f37317" class="metting-list-choice" >
+                                        <p><span style="display:inline-block;width:18px;height:18px;margin-right:10px;background-color:#f37317;">&nbsp;</span>Appointment<p>
+                                   </li>
+                               </ul>
+                           </div>
+                       </div>
+                       <div class="line-wrap">
+                            <div class="line-wrap-left">
+                                <a id="line-wrap-left-1" class="line-wrap-a" href="javascript:;">
+                                    <div class="line-topline"></div>
+                                    <div class="line-rightline"></div>
+                                    <div class="line-bottomline"></div>
+                                    <div class="line-ball" style="background-color:#438ec8;"></div>
+                                    <div class="line-title-line"></div>
+                                    <div class="line-title">
+                                        <p class="line-date">29/08/2016</p>
+                                        <p class="line-l">|</p>
+                                        <p class="line-word">Create Proposal</p>
+                                    </div>
+                                    <div class="line-for">
+                                            <p>A friend without faults will never be found.</p>
+                                            <p>for JackEdwords</p>
+                                    </div>
+                                    <img class="line-img" src="${base}/res/images/ifa/cre.png">
+                                </a>
+                                <a id="line-wrap-left-2" class="line-wrap-a" href="javascript:;">
+                                    <div class="line-topline"></div>
+                                    <div class="line-rightline"></div>
+                                    <div class="line-bottomline"></div>
+                                    <div class="line-ball" style="background-color:#438ec8;"></div>
+                                    <div class="line-title-line"></div>
+                                    <div class="line-title">
+                                        <p class="line-date">26/08/2016</p>
+                                        <p class="line-l">|</p>
+                                        <p class="line-word">Create Proposal</p>
+                                    </div>
+                                    <div class="line-for">
+                                    <p><p>Lie awake in bed at night,and think about your life</p></p>
+                                            <p>for Ozill</p>
+                                        </div>
+                                    <img class="line-img" src="${base}/res/images/ifa/cre.png">
+                                </a>
+                            
+                            </div>
+                            <div class="line-wrap-right">
+                                <div class="line-wrap-a">
+                                    <div class="line-topline"></div>
+                                    <div class="line-rightline"></div>
+                                    <div class="line-bottomline"></div>
+                                    <div class="line-ball"  style="background-color:#f37317;"></div>
+                                    <div class="line-title-line"></div>
+                                    <div class="line-title">
+                                        <p class="line-word"><a href="${base}/front/strategy/info/clientDetailKyc.do">KYC</a></p>
+                                        <p class="line-l">|</p>
+                                        <p class="line-date">09/08/2016</p>
+                                    </div>
+                                    <div class="line-for">
+                                            <p>for Simon Temple</p>
+                                            <p>Notes: Prepare materials ,include RPQ, </p>
+                                            <p>some forms for  KYC etc.</p>
+                                        </div>
+                                    <img class="line-img" src="${base}/res/images/ifa/kyc.jpg">
+                                </div>
+                                <a id="line-wrap-right-2" class="line-wrap-a" href="javascript:;">
+                                    <div class="line-topline"></div>
+                                    <div class="line-rightline"></div>
+                                    <div class="line-bottomline"></div>
+                                    <div class="line-ball"   style="background-color:#7dd536;"></div>
+                                    <div class="line-title-line"></div>
+                                    <div class="line-title">
+                                        <p class="line-word">Make Appointment</p>
+                                        <p class="line-l">|</p>
+                                        <p class="line-date">06/08/2016</p>
+                                    </div>
+                                    <div class="line-for">
+                                            <p>for xc zhao sdasd sadas sads ad ad asdsa dasd asdqwdqweqw eqdasdasdasdas sadasda sadasdasdas asda sdasdasdasdasd asd asdas</p>
+                                    </div>
+                                </a>
+                                <a class="line-wrap-a" href="javascript:;">
+                                    <div class="line-topline"></div>
+                                    <div class="line-rightline"></div>
+                                    <div class="line-bottomline"></div>
+                                    <div class="line-ball"   style="background-color:#7dd536;"></div>
+                                    <div class="line-title-line"></div>
+                                    <div class="line-title">
+                                        <p class="line-word">Make Appointment</p>
+                                        <p class="line-l">|</p>
+                                        <p class="line-date">14/08/2016</p>
+                                    </div>
+                                    <div class="line-for">
+                                            <p> </p>
+                                            <p>for xc zhao</p>
+                                    </div>
+                                </a>
+                                <a class="line-wrap-a" href="javascript:;">
+                                    <div class="line-topline"></div>
+                                    <div class="line-rightline"></div>
+                                    <div class="line-bottomline"></div>
+                                    <div class="line-ball"  style="background-color:#7dd536;"></div>
+                                    <div class="line-title-line"></div>
+                                    <div class="line-title">
+                                        <p class="line-word">Make Appointment</p>
+                                        <p class="line-l">|</p>
+                                        <p class="line-date">12/08/2016</p>
+                                    </div>
+                                    <div class="line-for">
+                                            <p>After telecom scam deaths, experts raise worries </p>
+                                            <p>for k.d.lin</p>
+                                    </div>
+                                </a>
+                            </div> 
+                            
+                            <ul class="line-add-label" style="display:none;">
+                               <li data-color="#438ec8" class="metting-list-choice" style="background-color:#438ec8">KYC</li>
+                               <li data-color="#7dd536" class="metting-list-choice" style="background-color:#7dd536">Create Proposal</li>
+                               <li data-color="#f37317" class="metting-list-choice" style="background-color:#f37317">Make Appointment</li>
+                            </ul>
+                       </div>
+                    </div>
+                    <div>
+                        <div class="client-account-rows">
+                            <div class="client-account-title">
+                                <img class="account-title-dis" src="${base}/res/images/client/dis_ico_02.png" alt="">
+                                <p class="account-title-name">UK distributor</p>
+                                <span class="client-more-ico"></span>
+                            </div>
+                            <p class="client-account-date"><span>Next Document Check Date:  20 days</span></p>
+                            <div class="client-account-contens">
+                                <div class="client-account-left">
+                                    <p class="client-account-num"><a class="client-a-href" href="${base}/front/strategy/info/clientDetailKyc.do">000003983311</a></p>
+                                    <ul class="client-account-describe">
+                                        <li>Indiviual</li>
+                                        <li>CIES</li>
+                                        <li>HKD</li>
+                                    </ul>
+                                </div>
+                                <div class="client-account-right">
+                                    <div class="client-account-garden">
+                                        100%
+                                    </div>
+                                    <div class="client-account-price">
+                                        <div class="account-price">
+                                            <span class="account-price-pink"></span>
+                                            <p class="account-price-title">Asset: </p>
+                                            <p class="account-price-num">1,000,256.00 USD</p>
+                                        </div>
+                                        <div class="account-price">
+                                            <span class="account-price-case"></span>
+                                            <p class="account-price-title">Cash: </p>
+                                            <p class="account-price-num">1,321,136.00 USD</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="client-account-rows">
+                            <div class="client-account-title">
+                                <img class="account-title-dis" src="${base}/res/images/client/dis_ico_02.png" alt="">
+                                <p class="account-title-name">UK distributor</p>
+                                <span class="client-more-ico"></span>
+                            </div>
+                            <div class="client-account-contens client-account-border">
+                                <div class="client-account-interval"></div>
+                                <div class="client-account-left">
+                                    <p class="client-account-num"><a class="client-a-href" href="${base}/front/strategy/info/clientDetailKyc.do">000009850581</a></p>
+                                    <ul class="client-account-describe">
+                                        <li>Joint</li>
+                                        <li>CIES</li>
+                                        <li>USD</li>
+                                    </ul>
+                                </div>
+                                <div class="client-account-right">
+                                    <div class="client-account-garden">
+                                        51%
+                                    </div>
+                                    <div class="client-account-price">
+                                        <div class="account-price">
+                                            <span class="account-price-pink"></span>
+                                            <p class="account-price-title">Asset: </p>
+                                            <p class="account-price-num">464,980.00 USD</p>
+                                        </div>
+                                        <div class="account-price">
+                                            <span class="account-price-case"></span>
+                                            <p class="account-price-title">Cash: </p>
+                                            <p class="account-price-num">24,970.00 USD</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="client-proposal-rows">
+                            <p class="client-proposal-title">Value investment proposal</p>
+                            <div class="client-proposal-apr"><img src="${base}/res/images/client/time_ico.png"> 10-Apr-2016</div>
+                            <div class="client-proposal-amount">
+                                <span class="client-usd-ico"></span>
+                                <p class="client-proposal-num">HKD 1,500,000</p>
+                                <p class="client-proposal-inv">Inv.Amount</p>
+                            </div>
+                            <div class="client-proposal-accept">
+                                <img src="${base}/res/images/client/accept_ico.png"> Accept
+                            </div>
+                        </div>
+                        <div class="client-proposal-rows">
+                            <p class="client-proposal-title">Steady investment proposal</p>
+                            <div class="client-proposal-apr"><img src="${base}/res/images/client/time_ico.png"> 21-Apr-2016</div>
+                            <div class="client-proposal-amount">
+                                <span class="client-usd-ico client-usd-old"></span>
+                                <p class="client-proposal-num">HKD 2,000,000</p>
+                                <p class="client-proposal-inv">Inv.Amount</p>
+                            </div>
+                            <div class="client-proposal-accept">
+                                <img src="${base}/res/images/client/draft_ico.png"> Draft
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="client-transaction-rows">
+                            <div class="client-choice-wrap">
+                                <p class="client-choice-title">Period</p>
+                                <ul class="client-choice">
+                                    <li class="client-all client-choice-active per-child">Today</li>
+                                    <li>1 Week</li>
+                                    <li>1 Month</li>
+                                    <li>2 Month</li>
+                                    <li>6 Month</li>
+                                    <li>1 Year</li>
+                                    <li>Other</li>
+                                </ul>
+                            </div>
+                            <div class="client-choice-wrap">
+                                <p class="client-choice-title">Status</p>
+                                <ul class="client-choice">
+                                    <li class="client-all client-choice-active per-child">All</li>
+                                    <li>Processsing</li>
+                                    <li>Success</li>
+                                    <li>Fail</li>
+                                    <li>Cancel</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="client-transaction-rows">
+                            <table class="client-table">
+                                <tbody>
+                                    <tr class="client-table-th">
+                                        <th width="10%" class="">Date</th>
+                                        <th width="20%" class="client-tables-header">Product Name</th>
+                                        <th width="10%" class="client-tables-header">Transaction Unit</th>
+                                        <th width="10%" class="client-tables-header">Transaction Amount</th>
+                                        <th width="10%" class="client-tables-header">Transaction Fee</th>
+                                        <th width="10%" class="client-tables-header">Transaction Type</th>
+                                        <th width="10%" class="client-tables-header">Account No</th>
+                                        <th width="10%" class="client-tables-header">Status</th>
+                                        <th width="10%" class="client-tables-header">Action</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="portfolio-tables-fnames">2016-06-23 16:23:21</td>
+                                        <td class="portfolio-tables-fnames">CIFMHK Funds - CIFM (HK) RMB China A Focus Fund (RMB) A</td>
+                                        <td class="portfolio-tdcenter">1000</td>
+                                        <td class="portfolio-tdcenter">124,530.57  HKD</td>
+                                        <td class="portfolio-tdcenter">N/A</td>
+                                        <td class="portfolio-tdcenter">Subscription</td>
+                                        <td class="portfolio-tdcenter">000452166</td>
+                                        <td class="portfolio-tdcenter">Processsing</td>
+                                        <td class="portfolio-tdcenter"><img src="${base}/res/images/client/close_ico.png"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="portfolio-tables-fnames">2016-06-24 12:20:52</td>
+                                        <td class="portfolio-tables-fnames">AB FCP I - US Thematic Research Portfolio (USD) A/td>
+                                        <td class="portfolio-tdcenter">1200</td>
+                                        <td class="portfolio-tdcenter">134,421.21  HKD</td>
+                                        <td class="portfolio-tdcenter">N/A</td>
+                                        <td class="portfolio-tdcenter">Subscription</td>
+                                        <td class="portfolio-tdcenter">000455432</td>
+                                        <td class="portfolio-tdcenter">Processsing</td>
+                                        <td class="portfolio-tdcenter"><img src="${base}/res/images/client/close_ico.png"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="portfolio-tables-fnames">2016-06-25 15:40:30</td>
+                                        <td class="portfolio-tables-fnames">Fidelity Funds - Global Technology A-EUR</td>
+                                        <td class="portfolio-tdcenter">1400</td>
+                                        <td class="portfolio-tdcenter">106,550.00  HKD</td>
+                                        <td class="portfolio-tdcenter">N/A</td>
+                                        <td class="portfolio-tdcenter">Subscription</td>
+                                        <td class="portfolio-tdcenter">000456545</td>
+                                        <td class="portfolio-tdcenter">Processsing</td>
+                                        <td class="portfolio-tdcenter"><img src="${base}/res/images/client/close_ico.png"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="client-detail-info">
+                            <ul class="client-info-wrap">
+                                <li>
+                                    <p class="client-info-title">Last Name(in English)</p>
+                                    <p class="client-info-word">Lu</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Alias</p>
+                                    <p class="client-info-word">Ms'Lu</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Mobile Number</p>
+                                    <p class="client-info-word">+86 9870 8873</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Gender</p>
+                                    <p class="client-info-word">Female</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Nationality</p>
+                                    <p class="client-info-word">English</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">ID/Passport No</p>
+                                    <p class="client-info-word">6227476534654</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Occupation</p>
+                                    <p class="client-info-word">Business Services</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Liguid Asset</p>
+                                    <p class="client-info-word">HKD  250,000 -  HKD 749,999</p>
+                                </li>
+                            </ul>
+                            <ul class="client-info-wrap">
+                                <li>
+                                    <p class="client-info-title">First Name(in English)</p>
+                                    <p class="client-info-word">Shirley</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Chinese Name</p>
+                                    <p class="client-info-word">路雪莉</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Email</p>
+                                    <p class="client-info-word">Rlee@gmail.com</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Date of Birth</p>
+                                    <p class="client-info-word">1987/10/19</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Credentials Type</p>
+                                    <p class="client-info-word">ID Card</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Employment Details</p>
+                                    <p class="client-info-word">Full-time employed</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">Level of Education</p>
+                                    <p class="client-info-word">Full-time employed</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="client-info-remark">
+                            <p class="client-info-title">Remark</p>
+                            <p class="client-info-word">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus</p>
+                        </div>
+                        <div class="client-account-rows">
+                            <div class="client-account-title">
+                                <p class="account-title-name">Other Info</p>
+                                <span class="client-more-ico"></span>
+                            </div>
+                            <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">Investment Style</p>
+                                <ul class="information-paragraph-list">
+                                    <li class="information-describe-yellow">Steady</li>
+                                    <li class="information-describe-yellow">Value</li>
+                                </ul>           
+                            </div>
+                            <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">Favorite Investment Field</p>
+                                <ul class="information-paragraph-list">
+                                    <li class="information-describe-yellow">Gold</li>
+                                    <li class="information-describe-yellow">Energy</li>
+                                    <li class="information-describe-yellow">Healthcare</li>
+                                    <li class="information-describe-yellow">Commodity Futures</li>
+                                </ul>           
+                            </div>
+                            <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">Hobby</p>
+                                <ul class="information-paragraph-list">
+                                    <li class="information-describe-yellow">Gold</li>
+                                    <li class="information-describe-yellow">Energy</li>
+                                    <li class="information-describe-yellow">Healthcare</li>
+                                    <li class="information-describe-yellow">Commodity Futures</li>
+                                </ul>           
+                            </div>
+                        </div>
+                    </div>
+                    <div><img style="width:100%;" src="${base}/res/images/allimg/client/client_07.png"></div>
+                </div>
+            </div>
+    </div>
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/strategy/clientDetail.js');
+</script>

@@ -1,0 +1,325 @@
+/*
+ * Copyright (c) 2016-2019 by fsll
+ * All rights reserved.
+ */
+package com.fsll.common.mongodb.impl;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.bson.Document;
+import org.springframework.stereotype.Repository;
+
+import com.fsll.common.mongodb.MongoDao;
+import com.fsll.common.mongodb.MongoUtilForRead;
+import com.fsll.common.mongodb.MongoUtilForWrite;
+import com.fsll.common.util.JsonPaging;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
+
+/**
+ * Mongo 数据访问接口
+ * @author 黄模建 E-mail:mjhuang@fsll.cn
+ * @version 1.0.0
+ * Created On: 2016-8-8
+ */
+@Repository("mongoDao")
+public class MongoDaoImpl implements MongoDao {
+	
+	/**
+	 * 保存记录创建索引
+	 * @param table表名
+	 * @param 数据
+	 */
+	public void createIndex(String table,Document doc) {
+		MongoUtilForWrite mongoUtil = MongoUtilForWrite.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForWrite.getDB().getCollection(table);
+		mc.createIndex(doc);
+		mongoUtil.closeMongoClient();
+	}
+	
+	/**
+	 * 保存记录创建索引
+	 * @param table表名
+	 * @param 数据
+	 */
+	public void deleteIndex(String table,Document doc) {
+		MongoUtilForWrite mongoUtil = MongoUtilForWrite.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForWrite.getDB().getCollection(table);
+		mc.dropIndex(doc);
+		mongoUtil.closeMongoClient();
+	}
+
+	/**
+	 * 保存记录
+	 * @param table表名
+	 * @param 数据
+	 */
+	public void saveObj(String table,Object obj) {
+		MongoUtilForWrite mongoUtil = MongoUtilForWrite.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForWrite.getDB().getCollection(table);
+		Document doc = new Document();
+		MongoUtilForWrite.getInstance().dymParms(doc,obj,"put");
+		mc.insertOne(doc);
+		mongoUtil.closeMongoClient();
+	}
+	
+	/**
+	 * 保存一条记录
+	 * @param collection
+	 * @param doc
+	 */
+    public void saveOne(String table, Document doc) {
+    	MongoUtilForWrite mongoUtil = MongoUtilForWrite.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForWrite.getDB().getCollection(table);
+		mc.insertOne(doc);
+    	mongoUtil.closeMongoClient();
+    }
+    
+	/**
+	 * 保存多条记录
+	 * @param collection
+	 * @param doc
+	 */
+    public void saveMany(String table,List<Document> list) {
+    	MongoUtilForWrite mongoUtil = MongoUtilForWrite.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForWrite.getDB().getCollection(table);
+		mc.insertMany(list);
+    	mongoUtil.closeMongoClient();
+    }
+
+	/**
+	 * 删除数据
+	 * @param table 
+	 * @param obj
+	 */
+	public void delete(String table,Object obj) {
+		MongoUtilForWrite mongoUtil = MongoUtilForWrite.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForWrite.getDB().getCollection(table);
+		BasicDBObject query = new BasicDBObject();
+		MongoUtilForWrite.getInstance().dymParms(query, obj,"append");
+		mc.deleteMany(query);
+		mongoUtil.closeMongoClient();
+	}
+	
+	/**
+	 * 删除一个表的所有数据
+	 * @param table 
+	 */
+	public void deleteTable(String table) {
+		MongoUtilForWrite mongoUtil = MongoUtilForWrite.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForWrite.getDB().getCollection(table);
+		mc.drop();
+		mongoUtil.closeMongoClient();
+	}
+
+	/**
+	 * 按条件清空记录
+	 * @param table
+	 * @param query
+	 */
+    public long deleteByFilter(String table,BasicDBObject query) {
+    	MongoUtilForWrite mongoUtil = MongoUtilForWrite.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForWrite.getDB().getCollection(table);
+		DeleteResult deleteResult = mc.deleteMany(query);
+		long count = deleteResult.getDeletedCount();
+		mongoUtil.closeMongoClient();
+    	return count;
+    }
+	
+	/**
+	 * 更新数据
+	 * @param table表名
+	 * @param conditions条件
+	 * @param obj更新数据
+	 */
+	public void update(String table,Object conditions,Object obj) {
+		MongoUtilForWrite mongoUtil = MongoUtilForWrite.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForWrite.getDB().getCollection(table);
+		BasicDBObject where = new BasicDBObject();
+		MongoUtilForWrite.getInstance().dymParms(where, conditions,"append");
+		BasicDBObject newContent = new BasicDBObject();
+		MongoUtilForWrite.getInstance().dymParms(newContent,obj,"append");
+		BasicDBObject update = new BasicDBObject("$set",newContent);
+		//updateMany updateOne 
+		mc.updateMany(where, update);
+		mongoUtil.closeMongoClient();
+	}
+	
+	/**
+	 * 修改第一个符合条件的数据
+	 * @param table
+	 * @param queryObj
+	 * @param updateObj
+	 */
+    public void updateOne(String table,BasicDBObject queryObj,BasicDBObject updateObj) {
+    	MongoUtilForWrite mongoUtil = MongoUtilForWrite.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForWrite.getDB().getCollection(table);
+		mc.updateOne(queryObj,updateObj);
+		mongoUtil.closeMongoClient();
+    }
+	
+    
+	/**
+	 * 修改多条符合条件的数据
+	 * @param table
+	 * @param queryObj
+	 * @param updateObj
+	 */
+    public long updateMany(String table,BasicDBObject queryObj,BasicDBObject updateObj) {
+    	if(queryObj != null && updateObj != null){
+    		MongoUtilForWrite mongoUtil = MongoUtilForWrite.getInstance();
+    		mongoUtil.init();
+    		MongoCollection<Document> mc = MongoUtilForWrite.getDB().getCollection(table);
+        	UpdateResult updateResult = mc.updateMany(queryObj,updateObj);
+        	long count = updateResult.getModifiedCount();
+        	mongoUtil.closeMongoClient();
+        	return count;
+    	}else{
+    		return 0;
+    	}
+    }
+	
+	/**
+	 * 查找记录
+	 * @param table
+	 * @param query 查询条件
+	 * @param sort 排序
+	 */
+	public List<Document> find(String table,BasicDBObject query,BasicDBObject sort){
+		MongoUtilForRead mongoUtil = MongoUtilForRead.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForRead.getDB().getCollection(table);
+		FindIterable<Document> iterable = null;
+        if(query != null && sort == null){
+        	iterable = mc.find(query);
+        }else if(query == null && sort != null){
+        	iterable = mc.find().sort(sort);
+        }else{
+        	iterable = mc.find(query).sort(sort);
+        }
+		MongoCursor<Document> cursor = iterable.iterator();
+		List<Document> list = new LinkedList<Document>();
+		if(iterable != null){
+			while (cursor.hasNext()) {
+				Document doc = cursor.next();
+				list.add(doc);
+			}
+		}
+		cursor.close();
+		mongoUtil.closeMongoClient();
+		return list;
+	}
+	
+    /**
+     * 获得总记录数
+     * @param table
+     * @param query 条件,可以为空
+     * @return
+     */
+    public long findTotal(String table,BasicDBObject query) {
+    	MongoUtilForRead mongoUtil = MongoUtilForRead.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForRead.getDB().getCollection(table);
+		long count = 0;
+        if(query == null){
+        	count = mc.count();
+        }else{
+        	FindIterable<Document> iterable = mc.find(query);
+    		MongoCursor<Document> cursor = iterable.iterator();
+    		if(iterable != null){
+    			while (cursor.hasNext()) {
+    				cursor.next();
+    				count++;
+    			}
+    		}
+        }
+        mongoUtil.closeMongoClient();
+    	return count;
+    }
+    
+    /**
+     * 分页获得记录数
+     * @param table
+     * @param jsonPaging
+     * @param query 条件
+     * @param sort 排序
+     * @return
+     */
+    public JsonPaging selectJsonPaging(String table,JsonPaging jsonPaging,BasicDBObject query,BasicDBObject sort) {
+    	//完全匹配
+    	//Pattern pattern = Pattern.compile("^name$", Pattern.CASE_INSENSITIVE);
+    	//右匹配
+    	//Pattern pattern = Pattern.compile("^.*name$", Pattern.CASE_INSENSITIVE);
+    	//左匹配
+    	//Pattern pattern = Pattern.compile("^name.*$", Pattern.CASE_INSENSITIVE);
+    	//模糊匹配
+    	//Pattern pattern = Pattern.compile("^.*name.*$", Pattern.CASE_INSENSITIVE);
+    	//BasicDBObject query = new BasicDBObject();
+    	//query.put("name",pattern);
+    	
+    	//BasicDBObject sort = new BasicDBObject();
+    	//1,表示正序； －1,表示倒序
+    	//sort.put("name",1);
+    	
+    	MongoUtilForRead mongoUtil = MongoUtilForRead.getInstance();
+		mongoUtil.init();
+		MongoCollection<Document> mc = MongoUtilForRead.getDB().getCollection(table);
+		long count = 0;
+        if(query == null){
+        	count = mc.count();
+        }else{
+        	FindIterable<Document> iterable = mc.find(query);
+    		MongoCursor<Document> cursor = iterable.iterator();
+    		if(iterable != null){
+    			while (cursor.hasNext()) {
+    				cursor.next();
+    				count++;
+    			}
+    		}
+        }
+    	jsonPaging.setTotal(Integer.parseInt(Long.toString(count)));
+    	
+		int curPage = 1;
+		if (null!=jsonPaging.getPage())
+			curPage = jsonPaging.getPage();
+		int pageSize = 0;
+		if (null!=jsonPaging.getRows())
+			pageSize = jsonPaging.getRows();
+		
+		FindIterable<Document> iterable = null;
+        if(query != null && sort == null){
+        	iterable = mc.find(query).skip((curPage - 1) * pageSize).limit(pageSize);
+        }else if(query == null && sort != null){
+        	iterable = mc.find().skip((curPage - 1) * pageSize).sort(sort).limit(pageSize);
+        }else{
+        	iterable = mc.find(query).skip((curPage - 1) * pageSize).sort(sort).limit(pageSize);
+        }
+        List<Document> list = new LinkedList<Document>();
+		MongoCursor<Document> cursor = iterable.iterator();
+		if(iterable != null){
+			while (cursor.hasNext()) {
+				Document doc = cursor.next();
+                list.add(doc);
+			}
+		}
+        jsonPaging.setList(list);
+        mongoUtil.closeMongoClient();
+        return jsonPaging;
+    }
+	
+}

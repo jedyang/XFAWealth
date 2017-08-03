@@ -1,0 +1,231 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/ifa.css"> 
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/community.css">
+<style>
+#box{
+	display: none;
+	width: 315px;
+	border: 1px solid #0e65ae;
+	padding: 12px;
+	text-align: left;
+	line-height: 175%;
+	font-size: 14px;
+    background-color: #0e65ae;
+    color: white;
+    border-radius: 3px
+}
+.wmes-nodata-tips{margin-top: 10%;}
+.watching-title-wrap{position:relative;}
+.watching-title-wrap .ifa-more-ico{top:0;}
+.group-list-ico{float:left;}
+.group-list-ico .group-list-edit{margin-right:15px;}
+.mf-fav-news .fav-portfolio-ico-left{margin:96px 0 0 30px;float:left;}
+.portfolio_inf_img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-top: 3px;
+}
+</style>
+<!--  <div class="wmes-top">
+    <a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+    <a href="javascript:;" class="header-over">My Favourites</a>
+</div>-->
+<div class="wmes-content" style="min-height:699px" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+    <div class="myfav-wrap">
+    <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='myfavourites.title'/]</p>
+        <ul class="tab_list_tab">
+        	<li class="now">[@lang_res k='myfavourites.portfolios'/]</li>
+            <li>[@lang_res k='myfavourites.watchinglist'/]</li>
+            <li>[@lang_res k='myfavourites.strategies'/]</li>
+             <li>[@lang_res k='community.space.topic'/]</li>
+             <li>[@lang_res k='community.space.news'/]</li>
+        </ul>
+        <div class="myfav-list">
+            <ul class="mf-fav-portfolios">
+            	[#if myFavoritesPortfoliosList?exists && myFavoritesPortfoliosList?size gt 0]
+                 [#list myFavoritesPortfoliosList as each]
+                <li>
+                    <p class="fav-portfolios-title"><a class="ifa-a-href" href="${base}/front/portfolio/arena/detail.do?id=${each.portfoliosId!}">${each.portfoliosName!}</a></p>
+                    <div class="fav-portfolios-contents">
+                        <div class="fav-portfolios-left">
+                            <!-- <img class="fav-portfolios-index" src="${base}/res/images/ifa/inv_index_img.png"> -->
+                             <span class="lump-equity-grade funds_leveal_${each.riskLevel!}" style="margin-right:20px;float:left;" ></span>
+                            <div class="fav-portfolio-time" style="padding-top: 20px;">
+                                <img class="fav-time-ico" src="${base}/res/images/client/time_ico.png">
+                                <p class="fav-portfolio-date">${each.favoritesTime?string('${defFormatDate!}')}</p>
+                            </div>
+                        </div>
+                        <a href="${base}/front/community/space/ifaSpace.do?id=${each.createMemberId!}"><p class="fav-portfolio-name"><img class="portfolio_inf_img" src="${base}${each.createrHeadUrl}">${each.portfoliosCreateName!}</p></a>
+                        <p class="fav-portfolio-return">[@lang_res k='myfavourites.portfolios.totalreturn'/] <span class="fav-portfolio-num">[@num_color s='${each.totalReturn!}' c='${defDisplayColor!}' /]</span></p>
+                        <div class="fav-portfolio-ico-left">
+                            <span followid="${each.favoritesId!}" class="watching-cart cancel-webfollow-img"></span>
+                        </div>
+                    </div>
+                </li>
+                 [/#list]
+                 [#else]
+                        <li style="border:0px;">
+                           <div class="wmes-nodata-tips portfolioTips" style="display:block;padding: 0px 0;">
+                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                 	</div>
+                       </li>
+                 [/#if]
+               
+            </ul>
+        </div>
+        <div class="myfav-list" style="display:none;">
+            <div class="watching_xiala_wrap">
+            	<div class="mylist-new-bn">[@lang_res k='global.add'/]</div>
+                <div class="watching_xiala">
+                    <input id='txt-xiala-selected' type="text" value="[@lang_res k='myfavourites.watchinglist.type.all'/]" placeholder="" readonly="">
+                    <span class="watching_icon_xiala"></span>
+                    <ul>
+                       <li data-value="">[@lang_res k='myfavourites.watchinglist.type.all'/]</li>
+                       [#if WebWatchlistTypeList?exists && WebWatchlistTypeList?size gt 0]
+                       [#list WebWatchlistTypeList as list]
+                       <li data-value="${list.id!}">${list.name!}</li>
+                       [/#list]
+                       [/#if]
+                    </ul>
+                </div>  
+            </div>
+            <div class="myfav-list-rows">
+                
+            </div>         
+        </div>
+        <div class="myfav-list" style="display:none;">
+            <ul class="mf-fav-portfolios">
+            [#if myFavoritesStrategyList?exists && myFavoritesStrategyList?size gt 0]
+                 [#list myFavoritesStrategyList as each]
+                 <li>
+                    <p class="fav-portfolios-title"><a class="ifa-a-href" href="${base}/front/strategy/info/strategiesdetail.do?id=${each.strategyId!}">${each.strategyName!}</a></p>
+                    <div class="fav-portfolios-contents">
+                        <div class="fav-portfolios-left">
+                            <div class="fav-portfolio-time">
+                                <img class="fav-time-ico" src="${base}/res/images/client/time_ico.png">
+                                <p class="fav-portfolio-date">${each.favoritesTimeStr!}</p>
+                            </div>
+                        </div>
+                        <a href="${base}/front/community/space/ifaSpace.do?id=${each.strategyCreateMemberId!}"><p class="fav-portfolio-name"><img class="portfolio_inf_img" src="${base}${each.createrHeadUrl}">${each.strategyCreateName!}</p></a>
+                        <p class="fav-portfolio-return">[@lang_res k='myfavourites.strategies.funds'/] <span class="fav-portfolio-num">${each.fundsCount!}</span></p>
+                        <div class="fav-portfolio-ico-left">
+                            
+                             <span followid="${each.favoritesId!}" class="watching-cart cancel-webfollow-img"></span>
+                        </div>
+                    </div>
+                </li>
+                 [/#list]
+                 [#else]
+                        <li style="border:0px;">
+                            <div class="wmes-nodata-tips portfolioTips" style="display:block;padding: 0px 0;">
+		                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+		                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+		                 	</div>
+                       </li>
+                 [/#if]
+            </ul>    
+        </div>
+                <div class="myfav-list">
+            <ul class="mf-fav-topic">
+                <li ng-repeat="each in topicList">
+                   <div class="wmes-community-news-wrap ng-scope" >
+						<a href="${base}/front/community/info/topicDetail.do?id={{each.id}}&type=t"><div class="wmes-community-news-title topicTitle" id={{each.id}}>{{each.title}}</div></a>
+						<p class="wmes-community-news-text" ng-bind="each.content | cutHmtl:true:150:'...'"></p>
+						<div class="wmes-community-news-message">
+							<div class="wmes-community-news-message-left">
+								<div class="wmes-community-news-type">{{each.sectionName}}<span>{{each.nickName}}&nbsp;&nbsp;&nbsp;{{each.publishTimeFormat}}</span></div>
+							</div>
+							<div class="wmes-community-news-message-right">
+								<div class="wmes-community-news-message-right-relycon">
+									<div class="watching-cart cancel-webfollow-img" id='{{each.id}}' ></div>
+								</div>
+								<div class="wmes-community-news-message-right-relycon">
+									<div class="wmes-community-news-message-right-rely"></div><span>{{each.commentCount}}</span>
+								</div>
+								<div class="wmes-community-news-message-right-eyecon">
+									<div class="wmes-community-news-message-right-eye"></div><span>{{each.readCount}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+                </li>
+                
+                        <li style="border:0px;">
+                           <div class="wmes-nodata-tips no_topic_tips" style="display:none;padding: 0px 0;">
+                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                 	</div>
+                       </li>
+                 
+               
+            </ul>
+            <div class="clickmore  topicMore" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+        </div>
+                <div class="myfav-list">
+            <ul class="mf-fav-news">
+                <li ng-repeat="items in newsList">
+                    <div class="recommend-news-main">
+	                	<div class="recommend-news-contents">
+	                		<p class="insights-content space-word-show"><span class="gray-box"></span> 
+	                		<a class="wmes-community-news-title" href="${base}/front/news/info/newsContent.do?id={{items.id}}" >{{items.title}}</a></p>
+		                	<div class="news-word-wrap">
+				                <a class="ifa-news-img" href="javascript:;">
+				                    <img src="{{items.url}}">
+				                </a>
+				                <div class="news-wrap">
+				                    <p class="ifa-news-word">{{items.description}}</p>
+				                    <div class="recommend-news-contents-bottom">
+				                        <div class="recommend-news-bottom-left">
+				                        	<p class="recommend-news-date-time">{{items.dateTime}}</p>
+				                        </div>
+					                </div>
+				                </div>  
+				            </div>
+	                	</div>
+	                	<div class="fav-portfolio-ico-left">
+						    <span  class="watching-cart cancel-webfollow-img" newsId="{{items.id}}"></span>
+						</div>
+	                </div>
+                </li>
+                <li style="border:0px;">
+                    <div class="wmes-nodata-tips no_news_tips " style="display:none;padding: 0px 0;">
+                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                 	</div>
+                </li>
+            </ul>
+             <div class="clickmore  newskmore" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+        </div>
+    </div>
+</div>
+<div id="box" ></div>
+[#include "../inc/foot_v2.html"/]  
+<script type="text/javascript">
+	 var MEMBER_DEFDISPLAYCOLOR = "${defDisplayColor!}";
+	 var DEFFORMATDATE = "${defFormatDate!}";
+     var IFASPACE_LANG_NODATA_TIPS = "[@lang_res k='global.nodata.tips'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_PORDUCTNAME = "[@lang_res k='myfavourites.watchinglist.list.porductname'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_CUR = "[@lang_res k='myfavourites.watchinglist.list.cur'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_RISK = "[@lang_res k='myfavourites.watchinglist.list.risk'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_LATESTNAVPRICE = "[@lang_res k='myfavourites.watchinglist.list.latestNavPrice'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_DAILY = "[@lang_res k='myfavourites.watchinglist.list.daily'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_VALUATIONDATE = "[@lang_res k='myfavourites.watchinglist.list.valuationDate'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_ONEYEARRETURN = "[@lang_res k='myfavourites.watchinglist.list.oneYearReturn'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_YTDDATE = "[@lang_res k='myfavourites.watchinglist.list.ytdDate'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_ACTIONS = "[@lang_res k='myfavourites.watchinglist.list.actions'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_DIALOGREMARKTITLE = "[@lang_res k='myfavourites.watchinglist.list.dialogRemarkTitle'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_DIALOGSAVESUCCESS = "[@lang_res k='myfavourites.watchinglist.list.dialogSaveSuccess'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_DIALOGBTNSAVE = "[@lang_res k='myfavourites.watchinglist.list.dialogBtnSave'/]";
+     var MYFAVOURITES_WATCHINGLIST_LIST_DIALOGBTNCLOSE = "[@lang_res k='myfavourites.watchinglist.list.dialogBtnClose'/]";
+     
+     var MYFAVOURITES_WATCHINGLIST_TYPE_FUND = "[@lang_res k='myfavourites.watchinglist.type.fund'/]";
+     var MYFAVOURITES_WATCHINGLIST_TYPE_STOCK = "[@lang_res k='myfavourites.watchinglist.type.stock'/]";
+     var MYFAVOURITES_WATCHINGLIST_TYPE_BOND = "[@lang_res k='myfavourites.watchinglist.type.bond'/]"; 
+
+     
+     seajs.use('${base}/res/web/ifa/myFavorites.js');
+</script>

@@ -1,0 +1,250 @@
+[#include "../../inc/head.html"/]
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<!-- <div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='portfolio.title'/]</a>
+</div> -->
+<style>
+.ifa_insight_tb tr {
+    margin: 5px;
+}
+.ifa_insight_tb tr:nth-child(2n) {
+    background-color: white;
+}
+.select_choice {font-size:12px;color:#ffb657;border: 2px solid #ffffff;margin-left: 130px;overflow: hidden;padding:5px;}
+.select_choice li{position: relative;cursor: pointer;display: inline-block;width: 130px;height:30px;line-height:24px;text-align: center;padding: 0px 0px;border: 1px solid #dddddd;margin-right:-1px;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+.select_choice .select_choice_active{border: 2px solid #ffb657;}
+</style>
+<form id="paramsForm" name="paramsForm" action="" method="post">
+<div class="wmes-content" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+        <!-- <div class="white_background" > -->
+            <div class="ifa_choose_condition">
+                <div class="OpenAccount_big_title">
+                  <h2>[@lang_res k='portfolio.info.list.title'/]</h2>
+                </div>               
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title" style="width:160px;text-align:right;">Issued Date :</p>
+                    <ul class="funds_choice" style="margin-left: 168px;" >
+                        <li data-name="period" data-key=""   data-value=""  class="funds_all fund_choice_active">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+                        <li data-name="period" data-key="1 Week"  data-value="1W">1 Week</li>
+                        <li data-name="period" data-key="1 Month" data-value="1M">1 Month</li>
+                        <li data-name="period" data-key="3 Month" data-value="3M">3 Month</li>
+                        <li data-name="period" data-key="6 Month" data-value="6M">6 Month</li>
+                        <li data-name="period" data-key="1 Year"  data-value="1Y">1 Year</li>
+                        <li><input class="insight-input-date" style="width: 170px;" id="fromDate" readonly type="text" name="fromDate"></li>
+                        <li>To <input class="insight-input-date" style="width: 170px;" id="toDate" readonly type="text" name="toDate"></li>
+                    </ul>
+                </div>
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title" style="width:160px;text-align:right;">Relate Geo Allocation :</p>
+                    <ul class="funds_choice funds_logo_b" style="margin-left: 168px;" id="letter_choice">
+                        <li data-letter="" class="funds_all fund_choice_active" data-name="funds_all">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+                        <li data-letter="A">A</li>
+                        <li data-letter="B">B</li>
+                        <li data-letter="C">C</li>
+                        <li data-letter="D">D</li>
+                        <li data-letter="E">E</li>
+                        <li data-letter="F">F</li>
+                        <li data-letter="G">G</li>
+                        <li data-letter="H">H</li>
+                        <li data-letter="I">I</li>
+                        <li data-letter="J">J</li>
+                        <li data-letter="K">K</li>
+                        <li data-letter="L">L</li>
+                        <li data-letter="M">M</li>
+                        <li data-letter="N">N</li>
+                        <li data-letter="O">O</li>
+                        <li data-letter="P">P</li>
+                        <li data-letter="Q">Q</li>
+                        <li data-letter="R">R</li>
+                        <li data-letter="S">S</li>
+                        <li data-letter="T">T</li>
+                        <li data-letter="U">U</li>
+                        <li data-letter="V">V</li>
+                        <li data-letter="W">W</li>
+                        <li data-letter="S">S</li>
+                        <li data-letter="Y">Y</li>
+                        <li data-letter="Z">Z</li>
+                    </ul>
+                    <ul class="select_choice" id="letter_search_choice">
+                    [#if regionList?exists && regionList?size gt 0 ]
+                    [#list regionList as x]
+                    <li style="display:none;" title="${x.name!}" data-letter="${x.key!}" data-key="${x.name!}" data-name="region" data-value="${x.itemCode!}" >
+                        ${x.name!}</li>
+                    [/#list]
+                    [/#if]
+                    </ul>
+                </div>
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title" style="width:160px;text-align:right;">Relate Sector :</p>
+                    <ul class="funds_choice" style="margin-left: 168px;" >
+                        <li data-name="sector" data-key=""   data-value=""  class="funds_all fund_choice_active">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+                        [#if sectorList?exists && sectorList?size gt 0 ]
+	                    [#list sectorList as x]
+	                        <li data-name="sector" data-key="${x.name!}" data-value="${x.itemCode!}">${x.name!}</li>
+	                    [/#list]
+	                    [/#if]
+                    </ul>
+                </div>
+            </div>
+            <div class="portfolio_list_wrap">
+	            <div class="funds_list_selected">
+	                <p class="funds_selected_title">[@lang_res l=Session["_LANG_CODE_"] k='global.selectedCondition'/] </p>
+	                <ul class="selection_criteria">
+	                    <p class="funds_title_selection">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.resetFilter'/] </p>
+	                </ul>
+	            </div>
+	            <div class="ifa_keyserach_wrap">
+	                <p class="ifa_serach_sum">
+	                    A total of                  
+	                    <span class="funds_serach_digital">{{datatotal}}</span> records to meet your requirements</p>
+	                <div class="funds_keyserach ifa_keyserach">
+	                    <input type="text" id="searchKeyWord" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+	                    <span class="icon_search" id="searchKeyBtn"></span>
+	                </div>
+	            </div>
+	            <div class="wenti_btn" id="rpa_subbtn">
+	                <a href="${base}/front/portfolio/info/add.do" id="btnAdd" class="btn_middle" style="width:96px;">[@lang_res k='global.add'/]</a>
+	            </div>
+	            <ul class="funds_ifalist_sorting">
+	                <li class="funds_active" currentSort="viewSort" removeSort="issuedDateSort">
+	                    <p>Views</p>                    
+	                    <p>
+	                        <span class="funds_arrow_top"></span>
+	                        <span class="funds_arrow_down funds_down_active"></span>
+	                    </p>
+	                </li>
+	                <li currentSort="issuedDateSort" removeSort="viewSort">
+	                    <p>Issued Date</p>                  
+	                    <p>
+	                        <span class="funds_arrow_top"></span>
+	                        <span class="funds_arrow_down"></span>
+	                    </p>
+	                </li>   
+	                <li currentSort="totalReturnSort" removeSort="totalReturn">
+	                    <p>Total Return</p>                  
+	                    <p>
+	                        <span class="funds_arrow_top"></span>
+	                        <span class="funds_arrow_down"></span>
+	                    </p>
+	                </li>   
+	            </ul>
+	            <div class="ifa_insight_tab">
+	                <ul class="ifa_search_tab">
+	                    <li class="now" data-value="1"><a href="javascript:;">Publish</a></li>
+	                    <li data-value="0"><a href="javascript:;">Draft</a></li>
+	                </ul>
+	            </div>
+	               
+	            <div class="ifa_list" >
+	                <table id="tableList" class="ifa_insight_tb" width="100%">
+	                    <tbody>
+							<tr>
+							    <th></th>
+							    <th>Portfolio Name</th>
+	                            <th>Total Return</th>
+							    <th>Issued Date</th>
+							    <th>Actions</th>
+							</tr>
+	                  
+	                        <tr ng-repeat="items in dataList" class="dataListTr" >
+	                            <td style="width:5%;padding-top: 5px;" valign="top">
+	                            <div style="float:left" ng-if="items.riskLevel<'3'"><img src="${base}/res/images/ifa/u238.png"/></div>
+	                            <div style="float:left" ng-if="items.riskLevel>='3' && items.riskLevel<'5'"><img src="${base}/res/images/ifa/u806.png"/></div>
+	                            <div style="float:left" ng-if="items.riskLevel>='5'"><img src="${base}/res/images/ifa/u804.png"/></div>
+	                            </td>
+	                            <td style="width:40%;padding-top: 5px;" valign="top">
+	                                <div style="font-weight:bold;padding:0px 5px 5px 20px;text-align:left">{{items.portfolioName}}</div><br>
+	                            </td>
+	                            <td style="width:15%;padding-top: 5px;" valign="top">
+	                                <div style="font-weight:bold;padding:0px 5px 5px 20px;text-align:left" ng-if="items.totalReturn<'0'"><font color="red">-{{items.totalReturn}}</font></div><br>
+	                                <div style="font-weight:bold;padding:0px 5px 5px 20px;text-align:left" ng-if="items.totalReturn>='0'"><font color="green">+{{items.totalReturn}}</font></div><br>
+	                            </td>
+	                            <td style="width:20%;padding-top: 5px;" valign="top">
+	                                <div style="font-weight:bold;padding:5px 5px 5px 20px;text-align:center">{{items.lastUpdate|date:'yyyy-MM-dd HH:mm'}}</div><br>
+	                                <div style="font-weight:bold;padding:5px 5px 5px 20px;text-align:center;">
+	                                 <a id="view" style="display:inline-block;overflow:hidden;" href="javascrpit:;"><img style="width:36px;height:36px;" src="${base}/res/images/u64.png" /></a> {{items.click}}
+	                                 <a id="visitors" class="visitorsBtn" style="display:inline-block;overflow:hidden;" href="javascrpit:;" insightId={{items.id}}><img style="width:36px;height:36px;" src="${base}/res/images/u280.png" /></a> 30
+	                                </div>
+	                            </td>
+	                            <td style="width:20%;padding-top: 5px;text-align: center;" valign="top">
+	                                <a id="view" style="display:inline-block;overflow:hidden;" href="${base}/front/portfolio/info/view.do?id={{items.id}}"><img style="width:24px;height:24px;" src="${base}/res/images/u211.png" /></a>
+	                                <a id="edit" style="display:inline-block;overflow:hidden;" href="${base}/front/portfolio/info/edit.do?id={{items.id}}"><img style="width:24px;height:24px;" src="${base}/res/images/u210.png" /></a>
+	                                <a class="delete" style="display:inline-block;overflow:hidden;" href="javascrpit:;" itemId="{{items.id}}"><img style="width:24px;height:24px;" src="${base}/res/images/u204.png" /></a>
+	                                <a class="up" ng-if="items.overhead!='1'" style="display:inline-block;overflow:hidden;" href="javascrpit:;" itemId="{{items.id}}"><img style="width:24px;height:24px;" src="${base}/res/images/u222.png" /></a>
+	                                <a class="down" ng-if="items.overhead=='1'" style="display:inline-block;overflow:hidden;" href="javascrpit:;" itemId="{{items.id}}"><img style="width:30px;height:30px;" src="${base}/res/images/u292.png" /></a>
+	                            </td>
+	                        </tr>
+	
+	                        <tr class="no_list_tips">
+	                            <td colspan="4">
+	                                <div>
+	                                    <div class="notipswrap">
+	                                        <div class="noResult">[@lang_res k='fund.info.noFund.sorry'/]</div>
+	                                        <p class="noResultText">[@lang_res k='fund.info.noFund.suggestion.one'/]<br>　　　　[@lang_res k='fund.info.noFund.suggestion.two'/]</p>
+	                                    </div>
+	                                </div>
+	                            </td>
+	                        </tr>
+	                    </tbody>
+	                </table>
+	            </div>
+	            <ul class="ifa_list_paging">
+	                <li class="ifa_pagint_num ifa_pagint_now">1</li>
+	                <li class="ifa_pagint_num">2</li>
+	                <li class="ifa_pagint_num">3</li>
+	                <li class="ifa_pagint_some">...</li>
+	                <li class="ifa_pagint_num">10</li>
+	            </ul>
+            </div>
+            <!-- 弹出层 -->
+            <div class="ifa-space-popup">
+                <div class="ifa-space-mask"></div>
+                <div class="space-mask-wrap">
+                    <div class="space-mask">
+                        <a href="javascript:;" class="space-mask-close"></a>
+                        <p class="space-mask-title">Recent Visitors</p>
+                        <div class="space-mask-ifo">
+                            <ul class="mask-ifo-left" style="width:100%">
+                                <li>
+                                    <div class="ifa_list_ifo" style="float:left;padding:10px 5px" ng-repeat="friend in friendList">
+                                        <img alt="" src="${base}{{friend.iconUrl}}" class="ifa_touxiang_friend">
+                                        <div class="ifa_list_information_friend">
+                                            <p class="ifa_list_name">{{friend.loginCode}}</p>
+                                            <p class="ifa_list_form">{{friend.visitTime|date:'yyyy-MM-dd HH:mm:ss' }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
+</div>
+    <input type="hidden" value="" name="period" id="period"/>
+    <input type="hidden" value="" name="regions" id="regions"/>
+    <input type="hidden" value="" name="sectors" id="sectors"/>
+    <input type="hidden" value="" name="viewSort" id="viewSort"/>
+    <input type="hidden" value="" name="issuedDateSort" id="issuedDateSort"/>
+    <input type="hidden" value="" name="keyWord" id="keyWord"/>
+    <input type="hidden" value="1" name="status" id="status"/>
+</form>
+[#include "../../inc/foot.html"/] 
+<script type="text/javascript">
+seajs.use('${base}/res/js/jsDatePick.jquery.min.1.3.js');
+seajs.use('${base}/res/web/portfolio/info/list.js');
+window.onload = function(){
+    new JsDatePick({
+      useMode:2,
+      target:"fromDate",
+      dateFormat:"%Y-%m-%d"
+    });
+    new JsDatePick({
+      useMode:2,
+      target:"toDate",
+      dateFormat:"%Y-%m-%d"
+    });
+};
+</script>

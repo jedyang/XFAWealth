@@ -1,0 +1,334 @@
+package com.fsll.wmes.group.service.impl;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+import com.fsll.common.CommonConstants;
+import com.fsll.common.base.service.BaseService;
+import com.fsll.common.util.DateUtil;
+import com.fsll.common.util.JsonPaging;
+import com.fsll.common.util.PageHelper;
+import com.fsll.common.util.PropertyUtils;
+import com.fsll.common.util.StrUtils;
+import com.fsll.core.entity.SysAdmin;
+import com.fsll.wmes.common.CommonConstantsWeb;
+import com.fsll.wmes.entity.MemberBase;
+import com.fsll.wmes.entity.MemberGroup;
+import com.fsll.wmes.entity.MemberGroupDetail;
+import com.fsll.wmes.entity.PortfolioHoldAccount;
+import com.fsll.wmes.group.service.MemberGroupService;
+import com.fsll.wmes.group.vo.MemberGroupDetailVO;
+import com.fsll.wmes.group.vo.MemberGroupVO;
+
+@Service("memberGroupService")
+public class MemberGroupServiceImpl extends BaseService implements MemberGroupService {
+
+	/**
+	 *  客户分组数据获取
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param jsonPaging
+	 * @param langCode
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public JsonPaging getGroups(JsonPaging jsonPaging, String langCode) {
+		StringBuffer hql = new StringBuffer(""
+				+ " FROM MemberGroup g ORDER BY g.createTime ASC"
+				+ "");
+		jsonPaging = this.baseDao.selectJsonPaging(hql.toString(), null, jsonPaging, false);
+		if(jsonPaging != null && !jsonPaging.getList().isEmpty()){
+			List<MemberGroupVO> vos = new ArrayList<MemberGroupVO>();
+			List<MemberGroup> groups = jsonPaging.getList();
+			for (MemberGroup memberGroup : groups) {
+				MemberGroupVO vo = new MemberGroupVO();
+				BeanUtils.copyProperties(memberGroup, vo);
+				if("1".equals(vo.getIsValid())){
+					vo.setStatusDisplay(PropertyUtils.getPropertyValue(langCode, "global.status.valid", null));
+				}else if("0".equals(vo.getIsValid())){
+					vo.setStatusDisplay(PropertyUtils.getPropertyValue(langCode, "global.status.invalid", null));
+				}else if("-1".equals(vo.getIsValid())){
+					vo.setStatusDisplay(PropertyUtils.getPropertyValue(langCode, "global.status.deleted", null));
+				}
+				if (vo.getCreateTime() != null) {
+					vo.setCreateTimeStr(DateUtil.dateToDateString(vo.getCreateTime(), CommonConstants.FORMAT_DATE_TIME));
+				}
+				if (StringUtils.isNotBlank(vo.getCreatorId())) {
+					SysAdmin admin = (SysAdmin) baseDao.get(SysAdmin.class, vo.getCreatorId());
+					if(admin != null){
+						vo.setCreator(admin.getNickName());
+					}else{
+						MemberBase member = (MemberBase) baseDao.get(MemberBase.class, vo.getCreatorId());
+						vo.setCreator(getCommonMemberName(member.getId(), langCode, "2"));
+					}
+				}
+				vos.add(vo);
+			}
+			jsonPaging.getList().clear();
+			jsonPaging.getList().addAll(vos);
+		}
+		return jsonPaging;
+	}
+
+	/**
+	 *  客户分组实体获取
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param id member_group.id
+	 */
+	@Override
+	public MemberGroup findById(String id) {
+		MemberGroup group = null;
+		if (StringUtils.isNotBlank(id)) {
+			group = (MemberGroup) baseDao.get(MemberGroup.class, id);
+		}
+		return group;
+	}
+
+	/**
+	 *  客户分组实体保存
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param group
+	 */
+	@Override
+	public MemberGroup save(MemberGroup group) {
+		if(group != null){
+			group = (MemberGroup) baseDao.saveOrUpdate(group);
+		}
+		return group;
+	}
+
+	/**
+	 *  客户分组信息保存
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param group
+	 */
+	@Override
+	public Map<String, Object> saveGroup(MemberGroup group, SysAdmin admin) {
+		Boolean flag = false;
+		if (StringUtils.isNotBlank(group.getId())) {
+		// update
+			MemberGroup target = findById(group.getId());
+			if(target != null){
+				target.setGroupName(group.getGroupName());
+				target.setRemark(group.getRemark());
+				target.setIsValid(group.getIsValid());
+				target.setLastUpdate(new Date());
+				group = save(target);
+				flag = true; 
+			}
+		}else{
+		// create
+			group.setId(null);
+			group.setIsValid("1");
+			group.setCreatorId(admin.getId());
+			group.setCreateTime(new Date());
+			group.setLastUpdate(new Date());
+			group = save(group);
+			flag = true; 
+		}
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("flag", flag);
+		result.put("group", group);
+		return result;
+	}
+	
+	/**
+	 *  客户分组状态修改
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param id member_group.id
+	 * @param isValid member_group.is_valid
+	 */
+	@Override
+	public Map<String, Object> updateGroup(String id, String isValid) {
+		Boolean flag = false;
+		MemberGroup group = null;
+		if (StringUtils.isNotBlank(id) && StringUtils.isNotBlank(isValid)) {
+			group = findById(id);
+			if(group != null){
+				group.setIsValid(isValid);
+				group.setLastUpdate(new Date());
+				group = save(group);
+				flag = true;
+			}
+		}
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("flag", flag);
+		result.put("group", group);
+		return result;
+	}
+	
+	/**
+	 *  客户组成员数据获取
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param jsonPaging
+	 * @param groupId member_group.id
+	 * @param keyWord 关键字模糊查询（客户名称，投资账户）
+	 * @param langCode
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public JsonPaging getGroupDetails(JsonPaging jsonPaging, String groupId, String keyWord, String langCode) {
+		if (StringUtils.isNotBlank(groupId)) {
+			StringBuffer hql = new StringBuffer(""
+					+ " SELECT"
+					+ " d,a,l.firmLogo"
+					+ " FROM"
+					+ " MemberGroupDetail d"
+					+ " LEFT JOIN"
+					+ " InvestorAccount i"
+					+ " ON"
+					+ " i.member.id=d.member.id"
+					+ " AND"
+					+ " i.subFlag=0"
+					+ " LEFT JOIN"
+					+ " PortfolioHoldAccount a"
+					+ " ON"
+					+ " a.account.id=i.id"
+					+ " LEFT JOIN"
+					+ " MemberIfaIfafirm b"
+					+ " ON"
+					+ " b.ifa.id=a.ifa.id"
+					+ " AND"
+					+ " b.checkStatus=1"
+					+ " LEFT JOIN"
+					+ " MemberIfafirm l"
+					+ " ON"
+					+ " l.id=b.ifafirm.id"
+					+ " LEFT JOIN"
+					+ " MemberBase c"
+					+ " ON"
+					+ " c.id=a.member.id"
+					+ " LEFT JOIN"
+					+ " MemberIndividual f"
+					+ " ON"
+					+ " f.member.id=a.member.id"
+					+ " WHERE"
+					+ " d.group.id=?"
+					+ "");
+			List<Object> params = new ArrayList<Object>();
+			params.add(groupId);
+			if (StringUtils.isNotBlank(keyWord)) {
+				hql.append(" AND"
+						+ "("
+						+ "	TRIM(f.firstName)||' '||TRIM(f.lastName) LIKE ? OR"
+						+ " f.lastName LIKE ? OR"
+						+ " f.firstName LIKE ? OR"
+						+ " f.nameChn LIKE ? OR"
+						+ " c.nickName LIKE ? OR"
+						+ " c.loginCode LIKE ?"
+						+ ")"
+						+ "");
+				params.add("%" + keyWord + "%");
+				params.add("%" + keyWord + "%");
+				params.add("%" + keyWord + "%");
+				params.add("%" + keyWord + "%");
+				params.add("%" + keyWord + "%");
+				params.add("%" + keyWord + "%");
+			}
+			hql.append(" ORDER BY i.createTime ASC");
+			jsonPaging = this.baseDao.selectJsonPaging(hql.toString(), params.toArray(), jsonPaging, false);
+			if(jsonPaging != null && !jsonPaging.getList().isEmpty()){
+				List<MemberGroupDetailVO> vos = new ArrayList<MemberGroupDetailVO>();
+				List<Object[]> objects = jsonPaging.getList();
+				for (Object[] objs : objects) {
+					MemberGroupDetail detail = (MemberGroupDetail) objs[0];
+					PortfolioHoldAccount holdAccount = (PortfolioHoldAccount) objs[1];
+					String firmLogo = (String) objs[2];
+					MemberGroupDetailVO vo = new MemberGroupDetailVO();
+					BeanUtils.copyProperties(detail, vo);
+					if(detail.getGroup() != null){
+						vo.setGroupName(detail.getGroup().getGroupName());
+					}
+					if(holdAccount != null){
+						if(holdAccount.getAccount().getMember() != null){
+							vo.setClientName(getCommonMemberName(holdAccount.getAccount().getMember().getId(), langCode, "2"));
+						}
+						vo.setAccountNo(holdAccount.getAccount().getAccountNo());
+						vo.setCurrencyCode(holdAccount.getBaseCurrency());
+						if (StringUtils.isNotBlank(holdAccount.getBaseCurrency())) {
+							vo.setCurrencyName(getParamConfigName(langCode, holdAccount.getBaseCurrency(), CommonConstantsWeb.SYS_PARM_TYPE_CURRENCY_TYPE));
+						}
+						vo.setTotalAsset(holdAccount.getTotalAsset());
+						vo.setMarketValue(holdAccount.getMarketValue());
+						if (holdAccount.getAccount().getCreateTime() != null) {
+							vo.setAccountCreateTime(DateUtil.dateToDateString(holdAccount.getAccount().getCreateTime(), CommonConstants.FORMAT_DATE_TIME));
+						}
+						if(holdAccount.getIfa() != null){
+							vo.setIfaName(getCommonMemberName(holdAccount.getIfa().getMember().getId(), langCode, "2"));
+						}
+					}
+					vo.setFirmLogo(PageHelper.getLogoUrl(firmLogo, "F"));
+					vos.add(vo);
+				}
+				jsonPaging.getList().clear();
+				jsonPaging.getList().addAll(vos);
+			}
+		}
+		return jsonPaging;
+	}
+
+	/**
+	 *  客户分组删除成员
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param id member_group_detail.id
+	 */
+	@Override
+	public Boolean delete(String id) {
+		Boolean flag = false;
+		if (StringUtils.isNotBlank(id)) {
+			MemberGroupDetail detail = (MemberGroupDetail) baseDao.get(MemberGroupDetail.class, id);
+			if(detail != null){
+				baseDao.delete(detail);
+				flag = true;
+			}
+		}
+		return flag;
+	}
+
+	/**
+	 *  客户组添加成员
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param ids member_base.id字符串
+	 * @param groupId member_group.id
+	 */
+	@Override
+	public Map<String, Object> addMember(String ids, String groupId) {
+		Boolean flag = false;
+		if (StringUtils.isNotBlank(ids) && StringUtils.isNotBlank(groupId)) {
+			MemberGroup group = (MemberGroup) baseDao.get(MemberGroup.class, groupId);
+			if(group != null){
+				ids = StrUtils.reHeavy(ids);
+				String[] strs = ids.indexOf(",") > -1 ? ids.split(",") : new String[]{ids}; 
+				for (String id : strs) {
+					MemberBase member = (MemberBase) baseDao.get(MemberBase.class, id);
+					MemberGroupDetail detail = new MemberGroupDetail();
+					detail.setMember(member);
+					detail.setGroup(group);
+					baseDao.saveOrUpdate(detail);
+				}
+				flag = true;
+			}
+		}
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("flag", flag);
+		return result;
+	}
+
+	
+
+
+}

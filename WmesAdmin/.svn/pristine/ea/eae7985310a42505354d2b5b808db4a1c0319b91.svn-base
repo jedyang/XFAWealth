@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>客户列表</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div class="container-fluid pd0" id="wmes_wraper">
+	      <div class="tab-side container-fluid">
+	        <div class="tab-side-container">
+	            <div class="clear"></div>
+					<div class="tab_wrap" id="tab_wrap">
+					  <div class="form-inline">
+						<div class="row pd10">
+							<div class="col-md-5">
+								<label for="s-1">
+									[@lang_res k='member.list.keyword'/]
+								</label>
+								<input id='txtkeyword' type="text" class="form-control searchCondition" id="s-1" placeholder="账户、姓名">
+								<button type="button" class="btn btn-primary" id="btnSearch">
+									 [@lang_res k='global.query'/]
+								</button>
+							</div>
+					   </div>
+					   <!-- 客户列表  -->   
+		                <form class="form-inline" style="display:block;">
+		                	<input type="hidden" id="hidId" name="id" value="${(id)?if_exists}">
+		                   	<input type="hidden" name="memberType"  id="memberType"/>
+		                    <div>
+		                        <table border="0" id="customerList" cellpadding="0" cellspacing="0" class="table table-hover " >
+		                        		   <thead>
+		                        		   <tr>
+		                                      <th class="table-head">账户</th>
+		                                      <th class="table-head">名称</th>
+		                                      <th class="table-head">电子邮箱</th>
+		                                      <th class="table-head">手机号码</th>
+		                                      <th class="table-head">国籍</th>
+		                                      <th class="table-head">[@lang_res k='ifafirm.list.operation'/]</th>
+		                                    </tr>
+		                                    </thead>
+		                                <tbody>
+		                                </tbody>
+		                         </table>
+		                   
+				           		<nav  class="pull-right">
+					                <!-- log分页 -->
+					                <ul id='customerPagination' class="pagination pagination-sm">  
+					                	
+					                </ul>
+					            </nav>
+		           				<div class="clear"></div>                      
+		                    </div>	
+						</form>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/typeahead/bootstrap-typeahead.js"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script type="text/javascript">
+	function ShowFirmDialog(relateId,memberType) {
+		BootstrapDialog.show({
+			title : "客户详情",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="yes" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="${base}/console/ifa/disCustomerDetail.do?id='+relateId+'&memberType='+memberType+'"></iframe></div>').load(),
+			buttons : [{
+				label : "[@lang_res  k='global.close'/]",
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			}]
+	  	});
+	}
+</script>
+<script type="text/javascript">
+$(function() {
+		bindlist(0);
+		setAutoSearch("#txtkeyword",bindlist,0);
+		$("#btnSearch").bind("click", function() {
+			bindlist(0);
+		});
+		//按下回车键搜索
+		document.onkeydown = function(e) {
+			var ev = document.all ? window.event : e;
+			if (ev.keyCode == 13) {
+				bindlist(0);
+			}
+		};
+		
+		//查询
+		function bindlist(curPage) {
+		var id = $('#hidId').val();
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/customer/disListJson.do?id='+id,
+			data : {
+				'keyword' : $("#txtkeyword").val(),
+				'page' : curPage + 1,
+				'rows' : 10,
+				'sort' : '',
+				'order' : ''
+			},
+			success : function(json) {
+				var html = "";
+				var total = json.total;
+				var table = json.rows;
+				$.each(table, function(i, n) {
+				    var type = n.memberType;
+				    var id = n.id;
+				    var relateId = n.relateId;
+					var typeValue = "";
+					var detailUrl = "${base}/console/ifa/customerdetail.do?id=" + n.relateId+"&memberType="+type;
+					html += "<tr><td>" + n.accountNo + "</td><td>" 
+					+ n.nameChn
+					+ "</td><td>" 
+					+ n.email 
+					+ "</td><td>" 
+					+ "(" + n.mobileCode + ")" + n.mobileNumber
+					+ "</td><td>" 
+					+ n.nationality
+					html += "<td><a href=\"javascript:void(0);\" onclick=\"ShowFirmDialog('"+relateId+"'"+",'"+type+"'"+")\">"+ '查看详情' +"</a></td></tr>";
+				});
+
+				$('#customerList tbody').empty().append(html);
+				$("#customerPagination").pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 10,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+			bindlist(page_id);
+		}
+	}
+	
+	
+	function ShowFirmListDialog() {
+		BootstrapDialog.show({
+			title : "[@lang_res  k='ifafirm.list.selectIfafirm'/]",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div></div>').load('../ifafirm/dialogFirmShow.do?procedureid='),
+			buttons : [ {
+				label : "[@lang_res  k='global.confirm'/]",
+				cssClass : 'btn-primary',
+				action : function(dialogItself) {
+					var selected = $('#id_irm_selected');
+					var selectedid = selected.attr('companyid');
+					var selectedname = selected.attr('companyname');
+					if (selectedid == undefined || selectedid == '') {
+						layer.alert("[@lang_res  k='ifafirm.message.promptNotSelectedIfafirm'/]", {
+							icon : 0
+						});
+						return;
+					}
+					$('#txtSelectedCompanyName').val(selectedname);
+					$('#txtSelectedCompanyName').attr('companyid', selectedid);
+					bindList(0);
+					dialogItself.close();
+				}
+			}, {
+				label : "[@lang_res  k='global.back'/]",
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			} ]
+		});
+	}
+		
+});
+					
+</script>
+</body>
+</html>

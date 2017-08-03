@@ -1,0 +1,278 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+     <link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+     <link rel="stylesheet" href="${base}/res/css/client.css"> 
+    <style type="text/css">
+        /*swiper 重写*/
+        .swiper-button-next, .swiper-button-prev {opacity: 0.7;cursor: pointer;background-position: center;background-repeat: no-repeat;display: none;
+                    }
+        .swiper-button-disabled{display: none!important;}
+        .swiper-button-prev{background: url('${base}/res/images/ifa/left_ico.png') no-repeat;background-size: 100% 100%;left: 0px;}
+        .swiper-button-next{background: url('${base}/res/images/ifa/right_ico.png') no-repeat;background-size: 100% 100%;right: 0px;}
+        .proposal-charts-wrap{padding:0 1px;}
+    </style>
+    
+    <div class="wmes-content">
+    	<div class="proposal-wrap">
+    		<p class="wmes-wrap-title">
+    		[#if edit?? && edit=='1']
+    			[@lang_res k='crm.proposal.edit'/]
+    		[#else]
+    			[@lang_res k='create.proposal.step.title'/]
+    		[/#if]
+    		</p>
+    		<div class="proposal-step-wrap">
+    			<div class="proposal-step-portrait">
+    				<!--<img style="width:50px;height:50px" class="step-portrait-img" src="${base}/res/images/strategy/strategy_portrait.png">
+    				-->
+    				
+    				<img style="width:50px;height:50px" class="step-portrait-img client-top-portrait" src="[#if proposal.id??]${base}[@user_head u='${(iconUrl)?if_exists}' g='${(gender)?if_exists}'/][#else]${base}/res/images/strategy/strategy_portrait.png[/#if]">
+    				<div class="step-portrait-name-wrap">
+    					<p class="step-portrait-name">${name!}</p>
+    					<!--<ul class="step-portrait-choose">
+    						<li>Xc Zhao</li>
+    						<li>Ye Lam</li>
+    						<li>Mark Chen</li>
+    						<li>Ben Jack</li>
+    					</ul>
+    				--></div>
+    			</div>
+    			<ul class="proposal-step">
+    				<li class="proposal-step-title proposal-step-old">[@lang_res k='create.proposal.step.questionnaire'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title proposal-step-now">[@lang_res k='create.proposal.step.selectInv.Model'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">[@lang_res k='create.proposal.step.proposalBuilder'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">[@lang_res k='create.proposal.step.proposalReport'/]</li>
+    			</ul>
+    		</div>
+            <div class="stepOne-rows">
+                <div class="stepOne-rows-fillin">
+                    <p class="stepOne-rows-input-title" id="portfolio-show" style="display:block;">[@lang_res k='create.portfolio.step.one.pleaseSelectAStrategy'/]:</p>  
+                    <div class="proposal-choose-list">
+                        <div class="proposal-choose-rows">
+                            <p class="proposal-choose-title proposal-choose-one">[@lang_res k='create.portfolio.step.one.veryConservative'/]</p>
+                           [#if strategyList?exists && strategyList?size gt 0]
+                            <div class="proposal-charts-wrap swiper-container">
+                                <div class="proposal-charts-list swiper-wrapper">
+                                 [#assign flag = 0/]
+                                [#list strategyList as list]
+                                [#if list.riskLevel='1']
+                                  <div class="proposal-chart-rows swiper-slide [#if (proposal.strategy)??&& proposal.strategy.id==list.id]swiper-slide-active proposal-chart-active[/#if]" strategyId="${list.id!}">
+                                      <p class="proposal-charts-title">${list.strategyName!}</p>
+                                      <div class="create-proposal-charts" data-color="['#3399cc','#ff9999','#99cc99']" data-value="${list.allocationData!}"></div> 
+                                  </div> 
+                                  [#assign flag = 1/]
+                                  [/#if]
+                                  [/#list]
+                                </div>    
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>  
+                            </div> 
+                           [#if flag == 0]
+                            <div>
+                             	<img style="margin-left: 20%;margin-top: 30%;" alt="" src="${base!}/res/images/proposal/proposalnodata.png">
+                             	<p style="margin-left: 35%;color: #aad1e8;">[@lang_res k='global.search.noData'/]</p>
+                             </div>
+                           [/#if]
+                           [#else]
+                              <div>
+                             	<img style="margin-left: 20%;margin-top: 30%;" alt="" src="${base!}/res/images/proposal/proposalnodata.png">
+                             	<p style="margin-left: 35%;color: #aad1e8;">[@lang_res k='global.search.noData'/]</p>
+                              </div>          
+                           [/#if]               
+                        </div>
+                        <div class="proposal-choose-rows">
+                            <p class="proposal-choose-title proposal-choose-two">[@lang_res k='create.portfolio.step.one.conservative'/]</p>
+                            [#if strategyList?exists && strategyList?size gt 0]
+                            <div class="proposal-charts-wrap swiper-container">
+                                <div class="proposal-charts-list swiper-wrapper">
+                                [#assign flag = 0/]
+                                [#list strategyList as list]
+                                [#if list.riskLevel='2']
+                                  <div class="proposal-chart-rows swiper-slide [#if (proposal.strategy)??&& proposal.strategy.id==list.id]swiper-slide-active proposal-chart-active[/#if]" strategyId="${list.id!}">
+                                      <p class="proposal-charts-title">${list.strategyName!}</p>
+                                      <div class="create-proposal-charts" data-color="['#3399cc','#ff9999','#99cc99']" data-value="${list.allocationData!}"></div> 
+                                  </div> 
+                                  	[#assign flag = 1/]
+                                 [#else]
+                                 [/#if]
+                                 [/#list]
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div> 
+                            </div>
+                             [#if flag == 0]
+                             	<div>
+	                             	<img style="margin-left: 20%;margin-top: 30%;" alt="" src="${base!}/res/images/proposal/proposalnodata.png">
+	                             	<p style="margin-left: 35%;color: #aad1e8;">[@lang_res k='global.search.noData'/]</p>
+                             	</div>
+                              [/#if]
+                              [#else]
+                              <div>
+                             	<img style="margin-left: 20%;margin-top: 30%;" alt="" src="${base!}/res/images/proposal/proposalnodata.png">
+                             	<p style="margin-left: 35%;color: #aad1e8;">[@lang_res k='global.search.noData'/]</p>
+                              </div>   
+                            [/#if]
+                        </div>
+                        <div class="proposal-choose-rows">
+                            <p class="proposal-choose-title proposal-choose-three">[@lang_res k='create.portfolio.step.one.moderate'/]</p>
+                            [#if strategyList?exists && strategyList?size gt 0]
+                            <div class="proposal-charts-wrap swiper-container">
+	                            <div class="proposal-charts-list swiper-wrapper">
+	                            [#assign flag = 0/]
+	                            [#list strategyList as list]
+	                            [#if list.riskLevel='3']
+	                                <div class="proposal-chart-rows swiper-slide [#if (proposal.strategy)??&& proposal.strategy.id==list.id]swiper-slide-active proposal-chart-active[/#if]" strategyId="${list.id!}">
+	                                    <p class="proposal-charts-title">${list.strategyName!}</p>
+	                                    <div class="create-proposal-charts" data-color="['#3399cc','#ff9999','#99cc99']" data-value="${list.allocationData!}"></div> 
+	                                </div> 
+                                [#assign flag = 1/]
+                                [/#if]
+                                [/#list]
+	                            </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div> 
+                            </div>
+                            [#if flag == 0]
+                           	<div>
+                            	<img style="margin-left: 20%;margin-top: 30%;" alt="" src="${base!}/res/images/proposal/proposalnodata.png">
+                            	<p style="margin-left: 35%;color: #aad1e8;">[@lang_res k='global.search.noData'/]</p>
+                           	</div>
+                            [/#if]
+                            [#else]
+                            <div>
+	                           	<img style="margin-left: 20%;margin-top: 30%;" alt="" src="${base!}/res/images/proposal/proposalnodata.png">
+	                           	<p style="margin-left: 35%;color: #aad1e8;">[@lang_res k='global.search.noData'/]</p>
+                            </div> 
+                            [/#if]
+                        </div>
+                        <div class="proposal-choose-rows">
+                            <p class="proposal-choose-title proposal-choose-four">[@lang_res k='create.portfolio.step.one.aggressive'/]</p>
+                            [#if strategyList?exists && strategyList?size gt 0]
+                            <div class="proposal-charts-wrap swiper-container">
+                                <div class="proposal-charts-list swiper-wrapper">
+                                [#assign flag = 0/]
+                                [#list strategyList as list]
+                                [#if list.riskLevel='4']
+                                    <div class="proposal-chart-rows swiper-slide [#if (proposal.strategy)??&& proposal.strategy.id==list.id]swiper-slide-active proposal-chart-active[/#if]" strategyId="${list.id!}">
+                                        <p class="proposal-charts-title">${list.strategyName!}</p>
+                                        <div class="create-proposal-charts" data-color="['#3399cc','#ff9999','#99cc99']" data-value="${list.allocationData!}"></div> 
+                                    </div> 
+                                [#assign flag = 1/]
+                                [/#if]
+                                [/#list]
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div> 
+                            </div>
+                            [#if flag == 0]
+                           	<div>
+                            	<img style="margin-left: 20%;margin-top: 30%;" alt="" src="${base!}/res/images/proposal/proposalnodata.png">
+                            	<p style="margin-left: 35%;color: #aad1e8;">[@lang_res k='global.search.noData'/]</p>
+                           	</div>
+                            [/#if]
+                            [#else]
+                            <div>
+	                           	<img style="margin-left: 20%;margin-top: 30%;" alt="" src="${base!}/res/images/proposal/proposalnodata.png">
+	                           	<p style="margin-left: 35%;color: #aad1e8;">[@lang_res k='global.search.noData'/]</p>
+                            </div>
+                            [/#if]
+                        </div>
+                        <div class="proposal-choose-rows">
+                            <p class="proposal-choose-title  proposal-choose-five">[@lang_res k='create.portfolio.step.one.veryAggressive'/]</p>
+                            [#if strategyList?exists && strategyList?size gt 0]
+                            <div class="proposal-charts-wrap swiper-container">
+                                <div class="proposal-charts-list swiper-wrapper">
+                                 [#assign flag = 0/]
+                                [#list strategyList as list]
+                                [#if list.riskLevel='5']
+                                    <div class="proposal-chart-rows swiper-slide [#if (proposal.strategy)??&& proposal.strategy.id==list.id]swiper-slide-active proposal-chart-active[/#if]" strategyId="${list.id!}">
+                                        <p class="proposal-charts-title">${list.strategyName!}</p>
+                                        <div class="create-proposal-charts" data-color="['#3399cc','#ff9999','#99cc99']" data-value="${list.allocationData!}"></div> 
+                                    </div> 
+                                 [#assign flag = 1/]
+                                [/#if]
+                                [/#list]
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div> 
+                            </div>
+                            [#if flag == 0]
+                           	<div>
+                            	<img style="margin-left: 20%;margin-top: 30%;" alt="" src="${base!}/res/images/proposal/proposalnodata.png">
+                            	<p style="margin-left: 35%;color: #aad1e8;">[@lang_res k='global.search.noData'/]</p>
+                           	</div>
+                            [/#if]
+                            [#else]
+                            <div>
+	                           	<img style="margin-left: 20%;margin-top: 30%;" alt="" src="${base!}/res/images/proposal/proposalnodata.png">
+	                           	<p style="margin-left: 35%;color: #aad1e8;">[@lang_res k='global.search.noData'/]</p>
+                            </div>
+                            [/#if]
+                        </div> 
+                    </div>  
+                </div>
+                <!--<div class="stepOne-rows-fillin" id="portfolio-hide" style="display:none;">
+                    <p class="stepOne-rows-input-title">Please select a portfolio:</p>
+                    <div class="stepOne-rows-text-wrap">
+                        <div class="account-checkbox">
+                            <input type="checkbox" value="" id="in_use">
+                            <label for="in_use"></label>
+                        </div>
+                        <span class="account-checkbox-font">Client portfolio</span>
+                        <div class="account-checkbox">
+                            <input type="checkbox" value="" id="in_use2">
+                            <label for="in_use2"></label>
+                        </div>
+                        <span class="account-checkbox-font">Profitable portfolio:</span>
+                    </div>                     
+                </div>        
+            --></div><!--
+    		<div class="stepTwo-rows">
+                 <div class="stepTwo-rows-img">
+                        <img src="${base}/res/images/strategy/step_main_img.png">   
+                     </div> 
+                <div class="stepOne-constrains-rows">
+                    <p class="stepOne-rows-input-title" style="line-height: 35px;">Select Strategy Template</p>
+                    <div class="stepOne-rows-text-wrap">
+                        <div class="proposal_xiala stepOne-constrains-xiala">
+                            <input type="text" class="step-growth-value"  value="Growth" readonly>
+                            <span class="icon_xiala"></span>
+                            <ul class="step-growth-choose">
+                                <li>Fixed Incom</li>
+                                <li>Income</li>
+                                <li>Yield</li>
+                                <li>Balanced</li>
+                                <li>Growth</li>
+                                <li>Equity</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="stepOne-constrains-rows">
+                    <p class="stepOne-rows-input-title">Remark</p>
+                    <div class="stepOne-rows-text-wrap">
+                        <textarea class="stepOne-rows-text"></textarea>
+                    </div>
+                </div>
+    		</div>
+            
+    		-->
+    		<form method="post" id="frm">
+    		<input type="hidden" id="memberId" name="memberId" value="${(proposal.member.id)?if_exists}">
+    		<input type="hidden" id="id" name="id" value="${(proposal.id)?if_exists}">
+    		<input type="hidden" id="strategyId" name="strategyId" value="${(proposal.strategy.id)?if_exists}"/>
+    		<div class="proposal-button-wrap" style="margin-top:120px;">
+    		    <a class="proposal-button " href="javascript:;" id="btnPrevious">[@lang_res k='open.account.Previous'/]</a>
+    		    <a class="proposal-button" href="javascript:;" id="btnNext">[@lang_res k='open.account.Next'/]</a>
+    			<a class="proposal-button" href="javascript:;" id="btnDraft">[@lang_res k='open.account.Draft'/]</a></div>
+    		</form>
+    	</div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     var props = [@load_prop k=''/];
+     seajs.use('${base}/res/web/proposal/createProposal/createProposalSetTwo.js');
+</script>

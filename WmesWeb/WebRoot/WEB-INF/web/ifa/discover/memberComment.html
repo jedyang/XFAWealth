@@ -1,0 +1,68 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/other.css">
+<div class="wmes-content">
+	<input id="hidModuleType" value="${moduleType!}" type="hidden">
+	<input id="hidRelateId" value="${relateId!}" type="hidden">
+	<div class="member-comment-wrap">
+		<div class="comment-topper-contents">
+			<div class="member-comment-topper">
+				<p class="member-comment-title">会员评论</p>
+				<p class="member-number-words"><span class="input-length">0</span>/500</p>
+			</div>
+			<textarea class="member-comment-text"></textarea>
+			<div class="member-comment-reply">
+				<img class="comment-expression-ico" src="${base}/res/images/discover/wechat_ico.png">
+				<a class="comment-reply-word discover-word" href="javascript:;">Reply</a>
+			</div>
+		</div>
+		<div class="member-comment-contents">
+			<div class="comment-contents-title"><span class="comment-news-title">最新评论</span>
+				<p class="comment-contents-number">( <span>[#if webDiscusss?exists]${webDiscusss.list?size}[/#if]</span> )</p>
+			</div>
+		</div>
+		
+		<ul class="member-comment-list">
+			[#if webDiscusss?exists && webDiscusss.list?exists && webDiscusss.list?size gt 0 ]
+            [#list webDiscusss.list as webDiscuss]
+			<li id="${webDiscuss.id!}">
+				<div class="comment-list-rows">
+					<img class="comment-list-portrait" src="${base}[#if (webDiscuss.member)??]${webDiscuss.member.iconUrl!}[/#if]">
+					<div class="comment-list-topper">
+						<p class="comment-list-topper-name">[#if (webDiscuss.member)??]${webDiscuss.member.nickName!}[/#if]<span class="comment-list-topper-time" data-create-time="${webDiscuss.createTime!}">${webDiscuss.timeNum!}[#if webDiscuss.timeType?? && webDiscuss.timeType == 'D']天前[#else]小时前[/#if]</span></p>
+						<p class="comment-list-topper-comment">
+							${webDiscuss.content!}
+						</p>
+						<div data-is-reply="0" class="comment-list-topper-nice"><img src="${base}/res/images/ifa/nice.png" /><span>${webDiscuss.ups!}</span></div>
+						<div data-reply="${webDiscuss.id!}" class="comment-list-topper-reply"><img src="${base}/res/images/ifa/reply.png" /><span>${webDiscuss.replyCount!}</span></div>
+						<div class="comment-list-topper-replynone" style="display:[#if webDiscuss.replyCount?? && webDiscuss.replyCount>0]block[#else]none[/#if]"><img src="${base}/res/images/ifa/replynone.png" /><span data-state="0">展开回复</span></div>
+					</div>
+				</div>
+				<div id="reply${webDiscuss.id!}" class="comment-list-rowstop">
+					<div class="comment-topper-contents">
+						<div class="member-comment-topper">
+							<p class="member-comment-title">会员回复</p>
+							<p class="member-number-words"><span class="input-length">0</span>/500</p>
+						</div>
+						<textarea class="member-comment-text"></textarea>
+						<div class="member-comment-reply">
+							<img class="comment-expression-ico" src="${base}/res/images/discover/wechat_ico.png">
+							<a class="comment-reply-word reply-word" href="javascript:;">Reply</a>
+						</div>
+					</div>
+				</div>
+			</li>
+			[/#list]
+            [/#if]
+		</ul>
+		[#if webDiscusss?exists && webDiscusss.list?exists && webDiscusss.list?size gte 10 ]
+		<p class='more-more'>加载更多...</p>
+		[/#if]
+	</div>
+</div>
+
+
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var isLogin = '${Session["_FRONT_USER_NAME_"]!''}';
+	seajs.use('${base}/res/web/ifa/memberComment.js');
+</script>

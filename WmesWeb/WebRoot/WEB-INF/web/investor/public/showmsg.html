@@ -1,0 +1,37 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+    <div class="wmes-content">
+        <div class="ifa_choose_condition" style="min-height:40vh;">
+            <div class="wmes-wrap-title">[#if title??]${title!}[#else][@lang_res k='open.account.msgTitle'/][/#if]</div>
+        
+        	<div style="height:200px;margin:50px 100px 50px 100px;font-size: 20px;">
+                <br><br>
+                [#if label??]${label!}:[/#if]
+                <br><br>
+                <div style="color:red;margin-left:50px;">
+                <font color="red" style="font-size: 18px;font-style:italic">${result!""}</font>
+                </div>
+                <br><br>
+                <!-- <a href="${base}/index.do" class="font_blue">back to home</a>  --> 
+            </div>
+        	
+            <div class="btn_next_div" style="padding:0px;margin-top:100px;height:100px;">
+                <a class="btn_next" href="${base}/index.do">[@lang_res k='global.home'/]</a>
+            </div>
+        
+       </div> 
+    </div>
+
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+    function GetQueryString(name)
+    {
+         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+         var r = decodeURI(window.location.search).substr(1).match(reg);
+         //原始地址没有参数，返回all
+         if(r!=null)return  unescape(r[2]); return "";
+    }
+    /*var emailContent = document.getElementById("resetemail");
+    emailContent.innerHTML = GetQueryString('resetemail') ;*/
+
+</script>

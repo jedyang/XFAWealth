@@ -1,0 +1,110 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+    <style type="text/css">
+        /*swiper 重写*/
+        .swiper-button-next, .swiper-button-prev {opacity: 0.7;cursor: pointer;background-position: center;background-repeat: no-repeat;display: none;
+                    }
+        .swiper-button-disabled{display: none!important;}
+        .swiper-button-prev{background: url('${base}/res/images/ifa/left_ico.png') no-repeat;background-size: 100% 100%;left: 0px;}
+        .swiper-button-next{background: url('${base}/res/images/ifa/right_ico.png') no-repeat;background-size: 100% 100%;right: 0px;}
+    	html,body{font-family:"微软雅黑";}
+    </style>
+    <div class="wmes-top">
+        <a href="javascript:;" class="header-over">[@lang_res k='create.portfolio.title'/]</a>
+    </div>
+    <div class="wmes-content">
+    	<div class="proposal-wrap" style="min-height:700px;*+height:100%;_height:700px;">
+    		<p class="wmes-wrap-title">[@lang_res k='create.portfolio.title'/]</p>
+    		<div class="createflow">
+                <div class="Straegy_Define" style="width: 20%;">[@lang_res k='create.portfolio.step.selectCreateMethod'/]</div>
+                <div class="createflownext" style="width: 6.5%;">></div>
+                <div class="Release" style="width: 20%;">[@lang_res k='create.portfolio.step.overView'/]</div>
+                <div class="createflownext" style="width: 6.5%;">></div>
+                <div class="Release" style="width: 20%;">[@lang_res k='create.portfolio.step.allocationMethod'/]</div>
+                <div class="createflownext" style="width: 6.5%;">></div>
+                <div class="Release" style="width: 20%;">[@lang_res k='create.portfolio.step.release'/]</div>
+			</div>
+    		<div class="stepOne-rows">
+    			<!--<p class="stepOne-rows-title">[@lang_res k='create.portfolio.step.one.prompt'/]</p>
+    			--><div class="stepOne-rows-fillin">
+    				<p style="font-weight: bold;font-size: 15px;width: 100%;text-align: left;" class="stepOne-rows-input-title">[@lang_res k='create.portfolio.step.one.create.mode.tips'/]</p>
+    				<!-- <div class="stepOne-rows-text-wrap">
+    					<a class="portfolio-state portfolio-state-active" id="portfolio-one" href="javascript:;">[@lang_res k='create.portfolio.step.one.fromMyStrategy'/]</a>
+                        <a class="portfolio-state" id="portfolio-two" href="javascript:;">From My Existing Portfolio</a>
+                        <a id="create-new-portfolio" class="portfolio-state" href="javascript:;">[@lang_res k='create.portfolio.step.one.createNew'/]</a> 
+    				</div> -->
+    			</div>
+    		</div>
+            <div class="stepOne-rows">
+                <div id="portfolio-show" class="stepOne-rows-fillin" style="">
+                    <p class="stepOne-rows-input-title" style="display:block;">[@lang_res k='create.portfolio.step.selectCreateMethod'/]:</p>
+                    <!-- strategyId -->
+                    <input id="hidStrategyId" type="hidden" value="${(strategyId)?if_exists}">  
+                    <!-- portfolioId -->
+                    <input id="hidPortfolioId" type="hidden" value="${(portfolioId)?if_exists}">  
+                    <div class="proposal-choose-list">
+                        <div class="proposal-choose-rows">
+                            <p class="proposal-choose-title proposal-choose-one">[@lang_res k='create.portfolio.step.one.veryConservative'/]</p>
+                            <div class="proposal-charts-wrap swiper-container">
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div> 
+                                <div class="proposal-charts-list swiper-wrapper" id="strategy-1">
+                                	<!-- Very Conservative -->
+                                </div>   
+                            </div>                
+                        </div>
+                        <div class="proposal-choose-rows">
+                            <p class="proposal-choose-title proposal-choose-two">[@lang_res k='create.portfolio.step.one.conservative'/]</p>
+                            <div class="proposal-charts-wrap swiper-container">
+                                <div class="proposal-charts-list swiper-wrapper" id="strategy-2">
+                                	<!-- Conservative -->
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div> 
+                            </div>
+                        </div>
+                        <div class="proposal-choose-rows">
+                            <p class="proposal-choose-title proposal-choose-three">[@lang_res k='create.portfolio.step.one.moderate'/]</p>
+                            <div class="proposal-charts-wrap swiper-container">
+                                <div class="proposal-charts-list swiper-wrapper" id="strategy-3">
+                                   <!-- Moderate -->
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div> 
+                            </div>
+                        </div>
+                        <div class="proposal-choose-rows">
+                            <p class="proposal-choose-title proposal-choose-four">[@lang_res k='create.portfolio.step.one.aggressive'/]</p>
+                            <div class="proposal-charts-wrap swiper-container">
+                                <div class="proposal-charts-list swiper-wrapper" id="strategy-4">
+                                    <!-- Aggressive -->
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div> 
+                            </div>
+                        </div>
+                        <div class="proposal-choose-rows">
+                            <p class="proposal-choose-title  proposal-choose-five">[@lang_res k='create.portfolio.step.one.veryAggressive'/]</p>
+                            <div class="proposal-charts-wrap swiper-container">
+                                <div class="proposal-charts-list swiper-wrapper" id="strategy-5">
+                                    <!-- Very Aggressive -->
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div> 
+                            </div>
+                        </div> 
+                    </div>  
+                </div>
+            </div>
+    		<div class="proposal-button-wrap" style="position: absolute;left: 40%;bottom: 5%;">
+    			<a id="btnNextTwo" style="background: #94999e;cursor: no-drop;" class="proposal-button" href="javascript:void(0)">[@lang_res k='create.portfolio.step.one.create.by.strategy'/]</a>
+    			<a id="create-new-portfolio" class="proposal-button" href="javascript:void(0)">[@lang_res k='global.create'/]</a>
+    		</div>
+    	</div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var props = [@load_prop k=''/];
+     seajs.use('${base}/res/web/portfolio/createPortfolio/createPortfolioOne.js');
+</script>

@@ -1,0 +1,1110 @@
+[#include "../../inc/head_v2.html"/]
+<link href="${base}/res/third/fullcalendar/css/fullcalendar.print.css" rel="stylesheet" media="print">
+<link href="${base}/res/third/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+<!--<link href="${base}/res/third/laydate/need/laydate.css" rel="stylesheet">
+<link href="${base}/res/third/laydate/skins/yalan/laydate.css" rel="stylesheet">-->
+<link rel="stylesheet" href="${base}/res/css/swiper.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/client.css">
+<link href="${base}/res/third/minicolor/jquery.minicolors.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	.page_left {
+		background: url('${base}/res/images/ifa/left_ico.png') no-repeat;
+		;
+		position: absolute;
+		top: 45%;
+		width: 65px;
+		height: 67px;
+		margin-top: -22px;
+		z-index: 10;
+		left: -10px;
+		opacity: 0.7;
+		right: auto;
+		cursor: pointer;
+	}
+	
+	.page_right {
+		background: url('${base}/res/images/ifa/right_ico.png') no-repeat;
+		position: absolute;
+		top: 45%;
+		width: 65px;
+		height: 67px;
+		margin-top: -22px;
+		z-index: 10;
+		right: -10px;
+		opacity: 0.7;
+		left: auto;
+		cursor: pointer;
+	}
+	/*swiper 重写*/
+	
+	.swiper-button-next,
+	.swiper-button-prev {
+		position: absolute;
+		top: 80px;
+		width: 50px;
+		height: 50px;
+		opacity: 0.7;
+		margin-top: -22px;
+		z-index: 10;
+		cursor: pointer;
+		background-position: center;
+		background-repeat: no-repeat;
+		display: none;
+	}
+	
+	.swiper-button-disabled {
+		display: none!important;
+	}
+	
+	.swiper-button-prev {
+		background: url('${base}/res/images/ifa/left_ico.png') no-repeat;
+		background-size: 100% 100%;
+		left: 0px;
+	}
+	
+	.swiper-button-next {
+		background: url('${base}/res/images/ifa/right_ico.png') no-repeat;
+		background-size: 100% 100%;
+		right: 0px;
+	}
+	/*			.pipelin-list-swiper{height: 477px;z-index: 0;}
+		.pipelin-list{margin-top: -290px;}*/
+	
+	.pipelin-list:first-of-type {
+		margin-top: 0px;
+	}
+	.mask-layer1 {position: absolute;top: -20%;left: 0;}
+.account-choose-name {color: #939292;}
+.register_xiala_long input {width: 91%;color:black}
+.tasklist-metting-choice {z-index: 9999;}
+.schedule-save-load {display: none;height: 100%;width: 100%; background: rgba(0, 0, 0, 0.42);position: absolute;z-index: 999999;top: 0;}
+.schedule-save-load-gif {position: fixed;left: 50%;top: 40%;}
+</style>
+<div class="wmes-top">
+	<a href="javascript:;" class="header-over">[@lang_res k='pipeline.formTitle'/]</a>
+</div>
+<div class="wmes-content pipelinenew-content">
+	
+	<div class="my-pipeline-wrap" style="padding-left:25px;">
+		<div style="height:60px;background:#fff;padding-bottom:20px;position: relative;padding-bottom:10px;background-color:white">
+		<p class="wmes-wrap-title" style="margin-bottom:0px;">[@lang_res k='pipeline.formTitle'/]</p>
+		<ul class="pipelinenew-content-tab" style="position: absolute;right:0;top:0;overflow: hidden;margin-top:-10px;">
+			<li><a id="pipelin-schedule" href="javascript:;"><span class="pipelinenew-content-tab2" title="[@lang_res k='pipeline.appointment'/]"></span></a></li>
+			<li><a href="${base}/front/ifa/info/communicationRecord.do"><span class="pipelinenew-content-tab3" title="[@lang_res k='pipeline.communication'/]"></span></a></li>
+			<li><a href="${base}/front/ifa/investor/investorList.do"><span class="pipelinenew-content-tab4" title="[@lang_res k='pipeline.investorList'/]"></span></a></li>
+		</ul>
+	</div>
+		<ul class="noline_tab_tab ifa-topfive-tab" style="margin-bottom:15px;">
+			<li class="now" data-li="E">[@lang_res k='pipeline.tab.existing'/]<span></span></li>
+            <li data-li="P">[@lang_res k='pipeline.tab.prospect'/]<span></span></li>
+        </ul>
+        <button type="button" id="btnCallBack" style="display:none;"></button>
+		<input type="hidden" name="hdClientType" value="1" id="hdClientType" />
+		<input type="hidden" name="hdExpiredAeCode" value="${expiredAeCode!}" id="hdExpiredAeCode" />
+		<input type="hidden" name="hdDisplayColor" value="${displayColor!}" id="hdDisplayColor" />
+		<div class="pipelin-top-search" style="position: relative;">
+			<div class="plipelin-imporatant-ico" style="width: calc(100% - (290px))">
+				<p class="plipelin-checkbox-title">[@lang_res  k='pipeline.search.clientType'/]</p>
+				<div class="addclienttype" style="margin-right:20px"><img src="${base}/res/images/application/pipelinepen.png"></div>
+				<ul class="pipelinenew-Client_Type" style="margin-left:0;width: calc(100% - (120px))">
+					<li class="pipelinenew-Client_Typeac">[@lang_res  k='pipeline.search.all'/]</li>
+				</ul>
+				<div class="pipelin-bell pipelin-bell-existing" style="padding-top:4px;position: absolute;right:275px;top:12px">
+			<span class="client-bell-img"></span>
+			<div class="pipelin-bell-wrap" style="margin-left:-150px">
+				<p class="pipelin-bell-name">[@lang_res  k='pipeline.remind'/]</p>
+				<ul class="pipelin-bell-tab">
+					<li data-value="1">[@lang_res  k='pipeline.remind.today'/]</li>
+					<li data-value="7" class="bell-tab-active">[@lang_res  k='pipeline.remind.oneweek'/]</li>
+					<li data-value="14">[@lang_res  k='pipeline.remind.twoweek'/]</li>
+					<li data-value="30">[@lang_res  k='pipeline.remind.onemonth'/]</li>
+				</ul>
+				<ul class="pipelin-bell-contents">
+					<li style="display:block;">
+						<div class="pipelin-bell-mesWrap" data-type="care">
+							<div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_review_ico.png"></div>
+							<p class="pipelin-bell-word">[@lang_res  k='pipeline.remind.porfolio'/]</p>
+							<p id="portfolioRemindNum" class="pipelin-bell-num">1</p>
+						</div>
+						<div class="pipelin-bell-mesWrap" data-type="kyc">
+							<div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_kyc_ico.png"></div>
+							<p class="pipelin-bell-word">[@lang_res  k='pipeline.remind.kyc'/]</p>
+							<p id="kycRemindNum" class="pipelin-bell-num">2</p>
+						</div>
+					</li>
+					<li>
+						<div class="pipelin-bell-mesWrap">
+							<div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_review_ico.png"></div>
+							<p class="pipelin-bell-word">[@lang_res  k='pipeline.remind.porfolio'/]</p>
+							<p class="pipelin-bell-num">3</p>
+						</div>
+						<div class="pipelin-bell-mesWrap" data-type="kyc">
+							<div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_kyc_ico.png"></div>
+							<p class="pipelin-bell-word">[@lang_res  k='pipeline.remind.kyc'/]</p>
+							<p class="pipelin-bell-num">1</p>
+						</div>
+					</li>
+				</ul>
+				<div class="pipelin-bell-line"></div>
+			</div>
+		</div>
+				<div class="wmes_keyserach" style="position: absolute;right:10px">					
+					<input type="hidden" name="hdPeriod" value="7" id="hdPeriod"/>
+					<input type="text" id="txtKeyword" placeholder="[@lang_res  k='pipeline.search.clientName'/]">
+					<span class="wmes_icon_search" id="btnSearchAll"></span>
+				</div>
+			</div>
+			<div class="my-group-wrapper">
+				<div class="my-group-title">
+					<p class="group-title">[@lang_res  k='pipeline.clientType.manage'/]</p>
+					<span class="group-title-close"></span>
+				</div>
+				<div class="group-list-wrapper" id="group-list-wrapper">
+					<ul class="my-group-list" id="my-group-list">
+						<li class="my-group-li">
+							<input type="text" maxlength="18" readonly="" class="group-list-word" value="Asian clients">
+							<div class="group-list-ico">
+								<span class="group-list-edit"></span>
+								<span class="group-list-close"></span>
+							</div>
+						</li>
+						<li class="my-group-li">
+							<input type="text" maxlength="18" readonly="" class="group-list-word" value="European clients">
+							<div class="group-list-ico">
+								<span class="group-list-edit"></span>
+								<span class="group-list-close"></span>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<a class="group-list-button" href="javascript:;">[@lang_res  k='pipeline.clientType.new'/]</a>
+			</div>
+
+		</div>
+		<div class="pipeline-existing pipeline-div pipeline-div-active">
+			<div class="pipelin-list-wrap">
+				<div class="pipelin-list-rows">
+					<ul class="pipelin-list">
+						<li class="pipelin-list-date">
+							<p class="pipelin-date-title-existing" clientStatus="customer-care">[@lang_res  k='pipeline.existing.list.type.customercare'/]</p>
+						</li>
+						<li class="pipelin-list-swiper swiper-container">
+							<ul class="swiper-wrapper customer-care">
+								<!-- customercare阶段的客户 -->
+							</ul>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</li>
+					</ul>
+					<ul class="pipelin-list">
+						<li class="pipelin-list-date">
+							<p class="pipelin-date-title-existing" clientStatus="kyc">[@lang_res  k='pipeline.existing.list.type.kyc'/]</p>
+						</li>
+						<li class="pipelin-list-swiper swiper-container">
+							<ul class="swiper-wrapper pipeline-KYC kyc">
+								<!-- KYC阶段的客户 -->								
+							</ul>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</li>
+					</ul>
+					<ul class="pipelin-list">
+						<li class="pipelin-list-date">
+							<p class="pipelin-date-title-existing" clientStatus="open-account">[@lang_res  k='pipeline.existing.list.type.openaccount'/]</p>
+						</li>
+						<li class="pipelin-list-swiper swiper-container">
+							<ul class="swiper-wrapper open-account">
+								<!-- openaccount阶段的客户 -->
+							</ul>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</li>
+					</ul>
+					<ul class="pipelin-list">
+						<li class="pipelin-list-date">
+							<p class="pipelin-date-title-existing" clientStatus="proposal">[@lang_res  k='pipeline.existing.list.type.proposal'/]</p>
+						</li>
+						<li class="pipelin-list-swiper swiper-container">
+							<ul class="swiper-wrapper proposal">
+								<!-- Proposal阶段的客户 -->
+							</ul>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</li>
+					</ul>
+					<ul class="pipelin-list">
+						<li class="pipelin-list-date">
+							<p class="pipelin-date-title-existing" clientStatus="portfolio">[@lang_res  k='pipeline.existing.list.type.portfolio'/]</p>
+						</li>
+						<li class="pipelin-list-swiper swiper-container">
+							<ul class="swiper-wrapper portfolio">
+								<!-- Portfolio阶段的客户 -->
+							</ul>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</li>
+					</ul>
+					<ul class="pipelin-list">
+						<li class="pipelin-list-date">
+							<p class="pipelin-date-title-existing" clientStatus="not-yet-invest">[@lang_res  k='pipeline.existing.list.type.notyetinvest'/]</p>
+						</li>
+						<li class="pipelin-list-swiper swiper-container">
+							<ul class="swiper-wrapper not-yet-invest">
+								<!-- notyetinvest阶段的客户 -->
+							</ul>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</li>
+					</ul>
+					<div class="pipeline_loading"></div>
+				</div>
+			</div>
+		</div>
+		<div class="pipeline-prospect pipeline-div">
+			<div class="pipelin-list-wrap">
+				<div class="pipelin-list-rows">
+					<ul class="pipelin-list">
+						<li class="pipelin-list-date">
+							<!--<p class="pipelin-date-day">01</p> -->
+							<p class="pipelin-date-title" saleStageId="sales_new">[@lang_res  k='pipeline.prospect.list.type.new'/]</p>
+							<div class="pipelin-date-bottom">
+								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+							</div>
+						</li>
+						<li class="pipelin-list-swiper swiper-container">
+							<ul class="swiper-wrapper sales_new">
+								<!-- New阶段的客户 -->								
+							</ul>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</li>
+					</ul>
+					<ul class="pipelin-list">
+						<li class="pipelin-list-date">
+							<p class="pipelin-date-title" saleStageId="sales_contact">[@lang_res  k='pipeline.prospect.list.type.contact'/]</p>
+							<div class="pipelin-date-bottom">
+								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+							</div>
+						</li>
+						<li class="pipelin-list-swiper swiper-container">
+							<ul class="swiper-wrapper sales_contact">
+								<!-- Contact阶段的客户 -->
+							</ul>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</li>
+					</ul>
+					<ul class="pipelin-list">
+						<li class="pipelin-list-date">
+							<p class="pipelin-date-title" saleStageId="sales_proposal">[@lang_res  k='pipeline.prospect.list.type.proposal'/]</p>
+						</li>
+						<li class="pipelin-list-swiper swiper-container">
+							<ul class="swiper-wrapper sales_proposal" style="height:166px">
+								<!-- Proposal阶段的客户 -->
+							</ul>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</li>
+					</ul>
+					<ul class="pipelin-list">
+						<li class="pipelin-list-date">
+							<p class="pipelin-date-title" saleStageId="sales_close">[@lang_res  k='pipeline.prospect.list.type.close'/]</p>							
+						</li>
+						<li class="pipelin-list-swiper swiper-container">
+							<ul class="swiper-wrapper sales_close">
+								<!-- Closed阶段的客户 -->
+							</ul>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="pipelin-search-mask"></div>
+	</div>
+	<div class="pipelin-list-search pipelin-list-searchnew">
+		<div class="pipelin-search-wrap pipelin-search-wrap-new">
+			<p class="wmes-wrap-title tanchutitle" style="padding: 0px 15px 20px 15px;background-color:white;margin-bottom:0px;"></p>
+			<div class="pipeline-search-choose pipeline-search-chooseac">
+				<div class="wmes-close"></div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.clientName'/]</p>
+					<ul class="wmes_choice">
+						<li data-name="name" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="name" data-letter="A,B,C,D,E">A-E</li>
+						<li data-name="name" data-letter="F,G,H,I,J">F-J</li>
+						<li data-name="name" data-letter="K,L,M,N,O">K-O</li>
+						<li data-name="name" data-letter="P,Q,R,S,T">P-T</li>
+						<li data-name="name" data-letter="U,V,W,S,Y,Z">U-Z</li>
+					</ul>
+				</div>
+			</div>
+			<!-- prospect proposal -->
+			<div class="pipeline-search-choose">
+				<div class="wmes-close"></div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.clientName'/]</p>
+					<ul class="wmes_choice">
+						<li data-name="name" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="name" data-letter="A,B,C,D,E">A-E</li>
+						<li data-name="name" data-letter="F,G,H,I,J">F-J</li>
+						<li data-name="name" data-letter="K,L,M,N,O">K-O</li>
+						<li data-name="name" data-letter="P,Q,R,S,T">P-T</li>
+						<li data-name="name" data-letter="U,V,W,S,Y,Z">U-Z</li>
+					</ul>
+				</div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.status'/]</p>
+					<ul class="wmes_choice">
+						<li data-name="Status" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="Status" data-key="[@lang_res k='pipeline.search.proposal.status.draft'/]" data-value="0">[@lang_res k='pipeline.search.proposal.status.draft'/]</li>
+						<li data-name="Status" data-key="[@lang_res k='pipeline.search.proposal.status.processing'/]" data-value="1">[@lang_res k='pipeline.search.proposal.status.processing'/]</li>
+						<li data-name="Status" data-key="[@lang_res k='pipeline.search.proposal.status.reject'/]" data-value="-1">[@lang_res k='pipeline.search.proposal.status.reject'/]</li>
+					</ul>
+				</div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.invAmount'/]</p>
+					<ul class="wmes_choice">
+						<li data-name="Inv.Amount" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="Inv.Amount" data-key="<0.1 M" data-value-from="0" data-value-to="100000">[@lang_res k='pipeline.search.invAmount.lt01M'/]</li>
+						<li data-name="Inv.Amount" data-key="0.1 M ~ 1 M" data-value-from="100000" data-value-to="1000000">[@lang_res k='pipeline.search.invAmount.01M1M'/]</li>
+						<li data-name="Inv.Amount" data-key="1 M ~ 9 M" data-value-from="1000000" data-value-to="10000000">[@lang_res k='pipeline.search.invAmount.1M10M'/]</li>
+						<li data-name="Inv.Amount" data-key=">10 M" data-value-from="10000000">[@lang_res k='pipeline.search.invAmount.gt10M'/]</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- CustomerCare -->
+			<div class="pipeline-search-choose-existing">
+				<div class="wmes-close"></div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.clientName'/]</p>
+					<ul class="wmes_choice">
+						<li data-name="name" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="name" data-letter="A,B,C,D,E">A-E</li>
+						<li data-name="name" data-letter="F,G,H,I,J">F-J</li>
+						<li data-name="name" data-letter="K,L,M,N,O">K-O</li>
+						<li data-name="name" data-letter="P,Q,R,S,T">P-T</li>
+						<li data-name="name" data-letter="U,V,W,S,Y,Z">U-Z</li>
+					</ul>
+				</div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.totalReturn'/]</p>
+					<ul class="wmes_choice">
+						<li class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="Total_Return" data-key="<0"  data-value-to="0"><0</li>
+						<li data-name="Total_Return" data-key="0-10%" data-value-from="0" data-value-to="10">0-10%</li>
+						<li data-name="Total_Return" data-key="10-20%" data-value-from="10" data-value-to="20">10-20%</li>
+						<li data-name="Total_Return" data-key="20-30%" data-value-from="20" data-value-to="30">20-30%</li>
+						<li data-name="Total_Return" data-key="30-40%" data-value-from="30" data-value-to="40">30-40%</li>
+						<li data-name="Total_Return" data-key=">50%" data-value-from="50">>50%</li>
+					</ul>
+				</div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.invAmount'/]</p>
+					<ul class="wmes_choice">								
+						<li data-name="Inv.Amount" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="Inv.Amount" data-key="<0.1 M" data-value-from="0" data-value-to="100000">[@lang_res k='pipeline.search.invAmount.lt01M'/]</li>
+						<li data-name="Inv.Amount" data-key="0.1 M ~ 1 M" data-value-from="100000" data-value-to="1000000">[@lang_res k='pipeline.search.invAmount.01M1M'/]</li>
+						<li data-name="Inv.Amount" data-key="1 M ~ 9 M" data-value-from="1000000" data-value-to="10000000">[@lang_res k='pipeline.search.invAmount.1M10M'/]</li>
+						<li data-name="Inv.Amount" data-key=">10 M" data-value-from="10000000">[@lang_res k='pipeline.search.invAmount.gt10M'/]</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- KYC -->
+			<div class="pipeline-search-choose-existing">
+				<div class="wmes-close"></div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.clientName'/]</p>
+					<ul class="wmes_choice">
+						<li data-name="name" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="name" data-letter="A,B,C,D,E">A-E</li>
+						<li data-name="name" data-letter="F,G,H,I,J">F-J</li>
+						<li data-name="name" data-letter="K,L,M,N,O">K-O</li>
+						<li data-name="name" data-letter="P,Q,R,S,T">P-T</li>
+						<li data-name="name" data-letter="U,V,W,S,Y,Z">U-Z</li>
+					</ul>
+				</div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">Distributor</p>
+					<ul class="wmes_choice">
+						<li class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						[#if distributorList?exists && distributorList?size gt 0]
+						[#list distributorList as cList]
+						<li data-name="Distributor" data-key="HK Distributor" data-value="${cList.id!}">${cList.companyName!}</li>							  
+						[/#list]
+						[/#if]
+					</ul>
+				</div>
+			</div>
+			<!-- Open Account -->
+			<div class="pipeline-search-choose-existing">
+				<div class="wmes-close"></div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.clientName'/]</p>
+					<ul class="wmes_choice">
+						<li data-name="name" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="name" data-letter="A,B,C,D,E">A-E</li>
+						<li data-name="name" data-letter="F,G,H,I,J">F-J</li>
+						<li data-name="name" data-letter="K,L,M,N,O">K-O</li>
+						<li data-name="name" data-letter="P,Q,R,S,T">P-T</li>
+						<li data-name="name" data-letter="U,V,W,S,Y,Z">U-Z</li>
+					</ul>
+				</div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.status'/]</p>
+					<ul class="wmes_choice">
+						<li class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="Status" data-key="Draft" data-value="0">[@lang_res k='pipeline.search.status.draft'/]</li>
+						<li data-name="Status" data-key="Confirm" data-value="1">[@lang_res k='pipeline.search.status.confirm'/]</li>
+						<li data-name="Status" data-key="Processing" data-value="2">[@lang_res k='pipeline.search.status.processing'/]</li>
+						<li data-name="Status" data-key="Reject" data-value="-1">[@lang_res k='pipeline.search.status.reject'/]</li>
+					</ul>
+				</div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">Distributor</p>
+					<ul class="wmes_choice">
+						<li class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						[#if distributorList?exists && distributorList?size gt 0]
+						[#list distributorList as cList]
+						<li data-name="Distributor" data-key="HK Distributor" data-value="${cList.id!}">${cList.companyName!}</li>							  
+						[/#list]
+						[/#if]
+					</ul>
+				</div>
+			</div>
+			
+			<!-- Proposal -->
+			<div class="pipeline-search-choose-existing">
+				<div class="wmes-close"></div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.clientName'/]</p>
+					<ul class="wmes_choice">
+						<li data-name="name" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="name" data-letter="A,B,C,D,E">A-E</li>
+						<li data-name="name" data-letter="F,G,H,I,J">F-J</li>
+						<li data-name="name" data-letter="K,L,M,N,O">K-O</li>
+						<li data-name="name" data-letter="P,Q,R,S,T">P-T</li>
+						<li data-name="name" data-letter="U,V,W,S,Y,Z">U-Z</li>
+					</ul>
+				</div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.status'/]</p>
+					<ul class="wmes_choice">
+						<li class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>						
+						<li data-name="Status" data-key="[@lang_res k='pipeline.search.proposal.status.draft'/]" data-value="0">[@lang_res k='pipeline.search.proposal.status.draft'/]</li>
+						<li data-name="Status" data-key="[@lang_res k='pipeline.search.proposal.status.processing'/]" data-value="1">[@lang_res k='pipeline.search.proposal.status.processing'/]</li>
+						<li data-name="Status" data-key="[@lang_res k='pipeline.search.proposal.status.reject'/]" data-value="-1">[@lang_res k='pipeline.search.proposal.status.reject'/]</li>						
+					</ul>
+				</div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.invAmount'/]</p>
+					<ul class="wmes_choice">
+						<li data-name="Inv.Amount" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="Inv.Amount" data-key="<0.1 M" data-value-from="0" data-value-to="100000">[@lang_res k='pipeline.search.invAmount.lt01M'/]</li>
+						<li data-name="Inv.Amount" data-key="0.1 M ~ 1 M" data-value-from="100000" data-value-to="1000000">[@lang_res k='pipeline.search.invAmount.01M1M'/]</li>
+						<li data-name="Inv.Amount" data-key="1 M ~ 9 M" data-value-from="1000000" data-value-to="10000000">[@lang_res k='pipeline.search.invAmount.1M10M'/]</li>
+						<li data-name="Inv.Amount" data-key=">10 M" data-value-from="10000000">[@lang_res k='pipeline.search.invAmount.gt10M'/]</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- Portfolio -->
+			<div class="pipeline-search-choose-existing">
+				<div class="wmes-close"></div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.clientName'/]</p>
+					<ul class="wmes_choice">
+						<li data-name="name" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="name" data-letter="A,B,C,D,E">A-E</li>
+						<li data-name="name" data-letter="F,G,H,I,J">F-J</li>
+						<li data-name="name" data-letter="K,L,M,N,O">K-O</li>
+						<li data-name="name" data-letter="P,Q,R,S,T">P-T</li>
+						<li data-name="name" data-letter="U,V,W,S,Y,Z">U-Z</li>
+					</ul>
+				</div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.status'/]</p>
+					<ul class="wmes_choice">
+						<li class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>						
+						<li data-name="Status" data-key="[@lang_res k='pipeline.search.status.draft'/]" data-value="-1,0">[@lang_res k='pipeline.search.status.draft'/]</li>
+						<li data-name="Status" data-key="[@lang_res k='pipeline.search.status.confirm'/]" data-value="1,3">[@lang_res k='pipeline.search.status.confirm'/]</li>
+						<li data-name="Status" data-key="[@lang_res k='pipeline.search.status.reject'/]" data-value="2">[@lang_res k='pipeline.search.status.reject'/]</li>
+						<li data-name="Status" data-key="[@lang_res k='pipeline.search.status.trading'/]" data-value="4">[@lang_res k='pipeline.search.status.trading'/]</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- Not Yet Invest -->
+			<div class="pipeline-search-choose-existing">
+				<div class="wmes-close"></div>
+				<div class="wmes_choice_wrap">
+					<p class="wmes_choice_title pipelin_choice_title" style="width:90px">[@lang_res k='pipeline.search.clientName'/]</p>
+					<ul class="wmes_choice">
+						<li data-name="name" class="wmes_choice_active">[@lang_res k='pipeline.search.all'/]</li>
+						<li data-name="name" data-letter="A,B,C,D,E">A-E</li>
+						<li data-name="name" data-letter="F,G,H,I,J">F-J</li>
+						<li data-name="name" data-letter="K,L,M,N,O">K-O</li>
+						<li data-name="name" data-letter="P,Q,R,S,T">P-T</li>
+						<li data-name="name" data-letter="U,V,W,S,Y,Z">U-Z</li>
+					</ul>
+				</div>
+			</div>
+			<div class="pipelin-search-keys" style="padding-left:25px;border-top:1px solid #d7dce4;padding-top:20px;margin-top:10px;">
+				<p style="float:left;line-height: 32px;margin-bottom:20px;">
+					[@lang_res k='pipeline.search.client.result.total'/]
+					<span id="totalOf">0</span> [@lang_res k='pipeline.search.client.result.tips'/]</p>
+				<div class="wmes_keyserach">
+					<input type="text" id="pipelinKeyWord" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+					<span class="wmes_icon_search" id="btnSearch"></span>
+				</div>
+			</div>
+			<ul class="pipelin_choice-contents">
+				<!-- li  分类的全部客户 -->
+			</ul>
+			<div class="pipeline_choose_list">
+				<ul class="pipelin-list sales_new">					
+					<!-- sales_new阶段的客户 -->
+				</ul>
+			</div>
+			
+			<div class="pipeline_choose_list">
+				<ul class="pipelin-list sales_contact">
+					<!-- sales_contact阶段的客户 -->
+				</ul>
+			</div>
+			
+			<div class="pipeline_choose_list">
+				<ul class="pipelin-list sales_proposal">
+					<!-- sales_proposal阶段的客户 -->
+				</ul>
+			</div>
+			
+			<div class="pipeline_choose_list">
+				<ul class="pipelin-list sales_close">
+					<!-- sales_close阶段的客户 -->
+				</ul>
+			</div>
+						
+
+			<div class="pipeline_choose_list1">
+				<ul class="pipelin-list customer-care">
+					<!-- customercare阶段的客户 -->				
+				</ul>
+			</div>	
+			
+			<div class="pipeline_choose_list1">
+				<ul class="pipelin-list pipeline-KYC kyc">
+					<!-- KYC阶段的客户 -->					
+				</ul>
+			</div>
+			<div class="pipeline_choose_list1">
+				<ul class="pipelin-list open-account">
+					<!-- openaccount阶段的客户 -->
+				</ul>
+			</div>
+			<div class="pipeline_choose_list1">
+				<ul class="pipelin-list proposal">
+					<!-- Proposal阶段的客户 -->
+				</ul>
+			</div>
+			<div class="pipeline_choose_list1">
+				<ul class="pipelin-list portfolio">
+					<!-- portfolio阶段的客户 -->
+				</ul>
+			</div>
+			<div class="pipeline_choose_list1">
+				<ul class="pipelin-list not-yet-invest">
+					<!-- not-yet-invest阶段的客户 -->
+				</ul>
+			</div>
+	</div>
+</div>
+
+<!-- 弹出层 -->
+<div class="ifa-space-popup" id="ifa-pipeline-search">
+	<div class="ifa-space-mask"></div>
+	<div class="space-mask-wrap">
+		<div class="space-mask">
+			<div class="wmes-close" id="pipeline-search-close"></div>
+			<img style="width:100%;" src="${base}/res/images/allimg/client/message_01.png">
+		</div>
+	</div>
+</div>
+<!-- 弹出层 -->
+<div class="ifa-space-popup" id="ifa-pipeline-date">
+	<div class="ifa-space-mask"></div>
+	<div class="space-mask-wrap">
+		<div class="space-mask">
+			<div class="wmes-close" id="pipelin-date-close"></div>
+			<!--<img style="width:100%;" src="${base}/res/images/allimg/fullcander.png">-->
+			<div class="ifa-home-calendar" style="margin:50px;"></div>
+		</div>
+	</div>
+</div>
+
+<!-- 弹出层 -->
+<div class="ifa-space-popup" id="ifa-pipeline-investors">
+	<div class="ifa-space-mask"></div>
+	<div class="space-mask-wrap">
+		<div class="space-mask space-mask-investors">
+			<div class="wmes-close" id="pipelin-investors-close"></div>
+			<div class="ifa-home-contents">
+				<p class="wmes-wrap-title" style="text-align: left;">[@lang_res k='pipeline.findInv.title'/]</p>
+				<p class="home-investors-total">[@lang_res k='pipeline.findInv.total1'/]  <span class="home-investors-sum"></span>[@lang_res k='pipeline.findInv.total2'/]</p>
+				<div class="mid-inverstor-left">
+					<div class="home-investor-left">
+						<ul class="home-investor-list">
+
+						</ul>
+					</div>
+					<ul class="investor-chioce">
+						<li class="investor-chioce-list" type="language">
+							<div class="xuanzhongac"></div>
+							<a class="investor-chioce-button  investor-chioce-white" href="javascript:;">[@lang_res k='pipeline.findInv.lang'/]</a>
+							<div class="allowheight">
+							[#if langList?exists && langList?size gt 0][#list langList as list]
+							<p class="investor-region-list" code="${list.code!}"><span class="investor-chioce-condition">${list.name!}</span></p>
+							[/#list][/#if]
+							<!--<p class="investor-region-list" code="en"><span class="investor-chioce-condition">English</span></p>
+							<p class="investor-region-list" code="sc"><span class="investor-chioce-condition">Simplified Chinese</span></p>
+							<p class="investor-region-list" code="tc"><span class="investor-chioce-condition">Traditional Chinese</span></p>
+							--></div>
+						</li>
+						<li class="investor-chioce-list" type="style">
+							<div class="xuanzhongac"></div>
+							<a class="investor-chioce-button investor-chioce-white" href="javascript:;">[@lang_res k='pipeline.findInv.inv.style'/]</a>
+							<div class="allowheight">
+							[#if styleList?exists && styleList?size gt 0][#list styleList as list]
+							<p class="investor-region-list" code="${list.code!}"><span class="investor-chioce-condition">${list.name!}</span></p>
+							[/#list][/#if]
+							</div>
+						</li>
+						<li class="investor-chioce-list" type="interest">
+							<div class="xuanzhongac"></div>
+							<a class="investor-chioce-button investor-chioce-white" href="javascript:;">[@lang_res k='pipeline.findInv.interest'/]</a>
+							<div class="allowheight">
+							[#if intresteList?exists && intresteList?size gt 0][#list intresteList as list]
+							<p class="investor-region-list" code="${list.code!}"><span class="investor-chioce-condition">${list.name!}</span></p>
+							[/#list][/#if]
+							</div>
+						</li>
+						<li class="investor-chioce-list" type="region">
+							<div class="xuanzhongac"></div>
+							<a id="Country-btn" class="investor-chioce-button investor-chioce-white" href="javascript:;">[@lang_res k='pipeline.findInv.region'/]</a>
+							<div class="allowheight">
+							[#if regionList?exists && regionList?size gt 0][#list regionList as list]
+							<p class="investor-region-list" code="${list.code!}"><span class="investor-chioce-condition">${list.name!}</span></p>
+							[/#list][/#if]
+							</div>
+							
+							<!--<p class="investor-region-list"><span class="investor-chioce-condition">North America</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">South America</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Asia</span></p>
+                            -->
+						</li>
+						<li>
+							<p class="investor-chioce-button investor-chioce-white">[@lang_res k='pipeline.findInv.readInsights'/]</p>
+						</li>
+						<li class="investor-list-line"></li>
+						<li>
+							<a class="investor-chioce-button investor-chioce-white investor-noyet" href="javascript:;">[@lang_res k='pipeline.findInv.noifa'/]</a>
+						</li>
+					</ul>
+				</div>
+				<ul class="ifa_list_paging" id="pagination">
+					
+				</ul>
+				 
+			</div>
+		</div>
+	</div>
+</div>
+<div class="investment-wrap investment-hide">
+	<!-- investment 浮动的框 -->
+	<div class="investment-plan-wrap">
+		<p class="investment-plan-title" style="border-bottom:1px solid #eef0f2;margin-top:0;margin-bottom:15px;">[@lang_res k='pipeline.member.title'/]</p>
+		<div class="investment-close-ico wmes-close"></div>
+		<div class="information-plan-rows">
+			<div class="information-plan-left">
+				<img class="information-plan-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+				<p class="information-topper-name">Lam</p>
+			</div>
+			<div class="information-plan-right">
+				<div class="information-date-rows">
+					<p class="information-date-title ">[@lang_res k='pipeline.member.regisDate'/]</p>
+					<p class="information-date-time registrationDate">2016-10-25 14:33:45</p>
+				</div>
+				<div class="information-date-rows">
+					<p class="information-date-title ">[@lang_res k='pipeline.member.lastLogin'/]</p>
+					<p class="information-date-time loginDate">2016-10-24 16:19:22</p>
+				</div>
+			</div>
+		</div>
+		<div class="information-plan-rows">
+			<p class="information-plan-title">[@lang_res k='pipeline.member.contactInfo'/]</p>
+			<ul class="information-contact-list">
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/ifa/small_phone_ico.png">
+					<p class="information-contact-word mobile primary" field="mobile_number">+0085 **** 3440</p>
+				</li>
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/ifa/small_email_ico.png">
+					<p class="information-contact-word email primary"  field="email">Rlee@gmail.com</p>
+				</li>
+			</ul>
+			<ul class="information-contact-list">
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/client/wetchat_ico.png">
+					<p class="information-contact-word wetchat primary" field="webchat_code">******df</p>
+				</li>
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/client/weibo_ico.png">
+					<p class="information-contact-word weibo primary"  field="weibo_code">****y</p>
+				</li>
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/client/facebook_ico.png">
+					<p class="information-contact-word facebook primary" field="facebook_code">N/A</p>
+				</li>
+			</ul>
+			<ul class="information-contact-list">
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/client/twitter_ico.png">
+					<p class="information-contact-word twitter primary" field="twitter_code">tc212451254</p>
+				</li>
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/client/linke_ico.png">
+					<p class="information-contact-word linkedin primary"  field="linkedIn_code">sfdsdgdfgsdft</p>
+				</li>
+			</ul>
+		</div>
+		<div class="information-plan-rows">
+			<p class="information-plan-title">[@lang_res k='pipeline.member.invRelated'/]</p>
+			<div class="information-paragraph-rows">
+				<p class="information-paragraph-title">[@lang_res k='member.info.investStyle'/]</p>
+				<ul class="information-paragraph-list style">
+					<li class="information-describe-yellow">Steady</li>
+					<li class="information-describe-yellow">Value</li>
+				</ul>
+			</div>
+			<div class="information-paragraph-rows">
+				<p class="information-paragraph-title">[@lang_res k='member.info.investField'/]</p>
+				<ul class="information-paragraph-list field">
+					<li class="information-describe-blue">Gold</li>
+					<li class="information-describe-blue">Energy</li>
+					<li class="information-describe-blue">Healthcare</li>
+					<li class="information-describe-blue">Commodity Futures</li>
+				</ul>
+			</div>
+		</div>
+		<div class="information-plan-rows">
+			<p class="information-plan-title">[@lang_res k='pipeline.member.basicInfo'/]</p>
+			<div class="information-basic-top">
+				<div class="information-basic-rows">
+					<p class="information-paragraph-title">Employment Details</p>
+					<p class="information-basic-word employment">China, HongKong</p>
+				</div>
+				<div class="information-basic-rows">
+					<p class="information-paragraph-title">[@lang_res k='pipeline.member.nationality'/]</p>
+					<p class="information-basic-word nationality">China</p>
+				</div>
+			</div>
+			<div class="information-basic-top">
+				<div class="information-basic-rows">
+					<p class="information-paragraph-title">[@lang_res k='pipeline.member.education'/]</p>
+					<p class="information-basic-word education"></p>
+				</div>
+				<div class="information-basic-rows">
+					<p class="information-paragraph-title">[@lang_res k='pipeline.member.occupation'/]</p>
+					<p class="information-basic-word occupation">***</p>
+				</div>
+			</div>
+		</div>
+		<div class="information-plan-rows">
+			<p class="information-plan-title">[@lang_res k='pipeline.member.additionalInfo'/]</p>
+			<div class="information-paragraph-rows">
+				<p class="information-paragraph-title">[@lang_res k='member.info.hobbyType'/]</p>
+				<ul class="information-paragraph-list hobby">
+				</ul>
+			</div>
+			<div class="information-paragraph-rows">
+				<p class="information-paragraph-title">[@lang_res k='member.info.liveRegion'/]</p>
+				<ul class="information-paragraph-list region">
+				</ul>
+			</div>
+			<div class="information-paragraph-rows">
+				<p class="information-paragraph-title">[@lang_res k='member.info.languageSpoken'/]</p>
+				<ul class="information-paragraph-list spoken">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- investment 浮动的框 -->
+</div>
+<!-- CharacterSetting -->
+<div class="ifa-space-popup" id="CharacterSetting">
+	<div class="ifa-space-mask"></div>
+	<div class="space-mask-wrap">
+			<div class="investment-plan-wrap">
+		<div class="wmes-close character-close-ico"></div>
+		<p class="investment-plan-title">Character Setting</p>
+		<div class="character-setting-rows">
+			<div class="character-setting-contents">
+				<p class="character-setting-title">Character</p>
+				<ul id="character-selected-option" class="character-setting-list">
+					<input type="text" value="" class="character-setting-add">
+				</ul>
+			</div>
+			<div class="character-setting-choose">
+				<p class="character-choose-title">Please Select:</p>
+				<ul id="character-choose-list" class="character-choose-list">
+					
+				</ul>
+			</div>
+		</div>
+		<div class="character-setting-rows">
+			<div class="character-setting-contents">
+				<p class="character-setting-title">Hobby</p>
+				<ul id="hobby-selected-option" class="character-setting-list">
+					<!--<li data-value="Reading">Reading <span class="character-list-close"></span></li>
+						-->
+					<input type="text" value="" class="character-setting-add">
+				</ul>
+				
+			</div>
+			<div class="character-setting-choose">
+				<p class="character-choose-title">Please Select:</p>
+				<ul id="hobbytypes-choose-list" class="character-choose-list">
+
+				</ul>
+			</div>
+		</div>
+		<div class="character-text-list">
+			<div class="character-text-rows">
+				<p class="character-text-title">Special</p>
+				<input id="txtSpecial" class="character-text-input" type="text">
+			</div>
+			<div class="character-text-rows">
+				<p class="character-text-title">Dislike</p>
+				<input id="txtDislike" class="character-text-input" type="text">
+			</div>
+		</div>
+		<div class="character-button-rows">
+			<a class="character-button-save" href="javascript:;">Save</a>
+			<a class="character-button-close" href="javascript:;">Close</a>
+		</div>
+	</div>
+	</div>
+</div>
+</div>
+<!-- 弹出层 -->
+<div class="mask-layer1" style="display:none">
+   	<div class="create_groupbox">
+   		<div id="wmes-group-close" class="wmes-close"></div>
+   		<p class="wmes-wrap-title tanchutitle">[@lang_res k='schedule.create.group.title'/]</p>
+   		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table" style="margin-top:18px;">
+			<tbody>
+				<tr>
+					<td align="right" class="register_table_left" style="width:200px;padding-left:30px;">
+						<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.group.input.0'/]</span>
+					</td>
+					<td class="register_table_right">
+						<div class="add_scheduletextareacon">
+							<input id="txtGroupName" class="register_input" type="text" style="width:400px;">
+							<p class="alert-group-name" style="display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.groupName'/]</p>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td align="right" style="width:200px;padding-left:30px;">
+						<span class="price_negative">*</span><span style="margin-left:5px" class="font_gray_left"> [@lang_res k='schedule.create.group.input.1'/]</span>
+					</td>
+					<td class="register_table_right">
+						<div class="register_xiala_long" style="width:406px;">
+							<input type="text" id="txtGroupColor" style="width: 356px;color: #b0afaf;" class="value_show" data-position="bottom left" value="">
+                            <p class="alert-group-color" style="display:none;margin:35px 5px;color:red;">[@lang_res k='schedule.alert.empty.groupColor'/]</p>
+                            <!--<input type="hidden" class="value_hidden">
+                            <span class="register_xiala_ico"></span>
+                        --></div> 
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<a id="add_group_save" class="add_schedule_save">[@lang_res k='global.save'/]</a>
+		<a id="add_group_delete" style="display:none" class="add_schedule_delete">[@lang_res k='global.delete'/]</a>
+		<a id="add_group_cancel" class="add_schedule_cancel">[@lang_res k='global.cancel'/]</a>
+   	</div>
+</div>
+<!-- 弹出层 -->
+<div class="ifa-space-popup " id="add_Schedule" style="display: none;">
+	<div class="ifa-space-mask"></div>
+	<div class="space-mask-wrap" style="position: absolute;">
+		<div class="space-mask space-mask-investors" style="margin-left:12%;">
+			<div class="wmes-close" id="add_Schedule-close"></div>
+			<div class="ifa-home-contents">
+				<p class="wmes-wrap-title tanchutitle schedule-add-title" style="text-align: left;">[@lang_res k='schedule.create.schedule.title'/]</p>
+				<p class="wmes-wrap-title tanchutitle schedule-edit-title" style="display:none;text-align: left;">[@lang_res k='schedule.create.schedule.title.edit'/]</p>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+				<tbody>
+					<tr>
+						<td align="right" class="register_table_left" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.0'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="add_scheduletextareacon" style="width:504px">
+								<input id="hidScheduleId" class="register_input" type="hidden" style="width:400px;">
+								<input id="txtTitle" maxlength="50" class="register_input" style="float:left;width:400px;" type="text">
+								<div class="account-choose-input-wrap" style="float:left;margin: 5px;">
+                                	<input id="cheImportantFlag" type="checkbox" style="" name="important"/><span class="" style="color: #939292;">[@lang_res k='schedule.create.schedule.checkbox.important'/]</span>
+								</div>
+								<div class="member-comment-topper" style="margin-right: 100px;">
+									<p class="member-number-words-add_scheduletextareacon">[@lang_res k='create.portfolio.step.two.input.prefix'/] 50 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="title-inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="title-left">50</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]</p>
+								</div>
+								<p class="alert-schedule-title-name" style="clear:both;display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.title'/]</p>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:250px;padding-left:30px;">
+							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.3'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="conservative-date-wrap">
+                            	<div class="account-choose-input-wrap">
+                                	<input id="txtStartAt" class="laydate-icon form-control form-control-laydate schedule-choose-date" readonly="readonly" type="" name="" style="width:200px;">
+                            		<p class="alert-schedule-start-at" style="display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.startTime'/]</p>
+                            	</div>
+                            	<div class="account-choose-input-wrap schedule-dialog-creator" style="margin: 5px;">
+                                	<span style="margin:0 10px;color: #939292;">[@lang_res k='schedule.create.schedule.creator'/] :</span><span id="schedule-creator-text" style="color: #939292;"></span>
+                            	</div>
+                        	</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.4'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="conservative-date-wrap">
+                            	<div class="account-choose-input-wrap">
+                                	<input id="txtEndAt" class="laydate-icon form-control form-control-laydate schedule-choose-date" readonly="readonly" type="" name="" style="width:200px;">
+                            		<p class="alert-schedule-end-at" style="display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.endTime'/]</p>
+                            	</div>
+                            	<div class="account-choose-input-wrap" style="margin: 5px;">
+                                	<input id="cheRecurrentFlag" type="checkbox" name="recurrent"/><span class="" style="color: #939292;">[@lang_res k='schedule.create.schedule.checkbox.recurrent'/]</span>
+                            	</div>
+                        	</div>
+						</td>
+					</tr>
+					<tr class="repeat_typecon repeat_typecon_none">
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.recurrentType'/]</span>
+						</td>
+						<td class="register_table_right" style="padding-top:10px;">
+							<ul class="repeat_type">
+								<li><input id="repeatDay-0" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.0'/]</li>
+								<li><input id="repeatDay-1" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.1'/]</li>
+								<li><input id="repeatDay-2" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.2'/]</li>
+								<li><input id="repeatDay-3" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.3'/]</li>
+								<li><input id="repeatDay-4" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.4'/]</li><br><br>
+								<li><input id="repeatDay-5" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.5'/]</li>
+								<li><input id="repeatDay-6" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.6'/]</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.5'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="register_xiala_long" style="width:406px;">
+	                            <input id="txtCustomer" data-value="" readonly="readonly" type="text" class="value_show">
+	                            <input type="hidden" class="value_hidden">
+	                            <ul id="selCustomer" class="regiter_xiala_ul"></ul>
+	                            <span class="register_xiala_ico"></span>
+	                        </div> 
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.6'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="register_xiala_long" style="width:406px;">
+	                            <input id="txtGroup" data-value="" readonly="readonly" type="text" class="value_show">
+	                            <input type="hidden" class="value_hidden">
+	                            <ul id="selGroup" class="regiter_xiala_ul"></ul>
+	                            <span class="register_xiala_ico"></span>
+	                        </div> 
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.7'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="register_xiala_long" style="width:406px;">
+	                            <input id="txtRemind" data-value="" readonly="readonly" type="text" placeholder=" " class="value_show">
+	                            <input type="hidden" class="value_hidden">
+	                            <ul id="selRemind" class="regiter_xiala_ul"></ul>
+	                            <span class="register_xiala_ico"></span>
+	                        </div> 
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.8'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="add_scheduletextareacon">
+								<textarea id="txtContent" maxlength="500" class="member-comment-text" style="width:406px;"></textarea>
+								<div class="member-comment-topper">
+									<p class="member-number-words-add_scheduletextareacon">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="content-inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="content-left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]</p>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+				<a  id="add_schedule_save" class="add_schedule_save">[@lang_res k='global.save'/]</a>
+				<a id="add_schedule_delete" style="display:none" class="add_schedule_delete">[@lang_res k='global.delete'/]</a>
+				<a id="add_schedule_cancel" class="add_schedule_cancel">[@lang_res k='global.cancel'/]</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="schedule-save-load">
+	<div class="schedule-save-load-gif">
+		<img style="width: 100px;" src="${base}/res/images/saving.gif">
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var globalProp = [@load_prop k='global'/]; 
+	var prop = [@load_prop k='schedule'/];	
+	seajs.use('${base}/res/web/ifa/crm/myPipelineNew.js');
+	//seajs.use('${base}/res/web/ifa/crm/clientList.js');     
+	seajs.use('${base}/res/web/ifa/crm/schedule.js');
+	
+	function callbackloginresult(json){
+		var flag = false;
+		for(var i=0,l=json.length;i<l;i++){
+			console.log(json[i].accountno+','+json[i].result);
+			
+			if(json[i].result == "1"){
+				flag = true;
+				break;
+			}			
+		}
+		//flag = true;
+		//alert(flag);
+		if(flag == true){
+			document.getElementById("btnCallBack").click();
+		}
+	}
+	
+	var lang='${Session["_LANG_CODE_"]!'en'}';
+</script>

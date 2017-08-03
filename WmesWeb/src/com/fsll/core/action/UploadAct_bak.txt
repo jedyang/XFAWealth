@@ -1,0 +1,923 @@
+/*
+ * Copyright (c) 2016-2019 by fsll
+ * All rights reserved.
+ */
+package com.fsll.core.action;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.coobird.thumbnailator.Thumbnails;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
+import com.fsll.common.util.JsonUtil;
+import com.fsll.common.util.ResponseUtils;
+import com.fsll.common.util.UploadUtil;
+import com.fsll.core.base.CoreBaseAct;
+
+/**
+ * 控制器:系统首页
+ * @author 黄模建 E-mail:mjhuang@fsll.cn
+ * @version 1.0.0
+ * Created On: 2016-2-19
+ */
+@Controller
+public class UploadAct extends CoreBaseAct{
+	
+	private static HashMap<Long,String> moduleRelate = new HashMap<Long,String>();
+	static{
+		moduleRelate.put(1L,"m");//菜单模块	
+		moduleRelate.put(20L,"portrait");//头像存放目录
+		moduleRelate.put(2L, "insight");//ifa观点
+		moduleRelate.put(3L, "docCheck");//开户文档审批
+		moduleRelate.put(4L, "umEditorUpload");//um_editor上传
+		moduleRelate.put(5L, "investor_doc");//kyc与开户文档审查
+		
+	}
+	
+	/**
+	 * 通过的文件上传
+	 */
+	@RequestMapping("/upload")
+	public String upload(HttpServletRequest request,Long moduleId,HttpServletResponse response){
+    	String ctxPath = request.getSession().getServletContext().getRealPath("/");
+    	String filePaths = "";
+		try {
+			//创建一个通用的多部分解析器
+			CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+			//判断 request 是否有文件上传,即多部分请求
+			if(multipartResolver.isMultipart(request)){
+				//转换成多部分request  
+				MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
+				//取得request中的所有文件名
+				Iterator<String> iter = multiRequest.getFileNames();
+				while(iter.hasNext()){
+					//取得上传文件
+					MultipartFile file = multiRequest.getFile(iter.next());
+					if(file != null){
+						//取得当前上传文件的文件名称
+						String oriFileName = file.getOriginalFilename();
+						//如果名称不为"",说明该文件存在，否则说明该文件不存在
+						if(!"".equals(oriFileName.trim())){
+							String myFilePath = UploadUtil.getFileName(oriFileName,true,moduleRelate.get(moduleId));
+							File localFile = new File(ctxPath+myFilePath);
+							if(!localFile.getParentFile().exists()){
+								localFile.getParentFile().mkdirs();
+							}
+							file.transferTo(localFile);
+							if("".equals(filePaths)){
+								filePaths = oriFileName+":"+myFilePath;
+							}else{
+								filePaths += ";"+oriFileName+":"+myFilePath;
+							}
+						}
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(4L==moduleId && !"".equals(filePaths)){//对um_editor上传的图片进行特殊处理
+			String[] files = filePaths.split(";");
+			if(files.length>0){
+				Map<String, Object> ueObjs = new HashMap<String, Object>();
+				for(int x=0;x<files.length;x++){
+					String[] strs = files[x].split(":");
+					if(strs.length>0){
+						ueObjs.put("name", strs[0]);
+						ueObjs.put("url", strs[1]);
+						ueObjs.put("state","SUCCESS");
+					}
+				}
+				ResponseUtils.renderHtml(response,JsonUtil.toJson(ueObjs));
+				return null;
+			}
+		}
+		
+		
+    	Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("filePaths",filePaths);
+		JsonUtil.toWriter(obj, response);
+		return null;
+	}
+	
+	/**
+	 * 指定文件上传
+	 */
+    @RequestMapping("/uploadSec")
+	public String uploadSec(@RequestParam MultipartFile file,Long moduleId,HttpServletRequest request,HttpServletResponse response) {
+    	String ctxPath = request.getSession().getServletContext().getRealPath("/");
+    	String fileName = file.getOriginalFilename();
+    	String filePath = "";
+		try {
+	    	InputStream is = file.getInputStream();
+	    	filePath = UploadUtil.getFileName(fileName,true,moduleRelate.get(moduleId));
+			File localFile = new File(ctxPath+filePath);
+			if(!localFile.getParentFile().exists()){
+				localFile.getParentFile().mkdirs();
+			}
+	        FileOutputStream os = new FileOutputStream(ctxPath+filePath);
+	        int byteCount = 0;
+	        byte[] bytes = new byte[1024];
+	        while ((byteCount = is.read(bytes)) != -1){
+	        	os.write(bytes, 0, byteCount);
+	        }
+	        os.close();
+	        is.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("fileName",fileName);
+		obj.put("filePath",filePath);
+		JsonUtil.toWriter(obj, response);
+		return null;
+	}
+    
+	/**
+	 * 文件下载
+	 * 
+	 */
+	@RequestMapping("/download")
+	public String download(HttpServletRequest request,HttpServletResponse response,String fileName) throws IOException {
+		response.setContentType("text/html;charset=utf-8");
+		request.setCharacterEncoding("UTF-8");
+		java.io.BufferedInputStream bis = null;
+		java.io.BufferedOutputStream bos = null;
+		String ctxPath = request.getSession().getServletContext().getRealPath("/")+ "\\" + "d\\";
+		String downLoadPath = ctxPath + fileName;
+		try {
+			long fileLength = new File(downLoadPath).length();
+			response.setContentType("application/x-msdownload;");
+			response.setHeader("Content-disposition", "attachment; filename="+ new String(fileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (bis != null)
+				bis.close();
+			if (bos != null)
+				bos.close();
+		}
+		return null;
+	}
+	
+	/**
+	 * 上传图片，支持多文件，多缩略图，水印等
+	 * @author 林文伟
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+    @RequestMapping( value = "/wmesUpload")
+	public void upload(HttpServletRequest request,HttpServletResponse response){
+    	//String IsWater = request.getParameter("IsWater");
+    	String modulerelate = request.getParameter("moduleRelate");
+    	
+    	String ctxPath = request.getSession().getServletContext().getRealPath("/");
+    	try {
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+          //取得上传文件
+            MultipartFile multipartFile = multipartRequest.getFile(("file").toString());
+            if(multipartFile != null){
+            	//取得当前上传文件的文件名称
+				String oriFileName = multipartFile.getOriginalFilename();
+				//如果名称不为"",说明该文件存在，否则说明该文件不存在
+				if(!"".equals(oriFileName.trim())){
+					String myFilePath = UploadUtil.getFileName(oriFileName,true,modulerelate);
+					File localFile = new File(ctxPath+myFilePath);
+					if(!localFile.getParentFile().exists()){
+						localFile.getParentFile().mkdirs();
+					}
+					//上传文件
+					multipartFile.transferTo(localFile);
+		            //生成缩略图
+		            String [] savePathBySplitTemp = myFilePath.split("/");
+		            String temp = "";
+		            String fileName = savePathBySplitTemp[savePathBySplitTemp.length-1];
+		            for(int i = 0;i < savePathBySplitTemp.length-1; i++){
+		                if(i!=savePathBySplitTemp.length-2){
+		                    temp+=savePathBySplitTemp[i]+"/";
+		                }else{
+		                    temp+=savePathBySplitTemp[i];
+		                }
+		            }
+		            String pathTemp = request.getSession().getServletContext().getRealPath(temp); 
+		            pathTemp = pathTemp.replaceAll("\\\\", "//");
+		            pathTemp += "\\";
+		            //生成新的缩略图文件名称
+		            String thumbnail112x100FileName = UploadUtil.getThumbnailsFileName(oriFileName,UploadUtil.THUMBNAILSWH_112X100);
+		            String thumbnail112x100FilePath = pathTemp + thumbnail112x100FileName;
+		            String thumbnail200x150FileName = UploadUtil.getThumbnailsFileName(oriFileName,UploadUtil.THUMBNAILSWH_200X150);
+		            String thumbnail200x150FilePath = pathTemp + thumbnail200x150FileName;
+		            String thumbnail400x300FileName = UploadUtil.getThumbnailsFileName(oriFileName,UploadUtil.THUMBNAILSWH_400X300);
+		            String thumbnail400x300FilePath = pathTemp + thumbnail400x300FileName;
+		            String thumbnail600x400FileName = UploadUtil.getThumbnailsFileName(oriFileName,UploadUtil.THUMBNAILSWH_600X400);
+		            String thumbnail600x400FilePath = pathTemp + thumbnail600x400FileName;
+		            //设置前端要显示的缩略图规格
+		            String frontThumbnail112x100FilePath = UploadUtil.genFilePath(modulerelate) + "/" + thumbnail112x100FileName;
+		            String frontThumbnail200x150FilePath = UploadUtil.genFilePath(modulerelate) + "/" + thumbnail200x150FileName;
+		            String frontThumbnail400x300FilePath = UploadUtil.genFilePath(modulerelate) + "/" + thumbnail400x300FileName;
+		            String frontThumbnail600x400FilePath = UploadUtil.genFilePath(modulerelate) + "/" + thumbnail600x400FileName;
+		            //上传时同时生成各个规格的缩略图
+		            Thumbnails.of(localFile).size(112,100).toFile(thumbnail112x100FilePath);
+		    		Thumbnails.of(localFile).size(200,150).toFile(thumbnail200x150FilePath);
+		    		Thumbnails.of(localFile).size(400,300).toFile(thumbnail400x300FilePath);
+		    		Thumbnails.of(localFile).size(600,400).toFile(thumbnail600x400FilePath);
+		    		
+		    		
+		    		//获取后缀名
+		    		String suffix = fileName.substring(fileName.indexOf(".")+1);
+		    		//返回实体
+		    		Map<String, Object> obj = new HashMap<String, Object>();
+		            obj.put("status", 1);
+		            obj.put("msg", "upload success");
+		            obj.put("orifilename", oriFileName);//原文件名
+		            obj.put("newfilename", fileName);//新文件名
+		            obj.put("filepath", myFilePath);//新文件路径（路径+名称）
+		            obj.put("filepath_112x100", frontThumbnail112x100FilePath);//各个缩略图路径（路径+名称）
+		            obj.put("filepath_200x150", frontThumbnail200x150FilePath);
+		            obj.put("filepath_400x300", frontThumbnail400x300FilePath);
+		            obj.put("filepath_600x400", frontThumbnail600x400FilePath);
+		            obj.put("modulerelate", modulerelate);
+		            obj.put("size", multipartFile.getSize());
+		            obj.put("suffix",suffix);
+
+					ResponseUtils.renderHtml(response, JsonUtil.toJson(obj));
+				}
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            //System.out.println(e.getMessage());
+        }
+ 
+    }
+	
+	@RequestMapping(value = "/deleteByPath", method = RequestMethod.POST)
+	public void deleteFileByPath(HttpServletRequest request,HttpServletResponse response,String filePath){
+		String msg = "";
+		boolean result = true;
+		// modify by wwluo 2016/11/23  加上web应用地址   ctxPath
+		String ctxPath = request.getSession().getServletContext().getRealPath("/");
+		File file = new File(ctxPath+filePath);
+		// modify end
+		try{
+		  if(file.exists()){
+			  file.delete();
+			  msg = "done";
+		  }else{
+			  msg="文件不存在";
+			  result = false;
+		  }
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("result",result);
+		obj.put("msg", msg);
+		JsonUtil.toWriter(obj, response);
+	}
+		
+}
+
+
+
+
+
+/*
+ * Copyright (c) 2016-2019 by fsll
+ * All rights reserved.
+ */
+package com.fsll.core.action;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.coobird.thumbnailator.Thumbnails;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
+import com.fsll.common.util.FileCutUnionUtil;
+import com.fsll.common.util.JsonUtil;
+import com.fsll.common.util.ResponseUtils;
+import com.fsll.common.util.UploadUtil;
+import com.fsll.core.base.CoreBaseAct;
+
+/**
+ * 控制器:系统首页
+ * @author 黄模建 E-mail:mjhuang@fsll.cn
+ * @version 1.0.0
+ * Created On: 2016-2-19
+ */
+@Controller
+public class UploadAct extends CoreBaseAct{
+	
+	private static HashMap<Long,String> moduleRelate = new HashMap<Long,String>();
+	static{
+		moduleRelate.put(1L,"m");//菜单模块	
+		moduleRelate.put(20L,"portrait");//头像存放目录
+		moduleRelate.put(2L, "insight");//ifa观点
+		moduleRelate.put(3L, "docCheck");//开户文档审批
+		moduleRelate.put(4L, "umEditorUpload");//um_editor上传
+		moduleRelate.put(5L, "investor_doc");//kyc与开户文档审查		
+		moduleRelate.put(6L, "create_proposal_pdf");//创建组合pdf		
+	}
+	
+	/**
+	 * 通过的文件上传
+	 */
+	@RequestMapping("/upload")
+	public String upload(HttpServletRequest request,Long moduleId,HttpServletResponse response){
+    	String filePaths = "";
+		try {
+			//创建一个通用的多部分解析器
+			CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+			//判断 request 是否有文件上传,即多部分请求
+			if(multipartResolver.isMultipart(request)){
+				//转换成多部分request  
+				MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
+				//取得request中的所有文件名
+				Iterator<String> iter = multiRequest.getFileNames();
+				while(iter.hasNext()){
+					//取得上传文件
+					MultipartFile file = multiRequest.getFile(iter.next());
+					if(file != null){
+						//取得当前上传文件的文件名称
+						String oriFileName = file.getOriginalFilename();
+						//如果名称不为"",说明该文件存在，否则说明该文件不存在
+						if(!"".equals(oriFileName.trim())){
+							String myFilePath = UploadUtil.getFileName(oriFileName,true,moduleRelate.get(moduleId));
+							File localFile = new File(myFilePath);
+							if(!localFile.getParentFile().exists()){
+								localFile.getParentFile().mkdirs();
+							}
+							file.transferTo(localFile);
+							if("".equals(filePaths)){
+								filePaths = oriFileName+":"+myFilePath;
+							}else{
+								filePaths += ";"+oriFileName+":"+myFilePath;
+							}
+						}
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(4L==moduleId && !"".equals(filePaths)){//对um_editor上传的图片进行特殊处理
+			String[] files = filePaths.split(";");
+			if(files.length>0){
+				Map<String, Object> ueObjs = new HashMap<String, Object>();
+				for(int x=0;x<files.length;x++){
+					String[] strs = files[x].split(":");
+					if(strs.length>0){
+						ueObjs.put("name", strs[0]);
+						ueObjs.put("url", strs[1]);
+						ueObjs.put("state","SUCCESS");
+					}
+				}
+				ResponseUtils.renderHtml(response,JsonUtil.toJson(ueObjs));
+				return null;
+			}
+		}
+		
+		
+    	Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("filePaths",filePaths);
+		JsonUtil.toWriter(obj, response);
+		return null;
+	}
+	
+	/**
+	 * 指定文件上传
+	 */
+    @RequestMapping("/uploadSec")
+	public String uploadSec(@RequestParam MultipartFile file,Long moduleId,HttpServletRequest request,HttpServletResponse response) {
+    	//String ctxPath = request.getSession().getServletContext().getRealPath("/");
+    	String fileName = file.getOriginalFilename();
+    	String filePath = "";
+		try {
+	    	InputStream is = file.getInputStream();
+	    	filePath = UploadUtil.getFileName(fileName,true,moduleRelate.get(moduleId));
+			File localFile = new File(filePath);
+			if(!localFile.getParentFile().exists()){
+				localFile.getParentFile().mkdirs();
+			}
+	        FileOutputStream os = new FileOutputStream(filePath);
+	        int byteCount = 0;
+	        byte[] bytes = new byte[1024];
+	        while ((byteCount = is.read(bytes)) != -1){
+	        	os.write(bytes, 0, byteCount);
+	        }
+	        os.close();
+	        is.close();
+	        
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+    	Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("fileName",fileName);
+		obj.put("filePath",filePath);
+		JsonUtil.toWriter(obj, response);
+		return null;
+	}
+    
+	/**
+	 * 文件下载
+	 * 
+	 */
+	@RequestMapping("/download")
+	public String download(HttpServletRequest request,HttpServletResponse response,String fileName) throws IOException {
+		response.setContentType("text/html;charset=utf-8");
+		request.setCharacterEncoding("UTF-8");
+		java.io.BufferedInputStream bis = null;
+		java.io.BufferedOutputStream bos = null;
+		//String ctxPath = request.getSession().getServletContext().getRealPath("/")+ "\\" + "d\\";
+		//String downLoadPath = ctxPath + fileName;
+		String downLoadPath = fileName;
+		try {
+			long fileLength = new File(downLoadPath).length();
+			response.setContentType("application/x-msdownload;");
+			response.setHeader("Content-disposition", "attachment; filename="+ new String(fileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (bis != null)
+				bis.close();
+			if (bos != null)
+				bos.close();
+		}
+		return null;
+	}
+	
+	/**
+	 * 上传图片，支持多文件，多缩略图，水印等
+	 * @author 林文伟
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+    @RequestMapping( value = "/wmesUpload")
+	public void wmesUpload(HttpServletRequest request,HttpServletResponse response){
+    	//String IsWater = request.getParameter("IsWater");
+    	String uploadType = request.getParameter("uploadType");
+    	String modulerelate = request.getParameter("moduleRelate");
+    	//String ctxPath = request.getSession().getServletContext().getRealPath("/");
+    	try {
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+          //取得上传文件
+            MultipartFile multipartFile = multipartRequest.getFile(("file").toString());
+            if(multipartFile != null){
+            	//取得当前上传文件的文件名称
+				String oriFileName = multipartFile.getOriginalFilename();
+				//如果名称不为"",说明该文件存在，否则说明该文件不存在
+				if(!"".equals(oriFileName.trim())){
+					String myFilePath = UploadUtil.getFileName(oriFileName,true,modulerelate);
+					String suffix = myFilePath.substring(myFilePath.indexOf(".")+1);
+					
+					String fileUuidTemp = myFilePath.substring(0,myFilePath.indexOf("."));///u/corner/201612/fdsfdsfdsfdsfds
+					int lastIndex = fileUuidTemp.lastIndexOf("/");
+					String fileUuid = fileUuidTemp.substring(lastIndex+1);//如果有图片缩略图，则需要保持ID一致，缩略图的ID原有基础上加上_120X100等字样
+					
+					//File localFile = new File(ctxPath+myFilePath);
+					File localFile = new File(myFilePath);
+					if(!localFile.getParentFile().exists()){
+						localFile.getParentFile().mkdirs();
+					}
+					//上传文件
+					multipartFile.transferTo(localFile);
+					
+					//返回实体
+		    		Map<String, Object> obj = new HashMap<String, Object>();
+		    		
+					if("image".equals(uploadType)){
+						 //生成缩略图
+			            String [] savePathBySplitTemp = myFilePath.split("/");
+			            String temp = "";
+			            String fileName = savePathBySplitTemp[savePathBySplitTemp.length-1];
+			            for(int i = 0;i < savePathBySplitTemp.length-1; i++){
+			                if(i!=savePathBySplitTemp.length-2){
+			                    temp+=savePathBySplitTemp[i]+"/";
+			                }else{
+			                    temp+=savePathBySplitTemp[i];
+			                }
+			            }
+			            //String pathTemp = request.getSession().getServletContext().getRealPath(temp); 
+			            //pathTemp = pathTemp.replaceAll("\\\\", "//");
+			            temp += "/";
+			            //生成新的缩略图文件名称
+			            String thumbnail112x100FileName = UploadUtil.getThumbnailsFileName(fileUuid,oriFileName,UploadUtil.THUMBNAILSWH_112X100);
+			            String thumbnail112x100FilePath = temp + thumbnail112x100FileName;
+			            ///u/corner/201612/584e9d99-863b-4578-b7a5-0fbf8db89f1f_thumbnails_112x100_.png
+			            String thumbnail200x150FileName = UploadUtil.getThumbnailsFileName(fileUuid,oriFileName,UploadUtil.THUMBNAILSWH_200X150);
+			            String thumbnail200x150FilePath = temp + thumbnail200x150FileName;
+			            String thumbnail400x300FileName = UploadUtil.getThumbnailsFileName(fileUuid,oriFileName,UploadUtil.THUMBNAILSWH_400X300);
+			            String thumbnail400x300FilePath = temp + thumbnail400x300FileName;
+			            String thumbnail600x400FileName = UploadUtil.getThumbnailsFileName(fileUuid,oriFileName,UploadUtil.THUMBNAILSWH_600X400);
+			            String thumbnail600x400FilePath = temp + thumbnail600x400FileName;
+			            //设置前端要显示的缩略图规格
+			            String frontThumbnail112x100FilePath = UploadUtil.genFilePath(modulerelate) + "/" + thumbnail112x100FileName;
+			            String frontThumbnail200x150FilePath = UploadUtil.genFilePath(modulerelate) + "/" + thumbnail200x150FileName;
+			            String frontThumbnail400x300FilePath = UploadUtil.genFilePath(modulerelate) + "/" + thumbnail400x300FileName;
+			            String frontThumbnail600x400FilePath = UploadUtil.genFilePath(modulerelate) + "/" + thumbnail600x400FileName;
+			            //上传时同时生成各个规格的缩略图
+			            //File newfile = new File(localFile);
+			            //System.out.println(myFilePath);System.out.println(temp);
+			            //System.out.println(localFile.getAbsoluteFile());System.out.println(thumbnail112x100FilePath);
+			            Thumbnails.of(localFile.getAbsoluteFile()).size(112,100).toFile(thumbnail112x100FilePath);//thumbnail112x100FilePath
+			            //生成后分块
+			            File localFile1 = new File(thumbnail112x100FilePath);
+			            String suffix1 = thumbnail112x100FilePath.substring(thumbnail112x100FilePath.indexOf(".")+1);
+						String tmpPath1= thumbnail112x100FilePath.substring(0, thumbnail112x100FilePath.length()-suffix1.length()-1);
+						File tmpFile1 = new File(tmpPath1);
+						tmpFile1.mkdirs();
+						FileCutUnionUtil.cutFile(localFile1,tmpFile1);//调用分割方法
+						localFile1.delete();
+						//完成分块
+			    		Thumbnails.of(localFile.getAbsoluteFile()).size(200,150).toFile(thumbnail200x150FilePath);
+			    		//生成后分块
+			            File localFile2 = new File(thumbnail200x150FilePath);
+			            String suffix2 = thumbnail200x150FilePath.substring(thumbnail200x150FilePath.indexOf(".")+1);
+						String tmpPath2= thumbnail200x150FilePath.substring(0, thumbnail200x150FilePath.length()-suffix2.length()-1);
+						File tmpFile2 = new File(tmpPath2);
+						tmpFile2.mkdirs();
+						FileCutUnionUtil.cutFile(localFile2,tmpFile2);//调用分割方法
+						localFile2.delete();
+						//完成分块
+			    		//Thumbnails.of(localFile.getAbsoluteFile()).size(400,300).toFile(thumbnail400x300FilePath);
+			    		//Thumbnails.of(localFile.getAbsoluteFile()).size(600,400).toFile(thumbnail600x400FilePath);
+			    			
+			    		//获取后缀名
+			    		suffix = fileName.substring(fileName.indexOf(".")+1);
+			    		obj.put("newfilename", fileName);//新文件名
+			    		obj.put("filepath_112x100", frontThumbnail112x100FilePath);//各个缩略图路径（路径+名称）
+			            obj.put("filepath_200x150", frontThumbnail200x150FilePath);
+			            //obj.put("filepath_400x300", frontThumbnail400x300FilePath);
+			            //obj.put("filepath_600x400", frontThumbnail600x400FilePath);
+					} else{
+						
+					}
+					//localFile.delete();
+					
+		            obj.put("status", 1);
+		            obj.put("msg", "upload success");
+		            obj.put("orifilename", oriFileName);//原文件名
+		            obj.put("filepath", myFilePath);//新文件路径（路径+名称）
+		            obj.put("modulerelate", modulerelate);
+		            obj.put("size", multipartFile.getSize());
+		            obj.put("suffix",suffix);
+
+					ResponseUtils.renderHtml(response, JsonUtil.toJson(obj));
+				}
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            //System.out.println(e.getMessage());
+        }
+    }
+	
+	@RequestMapping(value = "/deleteByPath", method = RequestMethod.POST)
+	public void deleteFileByPath(HttpServletRequest request,HttpServletResponse response,String filePath){
+		String msg = "";
+		boolean result = true;
+		File file = new File(filePath);
+		try{
+		  if(file.exists()){
+			  file.delete();
+			  msg = "done";
+		  }else{
+			  msg="文件不存在";
+			  result = false;
+		  }
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("result",result);
+		obj.put("msg", msg);
+		JsonUtil.toWriter(obj, response);
+	}
+	
+	/**
+	 * @author scshi_u330p
+	 * @date 20161215
+	 *页面重新获取图片SRC，显示图片
+	 * */
+	@RequestMapping(value = "/loadImgSrcByPath")
+	public String loadImgSrcByPath(HttpServletRequest request,HttpServletResponse response,String filePath) throws IOException {
+		java.io.BufferedInputStream bis = null;
+		java.io.BufferedOutputStream bos = null;
+		String downLoadPath = filePath;
+		try {
+			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (bis != null)
+				bis.close();
+			if (bos != null)
+				bos.close();
+		}
+		return null;
+	}
+	
+	/***************** 文件切换的方法 begin  ***************************/
+	/**
+	 * 通过的文件上传
+	 */
+	@RequestMapping("/uploadForCut")
+	public String uploadForCut(HttpServletRequest request,Long moduleId,HttpServletResponse response){
+    	String filePaths = "";
+		try {
+			//创建一个通用的多部分解析器
+			CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+			//判断 request 是否有文件上传,即多部分请求
+			if(multipartResolver.isMultipart(request)){
+				//转换成多部分request  
+				MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
+				//取得request中的所有文件名
+				Iterator<String> iter = multiRequest.getFileNames();
+				while(iter.hasNext()){
+					//取得上传文件
+					MultipartFile file = multiRequest.getFile(iter.next());
+					if(file != null){
+						//取得当前上传文件的文件名称
+						String oriFileName = file.getOriginalFilename();
+						//如果名称不为"",说明该文件存在，否则说明该文件不存在
+						if(!"".equals(oriFileName.trim())){
+							String myFilePath = UploadUtil.getFileName(oriFileName,true,moduleRelate.get(moduleId));
+							//File localFile = new File(ctxPath+myFilePath);
+							File localFile = new File(myFilePath);
+							if(!localFile.getParentFile().exists()){
+								localFile.getParentFile().mkdirs();
+							}
+							file.transferTo(localFile);
+							
+							/********** 文件分隔存储的方法 mjhuang begin *************/
+							String suffix = myFilePath.substring(myFilePath.indexOf(".")+1);
+							String tmpPath = myFilePath.substring(0, myFilePath.length()-suffix.length()-1);
+							//File tmpFile = new File(tmpPath);
+							File tmpFile = new File(tmpPath);
+							tmpFile.mkdirs();
+							FileCutUnionUtil.cutFile(localFile,tmpFile);//调用分割方法
+							localFile.delete();
+							/********** 文件分隔存储的方法 end *************/
+							
+							if("".equals(filePaths)){
+								filePaths = oriFileName+":"+myFilePath;
+							}else{
+								filePaths += ";"+oriFileName+":"+myFilePath;
+							}
+						}
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(4L==moduleId && !"".equals(filePaths)){//对um_editor上传的图片进行特殊处理
+			String[] files = filePaths.split(";");
+			if(files.length>0){
+				Map<String, Object> ueObjs = new HashMap<String, Object>();
+				for(int x=0;x<files.length;x++){
+					String[] strs = files[x].split(":");
+					if(strs.length>0){
+						ueObjs.put("name", strs[0]);
+						ueObjs.put("url", strs[1]);
+						ueObjs.put("state","SUCCESS");
+					}
+				}
+				ResponseUtils.renderHtml(response,JsonUtil.toJson(ueObjs));
+				return null;
+			}
+		}
+		
+		
+    	Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("filePaths",filePaths);
+		JsonUtil.toWriter(obj, response);
+		return null;
+	}
+	
+	/**
+	 * 指定文件上传
+	 */
+    @RequestMapping("/uploadSecForCut")
+	public String uploadSecForCut(@RequestParam MultipartFile file,Long moduleId,HttpServletRequest request,HttpServletResponse response) {
+    	//String ctxPath = request.getSession().getServletContext().getRealPath("/");
+    	String fileName = file.getOriginalFilename();
+    	String filePath = "";
+		try {
+	    	InputStream is = file.getInputStream();
+	    	filePath = UploadUtil.getFileName(fileName,true,moduleRelate.get(moduleId));
+			//File localFile = new File(ctxPath+filePath);
+			File localFile = new File(filePath);
+			if(!localFile.getParentFile().exists()){
+				localFile.getParentFile().mkdirs();
+			}
+	        //FileOutputStream os = new FileOutputStream(ctxPath+filePath);
+	        FileOutputStream os = new FileOutputStream(filePath);
+	        int byteCount = 0;
+	        byte[] bytes = new byte[1024];
+	        while ((byteCount = is.read(bytes)) != -1){
+	        	os.write(bytes, 0, byteCount);
+	        }
+	        os.close();
+	        is.close();
+	        
+			/********** 文件分隔存储的方法 mjhuang begin *************/
+			String suffix = filePath.substring(filePath.indexOf(".")+1);
+			String tmpPath = filePath.substring(0, filePath.length()-suffix.length()-1);
+			File tmpFile = new File(tmpPath);
+			tmpFile.mkdirs();
+			FileCutUnionUtil.cutFile(localFile,tmpFile);//调用分割方法
+			localFile.delete();
+			/********** 文件分隔存储的方法 end *************/
+	        
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+    	Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("fileName",fileName);
+		obj.put("filePath",filePath);
+		JsonUtil.toWriter(obj, response);
+		return null;
+	}
+	/**
+	 * 文件下载
+	 * 
+	 */
+	@RequestMapping("/downloadForCut")
+	public String downloadForCut(HttpServletRequest request,HttpServletResponse response,String fileName) throws IOException {
+		response.setContentType("text/html;charset=utf-8");
+		request.setCharacterEncoding("UTF-8");
+		java.io.SequenceInputStream sis = null;
+		java.io.BufferedOutputStream bos = null;
+		//String ctxPath = request.getSession().getServletContext().getRealPath("/")+ "\\" + "d\\";
+		//String downLoadPath = ctxPath + fileName;
+		String downLoadPath = fileName;
+		try {
+			long fileLength = new File(downLoadPath).length();
+			response.setContentType("application/x-msdownload;");
+			response.setHeader("Content-disposition", "attachment; filename="+ new String(fileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			
+			/********** 文件合并下载的方法 mjhuang begin *************/
+			String suffix = downLoadPath.substring(downLoadPath.indexOf(".")+1);
+			String tmpPath = downLoadPath.substring(0, downLoadPath.length()-suffix.length()-1);
+			File tmpFile = new File(tmpPath);
+			sis = FileCutUnionUtil.unionFile(tmpFile);//调用合并方法
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] by = new byte[100];
+			int len;
+			while((len=sis.read(by)) != -1){
+				bos.write(by, 0, len);
+			}
+			/********** 文件合并下载的方法 end *************/
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sis != null)
+				sis.close();
+			if (bos != null)
+				bos.close();
+		}
+		return null;
+	}
+	
+	@RequestMapping(value = "/deleteByPathForCut", method = RequestMethod.POST)
+	public void deleteFileByPathForCut(HttpServletRequest request,HttpServletResponse response,String filePath){
+		String msg = "";
+		boolean result = true;
+		/*** 删除文件碎片mjhuang begin ***/
+		String suffix = filePath.substring(filePath.indexOf(".")+1);
+		String tmpPath = filePath.substring(0, filePath.length()-suffix.length()-1);
+		File file = new File(tmpPath);
+		  if(file.exists()){
+			  msg = "done";
+		  }else{
+			  msg="文件不存在";
+			  result = false;
+		  }
+		UploadUtil.delFolder(tmpPath);
+		/*** 删除文件碎片mjhuang end ***/
+		Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("result",result);
+		obj.put("msg", msg);
+		JsonUtil.toWriter(obj, response);
+	}
+	
+	/**
+	 * @author scshi_u330p
+	 * @date 20161215
+	 *页面重新获取图片SRC，显示图片
+	 * */
+	@RequestMapping(value = "/loadImgSrcByPathForCut")
+	public String loadImgSrcByPathForCut(HttpServletRequest request,HttpServletResponse response,String filePath) throws IOException {
+		java.io.SequenceInputStream sis = null;
+		java.io.BufferedOutputStream bos = null;
+		String downLoadPath = filePath;
+		try {
+			/********** 文件合并下载的方法 mjhuang begin *************/
+			String suffix = downLoadPath.substring(downLoadPath.indexOf(".")+1);
+			String tmpPath = downLoadPath.substring(0, downLoadPath.length()-suffix.length()-1);
+			File tmpFile = new File(tmpPath);
+			sis = FileCutUnionUtil.unionFile(tmpFile);//调用合并方法
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] by = new byte[100];
+			int len;
+			while((len=sis.read(by)) != -1){
+				bos.write(by, 0, len);
+			}
+			/********** 文件合并下载的方法 end *************/
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sis != null)
+				sis.close();
+			if (bos != null)
+				bos.close();
+		}
+		return null;
+	}
+	/***************** 文件切换的方法end  ***************************/
+		
+}
+

@@ -1,0 +1,514 @@
+/**
+ * 
+ */
+package com.fsll.wmes.fund.service;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fsll.common.util.JsonPaging;
+import com.fsll.core.entity.AccessoryFile;
+import com.fsll.core.entity.SysCountry;
+import com.fsll.wmes.entity.FundAnno;
+import com.fsll.wmes.entity.FundBonus;
+import com.fsll.wmes.entity.FundDoc;
+import com.fsll.wmes.entity.FundHouseEn;
+import com.fsll.wmes.entity.FundInfo;
+import com.fsll.wmes.entity.FundInfoEn;
+import com.fsll.wmes.entity.FundInfoSc;
+import com.fsll.wmes.entity.FundInfoTc;
+import com.fsll.wmes.entity.FundReturn;
+import com.fsll.wmes.entity.MemberBase;
+import com.fsll.wmes.entity.ProductInfo;
+import com.fsll.wmes.entity.WebExchangeRate;
+import com.fsll.wmes.entity.WebInvestorVisit;
+import com.fsll.wmes.fund.vo.FundBasicDataVO;
+import com.fsll.wmes.fund.vo.FundInfoDataVO;
+import com.fsll.wmes.fund.vo.FundProductVO;
+import com.fsll.wmes.fund.vo.FundScreenerDataVO;
+import com.fsll.wmes.fund.vo.GeneralDataVO;
+
+/**
+ * 基金信息查询服务接口
+ * @author michael
+ * @date 2016-6-20
+ */
+public interface FundInfoService {
+	
+	/**
+	 * 通过ID查找一条基金基础信息
+	 * @param id
+	 * @return
+	 */
+	public FundInfo findFundInfoById(String id);
+	
+	/**
+	 * 通过ID查找一条基金附加英文信息
+	 * @param id
+	 * @return
+	 */
+	public FundInfoEn findFundInfoEnById(String id);
+	
+	/**
+	 * 通过ID查找一条基金附加简体中文信息
+	 * @param id
+	 * @return
+	 */
+	public FundInfoSc findFundInfoScById(String id);
+	
+	/**
+	 * 通过ID查找一条基金附加繁体中文信息
+	 * @param id
+	 * @return
+	 */
+	public FundInfoTc findFundInfoTcById(String id);
+	
+	/**
+	 * 获取基金列表(Fund Screener页面)
+	 * @param jsonPaging 分页参数
+	 * @param filters 过滤条件
+	 * @return
+	 */
+	public JsonPaging findFundInfoList(JsonPaging jsonPaging, FundScreenerDataVO filters);
+
+	
+    /***
+     * 分页查询记录
+     * @param jsonPaging 分页参数
+     * @param fundInfo 查询参数
+	 * @return
+     */
+	public JsonPaging findAllFundInfo(JsonPaging jsonPaging,String keyword,String distributor,String language);
+
+	
+	/**
+	 * 通过isinCode查找一条信息
+	 * @param isinCode 编码
+	 * @param password 用户密码
+	 * @return
+	 */
+	public FundInfo findFundInfoByCode(String isinCode,String password);
+	
+	/**
+	 * 通过ID查找基金全部信息（含多语言）
+	 * @param id
+	 * @return
+	 */
+	public FundInfoDataVO findFundFullInfoById(String id);
+	
+	/**
+	 * 通过ID查找基金全部信息
+	 * @param id
+	 * @param langCode 语言
+	 * @param loginUserId 登陆用户id
+	 * @param toCurrency 转换货币
+	 * @return
+	 */
+	public FundInfoDataVO findFundFullInfoById(String id, String langCode,String loginUserId, String toCurrency);
+	
+	/**
+	 * 获取基金费用信息
+	 * @param fundId 资金id
+	 * @param Period 时间段编码
+	 * @param langCode 语言
+	 * @return	GeneralDataVO	基金费用数据
+	 */
+	public List<GeneralDataVO> findFundFees(String fundId, String langCode);
+
+	/**
+	 * 获取基金文档信息
+	 * @param id 基金
+	 */
+	public FundDoc findFundDoc(String id);
+	
+	/**
+	 * 获取基金文档信息
+	 * @param fundId 基金id
+	 * @param langCode 语言
+	 */
+	public JsonPaging findFundDocList(JsonPaging jsonPaging,String fundId);
+	
+	/**
+	 * 获取基金费用信息
+	 * @param fundId 资金id
+	 * @param Period 时间段编码
+	 * @param langCode 语言
+	 * @return	GeneralDataVO	基金费用数据
+	 */
+	public List<GeneralDataVO> findFundDocs(String fundId, String langCode);
+	
+	/**
+	 * 获取基金分红派息信息
+	 * @param id 基金
+	 */
+	public FundBonus findFundBonusById(String id);
+	
+	/**
+	 * 获取基金分红派息信息
+	 * @param fundId 基金id
+	 * @param langCode 语言
+	 */
+	public JsonPaging findFundBonusList(JsonPaging jsonPaging,String fundId);
+	
+	/**
+	 * 获取基金分红派息信息Dividend
+	 * @param fundId 资金id
+	 * @param Period 时间段编码
+	 * @return	GeneralDataVO	基金费用数据
+	 */
+	public List<GeneralDataVO> findFundBonus(String fundId);
+	
+	/**
+	 * 获取基金通告信息
+	 * @param id 基金
+	 */
+	//@Transactional(readOnly=true)
+	public FundAnno findFundAnno(String id);
+	
+	/**
+	 * 获取基金通告信息
+	 * @param fundId 基金id
+	 * @param langCode 语言
+	 */
+	//@Transactional(readOnly=true)
+	public JsonPaging findFundAnnoList(JsonPaging jsonPaging,String fundId, String langCode);
+	
+	/**
+	 * 获取基金通告信息
+	 * @param fundId 资金id
+	 * @param Period 时间段编码
+	 * @param langCode 语言
+	 * @return	GeneralDataVO	基金费用数据
+	 */
+	public List<GeneralDataVO> findFundAnnouncement(String fundId, String langCode);
+	
+	/**
+	 * 获取基金表现信息列表
+	 * @param fundId 资金id
+	 * @param type 类型：heap - 累积表现, year - 年度表现
+	 * @param period 时间段编码
+	 * @param langCode 语言
+	 * @return	GeneralDataVO	基金累积表现数据
+	 */
+	public List<GeneralDataVO> findFundReturnList(String fundId, String type, String period, String langCode);
+	
+	/**
+	 * 获取基金价格行情信息列表
+	 * @param fundId 基金id
+	 * @param period 时间段类型： day, week, month
+	 * @param startDate 开始时间： yyyy-MM-dd
+	 * @param endDate 结束时间： yyyy-MM-dd
+	 * @param langCode 语言
+	 * @return	GeneralDataVO	价格行情数据
+	 */
+	public List<GeneralDataVO> findFundMarketList(String fundId, String period, String startDate, String endDate, String langCode);
+
+	
+	/**
+	 * 获取基金公司列表
+	 * @param langCode
+	 * @return
+	 */
+	public List<GeneralDataVO> findFundHouseList(String langCode);
+	
+	/**
+	 * 获取基金评级信息列表
+	 * @param fundId 基金id
+	 * @param langCode 语言
+	 * @return	GeneralDataVO	基金表现数据
+	 */
+	public List<GeneralDataVO> findFundRatingLevelList(String fundId, String langCode);
+	
+	/**
+	 * 搜索基金信息
+	 * @param houseId 基金公司ID
+	 * @param keyWord 搜索关键词
+	 * @param langCode 语言
+	 * @return
+	 */
+	public List<GeneralDataVO> findFundListByHouse(String houseId, String keyWord, String langCode);
+	
+	/**
+	 * 根据基金类型统计
+	 * @param fundId 同类基金ID
+	 * @param typeCode 基金类型编码
+	 * @param typeName 基金类型名称
+	 * @return
+	 */
+	public int findFundTotalByType(String fundId, String typeCode, String typeName);
+	
+///////////////////////////zpzhou start////////////////////////////////
+	
+	/**
+	 * 分页查询基金列表信息
+	 * @param jsonPaging 分页参数
+	 * @param keyWord 搜索关键词
+	 * @param langCode 语言
+	 * @param userId 用户ID
+	 * @param fundType 基金类型
+	 * @param dateType 基金回报类型
+	 * @param toCurrency 转换货币
+	 * @return
+	 */
+	public JsonPaging findAllFundListForApp(JsonPaging jsonPaging,String keyWord,String langCode,String userId,String fundType,String dateType, String toCurrency);
+	
+	/**
+	 * 搜索基金信息
+	 * @param jsonPaging 分页参数
+	 * @param keyWord 搜索关键词
+	 * @param langCode 语言
+	 * @param userId 用户ID
+	 * @return
+	 */
+	public JsonPaging searchFundListForApp(JsonPaging jsonPaging,String keyWord,String langCode,String userId);
+
+	/**
+	 * 获取我关注的基金名单列表
+	 * @param jsonPaging
+	 * @param langCode 语言
+	 * @param userId 用户ID
+	 * @param dateType 基金回报类型
+	 * @param toCurrency 转换货币
+	 * @return
+	 */
+	public JsonPaging getFundFollowListForApp(JsonPaging jsonPaging,String langCode,String userId,String dateType, String toCurrency);
+
+	/**
+	 * 加载fundHouse列表
+	 * */
+	public List<FundHouseEn> loadFundHouseList(String langCode);
+	
+	/**
+	 * 获取兑换率列表
+	 * @return
+	 * */
+	public List<WebExchangeRate> loadExchangeList();
+	
+	/**
+	 * 获取兑换率列表分页
+	 * @param jsonPaging 
+	 * @return
+	 * */
+	public JsonPaging findExchangeList(JsonPaging jsonPaging);
+	
+	/**
+	 * 获取兑换率
+	 * @author michael
+	 * @param fromCurrency
+	 * @param toCurrency
+	 * @return
+	 */
+	public WebExchangeRate findExchangeRate(String fromCurrency, String toCurrency);
+	
+	/**
+	 * 获取货币列表
+	 * @author michael
+	 * @return
+	 */
+	//@Transactional(readOnly=true)
+	public List<String> getCurrencyList();
+	///////////////////////////zpzhou end////////////////////////////////
+	
+	/**基金快速选择接口
+	 * @author scshi
+	 * @param keyWord 搜索关键字
+	 * @param langCode 语言
+	 * @return	String 	搜索结果项目，多项以逗号分隔
+	 */
+	public String myFavFundList(String keyWord,String langCode);
+	
+	/**我关注的基金名单列表
+	 * @author scshi
+	 * @param relateID 对应类型id
+	 * @param memberID 网站会员ID
+	 * @param jsonPaging 
+	 * @param moduleType 对应模块,fund基金关注,ifa关注,article文章关注
+	 */
+	public JsonPaging getWebFollowList(String memberID,String moduleType,String lang,JsonPaging jsonPaging);
+	
+	/**
+	 * 得到
+	 * @param fundId 基金ID
+	 * @param langCode  语言
+	 * @param userId 用户ID
+	 * @param toCurrency 要转换的货币类型
+	 * @return
+	 */
+	public FundBasicDataVO getFundBasicDataMess(String fundId, String langCode, String userId, String toCurrency);
+	
+	/**
+	 * 获取基金基础数据列表
+	 * @return
+	 */
+	public List<FundProductVO> getFundProductVoList(String langCode);
+	
+	/**
+	 * 获取基金列表(Allocation页面)
+	 * @author michael
+	 * @param jsonPaging 分页参数
+	 * @param filters 过滤条件
+	 * @return
+	 */
+	public JsonPaging findFundInfoListForAllocation(JsonPaging jsonPaging, FundScreenerDataVO filters);
+	
+	/**
+	 * 设置基金信息vo中的回报及评级信息
+	 * @param vo
+	 * @param langCode 查看语言
+	 * @param memberId 用户ID
+	 * @param toCurrency 转换货币
+	 * @return
+	 */
+	public FundInfoDataVO setFundInfos(FundInfoDataVO vo, String langCode, String memberId, String toCurrency, String returnYears);
+	/**
+	 * 保存基金基本信息
+	 * @author michael
+	 * @param info
+	 * @return
+	 */
+	public FundInfo saveOrUpdate(FundInfo info);
+	
+	/**
+	 * 根据 id 获取产品信息
+	 * @author wwluo
+	 * @param productId 产品ID
+	 * @return
+	 */
+	public ProductInfo findProductById(String productId);
+	
+	/**
+	 * 根据产品ID获取基金信息
+	 * @author wwluo
+	 * @param productId 产品ID
+	 * @return
+	 */
+	public FundInfo getFundInfoByProduct(String productId);
+	
+	/**
+	 * 获取基金列表(Fund Screener页面)新版
+	 * @author zxtan
+	 * @date 2016-10-17
+	 * @param jsonPaging 分页参数
+	 * @param filters 过滤条件
+	 * @return
+	 */
+	public JsonPaging findFundInfoListData(JsonPaging jsonPaging, FundScreenerDataVO filters);
+	
+	/**
+	 * 获取基金数量(Fund Screener页面)新版
+	 * @author zxtan
+	 * @date 2016-11-08
+	 * @param jsonPaging 分页参数
+	 * @param filters 过滤条件
+	 * @return
+	 */
+	public JsonPaging findFundInfoCount(JsonPaging jsonPaging,String langCode);
+
+	/**
+	 * 保存一条浏览记录   WebInvestorVisit
+	 * @author wwluo
+	 * @date 2016-11-16
+	 * @param WebInvestorVisit 
+	 * @return
+	 */
+	public WebInvestorVisit saveWebInvestorVisit(WebInvestorVisit investorVisit);
+	
+	
+	/**
+	 * 获取基金浏览历史
+	 * @author wwluo
+	 * @date 2016-11-16
+	 * @param MemberBase 当前用户 
+	 * @return
+	 */
+	public List<String> getFundBrowserHistory(MemberBase loginUser);
+	
+	
+	/**
+	 * 获取一个月内表现最好的基金
+	 * @author wwluo
+	 * @date 2016-11-16
+	 * @param period 时间code
+	 * @param count 数量
+	 * @return
+	 */
+	public List<FundReturn> getBestFundReturn(String period,Integer count);
+
+	/**
+	 * 查找当前用户某个区间的浏览历史
+	 * @author wwluo
+	 * @date 2016-11-16
+	 * @param loginUser 当前用户 
+	 * @param relate 对应relateID 
+	 * @param period 查找区间的历史
+	 * @return
+	 */
+	public List<WebInvestorVisit> validWebInvestorVisit(MemberBase loginUser,
+			String relate,Date fromTime);
+	
+	/***
+     * 更新/保存方法
+     */
+	public FundInfo save(FundInfo fundInfo, FundInfoSc fundInfoSc, FundInfoTc fundInfoTc
+			, FundInfoEn fundInfoEn, boolean isAdd);
+	
+	/**
+	 * 通过ID删除一条记录
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteById(String id);
+	
+	/**
+	 * 通过ID更改一条记录状态
+	 * @param id
+	 * @return
+	 */
+	public boolean updateIsValid(String id);
+	
+	/**
+	 * 获取注册地国家列表
+	 * @return
+	 */
+	public List<SysCountry> getCountryList();
+	
+	/***
+     * 更新/保存方法
+     */
+	public FundAnno saveAnno(FundAnno info, boolean isAdd);
+	
+	/***
+     * 更新/保存方法
+     */
+	public FundBonus saveBonus(FundBonus info, boolean isAdd);
+	
+	/***
+     * 更新/保存方法
+     */
+	public FundDoc saveDoc(FundDoc info, boolean isAdd);
+	
+	/**
+	 * 通过ID删除一条记录
+	 * @param id
+	 * @return
+	 */
+	public boolean updateFileValidById(String id,String type);
+	
+	/**
+	 * 查找关联的文件
+	 * @param relateId
+	 * @return
+	 */
+	public List<AccessoryFile> findAccessoryList(String relateId);
+
+	/**
+	 *发布状态修改，isPublic
+	 *@author scshi
+	 *@date 20170425
+	 *@param id 基金主键
+	 *@param pubVal 状态值
+	 * */
+	public void updateFoundIsPublish(String id, String isPubVal);
+}

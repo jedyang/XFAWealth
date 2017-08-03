@@ -1,0 +1,45 @@
+#content{
+	position: relative;
+	width:500px;
+	margin:0 auto;
+}
+#content .imageBox
+{
+    position: relative;
+    height: 240px;
+    width: 300px;
+    margin:0 auto;
+    border:1px solid #aaa;
+    background: #fff;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    cursor:move;
+}
+
+.imageBox .thumbBox
+{
+    position: absolute;
+    top: 55px;
+    left: 80px;
+    width: 130px;
+    height: 130px;
+    box-sizing: border-box;
+    border: 1px solid rgb(102, 102, 102);
+    box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+    background: none repeat scroll 0% 0% transparent;
+}
+
+.imageBox .spinner
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+    line-height: 400px;
+    background: rgba(0,0,0,0.7);
+}
+#fileload{width: 80px;height: 30px;line-height: 30px;}
+#uploadImg{ font-size:12px; overflow:hidden; position:absolute}
+#file{ position:absolute; z-index:100; margin-left:-180px; font-size:60px;opacity:0;filter:alpha(opacity=0); margin-top:-5px;}

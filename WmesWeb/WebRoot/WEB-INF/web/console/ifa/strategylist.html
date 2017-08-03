@@ -1,0 +1,100 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+
+<form id="paramsForm" name="paramsForm" action="" method="post" onkeydown="if(event.keyCode==13){return false;}">
+
+<div class="wmes-content">
+	<div class="ifa_choose_condition">
+		<div class="wmes-wrap-title" style="height:16px;">
+			<p style="float:left;">[@lang_res k='strategy.list.title'/]</p>
+		</div>
+        <div class="client-more-screen-wrap">
+            <div class="funds_choice_wrap">
+                <p class="funds_choice_title">[@lang_res k='list.search.geoAllo'/]</p>
+                <ul class="funds_choice funds_logo_b" id="funds_logo_choice">
+                    <li data-letter="" class="funds_all fund_choice_active fund_choice_active2" data-name="regions">[@lang_res k='fund.info.searchAll'/]</li>
+                    <li data-letter="A,B,C,D,E">A-E</li>
+                    <li data-letter="F,I,J">F-J</li>
+                    <li data-letter="K,L,M,N,O">K-O</li>
+                    <li data-letter="P,Q,R,S,T">P-T</li>
+                    <li data-letter="U,V,W,X,Y,Z">U-Z</li>
+                </ul>
+                <ul class="funds_logo_choice funds_logo_choice_amend" id="funds_logo">
+                    [#if regionList?exists && regionList?size gt 0]
+                    [#list regionList as list]
+                    <li style="display:none;" title="${list.name!}" data-letter="${list.key!}" data-key="[@lang_res k='list.search.geoAllo'/] : ${list.name!}" data-name="regions" data-value="${list.itemCode!}" >${list.name!}</li>
+                    [/#list]
+                    [/#if]
+                </ul>
+            </div>
+            <div class="funds_choice_wrap funds_choice_wrap_hidden">
+	            <p class="funds_choice_title">[@lang_res k='list.search.sector'/]</p>
+	            <ul class="funds_choice funds_choice_amend">
+	                <li class="fund_choice_active funds_all fund_choice_active2 funds_all_Sector" data-name="sector" data-key="" data-value="Sector_00">[@lang_res k='fund.info.searchAll'/]</li>
+	                [#if sectorList?exists && sectorList?size gt 0]
+	                [#list sectorList as list]
+	                <li data-name="sector${list_index}" data-key="[@lang_res k='list.search.sector'/] : ${list.name!}" data-value="${list.itemCode!}">${list.name!}</li>
+	                [/#list]
+	                [/#if]
+	            </ul>
+	            <div class="funds_choice_wrap_hiddenclick">
+	                <img src="${base}/res/images/application/hideen.png">
+	            </div>
+            </div>
+            <div class="funds_choice_wrap">
+                <p class="funds_choice_title">[@lang_res k='list.search.riskLevel'/]</p>
+                <ul class="funds_choice">
+                <li class="fund_choice_active  funds_all fund_choice_active2" data-name="riskLevel" data-key="" data-value="">[@lang_res k='fund.info.searchAll'/]</li>
+                [#if riskList?exists && riskList?size gt 0]
+                [#list riskList as list]
+                <li data-name="riskLevel" data-key="[@lang_res k='list.search.riskLevel'/] : ${list.name!}" data-value="${list.value!}">${list.name!}</li>
+                [/#list]
+                [/#if]
+                </ul>
+            </div>
+        </div>
+        <div class="wmes-menu-hide">
+            <div class="wmes-menu-hidecon"><b>[@lang_res k='global.screen'/]</b><span></span></div>
+        </div>
+	</div>
+	<div class="strategies_list_wrap">
+		<div class="funds_list_selected">
+			<p class="funds_selected_title">[@lang_res k='global.selectedCondition'/] </p>
+			<ul class="selection_criteria">
+				<p class="funds_title_selection">[@lang_res k='fund.info.resetFilter'/] </p>
+			</ul>
+		</div>
+		<div class="ifa_keyserach_wrap">
+			<p class="ifa_serach_sum" style="margin-top:7px;">
+				[@lang_res k='search.list.total1'/]
+				<span class="funds_serach_digital ng-binding" id="datatotal"></span> 
+				[@lang_res k='search.list.total2'/]
+			</p>
+			<a href="javascript:void();" class="mylist-new-bn" style="margin-left:50px;margin-bottom: 20px;">[@lang_res k='strategy.mylist.new'/]</a>
+			<div class="funds_keyserach ifa_keyserach">
+				<input type="text" id="keyword" name="keyword" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+				<span class="icon_search" id="searchKeyBtn"></span>
+			</div>
+		</div>
+		<div class="strategies_list">
+			<ul class="strategies_list_ul" id="strategies_list">
+			</ul>
+			<div class="clickmore" id="clickmore">
+				<a href="javascript:;">[@lang_res  k='ifalist.list.clickmore'/]</a>
+			</div>
+		</div>
+	</div>
+</div>
+	<input type="hidden" name="ifaId" value="${ifaId?if_exists}">
+    <input type="hidden" value="" name="regions" id="regions"/>
+    <input type="hidden" value="" name="sectors" id="sectors"/>
+    <input type="hidden" value="" name="riskLevel" id="riskLevel"/>
+</form>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var tips = {};
+	tips.nomoredata = "[@lang_res k='ifalist.list.nomoredata'/]";
+	tips.clickmore = "[@lang_res k='ifalist.list.clickmore'/]";
+	seajs.use('${base}/res/console/web/ifa/strategies.js');
+</script>

@@ -1,0 +1,358 @@
+
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>[#if adminVo?exists && adminVo.id?exists] [@lang_res k='member.admin.detail'/] [#else] [@lang_res k='member.admin.add'/] [/#if]</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<!--<div class="right-side container-fluid">
+				<div class="r-side-container">
+					-->
+			<div style="padding-left: 20px; padding-right: 20px;">
+				<!--<div class="page-header mt-10">
+					<h4>
+						<b>[#if adminVo?exists && adminVo.id?exists] [@lang_res k='member.admin.detail'/] [#else] [@lang_res k='member.admin.add'/] [/#if]</b>
+					</h4>
+				</div>
+				-->
+				<div class="tab_wrap">
+					<form class="form-horizontal" id="frm" method="post">
+						<input type="hidden" id="id" name="id" value="${(adminVo.id)?if_exists}">
+						<input type="hidden" id="memberId" name="memberId" value="${(adminVo.memberId)?if_exists}">
+						<div class="form-group" style="margin-bottom: 5px">
+							<label class="col-sm-3 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.loginCode'/]
+							</label>
+							<div class="col-sm-7">
+								<input id='txtLoginCode' type="text" class="form-control " maxlength="50" name='loginCode' value="${(adminVo.loginCode)?if_exists}">
+							</div>
+
+						</div>
+						<div class="form-group" style="margin-bottom: 5px">
+							<label class="col-sm-3 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.email'/]
+							</label>
+							<div class="col-sm-7">
+								<input id='txtEmail' type="text" class="form-control " maxlength="50" name="email" value="${(adminVo.email)?if_exists}">
+							</div>
+						</div>
+
+
+						<div class="form-group" style="margin-bottom: 5px">
+							<label class="col-sm-3 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.mobileNumber'/]
+							</label>
+							<div class="col-sm-7">
+								<input id='txtPhone' type="text" class="form-control " maxlength="20" name="mobileNumber" value="${(adminVo.mobileNumber)?if_exists}">
+							</div>
+						</div>
+						<div class="form-group" style="margin-bottom: 5px">
+							<label class="col-sm-3 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.nickName'/]
+							</label>
+							<div class="col-sm-7">
+								<input id="txtNickName" type="text" class="form-control " maxlength="50" name="nickName" value="${(adminVo.nickName)?if_exists}">
+							</div>
+						</div>
+
+						<!--如果是系统管理员则可以新增其他类型的管理员-->
+						[#if curMember?exists && curMember.id?exists && curMember.memberType==0]
+						<div class="form-group">
+							<div class="col-sm-3 text-right">
+								<label for="txtType" class="label-control">
+									[@lang_res k='member.admin.type'/]
+								</label>
+							</div>
+							<div class="col-sm-7">
+								<select id="ddlAdminType" class="form-control" name="type" value="${(adminVo.type)?if_exists}">
+									<option value="">
+										[@lang_res k='global.pleaseSelect'/]
+									</option>
+									<option value="0" [#if adminVo?exists&&adminVo.type?exists&&adminVo.type=="0"]selected[/#if]>
+										[@lang_res k='member.admin.type.platform'/]
+									</option>
+									<option value="1" [#if adminVo?exists&&adminVo.type?exists&&adminVo.type=="1"]selected[/#if]>
+										[@lang_res k='member.admin.type.ifa'/]
+									</option>
+									<option value="2" [#if adminVo?exists&&adminVo.type?exists&&adminVo.type=="2"]selected[/#if]>
+										[@lang_res k='member.admin.type.distributor'/]
+									</option>
+								</select>
+							</div>
+						</div>
+
+						[#if adminVo?exists&&adminVo.type?exists&&adminVo.type=="1"]
+						<div class="form-group" id="divIfafirm">
+							[#else]
+							<div class="form-group" id="divIfafirm" style="display: none">
+								[/#if]
+								<div class="col-sm-3 text-right">
+									<label for="txtType" class="label-control">
+										[@lang_res k='member.admin.company'/]
+									</label>
+								</div>
+								<div class="col-sm-7">
+									<select id="ddlIfaFirm" class="form-control" name="ifafirmId" value="${(adminVo.ifafirmId)?if_exists}">
+										<option value="">
+											[@lang_res k='global.pleaseSelect'/]
+										</option>
+										[#if ifafirmlist?exists && ifafirmlist?size gt 0] [#list ifafirmlist as ifafirm]
+										<option value="${ifafirm.id}" [#if adminVo?exists&&adminVo.ifafirmId?exists&&adminVo.ifafirmId==ifafirm.id]selected[/#if]>
+											${(ifafirm.companyName)?if_exists}
+										</option>
+										[/#list] [/#if]
+									</select>
+								</div>
+							</div>
+							[#if adminVo?exists&&adminVo.type?exists&&adminVo.type=="2"]
+							<div class="form-group" id="divDistributor">
+								[#else]
+								<div class="form-group" id="divDistributor" style="display: none">
+									[/#if]
+									<div class="col-sm-3 text-right">
+										<label for="txtType" class="label-control">
+											[@lang_res k='member.admin.company'/]
+										</label>
+									</div>
+									<div class="col-sm-7">
+										<select id="ddlDistributor" class="form-control" name="distributorId" value="${(adminVo.distributorId)?if_exists}">
+											<option value="">
+												[@lang_res k='global.pleaseSelect'/]
+											</option>
+											[#if distributorList?exists && distributorList?size gt 0] [#list distributorList as dis]
+											<option value="${dis.id}" [#if adminVo?exists&&adminVo.distributorId?exists&&adminVo.distributorId==dis.id]selected[/#if]>
+												${dis.companyName?if_exists}
+											</option>
+											[/#list] [/#if]
+										</select>
+									</div>
+								</div>
+
+								[/#if] [#if adminVo?exists && adminVo.id?exists]
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="txtCreateBy" class="label-control">
+										父节点
+									</label>
+									<div class="col-sm-7">
+										<input rows="4" id="txtParent" readonly="readonly" class="form-control" name="parentName" value="${(adminVo.parentName)?if_exists}">
+									</div>
+								</div>
+								[/#if]
+
+
+								<div class="text-center pd10">
+									<button id="btnSave" type="submit" class="btn btn-primary">
+										[@lang_res k='global.save'/]
+									</button>
+									<!--<button id="btnBack" class="btn btn-primary" onclick="javascript:history.go(-1);">
+								[@lang_res k='global.back'/]
+							</button>
+						-->
+								</div>
+					</form>
+				</div>
+				<div class="clear">
+				</div>
+			</div>
+
+		</div>
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+		<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+		<script src="${base}/res/console/js/jquery.form.js"></script>
+		<script src="${base}/res/console/js/jquery.pagination.js"></script>
+		<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+		<script src="${base}/res/third/layer/layer_v2.js"></script>
+		<script>
+	$(function() {
+
+		$("#frm").bootstrapValidator({
+			feedbackIcons : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			fields : {
+				loginCode : {
+					message : '',
+					validators : {
+						notEmpty : {
+							message : '登录帐号不能为空'
+						},
+						callback : {
+							message : '帐号已被使用',
+							callback : function(value, validate) {
+								var url = "${base}/console/member/checkCodeUnique.do?datestr=" + new Date().getTime() + "&loginCode=" + encodeURI(encodeURI(value)) + "&userId=" + encodeURI(encodeURI($("#memberId").val()));
+								var res = true;
+								/*if ($("#txtLoginCode").val() != value
+										&& "" != value) {*/
+								$.ajax({
+									url : url,
+									method : 'post',
+									dataType : 'json',
+									async : false,
+									success : function(data) {
+										res = data;
+									},
+									error : function() {
+									}
+								});
+								//}
+								return res;
+							}
+						}
+					}
+				},
+				ifafirmId : {
+					validators : {
+						callback : {
+							message : '请选择所属公司',
+							callback : function(value, validate) {
+								var type = $("#ddlAdminType").val();
+								if (type == "1" && (value == undefined || value == "")) {
+									return false;
+								}
+								return true;
+							}
+						}
+					}
+				},
+				distributorId : {
+					validators : {
+						callback : {
+							message : '请选择所属公司',
+							callback : function(value, validate) {
+								var type = $("#ddlAdminType").val();
+								if (type == "2" && (value == undefined || value == "")) {
+									return false;
+								}
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}).on('success.form.bv', function(e) {
+			e.preventDefault();
+			//alert('valid ok');
+			Save();
+		});
+
+		$("#ddlAdminType").bind("change", function() {
+			var type = $("#ddlAdminType").val();
+			if (type == "1") {
+				$("#divIfafirm").css("display", "");
+				$("#divDistributor").css("display", "none");
+			} else if (type == "2") {
+				$("#divDistributor").css("display", "");
+				$("#divIfafirm").css("display", "none");
+			} else {
+				$("#divIfafirm").css("display", "none");
+				$("#divDistributor").css("display", "none");
+			}
+			$("#frm").data('bootstrapValidator').updateStatus("ifafirmId", "NOT_VALIDATED");
+			$("#frm").data('bootstrapValidator').updateStatus("distributorId", "NOT_VALIDATED");
+		})
+
+	});
+
+	function Save() {
+
+		var params = $("#frm").serialize();
+		params = decodeURIComponent(params, true);
+
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/member/admin/save.do?datestr=" + new Date().getTime(),
+			data : {
+				postData : params
+			},
+			success : function(data) {
+				//var dataObj = $.parseJSON(data.replace(/<.*?>/ig, ""));
+				if (data.result) {
+					layer.msg("[@lang_res k='global.success.save'/]", {
+						icon : 1,
+						time : 1000
+					});
+				} else {
+					$('#contact-form-error').show().fadeOut(10000);
+				}
+			}
+		});
+		/*
+		$("#frm").ajaxSubmit({
+			url : "${base}/console/member/admin/save.do?datestr=" + new Date().getTime(),
+			iframe : true,
+			success : function(data, status) {
+				var dataObj = $.parseJSON(data.replace(/<.*?>/ig, ""));
+				if (dataObj.result) {
+					layer.msg("[@lang_res k='global.success.save'/]", {
+						icon : 1,
+						time : 1000
+					});
+				} else {
+					$('#contact-form-error').show().fadeOut(10000);
+				}
+			},
+			error : function() {
+				$('#contact-form-error').show().fadeOut(10000);
+			}
+		});*/
+	}
+
+	function deleteUser(memberId) {
+		layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			$.ajax({
+				type : 'post',
+				datatype : 'json',
+				url : "${base}/console/sys/role/deleteUser.do?",
+				data : {
+					roleId : $("#id").val(),
+					memberId : memberId
+				},
+				success : function(json) {
+					if (json.result) {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]", {
+							title : "[@lang_res k='global.prompt'/]",
+							icon : 1,
+							time : 1000
+						},function(){
+						bindRoleUser(0);
+						});
+						
+					} else {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]", {
+							title : "[@lang_res k='global.prompt'/]",
+							icon : 5,
+							time : 1000
+						});
+					}
+
+				}
+			})
+		});
+	}
+</script>
+	</body>
+</html>

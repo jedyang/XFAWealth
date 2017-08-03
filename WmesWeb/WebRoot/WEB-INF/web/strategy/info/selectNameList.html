@@ -1,0 +1,200 @@
+ <script>
+        var base_root = '${base}';
+        var lang = '${Session["_LANG_CODE_"]!}';
+        var lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        if(lang=='en'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_EN.js";  
+        }else if(lang=='tc'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_TC.js";
+        }else if(lang=='sc'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        }
+    </script>
+<script type="text/javascript" src="${base}/res/js/base.js"></script>
+<script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+<script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+<script src="${base}/res/js/util.js"></script>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/wmes_en.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<style>
+html, body{
+             font-family:Microsoft YaHei !important;
+         }
+.ifa-more-ico{margin-top: 5px;margin-right: 10px;}
+.wmes-content{background-color: white;}
+.selectnamelistbox{    padding: 12px 0 0 89px;height: auto;}
+.SelectAll{line-height: 18px;}
+</style>
+<div class="wmes-content">
+	<div class="selectnamelistbox">
+		<div class="selectnamelistcon">
+			<!--<div class="removelist"><img src="${base}/res/images/application/removelist.png" /></div>
+			--><div class="selectnameltitle">Please select the name list</div>
+			<div class="myClient">
+				<div class="strategies_detail_list myClienttittle">
+					<p class="strategies_detail_product">My Client</p>
+					<span class="ifa-more-ico"></span>
+				</div>
+				<div class="selectedtext">
+					<div class="selectedtextleft"><span  class="count">0</span>clients selected.</div>
+					<ul class="selectedtextright">
+						<li>Select</li>
+						<li>
+							<p><input type="checkbox"><p>
+							<p class="SelectAll">Select All</p>
+						</li>
+						<li><span>Reverse</span></li>
+					</ul>
+					
+				</div>
+				<div class="selectedlist">
+					<ul>
+					 [#if clients??]
+                               [#list clients as x]
+						<li data-id="${x.id!''}" data-type="clients" class="container">
+							[#if x.isImportant?? && x.isImportant==1]<span class="myfavourite"></span>[/#if]
+							<div class="selectedshadow"></div>
+							<b></b>
+							<i></i>
+							<img src="${base}${x.iconUrl!}"/>
+							<p> ${x.lastName!""} ${x.firstName!""} </p>
+						</li>
+						  [/#list]
+                           [/#if]
+						
+					</ul>
+					
+				</p>
+			</div>
+		</div>
+		<div class="myClient">
+				<div class="strategies_detail_list myClienttittle">
+					<p class="strategies_detail_product">My Prospect</p>
+					<span class="ifa-more-ico"></span>
+				</div>
+				<div class="selectedtext">
+					<div class="selectedtextleft"><span  class="count">0</span>clients selected.</div>
+					<ul class="selectedtextright">
+						<li>Select</li>
+						<li>
+							<p><input type="checkbox"><p>
+							<p class="SelectAll">Select All</p>
+						</li>
+						<li><span>Reverse</span></li>
+					</ul>
+					
+				</div>
+				<div class="selectedlist">
+					<ul>
+					[#if prospects??]
+                     [#list prospects as x]
+						<li  data-id="${x.id!''}" data-type="prospects" class="container">
+							[#if x.isImportant?? && x.isImportant==1]<span class="myfavourite"></span>[/#if]
+							<div class="selectedshadow"></div>
+							<b></b>
+							<i></i>
+							<img src="${base}${x.iconUrl!}"/>
+							<p>${x.lastName!""} ${x.firstName!""}</p>
+						</li>
+						 [/#list]
+                           [/#if]
+					</ul>
+					
+				</p>
+			</div>
+		</div>
+		<div class="myClient">
+				<div class="strategies_detail_list myClienttittle">
+					<p class="strategies_detail_product">My Buddy</p>
+					<span class="ifa-more-ico ifa-more-icoactive"></span>
+				</div>
+				<div class="selectedtext ifa-more-ico-hidden">
+					<div class="selectedtextleft"><span  class="count">0</span>clients selected.</div>
+					<ul class="selectedtextright">
+						<li>Select</li>
+						<li>
+							<p><input type="checkbox"><p>
+							<p class="SelectAll">Select All</p>
+						</li>
+						<li><span>Reverse</span></li>
+					</ul>
+					
+				</div>
+				<div class="selectedlist ifa-more-ico-hidden">
+					<ul>
+					 [#if buddies??]
+                     [#list buddies as x]
+						<li data-id="${x.id!''}" data-type="buddies" class="container">
+						[#if x.isImportant?? && x.isImportant==1]<span class="myfavourite"></span>[/#if]
+							<div class="selectedshadow"></div>
+							<b></b>
+							<i></i>
+							<img src="${base}${x.iconUrl!}"/>
+							<p> ${x.lastName!""} ${x.firstName!""}</p>
+						</li>
+						 [/#list]
+                           [/#if]
+						
+					</ul>
+					
+				</p>
+			</div>
+		</div>
+		<div class="myClient">
+				<div class="strategies_detail_list myClienttittle">
+					<p class="strategies_detail_product">My Colleague</p>
+					<span class="ifa-more-ico ifa-more-icoactive"></span>
+				</div>
+				<div class="selectedtext ifa-more-ico-hidden">
+					<div class="selectedtextleft"><span  class="count">0</span>clients selected.</div>
+					<ul class="selectedtextright">
+						<li>Select</li>
+						<li>
+							<p><input type="checkbox"><p>
+							<p class="SelectAll">Select All</p>
+						</li>
+						<li><span>Reverse</span></li>
+					</ul>
+					
+				</div>
+				<div class="selectedlist ifa-more-ico-hidden">
+					<ul>
+					 [#if colleagues??]
+                      [#list colleagues as x]
+						<li data-id="${x.id!''}" data-type="colleagues" class="container">
+							[#if x.isImportant?? && x.isImportant==1]<span class="myfavourite"></span>[/#if]
+							<div class="selectedshadow"></div>
+							<b></b>
+							<i></i>
+							<img src="${base}${x.iconUrl!}"/>
+							<p> ${x.lastName!""} ${x.firstName!""}</p>
+						</li>
+						[/#list]
+                        [/#if]
+						
+					</ul>
+					
+				</p>
+			</div>
+		</div>
+		<div class="creatlistbn" style="margin-top:40px;">
+			<a class="craetbnCancel">[@lang_res k='global.cancel'/]</a>
+			<a class="craetbnSave" id="btn_update" style="margin-right:15px;">[@lang_res k='global.update'/]</a>
+		</div>
+	</div>
+	  <input type="hidden" name="clients" id="clients">
+               <input type="hidden" name="prospects" id="prospects">
+               <input type="hidden" name="buddies" id="buddies">
+               <input type="hidden" name="colleagues" id="colleagues">
+</div>
+</div>
+<script type="text/javascript">
+ var cnt_clients = ${clients?size};
+  var cnt_prospects = ${prospects?size};
+   var cnt_buddies = ${buddies?size};
+    var cnt_colleagues = ${colleagues?size};
+seajs.use("${base}/res/web/ifa/selectNameList.js");
+	
+	
+</script>

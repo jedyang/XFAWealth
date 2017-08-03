@@ -1,0 +1,171 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<link rel="stylesheet" href="${base}/res/third/formValidator/css/validationEngine.jquery.css"/>
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='open.account.title'/]</a>
+</div>
+<div class="wmes-content">
+    <div class="kaihu_div white_background">
+    <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='open.account.title'/]</p>
+            <div class="white_background">   
+                <!-- <div class="OpenAccount_big_title">
+                  <h2>Open account</h2>
+                </div> -->
+                <div class="OpenAccount_liucheng_div">
+                    <div class="OpenAccount_liucheng">
+                        <ul>
+                            [#if ifaApproveCheck?? && ifaApproveCheck]
+                        	<li class="liucheng_first liucheng_light"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                        	[#else]
+                        	<!-- 
+                            <li class="liucheng_first liucheng_light"><div class="font_height">[@lang_res k='open.account.Start'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_light"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                             -->
+                            <li class="liucheng_first liucheng_light"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                        	[/#if]
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_light"><div class="font_height">[@lang_res k='open.account.BasicInfo'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_light"><div>[@lang_res k='open.account.DocumentCheck'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_03.png"></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_orange"><div class="font_height">[@lang_res k='open.account.Declaration'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_05.png"></div>
+                            </li>
+                            <li class="liucheng_last"><div class="font_height">[@lang_res k='open.account.Submit'/]</div></li>
+                        </ul>
+                    </div>    
+				</div>
+    
+		<form id="declarForm" name="declarForm" method="post" action="">                
+                <div class="OpenAccount_liucheng_content">					
+					<div class="Declaration_content">
+                    	<h4>[@lang_res k='open.account.declare.title.investor'/]</h4>
+                        <br>
+                        <span class="Declaration_content_file" id="CustomerSrc" >[@lang_res k='open.account.declare.customer'/]</span>
+                        <br>
+                        <div [#if ifaApproveCheck?? && ifaApproveCheck]style="display:none;"[/#if]>
+                        	<div class="login_checkbox">
+                                <input type="checkbox" value="1" name="declarationFlag" id="declarationFlag"  class="validate[required] onlyRead" data-prompt-target="CustomerSrcError"/>
+                                <label for="declarationFlag" flag="declarationFlag"></label>
+                            </div>
+                        	<span class="login_checkbox_font">[@lang_res k='open.account.declare.agree'/]</span>
+	                        <span id="CustomerSrcError"></span>
+                        </div>
+                        <br><br>
+                        <span class="Declaration_content_file" id="personalSrc">[@lang_res k='open.account.declare.personal'/]</span>
+                        <br>
+                        <div [#if ifaApproveCheck?? && ifaApproveCheck]style="display:none;"[/#if]>
+                        	<div class="login_checkbox">
+                                <input type="checkbox" value="1" name="" id="informationFlag" class="validate[required] onlyRead" data-prompt-target="informationError"/>
+                                <label for="informationFlag" flag="informationFlag"></label>
+                            </div>
+                        	<span class="login_checkbox_font">[@lang_res k='open.account.declare.confirm'/]</span>
+                        	<span id="informationError"></span>
+                        </div>
+                        <Br>
+                        <div [#if ifaApproveCheck?? && ifaApproveCheck]style="display:none;"[/#if]>
+                        	<div class="login_checkbox">
+                                <input type="checkbox" value="1" name="aimFlag" id="aimFlag" class="validate[required] [#if ifaApproveCheck?? && ifaApproveCheck]onlyRead[/#if] " data-prompt-target="aimFlagError"/>
+                                <label for="aimFlag" flag="aimFlag"></label>
+                            </div>
+                        	<span class="login_checkbox_font duoxuan_font ">[@lang_res k='open.account.declare.ageas.approveTips'/]</span>
+                        </div>
+                        <div style="clear:both;">
+                        	<span id="aimFlagError"></span>
+                        </div>
+                        <div class="document_line"></div>
+                        
+                        <h4>[@lang_res k='open.account.declare.title.advisor'/]</h4>
+                        <br>
+                        <span class="Declaration_content_file" id="byadvisorSrc">[@lang_res k='open.account.declare.advisor'/] </span>
+                        <br>
+                        
+                        [#if ifaApproveCheck?? && ifaApproveCheck]<!-- ifa审批时显示 -->
+                        <div>
+                        	<div class="login_checkbox">
+                                <input type="checkbox" value="1" name="advisorFlag" id="advisorFlag" class="validate[required] onlyRead" data-prompt-target="advisorError"/>
+                                <label for="advisorFlag" flag="advisorFlag"></label>
+                            </div>
+                        	<span class="login_checkbox_font">[@lang_res k='open.account.declare.agree'/]</span>
+                        	<span id="advisorError"></span>
+                        </div>
+                        [/#if]
+                        <div class="document_line"></div>                                                
+                        
+                        <h4>[@lang_res k='open.account.declare.title.qualified'/]</h4>
+                        <br>
+                        <span class="Declaration_content_file" id="qualifiedSrc" href="javascirpt:;">[@lang_res k='open.account.declare.qualified'/]</span>
+                        <br>
+                        <div [#if ifaApproveCheck?? && ifaApproveCheck]style="display:none;"[/#if]>
+                        	<div class="login_checkbox">
+                                <input type="checkbox" value="1" name="qualifiedFlag" id="qualifiedFlag" class="validate[required] onlyRead" data-prompt-target="qualifiedError"/>
+                                <label for="qualifiedFlag" flag="qualifiedFlag"></label>
+                            </div>
+                        	<span class="login_checkbox_font">[@lang_res k='open.account.declare.agree'/]</span>
+                        	<span id="qualifiedError"></span>
+                        </div>
+                        <div class="document_line"></div>
+                    </div>
+                    
+                    <div class="wenti_btn">
+                      <a class="wenti_btn_bule" href="${base}/front/investor/accountDoc.do?accountId=${accountId!}">[@lang_res k='open.account.Previous'/]</a>
+                      <a id="btn_next" class="wenti_btn_bule" href="javascript:;">[@lang_res k='open.account.Next'/]</a>
+                      <a class="wenti_btn_bule" href="javascript:;">[@lang_res k='open.account.Draft'/]</a>
+                      <a id="btn_cancel" class="wenti_btn_LightBlue" href="javascript:;">[@lang_res k='open.account.Cancel'/]</a>
+                    </div>
+                </div>
+</form>    
+            </div>
+        </div>
+    </div>
+    <div id="DeclarifaBack"></div>
+    <div id="Declarifa" style="z-index:99;">
+        <iframe id="DeclarifaWrap" src=""> 
+        
+        </iframe> 
+    </div>
+    
+    <a id="iframe_close" class="wenti_btn_bule" href="javascript:;" style="display:none;"></a>
+    <input type="hidden" id="accountId" name="accountId" id="${accountId!}">
+	<a id="bycustomer" href="javascript:;" style="display:none;"></a>
+	<a id="bycustomerno" href="javascript:;" style="display:none;"></a>
+	<a id="personal" href="javascript:;" style="display:none;"></a>
+	<a id="personalno" href="javascript:;" style="display:none;"></a>
+	<a id="byadvisor" href="javascript:;" style="display:none;"></a>
+	<a id="byadvisorSrclno" href="javascript:;" style="display:none;"></a>
+	<a id="qualified" href="javascript:;" style="display:none;"></a>
+	<a id="qualifiedno" href="javascript:;" style="display:none;"></a>
+	<a id="iframeCloseLink" href="javascript:;" style="display:none;"></a>
+
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+var accountId = "${accountId!}";
+var ifIfaCheck = "${ifaApproveCheck?string ("true","false")}";
+
+[#if validity?exists && validity == "false" ]
+  alert( "抱歉，当前开户关联的accountId有误，请检查开户流程是否正确？" );
+  window.location.href = "${base}/front/investor/accountStart.do?accountId=${accountId!''}"+"&r="+Math.random();
+[/#if]
+seajs.use('${base}/res/web/openAccount/openAccountDecalre.js');
+var agreeFlag = {
+[#if declaration??]
+    "id":"${declaration.id!}",
+    "declarationFlag":"${declaration.declarationFlag!}",
+    "informationFlag":"${declaration.informationFlag!}",
+    "aimFlag":"${declaration.aimFlag!}",
+    "advisorFlag":"${declaration.advisorFlag!}",
+    "qualifiedFlag":"${declaration.qualifiedFlag!}",
+    "createTime":"${declaration.createTime!}",
+[/#if]
+}
+</script>

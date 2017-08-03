@@ -1,0 +1,70 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <div class="wmes-top">
+        <a href="javascript:;" class="header-over">Edit Proposal</a>
+    </div>
+    <div class="wmes-content">
+    	<div class="proposal-wrap">
+    		<p class="proposal-title">Proposal A</p>
+    		<div class="proposal-step-wrap">
+    			<div class="proposal-step-portrait">
+    				<img class="step-portrait-img" src="${base}/res/images/strategy/strategy_portrait.png">
+    				<div class="step-portrait-name-wrap">
+    					<p class="step-portrait-name">Shirley Lu</p>
+    					<ul class="step-portrait-choose">
+    						<li>Xc Zhao</li>
+    						<li>Ye Lam</li>
+    						<li>Mark Chen</li>
+    						<li>Ben Jack</li>
+    					</ul>
+    				</div>
+    			</div>
+    			<ul class="proposal-step">
+    				<li class="proposal-step-title proposal-step-old">Questionnaire</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title proposal-step-now">Select Inv.Model</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">Portfolio Builder</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">Proposal Report</li>
+    			</ul>
+    		</div>
+    		<div class="stepTwo-rows">
+    			<div class="stepTwo-rows-img">
+                    <img src="${base}/res/images/strategy/step_main_img.png">   
+                </div>
+                <div class="stepOne-constrains-rows">
+                    <p class="stepOne-rows-input-title" style="line-height: 35px;">Select Strategy Template</p>
+                    <div class="stepOne-rows-text-wrap">
+                        <div class="proposal_xiala stepOne-constrains-xiala">
+                            <input type="text" class="step-growth-value"  value="Growth" readonly>
+                            <span class="icon_xiala"></span>
+                            <ul class="step-growth-choose">
+                                <li>Fixed Incom</li>
+                                <li>Income</li>
+                                <li>Yield</li>
+                                <li>Balanced</li>
+                                <li>Growth</li>
+                                <li>Equity</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="stepOne-constrains-rows">
+                    <p class="stepOne-rows-input-title">Remark</p>
+                    <div class="stepOne-rows-text-wrap">
+                        <textarea class="stepOne-rows-text"></textarea>
+                    </div>
+                </div>
+    		</div>
+    		<div class="proposal-button-wrap">
+                <a class="proposal-button proposal-button-old" href="${base}/front/strategy/info/editProposalSetOne.do">Previous</a>
+    			<a class="proposal-button" href="${base}/front/strategy/info/editProposalSetThree.do">Next</a>
+    			<a class="proposal-button" href="javascript:;">Draft</a>
+    		</div>
+    	</div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/strategy/createProposalSetTwo.js');
+</script>

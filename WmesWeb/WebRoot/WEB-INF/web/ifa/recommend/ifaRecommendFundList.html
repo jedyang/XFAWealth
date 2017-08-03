@@ -1,0 +1,70 @@
+[#include "../../inc/head_v2.html"/]
+
+
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/other.css">
+<div class="wmes-content">
+	<div class="strategies-view-header">
+        <p class="wmes-wrap-title">[@lang_res k='recommend.fund.list.title'/]</p>
+		<a href="${base}/front/community/space/ifaSpace.do?id=${ifa.memberId!}">
+		<img class="strategies-view-portrait" src="${base}${ifa.iconUrl!}">
+		</a>
+		<div class="ifa-personal-ageas">
+			<p class="ifa-personal-name">${ifa.memberName}  ([#if ifa.gender?? && ifa.gender=="F"][@lang_res k='member.gender.ms'/][#else][@lang_res k='member.gender.mr'/][/#if])</p>
+			<p class="ifa-personal-aico">[@lang_res k='ifa.popular'/] ${ifa.popularityTotal?default(0)}</p>
+		</div>
+		<div class="ifa-personal-contact">
+			<p><img src="${base}/res/images/ifa/my_ifa_phone.png">${ifa.phoneNumber!}</p>
+			<p><img src="${base}/res/images/ifa/my_ifa_email.png">${ifa.email!}</p>
+		</div>
+		<div class="ifa-personal-contact">
+			<p class="ifa-personal-aico" style="margin-bottom:0;margin-top:-6px;"><img src="${base}${ifa.ifafirmIconUrl!}" style="width: 30px;">${ifa.ifafirmName!}</p>
+			<p>[@lang_res k='ifa.experience'/] ${ifa.investLife!} [@lang_res k='ifa.detail.profile.year'/]</p>
+		</div>
+	</div>
+	<div class="strategies_list_wrap"  ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+	<input type="hidden" id="dateFormat" value="${dateFormat!}">
+        <div class="ifa_keyserach_wrap">
+            <div class="funds_keyserach ifa_keyserach">
+                <input type="text" id="fundName" placeholder="[@lang_res k='fund.info.fundName'/]">
+                <span class="icon_search" id="searchKeyBtn"></span>
+            </div>
+        </div>
+         <input type="hidden" id="defColor" value="${defColor!}"> 
+		<div class="strategies_list">
+			<ul class="views-lump-ul" style="display:none;">
+                <li class="dataListTr" ng-repeat="items in dataList" ng-init="checkLast($last)">
+                   <a href="${base}/front/fund/info/fundsdetail.do?id={{items.fundId}}"> <p class="funds-lump-title">{{items.fundName}}</p></a>
+                    <div class="funds-lump-equity">
+                        <span class="lump-equity-title" title="{{items.sectorType}}">{{items.sectorType}}</span>
+                        <span class="lump-equity-country">{{items.fundCurrency}}</span>
+                        <span class="lump-equity-grade funds_leveal_{{items.fundInfo.riskLevel}}">{{items.fundInfo.riskLevel}}</span>
+                    </div>
+                    <div class="lump-last-wrap">
+                        <p class="lump-last-title">[@lang_res k='fund.info.LastNAV'/]<span class="lump-last-num">{{items.fundInfo.lastNav}}({{items.fundCurrency}})</span></p>
+                        <p class="lump-growth-title">[@lang_res k='fund.info.screener.performance.1MonthReturn'/]
+                        <span  class="lump-growth-num" ng-bind-html="items.fundReturnOneMonth | percentColor:'%':defColor"></span>
+                        
+                        </p>
+                    </div>
+                    <p class="lump-list-date">{{items.fundInfo.lastNavUpdate | date:dateFormat}}</p>
+                    <img class="lump-cart-img"  src="${base}/u/chart/{{items.id}}__middle.png" alt="">
+                </li>
+               
+            </ul>
+ <div class="clickmore" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+		</div>
+		 <div class=" no_list_tips">
+               <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+               <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+          </div>
+		
+		
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+var id='${ifa.memberId!}';
+	seajs.use('${base}/res/web/ifa/viewFundList.js');
+	
+</script>

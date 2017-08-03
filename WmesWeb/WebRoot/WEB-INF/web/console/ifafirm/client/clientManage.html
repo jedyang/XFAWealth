@@ -1,0 +1,169 @@
+[#include "../../inc/head_v2.html"/]
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">    
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <style>
+	.search-condition-input{border: 1px solid #e0dfdf;height: 28px;padding-left: 5px;width: 45%;}
+	.search-condition-button{background: #0098e1;color: white;padding: 7px 15px;margin-left: 15px;border-radius: 4px;}
+	.search-condition{border: 1px solid #e0dfdf;border-radius: 4px;float: left;height: 30px;width: 450px;}
+	.search-condition input{border: 0 none;height: 28px;padding-left: 5px;width:410px;}
+	.icon_search{width: 16px;height: 16px;background: url('${base}/res/images/icon_search.png') no-repeat;float: right;  margin: 7px 7px;cursor: pointer;}
+	.btn_add{background: #ef6a41;color: white;padding: 0px 22px;height:32px;line-height:32px;margin-top: 15px;border-radius: 4px;float: right;}
+    /* 因引入了bootstrap-3.3.4.css来实现弹出层，须修改两个样式，不然信息卡片样式会变样  */
+    * {
+        -webkit-box-sizing: initial; 
+        -moz-box-sizing: border-box;
+        box-sizing: initial; 
+    }
+    
+    /*调整弹出页面的宽度*/
+    .modal-lg {
+        width: 1200px !important;
+        margin-left:120px !important;
+    }
+	</style>
+    <div class="wmes-content" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+ 		<div class="ifa_choose_condition" style="margin-bottom:0;padding-bottom:40px;">
+ 			<div class="wmes-wrap-title" style="margin-bottom:0">[@lang_res k='client.list.title'/]
+                [#if Session["role"]?exists && Session["role"]=='IFA_FIRM']
+                [/#if]
+            </div>
+ 			<div class="client-more-screen-wrap">
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">[@lang_res k='client.name'/]</p>
+                    <ul>
+                        <li>
+                            <div class="search-condition">
+                                <input type="text" placeholder="[@lang_res k='client.name'/]" id="clientName" name="clientName"/>
+                                <span class="icon_search clientName" id="searchClient"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">[@lang_res k='member.ifa'/]</p>
+                    <ul>
+                        <li>
+                            <div class="search-condition">
+                                <input type="text" placeholder="[@lang_res k='criteria.ifaName'/]" id="ifa" name="ifa"/>
+                                <span class="icon_search ifaName" id="searchKeyBtn"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div> 
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">[@lang_res k='assets.marketValue'/]</p>
+                    <ul class="funds_choice">
+                        <li class="fund_choice_active funds_all fund_choice_active2" data-name="Total Return" data-key="" data-value="TotalReturn Level_00">[@lang_res k='global.all'/]</li>
+                        <li data-name="Martket Value" data-key="<1M" data-value="TotalReturn Level_01"><1M</li>
+                        <li data-name="Martket Value" data-key="1M ~ 5M" data-value="TotalReturn Level_02">1M ~ 5M</li>
+                        <li data-name="Martket Value" data-key="5M ~ 10M" data-value="TotalReturn Level_03">5M ~ 10M</li>
+                        <li data-name="Martket Value" data-key=">10M" data-value="TotalReturn Level_03">>10M</li>
+                    </ul>
+                </div>
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">[@lang_res k='client.totalReturn'/]</p>
+                    <ul class="funds_choice">
+                        <li class="fund_choice_active funds_all fund_choice_active2" data-name="Total Return" data-key="" data-value="TotalReturn Level_00">[@lang_res k='global.all'/]</li>
+                        <li data-name="Total Return" data-key="<0" data-value="TotalReturn Level_01"><0</li>
+                        <li data-name="Total Return" data-key="0 ~ 10%" data-value="TotalReturn Level_02">0-10%</li>
+                        <li data-name="Total Return" data-key="10% ~ 20%" data-value="TotalReturn Level_03">10%-20%</li>
+                        <li data-name="Total Return" data-key="20% ~ 30%" data-value="TotalReturn Level_04">20%-30%</li>
+                        <li data-name="Total Return" data-key="30% ~ 40%" data-value="TotalReturn Level_04">30%-40%</li>
+                        <li data-name="Total Return" data-key=">50%" data-value="TotalReturn Level_04">>50%</li>
+                    </ul>
+                </div>
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">[@lang_res k='client.aum'/]</p>
+                    <ul class="funds_choice">
+                        <li class="fund_choice_active funds_all fund_choice_active2" data-name="AuM" data-key="" data-value="AuM Level_00">[@lang_res k='global.all'/]</li>
+                        <li data-name="AuM" data-key="<1M" data-value="AuM Level_01"><1M</li>
+                        <li data-name="AuM" data-key="1M ~ 5M" data-value="AuM Level_02">1M ~ 5M</li>
+                        <li data-name="AuM" data-key="5M ~ 10M" data-value="AuM Level_03">5M ~ 10M</li>
+                        <li data-name="AuM" data-key=">10M" data-value="AuM Level_04">>10M</li>
+                    </ul>
+                </div>
+                                     
+            </div>
+            <div class="wmes-menu-hide"><div class="wmes-menu-hidecon"><b>[@lang_res k='global.screen'/]</b><span></span></div></div>
+ 		</div>
+        <div class="ifa_choose_condition" style="padding-top:0;border-bottom:0;">
+           <div class="client-list-wrap" style="margin-top:5px;">
+                <input type="hidden" id="defColor" value="${defColor!}">
+                <input type="hidden" id="currency" value="${curName!}">
+                <input type="hidden" id="currencyCode" value="${currency!}">
+                <input type="hidden" id="decimals" value="${decimals!}">
+                
+                <div class="account-choose-left">
+                        <p class="investor-xiala-title">[@lang_res k='account.list.cur'/]</p>
+                        <div class="investor-xiala">
+							<input type="text" id="txtCurrency" itemcode="${currency!}" value="${curName!}" readonly="">
+							
+							<span class="icon_xiala"></span>
+							<ul class="xiala-list" style="display: none;">
+							   [#if currencyType?? && currencyType?size gt 0]
+							   [#list currencyType as list]
+								<li id="${list.itemCode!}">${list.name!}</li>
+								[/#list]
+								[/#if]
+							</ul>
+						</div>
+
+                    </div>
+                <div class="client_list" style="display:none"> 
+                    <table class="funds_search_information strategies_List" id="sortable">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                    <th class="funds_tables_fnames">[@lang_res k='account.list.clientName'/]</th>
+                                    <th class="funds_tables_header"> [@lang_res k='account.list.openAccountTime'/]</th>
+                                    <th  class="funds_tables_header">[@lang_res k='account.list.totalAssets'/] </th>
+                                    <th  class="funds_tables_header">[@lang_res k='account.list.totalMarket'/]</th>
+                                    <th class="funds_tables_header">[@lang_res k='client.totalReturn'/]</th>
+                                    <th class="funds_tables_header">[@lang_res k='account.list.risk'/]</th>
+                                     <th class="funds_tables_header">[@lang_res k='global.ifa'/]</th>
+                                </tr>
+							<tr ng-repeat="items in dataList" class="datalist" ng-init="checkLast($last)" >
+								<td class="tdleft funds_tables_fnames">
+									<a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}">{{items.clientName}}</a>							</td>
+								<td class="funds_search_tdcenter">
+									{{items.invDate}}	
+								</td>
+								<td class="funds_search_tdcenter" >
+									<span style="margin-left: 10px;">{{items.aum | formatCurrency:'':decimals}}</span>({{items.currencyName}})
+								</td>
+								<td class="funds_search_tdcenter">
+								   {{items.market | formatCurrency:'':decimals}}({{items.currencyName}})
+								</td>
+								<td class="funds_search_tdcenter">
+								<span ng-bind-html="items.totalReturn | currencyColor:'':defColor"></span>({{items.currencyName}})
+									
+								</td>
+								<td class="funds_search_tdcenter">
+								 
+									<img class="client-list-index" ng-if="items.riskLevel!=null && items.riskLevel!=''" src="${base}/res/images/strategy/risk_level_0{{items.riskLevel}}.png">
+	                                <img class="client-list-index" ng-if="items.riskLevel==null || items.riskLevel==''" src="${base}/res/images/strategy/risk_level_00.png">
+								</td>
+								<td class="funds_search_tdcenter">
+									{{items.ifaName}}
+								</td>
+								
+							</tr>
+
+				             </tbody>
+                        </table>
+                    <div class="wmes-nodata-tips no_list_tips">
+                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                    </div>
+                    <div class="clickmore" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifafirm/clientManage.js');
+</script>

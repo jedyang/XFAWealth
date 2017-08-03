@@ -1,0 +1,110 @@
+.webuploader-container {
+	position: relative;
+}
+.webuploader-element-invisible {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+.webuploader-pick {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	padding: 0px 3px;
+	color: #fff;
+	text-align: center;
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.webuploader-pick-disable {
+	opacity: 0.6;
+	pointer-events:none;
+}
+
+.webuploader-element-invisible {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+
+.fileList{
+		list-style: outside none none;
+        margin: 0;
+        padding: 0;
+}
+.fileList li{
+	 font-size: 12px;
+     margin: 8px;
+     overflow: hidden;
+     position: relative;
+     text-align: center;
+     float:left;
+}
+.fileList li p{margin:0 auto;}
+
+.fileList li div.progress {
+	background: #fff none repeat scroll 0 0;
+    border: 1px solid #1483d8;
+    color: #6dbfff;
+    display: inline-block;
+    height: 8px;
+    line-height: 8px;
+    position: relative;
+    text-align: center;
+    width: 198px;
+}
+
+.fileList li div.progress span.text {
+    position: relative;
+    z-index: 10;
+}
+
+.fileList li div.progress span.percentage {
+    background: #1483d8 none repeat scroll 0 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 0;
+}
+	.fileList div.file-panel {
+        background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
+        height: 0;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 300;
+    }
+    
+	.fileList div.file-panel span {
+        background: rgba(0, 0, 0, 0) url("../images/icons.png") no-repeat scroll 0 0;
+        cursor: pointer;
+        display: inline;
+        float: right;
+        height: 24px;
+        margin: 5px 1px 1px;
+        overflow: hidden;
+        text-indent: -9999px;
+        width: 24px;
+    }
+    
+	.fileList div.file-panel span.cancel {
+        background-position: -48px -24px;
+    }
+    
+	.fileList div.file-panel span.cancel:hover {
+        background-position: -48px 0;
+    }
+    
+	.fileList div.file-panel span.thumb {
+        background-position: -70px -24px;
+    }
+    
+	.fileList div.file-panel span.thumb:hover {
+        background-position: -70px -1px;
+    }   
+    
+.fileName a{padding-left:15px;text-decoration:none}

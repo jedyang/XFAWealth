@@ -1,0 +1,208 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <div class="wmes-top">
+        <a href="javascript:;" class="header-over">Edit Proposal</a>
+    </div>
+    <div class="wmes-content">
+        <div class="proposal-wrap">
+            <p class="proposal-title">Proposal A</p>
+            <div class="proposal-step-wrap">
+                <div class="proposal-step-portrait">
+                    <img class="step-portrait-img" src="${base}/res/images/strategy/strategy_portrait.png">
+                    <div class="step-portrait-name-wrap">
+                        <p class="step-portrait-name">Shirley Lu</p>
+                        <ul class="step-portrait-choose">
+                            <li>Xc Zhao</li>
+                            <li>Ye Lam</li>
+                            <li>Mark Chen</li>
+                            <li>Ben Jack</li>
+                        </ul>
+                    </div>
+                </div>
+                <ul class="proposal-step">
+                    <li class="proposal-step-title proposal-step-old">Questionnaire</li>
+                    <li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+                    <li class="proposal-step-title proposal-step-old">Select Inv.Model</li>
+                    <li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+                    <li class="proposal-step-title proposal-step-now">Portfolio Builder</li>
+                    <li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+                    <li class="proposal-step-title">Proposal Report</li>
+                </ul>
+            </div>
+            <div class="stepThree-rows">
+                <p class="builder-title">Analysis Chart<span class="proposal-more-ico"></span></p>
+                <ul class="builder-tab">
+                    <li class="tab-active">Performance Chart<span></span></li>
+                    <li>Allocation Map<span></span></li>
+                    <li>Risk Analysis<span></span></li>
+                </ul>
+                <div class="builder-main-contents">
+                    <div class="builder-chart" style="display:block">
+                        <ul class="builder-chart-tab">
+                            <li class="tab-active" id="builder-chart-aggregate">Aggregate</li>
+                            <li id="builder-chart-separateness">Individual</li>
+                        </ul>
+                        <div class="builder-chart-wrap">
+                            <div class="builder-chart-one" id="builder-chart-one"></div>
+                            <ul class="builder-chart-date">
+                                <li date-day="30">1M</li>
+                                <li date-day="90">3M</li>
+                                <li date-day="180">6M</li>
+                                <li date-day="365">1Y</li>
+                                <li class="now" date-day="1100">3Y</li>
+                                <li date-day="1825">5Y</li>
+                                <li date-day="270">YTD</li>
+                            </ul>
+                        </div>           
+                    </div>
+                    <div class="allocation-map">
+                        <div class="allocation-chart">
+                            <div class="allocation-left-chart">
+                                <p class="allocation-chart-title">The Propose Model Combination</p>
+                                <p class="allocation-chart-level">Risk Level : Low</p>
+                                <div id="allocation-chart-propose"></div>
+                            </div>
+                            <img src="${base}/res/images/strategy/allocation-chart-ico.png">
+                            <div class="allocation-right-chart">
+                                <p class="allocation-chart-title">Adjusted Combination  (Changed)</p>
+                                <p class="allocation-chart-level">Risk Level : Medium</p>
+                                <div id="allocation-chart-change"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="risk-analysis">
+                        <div class="risk-analysis-left">
+                            <div id="risk-analysis-chart">
+                                <img src="${base}/res/images/allimg/transaction/Create3.png" style="width:100%;">
+                            </div>
+                        </div>
+                        <div class="risk-analysis-right">
+                            <div class="risk-analysis-rows">
+                                <p class="risk-analysis-title">Item</p>
+                                <p class="risk-analysis-lword">Portfolio Value</p>
+                                <p class="risk-analysis-lword">Risk Level</p>
+                                <p class="risk-analysis-lword">Daily VaR</p>
+                                <p class="risk-analysis-lword">Annual VaR</p>
+                                <p class="risk-analysis-lword">Beta</p>
+                                <p class="risk-analysis-lword">Alpha</p>
+                                <p class="risk-analysis-lword">Downside ratio%</p>
+                            </div>
+                            <div class="risk-analysis-rows">
+                                <p class="risk-analysis-title">Value</p>
+                                <p class="risk-analysis-rword">200,000.00</p>
+                                <p class="risk-analysis-rword">Medium</p>
+                                <p class="risk-analysis-rword">18,481.04</p>
+                                <p class="risk-analysis-rword">284,608.04</p>
+                                <p class="risk-analysis-rword">0.94</p>
+                                <p class="risk-analysis-rword">0.37</p>
+                                <p class="risk-analysis-rword">24.5%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="stepThree-rows">
+                 <p class="builder-title">Portfolio Detail<span class="proposal-more-ico"></span></p>
+                 <div class="portfolio-builder-edit-wrap">
+                     <div class="portfolio-edit-rows">
+                         <div class="portfolio-edit-rows-left">
+                             <p class="portfolio-edit-rows-title">Portfolio Name</p>
+                             <input class="portfolio-edit-name" type="" value="Shirley's Portfolio 1" name="" readonly onkeydown="this.onkeyup();" onkeyup="this.size=(this.value.length>4?this.value.length:4);" size="18" maxlength="29">
+                             <img class="portfolio-edit-img" src="${base}/res/images/strategy/strategy_edit_ico.png"> 
+                         </div>
+                     </div>
+                     <div class="portfolio-edit-rows">
+                        <div class="portfolio-edit-rows-left">
+                            <p class="portfolio-edit-rows-title">CUR</p>
+                            <div class="proposal_xiala">
+                                <input type="text"  value="USD" readonly>
+                                <span class="icon_xiala"></span>
+                                <ul id="proposal-choice">
+                                    <li>RMB</li>
+                                    <li>HKD</li>
+                                    <li>USD</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="portfolio-edit-rows-right">
+                            <p class="portfolio-edit-rows-title">Total Investment Amt</p>
+                            <input class="portfolio-edit-rows-input" type="" value="1560,000" name="">
+                        </div>
+                     </div>
+                 </div>
+                 <div class="products-list-wrap">
+                    <table class="portfolio-table">
+                            <tbody>
+                                <tr class="portfolio-table-th">
+                                    <th class="portfolio_tables_fnames">Fund Information</th>
+                                    <th class="portfolio_tables_header">Min Subscribe Amount</th>
+                                    <th class="portfolio_tables_header">Latest NAV Price</th>
+                                    <th class="portfolio_tables_header">Weight</th>
+                                    <th class="portfolio_tables_header">Amount</th>
+                                    <th class="portfolio_tables_header">YTD(%)</th>
+                                    <th class="portfolio_tables_header"></th>
+                                </tr>
+                                <tr>
+                                    <td class="portfolio_tables_fnames"><a href="javascript:;">Fidelity Funds - China Focus Fund A-USD</a>
+                                        <div class="portfolio_tables_nameWord">
+                                            <p class="portfolio_tables_risk">6 risk</p>
+                                            <p class="portfolio_tables_risk">Stock fund</p>
+                                        </div>
+                                    </td>
+                                    <td class="portfolio-tdcenter">1,000 USD</td>
+                                    <td class="portfolio-tdcenter">2 USD<br>(0.38)</td>
+                                    <td class="portfolio-tdcenter"><input class="strategy_chart_tinput" type="" value="25.00%" name=""></td>
+                                    <td class="portfolio-tdcenter">40,000</td>
+                                    <td class="portfolio-tdcenter">HKD <img class="strategy_chart_timg" src="${base}/res/images/strategy/strategy_chart_01.png"></td>
+                                    <td class="portfolio-tdcenter"><img src="${base}/res/images/ifa/garbage_ico.png"></td>
+                                </tr>
+                                <tr>
+                                    <td class="portfolio_tables_fnames"><a href="javascript:;">GF China RMB Fixed Income Fund (USD) Class A</a>
+                                        <div class="portfolio_tables_nameWord">
+                                            <p class="portfolio_tables_risk">4 risk</p>
+                                            <p class="portfolio_tables_risk">Stock fund</p>
+                                        </div>
+                                    </td>
+                                    <td class="portfolio-tdcenter">1,320 USD</td>
+                                    <td class="portfolio-tdcenter">1 USD<br>(0.42)</td>
+                                    <td class="portfolio-tdcenter"><input class="strategy_chart_tinput" type="" value="25.00%" name=""></td>
+                                    <td class="portfolio-tdcenter">43,500</td>
+                                    <td class="portfolio-tdcenter">HKD <img class="strategy_chart_timg" src="${base}/res/images/strategy/strategy_chart_03.png"></td>
+                                    <td class="portfolio-tdcenter"><img src="${base}/res/images/ifa/garbage_ico.png"></td>
+                                </tr>
+                                <tr>
+                                    <td class="portfolio_tables_fnames"><a href="javascript:;">CIFMHK Funds - CIFM (HK) RMB China A Focus Fund (RMB) A</a>
+                                        <div class="portfolio_tables_nameWord">
+                                            <p class="portfolio_tables_risk">5 risk</p>
+                                            <p class="portfolio_tables_risk">Stock fund</p>
+                                        </div>
+                                    </td>
+                                    <td class="portfolio-tdcenter">1,480 USD</td>
+                                    <td class="portfolio-tdcenter">3 USD<br>(0.33)</td>
+                                    <td class="portfolio-tdcenter"><input class="strategy_chart_tinput" type="" value="25.00%" name=""></td>
+                                    <td class="portfolio-tdcenter">38,800</td>
+                                    <td class="portfolio-tdcenter">HKD <img class="strategy_chart_timg" src="${base}/res/images/strategy/strategy_chart_02.png"></td>
+                                    <td class="portfolio-tdcenter"><img src="${base}/res/images/ifa/garbage_ico.png"></td>
+                                </tr>
+                            </tbody>
+                    </table>
+                 </div>
+            </div>
+            <div class="proposal-button-wrap">
+                <div class="proposal-button-wrap-left">
+                    <a class="proposal-button" href="javascript:;">Add Fund</a>
+                    <a class="proposal-button" href="javascript:;">Reset</a>
+                    <a class="proposal-button" href="javascript:;">Re-Calculate</a>
+                </div>
+                <div class="proposal-button-wrap-right"">
+                    <a class="proposal-button proposal-button-old" href="${base}/front/strategy/info/editProposalSetTwo.do">Previous</a>
+                    <a class="proposal-button" href="${base}/front/strategy/info/editProposalSetFour.do">Next</a>
+                    <a class="proposal-button" href="javascript:;">Draft</a>
+                </div>
+            </div>
+        </div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/strategy/createProposalSetThree.js');
+</script>

@@ -1,0 +1,188 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<link rel="stylesheet" href="${base}/res/third/formValidator/css/validationEngine.jquery.css"/>
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='open.account.title'/]</a>
+</div>
+<div class="wmes-content">
+    <div class="kaihu_div white_background">
+    <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='open.account.title'/]</p>
+            <div class="white_background">   
+                <!-- <div class="OpenAccount_big_title">
+                  <h2>Open account</h2>
+                </div> -->
+      
+                <div class="OpenAccount_liucheng_div">
+                    <div class="OpenAccount_liucheng">
+                        <ul>
+                        	                           [#if ifaApproveCheck?? && ifaApproveCheck]
+                            <li class="liucheng_first liucheng_orange"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                            [#else]
+                            <!-- 
+                            <li class="liucheng_first liucheng_light"><div class="font_height">[@lang_res k='open.account.Start'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_03.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_orange"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                             -->
+                            <li class="liucheng_first liucheng_orange"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                            [/#if]
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_05.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai"><div class="font_height">[@lang_res k='open.account.BasicInfo'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai"><div>[@lang_res k='open.account.DocumentCheck'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"></div>
+                            </li>
+                            <li class="liucheng_kuai"><div class="font_height">[@lang_res k='open.account.Declaration'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"></div>
+                            </li>
+                            <li class="liucheng_last"><div class="font_height">[@lang_res k='open.account.Submit'/]</div></li>
+                        </ul>
+                    </div>    
+                 </div>
+                [#if rpqList?exists && rpqList?size gt 1] 
+          		<div class="OpenAccount_tab">
+					<ul>
+						[#list rpqList as rpqTab]
+						<li>
+							<a [#if rpqTab_index==0]class="now"[/#if] href="javascript:;">${rpqTab.rpqPageTitle!}</a></li>
+						[/#list]
+					</ul>
+               	</div>
+               	[/#if]
+               	    
+                <div class="OpenAccount_liucheng_content">
+                <div class="rpqContent">
+                [#if rpqList?exists && rpqList?size gt 0 ]
+                [#list rpqList as rpq]
+               	<div [#if rpq_index!=0]style="display:none"[/#if]>
+                    <p class="rpqIntroduction">介绍</p>
+                    <div id="pageGen_${rpq_index}" class="rpqPageRemark" pageId="${rpq.rpqPageid!}">
+                    <input type="hidden" id="examId_${rpq_index}" value="${rpq.examId!}"/>
+                    <input type="hidden" id="isCalSorce_${rpq_index}" value="${rpq.isCalScore!}">
+                      ${rpq.rpqPageRemark}
+                    </div>
+                    <!-- 题目-->
+						<form id="rqpForm_${rpq_index}" name="rqpForm_${rpq_index}" action="" method="post" >
+                    	[#if rpq.questionList?? && rpq.questionList?size gt 0]
+                    	[#list rpq.questionList as questionList]
+                    	<div class="wenti">
+                      	<strong >${questionList.questTitle}</strong>
+	                      <div class="wenti_xuanzhe">
+	                              <ul class="BasicInfo_radio" questId="${questionList.questId!}" >
+	                              <!-- 问卷修改，加载原问卷与已选答案 -->
+	                              	[#if questionList.rqpExamItemList?exists && questionList.rqpExamItemList?size gt 0]
+	                              	[#list questionList.rqpExamItemList as examItem]
+	                              		<li>
+	                                    <input type="radio" class="regular-radio validate[required]" id="${examItem.id!}" name="${questionList.questId!}" value="${examItem.id!}" scoreValue="${examItem.scoreValue!}"  [#if examItem.checkFlag?exists && examItem.checkFlag=='1']checked[/#if]  data-prompt-target="rpqErrorMsg${questionList.questId!}" >
+	                                    <label for="${examItem.id!}"></label>
+	                                    <span class="font_gray_left">${examItem.title!}</span>
+	                                    </li>
+	                              	[/#list]
+	                              	[/#if]
+	                              	<li>
+			                      		<span id="rpqErrorMsg${questionList.questId!}"></span><!-- 表单验证信息 -->
+					                </li>      
+	                              </ul>
+	                        </div>                   
+                    	</div>
+ 						[/#list]
+						[/#if]
+						</form>
+						<script type="text/javascript">
+						seajs.use(['jquery','formValidLang','formValid'], function($){
+							$("#rqpForm_${rpq_index}").validationEngine({
+						        promptPosition: "inline",
+						        scroll:false,
+						        isOverflown:false,
+						        autoPositionUpdate:false,
+						        validateNonVisibleFields:true,
+						        focusFirstField:false,
+						        showArrow:false
+						    });
+					  	});	
+						</script>
+					<!-- 题目end -->	
+					
+						<!-- 各问卷评级 -->
+						
+	                    <div class="rpqSummary" [#if modifyFlag]style="display:block"[/#if] id="rpqSummary_${rpq_index}">
+	                      <p class="rpqSummaryTitle">Risk Profiling Result</p>
+	                      <div class="rpqSummaryMain">
+	                      
+	                          <div class="rpqSummaryLeft">
+	                              <p class="rpaSummarW">You are a <span class="rpqSummaryType" id="rpqSummaryType_${rpq_index}">Level:${rpq.level.riskLevel!}&nbsp;${rpq.level.result!}</span> </p>
+	                             [#if false==ifaApproveCheck]
+	                              <p>click <span class="rpqSummeryHere">here</span> to re evaluate</p>
+	                             [/#if]
+	                          </div>
+	                          <div class="rpqSummeryRight">
+	                              <p class="rpqRightTitle">Description:</p>
+	                              <p class="rpqRightContent" id="rpqRightContent_${rpq_index}">
+	                                As a balanced investor, you prefer the best of both worlds. Not too much risk, but not too shabby returns either. Your portfolio would probably consist of a large proportion of equity funds, balanced against an almost equal or larger proportion of less risky funds.
+	                                <br>
+	                                <br>
+	                                In general, one or more of these points apply to you.
+	                                You want slightly higher than average returns, yet are aware that your rates of returns are restricted due to the "safer" funds you hold.
+	                                 <br>
+	                                 <br>
+	                                You generally have some money saved up, although you wished that it were a little more, so that you could afford to take a little bit more risk in your investments.
+	                                 <br>
+	                                 <br>
+	                                You are very contented with your standard of living now. Your investments are meant to enable you to maintain this lifestyle, rather than to dramatically enhance it. (Although you wouldn't mind having a nicer car to drive though!)
+	                              </p>
+	                          </div>
+	                          
+	                      </div>
+	                    </div>
+	                    
+	                    <div class="wenti_btn rpq_btn" id="rpq_btn_${rpq_index}" [#if modifyFlag || ifaApproveCheck]style="display:none;"[/#if]>
+                    		<a class="wenti_btn_bule rpaUpdate" id="rpaUpdate_${rpq_index}" href="javascript:;" index="${rpq_index!}">Summit</a>
+	                      	<a class="wenti_btn_bule rpaReset" id="rpaReset_${rpq_index}" href="javascript:;" index="${rpq_index!}">Reset</a>
+	                    </div>
+                    <!-- 各问卷评级 end-->
+					</div>
+                    [/#list]
+                    <!-- rpq列表为空 ,不允许下一步 -->
+                    [#else]
+                    <div >
+						<div style="display:block;">
+							<div class="errMsg">[@lang_res k='front.rpq.noRpq.sorry'/]</div>
+						</div>
+					</div>
+                    [/#if]
+                  </div>
+                </div>
+                	<div class="wenti_btn" id="rpa_subbtn" [#if false==modifyFlag && false==ifaApproveCheck]style="display:none;"[/#if]>
+                		[#if rpqList?exists && rpqList?size gt 0 ]
+	                        [#if ifaApproveCheck?? && ifaApproveCheck]
+	                        <a id="btn_next" class="wenti_btn_bule" href="javascript:;">Next</a>
+	                        [#else]
+	                        <a class="wenti_btn_LightBlue" href="${base}/front/investor/[#if investorAccount.ifa?? && investorAccount.ifa.member?? && investorAccount.createBy?? && investorAccount.createBy==investorAccount.ifa.member.id]accountByIFA.do?accountId=${accountId!''}
+	                                [#else]accountStart.do?accountId=${accountId!''}[/#if]">Previous</a>
+							<a id="btn_next" class="wenti_btn_bule" href="javascript:;">Next</a>                                
+	                        <a id="btn_dreft" class="wenti_btn_bule" href="javascript:;">Draft</a>
+	                        [/#if]
+                        [/#if]
+                        <a id="btn_cancle" class="wenti_btn_LightBlue" href="javascript:;">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+	var accountId = '${accountId!}';
+	[#if validity?exists && validity == "false" ]
+	  alert( "抱歉，当前开户关联的accountId有误，请检查开户流程是否正确？" );
+	  window.location.href = "${base}/front/investor/accountStart.do?accountId=${accountId!''}"+"&r="+Math.random();
+	[/#if]
+	seajs.use('${base}/res/web/openAccount/openAccountRpq.js');
+</script>
+

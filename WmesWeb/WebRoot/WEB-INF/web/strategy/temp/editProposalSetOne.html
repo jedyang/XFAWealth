@@ -1,0 +1,103 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <div class="wmes-top">
+        <a href="javascript:;" class="header-over">Edit Proposal</a>
+    </div>
+    <div class="wmes-content">
+    	<div class="proposal-wrap">
+    		<p class="proposal-title">Proposal A</p>
+    		<div class="proposal-step-wrap">
+    			<div class="proposal-step-portrait">
+    				<img class="step-portrait-img" src="${base}/res/images/strategy/strategy_portrait.png">
+    				<div class="step-portrait-name-wrap">
+    					<p class="step-portrait-name">Shirley Lu</p>
+    					<ul class="step-portrait-choose">
+    						<li>Xc Zhao</li>
+    						<li>Ye Lam</li>
+    						<li>Mark Chen</li>
+    						<li>Ben Jack</li>
+    					</ul>
+    				</div>
+    			</div>
+    			<ul class="proposal-step">
+    				<li class="proposal-step-title proposal-step-now">Questionnaire</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">Select Inv.Model</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">Portfolio Builder</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">Proposal Report</li>
+    			</ul>
+    		</div>
+    		<div class="stepOne-rows">
+    			<p class="stepOne-rows-title">Please answer these questions to estimate client's investment requirements</p>
+    			<div class="stepOne-rows-fillin">
+    				<p class="stepOne-rows-input-title">Proposal Name</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<input class="stepOne-rows-input100" type="" name="">
+    				</div>
+    			</div>
+    			<div class="stepOne-rows-fillin">
+    				<div class="stepOne-rows-half-fillin">
+    					<p class="stepOne-rows-input-title">Initial Invest Amount</p>
+    					<div class="stepOne-rows-text-wrap">
+    						<input class="stepOne-rows-input50" type="" name="">	
+    					</div>
+    				</div>
+    				<div class="stepOne-rows-cur-fillin">
+    					<p class="stepOne-rows-cur-title">CUR</p>
+    					<div class="proposal_xiala">
+	                        <input type="text"  placeholder="USD" readonly>
+	                        <span class="icon_xiala"></span>
+	                        <ul id="proposal-choice">
+	                        	<li>RMB</li>
+	                            <li>HKD</li>
+	                            <li>USD</li>
+	                        </ul>
+	                    </div>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="stepOne-rows">
+    			<p class="stepOne-rows-title">Investment Constrains</p>
+    			<div class="stepOne-constrains-rows">
+    				<p class="stepOne-rows-input-title">Liquidity Needs</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<textarea class="stepOne-rows-text"></textarea>
+    				</div>
+    			</div>
+    			<div class="stepOne-constrains-rows">
+    				<p class="stepOne-rows-input-title">Time Frame</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<textarea class="stepOne-rows-text"></textarea>
+    				</div>
+    			</div>
+    			<div class="stepOne-constrains-rows">
+    				<p class="stepOne-rows-input-title">Tax Concerns</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<textarea class="stepOne-rows-text"></textarea>
+    				</div>
+    			</div>
+    			<div class="stepOne-constrains-rows">
+    				<p class="stepOne-rows-input-title">Legal and Regulatory Factors</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<textarea class="stepOne-rows-text"></textarea>
+    				</div>
+    			</div>
+    			<div class="stepOne-constrains-rows">
+    				<p class="stepOne-rows-input-title">Unique Needs and Preferences</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<textarea class="stepOne-rows-text"></textarea>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="proposal-button-wrap">
+    			<a class="proposal-button" href="${base}/front/strategy/info/editProposalSetTwo.do">Next</a>
+    			<a class="proposal-button" href="javascript:;">Draft</a>
+    		</div>
+    	</div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/strategy/createProposalSetOne.js');
+</script>

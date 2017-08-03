@@ -1,0 +1,86 @@
+[#include "../../inc/head_v2.html"/]
+
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/other.css">
+<div class="wmes-content">
+		<div class="strategies-view-header">
+        <p class="wmes-wrap-title">[@lang_res k='recommend.portfolio.list.title'/]</p>
+		<a href="${base}/front/community/space/ifaSpace.do?id=${ifa.memberId!}">
+		<img class="strategies-view-portrait" src="${base}${ifa.iconUrl!}">
+		</a>
+		<div class="ifa-personal-ageas">
+			<p class="ifa-personal-name">${ifa.memberName}  ([#if ifa.gender?? && ifa.gender=="F"][@lang_res k='member.gender.ms'/][#else][@lang_res k='member.gender.mr'/][/#if])</p>
+			<p class="ifa-personal-aico">[@lang_res k='ifa.popular'/] ${ifa.popularityTotal?default(0)}</p>
+		</div>
+		<div class="ifa-personal-contact">
+			<p><img src="${base}/res/images/ifa/my_ifa_phone.png">${ifa.phoneNumber!}</p>
+			<p><img src="${base}/res/images/ifa/my_ifa_email.png">${ifa.email!}</p>
+		</div>
+		<div class="ifa-personal-contact">
+			<p class="ifa-personal-aico" style="margin-bottom:0;margin-top:-6px;"><img  style="width: 30px;" src="${base}${ifa.ifafirmIconUrl!}">${ifa.ifafirmName!}</p>
+			<p>[@lang_res k='ifa.experience'/] ${ifa.investLife!} [@lang_res k='ifa.detail.profile.year'/]</p>
+		</div>
+	</div>
+	  <input type="hidden" id="defColor" value="${defDisplayColor!}"> 
+	  	<input type="hidden" id="dateFormat" value="${dateFormat!}">
+	<div class="strategies_list_wrap" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+		<div class="ifa_keyserach_wrap">
+			<div class="funds_keyserach ifa_keyserach">
+				<input type="text" id="fundName" placeholder="[@lang_res k='portfolio.info.list.portfolioName'/]">
+				<span class="icon_search" id="searchKeyBtn"></span>
+			</div>
+		</div>
+		<div class="strategies_list">
+			<ul class="portfolio_list_ul" style="display:none;">
+				<li class="dataListTr" ng-repeat="items in dataList" ng-init="checkLast($last)">
+					<a href="${base}/front/portfolio/arena/detail.do?id={{items.id}}">
+						<div class="portfolio_list_contents portfolio_list_contents_amend">
+							<p class="portfolio_name portfolio_name_amend" style="width:70%; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" data-ellipsis="true" data-ellipsis-max-line="3" title="{{items.portfolioName}}">{{items.portfolioName}}
+								<div class="portfolio_fav_img_amend"  optype="0" relateid="{{items.id}}"  src="${base}/res/images/icon-herat-1.png" ng-if="items.isFollow=='0' || items.isFollow==null"></div>
+							<div class="portfolio_fav_img_amend portfolio_fav_img_amend1active"  optype="1" relateid="{{items.id}}"   src="${base}/res/images/icon-herat-11.png" ng-if="items.isFollow=='1'"></div>
+								
+								<div class="strategies_word_wrap">
+									<p class="strategies_list_goal" style="width:70%; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" data-ellipsis="true" data-ellipsis-max-line="3" title="{{items.sector}} | {{items.geoAllocation}}">
+									{{items.sector}} <span ng-if="items.sector!='' && items.geoAllocation!=''">|</span> {{items.geoAllocation}}</p>
+									<span class="lump-equity-grade funds_leveal_{{items.riskLevel}}" style="margin-right:30px">{{items.riskLevel}}</span>
+									<!--<p class="strategies_list_fund">[@lang_res k='account.list.risk'/] {{items.riskLevel}}</p>
+								--></div>
+                           <p style="margin:10px 0;font-weight: 700;"><span class="portfolio_percent" style="font-size:14px;margin-right:6px">{{items.monReturn3 | formatCurrency:'%'}}</span> [@lang_res k='fund.info.screener.performance.3MonthReturn'/]</p>
+								<div class="portfolio_total portfolio_total_amend">
+									<div class="portfolio_index_wrap_amend">
+									<img src="${base}/loadImgSrcByPath.do?filePath={{items.chartUrl}}" ng-if="items.chartUrl!=null && tems.chartUrl!='' " style="height:100%;width:100%" />
+									
+									</div>
+									<div class="portfolio_return portfolio_return_amend">
+										<p class="portfolio_percent_amend" ng-if="(items.totalReturn<0 && defColor=='2') || (items.totalReturn>=0 && defColor!='2')">
+										{{items.totalReturn | formatCurrency:'%'}}
+									</p>
+									<p class="portfolio_percent_amend funds_search_negative" ng-if="(items.totalReturn>=0 && defColor=='2') || (items.totalReturn<0 && defColor!='2')">
+										{{items.totalReturn | formatCurrency:'%'}}
+									</p>
+										<p class="portfolio_return_word">[@lang_res k='list.search.return'/]</p>
+									</div>
+								</div>
+						</div>
+						<div class="strategies_list_inf">
+							<p class="strategies_time_word strategies_time_word_amend">{{items.lastUpdate|datetime:dateTimeFormat}}</p>
+							<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+						</div>
+					</a>
+				</li>
+
+			</ul>
+			  <div class="clickmore" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+		</div>
+	    	 <div class=" no_list_tips">
+               <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+               <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+          </div>
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+var id="${ifa.memberId!}";
+	seajs.use('${base}/res/web/ifa/viewPortfolioList.js');
+	
+</script>

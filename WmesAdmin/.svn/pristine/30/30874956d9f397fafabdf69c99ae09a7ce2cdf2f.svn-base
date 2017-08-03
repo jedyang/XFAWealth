@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择ifa</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+
+    <style>
+    .funds_keyword_search{float: left;margin-left: 15px;padding-left: 10px;}
+	.funds_keyword_search{float: left;margin-left: 15px;padding-left: 10px;}
+	.funds_keyword_input{   padding: 6px 12px;   width: 400px; height: 34px;  line-height: 1.42857143;border-radius: 4px;
+	  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;letter-spacing: normal;
+	  word-spacing: normal;
+	  text-transform: none;
+	  text-indent: 0px;
+	  text-shadow: none;
+	  display: inline-block;
+	  text-align: start;color: #555555;
+	  background-color: #ffffff;
+	  background-image: none;
+	  border: 1px solid #cccccc;}
+	.funds_keyword_search ul{display: none; border-right: 1px solid #e0dfdf;  border-left: 1px solid #e0dfdf; border-bottom:  1px solid #e0dfdf;  z-index: 9;width: 400px;color: black;position: absolute;}
+	.funds_keyword_search ul li{cursor: pointer; padding-left: 5px;  color: #606060;background-color: white;height: 30px;line-height: 30px;padding-left: 5px;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+	.funds_keyword_search li:hover{  background-color:#4ba6de;color: white;}
+    </style>
+</head>
+
+<body>
+<!-- 传递过来的团队与公司ID参数 -->
+<input type="hidden" id="hidTeamId" value="${(teamid)?if_exists}" />
+<input type="hidden" id="hidIfafirmId" value="${(ifafirmid)?if_exists}" />
+<div class="row">
+       <div class="col-md-12">
+           <form class="form-inline" style="display:block;">
+               <div class="funds_keyword_search">
+                <div class="row pd10" style="  margin-left: -45px;">
+                    <div class="col-md-12">
+                    	<input type="text"  class="funds_keyword_input" id="select_keyword" placeholder="请输入搜索关键字，支持英文姓名、中文姓名等">
+                    	<button type="button" id="btnSearch" class="btn btn-primary">[@lang_res k='global.query'/]</button>	                        	
+                    </div>
+                </div>
+               </div>
+               <div class="clear"></div>
+               <div>
+                   <table id="ifaselectlist" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                       <tbody>
+                       <tr>
+              	   <th class="table-head">[@lang_res k='member.info.firstName'/]</th>
+              	   <th class="table-head">[@lang_res k='member.info.lastName'/]</th>
+                           <th class="table-head">[@lang_res k='member.info.nameChn'/]</th>
+                           <th class="table-head">[@lang_res k='ifafirm.ifa.createTime'/]</th>
+                        </tr>                                
+                       </tbody>
+                   </table>
+	        	   <nav  class="pull-right">
+		              <!-- 分页 -->
+		             <ul id='team_select_pagination' class="pagination pull-right">
+			   		 </ul>
+		          </nav>
+      		  	  <div class="clear"></div>                      
+             </div>
+         </form>               
+      </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+
+<script type="text/javascript">
+$(function() {
+	//查询
+	$('#btnSearch').on('click',function(){
+		bindIfaList(0);
+	});
+	//选择
+	$(document).on('click', '.seluser', function() { 
+		var name = $(this).attr("selname");
+		var id = $(this).attr("selid");
+		selectifa(name,id);
+	});
+	//删除选择
+	$(document).on('click', '.badge', function() { 
+		selectedIds = '';
+		selectedNames = '';
+		$(this).parent().remove();
+	});
+	
+	bindIfaList(0);//
+	//根据公司与团队ID获取所有的成员数据，做成分页
+	function bindIfaList(pageid) {
+		var teamid = $('#hidTeamId').val();
+		var ifafirmid = $('#hidIfafirmId').val();
+		var keyword = $('#select_keyword').val();
+		var html = '';
+		$("#ifaselectlist tbody tr:gt(0)").empty();
+		$.ajax({
+				type : 'post',
+				datatype : 'json',
+				url : "${base}/console/ifafirm/teamUserSelectJson.do?datestr="+ new Date().getTime(),
+				data : {'keyword':keyword,'teamid':teamid,'ifafirmid':ifafirmid,page : pageid + 1,rows :6},
+				success : function(json) {
+					var total = json.total;
+					var table = json.rows;
+					$.each(table, function(i, n) {
+						var nameChn = n.nameChn; 
+						var ifaid = n.id; 
+						var firstName = n.firstName; 
+						var lastName = n.lastName; 
+						var createTime = n.createTime; 
+						html += '<tr data-id="'+ifaid+'" ><td><a class="seluser" selname="'+firstName+lastName+'" selid="'+ifaid+'" href="javascript:;">'+firstName+'</a></td><td>'+lastName+'</td><td>'+nameChn+'</td><td>'+ createTime+'</td></tr>';
+					
+	               	});
+					$('#ifaselectlist').append(html); 
+					$("#team_select_pagination").pagination(total, {
+						callback : pageselectCallback,
+						numDetail : '',
+						items_per_page : 6,
+						num_display_entries : 4,
+						current_page : pageid,
+						num_edge_entries : 2
+					});
+				}
+			});
+		//分页回调
+		function pageselectCallback(page_id, jq) {
+			bindIfaList(page_id);
+		}
+	}
+	//点击选择
+	var selectedIds = '';
+	var selectedNames = '';
+	function selectifa(name,id) { 
+		if(selectedIds == ''){
+			selectedIds = id;
+			selectedNames = name;
+		}
+		else{
+			selectedIds = selectedIds+","+id;
+			selectedNames = selectedNames+","+name;
+		}
+		$('#ifa_selected').remove();
+		$('.bootstrap-dialog-footer-buttons').prepend('<button id="ifa_selected" ifaNames="'+selectedNames+'" ifaIds="'+selectedIds+'" class="btn btn-default " type="button">'+selectedNames+' <span class="badge">X</span></button>    ');
+	}
+});
+</script>
+</body>
+</html>

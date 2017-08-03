@@ -1,0 +1,79 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/other.css">
+<div class="wmes-content">
+	<div class="strategies-view-header">
+        <p class="wmes-wrap-title">[@lang_res k='recommend.strategy.list.title'/]</p>
+		<a href="${base}/front/community/space/ifaSpace.do?id=${ifa.memberId!}">
+		<img class="strategies-view-portrait" src="${base}${ifa.iconUrl!}">
+		</a>
+		<div class="ifa-personal-ageas">
+			<p class="ifa-personal-name">${ifa.memberName}  ([#if ifa.gender?? && ifa.gender=="F"][@lang_res k='member.gender.ms'/][#else][@lang_res k='member.gender.mr'/][/#if])</p>
+			<p class="ifa-personal-aico">[@lang_res k='ifa.popular'/] ${ifa.popularityTotal?default(0)}</p>
+		</div>
+		<div class="ifa-personal-contact">
+			<p><img src="${base}/res/images/ifa/my_ifa_phone.png">${ifa.phoneNumber!}</p>
+			<p><img src="${base}/res/images/ifa/my_ifa_email.png">${ifa.email!}</p>
+		</div>
+		<div class="ifa-personal-contact">
+			<p class="ifa-personal-aico" style="margin-bottom:0;margin-top:-6px;"><img  style="width: 30px;" src="${base}${ifa.ifafirmIconUrl!}">${ifa.ifafirmName!}</p>
+			<p>[@lang_res k='ifa.experience'/] ${ifa.investLife!} [@lang_res k='ifa.detail.profile.year'/]</p>
+		</div>
+	</div>
+	<div class="strategies_list_wrap" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+		<input type="hidden" id="dateFormat" value="${dateFormat!}">
+		<div class="ifa_keyserach_wrap">
+			<div class="funds_keyserach ifa_keyserach">
+				<input type="text" id="fundName" placeholder="[@lang_res k='strategy.info.list.strategyName'/]">
+				<span class="icon_search" id="searchKeyBtn"></span>
+			</div>
+		</div>
+		<div class="strategies_list">
+		<ul class="strategies_list_ul" style="display:none;">
+				<li class="dataListTr ng-cloak" ng-repeat="items in dataList" ng-init="checkLast($last)">
+                <a href="${base}/front/strategy/info/strategiesdetail.do?id={{items.id}}">
+					<div class="strategies_list_ico">
+						
+							<p class="strategies_list_name">{{items.strategyName}}
+							<img class="strategies_fav_img" ng-if="items.isFollow=='1'" optype="1" relateid="{{items.id}}" src="${base}/res/images/icon-herat-11.png">
+							<img class="strategies_fav_img" ng-if="items.isFollow!='1'" optype="0" relateid="{{items.id}}" src="${base}/res/images/icon-herat-1.png">
+							</p>
+						
+						<img class="strategies_eve_img" style="display: none;" src="${base}/res/images/fund/strategies_eve.png">
+						</div>
+					<div class="strategies_word_wrap">
+						<p class="strategies_list_goal" style="width:60%; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" data-ellipsis="true" data-ellipsis-max-line="3" title="{{items.sector}} | {{items.geoAllocation}}">
+						{{items.sector}} <span ng-if="items.sector!='' && items.geoAllocation!=''">|</span> {{items.geoAllocation}}
+						</p>
+						<span class="lump-equity-grade funds_leveal_{{items.riskLevel}}" style="margin-right:30px">{{items.riskLevel}}</span>
+						<!--<p class="strategies_list_fund">{{items.riskLevel}}</p>
+					--></div>
+					<p class="strategies_list_word">
+							{{items.reason}}</p>
+					<div class='strategies_list_ptos' data-value="{{items.allocationData}}"></div>
+					</a>
+					<div class="strategies_list_inf">
+						<a href="${base}/front/community/space/ifaSpace.do?id={{items.creator.id}}"><img class="strategies_inf_img" src="${base}{{items.creator.iconUrl}}">
+						<p class="strategies_list_ifaname">{{items.ifa.firstName}} {{items.ifa.lastName}}</p>
+						</a>
+						<p class="strategies_time_word">{{items.lastUpdate|datetime:dateFormat}}</p>
+						<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+						
+					</div>
+					
+				</li>
+          </ul>
+           <div class="clickmore" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+          </div>
+	        <div class=" no_list_tips">
+               <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+               <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+          </div>
+</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+var id='${ifa.memberId!}';
+seajs.use('${base}/res/web/ifa/viewStrategiesList.js');
+	
+</script>

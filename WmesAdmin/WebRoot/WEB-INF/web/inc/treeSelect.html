@@ -1,0 +1,76 @@
+<!-- 
+<link rel="stylesheet" href="${base}/res/third/zTree/css/metroStyle/metroStyle.css" type="text/css">
+ -->
+<link rel="stylesheet" href="${base}/res/third/zTree/css/metroStyle/metroStyle.css" type="text/css">
+<script src="${base}/res/third/zTree/js/jquery.ztree.all.min.js" type="text/javascript"></script>
+<SCRIPT type="text/javascript">
+<!--
+var setting = {
+	view: {
+		dblClickExpand: false
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		onClick: treeOnClick
+	}
+};
+
+$(document).ready(function(){
+	$.fn.zTree.init($("#dropDownMenu"), setting, zNodes);
+});
+
+function treeBeforeClick(treeId, treeNode) {
+	var check = (treeNode && !treeNode.isParent);
+	return check;
+}
+
+function treeOnClick(e, treeId, treeNode) {
+  if (treeNode) {
+	var zTree = $.fn.zTree.getZTreeObj("dropDownMenu"),
+	nodes = zTree.getSelectedNodes(),
+	vName = "";
+	vId = "";
+	nodes.sort(function compare(a,b){return a.id-b.id;});
+	for (var i=0, l=nodes.length; i<l; i++) {
+		vName += nodes[i].name + ",";
+		vId += nodes[i].id + ",";
+	}
+	if (vName.length > 0 ) vName = vName.substring(0, vName.length-1);
+	if (vId.length > 0 ) vId = vId.substring(0, vId.length-1);
+	
+	var treeObj = $("#treeSelect");
+	treeObj.attr("value", vName);
+	
+	var treeObjId = $("#tree_select_id");
+	treeObjId.attr("value", vId);
+	
+	$("#treeSelect").removeClass("error-field");
+	hideMenu();
+	
+  }
+}
+
+function showMenu() {
+	var treeObjId = $("#treeSelect");
+	var treeOffset = $("#treeSelect").offset();
+	$("#dropDownMenuBackground").css({left:treeOffset.left + "px", top:treeOffset.top + treeObjId.outerHeight() + "px"}).slideDown("fast");
+	$("body").bind("mousedown", onBodyDown);
+}
+function hideMenu() {
+	$("#dropDownMenuBackground").fadeOut("fast");
+	$("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+	if (!(event.target.id == "menuBtn" || event.target.id == "dropDownMenuBackground" || $(event.target).parents("#dropDownMenuBackground").length>0)) {
+		hideMenu();
+	}
+}
+//-->
+</SCRIPT>
+<div id="dropDownMenuBackground" style="display:none;z-index:100;position:absolute; height:auto; min-width:200px; background-color:white;border:1px solid;overflow-y:auto;overflow-x:auto;">
+	<ul id="dropDownMenu" class="ztree" style="margin-top:0; width:340px;"></ul>
+</div>

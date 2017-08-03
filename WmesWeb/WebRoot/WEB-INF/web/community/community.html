@@ -1,0 +1,226 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/community.css">
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<style>
+.highlight{background:green;font-weight:bold;color:white;}  
+.headPortrait{cursor:pointer;}
+</style>
+	<div class="wmes-content" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+		<div class="wmes-community-wrap">
+			<div class="wmes-community-titlebox">
+				<p>[@lang_res k='community.community.communityName'/]</p>
+				<div class="wmes-community-searchbox-click">[@lang_res k='community.community.iWantToPublish'/]</div>
+				<div class="wmes-community-searchbox">
+					<input class="wmes-community-searchbox-text" placeholder="[@lang_res k='topic.publish.title'/]" id="txtkeywords"/>
+					<!--<div class="wmes-community-searchbox-choose">
+						<span class="wmes-community-searchbox-choose-txt">搜帖子</span>
+						<span class="wmes-community-searchbox-xiala"></span>
+					</div>-->
+					<div class="wmes-community-searchbox-search"></div>
+					<ul class="wmes-community-searchbox-choose-choose">
+						<li>搜帖子</li>
+						<li>搜人</li>
+					</ul>
+				</div>
+				
+			</div>
+			<div class="wmes-community-content">
+				<div class="wmes-community-content-left">
+					<ul class="wmes-community-tab wmes-community-topic-tab">
+						<li class="wmes-community-tabac" type="dynamic">[@lang_res k='community.community.dynamic'/]</li>
+						<li type="recommend" style="display:none">[@lang_res k='community.community.recommend'/]</li>
+						[#if communitySectionList?? && communitySectionList?exists &&communitySectionList?size gt 0]
+						[#list communitySectionList as each]
+			             <li type="${each.name!}" typeid="${each.id!}">${each.name!}</li>
+						[/#list]
+						[/#if]
+						
+					</ul>
+					<!-- 第一个TAB页内容 -->
+					<div class="dataListTr wmes-community-news-con ng-cloak" ng-repeat="items in dataList">
+						<div class="wmes-community-news-wrap">
+							<a href="${base}/front/community/info/topicDetail.do?id={{items.id}}&type=t">
+							<div class="wmes-community-news-title" >
+							<span ng-if="items.isShare=='1' && items.sourceType=='news'">[@lang_res k='topic.detail.share'/]</span>
+							<span ng-if="items.isShare=='1' && items.sourceType!='news'">[@lang_res k='topic.detail.transmit'/]</span>
+							<span  ng-bind="items.title"></span></div></a>
+							<div class="wmes-community-news-type">{{items.sectionName}}<span>{{items.publishTimeFormat}}</span></div>
+							<p class="wmes-community-news-text">
+							<span  ng-bind="items.content | cut:true:150:'...'"></span>
+							</p>
+							<div class="wmes-community-news-message">
+								<div class="wmes-community-news-message-left">
+									<img membertype="{{items.memberType}}" memberid="{{items.memberId}}" class="headPortrait wmes-community-news-headPortrait" src="${base}{{items.userHeadUrl}}"/></a>
+									<div class="wmes-community-news-message-name">{{items.nickName}}</div>
+									<div class="wmes-community-news-message-ifasign"  ng-if="items.memberType==2"></div>
+									<div class="wmes-community-news-message-investorsign"  ng-if="items.memberType==1"></div>
+								</div>
+								<div class="wmes-community-news-message-right">
+									<div class="wmes-community-news-message-right-caicon">
+										<div class="wmes-community-news-message-right-cai"></div><span>{{items.unlikeCount}}</span>
+									</div>
+									<div class="wmes-community-news-message-right-nicecon">
+										<div behavior="like" iscancel="" type="t" topicid="{{items.id}}" class="wmes-community-news-message-right-nice"></div><span>{{items.likeCount}}</span>
+									</div>
+									<div class="wmes-community-news-message-right-relycon" style="cursor:default;">
+										<div class="wmes-community-news-message-right-rely"></div><span>{{items.commentCount}}</span>
+									</div>
+									<div class="wmes-community-news-message-right-eyecon" style="cursor:default;">
+										<div class="wmes-community-news-message-right-eye"></div><span>{{items.readCount}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="clickmore" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+					 <div class="wmes-nodata-tips no_list_tips">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  </div>
+				</div>
+				<div class="wmes-community-content-right">
+					<div class="wmes-community-content-right-bigtitle">[@lang_res k='community.community.popularity'/]</div>
+					<ul class="wmes-community-tab wmes-community-popularity-tabac">
+						<li typeid="1" class="wmes-community-tabac">[@lang_res k='community.community.dayRank'/]</li>
+						<li typeid="2" >[@lang_res k='community.community.weekRank'/]</li>
+						<li typeid="3" >[@lang_res k='community.community.totalRank'/]</li>
+					</ul>
+					<div class="community-popularity-wrapcon">
+					[#if frontPopularityRankList?? && frontPopularityRankList?exists &&frontPopularityRankList?size gt 0]
+					[#list frontPopularityRankList as each]
+		             <div class="community-popularity-wrap">
+							<img memberid="${each.memberId!}" membertype="${each.memberType!}" class="headPortrait community-popularity-wrap-img" src="${base}${each.userHeadUrl}"/>
+							<div class="community-popularity-wrap-mes">
+								<div class="community-popularity-wrap-mes-name"><p>${each.nickName}</p>
+								[#if each.memberType=='1']
+								<span class="wmes-community-news-message-investorsign" ></span>
+								[#elseif each.memberType=='2']
+								<span class="wmes-community-news-message-ifasign" ></span>
+								[/#if]
+								</div>
+								<div class="community-popularity-wrap-mes-content">
+									<div class="community-popularity-wrap-mes-followers"><p>[@lang_res k='community.community.followers'/]</p><span>${each.followersCount}</span></div>
+									<div class="community-popularity-wrap-mes-topic"><p>[@lang_res k='community.community.topic'/]</p><span>${each.topicCount}</span></div>
+								</div>
+								<div class="community-popularity-wrap-mes-activity"><p>[@lang_res k='community.community.activity'/]</p><span>${each.activity}</span></div>
+							</div>
+						</div>
+					[/#list]
+					[#else]
+					<div class="wmes-nodata-tips" style="display:block;">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  	</div>
+					 <!--  <div style="text-align: center;margin-top: 20px;"><span>暂无数据</span></div>-->
+					[/#if]
+					</div>
+					<div class="community-popularity-wrapcon" style="display:none;">
+					[#if weekTopCommentTopicCreatorList?? && weekTopCommentTopicCreatorList?exists &&weekTopCommentTopicCreatorList?size gt 0]
+					[#list weekTopCommentTopicCreatorList as each]
+		             <div class="community-popularity-wrap">
+							<img memberid="${each.memberId!}" membertype="${each.memberType!}" class="headPortrait community-popularity-wrap-img" src="${base}${each.userHeadUrl}"/>
+							<div class="community-popularity-wrap-mes">
+								<div class="community-popularity-wrap-mes-name"><p>${each.nickName}</p>
+								[#if each.memberType=='1']
+								<span class="wmes-community-news-message-investorsign" ></span>
+								[#elseif each.memberType=='2']
+								<span class="wmes-community-news-message-ifasign" ></span>
+								[/#if]
+								</div>
+								<div class="community-popularity-wrap-mes-content">
+									<div class="community-popularity-wrap-mes-followers"><p>[@lang_res k='community.community.followers'/]</p><span>${each.followersCount}</span></div>
+									<div class="community-popularity-wrap-mes-topic"><p>[@lang_res k='community.community.topic'/]</p><span>${each.topicCount}</span></div>
+								</div>
+								<div class="community-popularity-wrap-mes-activity"><p>[@lang_res k='community.community.activity'/]</p><span>${each.activity}</span></div>
+							</div>
+						</div>
+					[/#list]
+					[#else]
+					 <div class="wmes-nodata-tips" style="display:block;">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  	</div>
+					[/#if]
+					</div>
+					<div class="community-popularity-wrapcon" style="display:none;">
+					[#if totalTopCommentTopicCreatorList?? && totalTopCommentTopicCreatorList?exists &&totalTopCommentTopicCreatorList?size gt 0]
+					[#list totalTopCommentTopicCreatorList as each]
+		             <div class="community-popularity-wrap">
+							<img memberid="${each.memberId!}" membertype="${each.memberType!}" class="headPortrait community-popularity-wrap-img" src="${base}${each.userHeadUrl}"/>
+							<div class="community-popularity-wrap-mes">
+								<div class="community-popularity-wrap-mes-name"><p>${each.nickName!}</p>
+								[#if each.memberType=='1']
+								<span class="wmes-community-news-message-investorsign" ></span>
+								[#elseif each.memberType=='2']
+								<span class="wmes-community-news-message-ifasign" ></span>
+								[/#if]
+								</div>
+								<div class="community-popularity-wrap-mes-content">
+									<div class="community-popularity-wrap-mes-followers"><p>[@lang_res k='community.community.followers'/]</p><span>${each.followersCount!}</span></div>
+									<div class="community-popularity-wrap-mes-topic"><p>[@lang_res k='community.community.topic'/]</p><span>${each.topicCount!}</span></div>
+								</div>
+								<div class="community-popularity-wrap-mes-activity"><p>[@lang_res k='community.community.activity'/]</p><span>${each.activity!}</span></div>
+							</div>
+						</div>
+					[/#list]
+					[#else]
+					<div class="wmes-nodata-tips" style="display:block;">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  	</div>
+					[/#if]
+					</div>
+					
+					<div class="wmes-community-content-right-bigtitle">[@lang_res k='community.community.hotTopics'/]</div>
+					[#if weekTopCommentTopicList?? && weekTopCommentTopicList?exists &&weekTopCommentTopicList?size gt 0]
+					[#list weekTopCommentTopicList as each]
+		             <div class="community-topics-wrapcon">
+						<div class="community-topics-wrap">
+							<div class="community-topics-title">
+								<div class="community-topics-type">${each.sectionName!}</div>
+								<a class="" href="${base}/front/community/info/topicDetail.do?id=${each.topicId}&type=t"><div class="community-topics-title-text">${each.topicName}</div></a>
+							</div>
+							<div class="wmes-community-news-message">
+								<div class="wmes-community-news-message-left">
+									<img memberid="${each.memberId!}" membertype="${each.memberType!}" class="headPortrait wmes-community-news-headPortrait" src="${base}${each.userHeadUrl}"/>
+									<div class="wmes-community-news-message-name">${each.nickName}</div>
+									[#if each.memberType=='1']
+									<span class="wmes-community-news-message-investorsign" ></span>
+									[#elseif each.memberType=='2']
+									<span class="wmes-community-news-message-ifasign" ></span>
+									[/#if]
+									
+								</div>
+								<div class="wmes-community-news-message-right">
+									<div class="wmes-community-news-message-right-relycon">
+										<div class="wmes-community-news-message-right-rely"></div><span>${each.commentCount}</span>
+									</div>
+									<div class="wmes-community-news-message-right-eyecon">
+										<div class="wmes-community-news-message-right-eye"></div><span>${each.readCount}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					[/#list]
+					[#else]
+					 <div class="wmes-nodata-tips" style="display:block;">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  	</div>
+					[/#if]
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<input id="hidloginMemberType" type="hidden" value="${loginMemberType!}">
+	<input id="hidloginMemberId" type="hidden" value="${loginMemberId!}">
+<!---->
+[#include "../inc/foot_v2.html"/]
+<script type="text/javascript">
+    seajs.use('${base}/res/web/ifa/community.js');
+</script>

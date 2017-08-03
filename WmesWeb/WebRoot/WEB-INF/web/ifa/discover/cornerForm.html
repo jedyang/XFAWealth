@@ -1,0 +1,53 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/other.css">
+<link rel="stylesheet" href="${base}/res/css/wmesupload.css">  
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+<style>
+
+</style>
+<div class="wmes-content">
+	<div class="publish-share-wrapper">
+		<div class="publish-share-title">
+			<a href="javascript:history.go(-1)">
+          		<span class="wmes-ruturn"></span>
+          	</a>
+        Share</div>
+		<div class="publish-share-wrap">
+			<div class="publish-share-rows">
+				<p class="publish-share-rows-title">Topic</p>
+				<div class="publish-share-rows-right">
+					<textarea class="publish-share-rows-text" id="txtTitle"></textarea>
+					<p class="publish-share-rows-total">[@lang_res k='create.portfolio.step.two.input.prefix'/] 2000 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="txtInvestmentGoal-inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="txtInvestmentGoal-left">2000</span> [@lang_res k='create.portfolio.step.two.input.suffix'/] </p>
+				</div>
+			</div>
+			<div class="publish-share-rows">
+				<p class="publish-share-rows-title">Upload</p>
+				<div class="publish-share-rows-right">
+					<div class="publish-share-rows-check">
+					<label><input name="uploadtype" type="radio" value="0" checked />Images </label>
+					<!-- <label><input name="uploadtype" type="radio" value="1" />Video </label> -->
+					</div>
+					<div id="upload-image">
+						<div class="upload-box upload-album" style="margin-top:10px;"></div>
+		      			<div class="photo-list"><ul></ul></div>
+					</div>
+					<div id="upload-video">
+						<div class="upload-box upload-video" style="margin-top:10px;"></div>
+		      			<div class="video-list"><ul></ul></div>
+					</div>
+				</div>
+			</div>
+			<div style="clear:both;float:none;"></div>
+			<div class="publish-share-rows" >
+				<p class="publish-share-rows-title"></p>
+				<div class="publish-share-rows-right" style="margin-top:20px;">
+					<a class="publish-share-rows-btn" href="javascript:;" id="btn-save" >发表</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/cornerInfoForm.js');
+</script>

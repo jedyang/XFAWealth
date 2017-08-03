@@ -1,0 +1,296 @@
+[#include "../../inc/head_v2.html"/]
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+    <style>
+           	.login-dialog .modal-dialog {width: 1000px;}
+          	.firminfo-dialog .modal-dialog{width: 900px;}
+            .teaminfo-dialog .modal-dialog{width: 700px;}
+            .btneditnode{text-decoration:underline;}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container" style="margin-left:80px">
+            <ul class="tab" id="tab-search">
+                <li class="tab-li-crr">
+                    <a href="#tab_wrap">多语言管理</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap" >
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+	                    <div class="row pd10">
+	                        <div class="col-md-3">
+	                        	<label for="txtTitle">关键字</label>
+	                        	<input type="text" class="form-control searchCondition" id="txtTitle">
+	                        </div>
+	                        <div class="col-md-3">
+	                        	<label for="enValue">值（英文）</label>
+	                        	<input type="text" class="form-control searchCondition" id="enValue">
+	                       	</div>
+	                       	<div class="col-md-3">
+	                        	<label for="scValue">值（简体）</label>
+	                        	<input type="text" class="form-control searchCondition" id="scValue">
+	                       	</div>
+	                       	<div class="col-md-3">
+	                        	<label for="tcValue">值（繁体）</label>
+	                        	<input type="text" class="form-control searchCondition" id="tcValue">
+	                       	</div>
+	                    </div>
+	                    <div class="row pd10">
+	                        <div class="col-md-3">
+	                        	<label for="nullEn">值（英文）为空</label>
+	                           	<select id="nullEn" class="form-control searchCondition">
+	                                   <option value=''>--请选择--</option>
+	                                   <option value='1'>是</option>
+	                                   <option value='0'>否</option>
+	                            </select> 
+	                       	</div>
+	                       	<div class="col-md-3">
+	                        	<label for="nullSc">值（简体）为空</label>
+	                        	<select id="nullSc" class="form-control searchCondition">
+	                                   <option value=''>--请选择--</option>
+	                                   <option value='1'>是</option>
+	                                   <option value='0'>否</option>
+	                            </select> 
+	                       	</div>
+	                       	<div class="col-md-3">
+	                        	<label for="nullTc">值（繁体）为空</label>
+	                        	<select id="nullTc" class="form-control searchCondition">
+	                                   <option value=''>--请选择--</option>
+	                                   <option value='1'>是</option>
+	                                   <option value='0'>否</option>
+	                            </select> 
+	                       	</div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20" style="padding-top: 5px;">
+                    	<a id="btnToDoSearch" href="javascript:loadPropertyToDb();" class="btn-blue-s">[@lang_res k='sys.lang.init'/]</a>
+                    	<a id="btnToDoSearch" href="javascript:exportDbToProp();" class="btn-blue-s">[@lang_res k='sys.lang.outToProp'/]</a>
+                    	<a id="btnAddInfoForm" href="javascript:showDetailPage('');" class="btn-blue-s">[@lang_res k='global.add'/]</a>
+                    	<a id="btnToDoSearch" href="javascript:bindList(0);" class="btn-blue-s">[@lang_res k='global.query'/]</a>
+                    </div>
+                    <div>
+                        <table border="0" id="pagedatalist" cellpadding="0" cellspacing="0" class="table table-hover table-striped" >
+                                <tbody>
+                                    <tr>
+                                        <th class="table-head" style="width:20%;">关键字</th>
+                                        <th class="table-head" style="width:25%;">值（英文）</th>
+                                        <th class="table-head" style="width:25%;">值（简体）</th>
+                                        <th class="table-head" style="width:25%;">值（繁体）</th>
+                                        <th class="table-head" style="width:5%;">操作</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>         
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script type="text/javascript">
+	$(function() {
+		seajs.use('${base}/res/third/layer/layer.js');
+		//搜索按钮事件
+		$('#btnToDoSearch').click(function() {
+			bindList(0);
+		});	
+		
+		//自动搜索事件
+	 	setAutoSearch('.searchCondition',bindList,0);
+		
+		//列表实例化
+		bindList(0);
+	});
+	
+	//列表数据实例化
+	function bindList(pageid) {
+		var title = $('#txtTitle').val();
+		var scValue = $('#scValue').val();
+		var enValue = $('#enValue').val();
+		var tcValue = $('#tcValue').val();
+		var nullSc = $("#nullSc").find("option:selected").val();;
+		var nullEn = $("#nullEn").find("option:selected").val();;
+		var nullTc = $("#nullTc").find("option:selected").val();;
+		$.ajax({
+					type : 'post',
+					dataType : 'json',
+					url : "${base}/console/sys/mutilLang/list.do?datestr="
+							+ new Date().getTime(),
+					data : {
+						keyCode : title,
+						valueSc :scValue,
+						valueEn :enValue,
+						valueTc :tcValue,
+						nullSc : nullSc,
+						nullEn : nullEn,
+						nullTc : nullTc, 
+						page : pageid + 1,
+						rows : 8
+					},
+				 	beforeSend: function () {
+	                    //indexmsg = layer.msg("正在加载数据中，请稍候....", { time: 50000 });
+	                },
+	                complete: function () {
+						//layer.close(indexmsg);
+	                },
+					success : function(json) {
+						//console.log(json);
+						//return ;
+						var total = json.total;
+						var table = json.rows;
+						var html = '';
+						$("#pagedatalist tbody tr:gt(0)").empty();
+						$.each(table,function(i, n) {
+								var id = n.id;
+								var key = n.keyCode;
+								var scValue = n.valueSc==null?'':n.valueSc;
+								var tcValue = n.valueTc==null?'':n.valueTc;
+								var enValue = n.valueEn==null?'':n.valueEn;
+								
+								
+								var button = //'<a classlayer="1" class="btndelpage" >'+"[@lang_res  k='global.delete'/]"+'</a>&nbsp;&nbsp;'+
+											'<a id="'+id+'" tempid="' + id + '" class="btnDetailPage" href="javascript:showDetailPage(\''+id+'\')"> 编辑</a>';
+								  html += '<tr><td>'
+										+ key
+										+ '</td><td>'
+										+ enValue
+										+ '</td><td>'
+										+ scValue
+										+ '</td><td>'
+										+ tcValue
+										+'</td><td style="width:20%;">'
+										+button+'</td></tr>'
+							});
+						$('#pagedatalist').append(html);
+						$("#pagination").pagination(total, {
+							callback : pageselectCallback,
+							numDetail : '',
+							items_per_page : 8,
+							num_display_entries : 4,
+							current_page : pageid,
+							num_edge_entries : 2
+						});
+					}
+			})
+		//回调
+		function pageselectCallback(page_id, jq) {
+			bindList(page_id);
+		}
+	}
+	
+	/***文档模板删除
+	function tempDel(tempid){
+		layer.confirm("[@lang_res k='global.confirm.delete'/]", 
+		{title:"[@lang_res k='global.prompt'/]", 
+		icon: 3,
+		btn: ["[@lang_res k='global.confirm'/]","[@lang_res k='global.cancel'/]"]},
+		function (){
+		 	$.ajax({
+			   	type:'post',
+			   	datatype:'json',
+			   	url:"${base}/console/docTemplate/tempDel.do?r="+Math.random(),
+			   	data:{"tempId":tempid},
+	   			success:function(json){
+			   		layer.closeAll();
+				    if(json.result){
+					    layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]",{title:"[@lang_res k='global.prompt'/]",icon:1,time:1000});
+					    bindDocList(0);
+				    }else{
+				    	layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]",{title:"[@lang_res k='global.prompt'/]",icon:5,time:1000});
+				    }
+			   	}
+		   	});
+		});
+	}
+	**/
+	
+	//新增文档
+	function showDetailPage(id){
+		BootstrapDialog.show({
+			title : '[@lang_res k='sys.lang.detail.title'/]',
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div></div>').load('detailPage.do?id='+id+'&r='+Math.random()),
+			buttons : [{
+				label : '[@lang_res k='global.close'/]',
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			} ]
+		});
+	}
+	
+	//读取配置文件--加载到数据库
+	function loadPropertyToDb(){
+		layer.confirm("[@lang_res k='global.comfirm.init'/]", 
+				{title:"[@lang_res k='global.prompt'/]", 
+				icon: 3,
+				btn: ["[@lang_res k='global.confirm'/]","[@lang_res k='global.cancel'/]"]},
+				function (){		
+		$.ajax({
+			url:base_root + "/console/sys/mutilLang/readProperty.do?r="+Math.random(),
+			type:"post",
+			dataType:"json",
+			success:function(json){
+				if(json.result){
+					layer.msg("[@lang_res k='sys.lang.init'/] [@lang_res k='global.success'/]",{title:"[@lang_res k='global.prompt'/]",icon:1,time:1000});
+					bindList(0);
+				}
+			}
+		});
+				});
+	}
+	
+	//导出配置
+	function exportDbToProp(){
+		layer.confirm("[@lang_res k='sys.lang.comfirm.export'/]", 
+				{title:"[@lang_res k='global.prompt'/]", 
+				icon: 3,
+				btn: ["[@lang_res k='global.confirm'/]","[@lang_res k='global.cancel'/]"]},
+				function (){		
+		$.ajax({
+			url:base_root + "/console/sys/mutilLang/exportDbToProp.do?r="+Math.random(),
+			type:"post",
+			dataType:"json",
+			success:function(json){
+				if(json.result){
+					layer.msg("[@lang_res k='global.export'/] [@lang_res k='global.success'/]",{title:"[@lang_res k='global.prompt'/]",icon:1,time:1000});
+					bindList(0);
+				}
+			}
+		});
+				});
+	}
+</script>
+[#include "../../inc/foot_v2.html"/]
+</html>
+

@@ -1,0 +1,111 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+    <style>
+    .application-form-img{
+    	float:left;
+    	margin:0 5px 10px 5px;
+    	padding: 1px;
+    }
+    .application-form-img img{
+    	width: 160px;
+		height:200px;
+    }
+    </style>
+    <div class="wmes-top">
+        <a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+        <a href="javascript:;" class="header-over">Account Detail</a>
+    </div>
+    <div class="wmes-content">
+         <div class="client-kyc-wrap">
+            <div class="client-detail-iof-wrap">
+                 <p class="client-bg-title">Account Info</p>
+                 <div class="client-detail-top">
+                     <div class="client-detail-left">
+                         <div class="detail-portrait-wrap">
+                             <img src="${base}/res/images/discover/Jennifer.png">
+                             <p class="detail-portrait-name">${(account.loginCode)!''} [#if account?exists && account.gender!='']([#if account.gender='F']Ms[#else]Mr[/#if])[/#if]</p>
+                         </div>
+                         <div class="client-detail-basic">
+                             <div class="client-detail-aim">
+                                  <p>${(account.accountNo)!''}</p>
+                                 <ul class="client-list-describe">
+                                    [#if account?exists && account.subFlag!='' ]
+									<li>
+										[#if account.subFlag='0']Master Account [#elseif account.subFlag='1']Sub Account[/#if]
+									</li>
+									[/#if]
+									[#if account?exists && account.cies='1' ]
+                                    <li>	
+                                    	CIES
+									</li>
+									[/#if] [#if account?exists && account.faca='1']
+									<li>
+										FACA
+									</li>
+									[/#if]
+                                </ul>
+                              </div>
+                             <p class="client-detail-title"><img src="${base}/res/images/client/dis_ico_01.png">${(account.distributorName)!''}</p>
+                             <ul class="detail-basic-li">
+                                 <li>
+                                     <p class="detail-basic-left">Basic Currency</p>
+                                     <p class="detail-basic-right">${(account.baseCurrency)!''}</p>
+                                 </li>
+                             </ul>
+                             [#if account?exists && account.authorized='1']
+                             <div class="detail-authorized">
+                                 <img src="${base}/res/images/client/gou_ico_01.png">
+                                 <p>Authorized</p>
+                             </div>
+                             [/#if]
+                         </div>
+                     </div>
+                 </div>
+			</div>
+            <p class="client-bg-title">Application Form</p>
+            <div class="client-detail-contents">
+                <div style="display:block;">
+	            	<div class="client-account-button">
+	                    <a class="client-button" href="javascript:void;" id="btnViewPDF">View PDF</a>
+	                </div>
+	            	<p style="margin-bottom: 20px;">Application Form Scan Copy Images List (With Sign)</p>
+	            	<!--  -->
+					<div>
+						[#if mainDoc?exists && mainDoc?size gt 0]
+							[#list mainDoc as mainDocEach]
+								[#if mainDocEach.fileList?exists && mainDocEach.fileList?size gt 0]
+									[#list mainDocEach.fileList as each]
+						<div class="application-form-img"><a id="${(mainDocEach.id)!}" class="application-form-a" href="javascript:void(0)"><img src="${base}${(each.filePath)!}" alt="${(each.fileName)!}" id="${(each.id)!}"></a></div>
+									[/#list]
+								[/#if]
+							[/#list]
+						[/#if]
+					</div>
+            	</div>
+            </div>
+            <p class="client-bg-title" style="clear: left">Process History</p>
+            <div class="client-detail-contents">
+                <div style="display:block;">
+                	<!--  -->
+                	<table class="client-table">
+                    	<tbody>
+                        	<tr class="client-table-th">
+	                            <th class="">#</th>
+	                            <th class="client-tables-header">Date</th>
+	                            <th class="client-tables-header">Person</th>
+	                            <th class="client-tables-header">Actions</th>
+	                            <th class="client-tables-header">Remark</th>
+	                            <th class="client-tables-header">Flow Step</th>
+                        	</tr>
+                    	</tbody>
+                     </table>
+            	</div>
+            </div>
+		</div>
+	</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/space/clientApplicationForm.js');
+</script>

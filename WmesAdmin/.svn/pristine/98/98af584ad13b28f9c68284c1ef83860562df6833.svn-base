@@ -1,0 +1,251 @@
+/**
+ * 
+ */
+package com.fsll.wmes.web.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fsll.common.base.service.BaseService;
+import com.fsll.common.util.JsonPaging;
+import com.fsll.wmes.common.CommonConstantsWeb;
+import com.fsll.wmes.entity.MemberMenu;
+import com.fsll.wmes.web.service.FrontMenuService;
+
+/**
+ * @author scshi_u330p
+ *
+ */
+@Service("frontMenuService")
+//@Transactional
+public class FrontMenuServiceImpl  extends BaseService implements FrontMenuService {
+
+	@Override
+	public JsonPaging findAll(JsonPaging jsonPaging, MemberMenu frontMenu) {
+		String hql=" from MemberMenu where (code like 'qta_%' or code like 'qtb_%') ";
+		List<Object> params=new ArrayList<Object>();
+		if(null!=frontMenu.getNameSc()&&!"".equals(frontMenu.getNameSc())){
+			hql+=" and ( code like ? or nameSc like ?  or nameTc like ? or nameEn like ? or webUrl like ? )";
+			
+			params.add("%"+frontMenu.getNameSc()+"%");
+			params.add("%"+frontMenu.getNameSc()+"%");
+			params.add("%"+frontMenu.getNameSc()+"%");
+			params.add("%"+frontMenu.getNameSc()+"%");
+			params.add("%"+frontMenu.getNameSc()+"%");			
+		}
+		
+		hql+=" order by orderBy ";
+		jsonPaging=this.baseDao.selectJsonPaging(hql, params.toArray(), jsonPaging, false);
+		if(null==frontMenu.getNameSc() || "".equals(frontMenu.getNameSc())){		
+			List<MemberMenu> list = getTreeMenu(jsonPaging.getList());
+			jsonPaging.setList(list);
+		}
+		else {			
+			List<MemberMenu> list = jsonPaging.getList();
+			if(!list.isEmpty()){
+				//查找当前搜索结果的根节点
+				String hqlParent = " from MemberMenu where parent is NULL ";
+				String hqlParentWhere = "";
+				for (MemberMenu menuVo : list) {
+					hqlParentWhere += " OR FIND_IN_SET(id,fn_queryMemberMenuParent('"+menuVo.getId()+"'))>0 ";
+				}
+				hqlParentWhere = " AND ( 1=2 "+hqlParentWhere+" ) ";
+				hqlParent = hqlParent + hqlParentWhere; 
+				List<MemberMenu> parentMenus = this.baseDao.find(hqlParent, null, false);
+				if(null != parentMenus && !parentMenus.isEmpty()){
+					//根据 根节点查找所有的子节点
+					String hqlQuery = " from MemberMenu where 1=2 ";
+					String hqlQueryWhere = "";
+					for (MemberMenu menuVo : parentMenus) {
+						hqlQueryWhere += " OR FIND_IN_SET(id,fn_queryMemberMenuChildren('"+menuVo.getId()+"'))>0 ";
+					}
+					hqlQuery = hqlQuery + hqlQueryWhere + " order by orderBy ";
+					List<MemberMenu> queryList = this.baseDao.find(hqlQuery, null, false);
+					queryList = getTreeMenu(queryList);
+					jsonPaging.setList(queryList);
+				}				
+			}
+		}
+
+		return jsonPaging;
+	}
+
+	List<MemberMenu> treeList;
+	public List<MemberMenu> getTreeMenu(List<MemberMenu> allList) {
+		treeList = new ArrayList<MemberMenu>();
+		for (MemberMenu menuVo : allList) {
+            if (menuVo.getParent() == null) {  
+                treeList.add(menuVo);
+                build(allList, menuVo);  
+            }else{
+            	menuVo.setParentId(menuVo.getParent().getId());
+            }
+		}
+		return treeList;
+	}
+	
+	private void build(List<MemberMenu> allNodes,MemberMenu node){  
+        List<MemberMenu> children = getChildren(allNodes,node);  
+        if (!children.isEmpty()) {   
+            for (MemberMenu child : children) {  
+            	treeList.add(child);  
+                build(allNodes,child);  
+            }  
+        }   
+    }
+	
+    private List<MemberMenu> getChildren(List<MemberMenu> nodes, MemberMenu node){  
+        List<MemberMenu> children = new ArrayList<MemberMenu>();  
+        String id = node.getId();  
+        for (MemberMenu child : nodes) {  
+            if (null != child.getParent() && id.equals(child.getParent().getId())) {  
+                children.add(child);  
+            }  
+        }  
+        return children;  
+    }
+
+    /***
+     * 查询所有有效的菜单
+     */
+	@Override
+	public List<MemberMenu> findAllMenu() {
+		String hql=" from MemberMenu order by orderBy asc";
+		List<MemberMenu> list = this.baseDao.find(hql, null, false);
+		if(null != list && !list.isEmpty()){
+			return list;
+		}else {
+			return null;
+		}	
+	}
+	
+	/***
+	 * 根据id查询用户对象的方法
+	 * @param menu 菜单项
+	 * @return
+	 */
+	@Override
+	public MemberMenu findMenuById(String id) {
+		if(StringUtils.isBlank(id)){
+			return null;
+		}
+		MemberMenu menu = (MemberMenu) this.baseDao.get(MemberMenu.class, id);
+		return menu;
+	}
+	
+	/**
+	 * 保存菜单
+	 * @author scshi_u330p
+	 * @date 20161103
+	 * */
+	public MemberMenu saveOrUpdate(MemberMenu menu, boolean isAdd){
+		menu = (MemberMenu)this.baseDao.saveOrUpdate(menu,isAdd);
+		return menu;
+	}
+	
+	/**
+	 * 删除叶子菜单(逻辑删除)
+	 * @author scshi_u330p
+	 * @date 20161103
+	 * */
+	public boolean deleteMenuInfo(String menuId){
+		if(StringUtils.isBlank(menuId)){
+			return false;
+		}
+		MemberMenu menu = (MemberMenu) baseDao.get(MemberMenu.class, menuId);
+		if(menu == null){
+			return false;
+		}
+		menu.setIsValid("0");
+		baseDao.update(menu);
+		return true;
+	}
+
+	/**
+	 *  前台菜单列表查询
+	 * @author wwluo
+	 * @date 2017-05-26
+	 * @param roleCode 菜单编码 member_role.code
+	 * @param keyword 关键字查询（匹配sys_menu.name_sc、sys_menu.name_tc、sys_menu.name_en）
+	 * @return JsonPaging
+	 */
+	@Override
+	public JsonPaging getFrontMenus(JsonPaging jsonPaging, String roleCode,
+			String keyWord) {
+		Object[] object = getFrontMenuSql(roleCode, keyWord);
+		if(object != null){
+			jsonPaging = this.baseDao.selectJsonPaging((String) object[0], (Object[]) object[1], jsonPaging, false);
+			if(jsonPaging.getList() != null && !jsonPaging.getList().isEmpty()){
+				iterationFrontChildMenus(jsonPaging.getList());
+			}
+		}
+		return jsonPaging;
+	}
+	
+	/**
+	 *  前台子菜单拼装
+	 * @author wwluo
+	 * @date 2017-05-26
+	 * @param menus
+	 */
+	private void iterationFrontChildMenus(List<MemberMenu> menus){
+		for (MemberMenu memberMenu : menus) {
+			if(memberMenu.getParent() != null){
+				memberMenu.setParentId(memberMenu.getParent().getId());
+			}
+			if(memberMenu.getChildSet() != null && !memberMenu.getChildSet().isEmpty()){
+				memberMenu.setChilds(new ArrayList<MemberMenu>(memberMenu.getChildSet()));
+				iterationFrontChildMenus(memberMenu.getChilds());
+			}
+		}
+	}
+	
+	/**
+	 *  菜单列表查询，返回查询hql、hql参数
+	 * @author wwluo
+	 * @date 2017-05-26
+	 * @param roleCode 菜单编码 member_role.code
+	 * @param keyWord 关键字查询（匹配sys_menu.name_sc、sys_menu.name_tc、sys_menu.name_en）
+	 * @return Object[] {hql字符串，params参数数组}
+	 */
+	private Object[] getFrontMenuSql(String roleCode,
+			String keyWord) {
+		Object[] object = new Object[2];
+		StringBuffer hql = new StringBuffer(""
+				+ " SELECT"
+				+ " m"
+				+ " FROM"
+				+ " MemberMenu m"
+				+ " LEFT JOIN"
+				+ " MemberRoleMenu r"
+				+ " ON"
+				+ " m.id=r.menu.id"
+				+ " LEFT JOIN"
+				+ " MemberRole a"
+				+ " ON"
+				+ " a.id=r.role.id"
+				+ " WHERE"
+				+ " m.parent IS NULL"
+				+ "");
+		List<Object> params = new ArrayList<Object>();
+		if (StringUtils.isNotBlank(roleCode)) {
+			hql.append(" AND a.code=?");
+			params.add(roleCode);
+		}
+		if (StringUtils.isNotBlank(keyWord)) {
+			hql.append(" AND ( m.nameSc like ? OR m.nameTc like ? OR m.nameEn like ? )");
+			params.add("%" + keyWord + "%");
+			params.add("%" + keyWord + "%");
+			params.add("%" + keyWord + "%");
+		}
+		hql.append(" ORDER BY m.orderBy");
+		object[0] = hql.toString();
+		object[1] = params.toArray();
+		return object;
+	}
+	
+}

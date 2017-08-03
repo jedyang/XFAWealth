@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加团队</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="${base}/res/css/wmesupload.css"> 
+    <script type="text/javascript">
+        var base_root = '${base}';
+    </script>
+</head>
+
+<body>
+<!-- 传递过来的参数 -->
+<input type="hidden" id="hidIfafirmid" value="${(ifafirmid)?if_exists}" />
+<input type="hidden" id="hidParentteamid" value="${(parentteamid)?if_exists}" />
+<input type="hidden" id="hidClasslayer" value="${(classlayer)?if_exists}" />
+<input type="hidden" id="hidChildclasslayer" value="${(childclasslayer)?if_exists}" />
+<input type="hidden" id="hidTeamId" value="${(id)?if_exists}" />
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+        <div class="tab-side-container">
+            <div class="page-header mt-10">
+                <h4><b></b></h4>
+            </div>
+               <div class="clear"></div>
+               <div class="tab_wrap">
+                <form id="frm" class="form-horizontal" style="display:block;">
+                    <!-- 团队名称 -->
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtName" class="label-control"><span class="red">*</span>[@lang_res  k='ifafirm.team.name'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="text" name="txtName" class="form-control" id="txtName" value="${(name)?if_exists}" >
+                        </div>
+                    </div>     
+                    <!-- 团队代码 -->
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtCode" class="label-control"><span class="red">*</span>[@lang_res  k='ifafirm.team.code'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="text" name="txtCode" class="form-control" id="txtCode" value="${(code)?if_exists}" >
+                        </div>
+                    </div>
+                    <!-- 备注信息 -->
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txRemark" class="label-control">[@lang_res  k='ifafirm.team.remark'/] </label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="text" name="txRemark" class="form-control" id="txRemark" value="${(reamrk)?if_exists}" >
+                        </div>
+                    </div>
+                    <!-- 排序 -->
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtOrderBy" class="label-control"><span class="red">*</span>[@lang_res  k='ifafirm.team.order'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="text" name="txtOrderBy" class="form-control" id="txtOrderBy" value="${(orderBy)?if_exists}" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+						<div class="text-center pd10">
+							<button id="btnSave" type="submit" class="btn btn-primary">
+								[@lang_res k='global.save'/]
+							</button>
+						</div>
+					</div>
+             </form>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+<script type="text/javascript" src="${base}/res/js/base.js"></script>
+<script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+<script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+<script type="text/javascript">
+
+$(function(){	
+	//表单验证
+	$('#frm').bootstrapValidator({
+		feedbackIcons : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		fields : {
+			txtName : {
+				validators : {
+					notEmpty : {
+						message : "[@lang_res k='ifafirm.list.team.nameTips'/]"
+					}
+				}
+			},
+			txtCode : {
+                validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='ifafirm.list.team.codeTips'/]"
+                    }
+                }
+            },
+            txtOrderBy : {
+                validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='ifafirm.list.team.orderbyTips'/]"
+                    },
+                    regexp: {
+					    regexp: "^[0-9]*$",
+					    message: "[@lang_res  k='console.country.orderBy.tips'/]"
+				    }
+                }
+            }
+		}
+	}).on('success.form.bv', function(e) {
+		e.preventDefault();
+		savefrom();
+	});
+	
+	//保存
+	function savefrom() {
+		var id = $('#hidTeamId').val();
+		var parentteamid = $('#hidParentteamid').val();
+		var classlayer = $('#hidClasslayer').val();
+		var childclasslayer = $('#hidChildclasslayer').val();
+		var ifafirmid = $('#hidIfafirmid').val();
+		var name = $('#txtName').val();
+		var code = $('#txtCode').val();
+		var remark = $('#txRemark').val();
+		var orderBy = $('#txtOrderBy').val();
+
+		var postData = {'id':id,'ifafirm.id':ifafirmid,'parent.id':parentteamid,'name':name,'reamrk':remark,'code':code,'classLayer':childclasslayer,'orderBy':orderBy}
+       	$.ajax({
+            type: "post",
+            url : "${base}/console/ifafirm/addTeam.do?datestr=" + new Date().getTime(),
+            data: postData,
+            async: false,
+            dataType: "json",
+            success: function (json) {
+               var result = json.result;
+               if(result==true){ 
+               		layer.msg("[@lang_res k='global.success.save'/]", { icon: 1, time: 3000 });
+               		$('#btnSave').attr('disabled','disabled');
+               }else
+               		layer.msg("[@lang_res k='global.failed.save'/]", { icon: 0, time: 2000 });
+               }
+       	});
+	}
+});
+</script>
+</body>
+</html>

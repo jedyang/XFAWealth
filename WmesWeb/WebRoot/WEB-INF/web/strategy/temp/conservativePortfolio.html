@@ -1,0 +1,403 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+    <div class="wmes-top">
+    	<a id="wmes-go-back" href="${base}/front/investor/zone/myAssets.do"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+        <a href="javascript:;" class="header-over">[@lang_res k='portfolio.hold.detail.title'/]</a>
+    </div>
+    <div class="wmes-content">
+        <div class="account-wrap">
+            <div class="conservative-top">
+                <div class="conservative-title-wrap">
+                    <p class="conservative-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>${info.portfolioName!}</p>
+                    <div class="conservative-title-button-wrap">
+                      [#if info.ifFirst?? && info.ifFirst=='0']
+                        <a class="conservative-title-button conservative-title-button-active" href="${base}/front/tradeRebalance/rebalanceMixer.do?id=${info.id!}">[@lang_res k='portfolio.hold.detail.rebalance'/]</a>
+                       [/#if]
+                        <!--<a class="conservative-title-button conservative-title-button-active" href="javascript:;">AIP Setting</a>
+                       
+                    --></div>
+                </div>
+                <div class="conservative-info-wrap">
+                    <div class="conservative-info">
+                        <a href="${base}/front/community/space/investorSpace.do?id=${individual.member.id!}"><img class="conservative-info-img strategies_inf_img" src="${base}[@user_head u='${individual.member.iconUrl!}' g='${individual.gender!}'/]"></a>
+                        <!--<p class="conservative-info-name">Ms. Rainy Lee</p>
+                        -->
+                        <p class="conservative-info-name">[#if individual??]${individual.nameChn!} [/#if]([@lang_res k='member.register.investor'/])</p>
+                        [#if info.ifa??]
+                       <a href="${base}/front/community/space/ifaSpace.do?id=${info.ifa.member.id!}"> <img class="conservative-info-img strategies_inf_img"  src="${base}[@user_head u='${info.ifa.member.iconUrl!}' g='${info.ifa.gender!}'/]"></a>
+                        <p class="conservative-info-name">${info.ifa.nameChn!} ([@lang_res k='member.register.ifa'/])</p>
+                        [/#if]
+                        
+                        <p class="conservative-info-name">[@lang_res k='global.lastUpdate'/]:  ${info.lastUpdate?string(dateTimeFormat)}</p>
+                    </div>
+                    <div class="account-choose-left">
+                        <p class="account-xiala-title">[@lang_res k='account.list.cur'/]</p>
+                        <div class="proposal_xiala">
+                            <input type="text" code="${assetsVO.baseCurrency!}" value="${assetsVO.currencyName!}" placeholder="USD" readonly="" id="currencyName">
+                            <span class="icon_xiala"></span>
+                            <ul>
+                            [#if currencyType?exists && currencyType?size gt 0]
+                            [#list currencyType as list]
+                                <li code="${list.itemCode!}">${list.name!}</li>
+                                [/#list]
+                                [/#if]
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="account-rows">
+                <p class="builder-title">[@lang_res k='portfolio.hold.detail.assetSummary'/]<span class="proposal-more-ico j-more-ico"></span></p>
+               
+               [#if info.ifFirst?? && info.ifFirst=='0']
+              
+                <ul class="conservative-asset-contents">
+               
+                    <li class="conservative-asset-li">
+                        <p class="conservative-asset-word">[@num_fmt  s='${assetsVO.totalAssets!}'  f='${numFormat}'/]</p>
+                        <p class="conservative-total">[@lang_res k='portfolio.hold.detail.totalAsset'/] ( ${assetsVO.currencyName!} )</p>
+                    </li>
+                    <li class="conservative-asset-li">
+                        <p class="conservative-asset-word">[@num_color   s='${assetsVO.totalReturnValue!}'  c='${displayColor!}' f='${numFormat}'/] </p>
+                        <p class="conservative-total">[@lang_res k='portfolio.hold.detail.totalPl'/] ( ${assetsVO.currencyName!} )</p>
+                    </li>
+                    <li class="conservative-asset-li">
+                        <p class="conservative-asset-word">[@num_color   s='${assetsVO.totalReturnRate!}'  c='${displayColor!}' f='#,##0.00%'/]</p>
+                        <p class="conservative-total">[@lang_res k='portfolio.hold.detail.totalPlRate'/]</p>
+                    </li>
+                </ul>
+                [#else]
+                 <div style="text-align: center;">
+                 <a class="conservative-title-button conservative-title-button-active" style="display: inline-block;float: none;padding: 5px 10px;" href="${base}/front/transaction/investorOrderPlan.do?holdId=${info.id!}">[@lang_res k='portfolio.hold.detail.create'/]</a>
+                </div>
+                [/#if]
+            </div>
+             [#if info.ifFirst?? && info.ifFirst=='0']
+            <div class="account-rows">
+                <p class="builder-title">[@lang_res k='portfolio.hold.detail.plStatistics'/]<span class="proposal-more-ico j-more-ico"></span></p>
+                <div class="conservative-time-choose">
+                    <div class="funds-time-wrap" style="min-height:31px;">
+                        <p class="conservative-time-title">[@lang_res k='portfolio.hold.detail.timeperiod'/]</p>
+                        <ul class="conservative-time-list">
+                            <li period="1W" >[@lang_res k='search.period.1w'/]</li>
+	                        <li period="2W" >[@lang_res k='search.period.2w'/]</li>
+	                        <li period="1M" >[@lang_res k='search.period.1m'/]</li>
+	                        <li period="3M" >[@lang_res k='search.period.3m'/]</li>
+	                        <li period="6M" class="list-active">[@lang_res k='search.period.6m'/]</li>
+	                        <li period="1Y" >[@lang_res k='search.period.1y'/]</li>
+	                        <li period="3Y" >[@lang_res k='search.period.3y'/]</li>
+	                        <li period="5Y" >[@lang_res k='search.period.5y'/]</li>
+	                        <li period="YTD" >[@lang_res k='search.period.ytd'/]</li>
+                            <li data-type="Other" period="" class="otherPeriod" >[@lang_res k='global.other'/]</li>
+                        </ul>
+                        <div class="conservative-date-wrap">
+                            <div class="account-choose-input-wrap">
+                                <input id='account-date-to' type="text" class="laydate-icon " style="height: 22px;" name="txtAipEndDate" value="">
+                            </div>
+                            <p class="account-choose-name">[@lang_res k='global.to'/]</p>
+                            <div class="account-choose-input-wrap">
+                               <input id='account-date-from' type="text" class="laydate-icon" style="height: 22px;" name="txtAipEndDate" value="">
+                            </div>
+                            <img class="account-data-search" src="${base}/res/images/icon_search.png">
+                        </div>
+                    </div>
+                    <ul class="funds-type-choose">
+                        <li class="funds-active">[@lang_res k='portfolio.hold.detail.cumulativepl'/]</li>
+                        <li>[@lang_res k='portfolio.hold.detail.dailypl'/]</li>
+                    </ul>
+                    <div class="conservative-main-chart-wrap">
+                        <div class="conservative-main-chart" id="conservative-main-chart" ></div>
+                        <div class="wmes-nodata-tips chartTips">
+                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="account-rows">
+                <p class="builder-title">[@lang_res k='portfolio.hold.detail.productList'/] 
+                <!--<span class="builder-title-time">(更新时间:2017-2-13 14:56:55)</span><span class="proposal-more-ico j-more-ico"></span>
+                --></p>
+                <div class="products-list-wrap">
+                    <div class="conservative-position-main">
+	                    <div class="myassets-positionInformation">
+						[#if chartList?exists && chartList?size gt 0]
+							<div id="positionInformation" data-value='${chartListJson!}'></div>
+							<!-- <div class="positionInformation">
+							[#list chartList as list]
+							[#if list.yesterdayPl?? && list.yesterdayPl!='']
+								<p>[@lang_res k='assets.yesterdayReturn'/]<b class="price_positive">${list.yesterdayPl!}</b><span>${currency!}</span></p>
+								[/#if]
+								[/#list]
+								</div> -->
+						[#else]
+						 <div  style="dispaly:block;    text-align: center;">
+				                   <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+				                   <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+						  </div>
+						[/#if]
+			       </div>
+		       </div>
+                    <ul class="funds_search_tab" id="conservative-rows-choose" style="display:block;margin-bottom: 10px;">
+                        <li class="now" name="[@lang_res k='allocation.stock'/]">[@lang_res k='allocation.stock'/]</li>
+                        <li name="[@lang_res k='allocation.fund'/]">[@lang_res k='allocation.fund'/]</li>
+                        <li name="[@lang_res k='allocation.bond'/]">[@lang_res k='allocation.bond'/]</li>
+                        <li name="[@lang_res k='allocation.insure'/]">[@lang_res k='allocation.insure'/]</li>
+                    </ul>
+                    <div class="conservative-position-rows" style="display:block;">
+                        <table class="funds_search_information conservative-position-table" style="margin-top:0">
+                            <tbody>
+                                <tr class="funds_tables_th record_List_th">
+                                     <th width="8%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.weight'/]</th>
+                                    <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.stockName'/]</th>
+                                    <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.holdingUnit'/]</th>
+                                    <th width="9%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.availableUnit'/]</th>
+                                    <th width="9%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.referenceCost'/]</th>
+                                    <th width="9%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.curPrice'/]</th>
+                                    <th width="14%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.marketValue'/]</th>
+                                    <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.pl'/]</th>
+                                    
+                                    <th width="11%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.accountNo'/]</th>
+                                </tr>
+                                [#if stockList?exists && stockList?size gt 0]
+                                [#list stockList as list]
+                                <tr>
+                                   <td class="funds_search_tdcenter">[@num_fmt s='${list.weight!}' f='#,##0.00%' /]</td>
+                                    <td class="funds_search_tdcenter">${list.productName!}</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.holdUnit!}' f='${numFormat}' /]</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.availableUnit!}' f='${numFormat}' /]</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.referenceCost!}' f='${numFormat}' /] ${assetsVO.currencyName!}</td>
+                                     <td class="funds_search_tdcenter">[@num_fmt s='${list.curPrice!}' f='${numFormat}' /] ${assetsVO.currencyName!}</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.marketValue!}' f='${numFormat}' /] ${assetsVO.currencyName!}</td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="price_negative">[@num_color  s='${list.pl!}' c='${displayColor!}' f='${numFormat}' /]</span> ${assetsVO.currencyName!}
+                                        <br>
+                                        (<span class="price_negative">[@num_color  s='${list.plRate!}' c='${displayColor!}' f='#,##0.00%' /]</span>)
+                                    </td>
+                                    
+                                    <td class="funds_search_tdcenter">${list.accountNo!}</td>
+                                </tr>
+                                [/#list]
+                                [#else]
+                                <tr>
+                                	<td colspan="9">
+                                		<div class="wmes-nodata-tips no_list_tips" style="display:block;">
+				                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+				                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+				                    	</div>
+                                	</td>
+                                </tr>
+                                [/#if]
+                                
+                            </tbody>
+                        </table>
+                        <div class="conservative-position-contents" style="display:none">
+                            <div class="conservative-position-half">
+                                <p class="position-half-title">行业分布</p>
+                                <div class="position-half-chart" data-value="[{'name':'金融','value':20},{'name':'工业','value':10},{'name':'消费必需品','value':20},{'name':'原材料','value':10},{'name':'能源','value':10},{'name':'现金','value':30}]"></div>
+                            </div>
+                            <div class="conservative-position-half">
+                                <p class="position-half-title">地区分布</p>
+                                <div class="position-half-chart" data-value="[{'name':'中国','value':50},{'name':'香港','value':30},{'name':'新加波','value':10},{'name':'印度','value':10}]"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--------------------------基金------------------------------->
+                    <div class="conservative-position-rows">
+                        <table class="funds_search_information conservative-position-table">
+                            <tbody>
+                                <tr class="funds_tables_th record_List_th">
+                                    <th width="8%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.weight'/]</th>
+                                    <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.fundName'/]</th>
+                                    <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.holdingUnit'/]</th>
+                                    <th width="9%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.availableUnit'/]</th>
+                                    <th width="9%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.referenceCost'/]</th>
+                                    <th width="9%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.curPrice'/]</th>
+                                   <th width="14%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.marketValue'/]</th>
+                                    <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.pl'/]</th>
+                                    
+                                    <th width="11%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.accountNo'/]</th>
+                                </tr>
+                                [#if fundList?exists && fundList?size gt 0]
+                                [#list fundList as list]
+                                <tr>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.weight!}' f='#,##0.00%' /]</td>
+                                    <td class="funds_search_tdcenter">${list.productName!}</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.holdUnit!}' f='${numFormat}' /]</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.availableUnit!}' f='${numFormat}' /]</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.referenceCost!}' f='${numFormat}' /] ${assetsVO.currencyName!}</td>
+                                     <td class="funds_search_tdcenter">[@num_fmt s='${list.curPrice!}' f='${numFormat}' /] ${assetsVO.currencyName!}</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.marketValue!}' f='${numFormat}' /] ${assetsVO.currencyName!}</td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="price_negative">[@num_color  s='${list.pl!}' c='${displayColor!}' f='${numFormat}' /]</span> ${assetsVO.currencyName!}
+                                        <br>
+                                        (<span class="price_negative">[@num_color  s='${list.plRate!}' c='${displayColor!}' f='#,##0.00%' /]</span>)
+                                    </td>
+                                    
+                                    <td class="funds_search_tdcenter">${list.accountNo!}</td>
+                                </tr>
+                                [/#list]
+                                [#else]
+                                <tr>
+                                	<td colspan="9">
+                                		<div class="wmes-nodata-tips no_list_tips" style="display:block;">
+				                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+				                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+				                    	</div>
+                                	</td>
+                                </tr>
+                                [/#if]
+                               
+                            </tbody>
+                        </table>
+                        <div class="conservative-position-contents" style="display:none">
+                            <div class="conservative-position-half">
+                                <p class="position-half-title">行业分布</p>
+                                <div class="position-half-chart" data-value="[{'name':'金融','value':20},{'name':'工业','value':10},{'name':'消费必需品','value':20},{'name':'原材料','value':10},{'name':'能源','value':10},{'name':'现金','value':30}]"></div>
+                            </div>
+                            <div class="conservative-position-half">
+                                <p class="position-half-title">地区分布</p>
+                                <div class="position-half-chart" data-value="[{'name':'中国','value':50},{'name':'香港','value':30},{'name':'新加波','value':10},{'name':'印度','value':10}]"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="conservative-position-rows">
+                        <table class="funds_search_information conservative-position-table">
+                            <tbody>
+                                <tr class="funds_tables_th record_List_th">
+                                     <th width="8%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.weight'/]</th>
+                                    <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.bondName'/]</th>
+                                    <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.holdingUnit'/]</th>
+                                    <th width="9%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.availableUnit'/]</th>
+                                    <th width="9%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.referenceCost'/]</th>
+                                    <th width="9%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.curPrice'/]</th>
+                                    <th width="14%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.marketValue'/]</th>
+                                    <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.pl'/]</th>
+                                    
+                                    <th width="11%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.accountNo'/]</th>
+                                </tr>
+                                [#if bondList?exists && bondList?size gt 0]
+                                [#list bondList as list]
+                                <tr>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.weight!}' f='#,##0.00%' /]</td>
+                                    <td class="funds_search_tdcenter">${list.productName!}</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.holdUnit!}' f='${numFormat}' /]</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.availableUnit!}' f='${numFormat}' /]</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.referenceCost!}' f='${numFormat}' /] ${assetsVO.currencyName!}</td>
+                                     <td class="funds_search_tdcenter">[@num_fmt s='${list.curPrice!}' f='${numFormat}' /] ${assetsVO.currencyName!}</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.marketValue!}' f='${numFormat}' /] ${assetsVO.currencyName!}</td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="price_negative">[@num_color  s='${list.pl!}' c='${displayColor!}' f='${numFormat}' /]</span> ${assetsVO.currencyName!}
+                                        <br>
+                                        (<span class="price_negative">[@num_color  s='${list.plRate!}' c='${displayColor!}' f='#,##0.00%' /]</span>)
+                                    </td>
+                                    
+                                    <td class="funds_search_tdcenter">${list.accountNo!}</td>
+                                </tr>
+                                [/#list]
+                                [#else]
+                                <tr>
+                                	<td colspan="9">
+                                		<div class="wmes-nodata-tips no_list_tips" style="display:block;">
+				                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+				                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+				                    	</div>
+                                	</td>
+                                </tr>
+                                [/#if]
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="conservative-position-rows">
+                        <table class="funds_search_information conservative-position-table">
+                            <tbody>
+                                <tr class="funds_tables_th record_List_th">
+                                    <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.insureName'/]</th>
+                                    <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.holdingUnit'/]</th>
+                                    <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.marketValue'/]</th>
+                                      <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.pl'/]</th>
+                                    <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.accountNo'/]</th>
+                                </tr>
+                                [#if insureList?exists && insureList?size gt 0]
+                                [#list insureList as list]
+                                <tr>
+                                    <td class="funds_search_tdcenter">${list.productName!}</td>
+                                     <td class="funds_search_tdcenter">[@num_fmt s='${list.marketValue!}' f='${numFormat}' /] ${assetsVO.currencyName!}</td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="price_negative">[@num_color  s='${list.pl!}' c='${displayColor!}' f='${numFormat}' /]</span> ${assetsVO.currencyName!}
+                                        <br>
+                                        (<span class="price_negative">[@num_color  s='${list.plRate!}' c='${displayColor!}' f='#,##0.00%' /]</span>)
+                                    </td>
+                                  
+                                    <td class="funds_search_tdcenter">${list.accountNo!}</td>
+                                </tr>
+                                [/#list]
+                                [#else]
+                                <tr>
+                                	<td colspan="9">
+                                		<div class="wmes-nodata-tips no_list_tips" style="display:block;">
+				                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+				                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+				                    	</div>
+                                	</td>
+                                </tr>
+                                [/#if]
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            [/#if] 
+        </div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+
+var totalMarketValue=${assetsVO.totalMarketValue};
+var totalCashValue=${assetsVO.totalCashValue};
+var base_root="${base}";
+var id='${info.id!}';
+var display_color="${displayColor!}";
+
+var _checkList='${checkList!}';
+var _accountType="${accountType!}";
+var _currency="${currency!}";
+     seajs.use('${base}/res/web/strategy/conservativePortfolio.js');
+  //    seajs.use('jquery',function($){
+	 // 	 setTimeout(function(){
+		// 	laydate({
+		// 		  istime: false,
+		// 		  elem: '#account-date-to',
+		// 		  format: 'YYYY-MM-DD'
+		// 		});
+		// 		laydate({
+		// 		  istime: false,
+		// 		  elem: '#account-date-from',
+		// 		  format: 'YYYY-MM-DD'
+		// 		});
+			
+		// },200);
+	 // });
+	 
+	 // function callbackloginresult(json){
+	 // 	 seajs.use('jquery', function($){
+		//  //	console.log(json);
+		//  	var count=0;
+		//  	$.each(json,function(i,n){
+		// 	 	if(n.status="1"){
+		// 	 	count++;
+		//  	    }
+		//  	})
+		//  	if(count>0){
+		//  	 setTimeout(function(){
+		//        window.location.url= window.location.url+"&check=1";
+		//      },1000);
+		//     }
+	 //    });
+ 	// }	
+</script>
+

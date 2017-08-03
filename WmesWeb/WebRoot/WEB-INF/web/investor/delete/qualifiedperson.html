@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>wmes</title>
+    <link rel="stylesheet" href="${base}/res/css/wmes_en.css">  
+    <script>
+      var base_root = '${base}';
+    </script>
+    <script type="text/javascript" src="${base}/res/js/base.js"></script>
+    <script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+    <script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+    <script src="${base}/res/js/util.js"></script>
+  <style type="text/css">
+      html, body{
+          [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']
+              font-family:  arial;
+          [#elseif Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']
+              font-family:Microsoft YaHei;
+          [#else]
+               font-family:Microsoft YaHei;
+          [/#if]
+      }
+  </style>
+</head>
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<body>
+<div class="blue_background">
+    	<div class="kaihu_div">
+            <div class="statement_wrap">   
+   				<p class="statement_title" style="text-align:left;">Declaration by a Qualified Person (Who certifies Identification Documents and signing of the Client Agreement) (Only applicable where the Advisor did not  certify the Identification Documents and signing of the Client Agreement)</p>
+   				<p class="statement_ct">Only applicable if a qualified person (other than the Advisor) certifies copies of the HKID^/Passport of the applicant(s) and the signing of the client agreement.  A qualified person means a person licensed or registered by a financial regulator (which is mandatory in Hong Kong), a Justice of the Peace or a professional person (such as the manager of a branch of a bank, certified public accountant, lawyer or notary public) (“Qualified Person”).</p>
+   				<p class="statement_ct">I (i.e. the Qualified Person), the undersigned, hereby confirm that I have identified the applicant(s) who executed this Application Form before me, and that I have reviewed the original of his/her/their HKID(s)^ or passport(s).</p>
+   				
+          <div class="wenti_btn">
+              <a class="wenti_btn_bule" id="j_Agree" href="javascript:;">Agree</a>
+                      <a class="wenti_btn_yellow" id="j_Disagree"  href="javascript:;">disagree</a>
+                </div>
+            </div>
+        </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    seajs.use('jquery', function($){
+
+      $("#j_Agree").on("click",function(){
+          //window.parent.window.qualified();
+    	  parent.document.getElementById("qualified").click();
+      });
+      $("#j_Disagree").on("click",function(){
+          //window.parent.window.qualifiedno();
+    	  parent.document.getElementById("qualifiedno").click();
+      });
+
+  });
+</script>
+</html>
+        

@@ -1,0 +1,120 @@
+ <script>
+        var base_root = '${base}';
+        var lang = '${Session["_LANG_CODE_"]!}';
+        var lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        if(lang=='en'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_EN.js";  
+        }else if(lang=='tc'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_TC.js";
+        }else if(lang=='sc'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        }
+    </script>
+<script type="text/javascript" src="${base}/res/js/base.js"></script>
+<script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+<script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+<script src="${base}/res/js/util.js"></script>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/wmes_en.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<style>
+html, body{
+             font-family:Microsoft YaHei !important;
+         }
+.ifa-more-ico{margin-top: 5px;margin-right: 10px;}
+.wmes-content{background-color: white;}
+.selectnamelistbox{    padding: 12px 0 0 89px;height: auto;}
+.SelectAll{line-height: 18px;}
+</style>
+<div class="wmes-content">
+	<div class="selectnamelistbox">
+		<div class="selectnamelistcon">
+			<div class="wmes-close"></div>
+			<div class="selectnameltitle">Please select the name list</div>
+			<div class="myClient">
+				<div class="strategies_detail_list myClienttittle">
+					<p class="strategies_detail_product">My Client</p>
+				</div>
+				<div class="selectedtext">
+					<div class="selectedtextleft"><span>0</span>clients selected.</div>
+					<ul class="selectedtextright">
+						<li>Select</li>
+						<li>
+							<p><input type="checkbox"><p>
+							<p class="SelectAll">Select All</p>
+						</li>
+						<li><span>Reverse</span></li>
+					</ul>
+					
+				</div>
+				<div class="selectedlist">
+					<ul>
+						<li>
+							<!--<span class="myfavourite"></span>-->
+							<div class="selectedshadow"></div>
+							<b></b>
+							<i></i>
+							<img src="${base}/res/images/ifa1.png"/>
+							<p>George Beaver</p>
+						</li>
+						<li>
+							
+							<div class="selectedshadow"></div>
+							<b></b>
+							<i></i>
+							<img src="${base}/res/images/ifa1.png"/>
+							<p>Gustav Booch</p>
+						</li>
+						<li>
+							<!--<span class="myfavourite"></span>-->
+							<div class="selectedshadow"></div>
+							<b></b>
+							<i></i>
+							<img src="${base}/res/images/ifa1.png"/>
+							<p>Mariam Pierre</p>
+						</li>
+						<li>
+							
+							<div class="selectedshadow"></div>
+							<b></b>
+							<i></i>
+							<img src="${base}/res/images/ifa1.png"/>
+							<p>Thomas Grönholm</p>
+						</li>
+						<li>
+							
+							<div class="selectedshadow"></div>
+							<b></b>
+							<i></i>
+							<img src="${base}/res/images/ifa1.png"/>
+							<p>Carla Warnes</p>
+						</li>
+						<li>
+							
+							<div class="selectedshadow"></div>
+							<b></b>
+							<i></i>
+							<img src="${base}/res/images/ifa1.png"/>
+							<p>Mariam Pierre</p>
+						</li>
+					</ul>
+					
+				</p>
+			</div>
+		</div>
+		
+		<div class="creatlistbn" style="margin-top:40px;">
+			<a class="craetbnCancel">Cancel</a>
+			<a class="craetbnSave" style="margin-right:15px;">Save</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+ var cnt_clients = ${clients?size};
+  var cnt_prospects = ${prospects?size};
+   var cnt_buddies = ${buddies?size};
+    var cnt_colleagues = ${colleagues?size};
+seajs.use("${base}/res/web/ifa/selectNameList.js");
+	
+	
+</script>

@@ -1,0 +1,268 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <div class="wmes-top">
+    <a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt="">
+	</a>
+        <a href="javascript:;" class="header-over">Account Progress</a>
+    </div>
+    <div class="wmes-content">
+         <div class="progress-wrap">
+          <p class="wmes-wrap-title">Account Progress</p>
+         	<div class="progress-top-wrap">
+         		<div class="progress-top-left">
+         			<div class="progress-name-wrap">
+	         			<p class="progress-top-title">${account.member.loginCode!}</p>
+	         			<ul class="client-list-describe">
+	         				<li>[#if account.accType?exists && account.accType='I']Indiviual [#else]Joint [/#if]</li>
+	         				[#if account.cies?exists && account.cies='1']<li>CIES</li>[/#if]
+	         				[#if account.baseCurrency?exists && account.baseCurrency??]<li>${account.baseCurrency!}</li>[/#if]
+	         			</ul>
+         			</div>
+         			<div class="progress-top-img">
+         				<img class="progress-top-invest" src="[#if account.distributor?exists && account.distributor.logofile?exists]${account.distributor.logofile!}[#else]${base}/res/images/client/client_invest_01.png[/#if]">
+         				<p class="progress-top-ageas">${account.distributor.companyName!}</p>
+         				<p class="progress-top-name">${account.ifa.member.loginCode!}</p>
+         				<img class="progress-top-portrait" src="[#if account.member.iconUrl?exists && account.member.iconUrl??]${base}${account.member.iconUrl}[#else]${base}/res/images/discover/Jennifer.png[/#if]">
+         				
+         			</div>
+         		</div>
+         		<div class="progress-top-right">
+         			<img src="${base}/res/images/client/small_img.png">
+         			<a href="#">
+         			<div class="progress-top-magnifier">
+         				<img src="${base}/res/images/client/magnifier_ico.png">
+         			</div>
+         			</a>
+         		</div>
+         	</div>
+         	<div class="progress-main-wrap">
+         		<p class="progress-main-title">Process History</p>
+         		<ul class="progress-main-step">
+         			<li class="progress-step">
+         			
+         				<div class="progress-step-rows" style="background-color: #fedbad;">
+         					<img class="gou-ico" src="${base}/res/images/client/gou_ico.png">
+         				</div>
+         				<p class="progress-step-word">Submit Application</p>
+         			</li>
+         			<li>
+         			
+         				<div class="progress-step-jiantou">
+         					<img class="jiantou-ico" src="${base}/res/images/client/jiantou_ico.png">
+         				</div>		
+         			</li>
+         			<li class="progress-step">
+         			[#if progress?exists && progress.ifaApproval?exists && progress.ifaApproval??]
+         			[#if progress.ifaApproval='0']
+         				<div class="progress-step-rows" style="background-color: #f6a03a;">
+         					<img class="gou-ico" src="${base}/res/images/client/reash_ico.png">
+         				</div>
+         				[#elseif progress.ifaApproval='1']
+         				<div class="progress-step-rows" style="background-color: #fedbad;">
+         					<img class="gou-ico" src="${base}/res/images/client/gou_ico.png">
+         				</div>
+         				[#elseif progress.ifaApproval='2']
+         				<div class="progress-step-rows" style="background-color: #fb1a4f;">
+         					<img class="gou-ico" src="${base}/res/images/client/cha_ico.png">
+         				</div>
+         				[#else]
+         				<div class="progress-step-rows">
+         					
+         				</div>
+         				[/#if]
+         				[#else]
+         				<div class="progress-step-rows">
+         					
+         				</div>
+         				[/#if]
+         				<p class="progress-step-word">IFA Approval</p>
+         			</li>
+         			<li>
+         				<div class="progress-step-jiantou">
+         					<img class="jiantou-ico" src="${base}/res/images/client/jiantou_ico.png">
+         				</div>	
+         			</li>
+         			<li class="progress-step">
+         				[#if progress?exists && progress.ifafirmApproal?exists && progress.ifafirmRoApproval?exists && (progress.ifafirmApproal?? || progress.ifafirmRoApproval??)]
+         			    [#if progress.ifafirmApproal='0' || progress.ifafirmRoApproval='0']
+         				<div class="progress-step-rows" style="background-color: #f6a03a;">
+         					<img class="gou-ico" src="${base}/res/images/client/reash_ico.png">
+         				</div>
+         				[#elseif progress.ifafirmApproal='1' && progress.ifafirmRoApproval='1']
+         				<div class="progress-step-rows" style="background-color: #fedbad;">
+         					<img class="gou-ico" src="${base}/res/images/client/gou_ico.png">
+         				</div>
+         				[#elseif progress.ifafirmApproal='2' || progress.ifafirmRoApproval='2']
+         				<div class="progress-step-rows" style="background-color: #fb1a4f;">
+         					<img class="gou-ico" src="${base}/res/images/client/cha_ico.png">
+         				</div>
+         				[#else]
+         				<div class="progress-step-rows">
+         					
+         				</div>
+         				[/#if]
+         				[#else]
+         				<div class="progress-step-rows">
+         					
+         				</div>
+         				[/#if]
+         				<p class="progress-step-word">IFA Firm Approval</p>
+         			</li>
+         			<li>
+         				<div class="progress-step-jiantou">
+         					<img class="jiantou-ico" src="${base}/res/images/client/jiantou_ico.png">
+         				</div>	
+         			</li>
+         			<!--<li class="progress-step">
+         				[#if progress?exists && progress.ifafirmRoApproval?exists && progress.ifafirmRoApproval??]
+         			    [#if progress.ifafirmRoApproval='0']
+         				<div class="progress-step-rows" style="background-color: #f6a03a;">
+         					<img class="gou-ico" src="${base}/res/images/client/reash_ico.png">
+         				</div>
+         				[#elseif progress.ifafirmRoApproval='1']
+         				<div class="progress-step-rows" style="background-color: #fedbad;">
+         					<img class="gou-ico" src="${base}/res/images/client/gou_ico.png">
+         				</div>
+         				[#elseif progress.ifafirmRoApproval='2']
+         				<div class="progress-step-rows" style="background-color: #fb1a4f;">
+         					<img class="gou-ico" src="${base}/res/images/client/cha_ico.png">
+         				</div>
+         				[#else]
+         				<div class="progress-step-rows">
+         					
+         				</div>
+         				[/#if]
+         				[#else]
+         				<div class="progress-step-rows">
+         					
+         				</div>
+         				[/#if]
+         				<p class="progress-step-word">IFA Firm RO Approval</p>
+         			</li>
+         			<li>
+         				<div class="progress-step-jiantou">
+         					<img class="jiantou-ico" src="${base}/res/images/client/jiantou_ico.png">
+         				</div>	
+         			</li>
+         			--><li class="progress-step">
+         				[#if progress?exists && progress.distributorApproval?exists && progress.distributorRoApproval?exists && (progress.distributorRoApproval?? || progress.distributorApproval??)]
+         			    [#if progress.distributorApproval='0' || progress.distributorRoApproval='0']
+         				<div class="progress-step-rows" style="background-color: #f6a03a;">
+         					<img class="gou-ico" src="${base}/res/images/client/reash_ico.png">
+         				</div>
+         				[#elseif progress.distributorApproval='1' && progress.distributorRoApproval='1']
+         				<div class="progress-step-rows" style="background-color: #fedbad;">
+         					<img class="gou-ico" src="${base}/res/images/client/gou_ico.png">
+         				</div>
+         				[#elseif progress.distributorApproval='2' || progress.distributorRoApproval='2']
+         				<div class="progress-step-rows" style="background-color: #fb1a4f;">
+         					<img class="gou-ico" src="${base}/res/images/client/cha_ico.png">
+         				</div>
+         				[#else]
+         				<div class="progress-step-rows">
+         					
+         				</div>
+         				[/#if]
+         				[#else]
+         				<div class="progress-step-rows">
+         					
+         				</div>
+         				[/#if]
+         				<p class="progress-step-word">Distrbutor Approval</p>
+         			</li>
+         			<li>
+         				<div class="progress-step-jiantou">
+         					<img class="jiantou-ico" src="${base}/res/images/client/jiantou_ico.png">
+         				</div>	
+         			</li>
+         			<!--<li class="progress-step">
+         				[#if progress?exists && progress.distributorRoApproval?exists && progress.distributorRoApproval??]
+         			    [#if progress.distributorRoApproval='0']
+         				<div class="progress-step-rows" style="background-color: #f6a03a;">
+         					<img class="gou-ico" src="${base}/res/images/client/reash_ico.png">
+         				</div>
+         				[#elseif progress.distributorRoApproval='1']
+         				<div class="progress-step-rows" style="background-color: #fedbad;">
+         					<img class="gou-ico" src="${base}/res/images/client/gou_ico.png">
+         				</div>
+         				[#elseif progress.distributorRoApproval='2']
+         				<div class="progress-step-rows" style="background-color: #fb1a4f;">
+         					<img class="gou-ico" src="${base}/res/images/client/cha_ico.png">
+         				</div>
+         				[#else]
+         				<div class="progress-step-rows">
+         					
+         				</div>
+         				[/#if]
+         				[#else]
+         				<div class="progress-step-rows">
+         					
+         				</div>
+         				[/#if]
+         				<p class="progress-step-word">Distrbutor RO Approval</p>
+         			</li>
+         			<li>
+         				<div class="progress-step-jiantou">
+         					<img class="jiantou-ico" src="${base}/res/images/client/jiantou_ico.png">
+         				</div>	
+         			</li>
+         			--><li class="progress-step">
+         			[#if progress?exists && progress.completeApproval?exists && progress.completeApproval='1']
+         			<div class="progress-step-rows" style="background-color: #fedbad;">
+         					<img class="gou-ico" src="${base}/res/images/client/gou_ico.png">
+         				</div>
+         			[#else]
+         				<div class="progress-step-rows">
+         					
+         				</div>
+         				[/#if]
+         				<p class="progress-step-word">Complete</p>
+         			</li>
+         		</ul>
+         	</div>
+         	[#if isIFA?exists && !isIFA]
+         	<!-- please wait -->
+         	<div class="progress-main-frim">
+         	  [#if progress?exists]
+         		<p class="progress-main-word">
+         		[#if progress.ifaApproval='0']IFA
+         		[#elseif progress.ifafirmApproal='0']IFA Firm 
+         		[#elseif progress.ifafirmRoApproval='0'] IFA Firm RO
+         		[#elseif progress.distributorApproval='0'] Distributor
+         		[#elseif progress.distributorRoApproval='0'] Distributor RO [/#if]  is approved, please wait!</p>
+         		[/#if]
+         	</div>
+         	[#else]
+         	<!-- 表格 -->
+         	 <div class="progress-main-table">
+         		<table class="client-table">
+                    <tbody>
+                        <tr class="client-table-th">
+                            <th width="15%" class="client-tables-header">Date</th>
+                            <th width="23%" class="client-tables-header">Person</th>
+                            <th width="22%" class="client-tables-header">Actions</th>
+                            <th width="30%" class="client-tables-header">Remark</th>
+                            <th width="10%" class="client-tables-header">Flow Step</th>
+                        </tr>
+                        [#if todoList?exists && todoList?size gt 0 ] [#list todoList as list]
+                        <tr style="background-color:#fef8ec;">
+                            <td class="portfolio-tdcenter">${list.processDate!}</td>
+                            <td class="portfolio-tdcenter">[#if list.flowUser?exists]${list.flowUser.loginCode!}[/#if]</td>
+                            <td class="portfolio-tdcenter">[#if list.flowState=1][#if list.checkStatus?exists && list.checkStatus=1 ] Approved [#else] Reject[/#if][/#if]</td>
+                            <td class="portfolio-tdcenter">${list.comment!}</td>
+                            <td class="portfolio-tdcenter">${list.flowName!}</td>
+                        </tr>
+                        [/#list]
+                        [/#if]
+                      
+                    </tbody>
+                </table>
+         	</div> 
+         	[/#if]
+         </div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+
+      seajs.use('${base}/res/web/openAccount/accountProgress.js');
+</script>

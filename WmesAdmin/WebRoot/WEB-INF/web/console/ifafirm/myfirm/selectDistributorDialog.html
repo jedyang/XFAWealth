@@ -1,0 +1,159 @@
+	
+	<!-- select distributor dialog  -->
+	<div>
+		<div class="row pd10">
+			<div class="col-md-2">
+				<label for="s-3">
+					代理商名称
+				</label>
+			</div>
+			<div class="col-md-2">
+				<input id='txtDisCompanyName' type="text"
+					class="form-control searchCondition" id="s-1">
+			</div>
+			<div class="col-md-2">
+				<label for="s-1">
+					性质
+				</label>
+			</div>
+			<div class="col-md-2">
+				<select id='selDisEntityType'
+					class="form-control searchCondition" id="s-1">
+					<option selected="selected" value=''>
+						请选择公司性质
+					</option>
+					<option value='1'>
+						[@lang_res k='console.ifafirm.detail.form.select.entityType.1'/]
+					</option>
+					<option value='2'>
+						[@lang_res k='console.ifafirm.detail.form.select.entityType.2'/]
+					</option>
+					<option value='3'>
+						[@lang_res k='console.ifafirm.detail.form.select.entityType.3'/]
+					</option>
+					<option value='4'>
+						[@lang_res k='console.ifafirm.detail.form.select.entityType.4'/]
+					</option>
+					<option value='5'>
+						[@lang_res k='console.ifafirm.detail.form.select.entityType.5'/]
+					</option>
+				</select>
+			</div>
+			<div class="col-md-4">
+				<button type="button" class="btn btn-primary" onclick="bindSelectDistributor(0)" id="btnSearch">
+					 [@lang_res k='global.query'/]
+				</button>
+			</div>
+		</div>
+	</div>
+	<div id="selectDistributorList" style="margin: 0 0 70px 0;">
+		<table id="selectDistributorTable" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+			<thead>
+				<tr>
+					<th class="table-head">
+						名称
+					</th>
+					<th class="table-head">
+						性质
+					</th>
+					<th class="table-head">
+						国家
+					</th>
+					<th class="table-head">
+						注册时间
+					</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<ul id='selectDistributorPagination' class="pagination pull-right now"></ul>
+	</div>
+<script>
+
+	$(function(){
+		bindSelectDistributor(0);
+	});
+	
+	function bindSelectDistributor(curPage){
+		var companyName =$('#txtDisCompanyName').val();
+		var entityType =$('#selDisEntityType').val();
+		$.ajax({
+			type : 'post',
+			url : '${base}/console/myfirm/distributorJson.do?dateStr='
+					+ new Date().getTime(),
+			data : {
+				page : curPage + 1,
+				entityType : entityType,
+				companyName : companyName,
+				sort : '',
+				order : ''
+			},
+			success : function(result) {
+				var html = '';
+				var json = result.rows;
+				var total = result.total;
+				if (null != json) {
+					$.each(json,function(i, n) {
+						var companyName = n.companyName == null ? ''
+								: n.companyName;
+						var incorporationDate = n.incorporationDate == null ? ''
+								: n.incorporationDate;
+						var countryName = n.countryName == null ? ''
+								: n.countryName;
+						var entityType = '';
+						switch (n.entityType) {
+		                    case ('1'):
+		                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.1'/]";
+		                        break;
+		                    case ('2'):
+		                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.2'/]";
+		                        break;
+		                    case ('3'):
+		                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.3'/]";
+		                        break;
+		                    case ('4'):
+		                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.4'/]";
+		                        break;
+		                    case ('5'):
+		                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.5'/]";
+		                        break;
+		                    default:
+		                     entityType = '';
+		                }
+						html += '<tr><td class="col-md-3"><a href="javascript:selectDistributor(\''+n.id+'\',\''+companyName+'\')">'
+								+ companyName
+								+ '</a></td><td class="col-md-3">'
+								+ entityType
+								+ '</td><td class="col-md-3">'
+								+ countryName
+								+ '</td><td class="col-md-3">'
+								+ incorporationDate
+								+ '</td></tr>';
+					});
+				}
+					$('#selectDistributorTable tbody').empty().append(html);
+					$('#selectDistributorPagination').pagination(total, {
+						callback : pageselectCallback,
+						numDetail : '',
+						items_per_page : 10,
+						num_display_entries : 4,
+						current_page : curPage,
+						num_edge_entries : 2
+					});
+					}
+		});
+		function pageselectCallback(page_id, jq) {
+			bindSelectDistributor(page_id,0);
+		}
+	}
+	
+	function selectDistributor(id,name){
+		var buttonHTML = '<button id="distributor_selected" name="'+name+'" selectId="'+id+'" class="btn btn-default" type="button">'+ name+ '&nbsp;<span class="badge">X</span></button>';
+		$('#distributor_selected').remove();
+		$('.bootstrap-dialog-footer-buttons').prepend(buttonHTML);
+		$('#distributor_selected').click(function(){
+			$('#distributor_selected').remove();
+		});
+	}
+	
+</script>

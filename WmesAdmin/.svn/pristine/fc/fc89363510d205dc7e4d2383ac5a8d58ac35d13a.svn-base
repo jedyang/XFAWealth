@@ -1,0 +1,125 @@
+package com.fsll.wmes.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+////@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Table(name = "portfolio_hold_product")
+public class PortfolioHoldProduct implements java.io.Serializable {
+    @Id
+    @Column(name="id")
+    @GeneratedValue(generator = "paymentableGenerator")        
+    @GenericGenerator(name = "paymentableGenerator", strategy = "uuid.hex")
+	private String id;
+    
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "portfolio_id")
+	@JsonIgnore
+    private PortfolioInfo portfolio;
+    
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "product_id")
+	@JsonIgnore
+	@NotFound(action=NotFoundAction.IGNORE)
+	private ProductInfo product;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "account_id")
+	@JsonIgnore
+	private InvestorAccount account;
+	
+	@Column(name = "account_no")
+	private String accountNo;
+	
+	@Column(name = "holding_unit")
+	private Integer holdingUnit;
+	
+	@Column(name = "available_unit")
+	private Integer availableUnit;
+	
+	@Column(name = "reference_cost")
+	private Double referenceCost;
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public ProductInfo getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductInfo product) {
+		this.product = product;
+	}
+
+	public PortfolioInfo getPortfolio() {
+		return portfolio;
+	}
+
+	public void setPortfolio(PortfolioInfo portfolio) {
+		this.portfolio = portfolio;
+	}
+
+	
+	
+	public InvestorAccount getAccount() {
+		return account;
+	}
+
+	public void setAccount(InvestorAccount account) {
+		this.account = account;
+	}
+
+	public String getAccountNo() {
+		return accountNo;
+	}
+
+	public void setAccountNo(String accountNo) {
+		this.accountNo = accountNo;
+	}
+
+	public Integer getHoldingUnit() {
+		return holdingUnit;
+	}
+
+	public void setHoldingUnit(Integer holdingUnit) {
+		this.holdingUnit = holdingUnit;
+	}
+
+	public Integer getAvailableUnit() {
+		return availableUnit;
+	}
+
+	public void setAvailableUnit(Integer availableUnit) {
+		this.availableUnit = availableUnit;
+	}
+
+	public Double getReferenceCost() {
+		return referenceCost;
+	}
+
+	public void setReferenceCost(Double referenceCost) {
+		this.referenceCost = referenceCost;
+	}
+	
+	
+}

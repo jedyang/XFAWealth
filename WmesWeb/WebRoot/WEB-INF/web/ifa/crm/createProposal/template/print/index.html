@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title></title>
+		<!--
+		<script type="text/javascript" src="js/echarts.min.js" ></script>
+		-->
+		<script type="text/javascript" src="${base}/res/js/jquery.min.js"></script>
+	</head>
+<style>
+html,body{margin:0;padding:0;font-family: "微软雅黑";font-size: 16px;}
+li{list-style: none;}
+ul{padding:0;}
+body{width:100%;}
+.header{font-size:26px;font-weight: bold}
+.wrap{height:auto;padding:1% 4%;}
+.header{text-align: center;margin:20px 0;}
+.subhead{text-align: center;font-size: 20px;height:40px;}
+.subhead img{vertical-align:middle;}
+.subhead span{line-height:40px;}
+.title{margin-top:40px;height:30px;border-bottom:1px solid #e8e8e8;font-weight: bold;color:rgb(227,107,10)}
+.littletitle{color:#1b73cd;font-weight: bold;}
+.textcontent{margin-left:22px;margin-right:10%;margin-bottom:20px;}
+.piebox{overflow: hidden;}
+.piebox li{width:49%;text-align:center;}
+.piebox li div{height:400px;}
+.tble{width:100%;border-collapse: collapse;border-spacing: 0;display: table;margin-top:25px;}
+.tble td{padding:0 10px;height:66px;}
+.tble_th{background:#f6fafe;border-bottom:2px solid #c7e7fe;height:66px;}
+.weight{text-align: center;}
+.tble .funds{padding-left:4%;}
+.plansetting{overflow: hidden;}
+.plansettingleft,.plansettingright{color:#b6b6b6;margin-top:20px;font-size:16px;}
+.plansettingleft span,.plansettingright span{display:inline-block;height:20px;line-height: 20px;padding:0 8px;color:#000;}
+.plansettingleft span:nth-child(1){text-align: right;color:#b6b6b6;width:120px;}
+.plansettingright span:nth-child(1){text-align: right;color:#b6b6b6;width:130px;}
+.plansettingleft .plansettingleftac,.plansettingright .plansettingrightac{background:#1286df;color:#fff;}
+.plansettingleft input{height:30px;border:1px solid #e3e3e3;line-height:30px}
+.Riskleft,.Riskright{float:left}
+.Riskleft{width:55%;margin-right:3%;}
+.Riskleft img{width:100%;height:auto;}
+.Riskright{width:40%;}
+.Riskright td{text-align: center;}
+.Riskright tr td:nth-child(1){color:#167bd1}
+</style>
+	<body>
+		[#if proposal??]
+		<div class="wrap">
+			<div class="header" style="margin:40px 0 0 0">
+				[#if proposal??]
+				${proposal.proposalName!}<br>
+				[/#if]
+			</div>
+			<div class="subhead" style="margin: 50px 0 660px 0;">
+				<img src="${base!}${iconUrl!}" style="height:40px;width:40px;border-radius: 50%;margin:0 22px;"/>
+				<span>${clientName!}</span><br>
+				<p>
+				${ifaName!}<br>
+				[#if proposal??]${proposal.lastUpdate?string('yyy-MM-dd')}[/#if]
+				</p>
+			</div>
+			<div class="title">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.investmentConstrains'/]
+			</div>
+			[#if proposal?? && proposal.liquidityNeed?? && proposal.liquidityNeed!=""]
+			<p class="littletitle">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.liquidityNeeds'/]
+			</p>
+			<p class="textcontent">
+				${(proposal.liquidityNeed)!}
+			</p>
+			[/#if]
+			[#if proposal?? && proposal.timeFrame?? && proposal.timeFrame!=""]
+			<p class="littletitle">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.timeFrame'/]
+			</p>
+			<p class="textcontent">
+				${(proposal.timeFrame)!}
+			</p>
+			[/#if]
+			[#if proposal?? && proposal.taxConcerns?? && proposal.taxConcerns!=""]
+			<p class="littletitle">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.taxConcerns'/]
+			</p>
+			<p class="textcontent">
+				${(proposal.taxConcerns)!}
+			</p>
+			[/#if]
+			[#if proposal?? && proposal.lrf?? && proposal.lrf!=""]
+			<p class="littletitle">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.legalAndRegulatoryFactors'/]
+			</p>
+			<p class="textcontent">
+				${(proposal.lrf)!}
+			</p>
+			[/#if]
+			[#if proposal?? && proposal.unp?? && proposal.unp!=""]
+			<p class="littletitle">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.uniqueNeedsAndPreferences'/]
+			</p>
+			<p class="textcontent">
+				${(proposal.unp)!}
+			</p>
+			[/#if]
+			<div class="title">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.portfolio.detail'/]
+			</div>
+			[#if proposal.initialInvestAmount??]
+			<p class="littletitle">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.initialInvestAmount'/]
+			</p>
+			<p class="textcontent">
+				[@num_fmt s='${(proposal.initialInvestAmount)!}'/]<span style="margin-left:10px">${currencyName!}</span>
+			</p>
+			[/#if]
+			[#if (portfolio.aipFlag)?? && portfolio.aipFlag=='1']
+			<div class="littletitle">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.aip.setting'/]
+			</div>
+			<div class="plansetting">
+				<div class="plansettingleft">
+					<p>
+					<span style="text-align: left;">[@lang_res lang='${langCode!}' k='order.plan.rebalance.AIP.execCycle'/]：</span>
+					[#if aip?? && (aip.aipExecCycle)?? && aip.aipExecCycle=='w']
+						<span class="plansettingleft1">[@lang_res lang='${langCode!}' k='order.plan.rebalance.AIP.execCycle.w'/]</span>
+					[#elseif (aip.aipExecCycle)?? && aip.aipExecCycle=='b']
+						<span class="plansettingleft1">[@lang_res lang='${langCode!}' k='order.plan.rebalance.AIP.execCycle.b'/]</span>
+					[#elseif (aip.aipExecCycle)?? && aip.aipExecCycle=='m']
+						<span class="plansettingleft1">[@lang_res lang='${langCode!}' k='order.plan.rebalance.AIP.execCycle.m'/]</span>
+					[/#if]
+					</p>
+					<p><span style="text-align: left;">[@lang_res lang='${langCode!}' k='order.plan.rebalance.AIP.amount'/]：</span><span>[@num_fmt s='${(aip.aipAmount)!}'/]</span><span style="margin-left:10px">${currencyName!}</span></p>
+					<p><span style="text-align: left;width: 130px;">[@lang_res lang='${langCode!}' k='order.plan.rebalance.AIP.timeDistance'/]：</span><span>${(aip.aipTimeDistance)!'-'}</span></p>
+					<p><span style="text-align: left;width: 160px;">[@lang_res lang='${langCode!}' k='order.plan.rebalance.AIP.init.date'/]：</span><span>[#if aip?? && aip.aipInitTime??]${aip.aipInitTime?string('yyy-MM-dd')}[/#if]</span></p>
+					<p>
+					[#if (aip.aipEndDate)??]
+					<span style="text-align: left;" class="plansettingrightac">[@lang_res lang='${langCode!}' k='order.plan.rebalance.AIP.endDate'/]:</span>
+					<span style="color: black;">${aip.aipEndDate?string('yyy-MM-dd')}</span>
+					[#elseif (aip.aipEndCount)?? && (aip.aipEndCount) gt 0]
+					<span style="text-align: left;" class="plansettingrightac">[@lang_res lang='${langCode!}' k='order.plan.rebalance.AIP.endCount'/]:</span>
+					<span style="color: black;">${aip.aipEndCount!} [@lang_res lang='${langCode!}' k='create.proposal.preview.times'/]</span>
+					[#elseif (aip.aipEndTotalAmount)?? && aip.aipEndTotalAmount gt 0]
+					<span style="text-align: left;" class="plansettingrightac">[@lang_res lang='${langCode!}' k='order.plan.rebalance.AIP.endTotalAmont'/]:</span>
+					<span style="color: black;">${aip.aipEndTotalAmount}</span> <span style="margin-left:10px">${currencyName!}</span>
+					[/#if]
+					</p>
+				</div>
+			</div>
+			[/#if]
+			[#if portfolio?? && portfolio.riskLevel??]
+			<p class="littletitle">
+				[@lang_res lang='${langCode!}' k='order.plan.rebalance.riskLevel'/]
+			</p>
+			<p class="textcontent">
+				${(portfolio.riskLevel)!'-'}
+			</p>
+			[/#if]
+			[#if products?? && products?size gt 0]
+			<div class="littletitle">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.fundsHoldings'/]
+			</div>
+			<table class="tble">
+				<tr class="tble_th">
+					<th style="width:30%;text-align: center;">[@lang_res lang='${langCode!}' k='create.proposal.preview.funds'/]</th>
+					<th style="width:18%;text-align: center;">[@lang_res lang='${langCode!}' k='create.proposal.preview.weight'/]</th>
+					<th style="width:32%;text-align: center;">[@lang_res lang='${langCode!}' k='create.proposal.preview.candidate'/]</th>
+				</tr>
+					[#list products as p]
+					<tr style="">
+						<td class="funds" style="text-align: center;">[#if p??]${p.fundName!}[/#if]</td>
+						<td class="weight" style="text-align: center;">[#if p??]${p.allocationRate!} %[/#if]</td>
+						<td style="text-align: center;">
+							[#if p?? && p.productDetails?? && p.productDetails?size gt 0]
+								[#list p.productDetails as sp]
+									[#if sp_index == p.productDetails?size-1]
+									${sp.spareFundName!}
+									[#else]
+									${sp.spareFundName!}<br/>
+									[/#if]
+								[/#list]
+							[#else]
+								<span style="margin: 0 45%;">-</span>
+							[/#if]
+						</td>
+					</tr>
+					[/#list]
+			</table>
+			[/#if]
+			[#if geoAllocationUrl?? && sectorTypeUrl??]
+			<div class="title">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.recommendedAllocation'/]
+			</div>
+			<ul class="piebox">
+				<li style="width:50%;float:left">
+					<img src="${base!}/loadImgSrcByPathNoLogin.do?filePath=${geoAllocationUrl!}" style="width:100%"/>
+				</li>
+				<li style="width:50%;float:right">
+					<img src="${base!}/loadImgSrcByPathNoLogin.do?filePath=${sectorTypeUrl!}" style="width:100%"/>
+				</li>
+			</ul>
+			[/#if]
+			<div class="title">
+				[@lang_res lang='${langCode!}' k='create.proposal.preview.portfolioIllustration'/]
+			</div>
+			[#if proposal?? && aggregateUrl??]
+			<p>
+			[@lang_res lang='${langCode!}' k='create.proposal.preview.portfolioIllustration.content' arg0='${(proposal.initialInvestAmount)!}${currencyName!}' arg1='${proposal.lastUpdate?string("yyy-MM-dd")}' /]
+			</p>
+			<div>
+			<img src="${base}/loadImgSrcByPathNoLogin.do?filePath=${aggregateUrl!}" style="width:100%;height:auto">
+			</div>
+			[/#if]
+			[#if proposal?? && separatenesUrl??]
+			<p>
+			[@lang_res lang='${langCode!}' k='create.proposal.preview.portfolioIllustration.fund' arg0='${proposal.lastUpdate?string("yyy-MM-dd")}' /]
+			</p>
+			<div>
+			<img src="${base}/loadImgSrcByPathNoLogin.do?filePath=${separatenesUrl!}" style="width:100%;height:auto">
+			</div>
+			[/#if]
+			
+			[#if proposal.status?? && proposal.status!='0']
+			<div class="proposal_check">
+				<div class="title">
+					[@lang_res lang='${langCode!}' k='order.plan.check.table.title'/]
+				</div>
+				<table class="tble">
+					<tr class="tble_th">
+						<th style="width:25%;text-align: center;">[@lang_res lang='${langCode!}' k='order.plan.check.table.th.approval'/]</th>
+						<th style="width:25%;text-align: center;">[@lang_res lang='${langCode!}' k='order.plan.check.table.th.status'/]</th>
+						<th style="width:25%;text-align: center;">[@lang_res lang='${langCode!}' k='order.plan.check.table.th.date'/]</th>
+						<th style="width:25%;text-align: center;">[@lang_res lang='${langCode!}' k='order.plan.check.table.th.opinon'/]</th>
+					</tr>
+					[#if checkVOs?? && checkVOs?size gt 0]
+					[#list checkVOs as items]
+					[#if items.checkStatus!='0']
+					<tr style="">
+						<td style="text-align: center;">${items.approval!'-'}</td>
+	                    <td style="text-align: center;">${items.checkStatusDisplay!'-'}</td>
+	                    <td style="text-align: center;">${items.checkTime!'-'}</td>
+	                    <td style="text-align: center;">${items.checkResult!'-'}</td>
+					</tr>
+					[/#if]
+					[/#list]
+					[/#if]
+					<tr style="">
+						<td style="text-align: center;">${ifaName!}</td>
+	                    <td style="text-align: center;">${ifaName!} [@lang_res k='create.proposal.check.submitted'/]</td>
+	                    <td style="text-align: center;">[#if proposal.lastUpdate??]${proposal.createTime?string('yyyy-MM-dd HH:mm:ss')}[#else]-[/#if]</td>
+	                    <td style="text-align: center;">-</td>
+					</tr>
+				</table>
+			</div>
+			[/#if]
+			
+		</div>
+		<div style="margin: 80px 45%;">
+            <a id="print" style="text-decoration:none;background: #2d80ce;color: white;padding: 10px 0;text-align: -webkit-center;border-radius: 4px;display:[#if isPrint?? && isPrint=='1']block[#else]none[/#if]" href="javascript:;">[@lang_res lang='${langCode!}' k='create.proposal.preview.print'/]</a>
+		</div>
+		[#else]
+		<div class="wmes-nodata-tips" style="text-align: center;padding: 50px 0;">
+           <img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+           <span class="wmes-nodate-word" style="color: #999999;margin-left: 10px;">[@lang_res k="global.search.noData"/]</span>
+        </div>
+        [/#if]
+	</body>
+</html>
+<script>	
+	//print
+	$('#print').click(function(){
+		$('#print').closest('div').hide();
+		$('.proposal_check').hide();
+		window.print();
+		$('.proposal_check').show();
+	});
+</script>

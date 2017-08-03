@@ -1,0 +1,821 @@
+[#include "../../inc/head_v2.html"/]
+<style>.swiper-container {width: 100%;height: 100%;}</style>
+<link href="${base}/res/third/fullcalendar/css/fullcalendar.print.css" rel="stylesheet" media="print">
+<link href="${base}/res/third/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+<link href="${base}/res/third/laydate/need/laydate.css">
+<link href="${base}/res/third/laydate/skins/yalan/laydate.css">
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+<link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link href="${base}/res/third/minicolor/jquery.minicolors.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/res/css/discover.css"> 
+<style>
+
+.swiper-pagination{position:absolute;top:20px;height: 13px;} 
+.swiper-pagination-bullet{margin: 0px 5px;}
+.investor-chioce-li-ss{height:50px;}
+.home-investor-right .investor-chioce .p-selected { color:#ffffff; background-color: #70bdfe;cursor:pointer;}
+.page_left {background: url('${base}/res/images/ifa/left_ico.png') no-repeat;;position: absolute;top: 45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;left: -10px;opacity: 0.7;right: auto;cursor: pointer;}
+.page_right {background: url('${base}/res/images/ifa/right_ico.png') no-repeat;position: absolute;top:45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;right: -10px;opacity: 0.7;left: auto;cursor: pointer;}
+.swiper-pagination-bullet{width: 12px;height: 12px;}
+.ifa-topfive-wrap .swiper-container{width: 100%;}
+.funds_fixed {position: fixed;z-index: 999999;}
+.mask-layer1 {position: absolute;top: 0;left: 0;}
+.account-choose-name {color: #939292;}
+.register_xiala_long input {width: 91%;color:black}
+.tasklist-metting-choice {z-index: 9999;}
+.space-mask-wrap{position:absolute;}
+.mask-layer-load {position: absolute;top: -20%;left: 0;z-index: 9999;background: rgba(0,0,0,0.2);}
+.schedule-save-load {display: none;height: 100%;width: 100%; background: rgba(0, 0, 0, 0.42);position: absolute;z-index: 999999;top: 0;}
+.schedule-save-load-gif {position: fixed;left: 50%;top: 40%;}
+.dialog-notice{
+    position: fixed;
+    top: 0px;
+    z-index: 999999;
+    padding-left: 100px;
+}
+.selectSector-title-sub{
+	float:left;
+	font-size: 14px;
+    padding-bottom: 15px;
+    color:#b7b5b5;
+    margin-left:25px;
+}
+.notice-content{
+	clear: both;
+    margin: 0 2%;
+}
+.dispaly-active{
+	height: 100%;
+ 	width: calc(100% - 110px);
+}
+</style>
+<style type="text/css">
+        .page_left {background: url('${base}/res/images/ifa/left_ico.png') no-repeat;;position: absolute;top: 45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;left: -10px;opacity: 0.7;right: auto;cursor: pointer;}
+        .page_right {background: url('${base}/res/images/ifa/right_ico.png') no-repeat;position: absolute;top:45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;right: -10px;opacity: 0.7;left: auto;cursor: pointer;}
+            /*swiper 重写*/
+        .swiper-button-next, .swiper-button-prev {position: absolute;top: 80px;width: 50px;height: 50px;opacity: 0.7;margin-top: -22px;z-index: 10;cursor: pointer;background-position: center;background-repeat: no-repeat;display: none;}
+        .swiper-button-disabled{display: none!important;}
+        .swiper-button-prev{background: url('${base}/res/images/ifa/left_ico.png') no-repeat;background-size: 100% 100%;left: 0px;}
+        .swiper-button-next{background: url('${base}/res/images/ifa/right_ico.png') no-repeat;background-size: 100% 100%;right: 0px;}
+        .pipelin-list-swiper{height: 367px;z-index: 0;}
+        .pipelin-list{margin-top: -180px;}
+        .pipelin-list:first-of-type{margin-top: 0px;}
+        .rotate{transform:rotate(180deg);}
+        .tip-metting-color{margin-top:-5px}
+        #callboard{z-index:1;padding-left:30px;width:60%;left:20%;height:24px;line-height:24px;overflow:hidden;font-size:12px;position:absolute;top:0;background:url('${base}/res/images/community/gg.png') no-repeat left top;background-size:24px 24px;background-color:#f5f5f5;} 
+        </style>
+<div class="wmes-top">
+        <a href="javascript:;" class="header-over">Home</a>
+    </div>
+<div class="wmes-notop-content"  ng-controller="profitTableCtrl"  ng-app="profitTable">
+    <input type="hidden" id="defColor" value="${defColor!}">
+	<input type="hidden" id="currency" value="${currency!}">
+	<input type="hidden" id="currencyName" value="${currencyName!}">
+	<input type="hidden" id="decimals" value="${decimals!}">
+     <div class="swiper-container ifa-home-wrap">
+        <div class="swiper-wrapper ifa-home-contents-list">
+            <div class="swiper-slide ifa-home-rows">
+                <div class="ifa-home-contents">
+                	<!--<div style="width:100px;height:100px;background:red;"></div>-->
+                    <p class="ifa-home-title">[@lang_res k='ifa.home.top5'/]</p>
+                    <ul class="noline_tab_tab ifa-topfive-tab">
+                        <li class="now">[@lang_res k='ifa.home.top5.best'/]<span></span></li>
+                        <li>[@lang_res k='ifa.home.top5.worst'/]<span></span></li>
+                    </ul>
+                    <div class="ifa-topfive-wrap">
+                        <div class="ifa-topfive-content ifa-topfive-active ifa-topfive-best">
+                            <div class="topfive-date-choose-wrap">
+                                <p class="topfive-date-title">[@lang_res k='client.sort.return'/]</p>
+                                <div class="topfive-date-choose best-choose">
+                                    <span data-key="1M" class="topfive-date-active">[@lang_res  k='ifa.home.top5.1M'/]</span>
+                                    <span data-key="3M">[@lang_res  k='ifa.home.top5.3M'/]</span>
+                                    <span data-key="YTD">[@lang_res  k='ifa.home.top5.ytd'/]</span>
+                                    <span data-key="1Y">[@lang_res  k='ifa.home.top5.1y'/]</span>
+                                    <span data-key="">[@lang_res  k='ifa.home.top5.total'/]</span>
+                                </div>
+                            </div>
+                            <div class="topfive-contents">
+                                <div class="topfive-left-contents ng-cloak" ng-if="$index==0" ng-repeat="items in bestList" ng-init="checkLast($last)"><!--style="background-image:url('${base}/loadImgSrcByPath.do?filePath={{items.chartUrl}}')"-->
+                                	<div class="hoverpoint">
+                                    	<a href="${base}/front/strategy/info/conservativePortfolio.do?id={{items.id}}" target="_self">
+                                    		<div class="topfive-left-topper">
+                                            	<span class="topfive-left-house">1</span>
+                                            	<p class="topfive-left-title ng-binding" title="{{items.portfolioName}}">{{items.portfolioName | characters:30:false}}</p>
+                                        	</div>
+                                            <div class="topfive-left-index-wrap">
+                                                <span class="lump-equity-grade funds_leveal_{{items.riskLevel}}" style="margin-right: 10px;">{{items.riskLevel}}</span>
+                                            </div>
+                                        	<p class="topfive-left-return">{{bestStatistic}}</p>
+                                            <p class="topfive-left-number" ng-bind-html="items.returnRate | currencyColor:'%':defColor"></p>	
+                                        	<div class="topfive-rows-nwrap">
+                                            	<div class="topfive-rows-aum">
+                                                	<p class="topfive-rows-title">[@lang_res k='ifa.home.aum'/] ( {{currencyName}} )</p>
+                                                	<p class="topfive-rows-num"  >{{items.aum | formatCurrency:'':decimals}}</p>
+                                            	</div>
+                                            	<div class="topfive-rows-inv">
+                                                	<p class="topfive-rows-title">[@lang_res k='ifa.home.invDays'/]</p>
+                                                	<p class="topfive-inv-word">{{items.invDays}}</p>
+                                            	</div>
+                                        	</div>
+                                        </a>
+                                	</div>
+                                    <div class="topfive-rows-bottom">
+                                        <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.customerId}}">
+                                            <p class="topfive-rows-name">{{items.nickName}}</p>
+                                        </a>
+                                        <img class="topfive-rows-chat layim-pop-chat" layim-pop-id="{{items.userId}}" nickName="{{items.nickName}}" src="${base}/res/images/ifa/top_chat.png">
+                                    </div>
+                                </div>
+                                <ul class="topfive-right-contents">
+                                    <li class="topfive-right-rows ng-cloak"  ng-if="$index>0" ng-repeat="items in bestList" ng-init="checkLast($last)" style="background-image:url('${base}/loadImgSrcByPath.do?filePath=/u/chart/{{items.id}}__middle.png')">
+                                    	<div class="hoverpoint">
+                                         <a href="${base}/front/strategy/info/conservativePortfolio.do?id={{items.id}}" target="_self">
+                                        <div class="topfive-left-topper">
+                                            <span class="topfive-left-house">{{$index+1}}</span>
+                                            <p class="topfive-left-title ng-binding"  title="{{items.portfolioName}}" >{{items.portfolioName | characters:30:false}}</p>
+                                        </div>
+                                        <div class="topfive-left-index-wrap">
+                                            <span class="lump-equity-grade funds_leveal_{{items.riskLevel}}" style="margin-right: 10px;">{{items.riskLevel}}</span>
+                                        </div>
+                                         <p class="topfive-left-return">{{bestStatistic}}</p>
+                                         <p class="topfive-left-number" ng-bind-html="items.returnRate | currencyColor:'%':defColor" ></p>
+                                        <div class="topfive-rows-nwrap">
+                                            <div class="topfive-rows-aum">
+                                                <p class="topfive-rows-title">[@lang_res k='ifa.home.aum'/] ( {{currencyName}} )</p>
+                                                <p class="topfive-rows-num">{{items.aumStr}}</p>
+                                            </div>
+                                            <div class="topfive-rows-inv">
+                                                <p class="topfive-rows-title">[@lang_res k='ifa.home.invDays'/]</p>
+                                                <p class="topfive-inv-word">{{items.invDays}}</p>
+                                            </div>
+                                        </div>
+                                        </a>
+                                      </div>
+                                        <div class="topfive-rows-bottom">
+                                         <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.customerId}}" >
+                                            <p class="topfive-rows-name">{{items.nickName}}</p>
+                                            </a>
+                                            <img class="topfive-rows-chat layim-pop-chat" layim-pop-id="{{items.userId}}" nickName="{{items.nickName}}" src="${base}/res/images/ifa/top_chat.png">
+                                        </div>
+                                    </li></ul>                   
+                            </div>
+                            <div class="wmes-nodata-tips bestTop5">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                            </div>
+                        </div>
+                        <div class="ifa-topfive-content ifa-topfive-worst">
+                            <div class="topfive-date-choose-wrap">
+                                <p class="topfive-date-title">[@lang_res k='client.sort.return'/]</p>
+                                <div class="topfive-date-choose worst-choose">
+                                    <span data-key="1M" class="topfive-date-active">[@lang_res  k='ifa.home.top5.1M'/]</span>
+                                    <span data-key="3M">[@lang_res  k='ifa.home.top5.3M'/]</span>
+                                    <span data-key="YTD">[@lang_res  k='ifa.home.top5.ytd'/]</span>
+                                    <span data-key="1Y">[@lang_res  k='ifa.home.top5.1y'/]</span>
+                                    <span data-key="">[@lang_res  k='ifa.home.top5.total'/]</span>
+                                </div>
+                            </div>
+                            <div class="topfive-contents worst-contents ">
+                                <div class="topfive-left-contents ng-cloak" ng-if="$index==0" ng-repeat="items in worstList" ng-init="checkLast($last)" style="background-image:url('${base}/loadImgSrcByPath.do?filePath=/u/chart/{{items.id}}__middle.png')">
+                                    <div class="hoverpoint">
+                                     <a href="${base}/front/strategy/info/conservativePortfolio.do?id={{items.id}}" target="_self">
+                                    <div class="topfive-left-topper">
+                                        <span class="topfive-left-house">1</span>
+                                       <p class="topfive-left-title ng-binding"  title="{{items.portfolioName}}">{{items.portfolioName | characters:20:false}}</p>
+                                    </div>
+                                    <div class="topfive-left-index-wrap">
+                                    <span class="lump-equity-grade funds_leveal_{{items.riskLevel}}" style="margin-right: 10px;"> {{items.riskLevel}}</span></div>
+                                    <p class="topfive-left-return">{{worstStatistic}}</p>
+                                     <p class="topfive-left-number" ng-bind-html="items.returnRate | currencyColor:'%':defColor"></p>
+                                     <div class="topfive-rows-nwrap">
+                                        <div class="topfive-rows-aum">
+                                            <p class="topfive-rows-title">[@lang_res k='ifa.home.aum'/] ( {{currencyName}} )</p>
+                                            <p class="topfive-rows-num">{{items.aum | formatCurrency:'':decimals}}</p>
+                                        </div>
+                                        <div class="topfive-rows-inv">
+                                            <p class="topfive-rows-title">[@lang_res k='ifa.home.invDays'/]</p>
+                                            <p class="topfive-inv-word">{{items.invDays}}</p>
+                                        </div>
+                                    </div>
+                                    </a>
+                                    </div>
+                                    <div class="topfive-rows-bottom">
+                                     <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.customerId}}" >
+                                        <p class="topfive-rows-name">{{items.nickName}}</p></a>
+                                        <img class="topfive-rows-chat layim-pop-chat" layim-pop-id="{{items.userId}}" nickName="{{items.nickName}}" src="${base}/res/images/ifa/top_chat.png">
+                                    </div>
+                                </div>
+                                <ul class="topfive-right-contents">
+                                    <li class="topfive-right-rows ng-cloak" ng-if="$index>0" ng-repeat="items in worstList" ng-init="checkLast($last)" style="background-image:url('${base}/loadImgSrcByPath.do?filePath=/u/chart/{{items.id}}__middle.png')" >
+                                    	<div class="hoverpoint">
+                                         <a href="${base}/front/strategy/info/conservativePortfolio.do?id={{items.id}}" target="_self">
+                                        <div class="topfive-left-topper">
+                                            <span class="topfive-left-house">{{$index+1}}</span>
+                                            <p class="topfive-left-title ng-binding"  title="{{items.portfolioName}}" >{{items.portfolioName | characters:30:false}}</p>
+
+                                        </div>
+                                        <div class="topfive-left-index-wrap">
+                                            <span class="lump-equity-grade funds_leveal_{{items.riskLevel}}" style="margin-right: 10px;">{{items.riskLevel}}</span>
+                                        </div>
+                                        <p class="topfive-left-return">{{worstStatistic}}</p>
+                                        <p class="topfive-left-number" ng-bind-html="items.returnRate | currencyColor:'%':defColor"></p>
+                                        <div class="topfive-rows-nwrap">
+                                            <div class="topfive-rows-aum">
+                                                <p class="topfive-rows-title">[@lang_res k='ifa.home.aum'/] ( {{currencyName}} )</p>
+                                                <p class="topfive-rows-num">{{items.aumStr}}</p>
+                                            </div>
+                                            <div class="topfive-rows-inv">
+                                                <p class="topfive-rows-title">[@lang_res k='ifa.home.invDays'/]</p>
+                                                <p class="topfive-inv-word">{{items.invDays}}</p>
+                                            </div>
+                                        </div>
+                                        </a>
+                                      </div>
+                                        <div class="topfive-rows-bottom">
+                                         <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.customerId}}" >
+                                            <p class="topfive-rows-name">{{items.nickName}}</p></a>
+                                            <img class="topfive-rows-chat  layim-pop-chat" layim-pop-id="{{items.userId}}" nickName="{{items.nickName}}" src="${base}/res/images/ifa/top_chat.png">
+                                        </div>
+                                    </li>
+                                </ul>                   
+                            </div>
+                            <div class="wmes-nodata-tips worstTop5">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div id="swiper-slide3" class="swiper-slide ifa-home-rows">
+                <div class="ifa-home-contents" style="min-height:1000px;*+height:100%;_height:1000px;">
+                   <p class="ifa-home-title">[@lang_res k='ifa.home.taskList'/]</p>
+                   <input id="hidPage" type="hidden" value="1">
+                   <input id="hidRows" type="hidden" value="10">
+                   <div class="tasklist-header">
+                   		<div class="tasklist-events" style="margin-right:10px;">
+                           <!--<input class="tasklist-events-checkbox" id="important-events-checkbox" type="checkbox" name="">-->
+                           <div class="login_checkbox">
+	                       		<input type="checkbox" value="0" name="important-events-checkbox" id="important-events-checkbox">
+	                        	<label for="important-events-checkbox"></label>
+	                   	   </div>
+                           <p class="tasklist-events-title">[@lang_res k='ifa.home.taskList.importEvent'/]</p>
+                       </div>
+                       <div class="tasklist-events tasklist-events-recurrent" style="margin-right:10px;">
+                           <!--<input class="tasklist-events-checkbox" checked="checked" id="events-checkbox" type="checkbox" name="">-->
+                           <div class="login_checkbox">
+	                       		<input type="checkbox" value="0" name="events-checkbox" id="events-checkbox">
+	                        	<label for="events-checkbox"></label>
+	                   	   </div>
+                           <p class="tasklist-events-title">[@lang_res k='ifa.home.taskList.recurrentEv'/]</p>
+                       </div>  
+                       <div class="tasklist-date-choice" style="margin-left: -10%;">
+                           <p data-sort="startDate" class="date-active">[@lang_res k='ifa.home.taskList.targetDay'/]</p>
+                           <p data-sort="createDate">[@lang_res k='ifa.home.taskList.createDay'/]</p>
+                       </div>
+                       <!-- 下拉列表 -->
+                       <p class="tasklist-date-ico">
+                           <span id="fullcalendar-show" class="take_list_date"></span>
+                       </p>
+                       <div class="tasklist-metting">
+                           <p class="tasklist-metting-title" style="line-height: 2px;"><span id="tasklist-title">[@lang_res k='ifa.home.taskList.choosegroup'/]</span>
+                           <img class="group-img" style="margin-left:5px;" src="${base}/res/images/ifa/ifa_more_ico.png"></p>
+                           <div class="tasklist-metting-color tip-metting-color" style="background-color: transparent ;"></div>
+                           <ul class="tasklist-metting-choice">
+                           </ul>
+                       </div>
+                   </div>
+                   <div id="schedule-view" class="line-wrap">
+                        <!-- Task List -->
+                   </div>
+                   <p class="schedule-task-list-loading"></p>
+                   <p id="schedule_more" class="ifa_list_more" style="display:none">Click for more data</p>
+                   <div class="wmes-nodata-tips wmes-nodata-tips-tasklist">
+	                       <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+	                       <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+	                    </div>
+                   <div class="ifa-home-calendar" style="margin:auto 50px;padding-bottom:50px;">
+                        <!-- Calendar -->
+                   </div>
+                </div>
+            </div>
+            <div class="swiper-slide ifa-home-rows">
+                <div class="ifa-home-contents">
+                    <p class="ifa-home-title">[@lang_res k='ifa.home.clients'/]</p>
+                    <div class="clientdetail-contents">
+                        <ul class="noline_tab_tab clientsdetail-tab">
+                            <li class="now">[@lang_res k='ifa.home.clients.profit'/]<span></span></li>
+                            <li>[@lang_res k='ifa.home.clients.loss'/]<span></span></li>
+                        </ul>
+                        <div class="clientdetail-contents-wrap clientdetail-contents-active profit-list">
+                            <div class="clientdetail-rows-first clientdetail-contents-rows ng-cloak" ng-if="$index==0" ng-repeat="items in profitList" ng-init="checkLast($last)" >
+                                 <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}" target="_self">
+                                <p class="clientdetail-rows-title">No.{{$index+1}}</p>
+                                <div class="clientdetail-rows-topper">
+                                    <p class="clientdetail-rows-name">{{items.nickName}}</p>
+                                    <div class="clientdetail-rows-describe">
+                                        <span ng-if="items.faca=='1'">FATCA</span>
+    							        <span ng-if="items.cies=='1'">CIES</span>
+                                    </div>
+                                </div>
+                                <div class="clientdetail-rows-mainer">
+                                    <div class="clientdetail-mainer-left">
+                                        <p class="clientdetail-mainer-return">[@lang_res k='client.totalReturn'/] ({{currencyName}})</p>
+                                         <p class="clientdetail-mainer-number " ng-bind-html="items.totalReturnRate | currencyColor:'%':defColor"></p>
+                                         <p class="clientdetail-mainer-total">(
+                                       <span class="clientdetail-mainer-number " ng-bind-html="items.totalReturn | currencyColor:'':defColor:decimals"></span>
+                                         )</p>
+                                        <div class="clientdetail-bottom-wrap">
+                                            <div class="clientdetail-bottom-left">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.aum'/] ({{currencyName}})</p>
+                                                <p class="clientdetail-bottom-aum" ng-bind-html="items.aum |  currencyColor:'':defColor:decimals "></p></div>
+                                            <div class="clientdetail-bottom-right">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.inv.days'/]</p>
+                                                <p class="clientdetail-bottom-days">{{items.days}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clientdetail-mainer-right">
+                                        <div class="clientdetail-mianer-index">
+                                        <span class="lump-equity-grade funds_leveal_{{items.riskLevel}}">{{items.riskLevel}}</span>
+                                            <!--<img   ng-if="items.riskLevel!=''" src="${base}/res/images/strategy/risk_level_0{{items.riskLevel}}.png">
+                                        --></div>
+                                        <div class="clientdetail-mainer-chart" data-value="{{items.productProJson}}"></div>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="clientdetail-rows-two clientdetail-contents-rows ng-cloak" ng-if="$index==1" ng-repeat="items in profitList" ng-init="checkLast($last)">
+                                  <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}" >
+                                 <p class="clientdetail-rows-title">No.{{$index+1}}</p>
+                                <div class="clientdetail-rows-topper">
+                                    <p class="clientdetail-rows-name ">{{items.nickName}}</p>
+                                    <div class="clientdetail-rows-describe">
+                                        <span ng-if="items.faca=='1'">FATCA</span>
+    							        <span ng-if="items.cies=='1'">CIES</span>
+                                    </div>
+                                </div>
+                                <div class="clientdetail-rows-mainer">
+                                
+                                    <div class="clientdetail-mainer-left">
+                                        <p class="clientdetail-mainer-return">[@lang_res k='client.totalReturn'/] ({{currencyName}})</p>
+                                     
+                                         <p class="clientdetail-mainer-number " ng-bind-html="items.totalReturnRate | currencyColor:'%':defColor"></p>
+                                        <p class="clientdetail-mainer-total">( 
+                                       
+                                         <span ng-bind-html="items.totalReturn | currencyColor:'':defColor:decimals"></span>
+                                         )</p>
+                                        <div class="clientdetail-bottom-wrap">
+                                            <div class="clientdetail-bottom-left">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.aum'/] ({{currencyName}})</p>
+                                             <p  class="clientdetail-mainer-number " ng-bind-html="items.aum | currencyColor:'':defColor:decimals"></p>
+                                             
+                                            </div>
+                                            <div class="clientdetail-bottom-right">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.inv.days'/]</p>
+                                                <p class="clientdetail-bottom-days">{{items.days}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clientdetail-mainer-right">
+                                        <div class="clientdetail-mianer-index">
+                                        <span class="lump-equity-grade funds_leveal_{{items.riskLevel}}">{{items.riskLevel}}</span>
+                                       </div>
+                                        <div class="clientdetail-mainer-chart" data-value="{{items.productProJson}}"></div>
+                                    </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="clientdetail-contents-rows" ng-if="$index>1" ng-repeat="items in profitList" ng-init="checkLast($last)">
+                             <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}" >
+                                 <p class="clientdetail-rows-title">No.{{$index+1}}</p>
+                                <div class="clientdetail-rows-topper">
+                                    <p class="clientdetail-rows-name ">{{items.nickName}}</p>
+                                    <div class="clientdetail-rows-describe">
+                                        <span ng-if="items.faca=='1'">FATCA</span>
+    							        <span ng-if="items.cies=='1'">CIES</span>
+                                    </div>
+                                </div>
+                                <div class="clientdetail-rows-mainer">
+                                    <div class="clientdetail-mainer-left">
+                                        <p class="clientdetail-mainer-return">[@lang_res k='client.totalReturn'/] ({{currencyName}})</p>
+                                         <p class="clientdetail-mainer-number " ng-bind-html="items.totalReturnRate | currencyColor:'%':defColor"></p>
+                                        <p class="clientdetail-mainer-total">
+                                          <span class="clientdetail-mainer-number " ng-bind-html="items.totalReturn| currencyColor:'':defColor:decimals"></span>
+                                         </p>
+                                        <div class="clientdetail-bottom-wrap">
+                                            <div class="clientdetail-bottom-left">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.aum'/] ({{currencyName}})</p>
+                                             <p class="clientdetail-mainer-number " ng-bind-html="items.aum | currencyColor:'':defColor:decimals"></p>
+                                            </div>
+                                            <div class="clientdetail-bottom-right">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.inv.days'/]</p>
+                                                <p class="clientdetail-bottom-days">{{items.days}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clientdetail-mainer-right">
+                                        <div class="clientdetail-mianer-index">
+                                        <span class="lump-equity-grade funds_leveal_{{items.riskLevel}}">{{items.riskLevel}}</span>
+                                       </div>
+                                        <div class="clientdetail-mainer-chart" data-value="{{items.productProJson}}"></div>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="wmes-nodata-tips profileTips">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                            </div>
+                          </div>
+                        <div class="clientdetail-contents-wrap loss-cliendtail loss-list">
+                            <div class="clientdetail-rows-first clientdetail-contents-rows ng-cloak" ng-if="$index==0" ng-repeat="items in lossList" ng-init="checkLast($last)">
+                                 <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}" >
+                                <p class="clientdetail-rows-title">No.{{$index+1}}</p>
+                                <div class="clientdetail-rows-topper">
+                                    <p class="clientdetail-rows-name ">{{items.nickName}}</p>
+                                    <div class="clientdetail-rows-describe">
+                                        <span ng-if="items.faca=='1'">FATCA</span>
+    							        <span ng-if="items.cies=='1'">CIES</span>
+                                    </div>
+                                </div>
+                                <div class="clientdetail-rows-mainer">
+                                    <div class="clientdetail-mainer-left">
+                                        <p class="clientdetail-mainer-return">[@lang_res k='client.totalReturn'/] ({{currencyName}})</p>
+                                        <p class="clientdetail-mainer-number " ng-bind-html="items.totalReturnRate | currencyColor:'%':defColor"></p>
+                                        <p class="clientdetail-mainer-total">(
+                                        
+                                        <span ng-bind-html="items.totalReturn | currencyColor:'':defColor:decimals"></span>
+                                        
+                                          )</p>
+                                        <div class="clientdetail-bottom-wrap">
+                                            <div class="clientdetail-bottom-left">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.aum'/] ({{currencyName}})</p>
+                                             <p class="clientdetail-mainer-number " ng-bind-html="items.aum | currencyColor:'':defColor:decimals"></p>
+                                            </div>
+                                            <div class="clientdetail-bottom-right">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.inv.days'/]</p>
+                                                <p class="clientdetail-bottom-days">{{items.days}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clientdetail-mainer-right">
+                                        <div class="clientdetail-mianer-index">
+                                        <span class="lump-equity-grade funds_leveal_{{items.riskLevel}}">{{items.riskLevel}}</span>
+                                        </div>
+                                        <div class="clientdetail-mainer-chart" data-value="{{items.productProJson}}"></div>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="clientdetail-rows-two clientdetail-contents-rows ng-cloak" ng-if="$index==1" ng-repeat="items in lossList" ng-init="checkLast($last)">
+                                 <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}" >
+                                <p class="clientdetail-rows-title">No.{{$index+1}}</p>
+                                <div class="clientdetail-rows-topper">
+                                    <p class="clientdetail-rows-name ">{{items.nickName}}</p>
+                                    <div class="clientdetail-rows-describe">
+                                        <span ng-if="items.faca=='1'">FATCA</span>
+    							        <span ng-if="items.cies=='1'">CIES</span>
+                                    </div>
+                                </div>
+                                <div class="clientdetail-rows-mainer">
+                                    <div class="clientdetail-mainer-left">
+                                        <p class="clientdetail-mainer-return">[@lang_res k='client.totalReturn'/] ({{currencyName}})</p>
+                                        
+                                         <p class="clientdetail-mainer-number " ng-bind-html="items.totalReturnRate | currencyColor:'%':defColor"></p>
+                                        <p class="clientdetail-mainer-total">(
+                                          
+                                         <span ng-bind-html="items.totalReturn | currencyColor:'':defColor:decimals"> </span>
+                                          )
+                                          </p>
+                                        <div class="clientdetail-bottom-wrap">
+                                            <div class="clientdetail-bottom-left">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.aum'/] ({{currencyName}})</p>
+                                          
+                                             <p class="clientdetail-mainer-number " ng-bind-html="items.aum | currencyColor:'':defColor:decimals"></p>
+                                            </div>
+                                            <div class="clientdetail-bottom-right">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.inv.days'/]</p>
+                                                <p class="clientdetail-bottom-days">{{items.days}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clientdetail-mainer-right">
+                                        <div class="clientdetail-mianer-index">
+                                        <span class="lump-equity-grade funds_leveal_{{items.riskLevel}}">{{items.riskLevel}}</span>
+                                        <!--
+                                            <img   ng-if="items.riskLevel!=''" src="${base}/res/images/strategy/risk_level_0{{items.riskLevel}}.png">
+                                        --></div>
+                                        <div class="clientdetail-mainer-chart" data-value="{{items.productProJson}}"></div>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="clientdetail-contents-rows" ng-if="$index>1" ng-repeat="items in lossList" ng-init="checkLast($last)">
+                                <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}" >
+                               <p class="clientdetail-rows-title">No.{{$index+1}}</p>
+                                <div class="clientdetail-rows-topper">
+                                    <p class="clientdetail-rows-name ">{{items.nickName}}</p>
+                                    <div class="clientdetail-rows-describe">
+                                        <span ng-if="items.faca=='1'">FATCA</span>
+    							        <span ng-if="items.cies=='1'">CIES</span>
+                                    </div>
+                                </div>
+                                <div class="clientdetail-rows-mainer">
+                                    <div class="clientdetail-mainer-left">
+                                        <p class="clientdetail-mainer-return">[@lang_res k='client.totalReturn'/] ({{currencyName}})</p>
+                                         
+                                         <p class="clientdetail-mainer-number " ng-bind-html="items.totalReturnRate | currencyColor:'%':defColor"></p>
+                                        <p class="clientdetail-mainer-total">(
+                                         <span  ng-bind-html="items.totalReturn | currencyColor:'%':defColor"> </span>
+                                          )</p>
+                                        <div class="clientdetail-bottom-wrap">
+                                            <div class="clientdetail-bottom-left">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.aum'/] ({{currencyName}})</p>
+                                              <p class="clientdetail-mainer-number " ng-bind-html="items.aum | currencyColor:'':defColor:decimals"></p>
+                                            </div>
+                                            <div class="clientdetail-bottom-right">
+                                                <p class="clientdetail-bottom-title">[@lang_res k='client.sort.inv.days'/]</p>
+                                                <p class="clientdetail-bottom-days">{{items.days}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clientdetail-mainer-right">
+                                        <div class="clientdetail-mianer-index">
+                                        <span class="lump-equity-grade funds_leveal_{{items.riskLevel}}">{{items.riskLevel}}</span>
+                                           </div>
+                                        <div class="clientdetail-mainer-chart" data-value="{{items.productProJson}}"></div>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="wmes-nodata-tips lossTips">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="swiper-pagination" id="ifa-home-page"></div>
+        <!--<div id="callboard">
+        	<ul>
+        		<li>关于全新组合“亚太投资组合”发布公告</li>
+        		<li>关于全新组合“亚太投资组合”发布公告</li>
+        		<li>关于全新组合“亚太投资组合”发布公告</li>
+        		<li>关于全新组合“亚太投资组合”发布公告</li>
+        	</ul>
+        </div>-->
+    </div>  
+<!-- 弹出层 -->
+<div class="mask-layer1" style="display:none">
+   	<div class="create_groupbox">
+   		<div id="wmes-group-close" class="wmes-close"></div>
+   		<p class="wmes-wrap-title tanchutitle">[@lang_res k='schedule.create.group.title'/]</p>
+   		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table" style="margin-top:18px;">
+			<tbody>
+				<tr>
+					<td align="right" class="register_table_left" style="width:200px;padding-left:30px;">
+						<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.group.input.0'/]</span>
+					</td>
+					<td class="register_table_right">
+						<div class="add_scheduletextareacon">
+							<input id="txtGroupName" class="register_input" type="text" style="width:400px;">
+							<p class="alert-group-name" style="display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.groupName'/]</p>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td align="right" style="width:200px;padding-left:30px;">
+						<span class="price_negative">*</span><span style="margin-left:5px" class="font_gray_left"> [@lang_res k='schedule.create.group.input.1'/]</span>
+					</td>
+					<td class="register_table_right">
+						<div class="register_xiala_long" style="width:406px;">
+							<input type="text" id="txtGroupColor" style="width: 356px;color: #b0afaf;" class="value_show" data-position="bottom left" value="">
+                            <p class="alert-group-color" style="display:none;margin:35px 5px;color:red;">[@lang_res k='schedule.alert.empty.groupColor'/]</p>
+                        </div> 
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<a id="add_group_save" class="add_schedule_save">[@lang_res k='global.save'/]</a>
+		<a id="add_group_delete" style="display:none" class="add_schedule_delete">[@lang_res k='global.delete'/]</a>
+		<a id="add_group_cancel" class="add_schedule_cancel">[@lang_res k='global.cancel'/]</a>
+   	</div>
+</div>
+<div class="notice-con">
+	<div class="notice-title"><a target="_self" href="${base!}/front/notice/previewNotices.do"><span class="notice-titlebg"></span>[@lang_res k='notice.ifa.home.title'/]</a><b></b></div>
+	<ul class="myzone-notice-list">
+		[#if sysNotices?? && sysNotices?size gt 0]
+		[#list sysNotices as items]
+		<li id="${(items.id)!}">
+			<span class="gray-box"></span>
+			<textarea class="hidContent" style="display:none;">${(items.content)!}</textarea>
+			<p class="notice-preview"  data-release-by="${(items.sourceName)!}" data-release-date="${(items.releaseDate)!}">${(items.subject)!}</p>
+			[#if items.isNew?? && items.isNew=='1']<i></i>[/#if]
+			<b>${(items.releaseDateStr)!}</b>
+		</li>
+		[/#list]
+		[#else]
+		<li style="width:343px;">
+			<div class="wmes-nodata-tips" style="display:block;">
+				<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+				<span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+			</div>
+		</li>
+		[/#if]
+	</ul>
+	<div class="noticeac">
+		<b></b>
+		<span class="notice-titlebg"></span>
+	</div>
+</div>
+<!-- preview notice -->
+<div id="previewNoticeDialog" class="wmes-content-position dialog-notice" style="background: rgba(0,0,0,0.3);display:none;width:90%">
+	<div class="selectSector" style="box-shadow:0px 0px 8px rgba(255, 255, 255, 0);background: rgba(255, 255, 255, 0);">
+		<div class="investment-wrap investment-hide" style="display:block">
+			<div class="investment-plan-wrap">
+				<div class="wmes-close"></div>
+				<p style="margin-bottom: 15px;font-size:25px;text-align: center;" class="selectSector-title notice-dialog-title"></p>
+				<div style="margin: 0 20%;">
+					<p class="selectSector-title-sub">[@lang_res k='notice.edit.dialog.notice.preview.releaseDate'/] : <span class="notice-dialog-release-date-time"></span></p>
+					<p class="selectSector-title-sub">[@lang_res k='notice.edit.dialog.notice.preview.releaseBy'/] : <span class="notice-dialog-release-by"></span></p>
+				</div>
+				<div class="notice-content dialog-notice-content" style="height: 450px;overflow: auto;"></div>
+				<div class="character-button-rows"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 弹出层 -->
+<div class="ifa-space-popup" id="add_Schedule" style="display: none;">
+	<div class="ifa-space-mask"></div>
+	<div class="space-mask-wrap" style="position: absolute;">
+		<div class="space-mask space-mask-investors" style="margin-left:12%;background:#fff;position:absolute;">
+			<div class="wmes-close" id="add_Schedule-close"></div>
+			<div class="ifa-home-contents">
+				<p class="wmes-wrap-title tanchutitle schedule-add-title" style="text-align: left;">[@lang_res k='schedule.create.schedule.title'/]</p>
+				<p class="wmes-wrap-title tanchutitle schedule-edit-title" style="display:none;text-align: left;">[@lang_res k='schedule.create.schedule.title.edit'/]</p>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+    				<tbody>
+    					<tr>
+    						<td align="right" class="register_table_left" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.0'/]</span>
+    						</td>
+    						<td class="register_table_right">
+    							<div class="add_scheduletextareacon" style="width:504px">
+    								<input id="hidScheduleId" class="register_input" type="hidden" style="width:400px;">
+    								<input id="txtTitle" maxlength="50" class="register_input" style="float:left;width:400px;" type="text">
+    								<div class="account-choose-input-wrap" style="float:left;margin: 5px;">
+                                    	<input id="cheImportantFlag" type="checkbox" style="" name="important"/><span class="" style="color: #939292;">[@lang_res k='schedule.create.schedule.checkbox.important'/]</span>
+    								</div>
+    								<div class="member-comment-topper" style="margin-right: 100px;">
+    									<p class="member-number-words-add_scheduletextareacon">[@lang_res k='create.portfolio.step.two.input.prefix'/] 50 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="title-inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="title-left">50</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]</p>
+    								</div>
+    								<p class="alert-schedule-title-name" style="clear:both;display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.title'/]</p>
+    							</div>
+    						</td>
+    					</tr>
+    					<tr>
+    						<td align="right" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.3'/]</span>
+    						</td>
+    						<td class="register_table_right">
+    							<div class="conservative-date-wrap">
+                                <div class="account-choose-input-wrap">
+                                    <input id="txtStartAt" class="laydate-icon form-control form-control-laydate schedule-choose-date" readonly="readonly" name="" style="width:200px;">
+                                	<p class="alert-schedule-start-at" style="display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.startTime'/]</p>
+                                </div>
+                                <div class="account-choose-input-wrap schedule-dialog-creator" style="margin: 5px;">
+                                	<span style="margin:0 10px;color: #939292;">[@lang_res k='schedule.create.schedule.creator'/] :</span><span id="schedule-creator-text" style="color: #939292;"></span>
+                            	</div>
+                            </div>
+    						</td>
+    					</tr>
+    					<tr>
+    						<td align="right" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.4'/]</span>
+    						</td>
+    						<td class="register_table_right">
+    							<div class="conservative-date-wrap">
+                                <div class="account-choose-input-wrap">
+                                    <input id="txtEndAt" class="laydate-icon form-control form-control-laydate schedule-choose-date" readonly="readonly" name="" style="width:200px;">
+                                	<p class="alert-schedule-end-at" style="display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.endTime'/]</p>
+                                </div>
+                                <div class="account-choose-input-wrap" style="margin: 5px;">
+                                    <input id="cheRecurrentFlag" type="checkbox" name="recurrent"/><span class="" style="color: #939292;">[@lang_res k='schedule.create.schedule.checkbox.recurrent'/]</span>
+                                </div>
+                            </div>
+    						</td>
+    					</tr>
+    					<tr class="repeat_typecon repeat_typecon_none">
+    						<td align="right" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.recurrentType'/]</span>
+    						</td>
+    						<td class="register_table_right" style="padding-top:10px;">
+    							<ul class="repeat_type">
+    								<li><input id="repeatDay-0" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.0'/]</li>
+    								<li><input id="repeatDay-1" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.1'/]</li>
+    								<li><input id="repeatDay-2" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.2'/]</li>
+    								<li><input id="repeatDay-3" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.3'/]</li>
+    								<li><input id="repeatDay-4" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.4'/]</li><br><br>
+    								<li><input id="repeatDay-5" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.5'/]</li>
+    								<li><input id="repeatDay-6" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.6'/]</li>
+    							</ul>
+    						</td>
+    					</tr>
+    					<tr>
+    						<td align="right" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.5'/]</span>
+    						</td>
+    						<td class="register_table_right">
+    							<div class="register_xiala_long" style="width:406px;">
+    	                            <input id="txtCustomer" data-value="" readonly="readonly" type="text" class="value_show">
+    	                            <input type="hidden" class="value_hidden">
+    	                            <ul id="selCustomer" class="regiter_xiala_ul"></ul>
+    	                            <span class="register_xiala_ico"></span>
+    	                        </div> 
+    						</td>
+    					</tr>
+    					<tr>
+    						<td align="right" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.6'/]</span>
+    						</td>
+    						<td class="register_table_right">
+    							<div class="register_xiala_long" style="width:406px;">
+    	                            <input id="txtGroup" data-value="" readonly="readonly" type="text" class="value_show">
+    	                            <input type="hidden" class="value_hidden">
+    	                            <ul id="selGroup" class="regiter_xiala_ul"></ul>
+    	                            <span class="register_xiala_ico"></span>
+    	                        </div> 
+    						</td>
+    					</tr>
+    					<tr>
+    						<td align="right" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.7'/]</span>
+    						</td>
+    						<td class="register_table_right">
+    							<div class="register_xiala_long" style="width:406px;">
+    	                            <input id="txtRemind" data-value="" readonly="readonly" type="text" placeholder=" " class="value_show">
+    	                            <input type="hidden" class="value_hidden">
+    	                            <ul id="selRemind" class="regiter_xiala_ul"></ul>
+    	                            <span class="register_xiala_ico"></span>
+    	                        </div> 
+    						</td>
+    					</tr>
+    					<tr>
+    						<td align="right" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.8'/]</span>
+    						</td>
+    						<td class="register_table_right">
+    							<div class="add_scheduletextareacon">
+    								<textarea id="txtContent" maxlength="500" class="member-comment-text" style="width:406px;"></textarea>
+    								<div class="member-comment-topper">
+    									<p class="member-number-words-add_scheduletextareacon">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="content-inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="content-left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]</p>
+    								</div>
+    							</div>
+    						</td>
+    					</tr>
+    				</tbody>
+    			</table>
+				<a  id="add_schedule_save" class="add_schedule_save">[@lang_res k='global.save'/]</a>
+				<a id="add_schedule_delete" style="display:none" class="add_schedule_delete">[@lang_res k='global.delete'/]</a>
+				<a id="add_schedule_cancel" class="add_schedule_cancel">[@lang_res k='global.cancel'/]</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="schedule-save-load">
+	<div class="schedule-save-load-gif">
+		<img style="width: 100px;" src="${base}/res/images/saving.gif">
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var globalProp = [@load_prop k='global'/]; 
+	var prop = [@load_prop k='schedule'/];	
+	var ifaProp = [@load_prop k='ifa'/];	
+     var _checkList='${checkList!}';
+	 var _accountType="${accountType!}";
+     seajs.use('${base}/res/web/ifa/ifaHome.js');
+//验证登录后回调事件
+function callbackloginresult(json){
+	 	 seajs.use('jquery', function($){
+		 //	console.log(json);
+		 	var count=0;
+		 	$.each(json,function(i,n){
+			 	if(n.status="1"){
+			 	count++;
+		 	    }
+		 	})
+		 	if(count>0){
+		 	 setTimeout(function(){
+		       window.location.url= window.location.url;
+		     },1000);
+		    }
+	    });
+ 	}
+</script>

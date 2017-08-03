@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<title></title>
+</head>
+<body>
+<!--[if lt IE 9]>
+<script src="json.js" charset="UTF-8"></script>
+<![endif]-->
+<!-- 自动适配移动端与pc端 -->
+<script src="wsdk.js" charset="UTF-8"></script>
+<script src="kit.js" charset="UTF-8"></script>
+<script>
+    // ?uid=test0&to=test1&appkey=23018936&pwd=123456&fullscreen
+    var search = location.search.substring(1);
+    var s = search.split('&'),kv;
+    var result = {};
+    for(var i = 0, len = s.length; i < len; i++){
+        kv = s[i].split('=');
+        result[kv[0]] = decodeURIComponent(kv[1]);
+    }
+    WKIT.init({
+		uid: result.uid || 'ifa002',
+		appkey: result.appkey || '23573928',
+		credential: result.pwd || '123456',	
+		touid: result.to || 'ifa001',
+		onMsgReceived: function(data){
+			console.log(data);
+		},
+		onMsgSent: function(data){
+			console.log(data);
+		},
+		autoMsg: 'xfa推送消息2-1-2',
+	          titleBar: true,
+	          title: '千牛',
+	          //customUrl: 'http://www.taobao.com/market/seller/openim/mitem.php ',
+	          onBack: function(){
+	            console.log('back');
+	          },
+	          onUploaderError: function(error){
+	              console.log(error);
+	          }
+   });
+</script>
+</body>
+</html>

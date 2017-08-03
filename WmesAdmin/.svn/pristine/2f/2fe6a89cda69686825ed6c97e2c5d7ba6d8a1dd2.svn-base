@@ -1,0 +1,222 @@
+package com.fsll.wmes.crm.action.console;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fsll.wmes.base.WmesBaseAct;
+import com.fsll.wmes.common.CommonConstantsWeb;
+import com.fsll.wmes.crm.service.CrmCustomerService;
+import com.fsll.wmes.crm.vo.PortfolioVO;
+import com.fsll.wmes.entity.MemberBase;
+import com.fsll.wmes.entity.MemberCorporate;
+import com.fsll.wmes.entity.MemberFi;
+import com.fsll.wmes.entity.MemberIndividual;
+import com.fsll.wmes.entity.PortfolioInfo;
+import com.fsll.wmes.member.service.MemberManageServiceForConsole;
+import com.fsll.wmes.member.vo.CoporateVO;
+import com.fsll.wmes.member.vo.FiVO;
+import com.fsll.wmes.member.vo.IfaVO;
+import com.fsll.wmes.member.vo.IndividualVO;
+
+@Controller
+public class ConsoleCrmCustomerAct extends WmesBaseAct {
+
+	@Autowired
+	private MemberManageServiceForConsole memberManageService;
+	@Autowired
+	private CrmCustomerService crmCustomerService;
+	/**
+	 * ifa客户列表页面
+	 * @author mqzou
+	 * @date 2016-08-18
+	 */
+	@RequestMapping(value = "/console/customer/list")
+	public String customerlist(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		this.isMobileDevice(request, model);
+		return "console/customer/inverstor_list";
+	}
+	
+	/**
+	 * 获取ifa的客户列表
+	 * @author qgfeng
+	 * @date 2016-11-18
+	 */
+	@RequestMapping(value = "/console/customer/listJson")
+	public void findInvestorByIfa(HttpServletRequest request, HttpServletResponse response,IfaVO ifaVO) {
+		String langCode = getLoginLangFlag(request);
+		jsonPaging = this.getJsonPaging(request);
+		jsonPaging = crmCustomerService.findInvestorByIfa(jsonPaging, ifaVO, langCode);
+		this.toJsonString(response, jsonPaging);
+	}
+	
+	/**
+	 * IFAFirm下ifa客户列表页面
+	 * @author rqwang
+	 * @date 2016-06-06
+	 */
+	@RequestMapping(value = "/console/customer/firmCustomerList")
+	public String firmcustomerlist(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		this.isMobileDevice(request, model);
+		String ifafirmId = request.getParameter("ifafirmId");
+		model.put("ifafirmId", ifafirmId);
+		return "console/ifafirm/firm_customer_list";
+	}
+	
+	/**
+	 * IFAFirm下获取ifa的客户列表
+	 * @author rqwang
+	 * @date 2017-06-06
+	 */
+	@RequestMapping(value = "/console/customer/firmListJson")
+	public void firmFindInvestorByIfa(HttpServletRequest request, HttpServletResponse response,IfaVO ifaVO) {
+		String langCode = getLoginLangFlag(request);
+		String ifafirmId = request.getParameter("ifafirmId");
+		jsonPaging = this.getJsonPaging(request);
+		jsonPaging = crmCustomerService.firmFindInvestorByIfa(jsonPaging,ifafirmId, ifaVO, langCode);
+		this.toJsonString(response, jsonPaging);
+	}
+	
+	/**
+	 * 代理商的客户列表页面
+	 * @author rqwang
+	 * @date 2016-06-07
+	 */
+	@RequestMapping(value = "/console/customer/disCustomerList")
+	public String discustomerlist(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		this.isMobileDevice(request, model);
+		String id = request.getParameter("id");
+		model.put("id", id);
+		return "console/distributor/dis_customer_list";
+	}
+	
+	/**
+	 * 代理商的客户列表数据
+	 * @author rqwang
+	 * @date 2017-06-07
+	 */
+	@RequestMapping(value = "/console/customer/disListJson")
+	public void disFindInvestor(HttpServletRequest request, HttpServletResponse response,IfaVO ifaVO) {
+		String langCode = getLoginLangFlag(request);
+		String id = request.getParameter("id");
+		id="5";
+		jsonPaging = this.getJsonPaging(request);
+		jsonPaging = crmCustomerService.disFindInvestor(jsonPaging,id, ifaVO, langCode);
+		this.toJsonString(response, jsonPaging);
+	}
+	
+	/**
+	 * ifa客户详细信息页面
+	 * @author qgfeng
+	 * @date 2016-11-30
+	 */
+	@RequestMapping(value = "/console/ifa/customerdetail")
+	public String investorDetail(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		this.isMobileDevice(request, model);
+		String id = request.getParameter("id");
+		String memberType = request.getParameter("memberType");
+		model.put("id", id);
+		if (CommonConstantsWeb.MEMBERBASE_SUB_MEMBERTYPE_COPORATE == Integer.parseInt(memberType)) {
+			MemberCorporate corporate = memberManageService.findCorporateById(id);
+			if(corporate != null){
+				CoporateVO vo = new CoporateVO(corporate);
+				model.put("coporatevo", vo);
+			}
+			return "console/customer/coporator_input";
+		} else if (CommonConstantsWeb.MEMBERBASE_SUB_MEMBERTYPE_INDIVIDUAL == Integer.parseInt(memberType)) {
+			MemberIndividual individual = memberManageService.findIndividualById(id);
+			if(individual != null){
+				IndividualVO vo = new IndividualVO(individual);
+				model.put("individualvo", vo);
+			}
+			return "console/customer/individual_input";
+		} else if (CommonConstantsWeb.MEMBERBASE_SUB_MEMBERTYPE_FI == Integer.parseInt(memberType)) {
+			MemberFi memeberFi = memberManageService.findFiById(id);
+			if(memeberFi != null){
+				FiVO vo = new FiVO(memeberFi);
+				model.put("fivo", vo);
+			}
+			return "console/customer/fi_input";
+		}
+		return "";
+	}
+	
+	/**
+	 * 获取ifa客户的投资组合列表
+	 * 
+	 * @author mqzou
+	 * @date 2016-08-23
+	 */
+	@RequestMapping(value = "/console/customer/portfolioListJson")
+	public void getPortfolioList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+		String memberId=request.getParameter("memberId");
+		PortfolioInfo portfolioInfo=new PortfolioInfo();
+		if(null!=memberId && !"".equals(memberId)){
+			MemberBase memberBase=new MemberBase();
+			memberBase.setId(memberId);
+			portfolioInfo.setMember(memberBase);
+		}
+		jsonPaging=getJsonPaging(request);
+		jsonPaging=crmCustomerService.findPortfolioByCustomer(jsonPaging, portfolioInfo);
+		toJsonString(response, jsonPaging);
+		
+	}
+	
+	/**
+	 * ifa客户的投资组合列表页面
+	 * 
+	 * @author mqzou
+	 * @date 2016-08-23
+	 */
+	@RequestMapping(value = "/console/customer/portfolioList")
+	public String showPortfolioList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+		String id=request.getParameter("memberId");
+		model.put("memberId", id);
+		return "console/portfolio/list";
+	}
+	
+	/**
+	 * ifa客户的投资组合列表页面
+	 * 
+	 * @author mqzou
+	 * @date 2016-08-24
+	 */
+	@RequestMapping(value = "/console/customer/portfolioDetail")
+	public String showPortfolioDetail(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+		String id=request.getParameter("id");
+		PortfolioInfo info=crmCustomerService.findPortfolioInfo(id);
+		PortfolioVO vo=new PortfolioVO();
+		if(null!=info){
+			//vo.setAipExecCycle(info.getAipExecCycle());
+			//vo.setAipNextTime(info.getAipNextTime());
+			//vo.setAipTimeDistance(info.getAipTimeDistance());
+			vo.setAipType(info.getAipFlag());
+			vo.setCreateTime(info.getCreateTime());
+			vo.setCreator(null!=info.getCreator()?info.getCreator().getNickName():"");
+			vo.setCreatorId(null!=info.getCreator()?info.getCreator().getId():"");
+			vo.setCurrencyType(info.getBaseCurrency());
+		//	vo.setDesc(info.getDesc());
+			vo.setId(info.getId());
+			vo.setLoginCode(null!=info.getMember()?info.getMember().getLoginCode():"");
+			vo.setMemberId(null!=info.getMember()?info.getMember().getId():"");
+			vo.setNickName(null!=info.getMember()?info.getMember().getNickName():"");
+			//vo.setObjectiveDesc(info.getObjectiveDesc());
+			vo.setPortfolioName(info.getPortfolioName());
+			vo.setProposalId(null!=info.getProposal()?info.getProposal().getId():"");
+			vo.setProposalName(null!=info.getProposal()?info.getProposal().getProposalName():"");
+//			vo.setReturnRate(info.getReturnRate());
+			//vo.setReturnTotal(info.getReturnTotal());
+			//vo.setRiskLeve(info.getRiskLeve());
+			//vo.setStatus(info.getStatus());
+			/*vo.setTotalInvestAmount(info.getTotalInvestAmount());
+			vo.setType(info.getType());*/
+		}
+		model.put("portfolio", vo);
+		return "console/portfolio/input";
+	}
+
+}

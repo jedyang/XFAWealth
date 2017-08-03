@@ -1,0 +1,486 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[@lang_res  k='console.rpq.questForm.questTitle'/]</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<!-- header -->
+
+
+
+				 <ul class="tab" id="dialog_tab-search">
+                <li class="tab-li-crr">
+                    <a href="javascript:;">[@lang_res  k='console.fund.fundhouse.info.chinese'/]</a>
+                </li>
+                 <li class="tab-li">
+                    <a href="javascript:;">[@lang_res  k='console.fund.fundhouse.info.TraditionalChinese'/]</a>
+                </li>
+                 <li class="tab-li">
+                    <a href="javascript:;">[@lang_res  k='console.fund.fundhouse.info.english'/]</a>
+                </li>
+                <li class="tab-li">
+                    <a href="javascript:;">[@lang_res  k='console.rpq.questForm.OptionsInformation'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap dialog_tab_wrap">
+                <!-- tab一 -->
+                <form class="form-horizontal" style="display:block;">
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtTitleSC" class="label-control">[@lang_res  k='console.rpq.questForm.questName'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtTitleSC" class="form-control " rows="3">${(rpqQuestScVO.title)?if_exists}</textarea>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtRemarkSC" class="label-control">[@lang_res  k='console.rpq.questForm.questDesc'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtRemarkSC" class="form-control " rows="5">${(rpqQuestScVO.remark)?if_exists}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="selIsPublic" class="label-control">[@lang_res  k='console.rpq.questForm.isPublic'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <select id="selIsPublic" class="form-control">
+                            			<option value='' [#if rpqQuestVO?exists && (!rpqQuestVO.isPublic?exists || (rpqQuestVO.isPublic?exists && rpqQuestVO.isPublic==''))]selected="selected"[/#if]>
+                                    [@lang_res  k='global.pleaseSelect'/]
+                                </option>
+								<option value='1' [#if rpqQuestVO?exists&&rpqQuestVO.isPublic?exists && rpqQuestVO.isPublic=='1']selected="selected"[/#if]>[@lang_res  k='global.true'/]</option>
+								<option value='0' [#if rpqQuestVO?exists&&rpqQuestVO.isPublic?exists && rpqQuestVO.isPublic=='0']selected="selected"[/#if]>[@lang_res  k='global.false'/]</option>
+							</select> 
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="selStatus" class="label-control">[@lang_res  k='console.rpq.questForm.questType'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <select id="selStatus" class="form-control">
+                                <option value='' [#if rpqQuestVO?exists && (!rpqQuestVO.questType?exists || (rpqQuestVO.questType?exists && rpqQuestVO.questType==''))]selected="selected"[/#if]>
+                                    [@lang_res  k='global.pleaseSelect'/]
+                                </option>
+                   				<option value='radio' [#if rpqQuestVO?exists&&rpqQuestVO.questType?exists && rpqQuestVO.questType=='radio']selected="selected"[/#if]>[@lang_res  k='console.rpq.questForm.radio'/]</option>
+                                <option value='select' [#if rpqQuestVO?exists&&rpqQuestVO.questType?exists && rpqQuestVO.questType=='select']selected="selected"[/#if]>[@lang_res  k='console.rpq.questForm.dropdownChoice'/]</option>
+	                           	<option value='checkbox' [#if rpqQuestVO?exists&&rpqQuestVO.questType?exists && rpqQuestVO.questType=='checkbox']selected="selected"[/#if]>[@lang_res  k='console.rpq.questForm.checkbox'/]</option>
+	                           	<option value='text' [#if rpqQuestVO?exists&&rpqQuestVO.questType?exists && rpqQuestVO.questType=='text']selected="selected"[/#if]>[@lang_res  k='console.rpq.questForm.text'/]</option>
+	                           	<option value='textarea' [#if rpqQuestVO?exists&&rpqQuestVO.questType?exists && rpqQuestVO.questType=='textarea']selected="selected"[/#if]>[@lang_res  k='console.rpq.questForm.texearea'/]</option>
+	                        </select> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="selStatus" class="label-control">[@lang_res  k='console.rpq.questForm.questStatus'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select id="selStatus" class="form-control">
+                                <option value='' [#if rpqQuestVO?exists && (!rpqQuestVO.status?exists || (rpqQuestVO.status?exists && rpqQuestVO.status==''))]selected="selected"[/#if]>
+                                    [@lang_res  k='global.pleaseSelect'/]
+                                </option>
+								<option value='using' [#if rpqQuestVO?exists&&rpqQuestVO.status?exists && rpqQuestVO.status=='using']selected="selected"[/#if]>[@lang_res  k='console.rpq.questForm.using'/]</option>
+                                <option value='unusing' [#if rpqQuestVO?exists&&rpqQuestVO.status?exists && rpqQuestVO.status=='unusing']selected="selected"[/#if]>[@lang_res  k='console.rpq.questForm.unusing'/]</option>
+                                <option value='draft' [#if rpqQuestVO?exists&&rpqQuestVO.status?exists && rpqQuestVO.status=='draft']selected="selected"[/#if]>[@lang_res  k='console.rpq.questForm.draft'/]</option>
+                                <option value='delete' [#if rpqQuestVO?exists&&rpqQuestVO.status?exists && rpqQuestVO.status=='delete']selected="selected"[/#if]>[@lang_res  k='console.rpq.questForm.delete'/]</option>
+							</select> 
+                        </div>
+                    </div>    
+                </form>   
+                 <!-- tab一 -->
+                <form class="form-horizontal" style="display:none;">
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtTitleTC" class="label-control">[@lang_res  k='console.rpq.questForm.questName'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtTitleTC" class="form-control " rows="3">${(rpqQuestTcVO.title)?if_exists}</textarea>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtRemarkTC" class="label-control">[@lang_res  k='console.rpq.questForm.questDesc'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtRemarkTC" class="form-control " rows="5">${(rpqQuestTcVO.remark)?if_exists}</textarea>
+                        </div>
+                    </div>  
+                </form>   
+                 <!-- tab一 -->
+                <form class="form-horizontal" style="display:none;">
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtTitleEN" class="label-control">[@lang_res  k='console.rpq.questForm.questName'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtTitleEN" class="form-control " rows="3">${(rpqQuestEnVO.title)?if_exists}</textarea>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtRemarEN" class="label-control">[@lang_res  k='console.rpq.questForm.questDesc'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                           <textarea id="txtRemarkEN" class="form-control " rows="5">${(rpqQuestEnVO.remark)?if_exists}</textarea>
+                        </div>
+                    </div>   
+                </form>   
+                <form class="form-inline" style="display:none;">
+					
+                    <div class="clear"></div>
+                   
+                    <div>
+                        <table border="0" id="itemdatalist" cellpadding="0" cellspacing="0" class="table table-hover table-striped" >
+                                <tbody>
+                                    <tr>
+                                      <th class="table-head" style="width:60%;">[@lang_res  k='console.rpq.questForm.title'/]</th>
+                                      <th class="table-head">[@lang_res  k='console.rpq.questForm.type'/]</th>
+                                      <th class="table-head">[@lang_res  k='console.rpq.questForm.score'/]</th>
+                                      <th class="table-head">[@lang_res  k='console.rpq.questForm.sort'/]</th>
+                                      <!-- 
+                                      <th class="table-head">操作</th>
+                                       -->
+                                    </tr>
+                                </tbody>
+                               
+                            </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='dispagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>	
+				</form>  
+            </div>  
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		//tab
+	    $("#dialog_tab-search li").click(function(){
+			 $(this).addClass("tab-li-crr").siblings().removeClass();
+			 $(".dialog_tab_wrap").children().hide().eq($(this).index()).show()
+		 });
+		 
+		$('#btnBack').on('click',back);
+		function back()
+		{
+			window.location.href = '${base}/console/rpq/quest_list.do?datestr=';
+		}
+		//弹出选项窗体
+		$('#btnShowQuestItemForm').on('click',showQuestItemForm);
+		//显示出已保存在数据库的选项信息
+		var id = "${id!''}";//getQueryString('id');
+		genItem(id);
+		function genItem(id)
+		{
+			var language = ("${language!}");
+			if(id!=''&&id!=null&&id!=undefined)
+			{
+				$.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : "${base}/console/rpq/listQuestItem.do?datestr="
+							+ new Date().getTime(),
+					data : {
+						id : id
+					},
+					 beforeSend: function () {
+                        indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptGetTeamListLoading'/]", {icon:3, time: 50000 });
+                    },
+                    complete: function () {
+						layer.close(indexmsg);
+                    },
+					success : function(json) {console.log(json);
+						var total = json.total;
+						var table = JSON.parse(json.itemJson);
+						var html = '';
+						$("#itemdatalist tbody tr:gt(0)").empty();
+						$.each(table,function(i, n) {
+								 var title = n[1].title;
+								 if(language=='en')title = n[3].title;
+								  if(language=='tc')title = n[2].title;
+								 var id = n[0].id;
+								 var remark = n[1].remark;
+								 var type = n[0].type==null?"":n[0].type;
+								 var selectTypeVal=type;
+								 if('radio'==type){
+									 type="[@lang_res  k='global.radio'/]"
+								 }else if('select'==type){
+									 type="[@lang_res  k='global.select'/]"
+								 }else if('checkbox'==type){
+									 type="[@lang_res  k='global.checkbox'/]"
+								 }else if('text'==type){
+									 type="[@lang_res  k='global.text'/]"
+								 }else if('textarea'==type){
+									 type="[@lang_res  k='global.textarea'/]"
+								 }
+								 var score = n[0].scoreValue;
+								 var orderno = n[0].orderBy;
+								 //TC
+								 var titleTC = n[2].title;
+								 var remarkTC = n[2].remark;
+								 //EN
+								 var titleEN = n[3].title;
+								 var remarkEN = n[3].remark;
+						 
+								 html += '<tr id="'+id+'" remark="'+remark+'" titletc="'+titleTC+'" remarktc="'+remarkTC+'" titleen="'+titleEN+'" remarken="'+remarkEN+'"><td>'+title+'</td>'
+											+ '<td selectVal="'+selectTypeVal+'">'
+											+ type
+											+ '</td><td>'
+											+ '<input type="text" class="form-control cla_score" value="' + score + '" style="height:22px; width:50px;">'
+											+ '</td><td><input type="text" class="form-control cla_sort" value="' + orderno + '" style="height:22px; width:50px;"></td>'
+											//+ '<td><a href="javascript:showQuestItemForm(\''+id+'\');"><i class="glyphicon glyphicon-edit  text-bold"></i> 编辑</a> '
+											//+ '<a href="javascript:delRow(\''+id+'\');"><i class="glyphicon glyphicon-remove  text-bold"></i> 删除</a></td> '
+											+ '</tr>';
+							});
+						$('#itemdatalist').append(html);
+					}
+				});
+			}
+		}
+/***只有查看功能，编辑功能去除 scshi170522		
+		 $("body").on('blur', '.cla_score', '', function () {
+		 	var scorevalue = $(this).val();
+		 	var ex = /^\d+$/;
+			if (ex.test(scorevalue)) {
+			} else
+			{
+				layer.msg("选项分数请输入数字！", {icon:3, time: 1000 });
+				$(this).val('');
+			}
+		 });
+		 
+		 $("body").on('blur', '.cla_sort', '', function () {
+		 	var scorevalue = $(this).val();
+		 	var ex = /^\d+$/;
+			if (ex.test(scorevalue)) {
+			} else
+			{
+				layer.msg("序号请输入数字！", {icon:3, time: 1000 });
+				$(this).val('');
+			}
+		 });
+
+		//保存题目与选项信息
+		$('#btnSave').on('click',saveQuest);
+		
+		function saveQuest() {
+			//题目相关信息
+			var id = getQueryString('id');
+			if(id==''||id==null||id==undefined)id='';
+			//SC
+			var titleSC = $('#txtTitleSC').val();  
+		 	var remarkSC = $('#txtRemarkSC').val();
+		 	var ispublic = $('#selIsPublic').val();
+		 	var status = $('#selStatus').val();
+			 //TC
+			var titleTC = $('#txtTitleTC').val();  
+		 	var remarkTC = $('#txtRemarkTC').val();
+			  //EN
+			var titleEN = $('#txtTitleEN').val();  
+		 	var remarkEN = $('#txtRemarkEN').val();
+			 //选项
+		 	var itemlist = '';
+			 $("#itemdatalist tbody tr:gt(0)").each(function(i,n){ 
+			 	var itemremark = $(this).attr('remark');
+			 	console.log($(this).attr('remark'));
+			 	console.log($(this).attr('titletc'));
+			 	console.log($(this).attr('remarktc'));
+			 	console.log($(this).attr('titleen'));
+			 	console.log($(this).attr('remarken'));
+			 	if(itemremark==null||itemremark==undefined)itemremark='__EMPTYSTR__';
+				var itemtitle = $(this).find('td:eq(0)').text();
+				if(itemtitle==null||itemtitle==undefined)itemtitle='__EMPTYSTR__';
+				var type = $(this).find('td:eq(1)').text();
+				var score = $(this).find('td:eq(2)').find('input').val();
+				if(score=='')score='1';
+				var orderno = $(this).find('td:eq(3)').find('input').val();
+				if(orderno=='')orderno='99';
+				//TC
+				var itemtitletc = $(this).attr('titletc');
+				if(itemtitletc==null||itemtitletc==undefined)itemtitletc='__EMPTYSTR__';
+				var itemremarktc = $(this).attr('remarktc');
+				if(itemremarktc==null||itemremarktc==undefined)itemremarktc='__EMPTYSTR__';
+				//EN
+				var itemtitleen = $(this).attr('titleen');
+				if(itemtitleen==null||itemtitleen==undefined)itemtitleen='__EMPTYSTR__';
+				var itemremarken = $(this).attr('remarken');
+				if(itemremarken==null||itemremarken==undefined)itemremarken='__EMPTYSTR__';
+				
+				itemlist += itemtitle+'#~'+type+'#~'+score+'#~'+orderno+'#~'+itemremark +'#~'+itemtitletc+'#~'+itemremarktc+'#~'+itemtitleen+'#~'+itemremarken+'###';
+			 });
+			
+			var postData = { 'id':id,'titleSC': titleSC, 'remarkSC': remarkSC,'titleTC': titleTC, 'remarkTC': remarkTC,'titleEN': titleEN, 'remarkEN': remarkEN, 'ispublic': ispublic, 'status': status, 'itemlist': itemlist}; 
+        	console.log(postData);
+        	$.ajax({
+	            type: "post",
+	            url : "${base}/console/rpq/saveQuestInfo.do?datestr="+ new Date().getTime(),
+	            data: postData,
+	            async: false,
+	            dataType: "json",
+	            beforeSend: function () { layer.msg("正在保存数据中......", { time: 50000 });},
+	            complete: function () {},
+	            error: function (XMLHttpRequest, textStatus, errorThrown) {},
+	            success: function (data, textStatus) {
+                console.log(data);
+               var result = data.result;
+               if(result==true)
+               { 
+               		layer.msg('保存成功', {icon: 1, time: 2000}, function () {   });
+               }
+               else layer.msg('保存失败', {icon: 0, time: 2000}, function () {   });
+            }
+        });
+        
+		}
+		
+**/
+	});
+	
+/**只有查看功能，编辑功能去除 scshi170522				
+function showQuestItemForm(id)
+    	{
+    	
+    	//console.log($(element).html());
+    	
+    		var checkifafirmid = $('#txtSelectedCompanyName2').attr('companyid');
+			//if(checkifafirmid==''||checkifafirmid==null||checkifafirmid==undefined)
+			//{ layer.msg("[@lang_res  k='ifafirm.message.promptNotSelectedIfafirm'/]", { icon: 0, time: 1000 }, function () { }); return false;}
+			
+    		 BootstrapDialog.show({
+				title : '[@lang_res  k='console.rpq.questForm.optionManager'/]',
+				cssClass : 'login-dialog',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('quest_item_form.do?procedureid='),
+				onshown:function(){ //alert(typeof id=='string' );
+					if(typeof id=='string')//
+					{ 
+						var element = '#'+id;
+						var dialog_title = $(element).find('td:eq(0)').text();
+						var dialog_type = $(element).find('td:eq(1)').text();
+						var dialog_score = $(element).find('td:eq(2)').find('input').val();//text();
+						var dialog_orderno = $(element).find('td:eq(3)').find('input').val();//.text();
+						var dialog_remark = $(element).attr('remark');
+						$('#txtItemTitleSC').text(dialog_title);
+						$('#txtItemRemarkSC').text(dialog_remark);
+						$('#selType').val(dialog_type);
+						$('#txtScoreValue').val(dialog_score);
+						$('#txtOrderBy').val(dialog_orderno);
+						//TC
+						var titleTC = $(element).attr('titletc');
+						var remarkTC = $(element).attr('remarktc');
+						$('#txtItemTitleTC').text(titleTC);
+						$('#txtItemRemarkTC').text(remarkTC);
+						//EN
+						var titleEN = $(element).attr('titleen');
+						var remarkEN = $(element).attr('remarken');
+						$('#txtItemTitleEN').text(titleEN);
+						$('#txtItemRemarkEN').text(remarkEN);
+					}
+				 },
+				buttons : [  {
+					label : "[@lang_res  k='global.confirm'/]",
+					cssClass : 'btn-primary',
+					action : function(dialogItself) {
+						if(typeof id!='string') id = Date.parse(new Date());
+						 var title = $('#txtItemTitleSC').val();  
+						 var remark = $('#txtItemRemarkSC').val();
+						 var type = $('#selType').val();
+						 var score = $('#txtScoreValue').val();
+						 var orderno = $('#txtOrderBy').val();
+						 //console.log(selectedid);console.log(selectedname);
+						 //TC
+						 var titleTC = $('#txtItemTitleTC').val();  
+						 var remarkTC = $('#txtItemRemarkTC').val();
+						 //EN
+						 var titleEN = $('#txtItemTitleEN').val();  
+						 var remarkEN = $('#txtItemRemarkEN').val();
+						 if(title == undefined || title == '')
+						 {
+						 	layer.msg("[@lang_res  k='console.rpq.questForm.enterTitle'/]", { icon: 0, time: 1000 }, function () {});
+						 	return;
+						 }
+						 //添加到选项列表中
+						 if(typeof id!='string')
+						 {
+//						 	var hidhtml1 = '<input id="txtOrderBy1" type="text" class="form-control " value="'+titleTC+'">';
+//						 	var hidhtml2 = '<input type="text" value="'+remarkTC+'">';
+//						 	var hidhtml3 = '<input type="text" value="'+titleEN+'">';
+//						 	var hidhtml4 = '<input type="text" value="'+remarkEN+'">';
+							 var tr = '<tr id="'+id+'" remark="'+remark+'" titletc="'+titleTC+'" remarktc="'+remarkTC+'" titleen="'+titleEN+'" remarken="'+remarkEN+'"><td>'+title+'</td>'
+												+ '<td>'
+												+ type
+												+ '</td><td>'
+												+ '<input type="text" class="form-control cla_score" value="' + score + '" style="height:22px; width:50px;">'
+												+ '</td><td><input type="text" class="form-control cla_orderno" value="' + orderno + '" style="height:22px; width:50px;"></td><td>'
+												+ '<a href="javascript:showQuestItemForm(\''+id+'\');"><i class="glyphicon glyphicon-edit  text-bold"></i> 编辑</a> '
+												+ '<a href="javascript:dellink(\''+''+'\');"><i class="glyphicon glyphicon-remove  text-bold"></i> 删除</a> '
+												+ '</td></tr>';
+						 	$('#itemdatalist').append(tr);
+						 }
+						 else
+						 {
+						 	var element = '#'+id;
+						 	$(element).attr('remark',remark);
+						 	//TC
+						 	$(element).attr('titletc',titleTC);
+						 	$(element).attr('remarktc',remarkTC);
+						 	//EN
+						 	$(element).attr('titleen',titleEN);
+						 	$(element).attr('remarken',remarkEN);
+						 	
+							$(element).find('td:eq(0)').text(title);
+							$(element).find('td:eq(1)').text(type);
+							$(element).find('td:eq(2)').find('input').val(score);
+							$(element).find('td:eq(3)').find('input').val(orderno);
+						 }
+						dialogItself.close();
+					}
+				},  {
+					label : "[@lang_res  k='global.back'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
+    	}
+
+	function delRow(id)
+	{
+	var element = '#'+id;
+		 layer.confirm("您确认要删除该选项吗？", { icon: 3  },function () { 
+           	$(element).remove(); 
+           	layer.closeAll();
+           });
+	}
+*/	
+</script>
+</body>
+</html>

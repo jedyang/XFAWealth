@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="WmesAdmin"
+  id="myeclipse.1464848931314"
+  context-root="/wmesAdmin"
+  j2ee-spec="6.0"
+  archive="WmesAdmin.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+

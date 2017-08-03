@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+    	#menuList .fixwidth{max-width:150px;overflow: hidden; text-overflow:ellipsis; white-space: nowrap;}
+    	.btn-primary{padding: 5px 20px;}
+    </style>
+</head>
+<body>
+	<div class="tab_wrap" id="wmes_wraper">
+		<form class="form-inline" style="display:block;">
+			<div style="margin-bottom: 10px;width:320px">
+				<label for="txtKeyWord" style="width:70px;padding-top: 5px;"> [@lang_res k='global.search.keyword'/] </label> 
+				<div class="wmes_keyserach">
+					<input title="[@lang_res k='member.group.keyWord.placeholder'/]" placeholder="[@lang_res k='member.group.keyWord.placeholder'/]" id="txtKeyWord"  type="text" class="searchCondition">
+					<span class="wmes_icon_search" id="searchKeyBtn"></span>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div style="margin-bottom: -30px" class="pdt20">
+				<button type="button" class="btn btn-blue-s" id="btnAdd">
+					[@lang_res k='global.add'/]
+				</button>
+				<input id="btnSearch" type="hidden">
+			</div>
+			<div style="float: right;margin-bottom: 10px;">
+				[@lang_res k='member.group.label.current.group'/]：<span>${(group.groupName)!}</span>
+			</div>
+			<div>
+				<table id="menuList" border="0" cellpadding="0" cellspacing="0"
+					class="table table-hover table-striped">
+					<tbody>
+						<tr>
+							<th style="width:10%" class="table-head">[@lang_res k='member.group.th.account.no'/]</th>
+							<th style="width:10%" class="table-head">[@lang_res k='member.group.th.client.name'/]</th>
+							<th style="width:20%" class="table-head">[@lang_res k='member.group.th.market.value'/]</th>
+							<th style="width:20%" class="table-head">[@lang_res k='member.group.th.totle.asset'/]</th>
+							<th style="width:20%" class="table-head">[@lang_res k='member.group.th.the.opening.time'/]</th>
+							<th style="width:10%" class="table-head">[@lang_res k='member.group.th.ifa'/]</th>
+							<th style="width:10%" class="table-head">[@lang_res k='global.operation'/]</th>
+						</tr>
+					</tbody>
+				</table>
+				<nav class="pull-right">
+					<!-- log分页 -->
+					<ul id='pagination' class="pagination pagination-sm"></ul>
+				</nav>
+				<div class="clear"></div>
+			</div>
+		</form>
+	</div>
+</body>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/js/base.js" type="text/javascript"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script type="text/javascript">
+	var pageSize = 10;
+	$(function(){
+        bindList(0);
+		$('#btnAdd').click(function() {});
+		$('#btnSearch').click(function() {
+			bindList(0);
+		});
+		setAutoSearch('.searchCondition',bindList,0);
+		var main = $(window.parent.document).find("iframe[name='"+getUrlParam('id')+"']");
+		main.height(1000);
+	});
+  	//分页绑定Table数据
+	function bindList(curPage){
+  		var keyWord = $('#txtKeyWord').val();
+  		var url = '${base}/console/memberGroup/detail/listJson.do?datestr=' + new Date().getTime();
+  		var data = {
+  			groupId:getUrlParam('id'),
+  			keyWord:keyWord,
+			page : curPage + 1,
+			rows : pageSize
+  		};
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : url,
+			data : data,
+			success : function(re) {
+				var total = re.total;
+                var list = re.rows;
+                var tr = '';
+                if(list != null){
+                	$.each(list, function(i, n){
+                		var id = n.id;
+                		var currencyCode = n.currencyCode == null ? '' : n.currencyCode;
+                		var currencyName = n.currencyName == null ? '' : n.currencyName;
+                		var accountNo = n.accountNo == null ? '' : n.accountNo;
+                		var clientName = n.clientName == null ? '' : n.clientName;
+                		var marketValue = n.marketValue == null ? '' : n.marketValue;
+                		var totalAsset = n.totalAsset == null ? '' : n.totalAsset;
+                		var accountCreateTime = n.accountCreateTime == null ? '' : n.accountCreateTime;
+                		var firmLogo = n.firmLogo == null ? '' : n.firmLogo;
+                		var ifaName = n.ifaName == null ? '' : n.ifaName;
+                		tr += "<tr id='"+id+"'>"
+                        + "<td>" + accountNo + "</td>"
+                        + "<td>" + clientName + "</td>"
+                        + "<td><sapn>" + formatCurrency(marketValue) +"</sapn><sapn style='margin-left:5px;' data-code=" + currencyCode + ">" + currencyName + "</span></td>"
+                        + "<td><sapn>" + formatCurrency(totalAsset) +"</sapn><sapn style='margin-left:5px;' data-code=" + currencyCode + ">" + currencyName + "</span></td>"
+                        + "<td>" + accountCreateTime + "</td>"
+                        + "<td><img style='height:32px' src='" + firmLogo + "'/><p style='text-align: center;'>" + ifaName + "</p></td>"
+                        + "<td nowrap><a class='action-delete' href='javascript:void(0)'>[@lang_res k='global.delete'/]</a></td>"
+                        + "</tr>"; 
+                	});
+                }
+                $("#menuList tbody tr:gt(0)").remove();
+                $("#menuList tbody").append(tr);
+			    $("#pagination").pagination(total, {
+	                 callback: pageselectCallback,
+	                 numDetail: '',
+	                 items_per_page: pageSize,
+	                 num_display_entries: 4,
+	                 current_page: curPage,
+	                 num_edge_entries: 2
+                });
+			}
+		});
+	 	//回调
+        function pageselectCallback(page_id, jq) {
+            bindList(page_id);
+        }
+	}
+	 $(document).on('click','.action-delete',function(){
+		 var id = $(this).closest('tr').attr('id');
+		 var status = $(this).data('status');
+		 layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/memberGroup/detail/delete.do?datestr="+new Date().getTime(),
+				data : {
+					id:id,
+					isValid:status,
+				},
+				success : function(json) {
+					if (json.flag) {
+						layer.msg("[@lang_res k='global.success'/]", {
+							icon : 1,
+							time : 1000
+						});
+					} else {
+						layer.msg("[@lang_res k='global.failed'/]", {
+							icon : 5,
+							time : 1000
+						});
+					}
+					bindList(0);
+				}
+			});
+		});
+    });
+    $(document).on('click','#btnAdd',function(){
+    	$(window.parent)[0].addMember(getUrlParam('id'));
+    });
+    function formatCurrency(num) {    
+	    num = num.toString().replace(/\$|\,/g,'');    
+	    if(isNaN(num))    
+	    num = "";    
+	    var sign = (num == (num = Math.abs(num)));    
+	    num = Math.floor(num*100+0.50000000001);    
+	    var cents = num%100;    
+	    num = Math.floor(num/100).toString();    
+	    if(cents<10)    
+	    cents = "0" + cents;    
+	    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)    
+	    num = num.substring(0,num.length-(4*i+3))+','+    
+	    num.substring(num.length-(4*i+3));    
+	    return (((sign)?'':'-') + num + '.' + cents);    
+	}
+</script>
+</body>
+</html>

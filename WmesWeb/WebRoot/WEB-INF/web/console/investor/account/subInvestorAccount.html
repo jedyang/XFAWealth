@@ -1,0 +1,449 @@
+[#include "../../inc/head_v2.html"/]
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <style>
+        .wmes-logo {
+            height: 60px;
+            padding: 5px;
+            margin: 0 auto;
+            top: 0px;
+            background: #464342;
+            text-align: center;
+            position: fixed;
+            width: 80px;
+            z-index: 1000000;
+        }
+        .wmes-contentbox {
+            background: #ffffff;
+            padding-top: 5px;
+        }
+    </style>
+
+
+<div class="wmes-content">
+<div class="ifa_choose_condition" style="height::800px;">
+    <div class="container-fluid pd0" id="wmes_wraper">
+        <div class="r-side-container" style="margin-left:0px;padding:0px;">
+		<div class="tab-side-container">
+            <div class="page-header mt-10">
+                <h4><b>[@lang_res k='console.inverstor.account.form.formTitle'/]</b></h4>
+            </div>
+            <div>
+                <form id="frm" class="form-horizontal" method="post">
+                    <input type="hidden" id="id" name="id" value="${(infoVO.id)?if_exists}">
+                    <input type="hidden" id="distributorId" name="distributorId" value="${(infoVO.distributorId)?if_exists}" >
+                    <input type="hidden" id="memberId" name="memberId" value="">
+					<input type="hidden" name="subFlag" value="1" >
+					<input type="hidden" id="firmId" name="ifaFirmId" >
+					<input type="hidden" id="ifaId" name="ifaId">
+                    <div class="form-group">
+                        <div class="col-md-2 text-right">
+                            <span class="red">* </span>
+                            <label for="txtDistributor" class="label-control">[@lang_res k='console.inverstor.account.form.distributor'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="txtDistributor" value="${(infoVO.distributorName)?if_exists}" readonly >
+                        </div>
+                         <div class="col-md-2 text-right">
+                            <span class="red">* </span>
+                            <label for="txtInvestor" class="label-control">[@lang_res k='member.register.investor'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="txtInvestName" name="txtInvestName" value="" readonly="readonly">
+                        </div>
+                    </div> 
+
+                    <div class="form-group">
+                        <div class="col-md-2 text-right">
+                            <span class="red">* </span>
+                            <label for="txtIfafirm" class="label-control">[@lang_res k='member.register.ifafirm'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="txtIfafirmName" name="txtIfafirmName" value="" readonly="readonly">
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <span class="red">* </span>
+                            <label for="txtIfa" class="label-control">[@lang_res k='console.inverstor.account.form.ifa'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                           	<input type="text" class="form-control" id="txtIfaName" name="txtIfaName" value="" readonly="readonly">
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <div class="col-md-2 text-right">
+                        	<span class="red">* </span>
+                            <label for="selSubRelateId" class="label-control">[@lang_res k='console.inverstor.account.form.subRelate'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" id="selSubRelateId" name="subRelateId" >
+                            	<option value=''>[@lang_res k='global.pleaseSelect'/]</option>
+                            	[#if masterList?? && masterList?size>0]
+	                                [#list masterList as mt]
+	                                <option value='${mt.id!}' >${mt.accountNo!}</option>
+	                                [/#list]
+                            	[/#if]
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <span class="red">* </span>
+                            <label for="txtAccountNo" class="label-control">[@lang_res k='console.inverstor.account.form.accountNo'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="txtAccountNo"  name="accountNo" value="" >
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-md-2 text-right">
+                            <span class="red">* </span>
+                            <label for="selAccType" class="label-control">[@lang_res k='console.inverstor.account.form.accType'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control " id="selAccType" name="accType">
+                                <option value="">
+                                    [@lang_res k='global.pleaseSelect'/]
+                                </option>
+                                <option value="I" [#if infoVO.accType?? && infoVO.accType=='I']selected[/#if]>[@lang_res k='console.inverstor.account.options.accType.I'/]</option>
+                                <option value="J" [#if infoVO.accType?? && infoVO.accType=='J']selected[/#if]>[@lang_res k='console.inverstor.account.options.accType.J'/]</option>                                
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <label for="selInvestType" class="label-control">[@lang_res k='console.inverstor.account.form.investType'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control " id="selInvestType" name="investType">
+                                <option value="">
+                                    [@lang_res k='global.pleaseSelect'/]
+                                </option>
+                                <option value="F" [#if infoVO.investType?? && infoVO.investType=='F']selected[/#if]>[@lang_res k='console.inverstor.account.options.investType.F'/]</option>
+                                <option value="P" [#if infoVO.investType?? && infoVO.investType=='P']selected[/#if]>[@lang_res k='console.inverstor.account.options.investType.P'/]</option>                               
+                            </select>
+                        </div>
+                    </div>
+                                        
+                    <div class="form-group">
+                        <div class="col-md-2 text-right">
+                            <label for="selTotalFlag" class="label-control">[@lang_res k='console.inverstor.account.form.totalFlag'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                        	<select class="form-control " id="selTotalFlag" name="totalFlag">
+								<option value="">
+									[@lang_res k='global.pleaseSelect'/]
+								</option>
+								<option value="1" [#if infoVO.totalFlag?? && infoVO.totalFlag=='1']selected[/#if]>[@lang_res k='console.inverstor.account.options.totalFlag.1'/]</option>
+								<option value="0" [#if infoVO.totalFlag?? && infoVO.totalFlag=='0']selected[/#if]>[@lang_res k='console.inverstor.account.options.totalFlag.0'/]</option>								
+							</select>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <label for="selCIES" class="label-control">[@lang_res k='console.inverstor.account.form.cies'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                        	<select class="form-control " id="selCIES" name="cies">
+								<option value="">
+									[@lang_res k='global.pleaseSelect'/]
+								</option>
+								<option value="1" [#if infoVO.cies?? && infoVO.cies=='1']selected[/#if]>[@lang_res k='console.inverstor.account.options.cies.1'/]</option>
+								<option value="0" [#if infoVO.cies?? && infoVO.cies=='0']selected[/#if]>[@lang_res k='console.inverstor.account.options.cies.0'/]</option>								
+							</select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-md-2 text-right">
+                            <label for="selFACA" class="label-control">[@lang_res k='console.inverstor.account.form.faca'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                        	<select class="form-control " id="selFACA" name="faca">
+								<option value="">
+									[@lang_res k='global.pleaseSelect'/]
+								</option>
+                                <option value="1" [#if infoVO.faca?? && infoVO.faca=='1']selected[/#if]>[@lang_res k='console.inverstor.account.options.faca.1'/]</option>
+                                <option value="0" [#if infoVO.faca?? && infoVO.faca=='0']selected[/#if]>[@lang_res k='console.inverstor.account.options.faca.0'/]</option>                             
+							</select>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <label for="selDividend" class="label-control">[@lang_res k='console.inverstor.account.form.dividend'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control " id="selDividend" name="dividend">
+                                <option value="">
+                                    [@lang_res k='global.pleaseSelect'/]
+                                </option>
+                                <option value="R" [#if infoVO.dividend?? && infoVO.dividend=='R']selected[/#if]>[@lang_res k='console.inverstor.account.options.dividend.R'/]</option>
+                                <option value="D" [#if infoVO.dividend?? && infoVO.dividend=='D']selected[/#if]>[@lang_res k='console.inverstor.account.options.dividend.D'/]</option>                             
+                            </select>
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <div class="col-md-2 text-right">
+                            <label for="selBaseCurrency" class="label-control">[@lang_res k='console.inverstor.account.form.baseCurrency'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control " id="selBaseCurrency" name="baseCurrency">
+                                <option value="">
+                                    [@lang_res k='global.pleaseSelect'/]
+                                </option>
+                            [#if currencyType?? && currencyType?size gt 0]
+                            [#list currencyType as x]
+                                [#if x?? && infoVO.baseCurrency?? && x.itemCode==infoVO.baseCurrency]
+                                <option value="${x.itemCode!}" selected > ${x.name!} </option>
+                                [#else]
+                                <option value="${x.itemCode!}"> ${x.name!} </option>
+                                [/#if]
+                            [/#list]
+                            [/#if]
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <label for="selPurpose" class="label-control">[@lang_res k='console.inverstor.account.form.purpose'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                        	<select class="form-control " id="selPurpose" name="purpose">
+								<option value="">
+									[@lang_res k='global.pleaseSelect'/]
+								</option>
+								<option value="I" [#if infoVO.purpose?? && infoVO.purpose=='I']selected[/#if]>[@lang_res k='console.inverstor.account.options.purpose.I'/]</option>
+								<option value="O" [#if infoVO.purpose?? && infoVO.purpose=='O']selected[/#if]>[@lang_res k='console.inverstor.account.options.purpose.O'/]</option>								
+							</select>
+                        </div>
+                    </div> 
+                    
+                    <div class="form-group">
+                        <div class="col-md-2 text-right">
+                            <label for="txtPurposeOther" class="label-control">[@lang_res k='console.inverstor.account.form.purposeOther'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="txtPurposeOther" name="purposeOther"  value="${(infoVO.purposeOther)?if_exists}" >
+                        </div>
+                        <div class="col-md-2 text-right">
+                         <label for="selSentBy" class="label-control">[@lang_res k='console.inverstor.account.form.sentBy'/]</label>
+	                    </div>
+	                    <div class="col-md-4">
+	                         <select class="form-control " id="selSentBy" name="sentBy">
+	                             <option value="">
+	                                 [@lang_res k='global.pleaseSelect'/]
+	                             </option>
+	                             <option value="Email" [#if infoVO.sentBy?? && infoVO.sentBy=='Email']selected[/#if]>[@lang_res k='console.inverstor.account.form.sentBy.email'/]</option>
+	                             <option value="Post" [#if infoVO.sentBy?? && infoVO.sentBy=='Post']selected[/#if]>[@lang_res k='console.inverstor.account.form.sentBy.post'/]</option>                             
+	                         </select>
+	                     </div>
+                    </div> 
+                   
+                    <div class="form-group">
+                        <div class="col-md-2 text-right">
+                            <label for="selDiscFlag" class="label-control">[@lang_res k='console.inverstor.account.form.discFlag'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                        	<select class="form-control " id="selDiscFlag" name="discFlag">
+								<option value="">
+									[@lang_res k='global.pleaseSelect'/]
+								</option>
+								<option value="1" [#if infoVO.discFlag?? && infoVO.discFlag=='1']selected[/#if]>[@lang_res k='console.inverstor.account.options.discFlag.1'/]</option>
+								<option value="0" [#if infoVO.discFlag?? && infoVO.discFlag=='0']selected[/#if]>[@lang_res k='console.inverstor.account.options.discFlag.0'/]</option>								
+							</select>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <label for="selSubmitStatus" class="label-control">[@lang_res k='console.inverstor.account.form.submitStatus'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control " id="selSubmitStatus" name="submitStatus">
+                                <option value="">
+                                    [@lang_res k='global.pleaseSelect'/]
+                                </option>
+                                <option value="invest" [#if infoVO.submitStatus?? && infoVO.submitStatus=='invest']selected[/#if]>[@lang_res k='console.inverstor.account.options.submitStatus.invest'/]</option>
+                                <option value="ifa" [#if infoVO.submitStatus?? && infoVO.submitStatus=='ifa']selected[/#if]>[@lang_res k='console.inverstor.account.options.submitStatus.ifa'/]</option>                             
+                                <option value="ifafirm" [#if infoVO.submitStatus?? && infoVO.submitStatus=='ifafirm']selected[/#if]>[@lang_res k='console.inverstor.account.options.submitStatus.ifafirm'/]</option>
+                                <option value="distributor" [#if infoVO.submitStatus?? && infoVO.submitStatus=='distributor']selected[/#if]>[@lang_res k='console.inverstor.account.options.submitStatus.dis'/]</option>                             
+                            </select>
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <div class="col-md-2 text-right">
+                            <label for="selAuthorized" class="label-control">[@lang_res k='console.inverstor.account.form.authorized'/]</label>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control " id="selAuthorized" name="authorized">
+                                <option value="">
+                                    [@lang_res k='global.pleaseSelect'/]
+                                </option>
+                                <option value="1" [#if infoVO.authorized?? && infoVO.authorized=='1']selected[/#if]>[@lang_res k='console.inverstor.account.options.authorized.1'/]</option>
+                                <option value="0" [#if infoVO.authorized?? && infoVO.authorized=='0']selected[/#if]>[@lang_res k='console.inverstor.account.options.authorized.0'/]</option>                             
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <label for="selIsValid" class="label-control">[@lang_res k='console.inverstor.account.form.isValid'/]</label>
+                        </div>
+                        <div class="col-md-4">
+							<select class="form-control " id="selIsValid" name="isValid">
+								<option value="">
+									[@lang_res k='global.pleaseSelect'/]
+								</option>
+								<option value="1" [#if infoVO.isValid?? && infoVO.isValid=="1"]selected[/#if]>[@lang_res k='console.inverstor.account.options.isValid.1'/]</option>
+								<option value="0" [#if infoVO.isValid?? && infoVO.isValid=="0"]selected[/#if]>[@lang_res k='console.inverstor.account.options.isValid.0'/]</option>
+							</select>
+                        </div>
+                    </div>  
+                <div class="text-center pd10">
+                    <button id="btnSave" type="submit" class="btn btn-primary">
+                        [@lang_res k='global.save'/]
+                    </button>
+                    <button id="btnClose" class="btn btn-primary" onclick="javascript:window.close();">
+                        [@lang_res k='global.close'/]
+                    </button>
+                </div>                
+                </form>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js"></script>
+<script src="${base}/res/console/js/jquery.form.js"></script>
+<script src="${base}/res/console/js/bootstrap.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script type="text/javascript">
+seajs.use('${base}/res/third/layer/layer.js');
+$(function() {
+    //校验表单数据
+    $('#frm').bootstrapValidator({
+        feedbackIcons : {
+            valid : 'glyphicon glyphicon-ok',
+            invalid : 'glyphicon glyphicon-remove',
+            validating : 'glyphicon glyphicon-refresh'
+        },
+        fields : {
+            accountNo : {
+                validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='console.inverstor.account.form.accountNo'/] [@lang_res k='global.empty.tip'/]"
+                    }, 
+                    remote: {//ajax验证。服务器端返回的 result:{"valid",true or false} 向服务发送当前code值，获得一个json数据。例表示正确：{"valid",true} 
+                        url: "${base}/console/investor/account/checkAccountNo.do", 
+                        type:"POST", 
+                        dataType: "json",
+                        data: function(validator) {
+                            var x_={ 
+                                accountId: "${infoVO.id!}",
+                                accountNo: validator.getFieldElements('accountNo').val()
+                            }; 
+                            //console.log(x_);
+                            return x_; 
+                        }, 
+                        message: "[@lang_res k='open.account.exist' /]"
+                    }
+                    
+                }
+            },
+            accType :{
+                validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='console.inverstor.account.form.accType'/] [@lang_res k='global.empty.tip'/]"
+                    }
+                }
+            },
+            subRelateId:{
+            	validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='console.inverstor.account.form.subRelate'/] [@lang_res k='global.empty.tip'/]"
+                    }
+                }
+            },
+            txtInvestName:{
+            	validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='member.register.investor'/] [@lang_res k='global.empty.tip'/]"
+                    }
+                }
+            },
+            txtIfafirmName:{
+            	validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='member.register.ifafirm'/] [@lang_res k='global.empty.tip'/]"
+                    }
+                }
+            },
+            txtIfaName:{
+            	validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='console.inverstor.account.form.ifa'/] [@lang_res k='global.empty.tip'/]"
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv', function(e) {
+        e.preventDefault();
+        dataSave();
+    });
+	
+    //保存
+    function dataSave(){
+        //return;
+        var params = $("#frm").serialize();
+        params = decodeURIComponent(params, true);
+        params = decodeURIComponent(params, true);
+        params = params.replace(/&/g,"','");    
+        params = params.replace(/=/g,"':'");    
+        params = "({'"+params +"'})";    
+        params = eval(params);   
+        $.ajax({
+            type : 'post',
+            datatype : 'json',
+            url :  "${base}/console/investor/account/subSave.do?datestr=" + new Date().getTime(),
+            data : params,
+            success : function(data) {
+                $("#frm").bootstrapValidator("resetForm"); 
+                if (data.result) {
+                    layer.msg("[@lang_res k='global.success.save'/]", {icon: 1}, function () { 
+                        setTimeout(function(){
+                            //parent.document.getElementById("btnSearch").click();
+                            //parent.document.getElementById("btnCloseIframe").click(); 
+                            window.close();
+                        },500)
+                    });
+                    
+                } else {
+                    layer.msg("[@lang_res k='global.failed.save'/]");
+                }
+            }
+        });
+    }
+    
+    /**
+   	主账户选择切换
+    */
+	$("#selSubRelateId").on("change",function(){
+		var masterAccId = $(this).val();
+		$.ajax({
+			url:base_root + "/console/investor/account/subAccountInfoJson.do?masterId="+masterAccId+"&r="+Math.random(),
+			type:"get",
+			dataType:"json",
+			success:function(data){
+				var data = data.data;
+				var ifaId = data.ifaId;
+				var ifaName = data.ifaName;
+				var firmId = data.ifafirmId;
+				var firmName = data.ifafirmName;
+				var customerName = data.customerName;
+				var memberId = data.memberId;
+				$("#txtIfafirmName").val(firmName);
+				$("#txtIfaName").val(ifaName);
+				$("#txtInvestName").val(customerName);
+				$("#ifaId").val(ifaId);
+				$("#firmId").val(firmId);
+				$("#memberId").val(memberId)
+			},
+			error:function(){
+				
+			}
+		});
+	});
+
+}); 
+
+</script>

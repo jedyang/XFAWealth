@@ -1,0 +1,212 @@
+{
+ "lang":
+   {
+     "listTpl":{
+                 "nofriend":"No friend in this group",
+                 "nogroup":"No group",
+                 "nohistory":"No chat history",
+                 "nodata":"no data",
+                 "editsign":"edit highlight",
+                 "connector":"Contacts",
+                 "online":"On line",
+                 "invisible":"Invisible",
+                 "group":"Group",
+                 "history":"history",
+                 "nonamegroup":"Unnamed group",
+                 "noconnector":"No contact",
+                 "search":"Search",
+                 "msgbox":"Message box",
+                 "find":"Find",
+                 "changebackgroud":"Change skin",
+                 "about":"About",
+                 "delchat":"Remove this session",
+                 "delallchatlist":"Clear all session lists",
+                 "mintitle":"My conversation",
+                 "nofriendingroup":"The group has no friends",
+                 "nogroup":"No group",
+                 "searchnodata":"No search results",
+                 "groupmembers":"member"
+               },
+     "elemSkinTpl":{
+                     "simple":"Simplicity"
+                   },
+     "elemChatTpl":{
+                     "unknowname":"Nameless",
+                     "tempsession":"Temporary session",
+                     "selectface":"Select expression",
+                     "uploadpic":"Upload picture",
+                     "senddoc":"Send files",
+                     "sendaudio":"Send network audio",
+                     "sendvideo":"Send network video",
+                     "chatlog":"Chat log",
+                     "close":"Close",
+                     "send":"Semd",
+                     "sendbyenter":"Press Enter key to send message",
+                     "sendbyctrlenter":"Press Ctrl+Enter key to send message",
+                     "showmorelog":"View more records",
+                      "nomorechathistory":"未开启更多聊天记录",
+                     "illegalUser":"Illegal user",
+                     "visitor":"Visitor",
+                     "msglength1":"Content should not exceed ",
+                     "msglength2":" characters",
+                     "msgfrom1":"New message from ",
+                      "msgfrom2":"",
+                      "newmsg":"New message received",
+                     "uploadfail":"Upload failed",
+                     "downloadfile":"Download File",
+                     "audio":"Audio",
+                     "video":"Video",
+                     "videoaddr1":"请输入网络",
+                     "videoaddr2":"地址",
+                     "audiotips":"您的浏览器不支持audio",
+                     "playaudiotips":"播放音频源异常",
+                     "videotips":"您的浏览器不支持video",
+                     "playvideo":"播放视频",
+                     "chatwithhis1":"与 ",
+                     "chatwithhis2":"的聊天记录"
+                   },
+      "elemAddTpl":{
+                    "selectgroup":"Select group",
+                     "enterggrouptips":"Please enter validation information",
+                     "validateinfo":"Validation information",
+                     "addfriend":"Add friends",
+                     "joingroup":"Join group",
+                     "confirm":"Confirm",
+                     "cancel":"Cancel",
+                     "sendapply":"Send application",
+                     "close":"Close",
+                      "friendexists1":"Friends ",
+                      "friendexists2":" already exists in the list",
+                      "groupin1":"You are a member of the ",
+                      "groupin2":" group"
+                   },
+      "face":{
+               "smile":"[Smile]",
+               "grin":"[Grin]",
+               "laugh":"[Laugh]",
+               "joyful":"[Joyful]",
+               "whimper":"[Whimper]",
+               "nosepick":"[NosePick]",
+               "surprise":"[Surprise]",
+               "shy":"[Shy]",
+               "wink":"[Wink]",
+               "silent":"[Silent]",
+               "lookdown":"[LookDown]",
+               "love":"[Love]",
+               "sob":"[Sob]",
+               "chuckle":"[Chuckle]",
+               "kiss":"[Liss]",
+               "ill":"[Sick]",
+               "happy":"[Happy]",
+               "slight":"[Slight]",
+               "righthem":"[Right Hem]",
+               "lefthem":"[Left Hem]",
+               "hush":"[Hush]",
+               "toasted":"[Toasted]",
+               "wronged":"[Wronged]",
+               "puke":"[Puke]",
+               "yawn":"[Yawn]",
+               "hug":"[Hug]",
+               "pout":"[Pout]",
+               "doubt":"[Doubt]",
+               "greedy":"[Greedy]",
+               "wave":"[Wave]",
+               "thinking":"[Thinking]",
+               "sweat":"[Sweat]",
+               "drowsy":"[Drowsy]",
+               "sleep":"[Sleep]",
+               "money":"[Money]",
+               "despair":"[Despair]",
+               "cool":"[Cool]",
+               "drool":"[Drool]",
+               "hum":"[Hum]",
+               "clap":"[Clap]",
+               "dizzy":"[Dizzy]",
+               "sad":"[Sad]",
+               "crazy":"[Crazy]",
+               "speechless":"[Speechless]",
+               "sly":"[Sly]",
+               "scold":"[Scold]",
+               "faneachother":"[FansEachOther]",
+               "heart":"[Heart]",
+               "heartbroken":"[HeartBroken]",
+               "pig":"[Pig]",
+               "panda":"[Panda]",
+               "rabbit":"[Rabbit]",
+               "ok":"[Ok]",
+               "yeah":"[Yeah]",
+               "good":"[Good]",
+               "no":"[NO]",
+               "strong":"[Strong]",
+               "beckon":"[Beckon]",
+               "weak":"[Weak]",
+               "horse":"[Fuck you]",
+               "what":"[What]",
+               "embarrassed":"[Embarrassed]",
+               "cloud":"[Cloud]",
+               "gelivable":"[Gelivable]",
+               "onlookers":"[Onlookers]",
+               "mighty":"[Mighty]",
+               "altman":"[Altman]",
+               "gift":"[Gift]",
+               "clock":"[Clock]",
+               "microphone":"[Microphone]",
+               "candle":"[Candle]",
+               "cake":"[Cake]"
+             }
+             ,"flow":{
+               "nomore":"没有更多了"
+               ,"loadmore":"加载更多"
+             
+             }
+             ,"layer":{
+                 "btnsure":"Confirm"
+                 ,"btncancel":"Cancel"  
+                 ,"next":"Next"
+                 ,"quit":"Quit"
+                 ,"title":"Info"
+                 ,"maxlength1":"Content should not exceed "
+                 ,"maxlength2":" characters"
+                 ,"noimage":"No image"
+                 ,"imageex":"当前图片地址异常<br>是否继续查看下一张？"
+             }
+             ,"laydate":{
+                 "formaterror":"日期不符合格式，请重新选择。"
+                 ,"validerror":"日期不在有效期内，请重新选择。"
+                 ,"year":"年"
+                 ,"month":"月"
+                 ,"newyear":"元旦"
+                 ,"women":"妇女"
+                 ,"qingming":"清明"
+                 ,"labor":"劳动"
+                 ,"children":"儿童"
+                 ,"teacher":"教师"
+                 ,"national":"国庆"
+                 ,"sun":"日"
+                 ,"mon":"一"
+                 ,"tues":"二"
+                 ,"wed":"三"
+                 ,"thur":"四"
+                 ,"fri":"五"
+                 ,"sat":"六"
+                 ,"time":"时间"
+                 ,"clear":"清空"
+                 ,"today":"今天"
+                 ,"confirm":"确认"
+                 ,"hour":"小时"
+                 ,"minute":"分钟"
+                 ,"second":"秒数"
+                 ,"tips":"提示"
+                 
+             }
+           ,"app":{
+		        "message":"Message"
+		        ,"contacts":"contacts"
+		        ,"more":"More"
+		        ,"title":"Chat"
+		     }
+     
+                   
+               
+   }
+}

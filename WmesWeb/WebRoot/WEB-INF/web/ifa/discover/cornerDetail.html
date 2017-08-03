@@ -1,0 +1,218 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/discover.css">
+    <style>
+    .conner-share {
+    font-size: 16px;
+    line-height: 26px !important;}
+    .conner-share a {
+    padding-left: 0px;
+    cursor:pointer;
+}
+ .conner-share .bshare-sinaminiblog {
+    background: url(${base}/res/images/discover/sinaminiblog32.gif) no-repeat; 
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+ .conner-share .bshare-facebook {
+    background: url(${base}/res/images/discover/facebook32.gif) no-repeat;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+ .conner-share .bshare-twitter {
+    background: url(${base}/res/images/discover/twitter32.gif) no-repeat;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+ .conner-share .bshare-linkedin {
+    background: url(${base}/res/images/discover/linkedin32.gif) no-repeat;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+ .conner-share .bshare-weixin {
+    background: url(${base}/res/images/discover/weixin32.gif) no-repeat;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+ .conner-share .bshare-close {
+    background: url(${base}/res/images/top5-close.png) no-repeat;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+	.conner-share .bshare-wmes {
+    background: url(${base}/res/images/discover/weixin.gif) no-repeat;
+    display: inline-block;width: 50px;
+    height: 50px;
+    }
+    .bshare-custom  .icon-medium-plus .bshare-wmes {
+    background: url(${base}/res/images/discover/weixin32.gif) no-repeat;
+    display: inline-block;
+    }
+     .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #000;
+        
+    }
+    .swiper-slide img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      -ms-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      position: absolute;
+      left: 50%;
+      top: 50%;
+    }
+    .photo-list ul {
+    /* margin: 0 0 0 -15px; */
+    /* height: auto; */
+    /* margin: 0px auto; */
+    /* width: 1000px; */
+    /* border: 1px solid Red; */
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+    .layui-layer-setwin .layui-layer-close2{z-index:999;}
+	</style>
+    
+    <div class="wmes-top">
+         <a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+        <a href="javascript:;" class="header-over" >${ifaCorner.ifaNickName!}</a>
+    </div>
+    <div class="wmes-content">
+         <div class="cooner-wrapper" style="overflow: visible;padding-top:10px;">
+         	<div class="wmes-wrap-title" style="height:26px;margin-bottom:25px;">
+         		<a href="javascript:history.go(-1)">
+          			<span class="wmes-ruturn"></span>
+          		</a>
+          		${ifaCorner.ifaNickName!} [@lang_res k='ifaspace.info.scorner'/]
+         	</div>
+         	<div class="conner-top-wrap">
+         		<img class="corners-top-portrait" src="${base}[@user_head u='${ifaCorner.ifaHeadImg!}'  g=''/]" >
+         		<div class="conner-top-infor">
+         			<p class="conner-top-title">${ifaCorner.latestHighlight!}</p>
+         			<div class="conner-top-ico">
+         				<div class="conner-ico-wrap">
+         					<p class="conner-ico-title">Follows</p>
+         					<p class="conner-ico-word">${ifaCorner.follows!}</p>
+         				</div>
+         				<div class="conner-ico-wrap">
+         					<p class="conner-ico-title">Topics</p>
+         					<p class="conner-ico-word">${ifaCorner.topicsCount!}</p>
+         				</div>
+         			</div>
+         		</div>
+         	</div>
+         	<div class="cooner-rows-list">
+         	[#if ifaCornerInfoDetailVOList?exists && ifaCornerInfoDetailVOList?size gt 0 ]
+					[#list ifaCornerInfoDetailVOList as each] 
+				<div class="conner-contens-rows">
+         			<p class="conner-rows-title corner-fadein">${each.topic!}</p> 			
+         			<p class="conner-rows-word corner-fadein">${each.content!}</p>
+         			 <div id="conner-share-${each.id}" class="conner-share box" style="width: 430px;text-align: left;line-height: 175%;color: white;border-radius: 3px;background: -webkit-gradient(linear, 0% 20%, 0% 90%, from(#e5e5e5), to(#f5f5f5));box-shadow: 0 1px 2px #ddd;outline: 0;border:0px gray solid;padding:10px;z-index:9;">
+						<!-- <a title="分享到本站" class="bshare-wmes"></a> -->
+						<a title="分享到新浪微博" class="bshare-sinaminiblog" onclick="javascript:bShare.share(event,'sinaminiblog','${each_index}');return false;"></a>
+						<a title="分享到Facebook" class="bshare-facebook" onclick="javascript:bShare.share(event,'facebook','${each_index}');return false;"></a>
+						<a title="分享到twitter" class="bshare-twitter" onclick="javascript:bShare.share(event,'twitter','${each_index}');return false;"></a>
+						<a title="分享到linkedin" class="bshare-linkedin" onclick="javascript:bShare.share(event,'linkedin','${each_index}');return false;"></a>
+						<a title="分享到微信" class="bshare-weixin" onclick="javascript:bShare.share(event,'weixin','${each_index}');return false;"></a>   
+						<a  class="bshare-close" style="position: absolute;right:5px;"></a>
+						</div>
+         			<div class="conner-rows-comment">
+         				<p class="conner-ico-time">${each.createTimeFormat!}</p>
+         				<div class="conner-rows-ico">
+         					<p class="conner-ico-comment" style="display:block;"><img id="img-share-${each.id!}" authorHeaderImg="${ifaCorner.ifaHeadImg!}" cornerAuthorId="${ifaCorner.memberId!}" cornerid="${each.id!}" class="img-reprint" src="${base}/res/images/discover/forward_ico.png"> </p>
+         					<p class="conner-ico-comment comment-show-button"><img src="${base}/res/images/discover/comment_ico.png">${each.replycount!}</p>
+         					<p class="conner-ico-comment"><img cornerid="${each.id!}" class="img-liked" src="${base}/res/images/discover/zambia_ico.png"><span>${each.likedCount!}</span></p>
+         				</div>
+         				
+         			</div>
+         			<div class="conner-add-comment">
+         				<textarea class="connet-add-text"></textarea>
+         				<a cornerid="${each.id!}" class="connet-add-button" href="javascript:;">[@lang_res k='ifa.corner.buttonsend'/]</a>
+         				<img  class="expression-ico img-faces" src="${base}/res/images/discover/expression_ico.png">
+         			</div>
+         			<div class="conner-comment-contents" style="display:block;">
+         				
+         					[#if each.ifaCornerInfoLikedList?exists && each.ifaCornerInfoLikedList?size gt 0 ]
+         					<div id="conner-comment-like-${each.id!}" class="conner-comment-like">
+         					<img class="conner-like-ico" src="${base}/res/images/discover/zambia_ico01.png">
+							[#list each.ifaCornerInfoLikedList as y] 
+								<p class="conner-like-name">${y.memberNickName!}</p>
+							[/#list]
+							</div>
+							[#else]
+							<div id="conner-comment-like-${each.id!}" class="conner-comment-like" style="display:none;">
+         					<img class="conner-like-ico" src="${base}/res/images/discover/zambia_ico01.png">
+         					</div>
+							[/#if]
+         				
+         				
+         				<ul class="conner-comment-list">
+         				[#if each.ifaCornerInfoReplyList?exists && each.ifaCornerInfoReplyList?size gt 0 ]
+						[#list each.ifaCornerInfoReplyList as x] 
+								<li>
+	         						<p class="comment-list-name">${x.replyNickName!}:</p>
+	         						<p class="comment-list-word">${x.content!} </p>
+	         					</li>
+						[/#list]
+						[/#if]
+         				</ul>
+         			</div>
+         		</div>
+					[/#list]
+					[/#if]
+         		
+         	</div>
+         </div>
+    </div>
+    <input type="hidden" id="hidNickName" value="${ifaCorner.ifaNickName!}" />
+     <input type="hidden" id="hidCurLoginNickName" value="${loginUser.nickName}" />
+    <div id="box" imgShareElementId="" class="box">
+    <div class="goog-menu goog-menu-vertical share-menu" style="" role="menu" aria-haspopup="true">
+    	<div class="goog-menuitem" role="menuitem" id=":15" style="-webkit-user-select: none;">
+	    <div class="goog-menuitem-content" style="-webkit-user-select: none;">
+	    <span class="ico z-ico-daily-share" style="-webkit-user-select: none;"></span>本站分享</div>
+	    </div>
+	    <div class="goog-menuitem" role="menuitem" id=":15" style="-webkit-user-select: none;">
+	    <div class="goog-menuitem-content" style="-webkit-user-select: none;">
+	    <span class="ico z-ico-weibo-share" style="-webkit-user-select: none;"></span>新浪微博</div>
+	    </div>
+	    <div class="goog-menuitem" role="menuitem" id=":15" style="-webkit-user-select: none;">
+	    <div class="goog-menuitem-content" style="-webkit-user-select: none;">
+	    <span class="ico z-ico-weixin-share" style="-webkit-user-select: none;"></span>微信</div>
+	    </div>
+	    <div class="goog-menuitem" role="menuitem" id=":15" style="-webkit-user-select: none;">
+	    <div class="goog-menuitem-content" style="-webkit-user-select: none;">
+	    <span class="ico z-ico-daily-share" style="-webkit-user-select: none;"></span>搜狐微博</div>
+	    </div>
+	</div>
+    </div>
+    
+    
+   [#include "../../inc/foot_v2.html"/]
+   
+
+<script type="text/javascript">
+seajs.use('${base}/res/web/ifa/connerDetail.js');
+//seajs.use('${base}/res/third/jqthumb/jqthumb.js');
+</script> 
+<script src="${base}/res/js/library/html5video/html5media.min.js"></script>
+<!--引入bshare SDK-->
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&style=-1"></script>
+ <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>

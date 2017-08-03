@@ -1,0 +1,65 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" href="${base}/res/css/openaccount.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <div class="wmes-top">
+        <a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+        <a href="javascript:;" class="header-over">Client Detail</a>
+    </div>
+    <div class="wmes-content">
+    	<div class="fill-rpq-wrap">
+	    	<div class="fill-rpq-information">
+	            <div class="fill-rpq-portrait">
+	                <img src="${base}/res/images/discover/Jennifer.png">
+	                <p class="fill-rpq-name">${loginUser.nickName}</p>
+	            </div>
+	            <p class="fill-rpq-phone">(+${loginUser.mobileCode}) ${loginUser.mobileNumber}</p>
+	            <p class="fill-rpq-email">${loginUser.email}</p>
+	            <p class="fill-rpq-passport">ID/Passport No: <span>4564433333</span></p>
+	        </div>
+        </div>
+        <div class="rpqContent">
+        	<div class="stepOne-rows-fillin">
+   				<p class="stepOne-rows-input-title">Proposal Name</p>
+   				<div class="stepOne-rows-text-wrap">
+   					${proposal.proposalName!''}
+   				</div>
+   			</div>
+   			<div class="stepOne-rows-fillin">
+   				<p class="stepOne-rows-input-title">baseCurr</p>
+   				<div class="stepOne-rows-text-wrap">
+   					${proposal.baseCurrId!''}
+   				</div>
+   			</div>
+   			<div class="stepOne-rows-fillin">
+   				<p class="stepOne-rows-input-title">投资状态</p>
+   				<div class="stepOne-rows-text-wrap">
+   					${proposal.status!''}
+   				</div>
+   			</div>
+   			<div class="stepOne-rows-fillin">
+   				<p class="stepOne-rows-input-title">说明</p>
+   				<div class="stepOne-rows-text-wrap">
+   					${proposal.remark!''}
+   				</div>
+   			</div>
+   			<div class="stepOne-rows-fillin">
+   				<h2 style="margin-left:150px;font-size:20px;">strategy</h2>
+   				<div class="stepOne-rows-text-wrap">
+   					<p>
+   						<span>strategyName:</span>
+   						<span>${proposal.strategy.strategyName!''}:</span>
+   					</p>
+   					<p>
+   						<span>description:</span>
+   						<span>${proposal.strategy.strategyName!''}:</span>
+   					</p>
+   					<p>
+   						<span>investmentGoal:</span>
+   						<span>${proposal.strategy.investmentGoal!''}:</span>
+   					</p>
+   				</div>
+   			</div>
+   			
+        </div>
+    </div>
+[#include "../../inc/foot_v2.html"/]

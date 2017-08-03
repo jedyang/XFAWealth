@@ -1,0 +1,37 @@
+<style>
+	.new-content-right{width:27% !important;}
+</style>
+<div class="col-md-4 side-bar new-content-right"  ng-app="rightTable" >
+				<div class="first_half popular-news">
+						<header>
+							<a href="newsList.do?code=recommend"><h3 class="title-popular">[@lang_res k='news.category.recommend'/]</h3></a>
+						</header>
+						<div class="side-bar-articles recommendList">
+							</div>
+						 </div>
+						 <div class="secound_half">				 
+							 <div class="popular-news">
+								<header>
+									<h3 class="title-popular">[@lang_res k='news.type.latest'/]</h3>
+								</header>
+								<div class="popular-grids recentList">
+									</div>
+							</div>
+						</div>
+						<div class="secound_half ">				 
+							 <div class="popular-news">
+								<header>
+									<h3 class="title-popular">[@lang_res k='news.type.hot'/]</h3>
+								</header>
+								<div class="popular-grids hotList">
+									</div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+				</div>
+				<div class="clearfix"></div>
+				
+				<script type="text/javascript">
+seajs.use("${base}/res/web/ifa/newsRightPage.js")
+</script>
+		

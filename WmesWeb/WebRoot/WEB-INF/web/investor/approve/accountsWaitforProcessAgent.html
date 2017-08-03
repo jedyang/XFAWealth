@@ -1,0 +1,133 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/wmes_en.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<div class="wmes-content" ng-app="accountsWaitAgent" ng-controller="accountsWaitAgentCtrl">
+	<div class="ifa_choose_condition">
+		<p class="wmes-wrap-title">[@lang_res k='account.wait.for.process.agent.title'/]</p>
+		
+		<div class="funds_choice_wrap">
+			<p class="funds_choice_title">[@lang_res k='open.account.approver.firm'/]</p>
+			<ul class="funds_choice">
+				<li class="fund_choice_active funds_all" data-name="Distributor" data-key="" data-value="Risk Level_00">[@lang_res k='pipeline.search.all'/]</li>
+				[#if ifaFirms?exists && ifaFirms?size gt 0 ]
+            	[#list ifaFirms as ifaFirm]
+            	[#if (ifaFirm.companyName)??]
+				<li id="${ifaFirm.id!}" data-name="ifaFirm" data-key="${ifaFirm.companyName!}" data-value="${ifaFirm.id!}">${ifaFirm.companyName!}</li>
+				[/#if]
+				[/#list]
+				[/#if]
+			</ul>
+		</div>
+	</div>
+	<div class="strategies_list_wrap">
+		<div class="funds_list_selected">
+			<p class="funds_selected_title">[@lang_res k='clients.proposal.selected.condition'/] </p>
+			<ul class="selection_criteria">
+				<p class="funds_title_selection">[@lang_res k='clients.proposal.reset'/]</p>
+			</ul>
+		</div>
+		<div class="ifa_keyserach_wrap">
+			<p class="ifa_serach_sum">
+				[@lang_res k='clients.proposal.total.prefix'/]
+				<span class="funds_serach_digital ng-binding" ng-bind="datatotal">${(investorAccounts.total)!}</span> [@lang_res k='account.wait.for.process.agent.clientFit'/]</p>
+			<div class="funds_keyserach ifa_keyserach">
+				<input type="text" id="fundName" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+				<span class="icon_search" id="btnKeyWord" ng-click="searchKeyBtn()"></span>
+			</div>
+		</div>
+		<ul class="funds_ifalist_sorting">
+			<li class="funds_active">
+				<p>[@lang_res k='front.ifaFirm.investor.accountProcess.submitTime'/]</p>					
+				<p>
+					<span class="funds_arrow_top funds_arrow_top_submitTime"></span>
+					<span class="funds_arrow_down funds_down_active funds_arrow_down_submitTime" ></span>
+				</p>
+			</li>
+			<li>
+				<p>[@lang_res k='member.register.distributor'/]</p>					
+				<p>
+					<span class="funds_arrow_top funds_arrow_top_matching"></span>
+					<span class="funds_arrow_down funds_arrow_down_matching" ></span>
+				</p>
+			</li>
+			<li>
+				<p>[@lang_res k='portfolio.detail.performance'/]</p>					
+				<p>
+					<span class="funds_arrow_top funds_arrow_top_year"></span>
+					<span class="funds_arrow_down funds_arrow_down_year"></span>
+				</p>
+			</li>	
+		</ul>
+		<div class="strategies_list">
+			<table class="funds_search_information strategies_List accountsWaiforProcess-table">
+			<tbody>
+				<tr class="funds_tables_th funds_tables_th_amend">
+					<th class="funds_tables_header" style="width:18%;">
+						[@lang_res k='client.name'/]
+					</th>
+					<th class="funds_tables_header" style="width:16%">
+						[@lang_res k='account.wait.for.process.agent.clientMobile'/] 
+					</th>
+					<th class="funds_tables_header" style="width: 14%;text-align: center;">
+						[@lang_res k='open.account.AccountType'/]
+					</th>
+					<!-- 
+					<th class="funds_tables_header" style="width:8%;">
+						[@lang_res k='member.register.distributor'/]
+					</th>
+					 -->
+					<th class="funds_tables_header" style="width:12%">
+						[@lang_res k='account.wait.for.process.agent.summitTime'/]
+					</th>
+					<th class="funds_tables_header" style="width:20%;">
+						[@lang_res k='criteria.ifaName'/]
+					</th>
+					<th class="funds_tables_header" style="width:9%;">
+						[@lang_res k='criteria.ifaLogo'/]
+					</th>
+					<th class="funds_tables_header" style="width:11%;">
+						[@lang_res k='notice.list.table.th.actions'/]
+					</th>
+				</tr>
+				<tr ng-repeat="items in dataList">
+					<td class="funds_search_tdcenter">
+						<a>{{items.nickName}}</a>
+					</td>
+					<td class="funds_search_tdcenter">{{items.mobileNumber}}</td>
+					<td class="funds_tables_fnames">{{items.accType}}</td>
+					<td class="funds_search_tdcenter">
+						{{items.createTime}}
+						<br>
+						{{items.time}}
+					</td>
+					<td class="funds_search_tdcenter accounttable-img">
+						<div style="margin-left: 50px;"><img style="width: 38px;height:38px;border-radius: 50%;" src="${base!}/loadImgSrcByPath.do?filePath={{items.ifaIconUrl}}"/></div>
+						<div style="margin: 8px 0px 0px 20px;">{{items.ifaName}}</div>
+					</td>
+					<td>
+						<div class="funds_search_tdcenter"><img src="${base!}/loadImgSrcByPath.do?filePath={{items.ifafirm.firmLogo}}"/></div>
+					</td>
+					<td class="funds_search_tdcenter">
+						<a href="${base}/front/distributor/accountApprove.do?accountId={{items.id}}">
+							<img src="${base}/res/images/application/find.png">
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="no_list_tips">
+			<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+		</div>
+		<ul class="ifa_list_paging">
+            <wmespage conf="accountAgentConf"></wmespage>
+		</ul>
+		<div class="clear"></div> 
+		</div>
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var disId = "${distributorId!}";
+	seajs.use('${base}/res/web/openAccount/processDis.js');
+</script>

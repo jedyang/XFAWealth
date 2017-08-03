@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title></title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+		<![endif]-->
+	  	<link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+	</head>
+	<body>
+		<div class="tab_wrap">
+		<div class="ifa_choose_condition">
+		<!-- 
+			<div class="wmes-wrap-title">
+				<p>[@lang_res k='console.ifafirm.detail.title'/]</p>
+			</div>
+			 -->
+			<div class="AccountInfo">
+			<div class="client-detail-info">
+				<ul class="client-info-wrap" style="width:100%">
+					<li>
+						<p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.companyName'/]</p>
+						<p class="client-info-word">${(ifafirm.companyName)?if_exists}</p>
+					</li>
+				</ul>
+	            <ul class="client-info-wrap">
+	                <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.entityType'/]</p>
+	                    <p class="client-info-word">
+	                    	[#if ifafirm.entityType=='1']
+								[@lang_res k='console.ifafirm.detail.form.select.entityType.1'/]
+							[#elseif ifafirm.entityType=='2']
+								[@lang_res k='console.ifafirm.detail.form.select.entityType.2'/]
+							[#elseif ifafirm.entityType=='3']
+								[@lang_res k='console.ifafirm.detail.form.select.entityType.3'/]
+							[#elseif ifafirm.entityType=='4']
+								[@lang_res k='console.ifafirm.detail.form.select.entityType.4'/]
+							[#elseif ifafirm.entityType=='5']
+								[@lang_res k='console.ifafirm.detail.form.select.entityType.5'/]
+							[/#if]
+	                    </p>
+	                </li>
+	                <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.isFinancial'/]</p>
+	                    <p class="client-info-word">
+	                    	[#if ifafirm.isFinancial=='1']
+								[@lang_res k='global.true'/]
+							[#else]
+								[@lang_res k='global.false'/]
+							[/#if]
+	                    </p>
+	                </li>
+	                <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.incorporationDate'/] (YY-MM-DD)</p>
+	                    <p class="client-info-word">${ifafirm.incorporationDate?date}</p>
+	                </li>
+	                <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.incorporationPlace'/]</p>
+	                    <p class="client-info-word">${(ifafirm.incorporationPlace)?if_exists}</p>
+	                </li>
+	                <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.country'/]</p>
+	                    <p class="client-info-word">${(ifafirm.country)?if_exists}</p>
+	                </li>
+	                <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.website'/]</p>
+	                    <p class="client-info-word">${(ifafirm.website)?if_exists}</p>
+	                </li>
+	                 <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.approveMode'/]</p>
+	                    <p class="client-info-word">
+	                    	[#if ifafirm.superCheckType=='1']
+								[@lang_res k='console.ifafirm.detail.form.select.approveMode.1'/]
+							[#elseif ifafirm.superCheckType=='2']
+								[@lang_res k='console.ifafirm.detail.form.select.approveMode.2'/]
+							[#elseif ifafirm.superCheckType=='3']
+								[@lang_res k='console.ifafirm.detail.form.select.approveMode.3'/]
+							[/#if]
+	                    </p>
+	                </li>
+	                 <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.companyLogo'/]</p>
+	                    <p class="client-info-word">
+	                    	<img src="${base}${ifafirm.firmLogo!}"/>
+	                    </p>
+	                </li>
+	            </ul>
+	            <ul class="client-info-wrap">
+	                <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.registerNo'/]</p>
+	                    <p class="client-info-word"></p>
+	                </li>
+	                <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.giin'/](GIIN)</p>
+	                    <p class="client-info-word">${(ifafirm.giin)?if_exists}</p>
+	                </li>
+	                <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.naturePurpose'/]</p>
+	                    <p class="client-info-word">${(ifafirm.naturePurpose)?if_exists}</p>
+	                </li>
+	                <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.registeredAddress'/]</p>
+	                    <p class="client-info-word">${(ifafirm.registeredAddress)?if_exists}</p>
+	                </li>
+	                <li>
+	                    <p class="client-info-title">[@lang_res k='console.ifafirm.detail.form.label.mailingAddress'/]</p>
+	                    <p class="client-info-word">${(ifafirm.mailingAddress)?if_exists}</p>
+	                </li>
+	            </ul>
+	        </div>
+			</div>
+		</div>
+	</div>
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+		<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+	</body>
+</html>

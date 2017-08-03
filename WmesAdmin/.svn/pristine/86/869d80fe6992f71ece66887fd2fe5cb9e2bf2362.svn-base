@@ -1,0 +1,56 @@
+package com.fsll.wmes.notice.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fsll.wmes.base.WmesBaseAct;
+import com.fsll.wmes.notice.service.NoticeService;
+import com.fsll.wmes.notice.vo.NoticeVO;
+
+@Controller
+@RequestMapping("/console/notice")
+public class ConsoleNoticeAct extends WmesBaseAct{
+
+	@Autowired
+	private NoticeService noticeService;
+	
+	/**
+	 *  业务公告管理页面
+	 * @author wwluo
+	 * @date 2017-06-05
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String list(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		return "console/notice/console/list";
+	}
+	
+	/**
+	 *  业务公告管理页面
+	 * @author wwluo
+	 * @date 2017-06-05
+	 */
+	@RequestMapping(value = "/input", method = RequestMethod.GET)
+	public String input(String id,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		NoticeVO vo = noticeService.findNoticeVOById(id);
+		model.put("notice", vo);
+		return "console/notice/console/input";
+	}
+	
+	/**
+	 *  业务公告数据获取
+	 * @author wwluo
+	 * @date 2017-06-05
+	 */
+	@RequestMapping(value = "/getNotices", method = RequestMethod.POST)
+	public void getNotices(NoticeVO noticeVO,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		jsonPaging = this.getJsonPaging(request);
+		jsonPaging = noticeService.getConsoleNotices(jsonPaging, noticeVO);
+		this.toJsonString(response, jsonPaging);
+	}
+}

@@ -1,0 +1,193 @@
+[#include "../../inc/head_v2.html"/]
+
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<style>
+	.strategies_list_ifaname{max-width:none !important;}
+</style>
+<div class="wmes-content">
+	<div class="strategies_list_wrap">
+		<div class="wmes-wrap-title">
+			<a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='strategy.detail.title'/]</div>
+		<div class="wmes-detail-title">${(strategyInfo.strategyName)!}
+			<div class="collectcon">
+			[#if allowFav?? && !allowFav]
+			[#if (myself?? && myself=='1') ]
+				<div class="amend-type" ></div>
+			[#else]
+				<div isFollow="${isFollow!}" class="portfolio_fav_img_amend1 [#if strategyInfo.isFollow?? && strategyInfo.isFollow=='1']portfolio_fav_img_amend1active[/#if]"></div>
+			[/#if]
+			[/#if]
+			</div>
+			<span class="lump-equity-grade funds_leveal_${strategyInfo.riskLevel!}" title="Risk Level ${strategyInfo.riskLevel!}" style="float:right;margin:0 15px 0 0;">${strategyInfo.riskLevel!}</span>
+		</div>
+			<i class="strategies_list_goal strategiesdetail_list_goal">${strategyInfo.sector!} [#if strategyInfo.sector?? && strategyInfo.sector!=''  && strategyInfo.geoAllocation?? && strategyInfo.geoAllocation!='']|[/#if] ${strategyInfo.geoAllocation!}</i>
+			<!--<i class="strategies_list_fund strategiesdetail_list_fund">${strategyInfo.riskLevel!}</i>
+					-->
+		<div class="strategies_detail_fav"></div>
+		<div class="strategies_detail_inf strategiesdetail_detail_inf">
+			<div class="strategies_inf_left">
+				<a href="${base}/front/community/space/ifaSpace.do?id=${strategyInfo.creator.id}">
+					<img class="strategies_inf_img" src="${base}[@user_head u=strategyInfo.ifa.member.iconUrl g=strategyInfo.ifa.gender/]"></a>
+				<p class="strategies_list_ifaname strategiesdetail_list_ifaname">
+					${strategyInfo.creatorName!} 
+				</p>
+				<p class="strategies_time_word strategiesdetail_time_word">[#if strategyInfo.lastUpdate??]${strategyInfo.lastUpdate}[/#if]</p>
+			</div>
+			<div class="strategies_inf_right">
+				<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+				<p class="strategies_eve_num">[#if strategyInfo.click??]${strategyInfo.click!""}[#else]0[/#if]</p>
+			</div>
+		</div>
+		<div class="strategiesdetail_inf_Abstractcon">
+			<div class="strategiesdetail_inf_Abstract" style="background:url(${base}/res/images/fund/Abstract.png)">[@lang_res k='strategy.abstract'/]</div>
+			<div title="${strategyInfo.description!}">[#if strategyInfo.reason??]${strategyInfo.reason!''}[/#if]</div>
+		</div>
+		<div class="strategies_inf_word strategiesdetail_inf_word">
+			<div class="strategies_detail_list">
+				<p class="strategies_detail_product strategies_detail_product_amend">[@lang_res k='strategy.info.form.description'/]</p>
+				<span class="ifa-more-ico"></span>
+			</div>
+			<div class="strategies_inf_goal strategiesdetail_inf_goal">
+				<p class="strategies_inf_title">[@lang_res k='strategy.info.list.goal'/]</p>
+				<p class="strategies_top_word">[#if strategyInfo.investmentGoal??]${strategyInfo.investmentGoal!""}[/#if]
+				</p>
+			</div>
+			<div class="strategies_inf_goal strategiesdetail_inf_goal" style="border:none;">
+				<p class="strategies_inf_title">[@lang_res k='strategy.info.list.investor'/]</p>
+				<p class="strategies_top_word strategiesdetail_top_word">[#if strategyInfo.suitability??]${strategyInfo.suitability!""}[/#if]
+				</p>
+			</div>
+		</div>
+
+		<div class="strategies_inf_word strategiesdetail_inf_word">
+			<div class="strategies_detail_list">
+				<p class="strategiesdetail_inf_title_amend">[@lang_res k='strategy.info.form.allocaionview'/]<span class="ifa-more-ico"></span></p>
+
+			</div>
+			[#if typeList?exists && typeList?size gt 0]
+			<div class="strategiesdetail_inf_trapezoidcon">
+				<div class="strategiesdetail_inf_trapezoidnav">
+					[#list typeList as list]
+					<div class="strategiesdetail_inf_trapezoidnav1 [#if list_index==0]strategiesdetail_inf_trapezoidnav1active[/#if]" data-value="${list.weight!}" typeName='${list.typeName!}' displayColor="${list.displayColor!}">[@lang_res k='allocation.${list.typeName!}'/](${list.weight!}%)</div>
+					[/#list]
+				</div>
+				<div class="strategiesdetail_inf_trapezoid">
+					<div class="strategiesdetail_inf_trapezoidboard">
+						<div id="methodType"></div>
+						<div class="strategiesdetail_inf_barriersL"></div>
+						<div class="strategiesdetail_inf_barriersR"></div>
+						<div class="trapezoid_link"></div>
+
+					</div>
+					<div id="strategiesdetail_inf_trapezoidright" data-value=''>
+
+					</div>
+
+				</div>
+			</div>
+			[#else]
+			<div style="text-align: center;padding-top: 30px;">
+				<p>暂没有分配数据！</p>
+			</div>
+			[/#if]
+
+		</div>
+		<div id="strategies_list" ng-controller="Strategies" ng-app="myStrategies" style="padding:0">
+			<div class="strategies_detail_list">
+				<p class="strategiesdetail_inf_title_amend">
+					[@lang_res k='strategy.info.form.recommend'/]
+					[#if productInfoList?? && productInfoList?size gt 0]<span class="strategies_detail_sum">${productInfoList?size}</span>[/#if]<span class="ifa-more-ico"></span>
+				</p>
+			</div>
+			<table class="funds_search_information strategies_List" id="tableList" [#if productInfoList?size==0 ]style="display:none;" [/#if]>
+				<tbody>
+				</tbody>
+			</table>
+			<div style="text-align: center;padding-top: 30px; [#if   productInfoList?size gt 0]display:none;[/#if]">
+				<p>[@lang_res k='strategy.info.form.norecommendtips'/]</p>
+			</div>
+
+		</div>
+	</div>
+
+</div>
+[#if webViewVO??]
+<div class="view_permissions_settingcon">
+	<div class="view_permissions_settingbox">
+		<p class="wmes-wrap-title">Setting</p>
+		<div class="wmes-close setting-close"></div>
+		<div class="ifa_keyserach_wrap">
+			<ul class="view_permissions_setting">
+				<li>[@lang_res k='strategy.info.release.permission.view'/]:</li>
+					<li><input type="radio"  name="permit" id="permit0" value="1" [#if webViewVO?? && webViewVO.scopeFlag?? && webViewVO.scopeFlag=="1"]checked="checked"[/#if] />[@lang_res k='strategy.info.release.permission.onlyme'/]</li>
+					<li><input type="radio" name="permit" id="permit1" value="2" [#if  webViewVO?? &&  webViewVO.scopeFlag?? && webViewVO.scopeFlag=="2"]checked="checked"[/#if]/>[@lang_res k='strategy.info.release.permission.public'/]</li>
+					<li>
+						<input type="radio" name="permit" id="permit2" value="3" [#if   webViewVO?? &&  webViewVO.scopeFlag?? && webViewVO.scopeFlag=="3"]checked="checked"[/#if] />[@lang_res k='strategy.info.release.permission.specify'/]
+					</li>
+			</ul>
+			<div id="permit_ext" class="pushToSettingmenu pushToSettingmenu1" [#if  webViewVO?? &&  webViewVO.scopeFlag?? && webViewVO.scopeFlag=='3']style="display: block;"[/#if]>
+				<ul>
+					<li [#if webViewVO?exists && webViewVO.clientFlag?? && (webViewVO.clientFlag=='1' || webViewVO.clientFlag=='-1')]class="setting_active"[/#if]>
+							<div class="pushToSettingCheckbox ">
+								<input type="checkbox"  class="setting"  permitType="client" name="permit_client" value="${webViewVO.clientFlag!}" [#if webViewVO.clientFlag?? && (webViewVO.clientFlag=='1' || webViewVO.clientFlag=='-1')]checked="checked"[/#if] />[@lang_res k='strategy.info.release.specify.myClient'/]
+							</div>
+							<p class="pushToSettingName client_name" id="existingNames">[#if   webViewVO.clientFlag?? && webViewVO.clientFlag=='1'][@lang_res k='global.all'/][#else]${webViewVO.clientNames!}[/#if]</p>
+							<a class="j-permitASetting" type="existing" href="javascript:;"></a>
+						</li>
+						<li [#if webViewVO?exists && webViewVO.prospectFlag?? && (webViewVO.prospectFlag=='1' || webViewVO.prospectFlag=='-1')]class="setting_active"[/#if]>
+							<div class="pushToSettingCheckbox ">
+								<input type="checkbox" class="setting" permitType="prospect" name="permit_prospect" value="${webViewVO.prospectFlag!}" [#if webViewVO.prospectFlag?? && (webViewVO.prospectFlag=='1' || webViewVO.prospectFlag=='-1')]checked="checked"[/#if]/>[@lang_res k='strategy.info.release.specify.myProspect'/]
+							</div>
+							<p class="pushToSettingName client_name" id="prospectNames">[#if webViewVO.prospectFlag?? && webViewVO.prospectFlag=='1'][@lang_res k='global.all'/][#else]${webViewVO.prospectNames!}[/#if]</p>
+							<a class="j-permitASetting" type="prospect" href="javascript:;"></a>
+						</li>
+						<li [#if webViewVO?exists && webViewVO.buddyFlag?? && (webViewVO.buddyFlag=='1' || webViewVO.buddyFlag=='-1')]class="setting_active"[/#if]>
+							<div class="pushToSettingCheckbox ">	
+								<input type="checkbox" class="setting"  permitType="buddy" name="permit_buddy" value="${webViewVO.buddyFlag!}" [#if webViewVO.buddyFlag?? && (webViewVO.buddyFlag=='1' || webViewVO.buddyFlag=='-1')]checked="checked"[/#if]/>[@lang_res k='strategy.info.release.specify.myBuddy'/]
+							</div>
+							<p class="pushToSettingName client_name" id="buddyNames">[#if  webViewVO.buddyFlag?? && webViewVO.buddyFlag=='1'][@lang_res k='global.all'/][#else]${webViewVO.buddyNames!}[/#if]</p>
+							<a class="j-permitASetting" type="buddy"   href="javascript:;"></a>
+						</li>
+						<li [#if webViewVO.colleagueFlag?? && (webViewVO.colleagueFlag=='1' || webViewVO.colleagueFlag=='-1')]class="setting_active"[/#if]>
+							<div class="pushToSettingCheckbox ">
+								<input type="checkbox" class="setting"  permitType="colleague" name="permit_colleague" value="${webViewVO.colleagueFlag!}" [#if webViewVO.colleagueFlag?? && (webViewVO.colleagueFlag=='1' || webViewVO.colleagueFlag=='-1')]checked="checked"[/#if]/>[@lang_res k='strategy.info.release.specify.myTeamMember'/]
+							</div>
+							<p class="pushToSettingName client_name" id="colleagueNames">[#if webViewVO.colleagueFlag?? && webViewVO.colleagueFlag=='1'][@lang_res k='global.all'/][#else]${webViewVO.colleagueNames!}[/#if]</p>
+							<a class="j-permitASetting" type="colleague" href="javascript:;"></a>
+						</li>
+				</ul>
+				<input type="hidden" id="permitSetting" name="permitSetting" value="3">
+			</div>
+			<div class="creatlistbn" style="margin-top:40px;">
+				<a class="craetbnSave" id="btnSave" href="javascript:;">Save</a>
+				<a class="craetbnCancel" id="btnCancle" href="javascript:;">Cancel</a>
+			</div>
+		</div>
+	</div>
+	<form id="addForm">
+	<input type="hidden" name="permit" id="permit" value="${webViewVO.scopeFlag!}">
+	      <input type="hidden" name="id" id="id" value="${strategyInfo.id}">
+	     <input type="hidden" name="permit_client" id="permit_client" value="${webViewVO.clientFlag!}">
+	     <input type="hidden" name="permit_prospect" id="permit_prospect" value="${webViewVO.prospectFlag!}">
+	     <input type="hidden" name="permit_buddy" id="permit_buddy" value="${webViewVO.buddyFlag!}">
+	     <input type="hidden" name="permit_colleague" id="permit_colleague" value="${webViewVO.colleagueFlag!}">
+        <input type="hidden" name="permit_clients" id="existingIds" value="${webViewVO.clients!}">
+		<input type="hidden" name="permit_prospects" id="prospectIds" value="${webViewVO.prospects!}">
+		<input type="hidden" name="permit_buddies" id="buddyIds" value="${webViewVO.buddies!}">
+		<input type="hidden" name="permit_colleagues" id="colleagueIds" value="${webViewVO.colleagues!}">
+	</form>
+	<div class="selectnamelistbox" style="display:none;position: absolute;top:0;left:0;background:rgba(0,0,0,0.3)">
+		<!-- 选择用户控件 -->
+	</div>
+</div>
+[/#if]
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var _root_ = '${base}';
+	var _id_ = '${(strategyInfo.id)!}';
+	var _allocationJson = ${(allocationJson) !};
+	var _sectorList = ${(sectorListJson)!};
+	var _fundIds = '${(fundIds)!}';
+	seajs.use('${base}/res/web/strategy/strategiesdetail.js');
+</script>

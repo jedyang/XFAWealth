@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ifafirm fee for clients</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="${base}/res/third/bootstrap/css/bootstrapValidator.css"/>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+    <style>
+       .radioStyle {width:15px;height:15px;display:inline;border:0px;line-height:35px;}
+    </style>    	
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+		<div class="tab-side-container">
+				<div class="tab_wrap">
+               		<!-- tab 1 Sc -->
+					<form class="form-horizontal required-validate" id="frm"  style="display:block;">
+						<input type="hidden" id="feeId" name="id" value="${(info.id)!}"/>
+                        <input type="hidden" name="ifafirm.id" value="${(info.ifafirm.id)!}"/>
+						<!-- 公司名称 -->
+						<div class="form-group">
+	                        <div class="col-sm-3 text-right">
+	                            <label for="txtIfafirmName" class="label-control">[@lang_res  k='console.ifafirm.fee.ifafirmName'/]</label>
+	                        </div>
+	                        <div class="col-sm-7">
+	                            <input readonly="readonly" type="text" class="form-control" id="txtIfafirmName" value="${(name)?if_exists}" >
+	                        </div>
+	                    </div>
+                        <!-- member名称 -->
+                        <div class="form-group">
+                            <div class="col-sm-3 text-right">
+                                <span class="red">* </span><label for="selMemberName" class="label-control">[@lang_res  k='console.ifafirm.fee.member'/]</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <select class="form-control " id="selMember" name="memberId">
+                                    <option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                                   [#if list?exists && list?size gt 0]
+                                     [#list list as l]
+                                       <option value="${l.memberId!}" [#if info?? && info.member?? && info.member.id == l.memberId]selected[/#if]>${l.member.nickName!}</option>
+                                     [/#list]
+                                   [/#if]
+                                </select> 
+                                <input type="hidden" id="memberId" name="member.id" value="[#if info?? && info.member??]${info.member.id!}[/#if]">
+                            </div>
+                        </div>
+	                    <!-- 费用类型列表 -->
+                        <div class="form-group">
+                            <div class="col-sm-3 text-right">
+                                <span class="red">* </span><label for="feeType" class="label-control">[@lang_res  k='console.ifafirm.fee.feeType'/]</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <select class="form-control " id="selFeeType"  name="feeType">
+                                    <option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                                   [#if configList?exists && configList?size gt 0]
+                                     [#list configList as l]
+                                       <option value="${l.id!}" [#if info?exists&&info.feeType?exists&&info.feeType == l.id]selected[/#if]>${l.nameSc!}</option>
+                                     [/#list]
+                                   [/#if]
+                                </select> 
+                            </div>
+                        </div>
+                        <!-- 费用默认值 -->
+                        <div class="form-group">
+                            <div class="col-sm-3 text-right">
+                                <span class="red">* </span><label for="txtFeeDefValue" class="label-control">[@lang_res  k='console.ifafirm.fee.feeDefValue'/]</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="txtFeeDefValue" name="feeDefValue" value="${(info.feeDefValue)?if_exists}" >
+                            </div>
+                        </div>
+                        <!-- 费用最小值 -->
+                        <div class="form-group">
+                            <div class="col-sm-3 text-right">
+                                <span class="red">* </span><label for="txtFeeMin" class="label-control">[@lang_res  k='console.ifafirm.fee.feeMin'/]</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="txtFeeMin" name="feeMin" value="${(info.feeMin)?if_exists}" >
+                            </div>
+                        </div>
+                        <!-- 费用最大值 -->
+                        <div class="form-group">
+                            <div class="col-sm-3 text-right">
+                                <span class="red">* </span><label for="txtFeeMax" class="label-control">[@lang_res  k='console.ifafirm.fee.feeMax'/]</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="txtFeeMax" name="feeMax" value="${(info.feeMax)?if_exists}" >
+                            </div>
+                        </div>
+                        <!-- 有效 -->
+                        <div class="form-group">
+                            <div class="col-sm-3 text-right">
+                                <label for="txtIsValid" class="label-control">[@lang_res  k='global.status'/]</label>
+                            </div>
+                            <div class="col-sm-7" style="margin-top:5px;">
+                                <span id="typeLable" >
+                                <input type="radio" class="form-control radioStyle" name="isValid" value="1" [#if info?? && info.isValid?? && info.isValid=='1']checked[/#if]>[@lang_res  k='global.status.valid'/]
+                                <input type="radio" class="form-control radioStyle" name="isValid" value="0" [#if info?? && info.isValid?? && info.isValid=='0']checked[/#if]>[@lang_res  k='global.status.invalid'/]
+                                </span>
+                            </div>
+                        </div>
+	                    <div class="text-center pd10">
+		                 	<a href="#" id="btnSave" class="btn-blue-s2">[@lang_res  k='global.save'/]</a>
+		              	</div>
+	                </form>
+               	</div>
+            	<div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js" type="text/javascript"></script> 
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+
+<script type="text/javascript">
+var fundId = $('#fundId').val();
+$(function(){
+    //初始化
+    formValidator();
+    
+	//保存题目与选项信息
+	$('#btnSave').on('click',save);
+	
+	function save() {
+	   //开启验证
+        var bootstrapValidator = $("#frm").data('bootstrapValidator');
+        bootstrapValidator.validate();
+        if(!bootstrapValidator.isValid()){  
+            return ;  
+        }  
+	/*
+		var id = $('#feeId').val();
+		var feeType = $('#selFeeType').find('option:selected').val();
+		var feeDefValue = $('#txtFeeDefValue').val();
+		var feeMin = $('#txtFeeMin').val();
+		var feeMax = $('#txtFeeMax').val();
+		
+		var postData = { 
+			'id':id,
+			'memberId' : memberId,
+			'feeType' : feeType,
+			'feeDefValue' : feeDefValue,
+			'feeMin' : feeMin,
+			'feeMax' : feeMax
+		}; 
+*/
+        var memberId = $('#selMember').find('option:selected').val();
+        $('#memberId').val(memberId);
+        var postData = $("#frm").serialize();
+        
+    	$.ajax({
+            type: "post",
+            url : "${base}/console/ifafirm/fee/spec/save.do?datestr="+ new Date().getTime(),
+            data: postData,
+            async: false,
+            dataType: "json",
+            beforeSend: function () { layer.msg("[@lang_res k='global.saving'/]", { time: 20000 });},
+            complete: function () {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {},
+            success: function (data, textStatus) {
+          	   var result = data.result;
+               if(result==true) { 
+               		layer.msg("[@lang_res k='global.success'/]", {icon: 1}, function () { 
+               			setTimeout(function(){
+               				parent.document.getElementById("btnSearch").click();
+                   			parent.document.getElementById("btnCloseIframe").click(); 
+               			},1000)
+               			
+               		});          			
+               } else { 
+            	   layer.msg("[@lang_res k='global.failed'/]", {icon: 0, time: 2000}, function () {   });
+               }
+        	}
+    	});
+	}
+	
+	//form验证规则
+    function formValidator(){
+        $("#frm").bootstrapValidator({
+         /*feedbackIcons: { 
+            valid: 'glyphicon glyphicon-ok', 
+            invalid: 'glyphicon glyphicon-remove', 
+            validating: 'glyphicon glyphicon-refresh'
+         }, */
+         fields: { 
+             memberId:{ //input的name
+                 validators: { 
+                     notEmpty: {
+                         message: "[@lang_res  k='console.ifafirm.fee.member'/]&nbsp;[@lang_res k='global.empty.tip'/]"
+                     }
+                 }
+             },         
+             feeType:{ //input的name
+                 validators: { 
+                     notEmpty: {
+                         message: "[@lang_res  k='console.ifafirm.fee.feeType'/]&nbsp;[@lang_res k='global.empty.tip'/]"
+                     }
+                 }
+             },
+             feeDefValue:{
+                 validators: { 
+                     notEmpty: {
+                         message: "[@lang_res  k='console.ifafirm.fee.feeDefValue'/]&nbsp;[@lang_res k='global.empty.tip'/]"
+                     },
+                     numeric: {message: "[@lang_res  k='validate.msg.number'/]"} 
+                 }
+             }, 
+             feeMin : {
+                 validators : {
+                     notEmpty : {
+                         message : "[@lang_res  k='console.ifafirm.fee.feeMin'/]&nbsp;[@lang_res k='global.empty.tip'/]"
+                     },
+                     numeric: {message: "[@lang_res  k='validate.msg.number'/]"} 
+                 }
+             }, 
+             feeMax : {
+                 validators : {
+                     notEmpty : {
+                         message : "[@lang_res  k='console.ifafirm.fee.feeMax'/]&nbsp;[@lang_res k='global.empty.tip'/]"
+                     },
+                     numeric: {message: "[@lang_res  k='validate.msg.number'/]"} 
+                 }
+             }
+         }
+        });
+    }//formValidator
+});
+
+</script>
+
+
+</body>
+</html>

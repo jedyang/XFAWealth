@@ -1,0 +1,204 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+    <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+    <div class="wmes-content"   ng-controller="portfolioCtrl"  ng-app="portfolioTable">
+    <input type="hidden" id="currency" value="${currency!}">
+    <input type="hidden" id="currencyName" value="${currencyName!}">  
+     <input type="hidden" id="displayColor" value="${displayColor!}"> 
+     <input type="hidden" id="dateFormat" value="${dateFormat!}"> 
+     <input type="hidden" id="decimals" value="${decimals}">
+        <div class="ifa_choose_condition">
+                <p class="wmes-wrap-title" style="margin-bottom:0">
+                	<a href="javascript:history.go(-1)">
+          				<span class="wmes-ruturn"></span>
+          			</a>
+          			[@lang_res k='clients.portfolio.title'/]</p>
+          			<div class="client-more-screen-wrap">
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">[@lang_res k='clients.proposal.period'/]</p>
+						<ul class="funds_choice">
+							<li class="fund_choice_active  funds_all" data-name="period" data-key="" data-value="">[@lang_res k='clients.proposal.all'/]</li>
+							<li data-name="period" data-key="1-Month" data-value="1">[@lang_res k='clients.proposal.month.1'/]</li>
+							<li data-name="period" data-key="3-Month" data-value="3">[@lang_res k='clients.proposal.month.3'/]</li>
+							<li data-name="period" data-key="6-Month" data-value="6">[@lang_res k='clients.proposal.month.6'/]</li>
+							<li data-name="period" data-key="1-Year" data-value="12">[@lang_res k='clients.proposal.year.1'/]</li>
+							<li data-name="period" data-key="3-Year" data-value="36">[@lang_res k='clients.proposal.year.3'/]</li>
+							
+							<li class="recommend-date-li recommend-date-choice" data-name="period" data-key="" data-value="">
+                                <p class="recommend-other">[@lang_res k='clients.proposal.other'/]</p>
+                                <div class="recommend-other-wrap">
+                                    <div class="recom-input-wrap">
+                                        <input id="fromDate" readonly class="laydate-icon" type="" name="" style="width: 150px;padding:3px 12px;">
+                                    </div>
+                                    <p class="recommend-date-name">[@lang_res k='global.to'/]</p>
+                                    <div class="recom-input-wrap">
+                                        <input id="toDate" readonly class="laydate-icon" type="" name="" style="width: 150px;padding:3px 12px;" >
+                                    </div>
+                                    <a data-name="period" class="recommend-date-ok" href="javascript:">[@lang_res k='sys.role.saveButton'/]</a>
+                                </div>
+                            </li>
+						</ul>
+					</div><!-- 
+                    <div class="funds_choice_wrap">
+                            <p class="funds_choice_title">[@lang_res k='clients.portfolio.riskLevel'/]</p>
+                            <ul class="funds_choice">
+                                <li class="fund_choice_active  funds_all" data-name="riskLevel" data-key="" data-value="Risk Level_00">[@lang_res k='clients.proposal.all'/]</li>
+                                <li data-name="riskLevel" data-key="1" data-value="1">1</li>
+                                <li data-name="riskLevel" data-key="2" data-value="2">2</li>
+                                <li data-name="riskLevel" data-key="3" data-value="3">3</li>
+                                <li data-name="riskLevel" data-key="4" data-value="4">4</li>
+                                <li data-name="riskLevel" data-key="5" data-value="5">5</li>
+                                <li data-name="riskLevel" data-key="6" data-value="6">6</li>
+                                <li data-name="riskLevel" data-key="7" data-value="7">7</li>
+                            </ul>
+                        </div>
+                        --><div class="funds_choice_wrap">
+                            <p class="funds_choice_title">[@lang_res k='clients.portfolio.totalReturn'/]</p>
+                            <ul class="funds_choice">
+                                <li class="fund_choice_active  funds_all" data-name="totalReturn" data-key="" data-value="Risk Level_000">[@lang_res k='clients.proposal.all'/]</li>
+                                <li data-name="totalReturn" data-key="<0" data-value="0">&lt;0</li>
+                                <li data-name="totalReturn" data-key="0-10%" data-value="1">0-10%</li>
+                                <li data-name="totalReturn" data-key="10%-20%" data-value="2">10%-20%</li>
+                                <li data-name="totalReturn" data-key="20%-30%" data-value="3">20%-30%</li>
+                                <li data-name="totalReturn" data-key="30%-40%" data-value="4">30%-40%</li>
+                                <li data-name="totalReturn" data-key=">50%" data-value="5">&gt;50%</li>
+                            </ul>
+                        </div>
+                        <!--<div class="funds_choice_wrap">
+                            <p class="funds_choice_title">[@lang_res k='clients.portfolio.table.Status'/]</p>
+                            <ul class="funds_choice">
+                                <li class="fund_choice_active  funds_all" data-name="status" data-key="" data-value="">[@lang_res k='clients.proposal.all'/]</li>
+                                
+                                <li data-name="status" data-key="[@lang_res k='order.plan.list.finish.status.0'/]" data-value="-1,0">[@lang_res k='order.plan.list.finish.status.0'/]</li>
+                                <li data-name="status" data-key="[@lang_res k='order.plan.list.finish.status.1'/]" data-value="1">[@lang_res k='order.plan.list.finish.status.1'/]</li>
+                                <li data-name="status" data-key="[@lang_res k='order.plan.list.finish.status.2'/]" data-value="2">[@lang_res k='order.plan.list.finish.status.2'/]</li>
+                                <li data-name="status" data-key="[@lang_res k='order.plan.list.finish.status.3'/]" data-value="3">[@lang_res k='order.plan.list.finish.status.3'/]</li>
+                                <li data-name="status" data-key="[@lang_res k='order.plan.list.finish.status.4'/]" data-value="4">[@lang_res k='order.plan.list.finish.status.4'/]</li>
+                                <li data-name="status" data-key="[@lang_res k='order.plan.list.finish.status.5'/]" data-value="5">[@lang_res k='order.plan.list.finish.status.5'/]</li>
+                            </ul>
+                        </div>
+                    	--></div>
+                    	<div class="wmes-menu-hide"><div class="wmes-menu-hidecon"><b>[@lang_res k='global.screen'/]</b><span></span></div></div>
+        		</div>
+        		<div class="strategies_list_wrap">       			
+	    			<div class="funds_list_selected ifa-more-ico-hidden">
+		                <p class="funds_selected_title">[@lang_res k='clients.proposal.selected.condition'/] </p>
+		                <div class="search-condition" style="float:right;margin-top:4px;">
+	                        <input id="txtKeyWord" type="text" placeholder="[@lang_res k='pipeline.search.keyword'/]"/>
+                            <input type="hidden" id="memberId">
+	                        <span class="icon_search" id="searchKeyBtn"></span>
+	                    </div>
+						<ul class="selection_criteria">
+							<p class="funds_title_selection">[@lang_res k='clients.proposal.reset'/] </p>
+						</ul>
+					</div>
+					<div class="ifa_keyserach_wrap">
+						<p class="ifa_serach_sum">
+							[@lang_res k='clients.proposal.total.prefix'/] 					
+							<span id="portfolioTotal" class="funds_serach_digital ng-binding" >0</span> [@lang_res k='clients.proposal.total.suffix'/]</p>
+						<!--<a class="ifa-add-button" href="${base}/front/portfolio/arena/createPortfolioOne.do">Create Portfolio</a> 
+					--></div>
+					<div class="strategies_list" >
+						<table class="funds_search_information strategies_List" style="display:none;">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                    <th class="funds_tables_fnames">
+                                        [@lang_res k='clients.portfolio.table.name'/] 
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res k='clients.portfolio.table.client'/]
+                                    </th><th  class="funds_tables_header">
+                                        [@lang_res k='clients.portfolio.table.totalAsset'/] </th>
+                                    <th  class="funds_tables_header">
+                                       [@lang_res k='clients.portfolio.table.totalReturn'/]
+                                        <p class="funds_arrow_wraps">
+                                            	<span class="arrow_top_total_returm arrow_top"></span>
+                                            	<span class="arrow_down_total_returm arrow_down"></span>
+                                            </p>
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res k='clients.portfolio.table.AIP'/]
+                                    </th><th class="funds_tables_header">
+                                            [@lang_res k='clients.portfolio.table.lastModified'/]
+                                            <p class="funds_arrow_wraps">
+                                            	<span class="arrow_top_last_modified arrow_top"></span>
+                                            	<span class="arrow_down_last_modified arrow_down down_active"></span>
+                                            </p>
+                                    </th><!--
+                                    <th class="funds_tables_header">
+                                            [@lang_res k='clients.portfolio.table.Status'/]
+                                           
+                                    </th>
+                                   
+                                --></tr>
+
+							<tr ng-repeat="items in dataList" class="datalist" ng-init="checkLast($last)" >
+								<td class="tdleft funds_tables_fnames">
+									<a href="${base}/front/strategy/info/conservativePortfolio.do?id={{items.id}}">{{items.portfolioName}}</a>
+								</td>
+								<td class="funds_search_tdcenter">
+									<a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.clientId}}">{{items.clientName}}</a>
+								</td>
+								<td class="funds_search_tdcenter" >
+								<span ng-bind="items.totalAssets|formatCurrency:'':decimals"></span>
+									
+									<span style="margin-left: 10px;">{{currencyName}}</span>
+								</td>
+								<td class="funds_search_tdcenter">
+								<span ng-bind-html="items.totalReturnRate | currencyColor:'%':defColor"></span>
+									</td>
+								<td class="funds_search_tdcenter" ng-if="items.aipFlag=='0'">
+									[@lang_res k='global.false'/]
+								</td>
+								<td class="funds_search_tdcenter" ng-if="items.aipFlag=='1'">
+									[@lang_res k='global.true'/]
+								</td>
+								<td class="funds_search_tdcenter">
+									{{items.lastUpdate | datetime:dateFormat}}
+								</td>
+								<!--<td class="funds_search_tdcenter">
+									{{items.status}}
+								</td>
+							--></tr>
+
+				</tbody>
+                        </table>
+                        <div class="wmes-nodata-tips no_list_tips">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                        </div>
+					</div>
+	 				<ul id="pagination" class="ifa_list_paging">
+	 				</ul>
+        		</div>
+        		 
+    </div>
+    <div class="selectnamelistbox" style="display:none;top:0;left:0;background:rgba(0,0,0,0.3);">
+		<!-- 选择用户控件 -->
+	</div>
+[#include "../../inc/foot_v2.html"/]
+<script src="${base}/res/third/justgage-master/justgage.js"></script>
+<script src="${base}/res/third/justgage-master/raphael-2.1.4.min.js"></script>
+<script type="text/javascript">
+var _checkList='${checkList!}';
+var _accountType="${accountType!}";
+//验证登录后回调事件
+function callbackloginresult(json){
+	 	 seajs.use('jquery', function($){
+		 	var count=0;
+		 	$.each(json,function(i,n){
+			 	if(n.status="1"){
+			 	count++;
+		 	    }
+		 	})
+		 	if(count>0){
+		 	 setTimeout(function(){
+		       window.location.url= window.location.url+"?check=1";
+		     },1000);
+		    }
+	    });
+ 	}
+
+     seajs.use('${base}/res/web/portfolio/arena/portfolioManagement.js');
+</script>

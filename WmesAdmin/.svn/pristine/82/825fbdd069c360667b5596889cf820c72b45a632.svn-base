@@ -1,0 +1,558 @@
+package com.fsll.wmes.ifa.action.console;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fsll.common.util.JsonPaging;
+import com.fsll.common.util.JsonUtil;
+import com.fsll.core.service.SysParamService;
+import com.fsll.wmes.base.WmesBaseAct;
+import com.fsll.wmes.crm.service.CrmCustomerService;
+import com.fsll.wmes.crm.vo.PortfolioVO;
+import com.fsll.wmes.entity.CrmProposal;
+import com.fsll.wmes.entity.IfaDistributor;
+import com.fsll.wmes.entity.MemberDistributor;
+import com.fsll.wmes.entity.MemberIfa;
+import com.fsll.wmes.entity.MemberIfafirm;
+import com.fsll.wmes.entity.StrategyInfo;
+import com.fsll.wmes.ifa.service.IfaManageService;
+import com.fsll.wmes.ifa.vo.AutoCompleteVO;
+import com.fsll.wmes.ifa.vo.IfaDistributorVO;
+import com.fsll.wmes.ifa.vo.MemberIfaVO;
+import com.fsll.wmes.ifa.vo.StrategyInfoVO;
+import com.fsll.wmes.ifafirm.service.IfafirmManageService;
+import com.fsll.wmes.member.service.MemberManageServiceForConsole;
+import com.fsll.wmes.member.vo.IfaVO;
+import com.fsll.wmes.web.service.DistributorService;
+
+/**
+ * @author qgfeng
+ * @date 2016-11-18
+ * 控制器:ifa信息管理
+ */
+@Controller
+public class IfaManageAct extends WmesBaseAct{
+	
+	@Autowired
+	private IfaManageService ifaManageService;
+	@Autowired
+	private MemberManageServiceForConsole memberManageService;
+	@Autowired
+	private SysParamService sysParamService;
+	@Autowired
+	private CrmCustomerService crmCustomerService;
+	@Autowired
+	private IfafirmManageService iFAFrimService;
+	@Autowired
+	private DistributorService distributorService;
+	
+	
+	/**
+	 * Ifa分页列表页面
+	 * @author qgfeng
+	 * @date 2016-11-18
+	 */
+	@RequestMapping(value = "/console/ifa/list", method = RequestMethod.GET)
+	public String ifalist(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		this.isMobileDevice(request, model);
+		return "console/ifa/ifa_list";
+	}
+	
+	/**
+	 * ifa分页列表数据
+	 * @author qgfeng
+	 * @date 2016-11-18
+	 */
+	@RequestMapping(value = "/console/ifa/ifalist", method = RequestMethod.POST)
+	public void getIfaInIfaFirm(HttpServletRequest request, HttpServletResponse response,IfaVO ifaVo) {
+		String langCode=this.getLoginLangFlag(request);
+	    jsonPaging=this.getJsonPaging(request);
+//	    jsonPaging.setOrder(" r.member.loginCode ");
+	    jsonPaging=ifaManageService.findIfaByPage(jsonPaging, ifaVo, langCode);
+	    this.toJsonString(response, jsonPaging);
+	}
+	
+	
+	/**
+	 * IFAFirm详情Ifa分页列表页面
+	 * @author rqwang
+	 * @date 2017-06-05
+	 */
+	@RequestMapping(value = "/console/ifa/ifaFirmIfa", method = RequestMethod.GET)
+	public String ifaFirmifaList(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		this.isMobileDevice(request, model);
+		String ifafirmId = request.getParameter("ifafirmId"); 
+		model.put("ifafirmId", ifafirmId);
+		return "console/ifafirm/firm_ifa_list";
+	}
+	
+	/**
+	 * IFAFirm详情ifa分页列表数据
+	 * @author rqwang
+	 * @date 2017-06-05
+	 */
+	@RequestMapping(value = "/console/ifa/ifaFirmIfalist", method = RequestMethod.POST)
+	public void getIfaFirmIfaList(HttpServletRequest request, HttpServletResponse response,IfaVO ifaVo) {
+		String langCode=this.getLoginLangFlag(request);
+		String ifafirmId = request.getParameter("ifafirmId");
+	    jsonPaging=this.getJsonPaging(request);
+	    jsonPaging=ifaManageService.findIfaByifafirmId(jsonPaging,ifafirmId, ifaVo, langCode);
+	    this.toJsonString(response, jsonPaging);
+	}
+	
+	
+	/**
+	 * ifa详细信息（添加）
+	 * @author qgfeng
+	 * @date 2016-11-29
+	 */
+	@RequestMapping(value = "/console/ifa/input")
+	public String getIfaInfor(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String id = request.getParameter("id");
+		model.put("id", id);
+		MemberIfa ifa = memberManageService.finIfaById(id);
+		if(null != ifa){
+			IfaVO vo = new IfaVO(ifa,null);
+			model.put("ifavo", vo);
+		}
+		return "console/ifa/ifa_input";
+	}
+
+	/**
+	 * ifa关联的"团队"并跳转显示
+	 * @author wwluo midify qgfeng
+	 * @date 2016-08-15 
+	 */
+	@RequestMapping(value = "/console/ifa/ifa_team_list", method = RequestMethod.GET)
+	public String IfaTeamList(HttpServletRequest request,HttpServletResponse response,ModelMap model) {
+		String ifaId = request.getParameter("ifaId");
+		jsonPaging = this.getJsonPaging(request);
+		MemberIfa memberIfa = ifaManageService.findIfaById(ifaId);
+		if(memberIfa != null){
+			jsonPaging = ifaManageService.findTeamByIfaId(jsonPaging, ifaId);
+			MemberIfaVO vo = new MemberIfaVO();
+			BeanUtils.copyProperties(memberIfa, vo);
+			if(null != memberIfa.getIfafirm()){
+				vo.setIfaFirmId(memberIfa.getIfafirm().getId());
+				model.put("ifafirmId",memberIfa.getIfafirm().getId());
+			}
+		}
+		model.put("ifaTeamJson", JsonUtil.toJson(jsonPaging));
+		model.put("ifaId", ifaId);
+		return "console/ifa/ifa_team_list";
+	}
+	
+	/**
+	 * ifaFirm团队（获取ifa所属ifafirm下的"团队"并跳转显示）
+	 * @author wwluo
+	 * @date 2016-08-16 
+	 */
+	@RequestMapping(value = "/console/ifa/ifafirm_team_list", method = RequestMethod.GET)
+	public String ifaFirmTeam(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String ifafirmId = request.getParameter("ifafirmId");
+		String ifaId = request.getParameter("ifaId");
+		jsonPaging = this.getJsonPaging(request);
+		StringBuffer jsonBuffer = new StringBuffer();
+		StringBuffer ifaTeamBuffer = new StringBuffer();
+		MemberIfafirm ifafirm = iFAFrimService.findById(ifafirmId, null);
+		if(null != ifafirm){
+			jsonPaging = ifaManageService.findTeamByIfaFirm(jsonPaging, ifafirmId);
+			jsonBuffer.append(JsonUtil.toJson(jsonPaging));
+			JsonPaging ifaTeamJson = new JsonPaging(); 
+			ifaTeamJson = ifaManageService.findTeamByIfaId(ifaTeamJson, ifaId);
+			ifaTeamBuffer.append(JsonUtil.toJson(ifaTeamJson));
+		}
+		model.put("ifaId", ifaId);
+		model.put("ifafirm", ifafirm);
+		model.put("ifaFirmTeamJson", jsonBuffer.toString());
+		model.put("ifaTeamJson", ifaTeamBuffer.toString());
+        return "console/ifa/ifafirm_team_list";
+	}
+	/**
+	 * 加入团队（ifa关联team）
+	 * @author wwluo
+	 * @date 2016-08-16 
+	 */
+	@RequestMapping(value = "/console/ifa/addTeam", method = RequestMethod.POST)
+	public void addTeam(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String ifaFirmId = request.getParameter("ifafirmId");
+		String teamId = request.getParameter("teamId");
+		String ifaId = request.getParameter("ifaId");
+		boolean flag = false;
+		flag = ifaManageService.saveIfafirmTeamIfa(ifaFirmId,teamId,ifaId);
+		Map<String, Object> obj = new HashMap<String, Object>();
+	    obj.put("flag",flag);
+		JsonUtil.toWriter(obj, response);
+	}
+	
+	/**
+	 * 获取ifa关联的"组织架构"
+	 * @author wwluo
+	 * @date 2016-08-15 
+	 */
+	@RequestMapping(value = "/console/ifa/ifa_team", method = RequestMethod.POST)
+	public void getIfaTeam(HttpServletRequest request,HttpServletResponse response,ModelMap model) {
+		String ifaId = request.getParameter("ifaId");
+		jsonPaging = this.getJsonPaging(request);
+		StringBuffer jsonBuffer = new StringBuffer();
+		if(StringUtils.isNotBlank(ifaId)){
+			jsonPaging = ifaManageService.findTeamByIfaId(jsonPaging, ifaId);
+			jsonBuffer.append(JsonUtil.toJson(jsonPaging));
+		}
+		Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("ifaTeamJson", jsonBuffer.toString());
+		obj.put("ifaId", ifaId);
+		JsonUtil.toWriter(obj, response);
+	}
+	
+	/**
+	 * ifa取消关联team
+	 * @author wwluo
+	 * @date 2016-08-16 
+	 */
+	@RequestMapping(value = "/console/ifa/removeTeam", method = RequestMethod.POST)
+	public void removeTeam(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String teamId = request.getParameter("teamId");
+		String ifaId = request.getParameter("ifaId");
+		boolean flag = false;
+		if(StringUtils.isNotBlank(teamId) && StringUtils.isNotBlank(ifaId))
+			flag = ifaManageService.removeIfafirmTeamIfa(teamId,ifaId);
+		Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("flag",flag);
+		JsonUtil.toWriter(obj, response);
+	}
+	
+	//------ end Team --------
+	
+	
+	/**
+	 * 获取ifafirm信息
+	 * @author wwluo
+	 * @date 2016-08-16 
+	 */
+	@RequestMapping(value = "/console/ifa/ifa_firm_detail", method = RequestMethod.GET)
+	public String ifaFirmInfo(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String id = request.getParameter("ifafirmId");
+		MemberIfafirm ifafirm = new MemberIfafirm();
+		if(StringUtils.isNotBlank(id))
+		   ifafirm = iFAFrimService.findById(id, null);
+		model.put("ifafirm", ifafirm);
+		return "console/ifa/ifaFirm_info_input";
+	}
+	
+	/**
+	 * 获取ifa的客户列表并跳转显示
+	 * @author qgfeng
+	 * @date 2016-11-18
+	 */
+	@RequestMapping(value = "/console/ifa/ifaInverstor")
+	public String ifaInverstor(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		this.isMobileDevice(request, model);
+		String ifaId = request.getParameter("ifaId");
+		model.put("ifaId", ifaId);
+		return "console/ifa/ifa_inverstor";
+	}
+	
+	/**
+	 * 获取ifa的客户列表
+	 * @author qgfeng
+	 * @date 2016-11-18
+	 */
+	@RequestMapping(value = "/console/ifa/inverstor/listJson")
+	public void findInvestorByIfa(HttpServletRequest request, HttpServletResponse response,IfaVO ifaVO) {
+		String langCode = getLoginLangFlag(request);
+		jsonPaging = this.getJsonPaging(request);
+		jsonPaging = crmCustomerService.findInvestorByIfa(jsonPaging, ifaVO, langCode);
+		this.toJsonString(response, jsonPaging);
+	}
+	
+	//--------Ifa客户-----------
+	
+	/**
+    * IFA策略列表页面并跳转显示
+    * @author qgfeng
+    * @date 2016-11-21
+    */
+    @RequestMapping(value = "/console/ifa/strategylist")
+    public String StrategyList(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        this.isMobileDevice(request, model);
+        String ifaId = request.getParameter("ifaId");
+        model.put("ifaId", ifaId);
+        return "console/ifa/strategylist";
+    }
+	
+	/**
+	  * IFA策略列表
+	  * @author mqzou
+	  * @date 2016-08-19
+	  */
+	 @RequestMapping(value = "/console/ifa/strategylistJson", method = RequestMethod.POST)
+	 public void findStrategyList(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+	     String ifaId = request.getParameter("ifaId");
+	     String keyword = request.getParameter("keyWord");
+	     MemberIfa ifa = memberManageService.finIfaById(ifaId);
+	     jsonPaging = this.getJsonPaging(request);
+	     if(null != ifa){
+		     StrategyInfo info = new StrategyInfo();
+		     info.setCreator(ifa.getMember());
+		     info.setStrategyName(keyword);
+		     jsonPaging = ifaManageService.findStrategyList(jsonPaging, info, getLoginLangFlag(request));
+	     }
+	     this.toJsonString(response, jsonPaging);
+	 }
+	
+    /**
+     * IFA策略详细信息页面
+     * @author mqzou
+     * @date 2016-08-22
+     */
+    @RequestMapping(value = "/console/ifa/strategyinfo")
+    public String StrategyDetail(HttpServletRequest request, HttpServletResponse response, ModelMap model)  {
+        this.isMobileDevice(request, model);
+        String id = request.getParameter("id");
+        String langCode=getLoginLangFlag(request);
+        StrategyInfo info=ifaManageService.findStragyById(id);
+        StrategyInfoVO vo=new StrategyInfoVO();
+        if(null!=info){
+            vo.setId(info.getId());
+            SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+            vo.setCreateTime(sdf.format(info.getCreateTime()));
+            vo.setCreator(null!=info.getCreator()?info.getCreator().getNickName():"" );
+            vo.setDescription(info.getDescription());
+            vo.setGeoAllocation(info.getGeoAllocation());
+            vo.setGeoAllocationName(sysParamService.findNameByCode(info.getGeoAllocation(), langCode));
+            vo.setInvestmentGoal(info.getInvestmentGoal());
+            vo.setSector(info.getSector());
+            vo.setSectorName(sysParamService.findNameByCode(info.getSector(), langCode));
+            vo.setStrategyName(info.getStrategyName());
+            vo.setSuitability(info.getSuitability());
+        }
+        model.put("DataVo", vo);
+        return "console/ifa/strategy_input";
+    }
+    /**
+     * IFA创建的投资方案列表页面
+     * @author qgfeng
+     * @date 2016-11-29
+     */
+    @RequestMapping(value = "/console/ifa/proposalList")
+    public String showProposalList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    	this.isMobileDevice(request, model);
+    	String ifaId=request.getParameter("ifaId");
+    	model.put("ifaId", ifaId);
+    	return "console/ifa/proposal_list";
+    }
+    
+    /**
+     * IFA创建的投资方案列表
+     * @author qgfeng
+     * @date 2016-11-30
+     */
+    @RequestMapping(value = "/console/ifa/proposalJsonList")
+    public void findProposalList(HttpServletRequest request, HttpServletResponse response){
+    	 String ifaId = request.getParameter("ifaId");
+	     String keyword = request.getParameter("keyword");
+	     MemberIfa ifa = memberManageService.finIfaById(ifaId);
+	     jsonPaging = this.getJsonPaging(request);
+	     if(null != ifa){
+	    	 CrmProposal vo=new CrmProposal();
+	    	 vo.setCreator(ifa.getMember());
+		     vo.setProposalName(keyword);
+		     jsonPaging=ifaManageService.findProposalList(jsonPaging, vo);
+	     }
+	     this.toJsonString(response, jsonPaging);
+    }
+    
+    /**
+     *  IFA创建的投资组合列表页面
+     * @author qgfeng
+     * @date 2016-11-29
+     */
+    @RequestMapping(value = "/console/ifa/portfolioList")
+    public String showPofolioList(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+    	this.isMobileDevice(request, model);
+    	String ifaId=request.getParameter("ifaId");//ifa的id
+    	String memberId=request.getParameter("memberId");//ifa的memberid
+    	
+    	//如果没传memberId，则从ifa中获取
+    	if (StringUtils.isNoneBlank(ifaId) && !StringUtils.isNoneBlank(memberId)){
+    		MemberIfa ifa = ifaManageService.findIfaById(ifaId);
+    		if (null!=ifa && StringUtils.isNoneBlank(ifa.getId()) && null!=ifa.getMember())
+    			memberId = ifa.getMember().getId();
+    	}
+    	
+    	model.put("ifaId", ifaId);
+    	model.put("memberId", memberId);
+    	return "console/ifa/portfolio_list";
+    }
+    /**
+     * IFA创建的投资组合列表
+     * @author qgfeng
+     * @date 2016-11-30
+     */
+    @RequestMapping(value = "/console/ifa/pofolioJsonList")
+    public void PofolioList(HttpServletRequest request, HttpServletResponse response,PortfolioVO pofo){
+    	jsonPaging=getJsonPaging(request);
+    	jsonPaging=ifaManageService.findPofolioList(jsonPaging,pofo);
+    	this.toJsonString(response, jsonPaging);
+    }
+    
+    /**
+	 * 跳转ifa审批页面
+	 * @author wwluo
+	 * @date 2016-08-22
+	 */
+    @RequestMapping(value = "/console/ifa/approval_list", method = RequestMethod.GET)
+    public String list(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        this.isMobileDevice(request, model);
+        return "console/ifa/ifa_approval_list";
+    }
+    
+	
+	/**
+	 * IFA审批 （修改状态）
+	 * @author qgfeng
+	 * @date 2016-12-15
+	 */
+	@RequestMapping(value = "/console/ifa/approval/approvalStatus", method = RequestMethod.POST)
+	public void approvalStatus(HttpServletRequest request,HttpServletResponse response,IfaVO ifaVO)  {
+		boolean flag = ifaManageService.saveApprovalStatus(ifaVO);
+		Map<String, Object> obj = new HashMap<String, Object>();
+	    obj.put("flag",flag);
+		JsonUtil.toWriter(obj, response);
+	}
+	
+	/**
+	 * Ifa AE账户管理
+	 * @author qgfeng
+	 * @date 2016-11-18
+	 */
+	@RequestMapping(value = "/console/ifa/aeAccount")
+	public String aeAccount(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		this.isMobileDevice(request, model);
+		return "console/ifa/ifa_aeaccount";
+	}
+	
+	/**
+	 * ifa AE账户管理分页列表数据
+	 * @author qgfeng
+	 * @date 2016-11-18
+	 */
+	@RequestMapping(value = "/console/ifa/aeAccountJson", method = RequestMethod.POST)
+	public void aeAccountJson(HttpServletRequest request, HttpServletResponse response) {
+		String keyword = request.getParameter("keyword");
+	    jsonPaging=this.getJsonPaging(request);
+	    jsonPaging=ifaManageService.findIfaDisList(jsonPaging,keyword);
+	    this.toJsonString(response, jsonPaging);
+	}
+	
+	/**
+	 * ifa AE账户详细信息（添加）页面
+	 * @author qgfeng
+	 * @date 2016-11-29
+	 */
+	@RequestMapping(value = "/console/ifa/aeAccount/input")
+	public String aeAccountInput(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String id = request.getParameter("id");
+		IfaDistributor vo = ifaManageService.getIfaDisById(id);
+		model.put("vo", vo);
+		return "console/ifa/aeaccount_input";
+	}
+	/**
+	 * ifa AE账户保存操作
+	 * @author qgfeng
+	 * @date 2016-11-29
+	 */
+	@RequestMapping(value = "/console/ifa/aeAccount/save", method = RequestMethod.POST)
+	public void saveAeaccount(HttpServletRequest request, HttpServletResponse response,IfaDistributorVO vo) {
+		Map<String, Object> obj = new HashMap<String, Object>();
+		boolean result = false;
+		try {
+			IfaDistributor info = ifaManageService.getIfaDisById(vo.getId());
+			if(info == null){
+				info = new IfaDistributor();
+				info.setCreateTime(new Date());
+			}
+			info.setLastUpdate(new Date());
+			info.setAeCode(vo.getAeCode());
+			info.setIsValid(vo.getIsValid());
+			MemberIfa ifa = ifaManageService.findIfaById(vo.getIfaId());
+			MemberDistributor distributor = distributorService.findDistributorById(vo.getDistributorId());
+			if(ifa != null){
+				info.setIfa(ifa);
+			}
+			if(distributor != null){
+				info.setDistributor(distributor);
+			}
+			info = ifaManageService.saveIfaDis(info);
+			if(info != null){
+				result = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			obj.put("result", result);
+			JsonUtil.toWriter(obj, response);
+		}
+	}
+	
+	@RequestMapping(value = "/console/ifa/aeAccount/delete", method = RequestMethod.POST)
+	public void aeAccountDel(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> obj = new HashMap<String, Object>();
+		boolean result = false;
+		try {
+			String id = request.getParameter("id");
+			result = ifaManageService.deleteIfaDis(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			obj.put("result", result);
+			JsonUtil.toWriter(obj, response);
+		}
+	}
+    
+    //---------公共--------
+    /**
+	 * 获取自动填充查询条件列表(IFA)
+	 * @author mqzou
+	 * @date 2016-08-19
+	 */
+	@RequestMapping(value = "/console/ifa/autoIfaList", method = RequestMethod.POST)
+	public void autoCompleteIfa(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+		String keyWord=request.getParameter("keyWord");
+		List<AutoCompleteVO> list = null;
+		if(StringUtils.isNotBlank(keyWord)){
+			list=ifaManageService.findAutoIfa(keyWord);
+		}
+		Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("list", list);
+		JsonUtil.toWriter(obj,response);
+	}
+	/**
+	 * 弹出ifa选择
+	 * @author qgfeng
+	 * @date 2017-1-18
+	 */
+	@RequestMapping(value = "/console/ifa/dialog/selectIfa")
+	public String dialogSelectIfa(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String isSingle = request.getParameter("isSingle");//是否单选1位单选，否则默认多选
+		model.put("isSingle", isSingle);
+		return "console/ifa/dialog_select_ifa";
+	}
+    
+    
+}

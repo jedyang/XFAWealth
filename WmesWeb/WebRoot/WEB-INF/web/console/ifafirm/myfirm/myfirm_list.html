@@ -1,0 +1,267 @@
+[#include "../../inc/head_v2.html"/]
+<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+<link href="${base}/res/js/library/zTree/css/metroStyle/metroStyle.css" rel="stylesheet" type="text/css">
+<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<style>
+.ifa_choose_condition_new {
+    position: relative;
+    background-color: white;
+    width: 100%;
+    padding: 20px 30px 40px 25px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+.team-add-label-wrap{float: left;margin: 10px;margin-left: 20%;}
+.team-add-label{width:100px;text-align: right;}
+.team-add-input-wrap{float: left;margin: 10px;}
+.team-add-input{width:270px;float:left;}
+.clear{clear: both;}
+.analysis-chart-content{width:700px;height:550px;background:#fff;left:20%;top:10%;position:absolute;border-radius: 10px;}
+.team-tips{color: red;float: left;margin-left: 10px;display:none}
+</style>
+<div class="wmes-content">
+	<div ng-app="myFirm" ng-controller="myFirmCtrl" class="tab_wrap ifa_choose_condition_new" id="tab_wrap">
+		<div class="wmes-wrap-title">
+			<p>[@lang_res k='ifafirm.team.management.title'/]</p>
+		</div>
+		<div class="form-inline">
+			<ul class="tab" id="tab-search">
+				<li class="tab-li-crr"><a href="javascript:void(0)">[@lang_res k='ifafirm.team.tab.organization.management'/]</a></li>
+				<li><a href="javascript:void(0)">[@lang_res k='ifafirm.team.tab.ifa.approval'/]</a></li>
+			</ul>
+			<div class="clear"></div>
+			<div class="tab_wrap" id="tab_wrap">
+				<!-- tab1  organization management  -->
+				<div class="form-inline tab-search-wrap tab-org-wrap ng-cloak" style="display:block;">
+					<!-- organization tree -->
+					<div id="orgMenu" class="col-md-4" style="margin: 60px auto;height:550px;overflow: auto;">
+						<ul id="orgTree" class="ztree"></ul>
+					</div>
+					<!-- member list -->
+					<div id="memberTable" class="col-md-8" style="margin: 40px auto;">
+						<div class="funds_keyserach" style="margin-bottom: 20px;">
+							<input type="text" id="txtTeamIfaKeyWord" title="[@lang_res k='ifafirm.team.console.search.keyWord.placeholder'/]" placeholder="[@lang_res k='ifafirm.team.console.search.keyWord.placeholder'/]">
+							<span id="btnKeyWord" class="icon_search"></span>
+						</div>
+						<!-- <button style="margin-bottom: 20px;" type="button" class="btn btn-primary" id="btnAddTeam">[@lang_res k='ifafirm.team.btn.add'/]</button> -->
+						<table id="teamMemberList" border="0" cellpadding="0"
+							cellspacing="0" class="table table-hover table-striped">
+							<thead>
+								<tr>
+									<th class="table-head"></th>
+									<th class="table-head">[@lang_res k='ifafirm.team.th.loginCode'/]</th>
+									<th class="table-head">[@lang_res k='ifafirm.team.th.nameChn'/]</th>
+									<th class="table-head">[@lang_res k='ifafirm.team.th.nameEnglish'/]</th>
+									<th class="table-head">[@lang_res k='ifafirm.team.th.mobilePhone'/]</th>
+									<th class="table-head">[@lang_res k='ifafirm.team.th.email'/]</th>
+									<th id="ifafirmOperate" class="table-head">[@lang_res k='global.operate'/]</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="{{items.id}}" ng-repeat="items in ifafirmTeamIfa">
+								<td>
+									<img style="width: 22px;height: 22px;" ng-if="items.isSupervisor=='1'" src="${base!}/res/images/team/leader.png">
+								</td>
+								<td>
+									<a href="${base!}/console/ifa/input.do?id={{items.ifaId}}" title="">{{items.loginCode}}</a>
+								</td>
+								<td>{{items.ifaNameChn}}</td>
+								<td>{{items.ifaName}}</td>
+								<td>{{items.moblePhone}}</td>
+								<td>{{items.email}}</td>
+								<td>
+									<a data-ifa-id="{{items.ifaId}}" data-team-id="{{items.teamId}}" class="action-delete-team" href="javascript:void(0)"><img src="${base!}/res/images/workbench/delete_ico.png"></a>
+									<a data-ifa-id="{{items.ifaId}}" data-team-id="{{items.teamId}}" class="action-modify-team" href="javascript:void(0)"><img style="width: 22px;height: 22px;" src="${base!}/res/images/team/team.png"></a>
+									<a data-ifa-id="{{items.ifaId}}" data-team-id="{{items.teamId}}" ng-if="items.isSupervisor!='1'" class="action-set-leader" href="javascript:void(0)"><img style="width: 22px;height: 22px;" src="${base!}/res/images/team/leaderSetting.png"></a>
+									<a data-ifa-id="{{items.ifaId}}" data-team-id="{{items.teamId}}" ng-if="items.isSupervisor=='1'" class="action-cancel-leader" href="javascript:void(0)"><img style="width: 22px;height: 22px;" src="${base!}/res/images/team/leaderSetting.png"></a>
+								</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="no_list_tips no_list_tips_ifa">
+							<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+	            			<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+						</div>
+						<ul class="ifa_list_paging">
+				            <wmespage conf="ifaConf"></wmespage>
+						</ul>
+					</div>
+				</div>
+				<!-- tab4 IFA approval  -->
+				<div class="form-inline tab-search-wrap tab-ifa-approval-wrap ng-cloak" style="display:none;">
+					<div>
+						<div class="row pd10">
+							<div class="col-md-4">
+								<label for="txtIsApproval" class="label-control">
+									[@lang_res k='console.ifa.approval.label.isApproval'/] 
+								</label> 
+								<select id="selIsApproval" class="form-control searchCondition" name="selIsApproval">
+									<option value="0" selected="selected">[@lang_res
+										k='console.ifa.approval.select.isApproval.0'/]</option>
+									<option value="2">[@lang_res
+										k='console.ifa.approval.select.isApproval.2'/]</option>
+								</select>
+							</div>
+							<div class="funds_keyserach" style="margin-bottom: 20px;">
+								<input type="text" id="txtKeyWord" title="[@lang_res k='ifafirm.team.console.search.keyWord.placeholder'/]" placeholder="[@lang_res k='ifafirm.team.console.search.keyWord.placeholder'/]">
+								<span id="btnKeyWord1" class="icon_search"></span>
+							</div>
+						</div>
+						<div class="clear"></div>
+						<div class="pdt20"></div>
+						<div>
+							<table id="approvalList" border="0" cellpadding="0"
+								cellspacing="0" class="table table-hover table-striped">
+								<thead>
+									<tr>
+										<th class="table-head">[@lang_res k='ifafirm.team.th.loginCode'/]</th>
+										<th class="table-head">[@lang_res k='ifafirm.team.th.nameChn'/]</th>
+										<th class="table-head">[@lang_res k='ifafirm.team.th.nameEnglish'/]</th>
+										<th class="table-head">[@lang_res k='ifafirm.team.th.mobilePhone'/]</th>
+										<th class="table-head">[@lang_res k='ifafirm.team.th.email'/]</th>
+										<th class="table-head">[@lang_res k='ifafirm.team.th.registration.time'/]</th>
+										<th class="table-head">[@lang_res k='ifafirm.team.th.opinion'/]</th>
+										<th class="table-head">[@lang_res k='global.operate'/]</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr id={{items.id}} ng-repeat="items in memberIfaIfafirm">
+										<td>
+											<a href="${base!}/console/ifa/input.do?id={{items.ifaId}}" title="">{{items.loginCode}}</a>
+										</td>
+										<td>{{items.ifaNameChn}}</td>
+										<td>{{items.ifaName}}</td>
+										<td>{{items.moblePhone}}</td>
+										<td>{{items.email}}</td>
+										<td>{{items.registerTimeStr}}</td>
+										<td>{{items.checkOpinion}}</td>
+										<td>
+											<a class="action-approval-ifa" data-id="{{items.ifaId}}" data-name="{{items.name}}" href="javascript:void(0)"><img style="width:22px;height:22px;" src="${base!}/res/images/transaction/ico_approval.png"></a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="no_list_tips no_list_tips_memberIfaIfafirm">
+								<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+	           					<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+							</div>
+							<ul class="ifa_list_paging">
+					            <wmespage conf="memberIfaIfafirmConf"></wmespage>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<input id="hidTeamId" type="hidden"/>
+		<input id="tbnGetIfalist" type="hidden"/>
+		<input id="tbnGetMemberIfaIfafirm" type="hidden"/>
+	</div>
+</div>
+<div id="addTeam" class="client-portfolio-new-mask">
+	<div class="analysis-chart-content" style="">
+		<div class="wmes-close"></div>
+		<div class="wmes-wrap-title" style="margin: 15px;">[@lang_res k='ifafirm.team.dialog.addTeam.title'/]</div>
+		<div style="" class="clear team-add-parent-wrap">
+             <div style="" class="team-add-label-wrap">
+                 <label style="" for="txtLoginCode" class="team-add-label">[@lang_res k='ifafirm.team.dialog.addTeam.label.parent.team.name'/]</label>
+             </div>
+             <div style="" class="team-add-input-wrap">
+                 <input id="txtParentId" type="hidden" class="form-control team-add-input" >
+                 <input id="txtParentName" type="text" class="form-control team-add-input" readonly="" value="">
+             </div>
+         </div>
+		<div style="" class="clear">
+             <div class="team-add-label-wrap">
+                 <label style="" for="txtLoginCode" class="team-add-label"><span class="red">* </span>[@lang_res k='ifafirm.team.dialog.addTeam.label.team.name'/]</label>
+             </div>
+             <div style="" class="team-add-input-wrap">
+                 <input id="txtName" type="text" class="form-control team-add-input" value="">
+                 <span class="team-tips-name team-tips" >[@lang_res k='ifafirm.team.dialog.tips'/]</span>
+             </div>
+         </div>
+		<div style="" class="clear">
+             <div class="team-add-label-wrap">
+                 <label style="" for="txtLoginCode" class="team-add-label"><span class="red">* </span>[@lang_res k='ifafirm.team.dialog.addTeam.label.code'/]</label>
+             </div>
+             <div style="" class="team-add-input-wrap">
+                 <input id="txtCode" type="text" class="form-control team-add-input" value="">
+                 <span class="team-tips-code team-tips" >[@lang_res k='ifafirm.team.dialog.tips'/]</span>
+             </div>
+         </div>
+		<div style="" class="clear">
+             <div class="team-add-label-wrap">
+                 <label style="" for="txtLoginCode" class="team-add-label"><span class="red">* </span>[@lang_res k='ifafirm.team.dialog.addTeam.label.orderBy'/]</label>
+             </div>
+             <div style="" class="team-add-input-wrap">
+                 <input id="txtOrderBy" type="text" class="form-control team-add-input" value="" onkeyup="if(isNaN(this.value)){this.value=''};">
+           		 <span class="team-tips-orderBy team-tips" >[@lang_res k='ifafirm.team.dialog.tips'/]</span>
+             </div>
+        </div>
+		<div style="" class="clear">
+             <div class="team-add-label-wrap">
+                 <label style="" for="txtLoginCode" class="team-add-label">[@lang_res k='ifafirm.team.dialog.addTeam.label.remark'/]</label>
+             </div>
+             <div style="" class="team-add-input-wrap">
+                 <textarea id="texRemark" style="resize:none;" class="form-control team-add-input" rows="6"></textarea>
+             </div>
+        </div>
+		<div style="clear: both;margin-left:43%;padding-top: 50px;" class="">
+			<button style="margin-bottom: 20px;" type="button" class="btn btn-primary team-add-confirm" id="">[@lang_res k='global.confirm'/]</button>
+			<button style="margin-bottom: 20px;" type="button" class="btn btn-default team-add-cancel" id="">[@lang_res k='global.cancel'/]</button>
+        </div>
+	</div>
+</div>
+<div id="ifaApproval" style="display:none" class="client-portfolio-new-mask">
+	<div class="analysis-chart-content" style="width: 600px;height: 430px;">
+		<div class="wmes-close"></div>
+		<div class="wmes-wrap-title" style="margin: 15px;">[@lang_res k='ifafirm.team.dialog.approval.title'/]</div>
+		<div style="" class="clear team-add-parent-wrap">
+             <div style="margin-left: 10%;" class="team-add-label-wrap">
+                 <label style="" for="txtLoginCode" class="team-add-label">[@lang_res k='ifafirm.team.dialog.approval.label.ifa'/]</label>
+             </div>
+             <div style="" class="team-add-input-wrap">
+                 <input id="hidIfaId" type="hidden" class="form-control team-add-input" >
+                 <input id="txtIfaName" type="text" class="form-control team-add-input" readonly="" value="">
+             </div>
+         </div>
+		<div style="" class="clear">
+             <div style="margin-left: 10%;" class="team-add-label-wrap">
+                 <label style="" for="txtLoginCode" class="team-add-label">[@lang_res k='ifafirm.team.dialog.approval.label.opinion'/]</label>
+             </div>
+             <div style="" class="team-add-input-wrap">
+                 <textarea id="texOpinion" style="resize:none;" class="form-control team-add-input" rows="6"></textarea>
+                 <span class="team-tips-opinion team-tips" >[@lang_res k='ifafirm.team.dialog.approval.opinion.empty.tips'/]</span>
+             </div>
+        </div>
+		<div style="clear: both;margin-left:43%;padding-top: 50px;" class="">
+			<button style="margin-bottom: 20px;" type="button" class="btn btn-primary ifa-confirm" id="ifa-confirm">[@lang_res k='ifafirm.team.dialog.approval.btn.confirm'/]</button>
+			<button style="margin-bottom: 20px;" type="button" class="btn btn-danger ifa-reject" id="ifa-reject">[@lang_res k='ifafirm.team.dialog.approval.btn.reject'/]</button>
+        </div>
+	</div>
+</div>
+<div id="changeTeam" style="display:none" class="client-portfolio-new-mask">
+	<div class="analysis-chart-content" style="width: 550px;height: 580px;">
+		<div class="wmes-close"></div>
+		<div class="wmes-wrap-title" style="margin: 15px;">[@lang_res k='ifafirm.team.dialog.change.team.title'/]</div>
+		<div style="height: 400px; overflow-y: scroll;margin: 0 5%;">
+			<input id="hidOldTeamId" type="hidden" />
+			<input id="hidCurIfaId" type="hidden" />
+			<input id="hidCurTeamId" type="hidden" />
+			<ul id="addOrgTree" class="ztree"></ul>
+		</div>
+		<div style="clear: both;margin-left:43%;padding-top: 50px;" class="">
+			<button style="margin-bottom: 20px;" type="button" class="btn btn-primary" id="btnSaveTeam">[@lang_res k='global.save'/]</button>
+			<button style="margin-bottom: 20px;" type="button" class="team-add-cancel btn btn-default">[@lang_res k='global.cancel'/]</button>
+        </div>
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var props = [@load_prop k=""/];
+     seajs.use('${base}/res/console/web/ifa/myfirm.js');
+</script>

@@ -1,0 +1,438 @@
+[#include "../../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/community.css">
+<link rel="stylesheet" href="${base}/res/css/swiper.css">
+<style>
+	.wmes-myzone-myifa .community-popularity-wrap-mes-name {
+		margin-top: 7px;
+	}
+	.community-popularity-wrap {
+		border-bottom: 1px dashed #dedede;
+		padding-bottom: 12px;
+	}
+	.swiper-button-next,
+	.swiper-button-prev {
+		display: none;
+	}
+	.ifa-news-contents li{width:46%;float:left;border:0;margin-bottom:0;}
+	.ifa-news-contents li:nth-child(1){margin-right:6%;}
+	.ifa-news-contents{overflow:hidden;margin-top:15px;}
+	.news-word-wrap{margin-bottom:0;}
+	.gray-box{margin-top:10px;}
+	.myzone-noticeconright{width:calc(100% - 44px);float:none;padding:0;padding:22px;background:#fff;margin-bottom:14px;}
+	.myzone-noticeconleft{width:calc(100% - 44px);border:0;}
+	.myzone-noticeconright ul li i{margin-left:40px;}
+	.myzone-recommended-rightnotice{padding:22px;background:#fff;}
+	.myzone-noticecon{border:0;}
+	.myzone-noticecon > p{font-size:16px;color:#3399cc;margin-top:25px;}
+	.myzone-notice-list li p{max-width:calc(100% - 146px);}
+	.wmes-wrap-title{font-size: 22px;line-height: 22px;min-height: 22px;}
+</style>
+<div class="wmes-content">
+	<div class="wmes-myzone-bg">
+		<div class="wmes-myzone-left">
+			<div class="wmes-myzone-left-top">
+				<div class="myzone-myassets">
+					<p class="wmes-wrap-title">My Assets</p>
+					<div class="myzone-myassets-content">
+						<ul class="myzone-myassets-choose">
+							<li class="myzone-myassets-chooseac">All Portfolio</li>
+							<li>"黄模建"的组合</li>
+						</ul>
+						<ul class="myzone-myassets-rows">
+							<li>
+								<p class="my-assets-title">Total Assets (USD)</p>
+								<p class="my-assets-word"><span>110,750.00</span><img class="eve_ico" src="${base}/res/images/ifa/eves_ico_02.png"></p>
+							</li>
+							<li>
+								<p class="my-assets-title">Cash (USD)</p>
+								<p class="my-assets-word"><span>110,750.00</span></p>
+							</li>
+							<li>
+								<p class="my-assets-title">Acc.Return (USD)</p>
+								<p class="my-assets-word"><span class="price_positive">0.00</span></p>
+							</li>
+						</ul>
+						<div id="mycharts"></div>
+					</div>
+				</div>
+				<div class="wmes-myzone-performancecon">
+					<p class="wmes-wrap-title">Top Performance</p>
+					<ul class="wmes-community-tab">
+						<li class="wmes-community-tabac">Portfolios</li>
+						<li>Funds</li>
+					</ul>
+					<div class="myzone-topPerformance-list">
+						<div class="myzone-topPerformance-first">
+							<div class="myzone-topPerformance-title"><span>1</span>目标盈III型010期</div>
+							<p class="price_positive">11.04%</p>
+							<p>Total Return</p>
+							<div class="funds_leveal_6"></div>
+							<img src="${base}/res/images/community/lizi1.png"/>
+						</div>
+						<ul>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span>目标盈III型010期</div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span>目标盈III型010期</div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span>目标盈III型010期</div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span>目标盈III型010期</div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+						</ul>
+					</div>
+					<div class="myzone-topPerformance-list myzone-topPerformance-fundslist">
+						<div class="myzone-topPerformance-first">
+							<div class="myzone-topPerformance-title"><span>1</span>目标盈III型010期</div>
+							<p class="price_positive">11.04%</p>
+							<p>Total Return</p>
+							<div class="funds_leveal_6"></div>
+							<img src="${base}/res/images/community/lizi1.png"/>
+						</div>
+						<ul>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span>目标盈III型010期</div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span>目标盈III型010期</div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span>目标盈III型010期</div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+							<li>
+								<div class="myzone-topPerformance-title"><span>1</span>目标盈III型010期</div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_6"></div>
+									<div>
+										<p class="price_positive">11.04%</p>
+										<p>Total Return</p>
+									</div>
+								</div>
+								<img src="${base}/res/images/community/lizi1.png"/>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="myzone-selectedfundscon">
+					<p class="myzone-big-title" style="margin-left:9px;">Most Selected Funds</p>
+					<ul class="myzone-selectedfunds">
+						<li>
+							<p class="myzone-selectedfunds-title">ABE0019</p>
+							<div class="myzone-selectedfunds-content">
+								<div class="funds_leveal_6"></div>
+								<div class="myzone-selectedfunds-contentright">
+									<p>6</p>
+									<p>Portfolios</p>
+								</div>
+							</div>
+							<div class="myzone-selectedfundsbg">2</div>
+						</li>
+						<li>
+							<p class="myzone-selectedfunds-title">ABE0019</p>
+							<div class="myzone-selectedfunds-content">
+								<div class="funds_leveal_6"></div>
+								<div class="myzone-selectedfunds-contentright">
+									<p>6</p>
+									<p>Portfolios</p>
+								</div>
+							</div>
+							<div class="myzone-selectedfundsbg">3</div>
+						</li>
+						<li>
+							<p class="myzone-selectedfunds-title">ABE0019</p>
+							<div class="myzone-selectedfunds-content">
+								<div class="funds_leveal_6"></div>
+								<div class="myzone-selectedfunds-contentright">
+									<p>6</p>
+									<p>Portfolios</p>
+								</div>
+							</div>
+							<div class="myzone-selectedfundsbg">1</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<div class="wmes-myzone-right">
+			<div class="myzone-noticeconright">
+				<div class="myzone-big-title" style="margin-bottom:8px"><a class="click-into-list" href="#">e-Statement</a></div>
+				<ul class="e-Statement-list">
+					<li>
+						<img src="${base}/res/images/community/zhangdan.png"/>
+						<div class="e-Statement-content">
+							<p>2017年02月投资收益账单</p>
+							<p>2017-04-30</p>
+						</div>
+					</li>
+					<li>
+						<img src="${base}/res/images/community/zhangdan.png"/>
+						<div class="e-Statement-content">
+							<p>2017年02月投资收益账单</p>
+							<p>2017-04-30</p>
+						</div>
+					</li>
+					<li>
+						<img src="${base}/res/images/community/zhangdan.png"/>
+						<div class="e-Statement-content">
+							<p>2017年02月投资收益账单</p>
+							<p>2017-04-30</p>
+						</div>
+					</li>
+					<li>
+						<img src="${base}/res/images/community/zhangdan.png"/>
+						<div class="e-Statement-content">
+							<p>2017年02月投资收益账单</p>
+							<p>2017-04-30</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="myzone-noticeconright">
+				<div class="myzone-big-title" style="margin-bottom:8px"><a class="click-into-list" href="#">Forms Download</a></div>
+				<ul class="myzone-pdfdown-list">
+					<li>
+						<img src="${base}/res/images/community/pdf.png"/>
+						<p>Account application forms</p>
+					</li>
+					<li>
+						<img src="${base}/res/images/community/pdf.png"/>
+						<p>Account application forms</p>
+					</li>
+					<li>
+						<img src="${base}/res/images/community/pdf.png"/>
+						<p>Account application forms</p>
+					</li>
+					<li>
+						<img src="${base}/res/images/community/pdf.png"/>
+						<p>Account application forms</p>
+					</li>
+					<li>
+						<img src="${base}/res/images/community/pdf.png"/>
+						<p>Account application forms</p>
+					</li>
+				</ul>
+			</div>
+			<div class="myzone-recommended-rightnotice">
+				<div class="myzone-noticecon">
+			<div class="myzone-big-title" style="margin-bottom:8px"><a class="click-into-list" href="#">Announcement</a></div>
+			<div class="myzone-announcement-list">
+				<img src="${base}/res/images/community/fundlist.png"/><span>Fund</span>
+				<p>more</p>
+			</div>
+			<ul class="myzone-announcement-fundlist">
+				<li>
+					<div class="myzone-announcement-fundlisttop">
+						<span class="gray-box"></span>
+						<p>封闭式基金折价率排行</p>
+					</div>
+					<div class="myzone-announcement-fundlistbottom">
+						<p>华夏大盘</p>
+						<b>2017-04-04</b>
+					</div>
+				</li>
+				<li>
+					<div class="myzone-announcement-fundlisttop">
+						<span class="gray-box"></span>
+						<p>封闭式基金折价率排行</p>
+					</div>
+					<div class="myzone-announcement-fundlistbottom">
+						<p>华夏大盘</p>
+						<b>2017-04-04</b>
+					</div>
+				</li>
+				<li>
+					<div class="myzone-announcement-fundlisttop">
+						<span class="gray-box"></span>
+						<p>封闭式基金折价率排行</p>
+					</div>
+					<div class="myzone-announcement-fundlistbottom">
+						<p>华夏大盘</p>
+						<b>2017-04-04</b>
+					</div>
+				</li>
+				<li>
+					<div class="myzone-announcement-fundlisttop">
+						<span class="gray-box"></span>
+						<p>封闭式基金折价率排行</p>
+					</div>
+					<div class="myzone-announcement-fundlistbottom">
+						<p>华夏大盘</p>
+						<b>2017-04-04</b>
+					</div>
+				</li>
+			</ul>
+			<div class="myzone-announcement-list">
+				<img src="${base}/res/images/community/system.png"/><span>System</span>
+				<p>more</p>
+			</div>
+			<ul class="myzone-announcement-fundlist myzone-announcement-systemlist">
+				<li>
+					<div class="myzone-announcement-fundlisttop">
+						<span class="gray-box"></span>
+						<p>封闭式基金折价率排行</p>
+					</div>
+					<div class="myzone-announcement-fundlistbottom">
+						<p>华夏大盘</p>
+						<b>2017-04-04</b>
+					</div>
+				</li>
+				<li>
+					<div class="myzone-announcement-fundlisttop">
+						<span class="gray-box"></span>
+						<p>封闭式基金折价率排行</p>
+					</div>
+					<div class="myzone-announcement-fundlistbottom">
+						<p>华夏大盘</p>
+						<b>2017-04-04</b>
+					</div>
+				</li>
+				<li>
+					<div class="myzone-announcement-fundlisttop">
+						<span class="gray-box"></span>
+						<p>封闭式基金折价率排行</p>
+					</div>
+					<div class="myzone-announcement-fundlistbottom">
+						<p>华夏大盘</p>
+						<b>2017-04-04</b>
+					</div>
+				</li>
+				<li>
+					<div class="myzone-announcement-fundlisttop">
+						<span class="gray-box"></span>
+						<p>封闭式基金折价率排行</p>
+					</div>
+					<div class="myzone-announcement-fundlistbottom">
+						<p>华夏大盘</p>
+						<b>2017-04-04</b>
+					</div>
+				</li>
+			</ul>
+		</div>
+			</div>
+		</div>
+
+	</div>
+	
+	<div class="myzone-recommended">
+		<p class="myzone-recommended-title">Recommended</p>
+		<div class="myzone-recommended-rows">
+			<p class="myzone-little-title"><b></b><a class="click-into-list" href="#">Funds</a><span class="ifa-more-ico"></span></p>
+			<div class="swiper-container">
+				<ul class="swiper-wrapper myzone-list">
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon">
+							<div class="funds_leveal_6"></div>
+							<div>
+								<p class="price_positive">11.04%</p>
+								<p>1 Mon Return</p>
+							</div>
+						</div>
+					</li>
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon">
+							<div class="funds_leveal_6"></div>
+							<div>
+								<p class="price_positive">11.04%</p>
+								<p>1 Mon Return</p>
+							</div>
+						</div>
+					</li>
+					<li class="swiper-slide">
+						<p>Low Risk And High Return Investment Portfolio</p>
+						<div class="myzone-list-msg">
+							<p>Fiance,General</p>
+							<span>丨</span>
+							<p>China</p>
+						</div>
+						<div class="myzone-list-licon">
+							<div class="funds_leveal_6"></div>
+							<div>
+								<p class="price_positive">11.04%</p>
+								<p>1 Mon Return</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!---->
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('${base}/res/web/community/myzone.js');
+</script>

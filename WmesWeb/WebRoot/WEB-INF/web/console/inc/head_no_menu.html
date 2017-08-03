@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>${Session["_FRONT_COMPANY_SYSNAME_"]!"XFA Wealth"}</title>
+    <link href="${base}${Session["_FRONT_COMPANY_LOGO_TAB_"]!"/res/images/xfalogo_s.png"}" type="image/x-icon" rel="shortcut icon">
+    <link rel="stylesheet" href="${base}/res/css/wmes_en.css"> 
+    <link rel="stylesheet" href="${base}/res/css/animate.css"> 
+    <script>
+        var base_root = '${base}';
+        var lang = '${Session["_LANG_CODE_"]!'sc'}';
+        var sub_user_type = '${Session["_FRONT_USER_TYPE_"]!}';
+    </script>
+    <script type="text/javascript" src="${base}/res/js/base.js"></script>
+    <script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+    <script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+    <script src="${base}/res/js/util.js"></script>
+    <!--[if lte IE 8]>
+    <script src="${base}/res/js/html5shiv.min.js" type="text/javascript"></script>
+    <script src="${base}/res/js/respond.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        seajs.use('${base}/res/js/wmesGeneral.js');
+    </script>
+    <style type="text/css">
+         html, body{
+             font-family:Microsoft YaHei;
+            background:#ecf0f5;
+         }
+    </style>
+    [#setting date_format="yyyy-MM-dd"]
+</head>
+<body>
+<div class="wmes-wraper">
+
+<style>
+.wmes_yuyan{ position:fixed;top:20px;right:180px;opacity:1;}
+.yuanyan_wrap{padding-right:10px;text-align:right;z-index:9999999;}
+.yuyanshow,.showActive{background: white;float: right; color:#000000; opacity:0.7;}
+.yuyanshow > a,.showActive > a{color: #666666;}
+.yuyanshow #yuanyan_wrap .wmes_yuyan_ico{width:30px;background:url(../images/top_ico_09_01.png) no-repeat;}
+</style>        
+<script type="text/javascript">
+    seajs.use('jquery', function($){
+        $("#yuanyan_wrap").on("click",function(){
+            if($(this).parent().hasClass("yuyanshow")){
+                $(this).parents(".wmes_yuyan").find(".wmes_yuyankuang").hide();
+                $(this).parent().removeClass("yuyanshow");
+                $("#yuanyan_wrap").css("color","#ffffff");
+            }else{
+                $(this).parents(".wmes_yuyan").find(".wmes_yuyankuang").show();
+                $(this).parent().addClass("yuyanshow");
+                $("#yuanyan_wrap").css("color","red");
+            }
+            
+        })
+        $(".langChange").on("click",function(){
+            $.get(base_root+"/front/site/changLang.do?langFlag="+$(this).attr("langCode"), function(data, status, Request){
+                if(data != null){
+                    window.location.href=window.location.href;
+                }
+            });
+        })
+    });
+</script> 
+<!-- header -->        

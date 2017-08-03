@@ -1,0 +1,343 @@
+/*
+ * Copyright (c) 2016-2019 by fsll
+ * All rights reserved.
+ */
+package com.fsll.common.mongodb;
+
+import java.text.ParseException;
+import java.util.Arrays;
+
+import org.bson.Document;
+
+import com.mongodb.Block;
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+/**
+ * 
+ * @author 黄模建 E-mail:mjhuang@fsll.cn
+ * @version 1.0.0
+ * Created On: 2016-7-21
+ */
+public class MongoExample {
+	
+	public static void main(String[] args) throws ParseException {
+		//根据实际环境修改ip和端口
+		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		MongoDatabase database = mongoClient.getDatabase("local");
+		MongoExample client = new MongoExample(database);
+		client.show();
+		mongoClient.close();
+	}
+	
+	private MongoDatabase database;
+	public MongoExample(MongoDatabase database) {
+		this.database = database;
+	}
+	
+	public void show() {
+		
+		MongoCollection<Document> mc = database.getCollection("blog");
+		//每次执行前清空集合以方便重复运行
+		
+		mc.drop();
+		//插入用于测试的文档
+		Document doc1 = new Document("title", "good day").append("owner", "tom").append("words", 300).append("comments", 
+				 Arrays.asList(
+				  new Document("author", "joe").append("score", 3).append("comment", "good"), 
+				  new Document("author", "white").append("score", 1).append("comment", "oh no")
+				 )
+				);
+		Document doc2 = new Document("title", "good").append("owner", "john").append("words", 400).append("comments", Arrays.asList(new Document("author", "william").append("score", 4).append("comment", "good"), new Document("author", "white").append("score", 6).append("comment", "very good")));
+		Document doc3 = new Document("title", "good night").append("owner", "mike").append("words", 200).append("tag", Arrays.asList(1, 2, 3, 4));
+		Document doc4 = new Document("title", "happiness").append("owner", "tom").append("words", 1480).append("tag", Arrays.asList(2, 3, 4));
+		Document doc5 = new Document("title", "a good thing").append("owner", "tom").append("words", 180).append("tag", Arrays.asList(1, 2, 3, 4, 5));
+		mc.insertMany(Arrays.asList(doc1, doc2, doc3, doc4, doc5));
+		
+		//测试: 查询全部
+		FindIterable<Document> iterable = mc.find();
+		printResult("find all", iterable);
+		
+		//将在这里填充更多查询示例
+		
+		/********************** 数据插入 ****************************/
+		// // 创建新文档
+		// Document doc = new Document("name", "MongoDB")
+		// .append("type", "database").append("count", 1)
+		// .append("info", new Document("x", 203).append("y", 102));
+		// // 将文档插入文档集合
+		// collection.insertOne(doc);
+		//
+		// // 创建一个包含多个文档的列表
+		// List<Document> documents = new ArrayList<Document>();
+		// for (int i = 0; i < 100; i++) {
+		// documents.add(new Document("i", i));
+		// }
+		// // 向文档中插入列表
+		// collection.insertMany(documents);
+
+		/***************** 数据读取 ****************************************/
+		// // 显示集合中的文档的数量
+		// System.out.println(collection.count());
+		//
+		// // 查询集合中的第一个文档
+		// Document myDoc = collection.find().first();
+		// System.out.println(myDoc.toJson());
+		//
+		// //获取集合中的全部文档
+		// MongoCursor<Document> cursor = collection.find().iterator();
+		// try {
+		// while (cursor.hasNext()) {
+		// System.out.println(cursor.next().toJson());
+		// }
+		// } finally {
+		// cursor.close();
+		// }
+
+		// //获取全部文档的另一种方法
+		// for (Document cur : collection.find()) {
+		// System.out.println(cur.toJson());
+		// }
+
+		// // 根据条件获取某分文档 eq:==
+		// Document myDoc = collection.find(eq("i", 71)).first();
+		// System.out.println(myDoc.toJson());
+
+		// 通过查询语句一次性获取多个数据
+		// Block<Document> printBlock = new Block<Document>() {
+		// @Override
+		// public void apply(final Document document) {
+		// System.out.println(document.toJson());
+		// }
+		// };
+		// 获得所有大于50的
+		// collection.find(gt("i", 50)).forEach(printBlock);
+		// 大于50 小于 100
+		// collection.find(and(gt("i", 50), lte("i", 100))).forEach(printBlock);
+
+		// 对输出文档进行排序,-1为递减，1为递增
+		// 官方文档的例子有误：http://mongodb.github.io/mongo-java-driver/3.0/driver/getting-started/quick-tour/#sorting-documents
+		// Document myDoc = collection.find(exists("i"))
+		// .sort(new BasicDBObject("i", -1)).first();
+		// System.out.println(myDoc.toJson());
+
+		// 选择性输出结果中的元素，0为不显示，1为显示
+		// 官方文档中的例子又不能用：http://mongodb.github.io/mongo-java-driver/3.0/driver/getting-started/quick-tour/#projecting-fields
+		// BasicDBObject exclude = new BasicDBObject();
+		// exclude.append("_id", 0);
+		// // exclude.append("count", 0);
+		// exclude.append("name", 1);
+		// exclude.append("info", 1);
+		// Document myDoc = collection.find().projection(exclude).first();
+		// System.out.println(myDoc.toJson());
+
+		/************************* 修改数据库中数据 *************************************/
+
+		// 修改时的参数：
+		// $inc 对指定的元素加
+		// $mul 乘
+		// $rename 修改元素名称
+		// $setOnInsert 如果以前没有这个元素则增加这个元素，否则不作任何更改
+		// $set 修改制定元素的值
+		// $unset 移除特定的元素
+		// $min 如果原始数据更大则不修改，否则修改为指定的值
+		// $max 与$min相反
+		// $currentDate 修改为目前的时间
+
+		// //修改第一个符合条件的数据
+		// $set 为修改
+		// collection.updateOne(eq("i", 10), new Document("$set", new
+		// Document("i", 110)));
+		// // 获取全部文档,可以看到以前10的地方变成了110
+		// for (Document cur : collection.find()) {
+		// System.out.println(cur.toJson());
+		// }
+
+		// 批量修改数据并且返回修改的结果，讲所有小于100的结果都加100
+		// UpdateResult updateResult = collection.updateMany(lt("i", 100),
+		// new Document("$inc", new Document("i", 100)));
+		// // 显示发生变化的行数
+		// System.out.println(updateResult.getModifiedCount());
+		// // 获取全部文档,可以看到除了刚才修改的110其他的全为了100
+		// for (Document cur : collection.find()) {
+		// System.out.println(cur.toJson());
+		// }
+
+		/************************** 删除数据 *****************************/
+		// 删除第一个符合条件的数据
+		// collection.deleteOne(eq("i", 110));
+		// // 获取全部文档,可以看到没有110这个数了
+		// for (Document cur : collection.find()) {
+		// System.out.println(cur.toJson());
+		// }
+
+		// 删除所有符合条件的数据，并且返回结果
+		// DeleteResult deleteResult = collection.deleteMany(gte("i", 100));
+		// // 输出删除的行数
+		// System.out.println(deleteResult.getDeletedCount());
+		// // 获取全部文档,所有i>=100的数据都没了
+		// for (Document cur : collection.find()) {
+		// System.out.println(cur.toJson());
+		// }
+		/*************************** 程序块，一次执行多条语句 ********************************/
+		// 按照语句先后顺序执行
+		// collection.bulkWrite(Arrays.asList(new InsertOneModel<>(new Document(
+		// "_id", 4)), new InsertOneModel<>(new Document("_id", 5)),
+		// new InsertOneModel<>(new Document("_id", 6)),
+		// new UpdateOneModel<>(new Document("_id", 1), new Document(
+		// "$set", new Document("x", 2))), new DeleteOneModel<>(
+		// new Document("_id", 2)),
+		// new ReplaceOneModel<>(new Document("_id", 3), new Document(
+		// "_id", 3).append("x", 4))));
+		// // 获取全部文档
+		// for (Document cur : collection.find()) {
+		// System.out.println(cur.toJson());
+		// }
+
+		// 不按照语句先后顺序执行
+		// collection.bulkWrite(Arrays.asList(new InsertOneModel<>(new Document(
+		// "_id", 4)), new InsertOneModel<>(new Document("_id", 5)),
+		// new InsertOneModel<>(new Document("_id", 6)),
+		// new UpdateOneModel<>(new Document("_id", 1), new Document(
+		// "$set", new Document("x", 2))), new DeleteOneModel<>(
+		// new Document("_id", 2)),
+		// new ReplaceOneModel<>(new Document("_id", 3), new Document(
+		// "_id", 3).append("x", 4))), new BulkWriteOptions()
+		// .ordered(false));
+		// 获取全部文档
+		// for (Document cur : collection.find()) {
+		// System.out.println(cur.toJson());
+		// }
+		
+		
+		//创建单字段索引
+		mc.createIndex(new Document("words", 1));
+		//创建组合索引(同样遵循最左前缀原则)
+		mc.createIndex(new Document("title", 1).append("owner", -1));
+		//创建全文索引
+		mc.createIndex(new Document("title", "text"));	
+		//查询全部
+		iterable = mc.find();
+		printResult("find all", iterable);
+				
+		//查询title=good
+		iterable = mc.find(new Document("title", "good"));
+		printResult("find title=good", iterable);
+		        
+		//查询title=good and owner=tom
+		iterable = mc.find(new Document("title", "happiness").append("owner", "tom"));
+		printResult("find title=happiness and owner=tom", iterable);
+		        
+/*		//查询title like %good% and owner=tom
+		iterable = mc.find(and(regex("title", "good"),eq("owner", "tom")));
+		printResult("find title like %good% and owner=tom", iterable);
+				
+		//查询全部按title排序
+		iterable = mc.find().sort(ascending("title"));
+		printResult("find all and ascending title", iterable);
+				
+		//查询全部按owner,title排序
+		iterable = mc.find().sort(ascending("owner", "title"));
+		printResult("find all and ascending owner,title", iterable);
+				
+		//查询全部按words倒序排序
+		iterable = mc.find().sort(descending("words"));
+		printResult("find all and descending words", iterable);
+
+		//查询owner=tom or words>350
+		iterable = mc.find(new Document("$or", Arrays.asList(new Document("owner", "tom"), new Document("words", new Document("$gt", 350)))));
+		printResult("find owner=tom or words>350", iterable);
+		        
+		//返回title和owner字段
+		iterable = mc.find().projection(include("title", "owner"));
+		printResult("find all include (title,owner)", iterable);
+		        
+		//返回除title外的其他字段
+		iterable = mc.find().projection(exclude("title"));
+		printResult("find all exclude title", iterable);
+		        
+		//不返回_id字段
+		iterable = mc.find().projection(excludeId());
+		printResult("find all excludeId", iterable);
+		        
+		//返回title和owner字段且不返回_id字段
+		iterable = mc.find().projection(fields(include("title", "owner"), excludeId()));
+		printResult("find all include (title,owner) and excludeId", iterable);
+		        
+		//内嵌文档匹配
+		iterable = mc.find(new Document("comments.author", "joe"));
+		printResult("find comments.author=joe", iterable);
+		        
+		//一个错误的示例, 想查询评论中包含作者是white且分值>2的, 返回结果不符合预期
+		iterable = mc.find(new Document("comments.author", "white").append("comments.score", new Document("$gt", 2)));
+		printResult("find comments.author=white and comments.score>2 (wrong)", iterable);
+		        
+		//上面的需求正确的写法
+		iterable = mc.find(Projections.elemMatch("comments", Filters.and(Filters.eq("author", "white"), Filters.gt("score", 2))));
+		printResult("find comments.author=white and comments.score>2 using elemMatch", iterable);
+		        
+		//查找title以good开头的, 并且comments只保留一个元素
+		iterable = mc.find(Filters.regex("title", "^good")).projection(slice("comments", 1));
+		printResult("find regex ^good and slice comments 1", iterable);
+		        
+		//全文索引查找
+		iterable = mc.find(text("good"));
+		printResult("text good", iterable);
+
+		//用Filters构建的title=good
+		iterable = mc.find(eq("title", "good"));
+		printResult("Filters: title eq good", iterable);
+				
+		//$in 等同于sql的in
+		iterable = mc.find(in("owner", "joe", "john", "william"));
+		printResult("Filters: owner in joe,john,william", iterable);
+				
+		//$nin 等同于sql的not in
+		iterable = mc.find(nin("owner", "joe", "john", "tom"));
+		printResult("Filters: owner nin joe,john,tom", iterable);
+				
+		//查询内嵌文档
+		iterable = mc.find(in("comments.author", "joe", "tom"));
+		printResult("Filters: comments.author in joe,tom", iterable);
+				
+		//$ne 不等于
+		iterable = mc.find(ne("words", 300));
+		printResult("Filters: words ne 300", iterable);
+				
+		//$and 组合条件
+		iterable = mc.find(and(eq("owner", "tom"), gt("words", 300)));
+		printResult("Filters: owner eq tom and words gt 300", iterable);
+				
+		//较复杂的组合
+		iterable = mc.find(and(or(eq("words", 300), eq("words", 400)), or(eq("owner", "joe"), size("comments", 2))));
+		printResult("Filters: (words=300 or words=400) and (owner=joe or size(comments)=2)", iterable);
+				
+		//查询第2个元素值为2的数组
+		iterable = mc.find(eq("tag.1", 2));
+		printResult("Filters: tag.1 eq 2", iterable);
+				
+		//查询匹配全部值的数组
+		iterable = mc.find(all("tag", Arrays.asList(1, 2, 3, 4)));
+		printResult("Filters: tag match all (1, 2, 3, 4)", iterable);
+				
+		//$exists
+		iterable = mc.find(exists("tag"));
+		printResult("Filters: exists tag", iterable);
+				
+		iterable = mc.find(type("words", BsonType.INT32));
+		printResult("Filters: type words is int32", iterable);*/
+		
+	}
+	
+	//打印查询的结果集
+	public void printResult(String doing, FindIterable<Document> iterable) {
+		System.out.println(doing);
+        iterable.forEach(new Block<Document>() {
+            public void apply(final Document document) {
+                System.out.println(document);
+            }
+        });
+	}
+}

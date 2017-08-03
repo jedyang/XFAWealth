@@ -1,0 +1,340 @@
+[#include "../../inc/head_v2.html"/]
+
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+ <link rel="stylesheet" href="${base}/res/css/jquery.range.css">
+<style type="text/css">
+	.ifa_pagint_now span {
+		color: black;
+	}
+	
+	.page_left {
+		background:rgba(0, 0, 0, 0) url("${base}/res/images/ifa/left_ico.png") no-repeat scroll 0 0;
+		width: 62px;
+		height: 62px;
+		position: absolute;
+		cursor: pointer;
+		font-size: 30px;
+		text-align: center;
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+		background-color: #ccc;
+		color: white;
+		line-height: 62px;
+		border-radius: 10%;
+		margin: auto;
+		left: 0px;
+		top: 250px;
+		bottom: 0;
+	}
+	
+	.page_left:hover {
+		background-color: #4ba6de;
+	}
+	
+	.page_right {
+		background:rgba(0,
+		0,
+		0,
+		0) url("${base}/res/images/ifa/right_ico.png") no-repeat scroll 0 0;
+		width: 62px;
+		height: 62px;
+		position: absolute;
+		font-size: 30px;
+		text-align: center;
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+		background-color: #ccc;
+		color: white;
+		line-height: 62px;
+		cursor: pointer;
+		border-radius: 10%;
+		margin: auto;
+		right: 1px;
+		top: 250px;
+		bottom: 0;
+	}
+	
+	.page_right:hover {
+		background-color: #4ba6de;
+	}
+	.conservative-date-wrap{float:right;margin-top:6px;margin-right:60px;display: none;}
+	.account-choose-input-wrap{float:left;}
+	.account-choose-date{width:80px;}
+	.account-choose-name{float:left;}
+	.account-data-search{float: left;}
+</style>
+<div class="wmes-content wmes-content-position">
+	<div class="strategies_list_wrap">
+		<div class="wmes-wrap-title" style="height:16px;">
+			<p>[#if isNew?? && isNew=="1"][@lang_res k='strategy.info.form.newStrategy'/][#else][@lang_res k='strategy.info.form.editStrategy'/][/#if]</p>
+		</div>
+		<div class="proposal-step-wrap">
+    			<ul class="proposal-step">
+    				<li class="proposal-step-title proposal-step-old">[@lang_res k='strategy.info.flow.start'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title proposal-step-now">[@lang_res k='strategy.info.flow.allocation'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">[@lang_res k='strategy.info.flow.release'/]</li>
+    			</ul>
+    	</div>
+		<p class="createflowtip">[@lang_res k='strategy.info.form.allocation.tips'/]</p>
+		<ul class="builder-tab application-information-tab">
+          <li class="tab-active">[@lang_res k='fund.funds'/]<span></span></li>
+        </ul>
+        <div class="tabcut">
+		<div class="ifa_keyserach_wrap">
+		
+		<div id="settings" >
+         </div>
+			<div class="addnextlevel">
+				<div  id="addAllocation"><span>+</span><span>[@lang_res k='strategy.info.allocation.addAllocation'/]</span></div>
+			
+			<div class="register_xiala_long addnextlevelchoose" style="width:17%;">
+						<input id="methodText" type="text" placeholder="[@lang_res k='strategy.info.allocation.selectMethod'/]" class="value_show" style="height:22px" readonly="readonly">
+						<input id="method" type="hidden" class="value_hidden">
+						<ul id="methodSelect" class="regiter_xiala_ul">
+							<li value="region">[@lang_res k='strategy.info.allocation.method.G'/]</li>
+							<li value="fund_sector">[@lang_res k='strategy.info.allocation.method.S'/]</li>
+							<li value="fund_type">[@lang_res k='strategy.info.allocation.method.F'/]</li>
+						</ul>
+						<span class="register_xiala_ico"></span>
+					</div>
+			</div>
+			
+		  	<div id="strategies_list">       			
+    	    			<div class="strategies_detail_list">
+    	    				<p class="strategiesdetail_inf_title_amend" style="font-size:14px;">[@lang_res k='strategy.info.allocation.rcommendedProduct'/]</p>
+    	    			</div>
+    	    			<div class="creatbncon">
+    	    				<!--<p>Total 6 funds recommend</p>
+    	    				--><!--<div id="screenAdd" class="fundscreenbn">[@lang_res k='strategy.info.allocation.fundScreem'/]</div>
+    	    				--><div  id="quickAdd" class="quickaddbn">[@lang_res k='strategy.info.allocation.quickAdd'/]</div>
+    	    				
+    	    			</div>
+    	    			
+    	    			<div id="tableList" style="overflow: auto;text-align: center;">
+                        </div>
+                      
+        		</div>
+		<div class="creatlistbn">
+			<div class="craetbnSave" id="btnSave" >[@lang_res k='global.save'/]</div>
+			<div class="craetbnNext" id="btnNext">[@lang_res k='open.account.Next'/]</div>
+			<div class="craetbnPrevious">[@lang_res k='open.account.Previous'/]</div>
+			<div class="craetbnCancel"  id="btnCancle" >[@lang_res k='open.account.Cancel'/]</div>
+		   
+		</div>
+		<form id="addForm">
+		 <input type="hidden" id="ids" name="fundIds" value="${fundIds!}">
+		   <input type="hidden" id="id" name="id" value="${(strategyVO.id)?if_exists}">
+            <input type="hidden" id="next" value="false">
+            <input type="hidden" name="popupWinReturn" id="popupWinReturn">
+            <input type="hidden" name="allocationMethod" id="allocationMethod">
+            <input type="hidden" id="regions" name="regions" value="${(strategyVO.geoAllocation)?if_exists}">
+            <input type="hidden" id="sectors" name="sectors" value="${(strategyVO.sector)?if_exists}">
+            <input type="hidden" id="types" name="types" value="${(strategyVO.fundType)?if_exists}">
+            <input type="hidden" id="regionsWeight" name="regionsWeight" value="">
+            <input type="hidden" id="sectorsWeight" name="sectorsWeight" value="">
+            <input type="hidden" id="typesWeight" name="typesWeight" value="">
+             <input type="hidden" id="typesLevel" name="typesLevel" value="">
+             <input type="hidden" id="regionsLevel" name="regionsLevel" value="">
+             <input type="hidden" id="sectorsLevel" name="sectorsLevel" value="">
+		</form>
+		</div>
+			</div>
+			</div>
+		<div class="tabcut ifa-more-ico-hidden">
+		<div class="strategies_list">
+			<!--<div class="page_left"></div>
+				--><div class="application-information-tabcon">
+				
+            	<table class="funds_search_information strategies_List myProposalList">
+			<tbody>
+				<tr class="funds_tables_th">
+					<th class="funds_tables_header" style="width:37%;text-align: center;">
+						Portfolio Name
+					</th>
+					<th class="funds_tables_header" style="width:6%">
+					</th>
+					<th class="funds_tables_header" style="width:14%;">
+						Issued Date
+					</th>
+					<th class="funds_tables_header" style="width:25%;">
+						Actions
+					</th>
+					
+				</tr>
+				<tr>
+					<td class="tdleft funds_tables_fnames">
+						<a href="${base}/front/ifa/info/porfoliosdetail.do">A large cap value strategy</a><br/>
+						<span>[@lang_res k='strategy.info.form.goal'/]：</span><br/>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.
+					</td>
+					<td class="funds_search_tdcenter"></td>
+					<td class="funds_search_tdcenter myProposalList_time" style="text-align: center;">
+						<p>2016/8/15 15:09</p>
+					</td>
+					<td class="funds_search_tdcenter">
+						<img src="${base}/res/images/application/u23.png" style="width:24px;height:24px;" />
+						<img src="${base}/res/images/application/u129.png" style="width:24px;height:24px;" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!--<ul class="wmes_list_paging">
+				<li class="wmes_pagint_num">1</li>
+				<li class="wmes_pagint_num">2</li>
+				<li class="wmes_pagint_num wmes_pagint_now">3</li>
+				<li class="wmes_pagint_some">...</li>
+				<li class="wmes_pagint_num">10</li>
+			</ul>-->
+		</div>
+			</div>
+			<!--<div class="page_right"></div>
+		--></div>
+	</div>
+	
+<!--<div class="wmes-content personalWrap">
+    <div class="white_background">   
+        <p class="wmes-wrap-title">[@lang_res k='strategy.info.form.editStrategy'/]</p>
+		 <div class="zhongxin_right">
+            <div class="OpenAccount_big_title" style="background-color:white;">
+                <h2>[@lang_res k='strategy.info.form.newStrategy'/]</h2>
+            </div> 
+
+                <div class="OpenAccount_liucheng_div">
+                    <div class="OpenAccount_liucheng">
+                        <ul>
+                            <li class="liucheng_first"><div class="font_height">1.[@lang_res k='strategy.info.flow.start'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_light"><div class="font_height">2.[@lang_res k='strategy.info.flow.allocation'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"></div>
+                            </li>
+                            <li class="liucheng_last"><div class="font_height">3.[@lang_res k='strategy.info.flow.release'/]</div></li>
+                        </ul>
+                    </div>    
+                </div>
+
+            <div class="insight-left-content">
+                <form id="addForm">
+                    <div class="insight-row">
+                        <p class="insight-row-title">Please define your strategy detail by different levels allocation method.</p>
+                    </div>
+
+                    <div class="clear"/>
+                    <div id="settings" class="insight-row">
+                    </div>
+
+                    <div class="clear"/>
+                    <br>
+                    <div class="insight-row">
+                        <div class="insight-row" style="background-color: lightblue;height:35px;line-height:35px;text-align:center;">
+                        <select id="method" name="method" class="insight-input-select" style="float: left;margin-top:3px;">
+                            <option value="">=== Select Method ===</option>
+                            <option value="region">Geographical</option>
+                            <option value="fund_sector">Sector</option>
+                            <option value="fund_type">Fund Type</option>
+                        </select>
+                        <a id="addAllocation" href="javascript:;">
+	                        <span><font style="font-size:35px;">+</font></span> 
+	                        <span style="margin-left:20px;margin-bottom:40px;">Add Next Level Allocation Method</span>
+                        </a>
+                        </div>
+                    </div>
+                    
+                    <div class="clear"/>
+                    <div class="gary_title" style="">Recommended Product List (optional)</div>
+	                <div class="insight-row">
+	                    <div class="ifa_serach_sum" style="float:left;height:35px;line-height:35px;">
+	                        Total <span class="funds_serach_digital">0</span> funds recommend</div>
+	                    <div style="float:right;height:35px;line-height:35px;">
+	                        <a id="quickAdd" class="btn_orange" href="javascript:;">Quick Add</a>
+	                        <a id="screenAdd" class="btn_orange" href="javascript:;">Fund Screen...</a>
+	                    </div>
+	                    <br>
+	                </div>
+                    
+                    <div class="insight-row" style="padding:0px 0px 20px 0px;">
+                        <div id="tableList" style="overflow: auto;text-align: center;">
+                        </div>
+                        <input type="hidden" id="ids" name="fundIds" value="${fundIds!}">
+                    </div>
+                    
+                <div id="btnDiv" class="btn_middle_div" style="overflow:hidden;">
+                    <a id="btnCancle" class="wenti_btn_LightBlue" style="float:left;" href="${base}/front/strategy/info/myList.do">[@lang_res k='open.account.Cancel'/]</a>
+                    <a class="wenti_btn_LightBlue" style="margin-left:59%;" href="${base}/front/strategy/info/addStart.do?id=${(strategyVO.id)?if_exists}">[@lang_res k='open.account.Previous'/]</a>
+                    <a id="btnNext" class="wenti_btn_bule" href="javascript:;">[@lang_res k='open.account.Next'/]</a>
+                    <a id="btnSave" class="wenti_btn_bule" style="float:right;" href="javascript:;">[@lang_res k='global.save'/]</a>
+                    <input type="hidden" id="id" name="id" value="${(strategyVO.id)?if_exists}">
+                    <input type="hidden" id="next" value="false">
+                    <input type="hidden" name="popupWinReturn" id="popupWinReturn">
+                    <input type="hidden" name="allocationMethod" id="allocationMethod">
+                    <input type="hidden" id="regions" name="regions" value="${(strategyVO.geoAllocation)?if_exists}">
+                    <input type="hidden" id="sectors" name="sectors" value="${(strategyVO.sector)?if_exists}">
+                    <input type="hidden" id="types" name="types" value="${(strategyVO.fundType)?if_exists}">
+                    <input type="hidden" id="regionsWeight" name="regionsWeight" value="">
+                    <input type="hidden" id="sectorsWeight" name="sectorsWeight" value="">
+                    <input type="hidden" id="typesWeight" name="typesWeight" value="">
+                </div>
+                </form>
+            </div>
+            <div class="clear">
+            </div>
+         </div> 
+    </div>
+</div>-->
+<div id="div_setrange" style="display:none;"></div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+//定义公共变量
+//1.区域
+var regionList = new Array();
+[#if regionList?exists && regionList?size gt 0 ]
+[#list regionList as x]
+var obj = new Object();
+obj.itemCode = "${x.itemCode!}";
+obj.name = "${x.name!}";
+regionList.push(obj);
+[/#list]
+[/#if]
+
+//2.板块
+var sectorList = new Array();
+[#if sectorList?exists && sectorList?size gt 0 ]
+[#list sectorList as x]
+var obj = new Object();
+obj.itemCode = "${x.itemCode!}";
+obj.name = "${x.name!}";
+sectorList.push(obj);
+[/#list]
+[/#if]
+
+//3.区域
+var fundTypeList = new Array();
+[#if fundTypeList?exists && fundTypeList?size gt 0 ]
+[#list fundTypeList as x]
+var obj = new Object();
+obj.itemCode = "${x.itemCode!}";
+obj.name = "${x.name!}";
+fundTypeList.push(obj);
+[/#list]
+[/#if]
+
+//4.已选的分配类型
+var selectedAllocation = new Array();
+[#if distinctAllocation?exists && distinctAllocation?size gt 0 ]
+[#list distinctAllocation as x]
+var obj = new Object();
+obj.type = "${x.methodType!}";
+obj.level = "${x.layerLevel!}";
+selectedAllocation.push(obj);
+[/#list]
+[/#if]
+
+seajs.use('${base}/res/web/strategy/info/addAllocation.js');
+</script>

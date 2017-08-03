@@ -1,0 +1,312 @@
+[#include "../../inc/head_v2.html"/]
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="/wmes/res/css/Funds.css">
+    <style>
+       	.login-dialog .modal-dialog {width: 1000px;}
+      	.firminfo-dialog .modal-dialog{width: 900px;}
+        .teaminfo-dialog .modal-dialog{width: 700px;}
+        .btneditnode{text-decoration:underline;}
+        .wmes-contentbox {
+            background: #ffffff;
+            padding-top: 5px;
+        }
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div >
+        <div class="r-side-container" style="margin-left:80px">
+            <p class="wmes-wrap-title">
+			[@lang_res k='console.docTemplate.manageMentTitile'/]
+            </p>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap" >
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <input type="hidden" value="" class="hiddenSearch" id="selStatus"/>
+                    <div class="funds_choice_wrap">
+                    	<p class="funds_choice_title">[@lang_res  k='console.docTemplate.list.status'/]</p>
+                    	<ul class="funds_choice">
+                    		<li class="period_all selStatus fund_choice_active2 fund_choice_active" data-name="selStatus" data-key="" data-value="">[@lang_res k='ifaspace.info.all'/]</li>
+                    		<li class="" data-name="selStatus" data-key="[@lang_res k='console.docTemplate.list.status.a'/]" data-value="1">[@lang_res k='console.docTemplate.list.status.a'/]</li>
+                    		<li class="" data-name="selStatus" data-key="[@lang_res k='console.docTemplate.list.status.b'/]" data-value="0">[@lang_res k='console.docTemplate.list.status.b'/]</li>
+                    		<li class="" data-name="selStatus" data-key="[@lang_res k='console.docTemplate.list.status.c'/]" data-value="2">[@lang_res k='console.docTemplate.list.status.c'/]</li>
+                    	</ul>
+                    </div>
+                    <div class="clear"></div>
+                    <div>
+                    	<a id="btnAddInfoForm" href="javascript:showDetailPage('');" class="btn-blue-s">[@lang_res k='global.add'/]</a>
+                    	<a id="btnToDoSearch" href="javascript:void(0);" class="btn-blue-s">[@lang_res k='global.query'/]</a>
+                    </div>
+                    <!-- 筛选条件 -->
+                    <div class="funds_list_selected">
+			            <p class="funds_selected_title">[@lang_res k='criteria.selected'/]</p>
+						<ul class="selection_criteria">
+							<p class="funds_title_selection">[@lang_res k='criteria.selected.reset'/]</p>
+						</ul>
+					</div>
+					<!-- 数据条数与输入框查询 -->
+                    <div class="funds_keyserach_wrap">
+						<p class="ifa_serach_sum" style="line-height:33px;">
+							[@lang_res k='criteria.total.a'/]					
+							<span class="funds_serach_digital" id="dataTotal"></span> [@lang_res k='criteria.total.b'/]
+						</p> 
+					 	<div style="height:33px;" class="funds_keyserach ifa_keyserach">
+                       		<input type="text" class="searchCondition" id="txtTitle" placeholder="[@lang_res k='console.docTemplate.list.seachTitleTip'/]">
+                       		<span class="icon_search"></span>	
+                    	</div>
+			        </div>
+                    <div>
+                        <table border="0" id="pagedatalist" cellpadding="0" cellspacing="0" class="table table-hover table-striped" >
+                                <tbody>
+                                    <tr>
+                                        <th class="table-head" style="widht:30%;">[@lang_res k='console.docTemplate.list.title'/]</th>
+                                        <th class="table-head">[@lang_res k='console.docTemplate.list.tempCode'/]</th>
+                                        <th class="table-head">[@lang_res k='console.docTemplate.list.ifDef'/]</th>
+                                        <th class="table-head">[@lang_res k='console.docTemplate.list.language'/]</th>
+                                        <th class="table-head">[@lang_res k='console.docTemplate.list.customer'/]</th>
+                                        <th class="table-head">[@lang_res k='console.docTemplate.list.createTime'/]</th>
+                                        <th class="table-head">[@lang_res k='console.docTemplate.list.status'/]</th>
+                                        <th class="table-head">[@lang_res k='console.docTemplate.list.option'/]</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>         
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script type="text/javascript">
+	$(function() {
+		seajs.use('${base}/res/third/layer/layer.js');
+		//搜索按钮事件
+		$('#btnToDoSearch').click(function() {
+			bindList(0);
+		});	
+		$(".funds_choice li").on("click",function(){
+			$(this).siblings().removeClass("fund_choice_active2").end();
+			if($(this).index()==0){
+                $(this).addClass('fund_choice_active2');
+            }
+			$(this).siblings().removeClass("fund_choice_active").end().addClass("fund_choice_active");
+			
+			var selection_criterialenght = $(".selection_criteria li").length;
+			for(var i = 0; i < selection_criterialenght ;i++){
+				if($(".selection_criteria li").eq(i).attr("data-name") == $(this).attr("data-name") ){
+					$(".selection_criteria li").eq(i).remove();
+				}
+			}
+			if($(this).attr("data-key") != undefined && $(this).attr("data-key") != ""){
+				$(".funds_title_selection").before('<li data-name="' + $(this).attr("data-name") + '">' + $(this).attr("data-key") + '<span class="selection_delete"></span></li>')
+			}
+			
+			var selectId = $(this).attr("data-name");
+			var selectValue= $(this).attr("data-value");
+			$("#"+selectId).val(selectValue);
+			bindList(0)
+		});
+		
+		//执行清除方案点击操作
+		$(".funds_title_selection").on("click",function(){
+			$(".period_all").click();
+		});	
+		
+		//清除单个搜索条件
+		$(document).on("click",".selection_delete",function(){
+			var selectId = $(this).parent().data("name");
+			$("."+selectId).click();
+		});		
+		//自动搜索事件
+	 	setAutoSearch('.searchCondition',bindList,0);
+		//列表实例化
+		bindList(0);
+	});
+	//执行清除方案点击操作
+	$(".funds_title_selection").on("click",function(){
+		$(".period_all").click();
+	});	
+	
+	//清除单个搜索条件
+	$(document).on("click",".selection_delete",function(){
+		var selectId = $(this).parent().data("name");
+		$("."+selectId).click();
+	});		
+	
+	//列表数据实例化
+	function bindList(pageid) {
+		var title = $('#txtTitle').val();
+		var status = $('#selStatus').val();
+		$.ajax({
+					type : 'post',
+					dataType : 'json',
+					url : "${base}/console/docTemplate/tempPageJson.do?datestr="
+							+ new Date().getTime(),
+					data : {
+						title : title,
+						status : status,
+						page : pageid + 1,
+						rows : 8
+					},
+				 	beforeSend: function () {
+	                    //indexmsg = layer.msg("正在加载数据中，请稍候....", { time: 50000 });
+	                },
+	                complete: function () {
+						//layer.close(indexmsg);
+	                },
+					success : function(json) {
+						//console.log(json);
+						var total = json.total;
+						var table = json.rows;
+						var html = '';
+						$("#pagedatalist tbody tr:gt(0)").empty();
+						if(!!total){
+							$("#dataTotal").html(total)
+						}else{
+							$("#dataTotal").html(0)
+						}
+						$.each(table,function(i, n) {
+								var id = n.id;
+								var title = n.title;
+								var code = n.code;
+								
+								var isDefault = n.isDefault;
+								if (isDefault)
+									isDefault = "[@lang_res k='global.true'/]";
+								else
+									isDefault = "[@lang_res k='global.false'/]";
+								
+								var langCode = n.langCode;
+								if("sc"==langCode){
+									langCode="[@lang_res k='lang.sc'/]"
+								}else if("tc"==langCode){
+									langCode="[@lang_res k='lang.tc'/]";
+								}else if("en"==langCode){
+									langCode="[@lang_res k='lang.en'/]";
+								}
+								var clientType = n.clientType;
+								if("Individual"==clientType){
+									clientType="[@lang_res k='member.individual'/]";
+								}else if("Corporate"==clientType){
+									clientType="[@lang_res k='console.docTemplate.list.corpinvestor'/]";
+								}else if("JointAccount"==clientType){
+									clientType="[@lang_res k='console.docTemplate.list.jointAccount'/]";
+								}else if("FI"==clientType){
+									clientType="[@lang_res k='console.docTemplate.list.fi'/]";
+								}
+								
+								var createTime = n.createTime;
+								
+								var status = n.status;	
+								if("using"==status){
+									status="[@lang_res  k='ifa.crm.docTemp.using'/]";
+								}else if("unsing"==status){
+									status="[@lang_res  k='ifa.crm.docTemp.unusing'/]";
+								}else if("draft"==status){
+									status="[@lang_res  k='ifa.crm.docTemp.draft'/]";
+								}
+								
+								var button = '<a id="'+id+'" tempid="' + id + '" class="btnDetailPage" href="javascript:void(0);">'+"[@lang_res  k='console.docTemplate.list.docList'/]"+'</a>';
+								//删除按钮
+								if('draft'==status){
+									button += '<a classlayer="1" class="btndelpage" href="javascript:tempDel(\''+id+'\');"> '+"[@lang_res  k='global.delete'/]"+'</a>&nbsp;&nbsp;';  
+								}
+							  	html += '<tr><td><a href="javascript:void(0);" onclick="showDetailPage(\''+id+'\')">'
+									+ title
+									+ '</a></td><td>'
+									+ code
+									+ '</td><td>'
+									+ isDefault
+									+ '</td><td>'
+									+ langCode
+									+'</td><td>'
+									+ clientType
+									+'</td><td>'
+									+ createTime
+									+'</td><td>'
+									+ status
+									+'</td><td>'
+									+ button+'</td></tr>'
+								});
+						$('#pagedatalist').append(html);
+						$("#pagination").pagination(total, {
+							callback : pageselectCallback,
+							numDetail : '',
+							items_per_page : 8,
+							num_display_entries : 4,
+							current_page : pageid,
+							num_edge_entries : 2
+						});
+					}
+			})
+		//回调
+		function pageselectCallback(page_id, jq) {
+			bindList(page_id);
+		}
+	}
+	
+	//模板编辑/查看/新增页面
+    $("body").on('click', '.btnDetailPage', '', function () {
+    	var tempid = $(this).attr("tempid");
+        var url = '${base}/console/docTemplate/detail.do?id='+tempid+'&tab=2';
+        window.location.href=url;
+    });
+	
+	//文档模板删除
+	function tempDel(tempid){
+		layer.confirm("[@lang_res k='global.confirm.delete'/]", 
+		{title:"[@lang_res k='global.prompt'/]", 
+		icon: 3,
+		btn: ["[@lang_res k='global.confirm'/]","[@lang_res k='global.cancel'/]"]},
+		function (){
+		 	$.ajax({
+			   	type:'post',
+			   	datatype:'json',
+			   	url:"${base}/console/docTemplate/tempDel.do?r="+Math.random(),
+			   	data:{"tempId":tempid},
+	   			success:function(json){
+			   		layer.closeAll();
+				    if(json.result){
+					    layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]",{title:"[@lang_res k='global.prompt'/]",icon:1,time:1000});
+					    bindDocList(0);
+				    }else{
+				    	layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]",{title:"[@lang_res k='global.prompt'/]",icon:5,time:1000});
+				    }
+			   	}
+		   	});
+		});
+	}
+	
+	//模板编辑/查看/新增页面
+	function showDetailPage(id){
+		var url = '${base}/console/docTemplate/detail.do?id='+id+'&tab=1';
+        window.location.href=url;
+	}
+	
+</script>
+[#include "../../inc/foot_v2.html"/]
+</html>
+

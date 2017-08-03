@@ -1,0 +1,873 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <link href="${base}/res/third/fullcalendar/css/fullcalendar.print.css" rel="stylesheet" media="print">
+	<link href="${base}/res/third/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+    <style type="text/css">
+        .account-title-name{line-height: 30px;font-weight: 14px;}
+        .client-table{margin-bottom: 30px;}
+        .ifa-space-mask{position: fixed;top: 0px;left: 0px;background-color: black;height: 100%;width: 100%;opacity: 0.3;z-index: 99;}
+		.space-mask-wrap{text-align: center;width: 100%;height: 100%;position:absolute;top: 10px;left: 0px;z-index: 99;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+		.space-mask{background-color: white;padding: 1% 1.5%;position: relative;width: 95%;left:20px;top:10px}
+		.space-mask-title{    margin-top: 30px;padding-bottom: 24px;border-bottom: 1px solid #f0f0f0;font-size: 27px;}
+		.space-mask-ifo{margin-top: 20px;overflow: hidden;padding: 0px 20px;}
+		.space-mask-ifo > ul{overflow: hidden;width: 100%;}
+		.space-mask-content{text-align: left;padding: 20px 30px;margin-top: 10px;}
+		.space-mask-close{position: absolute;background: 0 0;right: 30px;cursor: pointer;height: 30px;width: 20px;top: 6px;right: 10px;}
+		.space-mask-close:after, .space-mask-close:before {content: '';background: #74bfff;height: 2px;width: 20px;}
+        .ifa-space-mask {
+		    position: fixed;
+		    top: 0px;
+		    left: 0px;
+		    background-color: black;
+		    height: 100%;
+		    width: 100%;
+		    opacity: 0.3;
+		    z-index: 99;
+		}
+    </style>
+   
+    <div class="wmes-content" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+    <input type="hidden" id="currency" value="${currency!}">
+     <input type="hidden" id="defColor" value="${defColor!}">
+     <input type="hidden" id="dateFormat" value="${dateFormat!}">
+     <input type="hidden" id="dateTimeFormat" value="${dateTimeFormat!}">
+            <div class="administration-wrap">
+                <p class="wmes-wrap-title">
+                    <a href="javascript:history.go(-1)">
+                        <span class="wmes-ruturn"></span>
+                    </a>
+                [@lang_res k='ifa.detail.title'/]</p>
+                <div class="administration-top-wrap">
+                     <img class="administration-top-portrait" src="${base}[@user_head u=ifa.member.iconUrl /]">
+                     <div class="administration-top-name">[#if ifa??]${ifa.member.nickName!} <p>(<span>${ifa.member.loginCode!}</span>)</p>[/#if]</div>
+                     <div class="administration-place-wrap">
+                         <p class="administration-last-time">[@lang_res k='member.info.lastLogin'/]<span>[#if ifa.member.loginTime??  ]${ifa.member.loginTime?string(dateTimeFormat)}[/#if]</span></p>
+                         <p class="administration-last-time">IP<span>${ifa.member.lastLoginIp!}</span></p>
+                     </div>
+                     <div class="administration-popularity-right">
+                         <p class="administration-popularity-num">${ifa.ifaInfo.popularityTotal!}</p>
+                         <div class="administration-popularity">
+                             <img src="${base}/res/images/ifa/popularity_ico.png">
+                             <p>[@lang_res k='ifa.detail.popularity'/]</p>
+                         </div>
+                     </div>
+                </div>
+                <ul class="tab_list_tab">
+                    <li class="now">[@lang_res k='member.personal.profile'/]<span></span></li>
+                    <li>[@lang_res k='ifa.detail.clients'/]<span></span></li>
+                    <li>[@lang_res k='ifa.detail.proposal'/]<span></span></li>
+                    <li>[@lang_res k='ifa.detail.portfolio'/]<span></span></li>
+                    <li>[@lang_res k='ifa.detail.account'/]<span></span></li>
+                    <li class="tab-schdule">[@lang_res k='ifa.detail.schdule'/]<span></span></li>
+                    <li>[@lang_res k='ifa.detail.insight'/]<span></span></li>
+                    <li>[@lang_res k='ifa.detail.recommend'/]<span></span></li>
+                </ul>
+                <div class="client-detail-contents">
+                    <div style="display:block;">
+                        <div class="client-account-rows">
+                            <div class="client-account-title">
+                                <p class="account-title-name">[@lang_res k='member.info.introduction'/]</p>
+                                <span class="client-more-ico"></span>
+                            </div>
+                            <p class="introduction-word">[@lang_res k='ifa.detail.profile.experience'/]：${ifa.investLife!} [@lang_res k='ifa.detail.profile.year'/]</p>
+                            <p class="introduction-word">${ifa.introduction!}</p>
+                        </div>
+                        <div class="client-account-rows">
+                            <div class="client-account-title">
+                                <p class="account-title-name">[@lang_res k='ifa.detail.personalInfo'/]</p>
+                                <span class="client-more-ico"></span>
+                            </div>
+                            <div class="client-detail-info">
+                                <ul class="client-info-wrap">
+                                 <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.firstnameinenglish'/]</p>
+                                        <p class="client-info-word">${ifa.ifaInfo.firstName!}</p>
+                                    </li>
+                                    
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.alias'/]</p>
+                                        <p class="client-info-word">${ifa.member.nickName!}</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.mobilenumber'/]</p>
+                                        <p class="client-info-word">[#if ifa.member.mobileCode?? && ifa.member.mobileCode!=''  ]${ifa.member.mobileCode}-[/#if]${ifa.member.mobileNumber!}</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.gender'/]</p>
+                                        <p class="client-info-word">[#if ifa.ifaInfo.gender=='f'][@lang_res k='member.register.female'/][#else][@lang_res k='member.register.male'/][/#if]</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.nationality'/]</p>
+                                        <p class="client-info-word">${ifa.nationality!}</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.idorpassportno'/]</p>
+                                        <p class="client-info-word">${ifa.ifaInfo.certNo!}</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.occupation'/]</p>
+                                        <p class="client-info-word">${ifa.occupation!}</p>
+                                    </li>
+                                   
+                                </ul>
+                                <ul class="client-info-wrap">
+                                   <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.lastnameinenglish'/]</</p>
+                                        <p class="client-info-word">${ifa.ifaInfo.lastName!}</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.nameinchinese'/]</p>
+                                        <p class="client-info-word">${ifa.ifaInfo.nameChn!}</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.email'/]</p>
+                                        <p class="client-info-word">${ifa.member.email!}</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.dateofbirth'/]</p>
+                                        <p class="client-info-word">[#if ifa.ifaInfo.born??]${ifa.ifaInfo.born?string(dateFormat)}[/#if]</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.credentialstype'/]</p>
+                                        <p class="client-info-word">${ifa.certType!}</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.employmentdetails'/]</p>
+                                        <p class="client-info-word">${ifa.employment!}</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title">[@lang_res k='member.register.levelofeducation'/]</p>
+                                        <p class="client-info-word">${ifa.education!}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="client-account-rows">
+                            <div class="client-account-title">
+                                <p class="account-title-name">[@lang_res k='ifa.detail.socialContact'/]</p>
+                                <span class="client-more-ico"></span>
+                            </div>
+                            <div class="client-detail-info">
+                                <ul class="client-info-wrap">
+                                        <li>
+                                            <p class="client-info-title"><img class="administration-contact-ico" src="${base}/res/images/client/wetchat_ico.png">[@lang_res k='member.info.webchatCode'/]</p>
+                                            <p class="client-info-word">${ifa.member.webchatCode!}</p>
+                                        </li>
+                                        <li>
+                                            <p class="client-info-title"><img class="administration-contact-ico" src="${base}/res/images/client/weibo_ico.png">[@lang_res k='member.info.weiboCode'/]</p>
+                                            <p class="client-info-word">${ifa.member.weiboCode!}</p>
+                                        </li>
+                                        <li>
+                                            <p class="client-info-title"><img class="administration-contact-ico" src="${base}/res/images/client/twitter_ico.png">[@lang_res k='member.info.twitterCode'/]</p>
+                                            <p class="client-info-word">${ifa.member.twitterCode!}</p>
+                                        </li>
+                                </ul>
+                                <ul class="client-info-wrap">
+                                    <li>
+                                        <p class="client-info-title"><img class="administration-contact-ico" src="${base}/res/images/client/facebook_ico.png">[@lang_res k='member.info.facebookCode'/]</p>
+                                        <p class="client-info-word">${ifa.member.facebookCode!}</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title"><img class="administration-contact-ico" src="${base}/res/images/client/linke_ico.png">[@lang_res k='member.info.linkedinCode'/]</p>
+                                        <p class="client-info-word">${ifa.member.linkedInCode!}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="client-account-rows">
+                            <div class="client-account-title">
+                                <p class="account-title-name">[@lang_res k='member.otherInfo'/]</p>
+                                <span class="client-more-ico"></span>
+                            </div>
+                            <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">[@lang_res k='member.info.investField'/]</p>
+                                <ul class="information-paragraph-list">
+                                [#if investField?exists && investField?size gt 0 ]
+                                [#list investField as list]
+                                    <li class="information-describe-word">${list.name!}</li>
+                                    [/#list]
+                                    [/#if]
+                                   
+                                </ul>
+                            </div>
+                            <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">[@lang_res k='member.info.investStyle'/]</p>
+                                <ul class="information-paragraph-list">
+                                 [#if investStyle?exists && investStyle?size gt 0 ]
+                                [#list investStyle as list]
+                                    <li class="information-describe-word">${list.name!}</li>
+                                    [/#list]
+                                    [/#if]
+                                 
+                                </ul>
+                            </div>
+                            <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">[@lang_res k='member.info.languageSpoken'/]</p>
+                                <ul class="information-paragraph-list">
+                                 [#if languageSpoken?exists && languageSpoken?size gt 0 ]
+                                [#list languageSpoken as list]
+                                    <li class="information-describe-word">${list.name!}</li>
+                                    [/#list]
+                                    [/#if]
+                                   
+                                </ul>
+                            </div>
+                            <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">[@lang_res k='member.info.hobbyType'/]</p>
+                                <ul class="information-paragraph-list">
+                                 [#if hobbyList?exists && hobbyList?size gt 0 ]
+                                [#list hobbyList as list]
+                                    <li class="information-describe-word">${list.name!}</li>
+                                    [/#list]
+                                    [/#if]
+                                  
+                                </ul>
+                            </div>
+                            <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">[@lang_res k='member.info.liveRegion'/]</p>
+                                <ul class="information-paragraph-list">
+                                 [#if liveRegion?exists && liveRegion?size gt 0 ]
+                                [#list liveRegion as list]
+                                    <li class="information-describe-word">${list.name!}</li>
+                                    [/#list]
+                                    [/#if]
+                                
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="administration-client-tab">
+                            <p class="client-now" data-value="0">[@lang_res k='ifa.clients.prospect'/]</p>
+                            <p data-value="1">[@lang_res k='ifa.clients.existing'/]</p>
+                        </div>
+                        <input class="administration-client-search" id="clientSearch" type="" name="" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+                        <div class="administration-client-wrap">
+                            <div class="administration-client-rows" style="display:block;">
+                                <table class="client-table">
+                                    <tbody>
+                                        <tr class="client-table-th">
+                                            <th width="20%" class="administration-clients-header">[@lang_res k='ifa.detail.clients.name'/]</th>
+                                            <th width="20%" class="administration-clients-header">[@lang_res k='ifa.detail.clients.contact'/]</th>
+                                            <th width="20%" class="administration-clients-header">[@lang_res k='ifa.detail.clients.email'/]</th>
+                                            <th width="20%" class="administration-clients-header">[@lang_res k='ifa.detail.clients.assets'/]</th>
+                                            <th width="20%" class="administration-clients-header">[@lang_res k='ifa.detail.clients.createDate'/]</th>
+                                        </tr>
+                                        <tr  ng-repeat="items in prospectList" ng-init="checkLast($last)">
+                                            <td class="portfolio-tdcenter" style="text-align:left">
+                                                <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}"><img class="administration-clients-img" src="${base}{{items.iconUrl}}"></a>
+                                               <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}"> <p class="administration-clients-name">{{items.name}}</p></a>
+                                            </td>
+                                            <td class="portfolio-tdcenter">{{items.contact}}</td>
+                                            <td class="portfolio-tdcenter">{{items.email}}</td>
+                                            <td class="portfolio-tdcenter">{{items.totalAssetStr}} {{currency}}</td>
+                                            <td class="portfolio-tdcenter">{{items.createDate | date:dateFormat}}</td>
+                                        </tr></tbody>
+                                </table>
+                                <div class="wmes-nodata-tips prospectTips">
+                                    <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                    <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                                </div>
+                                 <wmespage conf="prospect_page"></wmespage>
+                            </div>
+                            <div class="administration-client-rows">
+                                <table class="client-table">
+                                    <tbody>
+                                        <tr class="client-table-th">
+                                            <th width="20%" class="administration-clients-header">[@lang_res k='ifa.detail.clients.name'/]</th>
+                                            <th width="20%" class="administration-clients-header">[@lang_res k='ifa.detail.clients.contact'/]</th>
+                                            <th width="20%" class="administration-clients-header">[@lang_res k='ifa.detail.clients.email'/]</th>
+                                            <th width="20%" class="administration-clients-header">[@lang_res k='ifa.detail.clients.assets'/]</th>
+                                            <th width="20%" class="administration-clients-header">[@lang_res k='ifa.detail.clients.createDate'/]</th>
+                                        </tr>
+                                        <tr  ng-repeat="items in existingList" ng-init="checkLast($last)">
+                                            <td class="portfolio-tdcenter" style="text-align:left">
+                                               <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}"> <img class="administration-clients-img" onclick="window.location" src="${base}{{items.iconUrl}}"></a>
+                                                 <a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}"><p class="administration-clients-name">{{items.name}}</p></a>
+                                            </td>
+                                            <td class="portfolio-tdcenter">{{items.contact}}</td>
+                                            <td class="portfolio-tdcenter">{{items.email}}</td>
+                                            <td class="portfolio-tdcenter">{{items.totalAssetStr}} {{currency}}</td>
+                                            <td class="portfolio-tdcenter">{{items.createDate | date:dateFormat}}</td>
+                                        </tr>
+                                       </tbody>
+                                </table>
+                                <div class="wmes-nodata-tips existingTips">
+                                    <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                    <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                                </div>
+                                 <wmespage conf="existing_page"></wmespage>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="administration-transaction-rows">
+                            <input class="administration-client-search" id="proposalKey" type="" name="" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+                            <table class="client-table">
+                                <tbody>
+                                    <tr class="client-table-th">
+                                      <th width="30%" class="portfolio-tables-fnames">[@lang_res k='ifa.detail.proposal.name'/]</th>
+                                        <th width="15%" class="client-tables-header">[@lang_res k='ifa.detail.proposal.client'/]</th>
+                                        <th style="cursor: pointer;" width="15%" class="client-tables-header sort-click sort-initAmount">[@lang_res k='ifa.detail.proposal.invAmount'/]
+                                            <p class="client_arrow_wraps">
+                                                <span class="arrow_top"></span>
+                                                <span class="arrow_down"></span>
+                                            </p>
+                                        </th>
+                                        <th width="10%" class="client-tables-header">[@lang_res k='ifa.detail.proposal.status'/]</th>
+                                        <th style="cursor: pointer;" width="15%" class="client-tables-header sort-click sort-lastUpdate">[@lang_res k='ifa.detail.proposal.lastModify'/]
+                                            <p class="client_arrow_wraps">
+                                                <span class="arrow_top"></span>
+                                                <span class="arrow_down down_active"></span>
+                                            </p>
+                                        </th>
+                                    </tr>
+                                    <tr ng-repeat="items in proposalList" ng-init="checkLast($last)">
+                                        <td class="portfolio-tables-fnames">
+                                        <a href="${base}/front/crm/proposal/createProposalSetOne.do?id={{items.id}}" ng-if="items.status=='-1' || items.status=='0' || items.status=='-2'">{{items.proposalName}}</a>
+                                         <a href="${base}/front/crm/proposal/previewProposal.do?proposalId={{items.id}}" ng-if="items.status=='1' || items.status=='2' ">{{items.proposalName}}</a>
+                                        </td>
+                                        <td class="portfolio-tdcenter">{{items.customerName}}</td>
+                                       
+                                        <td class="portfolio-tdcenter">{{items.initialInvestAmount | formatCurrency:''}}  {{currency}}</td>
+                                        <td class="portfolio-tdcenter">{{items.status | lang:'clients.proposal.status.'}}</td>
+                                        <td class="portfolio-tdcenter">{{items.lastUpdate | date:dateFormat}}</td>
+                                    </tr></tbody>
+                            </table>
+                            <div class="wmes-nodata-tips proposalTips">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                          </div>
+                              <wmespage conf="proposal_page"></wmespage>
+                           </div>
+                    </div>
+                    <div>
+                        <div class="administration-transaction-rows">
+                            <input class="administration-client-search" id="portfolioKey" type="" name="" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+                            <table class="funds_search_information strategies_List">
+                                <tbody>
+                                    <tr class="funds_tables_th">
+                                        <th class="funds_tables_fnames">
+                                           [@lang_res k='ifa.detail.portfolio.name'/]
+                                        </th>
+                                        <th class="funds_tables_header">
+                                           [@lang_res k='ifa.detail.portfolio.riskLevel'/]
+                                        </th>
+                                        <th  class="funds_tables_header">
+                                             [@lang_res k='ifa.detail.portfolio.totalAssets'/]
+                                            <p class="funds_arrow_wraps">
+                                                    <span class="arrow_top"></span>
+                                                    <span class="arrow_down down_active"></span>
+                                                </p>
+                                        </th>
+                                        <th  class="funds_tables_header">
+                                            [@lang_res k='ifa.detail.portfolio.totalReturn'/]
+                                            <p class="funds_arrow_wraps">
+                                                    <span class="arrow_top"></span>
+                                                    <span class="arrow_down"></span>
+                                                </p>
+                                        </th>
+                                        <th class="funds_tables_header">
+                                             [@lang_res k='ifa.detail.portfolio.client'/]
+                                        </th>
+                                        <th class="funds_tables_header">
+                                                [@lang_res k='ifa.detail.portfolio.lastModify'/]
+                                                <p class="funds_arrow_wraps">
+                                                    <span class="arrow_top"></span>
+                                                    <span class="arrow_down"></span>
+                                                </p>
+                                        </th>
+                                    </tr>
+                                    <tr  ng-repeat="items in portfolioList" ng-init="checkLast($last)">
+                                        <td class="tdleft funds_tables_fnames">
+                                            <a href="${base}/front/strategy/info/conservativePortfolio.do?id={{items.id}}" >{{items.portfolioName | characters: 60}}</a>
+                                        </td>
+                                        <td class="funds_search_tdcenter">
+                                        <!--<img src="${base}/res/images/strategy/risk_level_0{{items.riskLevel}}.png"  width="75px"/>
+                                        --><span class="lump-equity-grade funds_leveal_{{items.riskLevel}}" style="margin-right:30px" title="Risk Level {{items.riskLevel}}">{{items.riskLevel}}</span>
+                                        </td>
+                                        <td class="funds_search_tdcenter">{{items.totalAsset | formatCurrency:''}} <span>{{currency}}</span></td>
+                                        <td class="funds_search_tdcenter">
+                                            <span ng-bind-html="items.totalReturn | currencyColor:'%':defColor"> </span>
+                                        </td>
+                                        <td class="funds_search_tdcenter">
+                                           {{items.nickName}}
+                                        </td>
+                                        <td class="funds_search_tdcenter">
+                                           {{items.lastUpdate | date:dateFormat}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                            </table>
+                             <div class="wmes-nodata-tips portfolioTips">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                          </div>
+                          <wmespage conf="portfolioPage"></wmespage>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="funds_choice_wrap administration-choose">
+                            <p class="funds_choice_title administration-choice-title">[@lang_res k='member.register.distributor'/]</p>
+                            <ul class="funds_choice distributor_choice">
+                                <li class="fund_choice_active funds_all" data-name="Distributor" data-key="" data-value="">All</li>
+                                [#if distributorList?exists && distributorList?size gt 0]
+                                [#list distributorList as list]
+                                <li data-name="Distributor" data-key="${list.id}" data-value=""><img class="administration-invest-ico" src="${base}${list.logoUrl}"></li>
+                                [/#list]
+                                [/#if]
+                              </ul>
+                        </div>
+                        <input class="administration-client-search" id="accountKey" type="" name="" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+                        <div class="administration-client-wrap">
+                            <div class="administration-client-rows" style="display:block;">
+                                <table class="client-table">
+                                    <tbody>
+                                        <tr class="client-table-th">
+                                            <th width="15%" class="administration-clients-header">[@lang_res k='ifa.detail.account.name'/]</th>
+                                            <th width="10%" class="administration-clients-header">[@lang_res k='ifa.detail.account.accountNo'/]</th>
+                                            <th width="15%" class="administration-clients-header">[@lang_res k='ifa.detail.account.type'/]</th>
+                                            <th width="10%" class="administration-clients-header">[@lang_res k='ifa.detail.account.baseCurrency'/]</th>
+                                            <th width="10%" class="administration-clients-header">[@lang_res k='ifa.detail.account.discretionary'/]</th>
+                                            <th width="10%" class="administration-clients-header">[@lang_res k='ifa.detail.account.createDate'/]</th>
+                                            <th width="15%" class="administration-clients-header">[@lang_res k='member.register.distributor'/]</th>
+                                            <th width="15%" class="administration-clients-header">[@lang_res k='ifa.detail.account.totalAccountValue'/]</th>
+                                        <tr ng-repeat="items in accountList" ng-init="checkLast($last)">
+                                            <td class="portfolio-tdcenter">
+                                                <img class="administration-clients-img" src="${base}{{items.iconUrl}}">
+                                                <p class="administration-clients-name">{{items.nickName}}</p>
+                                            </td>
+                                            <td class="portfolio-tdcenter administration-num-blue"><a href="${base}/front/investor/myAccountDetail.do?id={{items.accountId}}">{{items.accountNo}}</a></td>
+                                            <td class="portfolio-tdcenter">{{items.memberType | lang:'member.memberType.'}}</td>
+                                            <td class="portfolio-tdcenter">{{items.baseCurrency}}</td>
+                                            <td class="portfolio-tdcenter">{{items.Discretionary}}</td>
+                                            <td class="portfolio-tdcenter">{{items.createDate | date:dateFormat}}</td>
+                                            <td class="portfolio-tdcenter"><img class="administration-invest-ico" src="${base}{{items.distriburotUrl}}"></td>
+                                            <td class="portfolio-tdcenter">{{items.totalAccountValueStr}} {{currency}}</td>
+                                        </tr></tbody>
+                                </table>
+                                <div class="wmes-nodata-tips accountTips">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                              </div>
+                              <wmespage conf="account_page"></wmespage>
+                            </div>
+                            <div class="administration-client-rows">
+                                <table class="administration-client-table">
+                                    <tbody>
+                                        <tr>
+                                            <th width="20%" class="administration-clients-header">Name</th>
+                                            <th width="20%" class="administration-clients-header">Contact</th>
+                                            <th width="20%" class="administration-clients-header">Email</th>
+                                            <th width="20%" class="administration-clients-header">Investment Amt</th>
+                                            <th width="20%" class="administration-clients-header">Create Date</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="portfolio-tdcenter">
+                                                <img class="administration-clients-img" src="${base}/res/images/ifa/linshi_ifa_02.png">
+                                                <p class="administration-clients-name">Rainy Lee</p>
+                                            </td>
+                                            <td class="portfolio-tdcenter">+852 6785 5699</td>
+                                            <td class="portfolio-tdcenter">Linda@gmail.com</td>
+                                            <td class="portfolio-tdcenter">200,000 HKD</td>
+                                            <td class="portfolio-tdcenter">2016-12-12</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="portfolio-tdcenter">
+                                                <img class="administration-clients-img" src="${base}/res/images/ifa/linshi_ifa_01.png">
+                                                <p class="administration-clients-name">Linda Wang</p>
+                                            </td>
+                                            <td class="portfolio-tdcenter">+852 6785 5677</td>
+                                            <td class="portfolio-tdcenter">Linda@gmail.com</td>
+                                            <td class="portfolio-tdcenter">200,000 HKD</td>
+                                            <td class="portfolio-tdcenter">2016-12-12</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="portfolio-tdcenter">
+                                                <img class="administration-clients-img" src="${base}/res/images/ifa/linshi_ifa_05.png">
+                                                <p class="administration-clients-name">Linda Wang</p>
+                                            </td>
+                                            <td class="portfolio-tdcenter">+852 6554 3433</td>
+                                            <td class="portfolio-tdcenter">Linda@gmail.com</td>
+                                            <td class="portfolio-tdcenter">200,000 HKD</td>
+                                            <td class="portfolio-tdcenter">2016-12-12</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- schdule start -->
+                    <div style="">
+                        <div class="ifa-home-calendar" style="margin: 50px auto;"></div>
+                    </div>
+                    <!-- schdule end -->
+                    <div>
+                        <div class="funds_choice_wrap administration-choose">
+                            <p class="funds_choice_title administration-choice-title">[@lang_res k='ifa.detail.insight.category'/]</p>
+                            <ul class="funds_choice chanel_choice">
+                           
+                                <li class="fund_choice_active funds_all" data-name="Category" data- key="" data-value="Category">All</li>
+                                [#if chanelList?exists  && chanelList?size gt 0]
+                                [#list chanelList as list]
+                                <li data-name="Category" data-key="" data-value="Category_01">${list!}</li>
+                                [/#list]
+                                [/#if]</ul>
+                        </div>
+                        <input class="administration-client-search" id="insightKey" type="" name="" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+                        <div class="administration-client-wrap">
+                            <div class="administration-client-rows" style="display:block;">
+                                <table class="client-table">
+                                    <tbody>
+                                        <tr class="client-table-th">
+                                            <th width="55%" class="administration-clients-header">[@lang_res k='ifa.detail.insight.title'/]</th>
+                                            <th width="15%" class="administration-clients-header">[@lang_res k='ifa.detail.insight.category'/]</th>
+                                            <th width="15%" class="administration-clients-header">[@lang_res k='ifa.detail.insight.publishDate'/]</th>
+                                            <th width="15%" class="administration-clients-header">[@lang_res k='ifa.detail.insight.views'/]</th>
+                                        <tr ng-repeat="items in insightList" ng-init="checkLast($last)">
+                                            <td class="portfolio-tdcenter">
+                                                <img class="administration-insight-img" src="${base}/res/images/discover/discover_newimg09.jpg">
+                                                <p class="administration-insight-word">{{items.title}}</p>
+                                            </td>
+                                            <td class="portfolio-tdcenter">{{items.channel}}</td>
+                                            <td class="portfolio-tdcenter">{{items.pubDateStr}}</td>
+                                            <td class="portfolio-tdcenter">{{items.click}}</td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                            <div class="wmes-nodata-tips insightTips">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                          </div>
+                              <wmespage conf="insightConf"></wmespage>
+                            <!--
+                         <ul class="ifa_list_paging insight_page">
+                            <li class="wmes_pagint_num " ng-repeat="items in insightPage.ListPage" ng-class="{wmes_pagint_now: items.PageShow ==insightPage.nowPage}" ng-bind="{{'items.PageShow'}}" data-page="{{items.PageShow}}"></li>
+                        </ul>
+                    -->
+                    </div>
+                    <div>
+                        <div class="administration-client-tab">
+                            <p>[@lang_res k='ifa.detail.strategy'/]</p>
+                            <p>[@lang_res k='ifa.detail.portfolio'/]</p>
+                            <p class="client-now">[@lang_res k='ifa.detail.fund'/]</p>
+                        </div>
+                        <div class="administration-client-wrap">
+                            <div class="administration-client-rows">
+                                <input class="administration-client-search" id="re_strategyKey" type="" name="" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+                                <table class="funds_search_information strategies_List">
+                                    <tbody>
+                                        <tr class="client-table-th">
+                                            <th width="40%" class="administration-clients-header">[@lang_res k='strategy.info.list.strategyName'/]</th>
+                                            <th width="10%" class="administration-clients-header">[@lang_res k='strategy.info.list.riskLevel'/]</th>
+                                            <th width="15%" class="administration-clients-header">[@lang_res k='strategy.info.allocation.method.G'/]</th>
+                                            <th width="10%" class="administration-clients-header">[@lang_res k='strategy.info.allocation.method.S'/]</th>
+                                            <th width="15%" class="administration-clients-header">[@lang_res k='ifa.detail.insight.publishDate'/]</th>
+                                            <th width="10%" class="administration-clients-header">[@lang_res k='ifa.detail.insight.views'/]</th>
+                                        </tr>
+                                        <tr  ng-repeat="items in strategyList" ng-init="checkLast($last)">
+                                            <td class="portfolio-tdcenter">
+                                                <a href="${base}/front/strategy/info/strategiesdetail.do?id={{items.id}}"> <p class="administration-clients-name">{{items.strategyName}}</p></a>
+                                            </td>
+                                            <td class="portfolio-tdcenter">{{items.riskLevel}}</td>
+                                            <td class="portfolio-tdcenter">{{items.sector}}</td>
+                                            <td class="portfolio-tdcenter">{{items.geoAllocation}}</td>
+                                            <td class="portfolio-tdcenter">{{items.lastUpdate|date:dateTimeFormat}}</td>
+                                            <td class="portfolio-tdcenter">{{items.click}}</td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                                <div class="wmes-nodata-tips restrategyTips">
+                                    <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                    <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                                </div>
+                                 <wmespage conf="strategyListConf"></wmespage>
+                            </div>
+                            <div class="administration-client-rows">
+                                <input class="administration-client-search" id="rePortfolioKey" type="" name="" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+                                <table class="funds_search_information strategies_List">
+                                    <tbody>
+                                        <tr class="client-table-th">
+                                            <th width="40%" class="administration-clients-header">[@lang_res k='clients.portfolio.table.name'/]</th>
+                                            <th width="10%" class="administration-clients-header">[@lang_res k='strategy.info.allocation.method.G'/]</th>
+                                            <th width="15%" class="administration-clients-header">[@lang_res k='strategy.info.allocation.method.S'/]</th>
+                                            <th width="10%" class="administration-clients-header">[@lang_res k='clients.portfolio.table.totalReturn'/]</th>
+                                            <th width="15%" class="administration-clients-header">[@lang_res k='ifa.detail.insight.publishDate'/]</th>
+                                            <th width="10%" class="administration-clients-header">[@lang_res k='ifa.detail.insight.views'/]</th>
+                                        </tr>
+                                        <tr ng-repeat="items in rePofolioList" ng-init="checkLast($last)">
+                                            <td class="portfolio-tdcenter">
+                                                <a href="${base}/front/portfolio/arena/detail.do?id={{items.id}}"><p class="administration-clients-name">{{items.portfolioName}}</p></a>
+                                            </td>
+                                            <td class="portfolio-tdcenter">{{items.sector}}</td>
+                                            <td class="portfolio-tdcenter">{{items.geoAllocation}}</td>
+                                             <td class="portfolio-tdcenter " ng-bind-html="items.totalReturn | currencyColor:'':defColor"></td>
+                                            <!--<td class="portfolio-tdcenter price_negative" ng-if="(items.totalReturn<0 && defColor=='1') || (items.totalReturn>0 && defColor!='1')">{{items.totalReturn}}</td>
+                                            <td class="portfolio-tdcenter price_positive" ng-if="(items.totalReturn<0 && defColor=='2') || (items.totalReturn>0 && defColor!='2')">{{items.totalReturn}}</td>
+                                             <td class="portfolio-tdcenter " ng-if="items.totalReturn==0 || items.totalReturn==null">{{items.totalReturn}}</td>
+                                            --><td class="portfolio-tdcenter">{{items.lastUpdate|date:dateTimeFormat}}</td>
+                                            <td class="portfolio-tdcenter">{{items.click}}</td>
+                                        </tr></tbody>
+                                </table>
+                                <div class="wmes-nodata-tips reportfolioTips">
+                                    <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                    <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                                </div>
+                                 <wmespage conf="rePofolioListConf"></wmespage>
+                           </div>
+                            <div class="administration-client-rows" style="display:block;">
+                                <table class="funds_search_information strategies_List">
+                                    <tbody>
+                                        <tr class="funds_tables_th funds_tables_th_amend">
+                                            <th class="funds_tables_header" style="width: 20%;text-align: left;">
+                                                [@lang_res k='fund.info.fundName'/]
+                                            </th>
+                                            <th class="funds_tables_header" style="width:5%;">
+                                                [@lang_res k='fund.info.riskrating'/] 
+                                            </th>
+                                            <th class="funds_tables_header" style="width:4%">
+                                                [@lang_res k='fund.info.currency'/] 
+                                            </th>
+                                            <th class="funds_tables_header" style="width:10%;">
+                                                [@lang_res k='fund.info.price_date'/]
+                                            </th>
+                                            <th class="funds_tables_header" style="width:10%;">
+                                                [@lang_res k='fund.info.LastNAV'/]
+                                                
+                                            </th>
+                                            <th class="funds_tables_date" style="width:8%;">(1M)<div class="funds_cumulative_title" style="width:37%;">Cumulative Performance</div></th>                  
+                                            <th class="funds_tables_date" style="width:8%;">
+                                                (3M)
+                                            </th>
+                                            <th class="funds_tables_date" style="width:8%;">
+                                                (6M)
+                                            </th>
+                                            <th class="funds_tables_date" style="width:8%;">
+                                                YTD
+                                            </th>
+                                            <th class="funds_tables_date" style="width:8%;">
+                                                (1 Year)
+                                            </th>
+                                            <th class="funds_tables_header" style="width:10%;">[@lang_res k='recommend.date'/]</th>
+                                            <th class="funds_tables_header" style="width:5%;">[@lang_res k='ifa.detail.insight.views'/]</th>
+                                        </tr>
+                                        <tr ng-repeat="items in fundList" ng-init="checkLast($last)">
+                                           <td class="tdleft funds_tables_fnames">
+	                                        <a href="${base}/front/fund/info/fundsdetail.do?id={{items.fundId}}">{{items.fundName}}</a>
+	                                       </td>
+			                                <td class="funds_search_tdcenter">{{items.fundInfo.riskLevel}}</td>
+			                                <td class="funds_search_tdcenter">{{items.fundCurrency}}</td>
+			                                <td class="funds_search_tdcenter">{{items.fundInfo.lastNavUpdate}}</td>
+			                                <td class="funds_search_tdcenter">{{items.fundInfo.lastNav}} {{currency}}</td>
+			                                <td class="funds_search_tdcenter">
+			                                <span class="" ng-bind-html="items.fundReturnOneMonth | currencyColor:'':defColor" ></span>
+			                                    <!--<span class="funds_search_negative"  ng-if="(items.fundReturnOneMonth<0 && defColor=='1') || (items.fundReturnOneMonth>0 && defColor!='1')">{{items.fundReturnOneMonth}}%</span>
+			                                     <span class="funds_search_positive"  ng-if="(items.fundReturnOneMonth<0 && defColor=='2') || (items.fundReturnOneMonth>0 && defColor!='2')">{{items.fundReturnOneMonth}}%</span>
+			                                     <span class="" ng-if="items.fundReturnOneMonth==0">{{items.fundReturnOneMonth}}</span>
+			                                --></td>
+			                                <td class="funds_search_tdcenter">
+			                                <span class="" ng-bind-html="items.fundReturnThreeMonth | currencyColor:'':defColor" ></span>
+			                                    <!--<span class="funds_search_positive"  ng-if="(items.fundReturnThreeMonth<0 && defColor=='2') || (items.fundReturnThreeMonth>0 && defColor!='2')">{{items.fundReturnThreeMonth}}%</span>
+			                                    <span class="funds_search_negative"  ng-if="(items.fundReturnThreeMonth<0 && defColor=='1') || (items.fundReturnThreeMonth>0 && defColor!='1')">{{items.fundReturnThreeMonth}}%</span>
+			                                    <span class=""  ng-if="items.fundReturnThreeMonth==0 ">{{items.fundReturnThreeMonth}}</span>
+			                                --></td>
+			                                <td class="funds_search_tdcenter">
+			                                 <span class="funds_search_negative" ng-bind-html="items.fundReturnSixMonth | currencyColor:'':defColor" ></span>
+			                                    <!--<span class="funds_search_positive" ng-if="(items.fundReturnSixMonth<0 && defColor=='2') || (items.fundReturnSixMonth>0 && defColor!='2')">{{items.fundReturnSixMonth}}%</span>
+			                                     <span class="funds_search_negative" ng-if="(items.fundReturnSixMonth<0 && defColor=='1') || (items.fundReturnSixMonth>0 && defColor!='1')">{{items.fundReturnSixMonth}}%</span>
+			                                     <span class="" ng-if="items.fundReturnSixMonth==0 ">{{items.fundReturnSixMonth}}</span>
+			                                --></td>
+			                                <td class="funds_search_tdcenter">
+			                                <span class="" ng-bind-html="items.fundReturnYTD | currencyColor:'':defColor" ></span><!--
+			                                    <span class="funds_search_negative" ng-if="(items.fundReturnYTD<0 && defColor=='1') || (items.fundReturnYTD>0 && defColor!='1')">{{items.fundReturnYTD}}%</span>
+			                                     <span class="funds_search_positive" ng-if="(items.fundReturnYTD<0 && defColor=='2') || (items.fundReturnYTD>0 && defColor!='2')">{{items.fundReturnYTD}}%</span>
+			                                     <span class="" ng-if="items.fundReturnYTD==0 ">{{items.fundReturnYTD}}</span>
+			                                --></td>
+			                                <td class="funds_search_tdcenter">
+			                                   <span   class="" ng-bind-html="items.fundReturnYear1 | currencyColor:'':defColor"> </span><!-- 
+			                                   	<span class="funds_search_negative" ng-if="(items.fundReturnYear1<0 && defColor=='1') || (items.fundReturnYear1>0 && defColor!='1')">{{items.fundReturnYear1}}%</span>
+			                                   	<span class="funds_search_positive" ng-if="(items.fundReturnYear1<0 && defColor=='2') || (items.fundReturnYear1>0 && defColor!='2')">{{items.fundReturnYear1}}%</span>
+			                                   	<span class="" ng-if="items.fundReturnYear1==0 ">{{items.fundReturnYear1}}</span>
+			                                --></td>
+                                            <td class="funds_search_tdcenter">{{items.recommendInfo.recommendDate | date:dateTimeFormat}}</td>
+                                            <td class="funds_search_tdcenter">{{items.recommendInfo.views}}</td>
+                                        </tr>   
+                                        </tbody>
+                                </table>
+                                 <div class="wmes-nodata-tips refundTips">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                          </div>
+                                <wmespage conf="fundListConf"></wmespage>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <!-- 弹出层 -->
+<div class="ifa-space-popup " id="add_Schedule" style="display: none;">
+	<div class="ifa-space-mask"></div>
+	<div class="space-mask-wrap" style="position: absolute;">
+		<div class="space-mask space-mask-investors" style="margin-left:12%;">
+			<div class="wmes-close" id="add_Schedule-close"></div>
+			<div class="ifa-home-contents">
+				<p class="wmes-wrap-title tanchutitle" style="text-align: left;">[@lang_res k='schedule.create.schedule.title.datail'/]</p>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+				<tbody>
+					<tr>
+						<td align="right" class="register_table_left" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.0'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="add_scheduletextareacon" style="width:504px">
+								<input id="hidScheduleId" class="register_input" type="hidden" style="width:400px;">
+								<input id="txtTitle" readonly="readonly" class="register_input" style="float:left;width:400px;" type="text">
+								<div class="account-choose-input-wrap" style="float:left;margin: 5px;">
+                                	<input id="cheImportantFlag" disabled="disabled"
+                                	 type="checkbox" style="" name="important"/><span class="" style="color: #939292;">[@lang_res k='schedule.create.schedule.checkbox.important'/]</span>
+								</div>
+								<div class="member-comment-topper" style="margin-right: 100px;">
+									<p class="member-number-words-add_scheduletextareacon">[@lang_res k='create.portfolio.step.two.input.prefix'/] 50 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="title-inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="title-left">50</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]</p>
+								</div>
+								<p class="alert-schedule-title-name" style="clear:both;display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.title'/]</p>
+							</div>
+						</td>
+					</tr>
+					<tr>
+    						<td align="right" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.3'/]</span>
+    						</td>
+    						<td class="register_table_right">
+    							<div class="conservative-date-wrap">
+                                <div class="account-choose-input-wrap">
+                                    <input id="txtStartAt" readonly="readonly" class="laydate-icon form-control form-control-laydate schedule-choose-date" type="" name="" style="width:200px;">
+                                	<p class="alert-schedule-start-at" style="display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.startTime'/]</p>
+                                </div>
+                                 <div class="account-choose-input-wrap schedule-dialog-creator" style="margin: 5px;">
+                                	<span style="margin:0 10px;color: #939292;">[@lang_res k='schedule.create.schedule.creator'/] :</span><span id="schedule-creator-text" style="color: #939292;"></span>
+                            	 </div>
+                            </div>
+    						</td>
+    					</tr>
+    					<tr>
+    						<td align="right" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.4'/]</span>
+    						</td>
+    						<td class="register_table_right">
+    							<div class="conservative-date-wrap">
+                                <div class="account-choose-input-wrap">
+                                    <input id="txtEndAt" readonly="readonly" class="laydate-icon form-control form-control-laydate schedule-choose-date" type="" name="" style="width:200px;">
+                                	<p class="alert-schedule-end-at" style="display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.endTime'/]</p>
+                                </div>
+                                <div class="account-choose-input-wrap" style="margin: 5px;">
+                                    <input id="cheRecurrentFlag" disabled="disabled" type="checkbox" name="recurrent"/><span class="" style="color: #939292;">[@lang_res k='schedule.create.schedule.checkbox.recurrent'/]</span>
+                                </div>
+                            </div>
+    						</td>
+    					</tr>
+					<tr class="repeat_typecon repeat_typecon_none">
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.recurrentType'/]</span>
+						</td>
+						<td class="register_table_right" style="padding-top:10px;">
+							<ul class="repeat_type">
+								<li><input id="repeatDay-0" disabled="disabled" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.0'/]</li>
+								<li><input id="repeatDay-1" disabled="disabled" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.1'/]</li>
+								<li><input id="repeatDay-2" disabled="disabled" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.2'/]</li>
+								<li><input id="repeatDay-3" disabled="disabled" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.3'/]</li>
+								<li><input id="repeatDay-4" disabled="disabled" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.4'/]</li><br><br>
+								<li><input id="repeatDay-5" disabled="disabled" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.5'/]</li>
+								<li><input id="repeatDay-6" disabled="disabled" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.6'/]</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.5'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="register_xiala_long" style="width:406px;">
+	                            <input id="txtCustomer" data-value="" readonly="readonly" type="text" class="value_show">
+	                            <input type="hidden" class="value_hidden">
+	                            <ul id="selCustomer" class="regiter_xiala_ul"></ul>
+	                            <!--<span class="register_xiala_ico"></span>
+	                        --></div> 
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.6'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="register_xiala_long" style="width:406px;">
+	                            <input id="txtGroup" data-value="" readonly="readonly" type="text" class="value_show">
+	                            <input type="hidden" class="value_hidden">
+	                            <ul id="selGroup" class="regiter_xiala_ul"></ul>
+	                            <!--<span class="register_xiala_ico"></span>
+	                        --></div> 
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.7'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="register_xiala_long" style="width:406px;">
+	                            <input id="txtRemind" data-value="" readonly="readonly" type="text" placeholder=" " class="value_show">
+	                            <input type="hidden" class="value_hidden">
+	                            <ul id="selRemind" class="regiter_xiala_ul"></ul>
+	                            <!--<span class="register_xiala_ico"></span>
+	                        --></div> 
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.8'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="add_scheduletextareacon">
+								<textarea id="txtContent" readonly="readonly" class="member-comment-text" style="width:406px;"></textarea>
+								<div class="member-comment-topper">
+									<p class="member-number-words-add_scheduletextareacon">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="content-inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="content-left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]</p>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+		</div>
+	</div>
+</div>
+<input id="hidProposalOrder" type="hidden" value="desc">
+<input id="hidProposalSort" type="hidden" value="r.lastUpdate">
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+var memberId='${memberId!}';
+var _checkList='${checkList!}';
+var _accountType="${accountType!}";
+     seajs.use('${base}/res/web/ifa/ifaAdministration.js');
+     //验证登录后回调事件
+function callbackloginresult(json){
+	 	 seajs.use('jquery', function($){
+		 //	console.log(json);
+		 	var count=0;
+		 	$.each(json,function(i,n){
+			 	if(n.status="1"){
+			 	count++;
+		 	    }
+		 	})
+		 	if(count>0){
+		 	 setTimeout(function(){
+		       window.location.url= window.location.url+"&check=1";
+		     },1000);
+		    }
+	    });
+ 	}
+</script>

@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<style type="text/css">
+.w {width:30px;white-space:nowrap;padding:0px 5px 0px 5px;text-align:center;}
+.w2 {width:40px;padding:0px 5px 0px 5px;text-align:center;}
+td {
+text-align:center; /*设置水平居中*/
+vertical-align:middle;/*设置垂直居中*/
+}
+</style>
+	<table class="funds_search_information" style="width:100%;">
+		<tbody>
+			<tr class="funds_search_th" style="width:25%;">
+				<th class="funds_search_name">[@lang_res k='fund.info.fundName'/] </th>
+				<th class="w">[@lang_res k='fund.info.riskrating'/]</th>
+				<th class="w">[@lang_res k='fund.info.currency'/]</th>
+				<th class="w">[@lang_res k='fund.info.LastNAV'/]</th>
+				<th class="w2">[@lang_res k='fund.info.LastNAVUpdate'/]</th>
+				<th class="w2">[@lang_res k='fund.info.cumPerMon_1'/]</th>
+                <th class="w2">[@lang_res k='fund.info.cumPerMon_3'/]</th>
+                <th class="w2">[@lang_res k='fund.info.cumPerMon_6'/]</th>
+                <th class="w2">[@lang_res k='fund.info.cumPerYr_1'/]</th>
+                <th class="w2">[@lang_res k='fund.info.cumPerYr_3'/]</th>
+                <th class="w2">[@lang_res k='fund.info.cumPerYr_5'/]</th>
+                <th class="w">[@lang_res k='fund.info.Launch'/]</th>
+                <th class="w">[@lang_res k='fund.info.YTD'/]</th>
+                <th class="w">[@lang_res k='global.action'/]</th>
+			</tr>
+             [#if fundInfoList?size gt 0]
+			[#if fundInfoList?size gt 0]
+			[#list fundInfoList as fundList]
+			<tr>
+				<td class="funds_search_name">
+				<a href="javascript:void(0)" onclick="fundDetail('${base}/front/fund/info/fundsdetail.do?id=${fundList.fundInfo.id!}')" style="color:#000000">
+				${fundList.fundName!""}
+				</a>
+				</td>
+				<td>${fundList.fundInfo.riskLevel!""}</td><!-- 风险评级 -->
+				<td>${fundList.fundCurrency!""}</td>
+				<td>${fundList.fundInfo.lastNav!""}</td>
+				<td class="w">[#if fundList.fundInfo.lastNavUpdate??]${fundList.fundInfo.lastNavUpdate?string("yyyy-MM-dd")}[/#if]</td>
+                <td class="w"><span class="[#if fundList.fundReturnOneMonth lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList.fundReturnOneMonth!""}</span></td>
+                <td class="w"><span class="[#if fundList.fundReturnThreeMonth lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList.fundReturnThreeMonth!""}</span></td>
+                <td class="w"><span class="[#if fundList.fundReturnSixMonth lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList.fundReturnSixMonth!""}</span></td>
+                <td class="w"><span class="[#if fundList.fundReturnOneYear lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList.fundReturnOneYear!""}</span></td>
+                <td class="w"><span class="[#if fundList.fundReturnThreeYear lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList.fundReturnThreeYear!""}</span></td>
+                <td class="w"><span class="[#if fundList.fundReturnFiveYear lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList.fundReturnFiveYear!""}</span></td>
+                <td class="w"><span class="[#if fundList.fundReturnLaunch lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList.fundReturnLaunch!""}</span></td>
+                <td class="w"><span class="[#if fundList.fundReturnYTD lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList.fundReturnYTD!""}</span></td>
+                <td nowrap>[#if !(view?? && view=="true") ]
+                    <a class="editRec" style="display:inline-block;overflow:hidden;" href="javascrpit:;" data-id="${fundList.fundInfo.id}"><img style="width:24px;height:24px;" src="${base}/res/images/u211.png" /></a>
+                    <a class="deleteRec" style="display:inline-block;overflow:hidden;" href="javascrpit:;"><img style="width:24px;height:24px;" src="${base}/res/images/u204.png" /></a>
+                    [/#if]
+                </td>
+			</tr>
+			[/#list]
+			[/#if]
+             [/#if]
+		</tbody>
+	</table>
+
+<script  type="text/javascript">
+seajs.use('jquery', function($){
+    var base_root = '${base}';
+    
+    $(".editRec").on("click",function(){
+        var id=$(this).attr("data-id");
+        var url = base_root+"/front/fund/info/fundsdetail.do?id="+id;
+        openResWin(url,800,500,"fundSelector");
+    });
+    $(".deleteRec").on("click",function(){
+        $(this).parent().parent().remove();
+    });
+	function deleteTr(nowTr){ 
+	    //多一个parent就代表向前一个标签, 
+	    // 本删除范围为<td><tr>两个标签,即向前两个parent 
+	    //如果多一个parent就会删除整个table 
+	    $(nowTr).parent().parent().remove(); 
+	}
+	
+	function openResWin(url,width,height,id){ 
+       var myw = screen.availWidth;   //定义一个myw，接受到当前全屏的宽    
+       var myh = screen.availHeight;  //定义一个myw，接受到当前全屏的高   
+       if (width>myw) width = myw;
+       if (height>myh) height = myh;
+       
+       var top = (myh-height)/2-(window.screen.height-myh)/2;
+       if (top<0) top = 0;
+       
+       var left = (myw-width)/2-(window.screen.width-myw)/2;
+       if (left<0) left = 0;
+       //window.open(url,id,"height="+height+", width="+width+", top="+top+", left="+left+",location=no,menubar=no,toolbar=no,status=no,resizable=yes,scrollbars=yes");
+       var winid = parseInt(Math.random()*10000000000)+"";
+       window.open(url,winid,"height="+height+", width="+width+", top="+top+", left="+left+",location=no,menubar=no,toolbar=no,status=no,resizable=yes,scrollbars=yes");   
+    }
+});
+</script>

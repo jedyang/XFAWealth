@@ -1,0 +1,15 @@
+.regist-head-wrap{overflow: hidden;background:rgba(255,255,255,0.5);padding: 10px 23px;}
+.regist-head-left{float: left;overflow: hidden;}
+.regist-head-left-head{float: left; }
+.regist-head-left-title{float: left;padding: 7px 0;margin-left: 10px;text-align: left;}
+.regist-head-left-xinhua{font-size: 18px;}
+.regist-head-left-word{margin-top: 5px;font-size: 13px;}
+.regist-head-right{float: right;padding: 15px 0px;margin-right: 25px;}
+.regist-head-right-home{float: right;}
+.regist-head-right-home img{margin-right: 6px;}
+.regist-head-right-lang{float: right;margin-right: 80px;}
+.regist-head-lang-word{float: left;border-left: 1px solid #333333;padding: 0px 15px;}
+.regist-head-lang-word:nth-child(1){border: 0px;}
+.regist-bg{min-height:calc(100vh - 102px);width:100%;margin:0px auto; background: url('../images/register/regist_bg.jpg') repeat-x bottom; background-size: 100% 100%;background-color:#f2f7fd;padding-top:101px;}
+.regist-big-title{color: #315788; font-size: 28px; margin-top: 30px; margin-bottom: 40px; }
+.wmes-content{margin: 0px 0px 5px 85px;}

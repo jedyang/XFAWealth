@@ -1,0 +1,71 @@
+package com.fsll.wmes.group.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+import com.fsll.common.CommonConstants;
+import com.fsll.common.base.service.BaseService;
+import com.fsll.common.util.DateUtil;
+import com.fsll.common.util.JsonPaging;
+import com.fsll.common.util.PropertyUtils;
+import com.fsll.core.entity.SysAdmin;
+import com.fsll.wmes.entity.MemberBase;
+import com.fsll.wmes.entity.MemberGroup;
+import com.fsll.wmes.group.service.MemberGroupService;
+import com.fsll.wmes.group.vo.MemberGroupVO;
+
+@Service("memberGroupService")
+public class MemberGroupServiceImpl extends BaseService implements MemberGroupService {
+
+	/**
+	 *  客户分组数据获取
+	 * @author wwluo
+	 * @date 2017-06-01
+	 * @param jsonPaging
+	 * @param langCode
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public JsonPaging getGroups(JsonPaging jsonPaging, String langCode) {
+		StringBuffer hql = new StringBuffer(""
+				+ " FROM MemberGroup g ORDER BY g.createTime ASC"
+				+ "");
+		jsonPaging = this.baseDao.selectJsonPaging(hql.toString(), null, jsonPaging, false);
+		if(jsonPaging != null && !jsonPaging.getList().isEmpty()){
+			List<MemberGroupVO> vos = new ArrayList<MemberGroupVO>();
+			List<MemberGroup> groups = jsonPaging.getList();
+			for (MemberGroup memberGroup : groups) {
+				MemberGroupVO vo = new MemberGroupVO();
+				BeanUtils.copyProperties(memberGroup, vo);
+				if("1".equals(vo.getIsValid())){
+					vo.setStatusDisplay(PropertyUtils.getPropertyValue(langCode, "global.status.valid", null));
+				}else if("0".equals(vo.getIsValid())){
+					vo.setStatusDisplay(PropertyUtils.getPropertyValue(langCode, "global.status.invalid", null));
+				}else if("-1".equals(vo.getIsValid())){
+					vo.setStatusDisplay(PropertyUtils.getPropertyValue(langCode, "global.status.deleted", null));
+				}
+				if (vo.getCreateTime() != null) {
+					vo.setCreateTimeStr(DateUtil.dateToDateString(vo.getCreateTime(), CommonConstants.FORMAT_DATE_TIME));
+				}
+				if (StringUtils.isNotBlank(vo.getCreatorId())) {
+					SysAdmin admin = (SysAdmin) baseDao.get(SysAdmin.class, vo.getCreatorId());
+					if(admin != null){
+						vo.setCreator(admin.getNickName());
+					}else{
+						MemberBase member = (MemberBase) baseDao.get(MemberBase.class, vo.getCreatorId());
+						vo.setCreator(getCommonMemberName(member.getId(), langCode, "2"));
+					}
+				}
+				vos.add(vo);
+			}
+			jsonPaging.getList().clear();
+			jsonPaging.getList().addAll(vos);
+		}
+		return jsonPaging;
+	}
+
+}

@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fund fees item</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+        <div class="tab-side-container">
+             <form class="form-horizontal" style="display:block;">
+                  <div class="form-group">
+                     <div class="col-xs-3 text-right">
+                         <label for="txtExDividendDate" class="label-control">[@lang_res  k='console.fund.bonus.exDividendDate'/]</label>
+                     </div>
+                     <div class="col-xs-8">
+                     	<!--  
+                         <input type="text" id="txtExDividendDate" name="txtExDividendDate" class="form-control" value="${(info.exDividendDate)?if_exists}">
+                         -->
+                         <input id='txtExDividendDate' type="text" name="txtExDividendDate" 
+					        class="laydate-icon form-control form-control-laydate" 
+					        style="height: 34px; padding: 6px 12px;" 
+					        onclick="laydate({istime: false, format: 'YYYY-MM-DD'})" name="born" value="${(info.exDividendDate?string('yyyy-MM-dd'))?if_exists}">
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <div class="col-xs-3 text-right">
+                         <label for="txtDividendPerUnit" class="label-control">[@lang_res  k='console.fund.bonus.dividendPerUnit'/]</label>
+                     </div>
+                     <div class="col-xs-8">
+                         <input type="text" id="txtDividendPerUnit" name="txtDividendPerUnit" class="form-control" value="${(info.dividendPerUnit)?if_exists}">
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <div class="col-xs-3 text-right">
+                         <label for="txtAnnualDividendYield" class="label-control">[@lang_res  k='console.fund.bonus.annualDividendYield'/]</label>
+                     </div>
+                     <div class="col-xs-8">
+                         <input type="text" id="txtAnnualDividendYield" name="txtAnnualDividendYield" class="form-control" value="${(info.annualDividendYield)?if_exists}">
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <div class="col-xs-3 text-right">
+                         <label for="txtYear" class="label-control">[@lang_res  k='console.fund.bonus.year'/]</label>
+                     </div>
+                     <div class="col-xs-8">
+                         <input type="text" id="txtYear" name="txtYear" class="form-control" value="${(info.year)?if_exists}">
+                     </div>
+                 </div>
+                 
+                 
+              	 <div class="text-center pd10">
+                 	<a href="#" id="btnSave" class="btn-blue-s2">[@lang_res  k='global.save'/]</a>
+              	</div>
+            </form>    
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/laydate/laydate.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	$(function(){
+    	var id = getUrlParam('id');
+    	var fundId = getUrlParam('fundId');
+        //绑定查询按钮事件
+        $("#btnSave").click(function () {	
+        	var exDividendDate = $('#txtExDividendDate').val();
+        	var dividendPerUnit = $('#txtDividendPerUnit').val();
+        	var annualDividendYield = $('#txtAnnualDividendYield').val();
+        	var year = $('#txtYear').val();
+        	saveFeesItem(fundId,id,exDividendDate,dividendPerUnit,annualDividendYield,year);        	 
+        });	  
+        
+        $("#btnBackEn").click(function () {  
+	        	backToList();	
+        });	                  
+	});
+  
+  	//保存数据
+	function saveFeesItem(fundId,id,exDividendDate,dividendPerUnit,annualDividendYield,year){
+		$.ajax({
+			type : 'post',
+			dataType : 'json',
+			url : '${base}/console/fund/info/saveBonus.do?datestr='+new Date().getTime(),
+			data : {
+				'fundId' : fundId,
+				'id' : id,
+				'exDividendDate' : exDividendDate,
+				'dividendPerUnit' : dividendPerUnit,
+				'annualDividendYield' : annualDividendYield,
+				'year' : year
+			},
+			success : function(data) {
+				var result = data.result;
+				if(true==result) { 
+					layer.msg('保存成功', {icon: 1}, function () { 
+						setTimeout(function(){
+							parent.document.getElementById("btnSearch").click();
+			    			parent.document.getElementById("btnCloseIframe").click(); 
+						},500)});          			
+				} else { 
+					layer.msg('保存失败', {icon: 0, time: 2000}, function () {   });
+				}
+			}
+		});
+	}
+	
+	function backToList(){
+		var fundId = getUrlParam('fundId');
+		window.location.href = '${base}/console/fund/info/fundBonusList.do?fundId='+fundId;
+	}
+	
+
+</script>
+</body>
+</html>

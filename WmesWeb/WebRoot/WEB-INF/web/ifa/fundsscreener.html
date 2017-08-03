@@ -1,0 +1,543 @@
+[#include "../inc/head_v2.html"/]
+        <link rel="stylesheet" href="${base}/res/css/range.css"> 
+        <link rel="stylesheet" href="${base}/res/css/Funds.css">  
+        <div class="wmes-top">
+            <a href="javascript:;" class="header-over">[@lang_res k='fund.info.fundsScreener'/]</a>
+        </div>
+        <div class="wmes-content">
+        	<div class="funds-screnner-rows" style="padding-bottom: 0px;margin-bottom: 5px;">
+        	<p class="wmes-wrap-title">[@lang_res k='fund.info.fundsScreener'/]</p>
+                <div class="screener-a-title">
+                    <div class="srenner-a-rows">
+                        <a href="${base}/front/fund/info/list.do" style="display:inline-block;">[@lang_res k='fund.info.screener.simpleSearch'/]</a>
+                        <a href="javascript:;" id="j-criteria" style="text-align: right;display:inline-block;width:auto;">[@lang_res k='fund.info.screener.myCriteria'/]</a>
+                        <ul class="srenner-criteria" id="srenner-criteria-list">
+                            
+                        </ul>
+                    </div>
+                    <div class="srenner-a-rows"><a href="${base}/front/ifa/info/myfavorites.do">[@lang_res k='fund.info.screener.myWatchlist'/]</a></div>
+                </div>
+        		<div class="screener-sum-wrap" style="border-bottom: 1px solid #e3e3e3;">
+        			<p class="screener-title">[@lang_res k='fund.info.screener.fundUniverse'/]</p>
+        			<div class="screener-matches-wrap screener-matches-pad">
+        				<p class="screener-matches">[@lang_res k='fund.info.screener.fundTypeMatches'/] <span class="screener-matches-sum">0</span></p>
+        			</div>       			
+        		</div>
+        	</div>
+        	<div class="funds-screnner-rows">
+        		<div class="screener-sum-wrap">
+        			<p class="screener-title"><span class="screnner-title-ranking">1</span>[@lang_res k='fund.info.screener.general'/]</p>     			
+        		</div>
+        		<div class="funds-screener-choose">
+        			<div class="screener-choose-left" >
+        				<ul class="screener-condition">
+                            <li class="now">[@lang_res k='fund.info.screener.fundsType'/]<span class="screener-condition-num"></span></li>
+                            <li>[@lang_res k='fund.info.screener.geoAllocation'/]<span class="screener-condition-num"></span></li>
+                            <li>[@lang_res k='fund.info.screener.sector'/]<span class="screener-condition-num"></span></li>
+                            <li>[@lang_res k='fund.info.screener.currency'/]<span class="screener-condition-num"></span></li>
+                            <li>[@lang_res k='fund.info.screener.distributor'/]<span class="screener-condition-num"></span></li>
+        				</ul>
+        			</div>
+        			<div class="screener-choose-right">
+        				<div class="choose-already-top">
+        					<p id="btn_selectedall" class="choose-already-select">[@lang_res k='fund.info.screener.selectAll'/]</p>
+        					<p id="btn_clearselectedall" class="choose-already-remove">[@lang_res k='fund.info.screener.removeAll'/]</p>
+        				</div>
+        				<div class="choose-already-bottom">
+                            <div>
+                            <ul class="choose-already choose-already-active">
+                            [#if fundtypeList?exists && fundtypeList?size gt 0]
+                            [#list fundtypeList as cList]
+                               <li class="choose-already-li unchoose" data-text="${cList.name!}">
+                                    <p data-name="fundType"  data-text="${cList.name!}" data-value="${cList.itemCode!}" class="choose-already-word">${cList.name!}
+                                        <a href="javascript:;" data-name="fundType"  data-text="${cList.name!}" data-value="${cList.itemCode!}" class="choose-already-close"></a>
+                                    </p>
+                                </li>
+                            [/#list]
+                            [/#if]
+                            </ul>
+                            <ul class="choose-already">
+                            [#if allocationList?exists && allocationList?size gt 0]
+							[#list allocationList as cList]
+							   <li class="choose-already-li unchoose" data-text="${cList.name!}">
+                                    <p data-name="geoAllocation"  data-text="${cList.name!}" data-value="${cList.itemCode!}" class="choose-already-word">${cList.name!}
+                                        <a href="javascript:;" data-name="geoAllocation"  data-text="${cList.name!}" data-value="${cList.itemCode!}" class="choose-already-close"></a>
+                                    </p>
+                                </li>
+							[/#list]
+							[/#if]
+                            </ul>
+                            <ul class="choose-already">
+                            [#if sectorList?exists && sectorList?size gt 0]
+							[#list sectorList as cList]
+							   <li class="choose-already-li unchoose" data-text="${cList.name!}">
+                                    <p data-name="sectorType"  data-text="${cList.name!}" data-value="${cList.itemCode!}" class="choose-already-word">${cList.name!}
+                                        <a href="javascript:;" data-name="sectorType"  data-text="${cList.name!}" data-value="${cList.itemCode!}" class="choose-already-close"></a>
+                                    </p>
+                                </li>
+							[/#list]
+							[/#if]
+                            </ul>
+                            <ul class="choose-already">                             
+                            [#if currencyList?exists && currencyList?size gt 0]
+                            [#list currencyList as cList]
+                               <li class="choose-already-li unchoose" data-text="${cList.name!}">
+                                    <p data-name="currency"  data-text="${cList.name!}"  data-value="${cList.itemCode!}" class="choose-already-word">${cList.name!}
+                                        <a href="javascript:;" data-name="currency"  data-value="${cList.itemCode!}" class="choose-already-close"></a>
+                                    </p>
+                                </li>
+                            [/#list]
+                            [/#if]
+                            </ul>
+                            <ul class="choose-already">
+                            [#if distributorList?exists && distributorList?size gt 0]
+							[#list distributorList as cList]
+							   <li class="choose-already-li unchoose" data-text="${cList.companyName!}">
+                                    <p data-name="distributor"  data-text="${cList.companyName!}" data-value="${cList.id!}" class="choose-already-word">${cList.companyName!}
+                                        <a href="javascript:;" data-name="distributor"  data-text="${cList.companyName!}" data-value="${cList.id!}" class="choose-already-close"></a>
+                                    </p>
+                                </li>
+							[/#list]
+							[/#if]
+                            </ul>
+                            </div>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="funds-screnner-rows">
+        		<div class="screener-sum-wrap">
+        			<p class="screener-title"><span class="screnner-title-ranking">2</span>[@lang_res k='fund.info.screener.attributes'/]</p>
+        			<div class="screener-matches-wrap">
+        				<!-- <p class="screener-matches">Fund Type Matches <span id="sp_Fund-type-matches" class="screener-matches-sum">383</span></p>
+	        			<p class="screener-matches">Cumulative Matches <span id="sp_Cumulative-matches" class="screener-matches-sum">383</span></p>
+	        			<span class="screener-xiala"></span> -->
+        			</div>       			
+        		</div>
+        		<ul class="screener-attributes-wrap">
+                    <li data-criteria="fundsHouse">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.fundHouse'/]</p>                
+                            </div>
+                            <ul class="attributes-house-ul">
+                                <li data-letter="" class="attributes-house-active">[@lang_res k='fund.info.searchAll'/]</li>
+                                <li data-letter="A,B,C,D,E">A - E</li>
+                                <li data-letter="F,G,H,I,J">F - J</li>
+                                <li data-letter="K,L,M,N,O">K - O</li>
+                                <li data-letter="P,Q,R,S,T">P - T</li>
+                                <li data-letter="U,V,W,S,Y,Z">U - Z</li>
+                            </ul>
+                            <ul class="attributes-logo-choice" id="logo-choice">
+                   				[#if fundHouseList?exists && fundHouseList?size gt 0 ]
+								[#list fundHouseList as houseList]
+								<li style="display:none;" title="${houseList.houseName}" data-letter="${houseList.pinYin}" data-text="${houseList.houseName}" data-name="FundHouse" data-value="${houseList.id}" >
+									<img src="${base}/res/images/logo/logo${houseList_index}.png" alt=""> </li>
+								[/#list]
+								[/#if]                                
+                            </ul>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico" data-name="FundHouse"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="screener-attributes-show" data-criteria="fundSize">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.fundSize'/]</p>                
+                            </div>
+                            <ul class="attributes-date-ul fundSize">
+                            [#if fundsizeList?exists && fundsizeList?size gt 0]
+							[#list fundsizeList as cList]
+								<li style="width:19.5%;margin-right:0.5%;" data-name="fundSize" data-value="${cList.itemCode!}">
+                                    ${cList.name!}
+                                     <a href="javascript:;" data-name="fundSize" data-value="" class="choose-already-close"></a>
+                                </li>
+							[/#list]
+							[/#if]
+                            </ul>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="screener-attributes-show" data-criteria="inceptionDate">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.IssueDate'/]</p>
+                            </div>
+                            <ul class="attributes-date-ul inceptionDate">
+                            [#if issuedateList?exists && issuedateList?size gt 0]
+							[#list issuedateList as cList]
+								<li style="width:24.5%;margin-right:0.5%;" data-name="inceptionDate" data-value="${cList.itemCode!}">${cList.name!}
+                                <a href="javascript:;" data-name="inceptionDate" data-value="" class="choose-already-close"></a></li>
+							[/#list]
+							[/#if]
+                            </ul>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico" data-name="inceptionDate"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li data-criteria="mgtFee">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.mgtFee'/]</p>
+                            </div>
+                            <ul class="attributes-date-ul mgtFee">
+                            [#if mgtfeeList?exists && mgtfeeList?size gt 0]
+							[#list mgtfeeList as cList]
+								<li style="width:13.5%;margin-right:0.5%;" data-name="mgtFee" data-value="${cList.itemCode!}">${cList.name!}<a href="javascript:;" data-name="mgtFee" data-value="" class="choose-already-close"></a></li>
+							[/#list]
+							[/#if]
+                            </ul>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico" data-name="mgtFee"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li data-criteria="minInitialInv">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.minInitialInv'/]</p>
+                            </div>
+                            <ul class="attributes-date-ul minInitialInv">
+                            [#if mininitialList?exists && mininitialList?size gt 0]
+							[#list mininitialList as cList]
+								<li style="width:13.5%;margin-right:0.5%;" data-name="minInitialInv" data-value="${cList.itemCode!}">${cList.name!}<a href="javascript:;" data-name="minInitialInv" data-value="" class="choose-already-close"></a>
+                                </li>
+							[/#list]
+							[/#if]
+                            </ul>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico" data-name="minInitialInv"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li data-criteria="trailing1Mon">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.screener.performance.1MonthReturn'/]</p>
+                            </div>
+                            <div class="attributes-draw-wrap">
+                                <input type="" id="trailing1Mon_leftInput" name="trailing1Mon_leftInput" class="attributes-leftInput trailing1Mon">
+                                <span>%</span>
+                                <div class="attributes-draw">
+                                    <input class="range-slider return_period_code_1M" type="hidden" value="25,75">
+                                </div>
+                                <input type="" id="trailing1Mon_rightInput" name="trailing1Mon_rightInput" class="attributes-rightInput">
+                                <span>%</span>
+                            </div>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico"  data-name="trailing1Mon"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li data-criteria="trailing3Mon">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.screener.performance.3MonthReturn'/]</p>
+                            </div>
+                            <div class="attributes-draw-wrap">
+                                <input type="" id="trailing3Mon_leftInput" name="trailing3Mon_leftInput" class="attributes-leftInput">
+                                <span>%</span>
+                                <div class="attributes-draw">
+                                    <input class="range-slider return_period_code_3M" type="hidden" value="25,75">
+                                </div>
+                                <input type="" id="trailing3Mon_rightInput" name="trailing3Mon_rightInput" class="attributes-rightInput">
+                                <span>%</span>
+                            </div>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico"  data-name="trailing3Mon"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li data-criteria="trailing6Mon">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.screener.performance.6MonthReturn'/]</p>
+                            </div>
+                            <div class="attributes-draw-wrap">
+                                <input type="" id="trailing6Mon_leftInput" name="trailing6Mon_leftInput" class="attributes-leftInput">
+                                <span>%</span>
+                                <div class="attributes-draw">
+                                    <input class="range-slider return_period_code_6M" type="hidden" value="25,75">
+                                </div>
+                                <input type=""  id="trailing6Mon_rightInput" name="trailing6Mon_rightInput" class="attributes-rightInput">
+                                <span>%</span>
+                            </div>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico"  data-name="trailing6Mon"></a>
+                            </div>
+                        </div>
+                    </li>
+        			<li class="screener-attributes-show" data-criteria="trailingYTD">
+        				<div class="attributes-wrap">
+	        				<div class="screener-sum-wrap">
+			        			<p class="attributes-title">[@lang_res k='fund.info.screener.performance.YTDReturn'/]</p>
+			        			<!-- <div class="screener-matches-wrap">
+			        				<p class="screener-matches">3-year trailing total return matches <span class="screener-matches-sum">383</span></p>
+				        			<p class="screener-matches">Cumulative matches <span  class="screener-matches-sum">383</span></p>
+			        			</div> -->       			
+			        		</div>
+			        		<div class="attributes-draw-wrap">
+			        			<input type="text" id="trailingYTD_leftInput" name="trailingYTD_leftInput" class="attributes-leftInput">
+			        			<span>%</span>
+			        			<div class="attributes-draw">
+			        				<input class="range-slider return_period_code_YTD" type="hidden" value="0.25,0.75">
+			        			</div>
+			        			<input type="text"  id="trailingYTD_rightInput" name="trailingYTD_rightInput" class="attributes-rightInput">
+			        			<span>%</span>
+			        		</div>
+	        				<div class="attributes-close">
+        						<a href="javascript:;" class="attributes-close-ico"  data-name="trailingYTD"></a>
+        					</div>
+        				</div>
+        			</li>
+                    <li data-criteria="trailing1Year">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.screener.performance.1YearReturn'/]</p>
+                            </div>
+                            <div class="attributes-draw-wrap">
+                                <input type="" id="trailing1Year_leftInput" name="trailing1Year_leftInput" class="attributes-leftInput">
+                                <span>%</span>
+                                <div class="attributes-draw">
+                                    <input class="range-slider return_period_code_1Y" type="hidden" value="25,75">
+                                </div>
+                                <input type=""  id="trailing1Year_rightInput" name="trailing1Year_rightInput" class="attributes-rightInput">
+                                <span>%</span>
+                            </div>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico"  data-name="trailing1Year"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li data-criteria="trailing3Year">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.screener.performance.3YearReturn'/]</p>
+                            </div>
+                            <div class="attributes-draw-wrap">
+                                <input type="" id="trailing3Year_leftInput" name="trailing3Year_leftInput" class="attributes-leftInput">
+                                <span>%</span>
+                                <div class="attributes-draw">
+                                    <input class="range-slider return_period_code_3Y" type="hidden" value="25,75">
+                                </div>
+                                <input type=""  id="trailing3Year_rightInput" name="trailing3Year_rightInput" class="attributes-rightInput">
+                                <span>%</span>
+                            </div>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico" data-name="trailing3Year"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li data-criteria="trailing5Year">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.screener.performance.5YearReturn'/]</p>
+                            </div>
+                            <div class="attributes-draw-wrap">
+                                <input type="" id="trailing5Year_leftInput" name="trailing5Year_leftInput" class="attributes-leftInput">
+                                <span>%</span>
+                                <div class="attributes-draw">
+                                    <input class="range-slider return_period_code_5Y" type="hidden" value="25,75">
+                                </div>
+                                <input type=""  id="trailing5Year_rightInput" name="trailing5Year_rightInput" class="attributes-rightInput">
+                                <span>%</span>
+                            </div>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico" data-name="trailing5Year"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li data-criteria="sinceLaunch">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.screener.performance.SinceLaunchReturn'/]</p>
+                            </div>
+                            <div class="attributes-draw-wrap">
+                                <input type=""  id="sinceLaunch_leftInput" name="sinceLaunch_leftInput" class="attributes-leftInput">
+                                <span>%</span>
+                                <div class="attributes-draw">
+                                    <input class="range-slider return_period_code_LAUNCH" type="hidden" value="25,75">
+                                </div>
+                                <input type=""  id="sinceLaunch_rightInput" name="sinceLaunch_rightInput" class="attributes-rightInput">
+                                <span>%</span>
+                            </div>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico" data-name="sinceLaunch"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li data-criteria="riskLevel">
+                        <div class="attributes-wrap">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.screener.risk'/]</p>
+                            </div>
+                            <ul class="attributes-date-ul riskLevel">
+                                <li style="width: 13.5%;margin-right:0.5%;" data-name="riskLevel" data-value="1">1<a href="javascript:;" data-name="riskLevel" data-value="" class="choose-already-close"></a></li>
+                                <li style="width: 13.5%;margin-right:0.5%;" data-name="riskLevel" data-value="2">2<a href="javascript:;" data-name="riskLevel" data-value="" class="choose-already-close"></a></li>
+                                <li style="width: 13.5%;margin-right:0.5%;" data-name="riskLevel" data-value="3">3<a href="javascript:;" data-name="riskLevel" data-value="" class="choose-already-close"></a></li>
+                                <li style="width: 13.5%;margin-right:0.5%;" data-name="riskLevel" data-value="4">4<a href="javascript:;" data-name="riskLevel" data-value="" class="choose-already-close"></a></li>
+                                <li style="width: 13.5%;margin-right:0.5%;" data-name="riskLevel" data-value="5">5<a href="javascript:;" data-name="riskLevel" data-value="" class="choose-already-close"></a></li>
+                                <li style="width: 13.5%;margin-right:0.5%;" data-name="riskLevel" data-value="6">6<a href="javascript:;" data-name="riskLevel" data-value="" class="choose-already-close"></a></li>
+                                <li style="width: 13.5%;margin-right:0.5%;" data-name="riskLevel" data-value="7">7<a href="javascript:;" data-name="riskLevel" data-value="" class="choose-already-close"></a></li>
+                            </ul>
+                            <div class="attributes-close">
+                                <a href="javascript:;" class="attributes-close-ico" data-name="riskLevel"></a>
+                            </div>
+                        </div>
+                    </li>
+        		</ul>
+                <div class="screener-add-attributes">
+                        <div class="screener-wrap-attributes">
+                            <div class="screener-sum-wrap">
+                                <p class="attributes-title">[@lang_res k='fund.info.screener.criteria'/]</p>
+                                <a href="javascript:;" class="wmes-close" id="fund-criteria-close"></a>
+                            </div>
+                            <div class="screener-add-contains">
+                                <ul class="screener-contains-left">
+                                    <li data-type="Profile">[@lang_res k='fund.info.screener.profile'/]</li>
+                                    <li data-type="Investment">[@lang_res k='fund.info.screener.investment'/]</li>
+                                    <li data-type="Performance">[@lang_res k='fund.info.screener.performance'/]</li>
+                                    <li data-type="RiskLevel">[@lang_res k='fund.info.screener.risk'/]</li>
+                                    <!-- <li>Investment<span class="screener-condition-num">6 of 43</span></li> -->
+                                </ul>
+                                <ul class="screener-contains-right">
+                                    <li class="screener-contains-criteria">
+                                        <ul class="screenr-criteria-ul" style="display:block;" data-type="Profile">
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.fundHouse'/]</p><a class="screener-criteria-button screener-block-button" href="javascript:;" data-criteria="fundsHouse">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button" href="javascript:;" data-criteria="fundsHouse">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.fundSize'/]</p><a class="screener-criteria-button" href="javascript:;" data-criteria="fundSize">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button screener-block-button" href="javascript:;" data-criteria="fundSize">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.IssueDate'/]</p><a class="screener-criteria-button" href="javascript:;" data-criteria="inceptionDate">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button screener-block-button" href="javascript:;" data-criteria="inceptionDate">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                        </ul>
+                                        <ul class="screenr-criteria-ul" data-type="Investment">
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.mgtFee'/]</p><a class="screener-criteria-button screener-block-button" href="javascript:;" data-criteria="mgtFee">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button" href="javascript:;" data-criteria="mgtFee">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.minInitialInv'/]</p><a class="screener-criteria-button screener-block-button" href="javascript:;" data-criteria="minInitialInv">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button" href="javascript:;" data-criteria="minInitialInv">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                        </ul>
+                                        <ul class="screenr-criteria-ul" data-type="Performance">
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.screener.performance.1MonthReturn'/]</p><a class="screener-criteria-button screener-block-button" href="javascript:;" data-criteria="trailing1Mon">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button" href="javascript:;" data-criteria="trailing1Mon">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.screener.performance.3MonthReturn'/]</p><a class="screener-criteria-button screener-block-button" href="javascript:;" data-criteria="trailing3Mon">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button" href="javascript:;" data-criteria="trailing3Mon">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.screener.performance.6MonthReturn'/]</p><a class="screener-criteria-button screener-block-button" href="javascript:;" data-criteria="trailing6Mon">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button" href="javascript:;" data-criteria="trailing6Mon">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.screener.performance.YTDReturn'/]</p><a class="screener-criteria-button" href="javascript:;" data-criteria="trailingYTD">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button screener-block-button" href="javascript:;" data-criteria="trailingYTD">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.screener.performance.1YearReturn'/]</p><a class="screener-criteria-button screener-block-button" href="javascript:;" data-criteria="trailing1Year">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button" href="javascript:;" data-criteria="trailing1Year">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.screener.performance.3YearReturn'/]</p><a class="screener-criteria-button screener-block-button" href="javascript:;" data-criteria="trailing3Year">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button" href="javascript:;" data-criteria="trailing3Year">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.screener.performance.5YearReturn'/]</p><a class="screener-criteria-button screener-block-button" href="javascript:;" data-criteria="trailing5Year">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button" href="javascript:;" data-criteria="trailing5Year">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.screener.performance.SinceLaunchReturn'/]</p><a class="screener-criteria-button screener-block-button" href="javascript:;" data-criteria="sinceLaunch">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button" href="javascript:;" data-criteria="sinceLaunch">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                        </ul>
+                                        <ul class="screenr-criteria-ul" data-type="RiskLevel">
+                                            <li><p class="screenr-criteria-title">[@lang_res k='fund.info.screener.risk'/]</p><a class="screener-criteria-button screener-block-button" href="javascript:;" data-criteria="riskLevel">[@lang_res k='fund.info.screener.add'/]</a>
+                                            <a class="screener-hide-button" href="javascript:;" data-criteria="riskLevel">[@lang_res k='fund.info.screener.remove'/]</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                </div>
+                <div>
+					<input type="hidden" name="currencyLabel" value="Funds Currency" id="currencyLabel"/>
+					<input type="hidden" name="currency" value="" id="currency"/>
+					<input type="hidden" name="currencyText" value="" id="currencyText"/>
+					
+					<input type="hidden" name="geoAllocationLabel" value="Geographic Allocation" id="geoAllocationLabel"/>
+					<input type="hidden" name="geoAllocation" value="" id="geoAllocation"/>
+					<input type="hidden" name="geoAllocationText" value="" id="geoAllocationText"/>
+					
+					<input type="hidden" name="fundTypeLabel" value="Funds Type" id="fundTypeLabel"/>
+					<input type="hidden" name="fundType" value="" id="fundType"/>
+					<input type="hidden" name="fundTypeText" value="" id="fundTypeText"/>
+					
+					<input type="hidden" name="sectorTypeLabel" value="Sector" id="sectorTypeLabel"/>
+					<input type="hidden" name="sectorType" value="" id="sectorType"/>
+					<input type="hidden" name="sectorTypeText" value="" id="sectorTypeText"/>
+					
+					<input type="hidden" name="distributorLabel" value="Distributor" id="distributorLabel"/>	
+					<input type="hidden" name="distributor" value="" id="distributor"/>	
+					<input type="hidden" name="distributorText" value="" id="distributorText"/>					
+					
+					<input type="hidden" name="fundHouseIdsLabel" value="Funds House" id="fundHouseIdsLabel"/>
+					<input type="hidden" name="fundHouseIds" value="" id="fundHouseIds"/>
+					<input type="hidden" name="fundHouseIdsText" value="" id="fundHouseIdsText"/>
+					
+					<input type="hidden" name="fundSizeLabel" value="Funds Size" id="fundSizeLabel"/>
+					<input type="hidden" name="fundSize" value="" id="fundSize"/>
+					<input type="hidden" name="fundSizeText" value="" id="fundSizeText"/>
+					
+					<input type="hidden" name="inceptionDateLabel" value="Inception Date" id="inceptionDateLabel"/>
+					<input type="hidden" name="inceptionDate" value="" id="inceptionDate"/>
+					<input type="hidden" name="inceptionDateText" value="" id="inceptionDateText"/>
+															
+					<input type="hidden" name="minInitialInvLabel" value="Minimum Initial Investment" id="minInitialInvLabel"/>
+					<input type="hidden" name="minInitialInv" value="" id="minInitialInv"/>
+					<input type="hidden" name="minInitialInvText" value="" id="minInitialInvText"/>
+					
+					<input type="hidden" name="mgtFeeLabel" value="Management Fee" id="mgtFeeLabel"/>	
+					<input type="hidden" name="mgtFee" value="" id="mgtFee"/>
+					<input type="hidden" name="mgtFeeText" value="" id="mgtFeeText"/>
+					
+					<input type="hidden" name="riskLevelLabel" value="Risk Level" id="riskLevelLabel"/>
+					<input type="hidden" name="riskLevel" value="" id="riskLevel"/>
+					<input type="hidden" name="riskLevelText" value="" id="riskLevelText"/>
+					
+					<input type="hidden" name="sinceLaunchLabel" value="Since Launch Return" id="sinceLaunchLabel"/>
+					<input type="hidden" name="sinceLaunch" value="" id="sinceLaunch"/>
+					<input type="hidden" name="sinceLaunchText" value="" id="sinceLaunchText"/>
+					
+					<input type="hidden" name="trailingYTDLabel" value="YTD Return" id="trailingYTDLabel"/>
+					<input type="hidden" name="trailingYTD" value="" id="trailingYTD"/>
+					<input type="hidden" name="trailingYTDText" value="" id="trailingYTDText"/>
+					
+					<input type="hidden" name="trailing1MonLabel" value="1 Month Return" id="trailing1MonLabel"/>
+					<input type="hidden" name="trailing1Mon" value="" id="trailing1Mon"/>
+					<input type="hidden" name="trailing1MonText" value="" id="trailing1MonText"/>
+					
+					<input type="hidden" name="trailing3MonLabel" value="3 Month Return" id="trailing3MonLabel"/>
+					<input type="hidden" name="trailing3Mon" value="" id="trailing3Mon"/>
+					<input type="hidden" name="trailing3MonText" value="" id="trailing3MonText"/>
+					
+					<input type="hidden" name="trailing6MonLabel" value="6 Month Return" id="trailing6MonLabel"/>
+					<input type="hidden" name="trailing6Mon" value="" id="trailing6Mon"/>
+					<input type="hidden" name="trailing6MonText" value="" id="trailing6MonText"/>
+					
+					<input type="hidden" name="trailing1YearLabel" value="1 Year Return" id="trailing1YearLabel"/>
+					<input type="hidden" name="trailing1Year" value="" id="trailing1Year"/>
+					<input type="hidden" name="trailing1YearText" value="" id="trailing1YearText"/>
+					
+					<input type="hidden" name="trailing3YearLabel" value="3 Year Return" id="trailing3YearLabel"/>
+					<input type="hidden" name="trailing3Year" value="" id="trailing3Year"/>
+					<input type="hidden" name="trailing3YearText" value="" id="trailing3YearText"/>
+					
+					<input type="hidden" name="trailing5YearLabel" value="5 Year Return" id="trailing5YearLabel"/>
+					<input type="hidden" name="trailing5Year" value="" id="trailing5Year"/>
+					<input type="hidden" name="trailing5YearText" value="" id="trailing5YearText"/>
+					
+					<input type="hidden" name="search_filter" value="" id="search_filter"/>
+					
+                </div>
+        		<div class="screener-attributes-button">
+        			<a id="addCriteria" class="attributes-button" href="javascript:;">[@lang_res k='fund.info.screener.addCriteria'/]</a>
+        			<a id="saveCriteria" class="attributes-button" style="display:none;" href="javascript:;">[@lang_res k='fund.info.screener.saveCriteria'/]</a>
+        			<a id="resetCriteria" class="attributes-button" href="javascript:;">[@lang_res k='fund.info.screener.resetCriteria'/]</a>
+        			<a id="viewMatches" class="attributes-button" href="javascript:;">[@lang_res k='fund.info.screener.view'/] <span id="matches-number">0</span> [@lang_res k='fund.info.screener.matches'/]</a>
+        		</div>
+        	</div>        	
+        </div>
+<div class="fundsadd-space-mask"></div>
+[#include "../inc/foot_v2.html"/]
+
+<script type="text/javascript">
+	 seajs.use('${base}/res/web/ifa/screen.js');
+</script>

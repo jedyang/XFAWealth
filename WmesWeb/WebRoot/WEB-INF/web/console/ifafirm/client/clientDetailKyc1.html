@@ -1,0 +1,962 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+    <link rel="stylesheet" href="${base}/res/css/other.css">
+    <link rel="stylesheet" href="${base}/res/css/wmesupload.css">  
+    <style>
+    .dialog-form dl,.div-content dl{ clear:both; display:block; padding:5px 0; line-height:30px; }
+	.dialog-form dl:after,.div-content dl:after{ clear:both; content:"."; display:block; height:0; visibility:hidden; }
+	.dialog-form dl:first-child{ border-top:none; }
+	.dialog-form dl dt{ display:block; float:left; width:200px; text-align:right; color:#000000; }/*color:#6d7e86;*/
+	.dialog-form dl dd{ position:relative; margin-left:150px; }
+	.dialog-form .input {
+	  padding: 5px 4px;
+	  min-height: 32px;
+	  line-height: 20px;
+	  border: 1px solid #eee;
+	  background: #fff;
+	  vertical-align: middle;
+	  color: #333;
+	  font-size: 100%;
+	  box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  -webkit-box-sizing: border-box;
+	  width:300px;
+	}
+	.dialog-form textarea {border: 1px solid #eee; font-size: 100%;}
+	.document-update-rows .swiper-button-next {
+	    background: rgba(0, 0, 0, 0) url("${base}/res/images/ifa/right_ico.png") no-repeat scroll 0 0 / 100% 100%;
+	    opacity: 0.8;
+	    right: 0;
+	    width: 45px;
+	}
+	.document-update-rows .swiper-button-prev {
+	    background: rgba(0, 0, 0, 0) url("${base}/res/images/ifa/left_ico.png") no-repeat scroll 0 0 / 100% 100%;
+	    left: 0;
+	    opacity: 0.8;
+	    width: 45px;
+	}
+    </style>
+    <div class="wmes-content">
+         <div class="client-kyc-wrap">
+          <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='account.detail.title'/]</p>
+            <div class="client-detail-iof-wrap">
+                 <p class="client-bg-title">[@lang_res k='account.detail.accountInfo'/]</p>
+                 <div class="client-detail-top">
+                     <div class="client-detail-left">
+                         <div class="detail-portrait-wrap">
+                             <img src="${base}[@user_head u='account.iconUrl' /]">
+                             <p class="detail-portrait-name">${account.lastName!} ${account.firstName!} [#if account.gender?exists && account.gender!='']([#if account.gender='F'][@lang_res k='member.gender.ms'/][#else][@lang_res k='member.gender.mr'/][/#if])[/#if]</p>
+                         </div>
+                         <div class="client-detail-basic">
+                             <div class="client-detail-aim">
+                                  <p>${account.accountNo}</p>
+                                 <ul class="client-list-describe">
+                                   [#if account.subFlag?exists && account.subFlag!='' ]
+									<li>
+										[#if account.subFlag?? && account.subFlag='0'][@lang_res k='account.list.masterAccount'/] [#elseif account.subFlag?? && account.subFlag='1'][@lang_res k='account.list.subAccount'/][/#if]
+									</li>
+									[/#if]
+									[#if account.cies?exists && account.cies='1' ]
+                                   	<li>	
+                                     	CIES
+									</li>
+									[/#if] [#if account.faca?exists && account.faca='1']
+									<li>
+										FACA
+									</li>
+									[/#if]
+                                </ul>
+                              </div><!--
+                             <p class="client-detail-title"><img src="${base}/res/images/client/dis_ico_01.png">${account.distributorName}</p>
+                             -->
+                              
+                             <p class="client-detail-title">${account.distributorName!}</p>
+                            [#if account.distributorIconUrl??] <img class="client-detail-logo" src="${base}${account.distributorIconUrl!}"> [/#if]
+                             <ul class="detail-basic-li">
+                                 <li>
+                                     <p class="detail-basic-left">[@lang_res k='open.account.BaseCurrency'/]</p>
+                                     <p class="detail-basic-right">${account.baseCurrency!}</p>
+                                 </li>
+                             </ul>
+                              [#if account.authorized?exists && account.authorized='1']
+                             <div class="detail-authorized">
+                                 <img src="${base}/res/images/client/gou_ico_01.png">
+                                 <p>[@lang_res k='account.detail.authorized'/]</p>
+                             </div>
+                             [/#if]
+                         </div>
+                     </div>
+                     [#if account.subFlag?? &&  account.subFlag='0']
+                     <div class="client-detail-right">
+                         <a class="client-detail-button" href="javascript:;" id="showPdf">[@lang_res k='account.detail.viewApplication'/]</a>
+                     </div>
+                     [/#if]
+                 </div>
+                 <p class="client-bg-title">[@lang_res k='account.detail.accountAsset'/]</p>
+                 <div class="client-detail-iof">
+                     <div class="client-detail-left">
+                         <div class="account-choose-left">
+                             <div class="proposal_xiala account-cur-choose">
+                                <input type="text"  [#if cur?exists & cur!='']value="${cur!}"[#else]placeholder="USD"[/#if] readonly="" id="currency" >
+                                <span class="icon_xiala"></span>
+                                <ul style="width:70px;">
+                                 [#if currencyType?exists && currencyType?size gt 0]
+                                 [#list currencyType as list]
+                                <li>${list.itemCode!}</li>
+                                [/#list]
+                                [/#if]
+                                </ul>
+                            </div>
+                         </div>
+                         <div class="account-detail-basic">
+                             <ul class="detail-basic-li">
+                                 <li>
+                                     <p class="detail-basic-left">[@lang_res k='assets.totalAsset'/]</p>
+                                     <p class="detail-basic-right" style="font-weight:bold;">[@num_fmt s='${account.totalValue!}' f='#,##0.00' /] ${cur!}</p>
+                                 </li>
+                                 <li>
+                                     <p class="detail-basic-left">[@lang_res k='assets.marketValue'/]</p>
+                                     <p class="detail-basic-right">[@num_fmt s='${account.marketValue!}' f='#,##0.00' /] ${cur!}</p>
+                                 </li>
+                                 <li>
+                                     <p class="detail-basic-left">[@lang_res k='account.detail.totalCash'/]</p>
+                                     <p class="detail-basic-right">[@num_fmt s='${account.cashValue!}' f='#,##0.00' /] ${cur!}</p>
+                                 </li>
+                                 <li style="font-size:14px;">
+                                     <p class="detail-basic-left">[@lang_res k='account.detail.cashAvailable'/]</p>
+                                     <p class="detail-basic-right">[@num_fmt s='${account.cashAvailable!}' f='#,##0.00' /] ${cur!}</p>
+                                 </li>
+                                 <li style="font-size:14px;">
+                                     <p class="detail-basic-left">[@lang_res k='account.detail.cashAvailableWithdrawal'/]</p>
+                                     <p class="detail-basic-right">[@num_fmt s='${account.cashWithdrawal!}' f='#,##0.00' /] ${cur!}</p>
+                                 </li>
+                                 <li style="font-size:14px;">
+                                     <p class="detail-basic-left">[@lang_res k='account.detail.cashHeldForPendingTran'/]</p>
+                                     <p class="detail-basic-right">[@num_fmt s='${account.cashForPendingTran!}' f='#,##0.00' /] ${cur!}</p>
+                                 </li>
+                             </ul>
+                         </div>
+                     </div>
+                     <div class="client-detail-right">
+                     <p class="client-account-asset">[@lang_res k='account.detail.accountAsset'/]</p>
+                        <div class="client-detail-chart-wrap">
+                            <div class="client-detail-chart"></div>
+                        </div>
+                        
+                     </div>
+                 </div>
+            </div>
+            <div  class="client-table-contents client-more-ico-active" style="display:none;">
+                <p class="client-bg-title">[@lang_res k='account.detail.accountCurrency'/] <span class="client-more-ico"></span></p>
+                <table class="client-table">
+                    <tbody>
+                        <tr class="client-table-th">
+                            <th class="client-tables-header">[@lang_res k='account.detail.accountNo'/]</th>
+                            <th class="client-tables-header">[@lang_res k='open.account.BaseCurrency'/]</th>
+                            <th class="client-tables-header">[@lang_res k='account.detail.totalCash'/]</th>
+                        </tr>
+                       [#if subList?exists && subList?size gt 0 ] [#list subList as list]
+                        <tr>
+                            <td class="portfolio-tdcenter">${list.accountNo!}</td>
+                            <td class="portfolio-tdcenter">${list.currency!}</td>
+                            <td class="portfolio-tdcenter">${list.cashValue!}</td>
+                        </tr>
+                        [/#list]
+                        [#else]
+                         <tr>
+                            <td class="portfolio-tdcenter"></td>
+                            <td class="portfolio-tdcenter">暂没有数据！</td>
+                            <td class="portfolio-tdcenter"></td>
+                        </tr>
+                        [/#if]
+                    </tbody>
+                </table>
+            </div>
+            <ul class="client-tab">
+            
+                <li class="tab-active"  [#if  account.subFlag?? && account.subFlag!='0']style="display:none"[/#if]>KYC<span></span></li>
+                <li [#if account.subFlag?? &&  account.subFlag!='0']class="tab-active"[/#if]>Holding<span></span></li>
+                <li>Account Statement <span></span></li>
+            </ul>
+            <div class="client-detail-mainc">
+                <div style="[#if account?? && account.subFlag?? && account.subFlag=='0']display:block;[#else]display:none;[/#if]">
+                    <ul class="clientDetail_tab">
+                        <li class="now">RPQ</li>
+                        <li>Document Check</li>
+                        <li>Background</li>
+                        <li>Training Record</li>
+                    </ul>
+                    <div class="client-detail-contents">
+                        <div style="display:block;">
+                         <!-- 如果当前登录的是投资人 -->
+                            [#if curMemberType?exists && curMemberType=1 ]
+                        	<div class="client-account-button" style="float: none;">
+                                <a class="client-button" href="javascript:;" id="btn-addRpq" >Add RPQ</a>
+                            </div>
+                            [/#if]
+                            [#if rqpExamList?exists && rqpExamList?size gt 0]
+                            [#if  isExpire?string('true','false')='true']
+                             <!-- <p class="client-doc-tips">Note: RPQ expired, please update !</p> -->
+                            [/#if]
+                            [/#if]
+                            [#if curMemberType?exists && curMemberType=2 ]
+                            <table class="client-table">
+                                    <tbody>
+                                        <tr class="client-table-th" >
+                                            <th class="client-tables-header">RPQ</th>
+                                            <th class="client-tables-header">Issued Time</th>
+                                            <th class="client-tables-header">RPQ Result</br>(Risk Level)</th>
+                                            <th class="client-tables-header">Summit Date</th>
+                                            <th class="client-tables-header">Expiry Date</th>
+                                            <th class="client-tables-header">Statues</th>
+                                        </tr>
+                                        [#if rqpExamList?exists && rqpExamList?size gt 0]
+						                 [#list rqpExamList as each]
+						                 	<tr id="${each.id!}" data-page-id="${each.pageId!}" data-total-score="${each.totalScore!}">
+	                                            <td [#if each.status='0']style="color:#c3c3c3;" [/#if] class="portfolio-tdcenter rpq-td-title"><a [#if each.status='0']style="color:#c3c3c3;" [/#if] href="javascript:void(0)">${each.title!}</a></td>
+	                                            <td [#if each.status='0']style="color:#c3c3c3;" [/#if] class="portfolio-tdcenter">${each.createTime!}</td>
+	                                            <td [#if each.status='0']style="color:#c3c3c3;color:Red;" [/#if] class="portfolio-tdcenter">${each.riskLevel!}</td>
+	                                            <td [#if each.status='0']style="color:#c3c3c3;" [/#if] class="portfolio-tdcenter">${each.lastUpdate!}</td>
+	                                            <td [#if each.status='0']style="color:#c3c3c3;" [/#if] class="portfolio-tdcenter">${each.expireDate!}</td>
+	                                            <td [#if each.status='0']style="color:#c3c3c3;" [/#if] class="portfolio-tdcenter">[#if each.status='0']<span style="color:Red;">Expired</span>[#elseif each.status='1']Effective[/#if]</td>
+	                                        </tr>
+						                 [/#list]
+						                 [#else]
+				                         <tr>
+				                         <td colspan="6" ><div class="wmes-nodata-tips portfolioTips" style="display:block;padding-top:50px;">
+					                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+					                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+					                     	</div></td>
+				                            
+				                        </tr>
+						                 [/#if]
+                                    </tbody>
+                            </table>
+                            [/#if]
+                            <!-- 如果当前登录的是投资人 -->
+                            [#if curMemberType?exists && curMemberType=1 ]
+                            <div class="client-investor-rpq">
+                                <p class="client-investor-rpq-title">你的风险承受能力</p>
+                                <p class="client-investor-rpq-num">${riskLevel!}级风险能力</p>
+                                <p class="client-investor-rpq-last">下次评估时间</p>
+                                <p class="client-investor-rpq-days">${betweenDay!}天</p>
+                            </div>
+                            [/#if]
+                        </div>
+<!-- 文档审查 begin  -->                        
+                        <div>
+                        	<div class="strategies_list_wrap">
+                        	<div class="strategies_detail_list" >
+                            	<p class="client-bg-title">[@lang_res k='ifa.crm.kyc.MainChecklist'/]</p>
+                        		<span class="strategies_more"></span>
+                        	</div>	
+                            <table class="client-table">
+                                    <tbody>
+                                        <tr class="client-table-th">
+                                            <th width="20%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.DocumentName'/]</th>
+                                            <th width="10%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.UpdatePeriod'/]</th>
+                                            <th width="10%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.Necessary'/]</th>
+                                            <th width="15%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.LastestUploadDate'/]</th>
+                                            <th width="15%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.ExpireDate'/]</th>
+                                            <th width="15%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.Status'/]</th>
+                                            <th width="15%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.Images'/]</th>
+                                        </tr>
+                                        [#if mainDoc?exists && mainDoc?size gt 0 ]
+                                        [#list mainDoc as mainDoc]
+                                        <tr>
+                                            <td class="portfolio-tables-fnames">${mainDoc.docName!}</td>
+                                            <td class="portfolio-tdcenter">${mainDoc.updateCycle!}M</td>
+                                            <td class="portfolio-tdcenter">
+                                            	[#if mainDoc.isNecessary?exists]
+                                            		[#if '1'==mainDoc.isNecessary]
+                                            			[@lang_res k='global.true'/]
+                                            		[#else]
+                                            			[@lang_res k='global.false'/]
+                                            		[/#if]
+                                            	[/#if]
+                                            </td>
+                                            <td class="portfolio-tdcenter">${mainDoc.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+                                            <td class="portfolio-tdcenter">
+                                            [#if mainDoc.effectDate??]
+	                                            [#if mainDoc.expireStatus='1']
+	                                            	[#if Session["role"]?exists &&(Session["role"]=='IFA_FIRM' ||Session["role"]=='distributor') ]  
+	                                                <input class="portfolio-input-expire" type="texts" id="expireDateId${mainDoc.id!}" value="${mainDoc.effectDate?string("yyyy-MM-dd")}" docId="${mainDoc.id!}">
+	                                                [#else]
+	                                                <span [#if mainDoc.effectDateBetween?exists && mainDoc.effectDateBetween lt 30]style="color:red;"[/#if]>${mainDoc.effectDateBetween} </span>
+	                                                [/#if]
+	                                            [#else]
+	                                                ${mainDoc.effectDate?string("yyyy-MM-dd")}
+	                                            [/#if]	  
+                                             [#else]
+                                              N/A
+                                             [/#if]
+                                            </td>
+                                            <td class="portfolio-tdcenter">
+                                            	[#if mainDoc.checkStatus=='3']
+                                                <p>[@lang_res k='ifa.crm.kyc.StatusRevoke'/]</p>
+                                                [#elseif mainDoc.checkStatus=='2']
+                                                <p>[@lang_res k='ifa.crm.kyc.StatusRejected'/]</p>
+                                                [#elseif mainDoc.checkStatus=='1']
+                                                <p>[@lang_res k='ifa.crm.kyc.StatusApproved'/]</p>
+                                                [#elseif mainDoc.checkStatus=='0']
+                                                <p>[@lang_res k='ifa.crm.kyc.StatusInApproval'/]</p>
+                                                [#else]
+                                                <p>N/A</p>
+                                                [/#if]
+                                            </td>
+                                            <td class="portfolio-tdcenter">
+                                            <ul>
+                                            [#if mainDoc.fileList?exists && mainDoc.fileList?size gt 0]
+	                                            [#list mainDoc.fileList as m_f_list]
+		                                            [#if m_f_list_index == 0]
+		                                            <li class="img_li" fileid="${m_f_list.id!}" id="img_li_${m_f_list.id!}">
+		                                            	<div class="imgWrap document-img-num">
+		                                            		<a href="${base}/front/kycDoc/docDetail.do?docId=${mainDoc.id!}"   class="document_img" docid="${mainDoc.id!}">
+		                                            			<img src="${base}/loadImgSrcByPath.do?filePath=${m_f_list.filePath!}" class="lightense" width="60px"/>
+		                                            		</a>
+		                                            		<div class="mun_in_img">
+													        	${mainDoc.fileList?size}
+														    </div>    
+		                                            	</div>
+		                                            </li>
+		                                            [/#if]
+	                                            [/#list]
+                                            [#else]
+	                                            <li class="img_li">
+	                                            	<div class="imgWrap document-img-num">
+	                                            		<a href="${base}/front/kycDoc/docDetail.do?docId=${mainDoc.id!}"   class="document_img" docid="${mainDoc.id!}">
+	                                            			<img src="${base}/res/images/client/kycUpdate.png"/>
+	                                            		</a>  
+	                                            	</div>
+	                                            </li>
+                                            [/#if]
+	                                        </ul>    
+                                           	</td>
+                                        </tr>
+                                        [/#list]
+                                        [#else]
+                                        <tr>
+                                        	<td colspan="7">
+                                        	<div class="wmes-nodata-tips portfolioTips" style="display:block;padding-top:50px;">
+					                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+					                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+					                     	</div>
+                                        	</td>
+                                        </tr>
+                                        [/#if]
+                                    </tbody>
+                            </table>
+                            </div>
+                            [#if jointDoc?exists ]
+                            <div  class="strategies_list_wrap">
+	                            <div class="strategies_detail_list" >
+	                        		<p class="client-bg-title">[@lang_res k='ifa.crm.kyc.JointChecklist'/]</p>
+	                        		<span class="strategies_more"></span>
+	                        	</div>
+	                        	<table class="client-table">
+	                        	<tbody>
+                                        <tr class="client-table-th">
+                                            <th width="20%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.DocumentName'/]</th>
+                                            <th width="10%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.UpdatePeriod'/]</th>
+                                            <th width="10%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.Necessary'/]</th>
+                                            <th width="15%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.LastestUploadDate'/]</th>
+                                            <th width="15%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.ExpireDate'/]</th>
+                                            <th width="15%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.Status'/]</th>
+                                            <th width="15%" class="client-tables-header">[@lang_res k='ifa.crm.kyc.Images'/]</th>
+                                        </tr>
+                                        [#if jointDoc?size gt 0 ]
+                                        [#list jointDoc as jointDoc]
+                                        <tr>
+                                            <td class="portfolio-tables-fnames">${jointDoc.docName!}</td>
+                                            <td class="portfolio-tdcenter">${jointDoc.updateCycle!}M</td>
+                                            <td class="portfolio-tdcenter">
+                                            	[#if jointDoc.isNecessary?exists]
+                                            		[#if '1'==jointDoc.isNecessary]
+                                            			[@lang_res k='global.true'/]
+                                            		[#else]
+                                            			[@lang_res k='global.false'/]
+                                            		[/#if]
+                                            	[/#if]
+                                            </td>
+                                            <td class="portfolio-tdcenter">${jointDoc.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+                                            <td class="portfolio-tdcenter">
+                                            [#if jointDoc.effectDate??]
+                                                [#if jointDoc.expireStatus='1']
+		                                            	[#if Session["role"]?exists &&(Session["role"]=='IFA_FIRM' ||Session["role"]=='distributor') ]  
+		                                                <input class="portfolio-input-expire" type="texts" id="expireDateId${jointDoc.id!}" value="${jointDoc.effectDate?string("yyyy-MM-dd")}" docId="${jointDoc.id!}">
+		                                                [#else]
+		                                                <span [#if jointDoc.effectDateBetween?exists && jointDoc.effectDateBetween lt 30]style="color:red;"[/#if]>${jointDoc.effectDateBetween} </span>
+		                                                [/#if]
+	                                            [#else]
+	                                                ${jointDoc.effectDate?string("yyyy-MM-dd")}
+	                                            [/#if]
+	                                         [#else]
+                                              N/A  
+                                             [/#if]    
+                                            </td>
+                                            <td class="portfolio-tdcenter">
+                                                [#if jointDoc.checkStatus=='3']
+                                                <p>[@lang_res k='ifa.crm.kyc.StatusRevoke'/]</p>
+                                                [#elseif jointDoc.checkStatus=='2']
+                                                <p>[@lang_res k='ifa.crm.kyc.StatusRejected'/]</p>
+                                                [#elseif jointDoc.checkStatus=='1']
+                                                <p>[@lang_res k='ifa.crm.kyc.StatusApproved'/]</p>
+                                                [#elseif  jointDoc.checkStatus=='0']
+                                                <p>[@lang_res k='ifa.crm.kyc.StatusInApproval'/]</p>
+                                                [#else]
+                                                <p>N/A</p>
+                                                [/#if]
+                                            </td>
+                                            <td class="portfolio-tdcenter">
+                                            <ul>
+	                                            [#if jointDoc.fileList?exists && jointDoc.fileList?size gt 0]
+	                                            [#list jointDoc.fileList as j_f_list]
+		                                            [#if j_f_list_index == 0]
+		                                            <li class="img_li" fileid="${j_f_list.id!}" id="img_li_${j_f_list.id!}">
+		                                            	<div class="imgWrap">
+		                                            	<span style="position:relative"> 
+		                                            		<a href="${base}/front/kycDoc/docDetail.do?docId=${jointDoc.id!}"   class="document_img" docid="${jointDoc.id!}">
+		                                            			<img src="${base}/loadImgSrcByPath.do?filePath=${j_f_list.filePath!}" class="lightense" width="60px"/>
+		                                            		</a>
+		                                            		<div class="mun_in_img">
+													        	${jointDoc.fileList?size}
+														    </div>
+														</span>    
+		                                            	</div>
+		                                            </li>
+		                                            [/#if]
+	                                            [/#list]
+                                            [#else]
+	                                            <li class="img_li">
+	                                            	<div class="imgWrap">
+	                                            	<span style="position:relative"> 
+	                                            		<a href="javascript:;" class="document_img" docid="${mainDoc.id!}">
+	                                            			<img src="${base}/res/images/client/kycUpdate.png"/>
+	                                            		</a>
+													</span>    
+	                                            	</div>
+	                                            </li>
+                                            [/#if]
+	                                        </ul>    
+                                           	</td>
+                                        </tr>
+                                        [/#list]
+                                        [#else]
+                                        <tr>
+                                        	<td colspan="7">
+                                        	<div class="wmes-nodata-tips portfolioTips" style="display:block;padding-top:50px;">
+					                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+					                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+					                     	</div>
+                                        	</td>
+                                        </tr>
+                                        [/#if]
+                               	</tbody>         
+	                        	</table>	
+                            </div>
+                            [/#if]
+                        </div>
+<!-- 文档审查end  -->                         
+                        <div>
+                         <!-- 如果当前登录的是投资人 -->
+	                        [#if curMemberType?exists && curMemberType=1 ]
+	                            <div class="client-account-button">
+	                                <a class="client-button" href="javascript:;" id="btn-addbackground">Add Background</a>
+	                            </div>
+	                         [/#if]
+                            <table class="client-table">
+                                    <tbody>
+                                    <tr class="client-table-th">
+                                            <th width="10%" class="client-tables-header">Item</th>
+                                            <th width="20%" class="client-tables-header">Review Time</th>
+                                            <th width="20%" class="client-tables-header">Result</th>
+                                            <th width="50%" class="client-tables-header">Data sources</th>
+                                        </tr>
+                                    [#if ibList?exists && ibList?size gt 0]
+					                 [#list ibList as each]
+					                 	<tr class="background-table-tr" lbid="${each.id!}">
+                                            <td class="portfolio-tdcenter">${each.number!}</td>
+                                            <td class="portfolio-tdcenter">${each.reviewTime!}</td>
+                                            <td class="portfolio-tdcenter">${each.result!}</td>
+                                            <td class="portfolio-tdcenter">${each.sourceFrom!}</td>
+                                        </tr>
+					                 [/#list]
+					                 [#else]
+				                         <tr>
+				                            <td colspan="4"  class="portfolio-tdcenter">
+				                            	 <div class="wmes-nodata-tips portfolioTips" style="display:block;padding-top:50px;">
+					                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+					                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+					                     	</div>
+				                            </td>
+				                            
+				                        </tr>
+					                 [/#if]
+                                    </tbody>
+                            </table>
+                        </div>
+                        <div>
+                        <!-- 如果当前登录的是投资人 -->
+	                        [#if curMemberType?exists && curMemberType=1 ]
+	                            <div class="client-account-button">
+	                                <a class="client-button" href="javascript:;" id="btn-addtraining">Add Training</a>
+	                            </div>
+	                         [/#if]
+                            
+                            <table class="client-table">
+                                    <tbody>
+                                        <tr class="client-table-th">
+                                            <th width="8%" class="client-tables-header portfolio-tables-fnames">Item</th>
+                                            <th width="32%" class="client-tables-header">Training name</th>
+                                            <th width="30%" class="client-tables-header">Training time</th>
+                                            <th width="22%" class="client-tables-header">Training organization</th>
+                                            <th width="12%" class="client-tables-header">Actions</th>
+                                        </tr>
+                                        [#if trainingList?exists && trainingList?size gt 0]
+					                 [#list trainingList as each]
+					                 	<tr class="training-table-tr" lbid="${each.id!}">
+                                            <td class="portfolio-tdcenter">${each.number!}</td>
+                                            <td class="portfolio-tdcenter"><a lbid="${each.id!}" class="a_trainingName" href="javascript:void(0);">${each.name!}</td>
+                                            <td class="portfolio-tdcenter">${each.startTime!} ~ ${each.endTime!}</td>
+                                            <td class="portfolio-tdcenter">${each.organization!}</td>
+                                            <td class="portfolio-tdcenter">
+                                             <!-- 如果当前登录的是投资人 -->
+                            				[#if curMemberType?exists && curMemberType=1 ]
+                                            <img class="client-table-tr-img" data-id="${each.id}" style="width:17px;height:22px;" src="${base}/res/images/ifa/garbage_ico.png">
+                                            <img lbid="${each.id!}" class="a_modifyTraining" style="width:17px;height:22px;" src="${base}/res/images/ifa/modify_ico.png">
+                                            </td>
+                                        	[/#if]
+                                        </tr>
+					                 [/#list]
+					                 [#else]
+				                          <tr>
+				                            <td colspan="5"  class="portfolio-tdcenter">
+				                            	 <div class="wmes-nodata-tips portfolioTips" style="display:block;padding-top:50px;">
+					                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+					                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+					                     	</div>
+				                            </td>
+				                            
+				                        </tr>
+					                 [/#if]
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div [#if account?? && account.subFlag?? && account.subFlag!='0']style="display:block;"[/#if]>
+                    <table id="table-hoding-list" class="portfolio-table">
+                            <tr class="portfolio-table-th">
+                                <th width="5%" class="portfolio_tables_header">No</th>
+                                <th width="25%" class="portfolio_tables_header">Product Information</th>
+                                <th class="portfolio_tables_header">Base Currency</th>
+                                <th class="portfolio_tables_header">Latest Market Price</th>
+                                <th class="portfolio_tables_header">Holding Unit</th>
+                                <th class="portfolio_tables_header">Available Unit</th>
+                                <th class="portfolio_tables_header">Reference cost</th>
+                            </tr>
+                            [#if investorAccountHoldVOList?exists && investorAccountHoldVOList?size gt 0]
+					                 [#list investorAccountHoldVOList as each]
+					                 	<tr >
+                                            <td class="portfolio-tdcenter">${each.number!}</td>
+                                            [#if each.productType='fund']
+                                            <td class="portfolio-tdcenter"><a class="fund-a-href"  href="${base}/front/fund/info/fundsdetail.do?id=${each.productId!}">${each.productInformation!}</a></td>
+                                            [#else]
+                                            <td class="portfolio-tdcenter">${each.productInformation!}</td>
+                                            [/#if]
+                                            
+                                            <td class="portfolio-tdcenter">${each.baseCurrency!} </td>
+                                            <td class="portfolio-tdcenter">[@num_color s='${each.latestMarketPrice!}' c='1' f='#,###.00'/]</td>
+                                            <td class="portfolio-tdcenter">[@num_fmt s='${each.holdingUnit!}' f='#,###' /]</td>
+                                            <td class="portfolio-tdcenter">[@num_fmt s='${each.availableUnit!}' f='#,###' /]</td>
+                                            <td class="portfolio-tdcenter">[@num_fmt s='${each.referencecost!}' f='#,###' /]</td>
+                                        </tr>
+					                 [/#list]
+					                 [#else]
+				                         <tr>
+				                            <td colspan="8"  class="portfolio-tdcenter">
+				                            	 <div class="wmes-nodata-tips portfolioTips" style="display:block;padding-top:50px;">
+					                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+					                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+					                     	</div>
+				                            </td>
+				                        </tr>
+					                 [/#if]
+                    </table>
+                </div>
+                <div>
+                    <div class="conservative-choice-wrap">
+                        <p class="conservative-choice-title">Period</p>
+                        <ul class="conservative-choice">
+                         	<li class="conservative-choice-active" data-value="all">All</li>
+                            <li data-value="today">Today</li>
+                            <li data-value="1w">1 Week</li>
+                            <li data-value="1m">1 Month</li>
+                            <li data-value="3m">3 Month</li>
+                            <li data-value="6m">6 Month</li>
+                            <li data-value="1y">1 Year</li>
+                            <li data-value="other">Other</li>
+                        </ul>
+                    </div>
+                    <div class="conservative-choice-wrap">
+                        <p class="conservative-choice-title">Transaction Type</p>
+                        <div class="proposal_xiala acc-transaction-choose" style="width:150px;margin-bottom:15px;">
+                        <input id="txttransactiontype" data-value="" type="text" value="All Type" readonly="" style="width:105px;">
+                        <span class="icon_xiala"></span>
+                        <ul id="ul_transactiontype" style="width:150px;">
+                        	<li data-value="">All</li>
+                            <li data-value="1">Subscription</li>
+                            <li data-value="2">Redemption</li>
+                            <li data-value="3">Buy</li>
+                            <li data-value="4">Sell</li>
+                            <li data-value="5">Switch In</li>
+                            <li data-value="6">Switch Out</li>
+                            <li data-value="7">Deposit</li>
+                            <li data-value="8">Withdrawn</li>
+                            <li data-value="9">Asset Transfer In</li>
+                            <li data-value="10">Asset Transfer Out</li>
+                            <li data-value="11">Coupon</li>
+                            <li data-value="12">Interest</li>
+                            <li data-value="13">Fee Payment</li>
+                            <li data-value="14">Corporate Action</li>
+                            <li data-value="15">FX Voucher</li>
+                            <li data-value="16">Transaction Fee</li>
+                            <li data-value="17">Cash Dividend</li>
+                        </ul>
+                    </div>
+                    </div>
+                    
+                    <table id="table-order-return" class="portfolio-table">
+                        <tbody>
+                            <tr class="portfolio-table-th">
+                                <th class="portfolio_tables_header" width="10%">Date</th>
+                                <th class="portfolio_tables_header" width="20%">Product</th>
+                                <th class="portfolio_tables_header" width="10%">Transaction Type</th>
+                                <th class="portfolio_tables_header" width="10%">Currency</th>
+                                <th class="portfolio_tables_header" width="10%">Amount</th>
+                                <th class="portfolio_tables_header" width="5%">Quantity</th>
+                                <th class="portfolio_tables_header" width="10%">Order No</th>
+                                <th class="portfolio_tables_header" width="25%">Remark</th>
+                            </tr>
+                             [#if orderReturnList?exists && orderReturnList?size gt 0]
+					                 [#list orderReturnList as each]
+					                 	<tr>
+			                                <td class="portfolio-tdcenter">
+			                                    <p>${each.recordDate!}</p>
+			                                    
+			                                </td>
+			                                <td class="portfolio-tdcenter" style="text-align:left;">
+			                                    <p>${each.stockName!} </p>
+			                                    <p class="kyc-fund-num">${each.stockCode!}</p>
+			                                </td>
+			                                <td class="portfolio-tdcenter">Subscription</td>
+			                                <td class="portfolio-tdcenter">${each.currency!}</td>
+			                                <td class="portfolio-tdcenter">[@num_color s='${each.amount!}' c='1' f='#,###.00'/]</td>
+			                                <td class="portfolio-tdcenter">[@num_color s='${each.quantity!}' c='1' f='#,###.00'/]</td>
+			                                <td class="portfolio-tdcenter">${each.orderNumber!}</td>
+			                                <td class="portfolio-tdcenter">${each.remark!}</td>
+			                            </tr>
+					                 [/#list]
+					                 [#else]
+				                         <tr>
+				                             <td colspan="8"  class="portfolio-tdcenter">
+				                            	 <div class="wmes-nodata-tips portfolioTips" style="display:block;padding-top:50px;">
+					                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+					                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+					                     	</div>
+				                            </td>
+				                        </tr>
+					                 [/#if]
+                            
+
+         
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+         </div>
+    </div>
+    
+    <div class="dialog-form" id="backgroundForm" style="display:none;">
+    	<form id="form-background" role="form">
+           <div class="member-comment-wrap member-comment-wrap-application">
+		<div class="application-title">Add Background Review</div>
+		<div class="training-title"><span>*</span>Data sources</div>
+		<div class="checkbox" style="margin-top:0px;">
+				   <label class="checkbox-inline">
+				  <input type="checkbox" name="sourceFrom" id="inlineRadio1" value="China Public Security Bureau"> China Public Security Bureau
+				</label>
+				<label class="checkbox-inline">
+				  <input type="checkbox" name="sourceFrom" id="inlineRadio2" value="Reuters"> Reuters
+				</label>
+				<label class="rcheckbox-inline">
+				  <input type="checkbox" name="sourceFrom" id="inlineRadio3" value="Manual"> Manual
+				</label>
+			  </div>
+		<div class="training-title"><span>*</span>status</div>
+		<div>
+			<select name="status" id="ddlStatus" class="form-control">
+				  <option value="Checking">Checking</option>
+				  <option value="Complete">Complete</option>
+				</select>
+		</div>
+		<div class="training-title"><span>*</span>Result Description</div>
+		<div class="training-contentarea">
+			<textarea name="result" class="member-comment-text member-comment-text3" id="txtDescription"></textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 1000 characters, 0 inputed, 1000 left.
+			</div>
+		</div>
+		<div class="training-title" ><span>*</span>Officer's comment:</div>
+		<div class="training-contentarea">
+			<textarea name="comment" class="member-comment-text member-comment-text23" id="txtOfficercomment"></textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 1000 characters, 0 inputed, 1000 left.
+			</div>
+		</div>
+		<div class="Review-control" style="clear:both;">
+			<input type="hidden" id="hidMemberId" name="memberid" value="${account.memberId!}" ></input>
+			<div class="training-save-bn" id="btn-savebackground">Save</div>
+			<div class="training-cancel-bn">Cancel</div>
+		</div>
+		
+	</div> 
+</form>
+    </div>
+    
+    <div class="dialog-form" id="trainingForm" style="display:none;">
+    	<form id="form-edittraining" role="form">
+    	<input type="hidden" name="trainingid" id="hidtrainingid" value="" />
+           <div class="member-comment-wrap member-comment-wrap-application">
+		<div class="application-title">Add Training Review</div>
+		<div class="training-title"><span>*</span>Training Name</div>
+		<div class="training-contentarea">
+			<textarea name="name" id="txtName" class="member-comment-text member-comment-text1"></textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 100 characters, 0 inputed, 100 left.
+			</div>
+		</div>
+		<div class="training-title"><span>*</span>Training Time</div>
+		<div class="conservative-date-wrap" style="display:block;">
+            <div class="account-choose-input-wrap" style="display:block;">
+                
+                <input name="startime" type="text" id="txtStartime" class="account-choose-date" >
+            </div>
+            <p class="account-choose-name">to</p>
+            <div class="account-choose-input-wrap" style="display:block;">
+                <input name="endtime" type="text" id="txtEndtime" class="account-choose-date"  >
+            </div>
+            <img class="account-data-search" src="${base}/res/images/icon_search.png">
+        </div>
+        <div style="clear:both;"></div>
+		<div class="training-title" ><span>*</span>Training Organization</div>
+		<div class="training-contentarea">
+			<textarea name="organization" class="member-comment-text member-comment-text2" id="txtOrganization"></textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 100 characters, 0 inputed, 100 left.
+			</div>
+		</div>
+		<div class="training-title">Training Description</div>
+		<div class="training-contentarea">
+			<textarea name="description" class="member-comment-text member-comment-text3" id="txtDescription"></textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 2000 characters, 0 inputed, 500 left.
+			</div>
+		</div>
+		
+		
+		<div class="training-title">Add attachment</div>
+		<div >
+			<div class="upload-box upload-album"></div>
+		    <div class="photo-list"><ul></ul></div>
+		</div>
+		<div class="Review-control" style="clear:both;">
+			<input type="hidden" id="hidMemberId" name="memberid" value="${account.memberId!}" ></input>
+			<div class="training-save-bn" id="btn-savetraining">Save</div>
+			<div class="training-cancel-bn">Cancel</div>
+		</div>
+		
+	</div> 
+</form>
+    </div>
+    <!-- 显示每条训数据 -->
+    <div class="dialog-form" id="backgroundView" style="display:none;">
+    	<div class="member-comment-wrap member-comment-wrap-application">
+		<div class="application-title">Add Training Review</div>
+		<div class="training-title"><span>*</span>Training Name</div>
+		<div class="training-contentarea">
+			<textarea class="member-comment-text member-comment-text1"></textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 100 characters, 0 inputed, 100 left.
+			</div>
+		</div>
+		<div class="training-title"><span>*</span>Training Time</div>
+		<div class="conservative-date-wrap">
+            <div class="account-choose-input-wrap">
+                <input id="account-date-to" readonly="" class="account-choose-date" type="" name="">
+            </div>
+            <p class="account-choose-name">to</p>
+            <div class="account-choose-input-wrap">
+                <input id="account-date-from" readonly="" class="account-choose-date" type="" name="">
+            </div>
+            <img class="account-data-search" src="${base}/res/images/icon_search.png">
+        </div>
+		<div class="training-title"><span>*</span>Training Organization</div>
+		<div class="training-contentarea">
+			<textarea class="member-comment-text member-comment-text2"></textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 100 characters, 0 inputed, 100 left.
+			</div>
+		</div>
+		<div class="training-title">Training Description</div>
+		<div class="training-contentarea">
+			<textarea class="member-comment-text member-comment-text3"></textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 2000 characters, 0 inputed, 500 left.
+			</div>
+		</div>
+		
+		<ul class="attachment">
+			<li><div><span>1、</span>Training courseware.docx</div><img src="${base}/res/images/application/training-delete.png"/></li>
+			<li><div><span>2、</span>Training certificate.jpg</div><img src="${base}/res/images/application/training-delete.png"/></li>
+		</ul>
+		<div class="addattachment">
+
+			<div class="addattachment-text">
+				<div>+</div><div><span>Add attachment</span></div>
+			</div>
+		</div>
+		<div class="Review-control">
+			<div class="training-save-bn">Save</div>
+			<div class="training-cancel-bn">Cancel</div>
+		</div>
+		
+	</div>   
+    </div>
+    <!-- 结束 -->
+    <!-- 辑每条训数据 -->
+    <div class="dialog-form" id="editTrainingForm" style="display:none;">
+    	<form id="form-training" role="form">
+    	<input type="hidden" name="trainingid" id="hidtrainingid" value="" />
+           <div class="member-comment-wrap member-comment-wrap-application">
+		<div class="application-title">Edit Training Review</div>
+		<div class="training-title"><span>*</span>Training Name</div>
+		<div class="training-contentarea">
+			<textarea name="name" id="txtEditName" class="member-comment-text member-comment-text1"></textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 100 characters, 0 inputed, 100 left.
+			</div>
+		</div>
+		<div class="training-title"><span>*</span>Training Time</div>
+		<div class="conservative-date-wrap" style="display:block;">
+            <div class="account-choose-input-wrap" style="display:block;">
+                
+                <input name="startime" type="text" id="txtEditStartime" class="account-choose-date" >
+            </div>
+            <p class="account-choose-name">to</p>
+            <div class="account-choose-input-wrap" style="display:block;">
+                <input name="endtime" type="text" id="txtEditEndtime" class="account-choose-date"  >
+            </div>
+            <img class="account-data-search" src="${base}/res/images/icon_search.png">
+        </div>
+        <div style="clear:both;"></div>
+		<div class="training-title" ><span>*</span>Training Organization</div>
+		<div class="training-contentarea">
+			<textarea name="organization" class="member-comment-text member-comment-text2" id="txtEditOrganization"></textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 100 characters, 0 inputed, 100 left.
+			</div>
+		</div>
+		<div class="training-title">Training Description</div>
+		<div class="training-contentarea">
+			<textarea name="description" class="member-comment-text member-comment-text3" id="txtEditDescription"></textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 2000 characters, 0 inputed, 500 left.
+			</div>
+		</div>
+		
+		
+		<div class="training-title">Add attachment</div>
+		<div >
+			<div class="upload-box upload-album-edit"></div>
+		    <div id="edit-photo-list" class="photo-list" style="padding:20px 0 0 0;"><ul></ul></div>
+		</div>
+		<div class="Review-control" style="clear:both;">
+			<input type="hidden" id="hidMemberId" name="memberid" value="${account.memberId!}" ></input>
+			<div class="training-save-bn" id="btn-edittraining">Save</div>
+			<div class="training-cancel-bn">Cancel</div>
+		</div>
+		
+	</div> 
+</form>
+    </div>
+    <!-- 结束 -->
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+var _cashRatio='${account.cashRatio!}';
+var _marketRatio='${account.marketRatio!}';
+var _id='${account.id!}';
+var _distributorId='${account.distributorId!}';
+var titleMarketValue="[@lang_res k='assets.marketValue'/]";
+var titleCash="[@lang_res k='assets.cash'/]";
+var _checkList='${checkList!}';
+var _accountType="${accountType!}";
+
+
+     seajs.use('${base}/res/web/strategy/clientDetailKyc.js');
+     seajs.use('${base}/res/web/ifa/crm/docDetailEdit.js');
+     seajs.use('${base}/res/js/jsDatePick.jquery.min.1.3.js');
+     window.onload = function(){
+    	 seajs.use('jquery', function($){
+			$("input[id^='expireDateId']").each(function(){
+				var docId = $(this).attr("docId");
+	    		 var expirePick=new JsDatePick({
+				    	           useMode:2,
+				    	           target:$(this).attr("id"),
+				    	           dateFormat:"%Y-%m-%d",
+				   	         	});
+	    		 expirePick.setOnSelectedDelegate(function(){
+	    			 var obj = expirePick.getSelectedDay();
+	    			 var newExpireDate = obj.year+"-"+obj.month+"-"+obj.day;
+	    			 $.ajax({
+	    				 url:base_root + "/front/kycDoc/expireDateChange.do?r="+Math.random(),
+	    				 dataType:"json",
+	    				 data:{"id":docId,"expireDate":newExpireDate},
+	    				 type:"post",
+	    				 success:function(data){
+	    					//console.log(data);
+	    					 window.location.reload(); 
+	    				 },
+	    				 error:function(data){
+	    					 
+	    				 }
+	    			 })
+	    			
+    			});
+			});
+		});
+ 	};
+ 	
+ 	function callbackloginresult(json){
+	 	 seajs.use('jquery', function($){
+		 	console.log(json);
+		 	var count=0;
+		 	$.each(json,function(i,n){
+			 	if(n.status="1"){
+			 	count++;
+		 	    }
+		 	})
+		 	if(count>0){
+		 	 setTimeout(function(){
+		       window.location.url= window.location.url;
+		     },1000);
+		    }
+	    });
+ 	}
+ 	
+    
+ 	
+</script>

@@ -1,0 +1,116 @@
+	
+	<!-- select ifa dialog  -->
+	<div id="selectIfaTable" style="margin: 0 0 70px 0;">
+		<table id="selectIfaTable" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+			<thead>
+				<tr>
+					<th class="table-head">
+						姓名
+					</th>
+					<th class="table-head">
+						联系号码
+					</th>
+					<th class="table-head">
+						电子邮箱
+					</th>
+					<th class="table-head">
+						证件编号
+					</th>
+					<th class="table-head">
+						是否管理员
+					</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<ul id='selectIfaPagination' class="pagination pull-right now"></ul>
+	</div>
+<script>
+
+	$(function(){
+		bindSelectIfa(0);
+	});
+	
+	function bindSelectIfa(curPage){
+		$.ajax({
+			type : 'post',
+			url : '${base}/console/myfirm/ifalist.do?dateStr='
+					+ new Date().getTime(),
+			data : {
+				page : curPage + 1,
+				sort : '',
+				order : ''
+			},
+			success : function(result) {
+				var html = '';
+				var json = result.rows;
+				var total = result.total;
+				if (null != json) {
+					$.each(json,function(i, n) {
+						var isAdmin = n.isAdmin == null ? ''
+								: n.isAdmin;
+						var isSupervisor = n.isSupervisor == null ? ''
+								: n.isSupervisor;
+						var certNo = n.certNo == null ? '' : n.certNo;
+						var email = n.email == null ? '' : n.email;
+						var mobileNumber = n.telephone == null ? ''
+								: n.telephone;
+						var firstName = n.firstName == null ? ''
+								: n.firstName;
+						var lastName = n.lastName == null ? ''
+								: n.lastName;
+						var nameChn = n.nameChn == null ? ''
+								: n.nameChn;
+						var name = '';
+						if ('en' == '${Session["_LANG_CODE_"]!}') {
+							name = firstName + lastName;
+						} else {
+							name = nameChn;
+						}
+						html += '<tr><td class="col-md-3"><a href="javascript:selectIfa(\''+n.id+'\',\''+name+'\',\''+isAdmin+'\')">'
+								+ name
+								+ '</a></td><td class="col-md-2">'
+								+ mobileNumber
+								+ '</td><td class="col-md-2">'
+								+ email
+								+ '</td><td class="col-md-3">'
+								+ certNo
+								+ '</td><td class="col-md-2">';
+						if('1' == isAdmin)
+							html += '是';
+						else
+							html += '否';
+						html += '</td></tr>';
+					});
+				}
+					$('#selectIfaTable tbody').empty().append(html);
+					$('#selectIfaPagination').pagination(total, {
+						callback : pageselectCallback,
+						numDetail : '',
+						items_per_page : 10,
+						num_display_entries : 4,
+						current_page : curPage,
+						num_edge_entries : 2
+					});
+					}
+		});
+		function pageselectCallback(page_id, jq) {
+					bindSelectIfa(page_id,0);
+		}
+	}
+	
+	function selectIfa(id,name,isAdmin){
+		if('1'==isAdmin){
+			layer.msg("该IFA已经是管理员了，请重新选择！",{icon : 4,time : 2000});
+			$('#selectIfa-dialog-btnSave').attr({'disabled':'disabled'});
+		}else{
+			$('#selectIfa-dialog-btnSave').removeAttr('disabled');
+			var buttonHTML = '<button id="ifa_selected" name="'+name+'" selectId="'+id+'" class="btn btn-default" type="button">'+ name+ '&nbsp;<span class="badge">X</span></button>';
+			$('#ifa_selected').remove();
+			$('.bootstrap-dialog-footer-buttons').prepend(buttonHTML);
+		}
+		$('#ifa_selected').click(function(){
+			$('#ifa_selected').remove();
+		});
+	}
+</script>

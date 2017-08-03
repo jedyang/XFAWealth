@@ -1,0 +1,770 @@
+[#include "../../inc/head_v2.html"/]
+ <link rel="stylesheet" href="${base}/res/css/openaccount.css">
+ <link rel="stylesheet" href="${base}/res/css/strategy.css">
+ <link rel="stylesheet" href="${base}/res/css/client.css">
+ <link rel="stylesheet" href="${base}/res/css/ifa.css">
+ <link rel="stylesheet" href="${base}/res/css/Funds.css">
+ <link rel="stylesheet" href="${base}/res/css/member.css">
+ <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+ <link rel="stylesheet" href="${base}/res/css/jquery.range.css">
+<style>
+		.label li a {
+			display: block;
+			width: 100px;
+			height: 20px;
+			border: 1px solid red;
+		}
+		
+		.label li span {
+			display: inline-block;
+			width: 80px;
+			height: 20px;
+			border: 1px solid blue;
+		}
+		
+		.label li {
+			display: inline-block;
+			padding: 5px 10px 5px 10px;
+			width: auto;
+			height: 20px;
+			color: #ff9b19;
+			border: 1px solid #ff9b19;
+			text-align:center;
+			line-height: 20px;
+			overflow: hidden;
+		}
+		.disabled{text-align: -webkit-match-parent;}
+		
+		.show
+		{
+		    position: fixed;
+		    top: 8%;
+		    z-index: 100;
+		    left: 10%;
+		    width: 80%;
+		}
+		.wmes-content .white_background{
+			min-height:695px;
+		}
+		.regiter_xiala_ul li:hover{
+			color:#fff;
+		}
+	.ng-cloak,
+	.x-ng-cloak,
+	.ng-hide{display:none !important;}ng\:form{display:block;}
+	.ng-animate-start{clip:rect(0,auto,auto,0);-ms-zoom:1.0001;}
+	.ng-animate-active{clip:rect(-1px,auto,auto,0);-ms-zoom:1;}
+	</style>
+<link rel="stylesheet" href="${base}/res/third/formValidator/css/validationEngine.jquery.css"/>	
+<div class="personalWrap wmes-content"   ng-controller="personalCtrl"  ng-app="personalInfo" ng-init="checkLast($last)" >
+		<input type="hidden" id="dateFormat"  value="${dateFormat!}">
+		<input type="hidden" id="dateTimeFormat" value="${dateTimeFormat!}">
+		
+		
+        <div class="kaihu_div"> 
+            <div class="white_background funds_background">
+				        [#assign member=personalInfo.baseInfo]
+				        [#if member.memberType?? && member.memberType==1]
+				            [#assign details=personalInfo.individualPerson]
+				        [#elseif member.memberType?? && member.memberType==2]
+				            [#assign details=personalInfo.ifaPerson]
+				            <input type="hidden" id="ifaId" value="${personalInfo.ifaPerson.id!}"/>
+				        [/#if]
+			<div class="zhongxin_right">
+				<div class="zhongxin_right_content zhongxin_right_content_amend">
+					<div class="setting_title">[@lang_res k='member.personalInfo'/]</div>
+					<div class="setting_personal_information">
+						<div class="zhongxin_ziliao">
+							<a href="${base}/front/member/personal/changeIcon.do">
+							<img class="member_touxiang member_touxiang_amend" src="${base}[@user_head u=member.iconUrl g=member.gender/]" alt=""></a>
+							<!-- <a style="padding-left:20px;" href="${base}/front/member/personal/changeIcon.do">Change</a>-->
+						</div>
+
+						<div class="zhongxin_ziliao zhongxin_ziliao_amend">
+
+							<div class="setting_name ng-cloak"> 
+								{{member.nickName}}
+								<span style="margin-left:-5px">({{member.loginCode}})</span>
+							</div>
+							<div class="ip_timecon">
+								<div class="setting_login_time ng-cloak">
+									<span>[@lang_res k='member.info.lastLogin'/]</span> {{personalInfo.lastLogin | date:dateTimeFormat}} 
+								</div>
+								<div class="setting_login_ip">
+									<span>IP</span> <span class="ng-cloak" ng-bind="member.lastLoginIp" style="color: black;"></span>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<ul class="gary_title gary_title_amend">
+						<li class="backgroundac">
+							<div class="basic-settingpic"><span>[@lang_res k='member.personal.preference'/]</span></div>
+						</li>
+						<li>
+							<div class="security-settingpic"><span>[@lang_res k='member.personal.security'/]</span></div>
+						</li>
+						  [#if member.memberType?? && member.memberType==2]
+						<li>
+							<div class="IFA-settingpic" onclick="window.open('${base}/front/community/space/ifaSpace.do?id=${member.id!}')" ><span>[@lang_res k='member.personal.ifaSpaceSetting'/]</span></div>
+						</li>
+						<li>
+							<div class="IFA-Investment-settingpic"><span>[@lang_res k='member.personal.investmentSetting'/]</span></div>
+						</li>
+						
+						[/#if]
+						<li >
+							<div class="information1pic"><span>[@lang_res k='member.personal.profile'/]</span></div>
+						</li>
+					</ul>
+					<div class="setting-content setting-contentac setting-contentac1">
+					<form id="preferenceSetting" method="post">
+						<div class="basicSetting">
+							<div class="basicSettingleft">
+								<p style="margin:6px 0 26px 0;">[@lang_res k='member.info.language'/]</p>
+								<p style="height:18px">[@lang_res k='member.info.defDisplayColor'/]</p>
+								<p>[@lang_res k='member.info.defCurrency'/]</p>
+								<p>[@lang_res k='member.info.dateformat'/]</p>
+							</div>
+							<div class="basicSettingright">
+							<ul class="basicSettinglanguage">
+									<div class="register_xiala_long" style="margin-left:0">
+									   [#if member.langCode?? && member.langCode=='en']
+                                        <input type="text" readonly class="value_show" value="[@lang_res k='lang.list.lang.en'/]">
+                                       [#elseif member.langCode?? && member.langCode=='tc']
+                                        <input type="text" readonly class="value_show" value="[@lang_res k='lang.list.lang.tc'/]">
+									   [#else]
+                                        <input type="text" readonly class="value_show" value="[@lang_res k='lang.list.lang.sc'/]">
+									   [/#if]
+	                            		<input  name="langCode" id="langCode" type="hidden" class="value_hidden" value="${member.langCode!}">
+	                            		<ul class="regiter_xiala_ul">
+	                               			<li value="en">[@lang_res k='lang.list.lang.en'/]</li>
+	                               			<li value="sc">[@lang_res k='lang.list.lang.sc'/]</li>
+	                               			<li value="tc">[@lang_res k='lang.list.lang.tc'/]</li>
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        		</div> 
+								</ul>
+							    <ul class="basicSettingcolor">
+									<li>
+										<input type="radio" name="defDisplayColor" value="2"   ng-checked="member.defDisplayColor=='2'"/>
+										<div class="basicSettingcolorcon">
+											<div class="basicSettingcolor-rise">[@lang_res k='assets.profit.rise'/]</div>
+											<div class="basicSettingcolor-fall">[@lang_res k='assets.profit.fall'/]</div>
+										</div>
+									</li>
+									<li>
+										<input type="radio" name="defDisplayColor" value="1"  ng-checked="member.defDisplayColor=='1'"/>
+										<div class="basicSettingcolorcon">
+											<div class="basicSettingcolor-rise">[@lang_res k='assets.profit.fall'/]</div>
+											<div class="basicSettingcolor-fall">[@lang_res k='assets.profit.rise'/]</div>
+										</div>
+									</li>
+								</ul>
+								<div class="register_xiala_long" style="margin-left:0;margin-bottom:30px" value="{{member.defCurrency}}">
+	                            	<input type="text" placeholder="USD" class="value_show ng-cloak"  readonly value="{{personalInfo.currencyName}}">
+	                            	<input type="hidden" id="defCurrency" name="defCurrency" value="{{member.defCurrency}}" class="value_hidden">
+	                            	<ul class="regiter_xiala_ul">
+	                            	[#if currencyType?exists && currencyType?size gt 0]
+								    [#list currencyType as x]
+									<li value="${x.itemCode!}" >${x.name!}</li>
+									[/#list]
+									[/#if]
+	                            	</ul>
+	                            	<span class="register_xiala_ico"></span>
+	                        	</div>
+	                        	<div class="register_xiala_long "  style="margin-left:0;margin-bottom:30px">
+	                            	<input type="text" id="dateFormatValue" placeholder="yyyy/mm/dd" readonly class="value_show ng-cloak" value="{{member.dateFormat}}">
+	                            	<input name="dateFormat" type="hidden"  class="value_hidden"  value="{{member.dateFormat}}">
+	                            	<ul class="regiter_xiala_ul dateFormatSelect">
+	                               		<li value="yyyy-MM-dd">yyyy-MM-dd</li>
+	                               		<li value="dd-MM-yyyy">dd-MM-yyyy</li>
+	                               		<li value="MM-dd-yyyy">MM-dd-yyyy</li>
+	                               		<li value="yyyy/MM/dd">yyyy/MM/dd</li>
+	                               		<li value="dd/MM/yyyy">dd/MM/yyyy</li>
+	                               		<li value="MM/dd/yyyy">MM/dd/yyyy</li>
+	                            	</ul>
+	                            	<span class="register_xiala_ico"></span>
+	                        	</div>
+	                        	<span style="margin-left:20px;color: #999999;font-size:14px;">[@lang_res k='member.personal.example'/]:<span class="dateFormat" style="margin-left:20px;" date="2016/12/01"></span></span>
+	                        	</div>
+							<div class="setting-control">
+								<div class="setting-summit" id="savePreference">[@lang_res k='global.save'/]</div>
+								<div class="setting-cancel">[@lang_res k='global.cancel'/]</div>
+							</div>
+						</div>
+						</form>
+					</div>
+
+					<div class="setting-content">
+					<form id="changePassword" method="post">
+						<div class="setting-basicInfo">
+							<div class="setting-contentcon">
+								<div class="setting-basicInfoleft">
+									<p><span class="font_red" style="margin-right: 5px">*</span>[@lang_res k='member.changePassword.oldPwd'/]</p>
+									<p style="height:38px;padding-top:13px;"><span class="font_red" style="margin-right: 5px">*</span>[@lang_res k='member.changePassword.newPwd'/]</p>
+									<p style="margin-bottom: 80px;">[@lang_res k='member.resetPassword.strength'/]</p>
+									<p><span class="font_red" style="margin-right: 5px">*</span>[@lang_res k='member.changePassword.cfmPwd'/]</p>
+								</div>
+								<div class="setting-basicInforight">
+									<div style="clear: both;height: 55px;">
+										<input class="basicSettingselect validate[required]" style="float:left" id="oldpsw" type="password" maxlength="20" autocomplete="off"/>
+										<span id="oldPwdText" class="font_red" style="margin: 20px;"></span>
+									</div>
+									<div style="clear: both;height: 35px;">
+										<input class="basicSettingselect validate[required,minSize[7],maxSize[20],custom[pswRuleCustome]]" style="float:left" id="password" type="password" style="margin-top:14px;" maxlength="20" autocomplete="off"/>
+										<span id="passwordText" class="font_red" style="margin: 20px;"></span>
+                                        <p class="member-resetpsw-right-tips">[@lang_res k='member.register.password.tips'/]</p>
+									</div>
+									<div style="clear: both;height: 35px;">
+				                        <div style="margin-bottom: 20px;">
+				                          <div class="register_strength">
+				                            <ul>
+				                                  <li></li>
+				                                  <li></li>
+				                                  <li></li>
+				                                  <li></li>
+				                                  <li></li>
+				                                  <li></li>
+				                                  <li></li>
+				                              </ul>
+				                          </div>
+				                          <span class="register_strength_font">[@lang_res k='member.resetPassword.strength'/]</span>
+				                        </div>
+				                      </div>
+									<div style="clear: both;height: 35px;">
+										<p class="passwordprompter">[@lang_res k='member.personal.pwd.tips'/]</p>
+										<input class="basicSettingselect  validate[required,minSize[7],maxSize[20],equals[password]]" style="float:left" id="confirm_password" type="password" maxlength="20" autocomplete="off"/>
+										<span id="confirmText" class="font_red" style="margin: 20px;"></span>
+									</div>
+								</div>
+							</div>
+							<div class="setting-control">
+								<div class="setting-summit disabled" id="saveButton">[@lang_res k='global.submit'/]</div>
+								<div class="setting-cancel">[@lang_res k='global.cancel'/]</div>
+							</div>
+
+						</div>
+                        </form>
+					</div>
+                 [#if member.memberType?? && member.memberType==2]
+                    <div class="setting-content"> </div>
+					<div class="setting-content ">
+					<form id="investForm" method="post">
+						<div class="setting-subtitle" style="margin-bottom: 20px">
+							<p>
+								[@lang_res k='member.personal.portfolioReviewremind'/]
+							</p>
+						</div>
+						<ul class="Portfolio_Review_remind">
+							<li>
+								[@lang_res k='member.personal.performanceLessThan'/]
+							</li>
+							<li style="width:30px;">
+								<span class="range_result">[#if details?? && details.portfolioCriticalValue??]${details.portfolioCriticalValue}[#else]0[/#if]</span>%
+							</li>
+							<li>
+								<input type="hidden" class="single-slider" value="[#if details?? && details.portfolioCriticalValue??]${details.portfolioCriticalValue}[#else]0[/#if]" id="portfolioCriticalValue" name="portfolioCriticalValue" />
+							</li>
+						</ul>
+
+						<ul class="Portfolio_Review_remind">
+							<li>
+								[@lang_res k='member.personal.performanceMoreThan'/]
+							</li>
+							<li style="width:30px;">
+								<span class="return_result">[#if details?? && details.portfolioReturnValue??]${details.portfolioReturnValue}[#else]0[/#if]</span>%
+							</li>
+							<li>
+								<input type="hidden" class="single-slider" value="[#if details?? && details.portfolioReturnValue??]${details.portfolioReturnValue}[#else]0[/#if]" id="portfolioReturnValue" name="portfolioReturnValue" />
+							</li>
+						</ul>
+						<div class="setting-control">
+							<div class="setting-summit" id="saveInvest">
+								[@lang_res k='global.submit'/]
+							</div>
+							<div class="setting-cancel">
+								[@lang_res k='global.cancel'/]
+							</div>
+						</div>
+						</form>
+					</div>
+					[/#if]
+					<div class="setting-content ">
+						<div class="setting-subtitle">
+							<p>[@lang_res k='member.baseInfo'/]</p>
+							<div class="setting-bn">[@lang_res k='global.edit'/]</div>
+							<div class="setting-cancel" id="settinghidden">[@lang_res k='global.cancel'/]</div>
+							<div class="setting-summit" id="settinghide">[@lang_res k='global.save'/]</div>
+						</div>
+						<form id="RegisterForm"  method="post">
+						<div class="setting-basicInfo">
+							<div class="setting-basicInfoleft">
+							   <p>[@lang_res k='member.register.firstnameinenglish'/]</p>
+								<p>[@lang_res k='member.register.lastnameinenglish'/]</p>
+								<p>[@lang_res k='member.register.alias'/]</p>
+								<p>[@lang_res k='member.register.nameinchinese'/]</p>
+								<p>[@lang_res k='member.register.mobilenumber'/]</p>
+								<p>[@lang_res k='member.register.email'/]</p>
+								<p>[@lang_res k='member.register.gender'/]</p>
+								<p>[@lang_res k='member.register.dateofbirth'/]</p>
+								<p>[@lang_res k='member.register.nationality'/]</p>
+								<p>[@lang_res k='member.register.credentialstype'/]</p>
+								<p>[@lang_res k='member.register.idorpassportno'/]</p>
+								<p>[@lang_res k='member.register.employmentdetails'/]</p>
+								<p>[@lang_res k='member.register.occupation'/]</p>
+								<p>[@lang_res k='member.register.levelofeducation'/]</p>
+								<p><img class="administration-contact-ico" src="${base}/res/images/client/wetchat_ico.png">[@lang_res k='member.info.webchatCode'/]</p>
+								<p><img class="administration-contact-ico" src="${base}/res/images/client/facebook_ico.png">[@lang_res k='member.info.facebookCode'/]</p>
+								<p><img class="administration-contact-ico" src="${base}/res/images/client/weibo_ico.png">[@lang_res k='member.info.weiboCode'/]</p>
+								<p><img class="administration-contact-ico" src="${base}/res/images/client/twitter_ico.png">[@lang_res k='member.info.twitterCode'/]</p>
+								<p><img class="administration-contact-ico" src="${base}/res/images/client/linke_ico.png">[@lang_res k='member.info.linkedinCode'/]</p>
+								 [#if member.memberType?? && member.memberType==2]
+								<p>[@lang_res k='member.personal.investLifeBegin'/]</p>
+								<p>[@lang_res k='member.personal.personalIntroduction'/]</p>
+								[/#if]
+							</div>
+							<div class="setting-basicInforight" id="setting-basicInforight">
+							   <p><input type="text" name="firstName" value="{{details.firstName}}" readonly="readonly" UNSELECTABLE='on'/>
+								<span field="first_name" class="setting_eye"></span>
+								</p>
+								
+								<p><input type="text" name="lastName"  value="{{details.lastName}}" readonly="readonly" UNSELECTABLE='on'/>
+								<span field="last_name" class="setting_eye"></span>
+								</p>
+							
+								
+								<p><input type="text" name="nickName" value="{{member.nickName}}" readonly="readonly" UNSELECTABLE='on'/>
+								<!--<span field="nick_name" class="setting_eye"></span>
+								--></p>
+								
+								<p><input type="text" name="nameChn" value="{{details.nameChn}}"  readonly="readonly" UNSELECTABLE='on'/>
+								<span field="name_chn" class="setting_eye"></span>
+								</p>
+								
+								<p>
+								<input type="text" name="mobileCode" value="{{member.mobileCode}}" readonly="readonly" UNSELECTABLE='on' style="width: 40px; "/>-
+								<input type="text" name="mobileNumber" value="{{member.mobileNumber}}" readonly="readonly" UNSELECTABLE='on' style="width: 155px; "/>
+								<span field="mobile_number" class="setting_eye"></span>
+								</p>
+								
+								<p><input type="text"  name="email"  value="{{member.email}}" readonly="readonly" UNSELECTABLE='on'/>
+								<span field="email" class="setting_eye"></span>
+								</p>
+								
+								<div class="sexcon">
+								<span style="padding-left:6px" ng-if="details.gender=='M'">[@lang_res k='member.info.gender.M'/]</span>
+								<span style="padding-left:6px" ng-if="details.gender=='F'">[@lang_res k='member.info.gender.F'/]</span>
+								
+								<div class="sex">
+								<input type="radio" name="gender" value="M"  style="width:13px;height:13px" ng-checked="details.gender=='M'" value="[@lang_res k='member.info.gender.M'/]">[@lang_res k='member.info.gender.M'/]
+								<input type="radio" name="gender" value="F" style="width:13px;height:13px;margin-left:10px;"  ng-checked="details.gender=='F'"  value="[@lang_res k='member.info.gender.F'/]" >[@lang_res k='member.info.gender.F'/]</div></div>
+								<p style="overflow: visible;">
+								<input type="text" name="born" id="bornDate" style="pointer-events:none" value="{{details.born | date:dateFormat}}" readonly="readonly" UNSELECTABLE='on' class=" bornDate  form-control-laydate"/></p>
+								<div class="register_xiala_long">
+	                            		<input type="text" readonly placeholder="" class="value_show" value="{{personalInfo.nationName}}" readonly="readonly" UNSELECTABLE='on'>
+	                            		<input name="nationId" type="hidden" class="value_hidden" value="{{personalInfo.nationId}}">
+	                            		<ul class="regiter_xiala_ul">
+	                            		 [#list countryList as x]
+										 <li value="${x.id!''}" >${x.name!""}</li>
+										[/#list]
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        	</div> 
+								<div class="register_xiala_long">
+	                            		<input type="text" readonly placeholder=""  class="value_show" readonly="readonly" UNSELECTABLE='on' value="{{personalInfo.certType}}">
+	                            		<input name="certTypeId" type="hidden" class="value_hidden" value="{{personalInfo.certTypeId}}">
+	                            		<ul class="regiter_xiala_ul">
+	                               			[#list certList as x]
+										 	<li value="${x.itemCode!''}" >${x.name!""}</li>
+										   	[/#list]
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        	</div> 
+								<p><input type="text" name="certNo" value="{{details.certNo}}"  readonly="readonly" UNSELECTABLE='on'/></p>
+								<div class="register_xiala_long">
+	                            		<input type="text" readonly placeholder="" class="value_show" value="{{personalInfo.employment}}" readonly="readonly" UNSELECTABLE='on'>
+	                            		<input name="employmentId" type="hidden" class="value_hidden" value="{{personalInfo.employmentId}}">
+	                            		<ul class="regiter_xiala_ul">
+	                               			[#list employmentList as x]
+										 <li value="${x.itemCode!''}" >${x.name!""}</li>
+										   [/#list]
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        	</div>
+	                        	<div class="register_xiala_long">
+	                            		<input type="text" readonly placeholder="" class="value_show" readonly="readonly" UNSELECTABLE='on' value="{{personalInfo.occupation}}">
+	                            		<input name="occupationId" type="hidden" class="value_hidden" value="{{personalInfo.occupationId}}">
+	                            		<ul class="regiter_xiala_ul">
+	                               			[#list occupationList as x]
+										 <li value="${x.itemCode!''}" >${x.name!""}</li>
+										   [/#list]
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        	</div>
+	                        	<div class="register_xiala_long">
+	                            		<input type="text" readonly placeholder="" class="value_show" readonly="readonly" UNSELECTABLE='on' value="{{personalInfo.education}}">
+	                            		<input name="educationId" type="hidden" class="value_hidden" value="{{personalInfo.educationId}}">
+	                            		<ul class="regiter_xiala_ul">
+	                               			[#list educationList as x]
+										 <li value="${x.itemCode!''}" >${x.name!""}</li>
+										   [/#list]
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        	</div>
+	                        	
+								<p><input type="text" name="webchatCode" value="{{personalInfo.webchatCode}}" readonly="readonly" UNSELECTABLE='on'/>
+								<span  field="webchat_code" class="setting_eye"></span></p>
+								
+								<p><input type="text" name="facebookCode" value="{{personalInfo.facebookCode}}" readonly="readonly" UNSELECTABLE='on'/>
+								<span  field="facebook_code" class="setting_eye"></span></p>
+							
+								<p><input type="text" name="weiboCode" value="{{personalInfo.weiboCode}}" readonly="readonly" UNSELECTABLE='on'/>
+								<span  field="weibo_code" class="setting_eye"></span></p>
+								
+								<p><input type="text" name="twitterCode" value="{{personalInfo.twitterCode}}" readonly="readonly" UNSELECTABLE='on'/>
+								<span  field="twitter_code" class="setting_eye"></span></p>
+								
+								<p><input type="text" name="linkedInCode" value="{{personalInfo.linkedInCode}}" readonly="readonly" UNSELECTABLE='on'/>
+								<span  field="linkedIn_code" class="setting_eye"></span></p>
+								[#if memberType?? && memberType==2]
+								<div class="training-contentarea" style="height:32px;margin-bottom:18px;">
+									<input id='investLifeBegin' readonly="readonly" unselectable="on" type="text" class="form-control form-control-laydate " style="height: 22px;pointer-events:none"name="investLifeBegin" value="{{personalInfo.investLifeBegin | date:dateFormat}}">
+								</div>
+								<div class="training-contentarea">
+										<textarea class="member-comment-text" readonly="readonly" unselectable="on" id="introduction" maxLength="500" name="introduction" style="height:16px;border:none;">{{personalInfo.introduction}}</textarea>
+										<div class="member-comment-topper" style="display:none">
+											<p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputText">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+										</div>
+								</div>
+								[/#if]
+							</div>
+							<!--<div class="setting-control" >
+								<div class="setting-summit" id="settinghide" style="margin-top:40px">[@lang_res k='global.save'/]</div>
+								<div class="setting-cancel" id="settinghidden" style="margin-top:40px">[@lang_res k='global.cancel'/]</div>
+							</div>
+						--></div><!--
+						
+						<div class="IFA_settingwrap" style="height:30px;margin-top:0;">
+									<div class="IFA_settinglefttitle" style="margin-top:2px;">
+										[@lang_res k='member.personal.investLifeBegin'/]
+									</div>
+
+									<div class="training-contentarea">
+									<input id='investLifeBegin' type="text" class="laydate-icon form-control form-control-laydate " style="height: 22px;"name="investLifeBegin" value="[#if details?? && details.investLifeBegin??]${details.investLifeBegin?string(dateFormat)}[/#if]">
+									</div>
+
+								</div>
+								<div class="IFA_settingwrap">
+									<div class="IFA_settinglefttitle" style="margin-top:2px;">
+										[@lang_res k='member.personal.personalIntroduction'/]
+									</div>
+
+									<div class="training-contentarea">
+										<textarea class="member-comment-text" id="introduction" maxLength="500" name="introduction">[#if details?? && details.introduction??]${details.introduction}[/#if]</textarea>
+										<div class="member-comment-topper">
+											<p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputText">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+										</div>
+									</div>
+								</div>
+						--></form>
+						<div class="setting-subtitle">
+							<p>[@lang_res k='member.otherInfo'/]</p>
+						</div>
+						<div class="setting-otherInfo">
+							<div class="setting-otherInfoleft">
+								<p>[@lang_res k='member.info.languageSpoken'/]</p>
+								<p>[@lang_res k='member.info.liveRegion'/]</p>
+								<p>[@lang_res k='member.info.hobbyType'/]</p>
+								<p>[@lang_res k='member.info.investField'/]</p>
+								<p>[@lang_res k='member.info.investStyle'/]</p>
+							</div>
+							<div class="setting-otherInforight">
+								<div class="setting-other-hobby">
+								 
+									<div class="setting-other-bn" ng-repeat="x in languageSpoken "  data-ellipsis="true"  data-ellipsis-max-line="1" title="{{x.name}}"  ng-bind="x.name | characters:15:false" >
+									
+									</div>
+									
+									<div class="setting-other-add" settingName="languageSpoken">+</div>
+									</div>
+								<div class="setting-other-hobby">
+							
+									<div class="setting-other-bn" ng-repeat="x in liveRegion " data-ellipsis="true" data-ellipsis-max-line="3" title="{{x.name}}"  ng-bind="x.name | characters:15:false"></div>
+									
+									<div class="setting-other-add" settingName="liveRegion">+</div>
+									</div>
+									
+								<div class="setting-other-hobby">
+								
+									<div class="setting-other-bn" ng-repeat="x in hobbyList "  data-ellipsis="true" data-ellipsis-max-line="3" title="{{x.name}}"   ng-bind="x.name | characters:15:false"></div>
+									
+									<div class="setting-other-add"  settingName="hobby">+</div>
+									</div>
+								<div class="setting-other-hobby">
+							
+									<div class="setting-other-bn"  ng-repeat="x in investField "  data-ellipsis="true" data-ellipsis-max-line="3" title="{{x.name}}"   ng-bind="x.name | characters:15:false"></div>
+								
+									<div class="setting-other-add"  settingName="investField">+</div>
+									</div>
+								<div class="setting-other-hobby">
+								
+									<div class="setting-other-bn" ng-repeat="x in investStyle "  data-ellipsis="true" data-ellipsis-max-line="3" title="{{x.name}}"   ng-bind="x.name | characters:15:false"></div>
+									
+									<div class="setting-other-add" settingName="investStyle">+</div>
+									</div>
+							</div>
+							
+						</div>
+<!-- AE账户 -->						
+						<div class="setting-subtitle" style="display:none">
+							<p>AE账户信息</p>
+							<div class="craetbnNext" style="height:30px;line-height:30px;padding:0 22px">[@lang_res k='global.add'/]</div>
+						</div>
+						<div class="col-md-12"  ng-controller="aeTableCtrl"  ng-app="aeTable" style="display:none;" >
+							<form class="form-inline" style="display:block;">
+			                <div class="clear"></div>
+			                <div>
+			                    <table id="aelist" border="0" cellpadding="0" cellspacing="0" class="funds_search_information strategies_List myProposalList">
+			                        <tbody>
+		                        		<tr class="funds_tables_th">
+											<th class="funds_tables_header">
+												[@lang_res k='member.info.nickName'/]
+											</th>
+											<th class="funds_tables_header">
+												[@lang_res k='member.distributor'/]
+											</th>
+											<th class="funds_tables_header">
+												[@lang_res k='ifafirm.ifa.aecode'/]
+											</th>
+											<th class="funds_tables_header">
+												[@lang_res k='param.list.status'/]
+											</th>
+											<th class="funds_tables_header">
+		                                        [@lang_res k='global.operate'/]
+		                                    </th>
+				                         </tr>
+										 <tr ng-cloak ng-repeat="items in dataList" class="ng-cloak">
+											<td class="funds_search_tdcenter">
+												<span ng-bind="items.nickName"></span>
+											</td>
+											<td class="funds_search_tdcenter">
+												<span ng-bind="items.companyName"></span>
+											</td>
+											<td class="funds_search_tdcenter">
+												<span ng-bind="items.aeCode"></span>
+											</td>
+											<td class="funds_search_tdcenter">
+												<span  ng-if="items.isValid=='0'">
+													[@lang_res k='param.status.0'/]
+												</span>
+												<span  ng-if="items.isValid=='1'">
+													[@lang_res k='param.status.1'/]
+												</span>
+											</td>
+											<td class="funds_search_tdcenter">
+												<a class="view" href="javascript:void(0);" itemId="{{items.id}}"><img  src="${base}/res/images/fund/change_ico.png" style="width:20px;height:20px;" /></a>
+												<a class="delete" href="javascript:void(0);" itemId="{{items.id}}"><img  src="${base}/res/images/fund/delete_ico.png" style="width:21px;height:21px;" /></a>
+											</td>
+										 </tr>					                             
+			                        </tbody>
+			                    </table>
+								<div class="no_list_tips">
+			            			<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+			            			<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+			        			</div>
+			       				<div class="clear"></div>                      
+			                </div>
+			            	</form>
+			            	<ul  class="wmes_list_paging" style="display:none;">
+				                <li class="wmes_pagint_num" ng-repeat="items in page.ListPage" ng-class="{wmes_pagint_now: items.PageShow == page.nowPage}" ng-bind="{{'items.PageShow'}}" data-page="{{items.PageShow}}"></li>
+				            </ul>
+				            <input type="hidden" id="aeAccountReload"/>   						
+						</div>
+<!-- AE账户end -->						
+					</div>
+				</div>
+			</div>    
+           </div> 
+        </div>
+<!-- 弹出层 -->
+		<div id="investmentStyleSetting"  class="ifa-space-popup show" >
+		<div class="ifa-space-mask"></div>
+		<div class="space-mask-wrap"> 
+			<div class="investment-plan-wrap" settingName="investmentStyle">
+				<div class="wmes-close character-close-ico"></div>
+				<p class="investment-plan-title">[@lang_res k='member.info.investStyle'/] [@lang_res k='global.setting'/]</p>
+				<div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title" style="width:200px">[@lang_res k='member.info.investStyle'/]:</p>
+						<ul id="hobby-selected-option" class="character-setting-list">
+						<li data-code="{{list.itemCode}}" data-value="{{list.name}}" ng-repeat="list in investStyle">{{list.name}} <span class="character-list-close"></span></li>
+					   </ul>
+						<!--<input type="text" value="" class="character-setting-add">
+					--></div>
+					<div class="character-setting-choose">
+						<p class="character-choose-title">[@lang_res k='member.register.pleaseselect'/]:</p>
+						<ul id="hobbytypes-choose-list" class="character-choose-list">
+						
+						[#if allInvestStyle?exists  && allInvestStyle?size gt 0]
+						[#list allInvestStyle as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							</ul>
+					</div>
+				</div>
+				<div class="character-button-rows">
+					<a class="character-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+					<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div id="liveRegionSetting"  class="ifa-space-popup show" >
+		<div class="ifa-space-mask"></div>
+		<div class="space-mask-wrap"> 
+			<div class="investment-plan-wrap" settingName="liveRegion">
+				<div class="wmes-close character-close-ico"></div>
+				<p class="investment-plan-title">[@lang_res k='member.info.liveRegion'/] [@lang_res k='global.setting'/]</p>
+				<div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title" style="width:200px">[@lang_res k='member.info.liveRegion'/]</p>
+						<ul id="hobby-selected-option" class="character-setting-list">
+						<li data-code="{{list.itemCode}}" data-value="{{list.name}}" ng-repeat="list in liveRegion">{{list.name}} <span class="character-list-close"></span></li>
+						
+						</ul>
+						<!--<input type="text" value="" class="character-setting-add">
+					--></div>
+					<div class="character-setting-choose">
+						<p class="character-choose-title">[@lang_res k='member.register.pleaseselect'/]:</p>
+						<ul id="hobbytypes-choose-list" class="character-choose-list">
+						[#if allLiveRegion?exists  && allLiveRegion?size gt 0]
+						[#list allLiveRegion as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							</ul>
+					</div>
+				</div>
+				<div class="character-button-rows">
+					<a class="character-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+					<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+				</div>
+				</div>
+				</div>
+				</div>
+			<div id="languageSpokenSetting"  class="ifa-space-popup show" >
+			<div class="ifa-space-mask"></div>
+			<div class="space-mask-wrap"> 
+			<div class="investment-plan-wrap" settingName="languageSpoken">
+				<div class="wmes-close character-close-ico"></div>
+				<p class="investment-plan-title">[@lang_res k='member.info.languageSpoken'/] [@lang_res k='global.setting'/]</p>
+				<div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title" style="width:200px">[@lang_res k='member.info.languageSpoken'/]:</p>
+						<ul id="character-selected-option" class="character-setting-list">
+							<li data-code="{{list.itemCode}}" data-value="{{list.name}}" ng-repeat="list in languageSpoken">{{list.name}} <span class="character-list-close"></span></li>
+						</ul>
+						<!--<input type="text" value="" class="character-setting-add">
+					--></div>			
+					<div class="character-setting-choose">
+						<p class="character-choose-title">[@lang_res k='member.register.pleaseselect'/]:</p>
+						<ul id="character-choose-list" class="character-choose-list">
+						[#if languageList?exists  && languageList?size gt 0]
+						[#list languageList as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							<!--<li data-value="lively">lively <span class="character-list-close"></span></li>
+							<li data-value="Silent">Silent <span class="character-list-close"></span></li>
+							<li data-value="Melancholy">Melancholy <span class="character-list-close"></span></li>
+						--></ul>
+					</div>
+				</div>
+				<div class="character-button-rows">
+					<a class="character-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+					<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+					
+				</div>
+				</div>
+				</div>
+				</div>
+				<div id="hobbySetting"  class="ifa-space-popup show"  >
+				<div class="ifa-space-mask"></div>
+				<div class="space-mask-wrap"> 
+			 <div class="investment-plan-wrap" settingName="hobby" >
+			 	<div class="wmes-close character-close-ico"></div>
+				<p class="investment-plan-title">[@lang_res k='member.info.hobbyType'/] [@lang_res k='global.setting'/]</p>
+                <div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title" style="width:200px">[@lang_res k='member.info.hobbyType'/]:</p>
+						<ul id="hobby-selected-option" class="character-setting-list">
+						<li data-code="{{list.itemCode}}" data-value="{{list.name}}" ng-repeat="list in hobbyList">{{list.name}} <span class="character-list-close"></span></li>
+						</ul>
+						<input type="text" value="" class="character-setting-add">
+					</div>
+					<div class="character-setting-choose">
+						<p class="character-choose-title">[@lang_res k='member.register.pleaseselect'/]:</p>
+						<ul id="hobbytypes-choose-list" class="character-choose-list">
+						[#if allHobbyList?exists  && allHobbyList?size gt 0]
+						[#list allHobbyList as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							</ul>
+					</div>
+				</div>
+				<div class="character-button-rows">
+					<a class="character-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+					<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+				</div>
+				</div>
+				</div>
+				</div>
+				<div id="investmentFieldSetting"  class="ifa-space-popup show" >
+				<div class="ifa-space-mask"></div>
+				<div class="space-mask-wrap"> 
+			  <div class="investment-plan-wrap" settingName="investmentField">
+			  	<div class="wmes-close character-close-ico"></div>
+				<p class="investment-plan-title">[@lang_res k='member.info.investField'/] [@lang_res k='global.setting'/]</p>
+               <div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title" style="width:200px">[@lang_res k='member.info.investField'/]:</p>
+						<ul id="hobby-selected-option" class="character-setting-list">
+						<li data-code="{{list.itemCode}}" data-value="{{list.name}}" ng-repeat="list in investField">{{list.name}} <span class="character-list-close"></span></li>
+						
+							</div>
+					<div class="character-setting-choose">
+						<p class="character-choose-title">[@lang_res k='member.register.pleaseselect'/]:</p>
+						<ul id="hobbytypes-choose-list" class="character-choose-list">
+						[#if allInvestField?exists  && allInvestField?size gt 0]
+						[#list allInvestField as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							</ul>
+					</div>
+				</div>
+				<div class="character-button-rows">
+					<a class="character-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+					<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+				</div>
+				</div>
+				</div>
+				</div>
+<!-- 弹出层 结束 -->
+
+</div>  
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+	var propJson = [@load_prop k='member.personal'/];
+    var _root_ = '${base}';
+    var _privacySetting=${privacySetting!};
+	seajs.use('${base}/res/web/member/regist/strength.js');
+    seajs.use('${base}/res/web/member/personal/personalInfo.js');
+</script>
+
+

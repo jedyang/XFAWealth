@@ -1,0 +1,212 @@
+[#include "../../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/wmes_console.css">
+<link rel="stylesheet" href="${base}/res/css/jquery.range.css">
+<div class="wmes-content analysis_content">
+	<div class="analysis_contentbox">
+		<p class="wmes-wrap-title" style="margin:0px 12px 8px 12px;padding-top:15px">Sales Stats</p>
+		<div class="sales-target-ragecon">
+			<div class="sales-target-rageleft" style="margin-right:2%">
+				<ul class="sales-target-rage">
+					<li class="sales-target-rage-wrap1">Annual Sales Target (HK$ Million): <span class="zongshu">340.876</span></li>
+					<li><input type="hidden" class="single-slider" value="82" /></li>
+					<li class="sales-target-rage-wrap2"><span class="range_jieguo" style="margin-right:35%">279.518</span><span class="range_result">82</span>%</li>
+				</ul>
+			</div>
+			<div class="sales-target-rageleft">
+				<table class="funds_search_information strategies_List">
+					<tbody>
+						<tr class="funds_tables_th">
+							<th class="funds_tables_header" style="text-align: left;width:20%;">
+								Achieved Sales
+							</th>
+							<th class="funds_tables_header">
+								This Period
+							</th>
+							<th class="funds_tables_header" style="width:22%;">
+								The Same Period Last Year
+							</th>
+
+							<th class="funds_tables_header">
+
+							</th>
+
+						</tr>
+						<tr>
+							<td class="tdleft funds_tables_fnames">
+								Amount (HK$ Million)
+							</td>
+							<td class="funds_search_tdcenter">276.2383</td>
+							<td class="funds_search_tdcenter">263.784</td>
+
+							<td class="funds_search_tdcenter">
+								15.4543
+							</td>
+						</tr>
+						<tr>
+							<td class="tdleft funds_tables_fnames">
+								Rate
+							</td>
+							<td class="funds_search_tdcenter">82%</td>
+							<td class="funds_search_tdcenter">76%</td>
+
+							<td class="funds_search_tdcenter">
+								6%
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="analysis_contentcon">
+			<div class="analysis_left" style="border:none">
+				<div class="analysis_left_title" style="border:none">
+					<ul>
+						<li>Annual</li>
+						<li>Monthly</li>
+						<li class="analysis_left_titleac">Weekly</li>
+					</ul>
+				</div>
+				<div id="salesleft"></div>
+			</div>
+			<div class="analysis_left" style="height:auto">
+				<table class="funds_search_information strategies_List">
+					<tbody>
+						<tr class="funds_tables_th">
+							<th class="funds_tables_header" style="text-align: left;width:20%;">
+								Monthly Sales (HK$ Million)
+							</th>
+							<th class="funds_tables_header">
+								This Period
+							</th>
+							<th class="funds_tables_header" style="width:22%;">
+								The Same Period Last Year
+							</th>
+
+							<th class="funds_tables_header">
+
+							</th>
+
+						</tr>
+						<tr>
+							<td class="tdleft funds_tables_fnames">
+								Jan
+							</td>
+							<td class="funds_search_tdcenter">35.065</td>
+							<td class="funds_search_tdcenter">36.892</td>
+
+							<td class="funds_search_tdcenter">
+								-1.827
+							</td>
+						</tr>
+						<tr>
+							<td class="tdleft funds_tables_fnames">
+								Feb
+							</td>
+							<td class="funds_search_tdcenter">35.780</td>
+							<td class="funds_search_tdcenter">34.322</td>
+
+							<td class="funds_search_tdcenter">
+								1.448
+							</td>
+						</tr>
+						<tr>
+							<td class="tdleft funds_tables_fnames">
+								Mar
+							</td>
+							<td class="funds_search_tdcenter">40.203</td>
+							<td class="funds_search_tdcenter">39.322</td>
+
+							<td class="funds_search_tdcenter">
+								0.881
+							</td>
+						</tr>
+						<tr>
+							<td class="tdleft funds_tables_fnames">
+								Apr
+							</td>
+							<td class="funds_search_tdcenter">44.669</td>
+							<td class="funds_search_tdcenter">44.0394</td>
+
+							<td class="funds_search_tdcenter">
+								0.630
+							</td>
+						</tr>
+						<tr>
+							<td class="tdleft funds_tables_fnames">
+								May
+							</td>
+							<td class="funds_search_tdcenter">34.361</td>
+							<td class="funds_search_tdcenter">38.4983</td>
+
+							<td class="funds_search_tdcenter">
+								-4.137
+							</td>
+						</tr>
+						<tr>
+							<td class="tdleft funds_tables_fnames">
+								Jun
+							</td>
+							<td class="funds_search_tdcenter">28.634</td>
+							<td class="funds_search_tdcenter">29.4093</td>
+
+							<td class="funds_search_tdcenter">
+								-0.775
+							</td>
+						</tr>
+						<tr>
+							<td class="tdleft funds_tables_fnames">
+								Jul
+							</td>
+							<td class="funds_search_tdcenter">28.634</td>
+							<td class="funds_search_tdcenter">30.4839</td>
+
+							<td class="funds_search_tdcenter">
+								-1.849
+							</td>
+						</tr>
+						<tr>
+							<td class="tdleft funds_tables_fnames">
+								Aug
+							</td>
+							<td class="funds_search_tdcenter">28.703</td>
+							<td class="funds_search_tdcenter">25.343</td>
+
+							<td class="funds_search_tdcenter">
+								2.73
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+</div>
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('jquery', function($) {
+		$('.workbench_tab').on('click', function() {
+			$('.workbench_tab').removeClass('workbench_tabac');
+			$(this).addClass('workbench_tabac');
+			$('.qiucon').removeClass('workbench_tabtop');
+			$(this).parents('.qiucon').addClass('workbench_tabtop');
+			var qiuindex = $(this).parents('.qiucon').index();
+			/*if($(this).parents('.qiucon').css('top') !== '120px') {
+
+			} else {
+				$('.marginCon').addClass('workbench_tabzz');
+				setTimeout(function() {
+					$('.ifa_workbench_content').removeClass('ifa_workbench_contentac');
+					$('.ifa_workbench_content').eq(qiuindex).addClass('ifa_workbench_contentac');
+					$('.marginCon').removeClass('workbench_tabzz');
+				}, 900);
+			}*/
+			$('.ifa_workbench_content').removeClass('ifa_workbench_contentac');
+			$('.ifa_workbench_content').eq(qiuindex).addClass('ifa_workbench_contentac');
+		});
+
+	});
+</script>
+<script type="text/javascript ">
+	seajs.use('${base}/res/web/ifa/analysisDistributor.js');
+</script>

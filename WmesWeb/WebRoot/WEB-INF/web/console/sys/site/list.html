@@ -1,0 +1,83 @@
+[#include "../../inc/bak/head.html"/]
+<script type="text/javascript">
+var grid_list = "#list";
+</script>
+[#include "../../inc/nav.html"/]
+<div class="container-fluid">
+    <div class="main-body">
+        <h3 class="page-header page-header-top-fix">[@lang_res l=Session["_LANG_CODE_"] k='lang.title'/]
+        <button type="button" class="btn btn-link pull-right" onclick="addRecord('${base}/console/sys/site/add.do');">
+        <i class="fa fa-plus"></i> [@lang_res l=Session["_LANG_CODE_"] k='lang.addbtn'/]</button></h3>        
+        <table id="list" border="0" cellpadding="0" cellspacing="0" class="table table-striped table-responsive table-hover"></table>
+        [#include "../../inc/bak/foot.html"/] 
+    </div>
+</div>	
+<script type="text/javascript">
+
+$(function(){
+	$(grid_list).datagrid({
+	    //title: '数据列表',
+		url:"${base}/console/sys/site/listJson.do?datestr="+new Date().getTime(),
+		queryParams:{'siteName':'','status':''},
+		//iconCls: 'icon-save',
+		width:'auto',
+		height:'auto',
+		fitColumns: true,
+		//singleSelect: true,
+		nowrap: false,
+		striped: true,
+		collapsible:true,
+		sortName: 'domain',
+		sortOrder: 'desc',
+		remoteSort: true,
+		idField:'id',
+		columns:[[
+			{field:'xh',title:'[@lang_res l=Session["_LANG_CODE_"] k='lang.xh'/]',width:50,align:'left'},
+			{field:'domain',title:'[@lang_res l=Session["_LANG_CODE_"] k='lang.list.domain'/]',width:180,align:'left',sortable:true},
+			{field:'siteName',title:'[@lang_res l=Session["_LANG_CODE_"] k='lang.list.siteName'/]',width:180,align:'left',sortable:true},
+			{field:'shortName',title:'[@lang_res l=Session["_LANG_CODE_"] k='lang.list.shortName'/]',width:180,align:'left',sortable:true},
+			{field:'langFlag',title:'[@lang_res l=Session["_LANG_CODE_"] k='lang.list.lang'/]',width:100,align:'center',sortable:true,
+				formatter:function(value,rowData,rowIndex){
+					  if(value=='sc'){//sc简体中文,tc繁体中文,en英文
+				         return '<span style="color:blue">[@lang_res l=Session["_LANG_CODE_"] k='lang.list.lang.sc'/]</span>';
+					  }else if(value=='tc'){
+						  return '<span style="color:blue">[@lang_res l=Session["_LANG_CODE_"] k='lang.list.lang.tc'/]</span>';
+					  }else if(value=='en'){
+						  return '<span style="color:blue">[@lang_res l=Session["_LANG_CODE_"] k='lang.list.lang.en'/]</span>';
+					  }
+				}
+			},
+			{field:'oper',title:'[@lang_res l=Session["_LANG_CODE_"] k='lang.list.action'/]',width:200,align:'center',
+				formatter:function(value,rowData,rowIndex){
+				  var rStr = "";
+				  rStr += '&nbsp;<a href="${base}/console/sys/site/input.do?id='+rowData.id+'">[@lang_res l=Session["_LANG_CODE_"] k='lang.edit'/]</a>';
+				  rStr += '&nbsp;<a href="javascript:void(0)" onclick=deleteRecordSec("${base}/console/sys/site/delete.do?ids='+rowData.id+'")>[@lang_res l=Session["_LANG_CODE_"] k='lang.del'/]</a>';
+				  return rStr;
+				}
+			}
+		]],
+		[#if isMobile == true]		
+			view:scrollview,
+	        autoRowHeight:false,
+	        pageSize:15,
+			pagination:false
+	[#else]
+			pagination:true
+	[/#if]
+		});	
+	[#if isMobile == false]		
+	    $(grid_list).datagrid('getPager').pagination({layout:['sep','first','prev','links','next','last','sep']});
+	[/#if]
+});
+
+ /**
+ * 查格查询
+ **/
+function gridReload(){
+    var queryParams = $(grid_list).datagrid('options').queryParams;
+    queryParams.siteName = encodeURI($("#searchKeyWord").val()); 
+    queryParams.status = $("#status").val();
+    $(grid_list).datagrid('load');
+}
+
+</script>

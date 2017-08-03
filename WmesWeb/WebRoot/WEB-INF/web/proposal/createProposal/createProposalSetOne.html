@@ -1,0 +1,172 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+		<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+		<link rel="stylesheet" href="${base}/res/css/client.css"> 
+		<link rel="stylesheet" href="${base}/res/css/Funds.css"> 
+		 <style type="text/css">
+			/*swiper 重写*/
+		.swiper-button-next, .swiper-button-prev {position: absolute;top: 80px;width: 50px;height: 50px;opacity: 0.7;margin-top: -22px;z-index: 10;cursor: pointer;background-position: center;background-repeat: no-repeat;display: none;}
+		.swiper-button-disabled{display: none!important;}
+		.swiper-button-prev{background: url('${base}/res/images/ifa/left_ico.png') no-repeat;background-size: 100% 100%;left: 0px;}
+		.swiper-button-next{background: url('${base}/res/images/ifa/right_ico.png') no-repeat;background-size: 100% 100%;right: 0px;}
+     	 .price_negative {
+		    margin-right: 5px;
+		}
+        </style>
+
+    <div class="wmes-content">
+    	<div class="proposal-wrap">
+    		<p class="wmes-wrap-title">
+    		[#if edit?? && edit=='1']
+    			[@lang_res k='crm.proposal.edit'/]
+    		[#else]
+    			[@lang_res k='create.proposal.step.title'/]
+    		[/#if]
+    		</p>
+    		<div class="proposal-step-wrap">
+    			<div class="proposal-step-portrait">
+    				<img style="width:50px;height:50px" class="step-portrait-img client-top-portrait" src="[#if iconUrl?? && iconUrl!='' || gender?? && gender!='']${base}[@user_head u='${(iconUrl)?if_exists}' g='${(gender)?if_exists}'/][#else]${base}/res/images/strategy/strategy_portrait.png[/#if]">
+    				<div class="step-portrait-name-wrap">
+    					<p class="step-portrait-name" id="invName" valuelist="" >[#if name??]${name!}[#else][@lang_res k='create.proposal.step.one.selectCustomer'/][/#if]</p>
+    				</div>
+    			</div>
+    			
+    			<ul class="proposal-step">
+    				<li class="proposal-step-title proposal-step-now">[@lang_res k='create.proposal.step.questionnaire'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">[@lang_res k='create.proposal.step.selectInv.Model'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">[@lang_res k='create.proposal.step.proposalBuilder'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">[@lang_res k='create.proposal.step.proposalReport'/]</li>
+    			</ul>
+    		</div>
+    		<form method="post" id="frm">
+    		<input type="hidden" id="memberId" name="memberId" value="${(proposal.member.id)?if_exists}">
+    		
+    		<input type="hidden" id="id" name="id" value="${(proposal.id)?if_exists}"/>
+    		<div class="stepOne-rows">
+    			
+    			<div class="stepOne-rows-fillin">
+    				<p class="stepOne-rows-input-title"><span class="price_negative">*</span>[@lang_res k='create.proposal.step.proposalDetail.proposalName'/]</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<input class="stepOne-rows-input100 proposalName" type="" name="proposalName" value="${(proposal.proposalName)?if_exists}">
+    				</div>
+    			</div>
+    			<div class="stepOne-rows-fillin">
+    				<div class="stepOne-rows-half-fillin">
+    					<p class="stepOne-rows-input-title"><span class="price_negative">*</span>[@lang_res k='create.proposal.step.one.initialInvestAmount'/]</p>
+    					<div class="stepOne-rows-text-wrap">
+    						<input id="initialInvestAmount" maxlength="16" style="ime-mode:disabled" class="stepOne-rows-input50 initialInvestAmount" type="" name="initialInvestAmount" value="[@num_fmt s='${(proposal.initialInvestAmount)?if_exists}'/]">	
+    					</div>
+    				</div>
+    				<div class="stepOne-rows-cur-fillin">
+    					<p class="stepOne-rows-cur-title"><span class="price_negative">*</span>[@lang_res k='account.list.cur'/]</p>
+    					<div class="proposal_xiala" style="margin-top: 5px;">
+	                        <input type="hidden" id="hidBaseCurrId" name="baseCurrId" value="${(proposal.baseCurrId)?if_exists}" readonly >
+	                        <input type="text" id="baseCurrId" value="${(currencyName)?if_exists}" readonly >
+	                        <span class="icon_xiala"></span>
+	                        <ul id="proposal-choice">
+	                        [#if currencyList?exists && currencyList?size gt 0]
+	                        [#list currencyList as list]
+	                        	<li data-code="${(list.itemCode)!}">${list.name}</li>
+                        	[/#list]
+                        	[/#if]
+	                        </ul>
+	                    </div>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="stepOne-rows">
+    			<p class="stepOne-rows-title">[@lang_res k='create.proposal.step.one.investmentConstrains'/]</p>
+    			<div class="stepOne-constrains-rows training-contentarea">
+    				<p class="stepOne-rows-input-title">[@lang_res k='create.proposal.step.one.liquidityNeeds'/]</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<textarea class="stepOne-rows-text"  maxLength="1000"  name="liquidityNeed">${(proposal.liquidityNeed)?if_exists}</textarea>
+    					<div class="member-comment-topper">
+				         <p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 1000 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">1000</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+			            </div>
+    				</div>
+    			</div>
+    			<div class="stepOne-constrains-rows training-contentarea">
+    				<p class="stepOne-rows-input-title">[@lang_res k='create.proposal.step.one.timeFrame'/]</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<textarea class="stepOne-rows-text"  maxLength="1000"  name="timeFrame">${(proposal.timeFrame)?if_exists}</textarea>
+    					<div class="member-comment-topper">
+				         <p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 1000 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">1000</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+			            </div>
+    				</div>
+    			</div>
+    			<div class="stepOne-constrains-rows training-contentarea">
+    				<p class="stepOne-rows-input-title">[@lang_res k='create.proposal.step.one.taxConcerns'/]</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<textarea class="stepOne-rows-text"  maxLength="1000"  name="taxConcerns">${(proposal.taxConcerns)?if_exists}</textarea>
+    					<div class="member-comment-topper">
+				         <p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 1000 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">1000</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+			            </div>
+    				</div>
+    			</div>
+    			<div class="stepOne-constrains-rows training-contentarea">
+    				<p class="stepOne-rows-input-title">[@lang_res k='create.proposal.step.one.lrf'/]</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<textarea class="stepOne-rows-text"  maxLength="1000"  name="lrf">${(proposal.lrf)?if_exists}</textarea>
+    					<div class="member-comment-topper">
+				         <p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 1000 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">1000</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+			            </div>
+    				</div>
+    			</div>
+    			<div class="stepOne-constrains-rows training-contentarea">
+    				<p class="stepOne-rows-input-title">[@lang_res k='create.proposal.step.one.unf'/]</p>
+    				<div class="stepOne-rows-text-wrap">
+    					<textarea class="stepOne-rows-text" name="unp" maxlength="1000">${(proposal.unp)?if_exists}</textarea>
+    					<div class="member-comment-topper">
+				         <p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 1000 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">1000</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+			            </div>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="proposal-button-wrap">
+    			<a class="proposal-button" href="javascript:;" id="btnNext">[@lang_res k='global.next'/]</a>
+    			<a class="proposal-button" href="javascript:;" id="btnDraft">[@lang_res k='open.account.Draft'/]</a>
+    		</div>
+    		</form>
+    		   
+    	</div>
+ 	<div class="selectnamelistbox" style="display:none;position: absolute;top:0;left:0;background:rgba(0,0,0,0.3)">
+		<!-- 选择用户控件 -->
+	</div>
+    </div>
+    [#include "../../inc/foot_v2.html"/]
+    		<!-- 弹出层 -->
+<!--<div class="order-plan-sapce" style="width:1200px">
+	<div class="order-sapce-wrapper">
+	<span style=" padding-bottom:15px; margin-bottom:30px; font-size: 18px; font-weight: bold; margin: 15px 0 30px 0;">Select one Client</span>
+		<div class="swiper-container">
+			<div class="order-sapce-hidden swiper-wrapper">
+				[#if crmList?exists && crmList?size gt 0] [#list crmList as list] [#if list_index%12==0]
+				<div class="order-sapce-contents swiper-slide">
+					[/#if]
+					<div class="order-space-rows" memberId="${list.memberId}">
+						<img class="order-space-portrait" src="[#if list.iconUrl?? && list.iconUrl!='']${base}${list.iconUrl}[#else][#if list.gender?? && list.gender=='F']${base}/res/images/head_f.png[#else]${base}/res/images/head_m.png[/#if][/#if]">
+						<p class="order-space-name">
+							${list.nickName}
+						</p>
+					</div>
+					[#if list_index%12==11]
+				</div>
+				[/#if] [/#list] [/#if]
+
+			</div>
+		</div>
+	</div>
+	<div class="swiper-button-next"></div>
+	<div class="swiper-button-prev"></div>
+</div>
+
+
+
+-->
+<script type="text/javascript">
+	var props = [@load_prop k=''/];
+	seajs.use('${base}/res/web/proposal/createProposal/createProposalSetOne.js');
+</script>

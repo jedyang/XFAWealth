@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>投资组合列表</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+
+	</head>
+	<body>
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="tab-side container-fluid">
+				<div class="tab-side-container">
+					<div class="page-header mt-10">
+						<h4>
+							<b>[@lang_res k='console.strategyinfo.form.title'/]</b>
+						</h4>
+					</div>
+					<div>
+						<div class="form-horizontal" style="display: block;">
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="txtCustomer" class="label-control">
+										组合名称
+									</label>
+								</div>
+								<div class="col-md-4 row">
+									<label>
+										${detail.portfolioName!}
+									</label>
+								</div>
+								<div class="col-md-2 text-right ">
+									<label for="txtProposalName" class="label-control">
+										创建人
+									</label>
+								</div>
+								<div class="col-md-2 row">
+									<label>
+										${detail.creatorName!}
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="txtCustomer" class="label-control">
+										摘要
+									</label>
+								</div>
+								<div class="col-md-8 row">
+									<label>
+										${detail.description!}
+									</label>
+								</div>
+
+							</div>
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="txtCustomer" class="label-control">
+										投资目标
+									</label>
+								</div>
+								<div class="col-md-8 row">
+									<label>
+										${detail.investmentGoal!}
+									</label>
+								</div>
+
+							</div>
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="txtCustomer" class="label-control">
+										推荐原因
+									</label>
+								</div>
+								<div class="col-md-8 row">
+									<label>
+										${detail.reason!}
+									</label>
+								</div>
+
+							</div>
+							<div class="form-group">
+								<div class="col-md-10 ">
+									<label for="txtCustomer" class="label-control">
+										Performance
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-10">
+									<div class="conservative-time-choose conservative-time-choose_amend">
+										<div class="funds-time-wrap">
+											<span class="conservative-time-title conservative-time-title_amend" style="float: left;">Period</span>
+											<ul class="conservative-time-list">
+												<li period="1W" class="">
+													1Wk
+												</li>
+												<li period="2W">
+													2Wk
+												</li>
+												<li period="1M">
+													1Mon
+												</li>
+												<li period="3M">
+													3Mon
+												</li>
+												<li period="6M" class="">
+													6Mon
+												</li>
+												<li period="1Y" class="list-active">
+													1Yr
+												</li>
+												<li period="3Y">
+													3Yr
+												</li>
+												<li period="5Y">
+													5Yr
+												</li>
+											</ul>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-10 ">
+									<div id="porfolios-chart" style="height: 500px; width: 100%;"></div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-10 ">
+									<label for="txtCustomer" class="label-control">
+										Allocation Overview
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-3 " >
+									<div id="Allocation_Overview_left" style="height:400px;width: 400px;"></div>
+								</div>
+								<div class="col-md-3 " >
+			                        <div id="Allocation_Overview_center"  style="height:400px;width: 400px"></div>
+								</div>
+								<div class="col-md-3 ">
+			                      <div id="Allocation_Overview_right" style="height:400px;width: 400px;"></div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/jquery.pagination.js"></script>
+		<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+		<script src="${base}/res/third/layer/layer_v2.js"></script>
+		<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+		<script src="${base}/res/js/echarts.min.js"></script>
+		<style>
+.conservative-time-choose_amend {
+	overflow: visible;
+	border: none;
+	background: #eff7ff;
+	padding: 0;
+	height: 42px;
+	line-height: 42px;
+	margin-bottom: 36px;
+}
+
+.conservative-time-title_amend {
+	margin-left: 27px;
+}
+
+.conservative-time-list {
+	margin-bottom: 5px;
+	float: left;
+}
+
+.conservative-time-list>li {
+	float: left;
+	border-radius: 4px;
+	margin: 0px 3px;
+	padding: 0px 9px;
+	cursor: pointer;
+}
+
+.conservative-time-list>li:hover {
+	color: #fff;
+	background: #4ba6de
+}
+
+.conservative-time-choose input {
+	width: 100px;
+}
+
+.conservative-time-choose .proposal_xiala {
+	width: 140px;
+}
+
+.conservative-time-choose .list-active {
+	color: rgb(75, 166, 222);
+}
+
+.conservative-main-chart-wrap {
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 50px;
+}
+
+.position-main-chart-word {
+	display: inline-block;
+	overflow: hidden;
+	height: 183px;
+	padding-top: 40px;
+}
+
+.position-main-chart-word>li {
+	margin-bottom: 15px;
+}
+</style>
+		<script type="text/javascript">
+	    var sectorList = ${sectorList};
+	var geoList = ${geoList};
+	var typeList = ${typeList};
+	
+	
+	sectorchartInit();
+    function sectorchartInit(){
+    	data=[];dataname=[];
+    	 $.each(sectorList,function(i,n){
+    	    	data.push({
+    				value : n.value,
+    				name : n.name
+    			});
+    			dataname.push(n.name);
+    	    })
+    	   
+    	    
+    	    var option = {
+				title: {
+					text: "[@lang_res k='portfolio.detail.allocation.sector'/]",
+					x: 90,
+					y: 25
+				},
+			    legend: {
+			        
+					left: '10%',
+					top: '75%',
+			        data:dataname
+			    },
+			    series: [
+			        {
+			            type:'pie',
+			            center:	['35%', '42%'],
+			            radius : '42%',
+			            color :["#0080a3","#0097c1","#00abd9","#81c1e1","#b3d5e9"],
+			            label: {
+			                normal: {
+			                    position: 'inner',
+			                    formatter : "{d}%"  
+			                }
+			                
+			            },
+			            data:data
+			        }
+			    ]
+			};
+			var Chartinit = echarts.init(document.getElementById('Allocation_Overview_left'));
+			Chartinit.setOption(option);
+    }
+    
+     geographicalchartInit();
+    function geographicalchartInit(){
+    	data=[];dataname=[];
+   	 $.each(geoList,function(i,n){
+   	    	data.push({
+   				value : n.value,
+   				name : n.name
+   			});
+   			dataname.push(n.name);
+   	    });
+   	var option = {
+			title: {
+				text: "[@lang_res k='portfolio.detail.allocation.region'/]" ,
+				x: 90,
+				y: 25
+			},
+		    legend: {
+		        
+				left: '10%',
+				top: '75%',
+		        data:dataname
+		    },
+		    series: [
+		        {
+		            type:'pie',
+		            center:	['35%', '42%'],
+		            radius : '42%',
+		            color :['#bd8704', '#dda106', '#fbb508', '#fbc981', '#fbd9b3'],
+		            label: {
+		                normal: {
+		                    position: 'inner',
+		                    formatter : "{d}%"
+		                }
+		                
+		            },
+		            data:data
+		        }
+		    ]
+		};
+			var Chartinit = echarts.init(document.getElementById('Allocation_Overview_center'));
+			Chartinit.setOption(option);
+   }
+    
+     typechartInit();
+    function typechartInit(){
+    	data=[];dataname=[];
+   	 $.each(typeList,function(i,n){
+   	    	data.push({
+   				value : n.value,
+   				name : n.name
+   			});
+   			dataname.push(n.name);
+   	    });
+   	var option = {
+			title: {
+				text: "[@lang_res k='portfolio.detail.allocation.fundsType'/]"  ,
+				x: 90,
+				y: 25
+			},
+		    legend: {
+		        
+				left: '10%',
+				top: '75%',
+		        data:dataname
+		    },
+		    series: [
+		        {
+		            type:'pie',
+		            center:	['35%', '42%'],
+		            radius : '42%',
+		            color :['#6dcb1f', '#e70068', '#dc9a00', '#00a4da'],
+		            label: {
+		                normal: {
+		                    position: 'inner',
+		                    formatter : "{d}%"
+		                }
+		                
+		            },
+		            data:data
+		        }
+		    ]
+		};
+			var Chartinit = echarts.init(document.getElementById('Allocation_Overview_right'));
+			Chartinit.setOption(option);
+   }
+	
+	    var myChart = echarts.init(document.getElementById('porfolios-chart'));
+	    bindMainChart();
+	   function bindMainChart(){
+		var period="";
+		var fromDate="";
+		var toDate="";
+	   var activeTime=$('.conservative-time-list').find(".list-active");
+	   if($(activeTime).attr("data-type") == "Other"){
+		   fromDate=$("#account-date-to").val();
+		   toDate=$("#account-date-from").val();
+	   }else{
+		   period=activeTime.attr("period");
+	   }
+	   $.ajax({
+		  type:"post",
+		  datatype:"json",
+		  url:"${base}/console/portfolio/arena/getPortfolioCumperf.do",
+		  data:{id:"${detail.id!}",period:"1Y"},
+		  success:function(json){
+			  //console.log(json);
+			  var date = [];
+				var data=[];
+				$.each(json,function(i,n){
+					data.push({
+		   				value : (n.returnRate*100).toFixed(2),
+		   				name : n.marketDate
+		   			});
+					date.push(n.marketDate);
+				});
+				if(data.length==0){
+					$(".chart_noTips").show();
+					$("#porfolios-chart").hide();
+					return;
+				}
+				$(".chart_noTips").hide();
+				$("#porfolios-chart").show();
+				 var minVal=0;
+					var maxVal=0;
+					$.each(data,function(i,n){
+						if(minVal> parseFloat(n.value)){
+							minVal=parseFloat(n.value);
+						}
+						if(maxVal< parseFloat(n.value)){
+							maxVal=parseFloat(n.value);
+						}
+					})
+					if(minVal<0){
+					  minVal=Math.floor(minVal*1.2);
+					}else{
+					  minVal=0;
+					}
+					
+					
+					maxVal=Math.ceil(maxVal*1.2);
+					console.log("min",minVal);
+					console.log("max",maxVal);
+					console.log("data",data);
+			var option = {
+			    tooltip: {
+			        trigger: 'axis',
+			        position: function (pt) {
+			            return [pt[0], '10%'];
+			        },
+			        formatter: function (params) {
+			            params = params[0];
+			            //var date = new Date(params.name);
+			            return params.name+ ' : '+params.value+' %';
+			        }
+			    },
+			    title: {
+			        left: 'center',
+			        text: '',// 图表标题WMES
+			    },
+			    legend: {
+			        top: 'bottom'
+			    },
+			    toolbox: {
+			        feature: {
+			            dataZoom: {
+			                yAxisIndex: 'none'
+			            },
+			            restore: {},
+			            saveAsImage: {}
+			        }
+			    },
+			    xAxis: {
+			        type: 'category',
+			        boundaryGap: false,
+			        data: date
+			    },
+			    yAxis: {
+			        type: 'value',
+			        boundaryGap: [0, '100%'],
+			        min:minVal,
+			        max:maxVal,
+			        axisLabel: {
+		                  show: true,
+		                  interval: 'auto',
+		                  formatter: '{value} %'
+		          		}
+			    },
+			    series: [
+			        {
+			            name:'Performance',
+			            type:'line',
+			            smooth:true,
+			            symbol: 'none',
+			            itemStyle: {
+			                normal: {
+			                    color: '#12a1ec',
+			                    lineStyle:{width : 3}
+			                }
+			            },
+			           
+			            data: data
+			        }
+			    ]
+			};
+
+		    myChart.setOption(option,true);
+		  }
+	   });
+	    }
+	    
+	    
+	$('.conservative-time-list li').on("click",function(){
+		$(this).siblings().removeClass("list-active").end().addClass("list-active");
+		if($(this).attr("data-type") == "Other"){
+			$(".conservative-date-wrap").addClass("conservative-date-wrap-block");
+		}else{
+			$(".conservative-date-wrap").removeClass("conservative-date-wrap-block");
+			bindMainChart();	
+		}
+		
+	});	
+        </script>
+
+	</body>
+</html>

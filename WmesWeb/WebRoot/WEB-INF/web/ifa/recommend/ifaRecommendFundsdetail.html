@@ -1,0 +1,133 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">${fundInfoVO.fundName!""}</a>
+</div>
+<div class="blue_background">
+        <div class="kaihu_div">
+            <div class="white_background funds_background">
+            	<div class="wmes_navigation_bar">
+            		Recommend the Fund
+            	</div>
+              <!--   <div class="funds_details_title_wrap">
+	                <p class="funds_title">[@lang_res  k='fund.info.detail'/]</p>
+                </div> -->
+				<div class="funds_details_wrap">
+					<p class="funds_details_title">${fundInfoVO.fundName!""}</p>
+					<div class="funds_details_icon_wrap">
+					[#if Session["_FRONT_USER_LOGIN_"]?exists == true]
+						<span class="funds_cart"></span>
+						[#if fundInfoVO.followStatus?exists && fundInfoVO.followStatus=='1']
+						<span class="funds_heart funds_heart_active" followFlag="Delete" fundId="${fundInfoVO.fundInfo.id!}"></span>
+						[#else]
+						<span class="funds_heart" followFlag="Follow" fundId="${fundInfoVO.fundInfo.id!}"></span>
+						[/#if]
+					[#else]
+						<span class="funds_cart noLogin"></span>
+						<span class="funds_heart noLogin"></span>
+					[/#if]	
+					</div>
+				</div>
+				<div class="funds_details_information">
+					<p class="funds_information_rating">[@lang_res  k='fund.info.riskrating'/] <span class="funds_leveal_${fundInfoVO.fundInfo.riskLevel!""}">${fundInfoVO.fundInfo.riskLevel!""}</span></p>
+					<!-- <ul class="funds_information_risk">
+						<li>
+							<p class="funds_information_title">Risk rating</p>
+							<p class="funds_information_word">${fundInfoVO.fundInfo.riskLevel!""}</p>
+						</li>
+						<li>
+							<p class="funds_information_title">Last NAV</p>
+							<p class="funds_information_usd">${fundInfoVO.fundInfo.lastNav!""} ${fundInfoVO.fundCurrency!""}</p>
+							<p class="funds_information_percentage">+0.38%</p>
+						</li>
+						<li>
+							<p class="funds_information_date">${fundInfoVO.fundInfo.lastNavUpdate?string("yyyy-MM-dd")}</p>
+						</li>
+					</ul> -->
+					<div class="funds_information_lastNav">
+						<p class="funds_detail_price">[@lang_res  k='fund.info.LastNAV_rating'/]</p>
+						<p class="funds_information_usd">${fundInfoVO.fundInfo.lastNav!""} ${fundInfoVO.fundCurrency!""}</p>
+						<p class="funds_lastNav_percentage">${fundInfoVO.fundInfo.dayReturn!""}%</p>
+						<p class="funds_information_date">${fundInfoVO.fundInfo.lastNavUpdate?string("yyyy-MM-dd")}</p>
+					</div>
+					<ul class="funds_information_contents">
+						<li>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.cumPerMon_1'/]</p>
+								<p class="[#if fundInfoVO.fundReturnOneMonth lt 0 ]funds_information_unpercentage[#else]funds_information_percentage[/#if]">${fundInfoVO.fundReturnOneMonth!""}%</p>
+							</div>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.fundHouse'/]</p>
+								<p class="funds_information_word">${fundInfoVO.fundHouse!""}</p>
+							</div>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.detail.Latestsize'/]</p>
+								<p class="funds_information_word">${fundInfoVO.fundSize!""}</p>
+							</div>
+						</li>
+						<li>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.cumPerMon_3'/]</p>
+								<p class="[#if fundInfoVO.fundReturnThreeMonth lt 0 ]funds_information_unpercentage[#else]funds_information_percentage[/#if]">${fundInfoVO.fundReturnThreeMonth!""}%</p>
+							</div>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.detail.Sector'/]</p>
+								<p class="funds_information_word">${fundInfoVO.sectorType!""}</p>
+							</div>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.detail.Manager'/]</p>
+								<p class="funds_information_word">${fundInfoVO.fundManager!""}</p>
+							</div>
+						</li>
+						<li>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.cumPerYr_1'/]</p>
+								<p class="[#if fundInfoVO.fundReturnOneYear lt 0 ]funds_information_unpercentage[#else]funds_information_percentage[/#if]">${fundInfoVO.fundReturnOneYear!""}%</p>
+							</div>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.detail.Type'/]</p>
+								<p class="funds_information_word">${fundInfoVO.fundType!""}</p>
+							</div>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.detail.GeoAllocation'/]</p>
+								<p class="funds_information_word">${fundInfoVO.geoAllocation!""}</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<div id="RecommendReasonBlock">
+					<div>Recommend Reason：</div>
+					<div>
+						<textarea id="RecommendReasonText" rows="8" cols="80" maxlength="500"></textarea>
+					</div>
+					<div>
+						<div style="float: right">Total 500 characters, 0 inputed, 500 left.</div>
+					</div>
+				</div>
+				<br>
+
+				<div>
+					Pust To Setting：
+					<input type="radio" value="All">All  &nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" value="Let me specify">Let me specify
+				</div>
+
+				<input id="submitRecommendReason" type="button" value="OK">
+				<input id="Cancel" type="button" value="Cancel">
+
+            </div>
+
+        </div>
+</div>
+[#if Session["_FRONT_USER_LOGIN_"]?exists == true]
+    <input type="hidden" name="" id="loginCode" value="true">
+[#else]
+   	<input type="hidden" name="" id="loginCode" value="false">
+[/#if]
+[#include "../inc/foot_v2.html"/] 
+<script type="text/javascript">
+    var _root_ = '${base}';
+    var _fundId_ = '${id}';
+	seajs.use('http://localhost/res/web/ifa/ifaRecommendFundsDetail.js');
+</script>

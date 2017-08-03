@@ -1,0 +1,21 @@
+.member-contents{height: 100vh;background-color: white; padding: 30px 30px; margin-bottom: 20px; position: relative;}
+.member-step-wrap{overflow:hidden;}
+.member-step-ico{float: left;width: 8%;text-align: center;font-size: 30px;line-height: 45px;}
+.member-step{float: left;width: 28%;padding: 15px 0;background: #f0efee;text-align: center;border-radius: 10px;font-size: 18px;}
+.member-step-active{background-color: #f6a03a; color: white; }
+.resetpsw-title{margin-bottom: 30px; }
+.member-mainer{padding-top: 100px;width: 80%;margin: 0 auto;}
+.member-input-wrap{overflow: hidden;margin-bottom: 10px;min-height: 51px;}
+.member-input-title{float: left;min-width: 150px;min-height: 35px;line-height: 35px;}
+.member-input-01{border: #dcdadb 1px solid;border-radius: 3px;height: 30px;padding-left: 5px;}
+.member-input-right{float: left;}
+.member-input-next{background: #2d80ce; color: white; padding: 10px 25px; margin-right: 15px; border-radius: 4px; float: left; }
+.member-step-old{background-color: #fedbad; color: #ce4907;}
+.member-resetpsw-notice{padding-top: 50px;width: 80%;margin: 0 auto;overflow: hidden;}
+.member-resetpsw-notice-title{font-weight: bold;float: left;}
+.member-resetpsw-notice-word{margin-left: 90px; }
+.member-resetpsw-notice-title > img{display: inline-block;}
+.register_table_left{width: 130px;padding-right: 20px;}
+.register_table_right{width: 500px;}
+.member-resetpsw-right-tips{display: inline-block;color: #cccccc;}
+.member-resetpsw-change{margin-top: 8px; color: #4ca6ff; display: inline-block;cursor: pointer;margin-left: 10px}

@@ -1,0 +1,449 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>param</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/third/bootstrap/css/bootstrapValidator.css" rel="stylesheet" type="text/css" />
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="${base}/res/third/zTree/css/metroStyle/metroStyle.css" type="text/css">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	</head>
+
+	<body>
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="tab-side container-fluid">
+				<div class="tab-side-container">
+					<div class="page-header mt-10">
+						<h4>
+							<b>[@lang_res k='param.title'/]</b>
+						</h4>
+					</div>
+
+					<div class="clear"></div>
+					<div class="tab_wrap">
+						<!-- tab 1  -->
+						<form id="frm" method="post" class="form-horizontal" style="display: block;">
+
+							<input type="hidden" name="id" id="id" value="${(param.id)?if_exists}" />
+							<input type="hidden" name="hideconfigcode" id="hideconfigcode" value="${(param.configCode)?if_exists}">
+							<!-- 关联类型 -->
+							<div class="form-group">
+								<div class="col-md-3 text-right">
+									<label for="typeid" class="label-control">
+										<span class="red">*</span>[@lang_res l=Session["_LANG_CODE_"] k='param.type'/]
+									</label>
+								</div>
+								<div class="col-md-7">
+									<select class="form-control " id="typeid" name="typeid">
+										<option value="">
+											[@lang_res k='global.pleaseSelect'/]
+										</option>
+										[#if paramTypList?exists && paramTypList?size gt 0] [#list paramTypList as tp]
+										<option value="${tp.id}" [#if param.type?exists&&param.type.id==tp.id]selected[/#if]>${tp.name}</option>
+										[/#list] [/#if]
+									</select>
+								</div>
+							</div>
+							<!-- 父节点 -->
+							<div class="form-group">
+								<div class="col-md-3 text-right">
+									<label for="parentName" class="label-control">
+										[@lang_res l=Session["_LANG_CODE_"] k='param.parent.name'/]
+									</label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control" readonly="readonly" id="parentName" onclick="showMenu()" name="parentName" value="${(param.parent.name)?if_exists}" placeholder="[@lang_res l=Session[" _LANG_CODE_"] k='param.parent.name.tip'/]">
+									<input type="hidden" class="form-control" id="parentId" name="parentId" value="${(param.parent.id)?if_exists}">
+								</div>
+							</div>
+							<!-- 编码 -->
+							<div class="form-group">
+								<div class="col-md-3 text-right">
+									<label for="configCode" class="label-control">
+										<span class="red">*</span>[@lang_res l=Session["_LANG_CODE_"] k='param.config.code'/]
+									</label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control" id="configCode" name="configCode" value="${(param.configCode)?if_exists}" placeholder="[@lang_res l=Session[" _LANG_CODE_"] k='param.configCode.tip'/]">
+								</div>
+							</div>
+							<!-- 名称 -->
+							<div class="form-group">
+								<div class="col-md-3 text-right">
+									<label for="nameSc" class="label-control">
+										<span class="red">*</span>[@lang_res k='param.form.nameSc'/]
+									</label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control" id="nameSc" name="nameSc" value="${(param.nameSc)?if_exists}" placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-3 text-right">
+									<label for="nameTc" class="label-control">
+										<span class="red">*</span>[@lang_res k='param.form.nameTc'/]
+									</label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control" id="nameTc" name="nameTc" value="${(param.nameTc)?if_exists}" placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-3 text-right">
+									<label for="nameEn" class="label-control">
+										<span class="red">*</span>[@lang_res k='param.form.nameEn'/]
+									</label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control" id="nameEn" name="nameEn" value="${(param.nameEn)?if_exists}" placeholder="">
+								</div>
+							</div>
+							<!-- 值 -->
+							<div class="form-group">
+								<div class="col-md-3 text-right">
+									<label for="confValueSc" class="label-control">
+										[@lang_res k='param.form.valueSc'/]
+									</label>
+								</div>
+								<div class="col-md-7">
+									<textarea rows="5" class="form-control " id="confValueSc" name="confValueSc" placeholder="">${(param.confValueSc)?if_exists}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-3 text-right">
+									<label for="confValueTc" class="label-control">
+										[@lang_res k='param.form.valueTc'/]
+									</label>
+								</div>
+								<div class="col-md-7">
+									<textarea rows="5" class="form-control " id="confValueTc" name="confValueTc" placeholder="">${(param.confValueTc)?if_exists}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-3 text-right">
+									<label for="confValueEn" class="label-control">
+										[@lang_res k='param.form.valueEn'/]
+									</label>
+								</div>
+								<div class="col-md-7">
+									<textarea rows="5" class="form-control " id="confValueEn" name="confValueEn" placeholder="">${(param.confValueEn)?if_exists}</textarea>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-3 text-right">
+									<label for="orderBy" class="label-control">
+										<span class="red">*</span>[@lang_res l=Session["_LANG_CODE_"] k='param.orderBy'/]
+									</label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control" id="orderBy" name="orderBy" value="${(param.orderBy)?if_exists}" placeholder="[@lang_res l=Session[" _LANG_CODE_"] k='param.orderBy.tip'/]">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-3 text-right">
+									<label for="radiocode-1" class="label-control">
+										<span class="red">*</span>[@lang_res k='param.form.isValid'/]
+									</label>
+								</div>
+								<div class="col-md-7">
+									<span id="typeLable"> &nbsp;<input type="radio" value="1" id="radiocode-1" name="isValid" [#if param.isValid?exists== false || param.isValid=='1']checked[/#if]>[@lang_res k='param.form.isValid.1'/]&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" value="0" id="radiocode-2"
+											name="isValid" [#if param.isValid?exists && param.isValid=='0']checked[/#if]>[@lang_res k='param.form.isValid.0'/]</span>
+									</span>
+								</div>
+							</div>
+							<div class="text-center pd10">
+								<button type="submit" class="btn btn-primary" id="saveButton">
+									[@lang_res l=Session["_LANG_CODE_"] k='param.saveButton'/]
+								</button>
+								<button type="button" class="btn btn-default" id="btnClose" onclick="closeTab();">
+									[@lang_res l=Session["_LANG_CODE_"] k='global.close'/]
+								</button>
+								<span id="contact-form-success" style="display: none;">[@lang_res l=Session["_LANG_CODE_"] k='param.success'/]</span>
+								<span id="contact-form-error" style="display: none;">[@lang_res l=Session["_LANG_CODE_"] k='param.error'/]</span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="menuContent" class="menuContent" style="display: none; position: absolute;">
+			<ul id="treeDemo" class="ztree" style="margin-top: 0; width: 440px; background-color: #eaeaea; overflow: auto; overflow-y: scroll;height:440px"></ul>
+		</div>
+
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/jquery.form.js" type="text/javascript"></script>
+		<script src="${base}/res/third/zTree/js/jquery.ztree.all.min.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+		<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+		<script src="${base}/res/third/layer/layer_v2.js"></script>
+		<script src="${base}/res/third/laydate/laydate.js" type="text/javascript"></script>
+		<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+
+		<script type="text/javascript">
+	$(function(){
+		var url="${base}/console/sys/param/loadTree.do?date="+new Date().getTime();
+		$.ajax({
+			url:url,
+			dataType:'json',
+			method:'POST',
+			success:function(data){
+			  zNodes=eval(data.treeStr);
+			  $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			},error:function(){
+			}
+		}); 
+		
+	    $('#frm').bootstrapValidator({
+	        feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+	        },
+	        fields: {
+	        	typeid:{
+	            	message:'[@lang_res k='param.form.typeid.notEmpty'/]',
+	            	validators: {
+	                    notEmpty: {
+	                        message: '[@lang_res k='param.form.typeid.notEmpty'/]'
+	                    }
+	            	}
+	            },
+	            configCode: {
+	                message: '[@lang_res l=Session["_LANG_CODE_"] k='param.configCode.notEmpty'/]',
+	                validators: {
+	                    notEmpty: {
+	                        message: '[@lang_res l=Session["_LANG_CODE_"] k='param.configCode.notEmpty'/]'
+	                    },
+	                    callback : {
+		        			message: '[@lang_res l=Session["_LANG_CODE_"] k='param.configCode.exist'/]',
+		        			callback:function(value,validate){
+		        			    var url="${base}/console/sys/param/checkConfigCodeExist.do?datestr="+new Date().getTime()+"&code="+encodeURI(encodeURI(value));
+			        		    var res=true;
+		        			    if($("#hideconfigcode").val()!=value&&""!=value){
+		        			    	$.ajax({
+										url:url,
+										method:'post',
+										dataType:'json',
+										async: false,
+										success:function(data){
+											res=data.valid;
+										},error:function(){
+										}
+									});
+								} 
+		        		       return res;
+		        			},
+	            		},
+	                }
+	            },
+	            nameSc:{
+	            	message:'[@lang_res l=Session["_LANG_CODE_"] k='paramType.name.notEmpty'/]',
+	            	validators: {
+	                    notEmpty: {
+	                        message: '[@lang_res l=Session["_LANG_CODE_"] k='paramType.name.notEmpty'/]'
+	                    }
+	            	}
+	            },
+	            nameTc:{
+	            	message:'[@lang_res l=Session["_LANG_CODE_"] k='paramType.name.notEmpty'/]',
+	            	validators: {
+	                    notEmpty: {
+	                        message: '[@lang_res l=Session["_LANG_CODE_"] k='paramType.name.notEmpty'/]'
+	                    }
+	            	}
+	            },
+	            nameEn:{
+	            	message:'[@lang_res l=Session["_LANG_CODE_"] k='paramType.name.notEmpty'/]',
+	            	validators: {
+	                    notEmpty: {
+	                        message: '[@lang_res l=Session["_LANG_CODE_"] k='paramType.name.notEmpty'/]'
+	                    }
+	            	}
+	            },
+	            orderBy: {
+	                message: '[@lang_res l=Session["_LANG_CODE_"] k='param.orderBy.notEmpty'/]',
+	                validators: {
+	                    notEmpty: {
+	                        message: '[@lang_res l=Session["_LANG_CODE_"] k='param.orderBy.notEmpty'/]'
+	                    },
+	                    callback:{
+	                        message: '[@lang_res l=Session["_LANG_CODE_"] k='param.orderBy.error'/]',
+	                        callback:function(value,validate){
+	                            var testvalite=/^\d{1,9}$/;
+	                            if(testvalite.test(value)){
+									return true;
+	                            }
+	                            return false;
+	                        },
+	                    },
+	                }
+	            }  
+	        }
+	    }).on('success.form.bv', function(e) {
+	        e.preventDefault();
+	        //alert('valid ok');
+	       	saveData();
+	    }); 
+	          
+	});
+
+
+function saveData(){
+	/*//alert('ok');
+	$("#saveButton").attr({'disabled':true});
+     var params = $("#frm").serialize();
+		params = decodeURIComponent(params, true);
+
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/sys/param/save.do?datestr="+new Date().getTime(),
+			data : {
+				postData : params
+			},
+			success : function(data) {
+				//var dataObj = $.parseJSON(data.replace(/<.*?>/ig, ""));
+				if (data.result) {
+					layer.msg("[@lang_res k='global.success.save'/]", {
+						icon : 1,
+						time : 1000
+					});
+					window.location.href = "${base}/console/member/list.do"
+				} else {
+					$('#contact-form-error').show().fadeOut(10000);
+				}
+			}
+		});
+*/
+	
+	$("#frm").ajaxSubmit(
+	{
+		url: "${base}/console/sys/param/save.do?datestr="+new Date().getTime(),
+		iframe: true,
+		success: function(data, status)
+		{   
+	        $("#saveButton").attr({'disabled':true});
+	        var dataObj=eval("("+data+")");
+               if(dataObj.result){
+                //modify wwluo 160812
+               	//window.location.href="${base}/console/sys/param/list.do?r="+Math.random();
+               	window.parent.bindList(0);
+               	//end
+               	layer.msg("[@lang_res k='global.success.save'/]");
+               }else{
+                 layer.msg("[@lang_res k='global.failed.save'/]");
+               }
+		},
+		error:function()
+		{
+			layer.msg("[@lang_res k='global.failed.save'/]");
+		}
+	});
+
+}
+
+var setting = {
+	view: {
+		dblClickExpand: false
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		onClick: onClick
+	}
+};
+
+var zNodes;
+function onClick(e, treeId, treeNode) {
+	var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+	nodes = zTree.getSelectedNodes(),
+	v = "";
+	var ids="";
+	nodes.sort(function compare(a,b){return a.id-b.id;});
+	for (var i=0, l=nodes.length; i<l; i++) {
+		v += nodes[i].name + ",";
+		ids+= nodes[i].id+",";
+	}
+	if (v.length > 0 ) v = v.substring(0, v.length-1);
+	var parentNameobj = $("#parentName");
+	var parentNodeidobj=$("#parentId");
+	var nodeurl="${base}/console/sys/param/nodeName.do?r="+Math.random()+"&paramId="+ids;
+	$.ajax({
+		url:nodeurl,
+		dataType:'json',
+		async:false,
+		success:function(data){
+		    parentNameobj.attr("value", data.nodeName);
+		},
+		error:function(){
+		}
+	});
+	parentNodeidobj.attr("value", ids);
+	hideMenu();
+}
+
+function showMenu() {
+	var cityObj = $("#parentName");
+	var cityOffset = $("#parentName").offset();
+	$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+	$("body").bind("mousedown", onBodyDown);
+}
+
+function hideMenu() {
+	$("#menuContent").fadeOut("fast");
+	$("body").unbind("mousedown", onBodyDown);
+}
+
+function onBodyDown(event) {
+	if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+		hideMenu();
+	}
+}
+
+//delete wwluo 160809
+/*function sClose(){
+	window.location.href="${base}/console/sys/param/list.do?r="+Math.random();
+}*/
+
+
+  
+  	//保存数据
+	function saveFeesItem(lang,fundId,id,feesItemCode,feesItem,fees){
+	
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/fund/fees/save'+lang+'.do?datestr='+new Date().getTime(),
+			data : {
+				'fundId': fundId,'id': id,'feesItemCode':feesItemCode,'feesItem':feesItem,'fees':fees
+			},
+			success : function(json) {
+				if(null != json){
+					alert(json.msg);
+					if(null == id || '' == id){
+						window.location.href = '${base}/console/fund/fees/detail.do?fundId='+fundId+'&id='+json.feesItemId;
+					}
+				}	
+			}
+		})
+	}
+	
+	
+
+</script>
+	</body>
+</html>

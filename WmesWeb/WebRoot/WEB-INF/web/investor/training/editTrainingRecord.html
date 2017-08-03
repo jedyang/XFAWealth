@@ -1,0 +1,106 @@
+
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+    <link rel="stylesheet" href="${base}/res/css/other.css">
+    <link rel="stylesheet" href="${base}/res/css/wmesupload.css"> 
+
+
+    	<div class="member-comment-wrap member-comment-wrap-application">
+		<div class="application-title">Add Background Review</div>
+		<div class="training-title"><span>*</span>Training Name</div>
+		<div class="training-contentarea">
+			<textarea class="member-comment-text member-comment-text1">${InvestorTraining.name}</textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 100 characters, 0 inputed, 100 left.
+			</div>
+		</div>
+		<div class="training-title"><span>*</span>Training Time</div>
+		<div class="conservative-date-wrap">
+            <div class="account-choose-input-wrap">
+                <input id="account-date-to" readonly="" class="account-choose-date" type="" name="" value="${InvestorTraining.startTime}">
+            </div>
+            <p class="account-choose-name">to</p>
+            <div class="account-choose-input-wrap">
+                <input id="account-date-from" readonly="" class="account-choose-date" type="" name="" value="${InvestorTraining.endTime}">
+            </div>
+            <img class="account-data-search" src="${base}/res/images/icon_search.png">
+        </div>
+		<div class="training-title"><span>*</span>Training Organization</div>
+		<div class="training-contentarea">
+			<textarea class="member-comment-text member-comment-text2">${InvestorTraining.organization}</textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 100 characters, 0 inputed, 100 left.
+			</div>
+		</div>
+		<div class="training-title">Training Description</div>
+		<div class="training-contentarea">
+			<textarea class="member-comment-text member-comment-text3">${InvestorTraining.content}</textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">Total 2000 characters, 0 inputed, 500 left.
+			</div>
+		</div>
+		
+		<ul class="attachment">
+			<li><div><span>1、</span>Training courseware.docx</div><img src="${base}/res/images/application/training-delete.png"/></li>
+			<li><div><span>2、</span>Training certificate.jpg</div><img src="${base}/res/images/application/training-delete.png"/></li>
+		</ul>
+		<div class="addattachment">
+
+			<div class="addattachment-text">
+				<div>+</div><div><span>Add attachment</span></div>
+			</div>
+		</div>
+		<div class="Review-control">
+			<div class="training-save-bn">Save</div>
+			<div class="training-cancel-bn">Cancel</div>
+		</div>
+		
+	</div>   
+
+    <!--  -->
+	<div class="member-comment-wrap member-comment-wrap-application" style="font-family: '微软雅黑';display:none;">
+		<div class="application-title">Training Record</div>
+		<p class="training-title">Training Name</p>
+		<p class="training-content">${InvestorTraining.name}</p>
+		<p class="training-title">Training Time</p>
+		<p class="training-content">${InvestorTraining.startTime} To ${InvestorTraining.startTime}</p>
+		<p class="training-title">Training Organization</p>
+		<p class="training-content">${InvestorTraining.organization}</p>
+		<p class="training-title">Training Description</p>
+		<p class="training-content">${InvestorTraining.content}</p>
+		<p class="training-title">Attachment</p>
+		<ul class="attachment">
+		<!--  
+			<li><span>1、</span>Training courseware.docx</li>
+			<li><span>2、</span>Training certificate.jpg</li>-->
+		</ul>
+		<div >
+		    <div class="photo-list"><ul>
+		    [#if FileList?exists && FileList?size gt 0]
+                [#list FileList as each]
+                	<li><div class="img-box selected" onclick="javascript:void(0);"><img width="112" height="100" class="upload-eachimg" src="${base}/loadImgSrcByPath.do?filePath=${each.thumbnailFilePath112x100}" style="width:120px;height:100px;"></div>
+                	<a id="1479279640967" class="class-download" href="javascript:;">下载</a></li>
+                [/#list]
+                [/#if]
+		    </ul></div>
+		</div>
+		<div class="applications-information-main-left applications-information-main-left-amend">
+        		<div>
+        			<span class="applications-information-main-left1 applications-information-main-left1-amend">Create By</span>
+        			<span class="applications-information-main-left1 applications-information-main-left1-amend">Create Date</span>
+        			<span class="applications-information-main-left1 applications-information-main-left1-amend">Last Update</span>
+        		</div>
+        		<div style="width:200px;">
+        			<span style="width:200px;">${InvestorTraining.member.loginCode}</span>
+        			<span style="width:200px;">${InvestorTraining.createTime!}</span>
+        			<span style="width:200px;">${InvestorTraining.lastUpdate!}</span>
+        		</div>
+        </div>
+        <div style="display:none;" class="training-close-bn">Close</div>
+	</div>
+	
+
+
+
+

@@ -1,0 +1,135 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/community.css">
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<style>
+	.wmes-community-news-con{display:none}
+	.wmes-community-user-con1{display:none}
+	.wmes-community-news-conac{display:block}
+	.community-popularity-wrap-mes-content .community-popularity-wrap-mes-topic{float:left;margin-left:30px;}
+	.community-popularity-wrap-mes-content{line-height:22px;}
+	.community-popularity-wrap-mes-content{margin-top:10px;}
+	.wmes-space-add-attention{float:right;line-height:16px;margin-top:0;}
+	.community-popularity-wrap{padding-bottom:15px;border-bottom:1px solid #f0f0f0;}
+	.wmes-community-content-right ul{margin-top:20px;}
+	.wmes-community-content-right li{cursor:pointer;margin-top:10px;padding-bottom:10px;border-bottom:1px dashed #f0f0f0;}
+	.hightlight{color:Red;}
+	.headPortrait{cursor:pointer;}
+</style>
+	<div class="wmes-content" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+		<div class="wmes-community-wrap">
+			<div class="wmes-community-titlebox">
+				<p>[@lang_res k='community.community.communityName'/]</p>
+				<div class="wmes-community-searchbox-click">[@lang_res k='community.community.iWantToPublish'/]</div>
+				<div class="wmes-community-searchbox">
+					<input class="wmes-community-searchbox-text" placeholder="[@lang_res k='topic.publish.title'/]" id="txtkeywords"/>
+					<div class="wmes-community-searchbox-search"></div>
+				</div>
+				
+			</div>
+			<div class="wmes-community-content">
+				<div class="wmes-community-content-left">
+					<ul class="wmes-community-tab wmes-community-topic-tab">
+						<li type="topic" class="wmes-community-tabac">[@lang_res k='community.space.topic'/]</li>
+						<li type="question">[@lang_res k='community.space.question'/]</li>
+						<li type="insight">[@lang_res k='community.space.insight'/]</li>
+						<li type="user">[@lang_res k='community.community.search.member'/]</li>
+					</ul>
+					<div class="wmes-search-countcon">[@lang_res k='community.community.search.resultFirstStr'/]<span id="sp_keyword"></span>[@lang_res k='community.community.search.resultTwoStr'/]<span id="sp_datacount"> {{datatotal}} </span>[@lang_res k='community.community.search.resultRecordsStr'/]</div>
+					<!-- 第一个TAB页内容 -->
+					<div id="wmes-community-tab-topic" class="dataListTr wmes-community-news-con wmes-community-news-conac ng-cloak" ng-repeat="items in dataList">
+						<div class="wmes-community-news-wrap">
+							<a href="${base}/front/community/info/topicDetail.do?id={{items.id}}&type=t"><div class="wmes-community-news-title"  ng-bind-html="items.title | hightlight"></div></a>
+							<div class="wmes-community-news-type">{{items.sectionName}}<span>{{items.publishTimeFormat}}</span></div>
+							<p class="wmes-community-news-text" ng-bind="items.content"></p>
+							<div class="wmes-community-news-message">
+								<div class="wmes-community-news-message-left">
+									<img  membertype="{{items.memberType}}" memberid="{{items.memberId}}" class="headPortrait wmes-community-news-headPortrait" src="${base}{{items.userHeadUrl}}"/>
+									<div class="wmes-community-news-message-name">{{items.nickName}}</div>
+									<div class="wmes-community-news-message-ifasign"  ng-if="items.memberType==2"></div>
+									<div class="wmes-community-news-message-investorsign"  ng-if="items.memberType==1"></div>
+								</div>
+								<div class="wmes-community-news-message-right">
+									<div class="wmes-community-news-message-right-caicon">
+										<div behavior="unlike" iscancel="" type="t" topicid="{{items.id}}" class="wmes-community-news-message-right-cai"></div><span>{{items.unlikeCount}}</span>
+									</div>
+									<div class="wmes-community-news-message-right-nicecon">
+										<div behavior="like" iscancel="" type="t" topicid="{{items.id}}"  class="wmes-community-news-message-right-nice"></div><span>{{items.likeCount}}</span>
+									</div>
+									<div class="wmes-community-news-message-right-relycon">
+										<div class="wmes-community-news-message-right-rely"></div><span>{{items.commentCount}}</span>
+									</div>
+									<div class="wmes-community-news-message-right-eyecon">
+										<div class="wmes-community-news-message-right-eye"></div><span>{{items.readCount}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+                  
+					</div>
+					
+					
+					<!-- 第四个TAB页内容 -->
+					<div class="userListTr wmes-community-user-con ng-cloak"  id="wmes-community-tab-user" ng-repeat="items in userList">
+						<div class="community-popularity-wrap">
+							<img  membertype="{{items.memberType}}" memberid="{{items.memberId}}" class="headPortrait community-popularity-wrap-img" src="${base}{{items.iconUrl}}">
+							<div class="community-popularity-wrap-mes">
+								<div class="community-popularity-wrap-mes-name"><p ng-bind-html="items.nickName | hightlight"></p>
+								<span class="wmes-community-news-message-investorsign" ng-if="items.memberType==2"></span>
+								<span class="wmes-community-news-message-ifasign" ng-if="items.memberType==1"></span>
+								</div>
+								<div class="community-popularity-wrap-mes-content">
+									<div class="community-popularity-wrap-mes-followers"><p>[@lang_res k='community.community.followers'/]</p><span>{{items.followerCount}}</span></div>
+									<div class="community-popularity-wrap-mes-topic"><p>[@lang_res k='community.community.topic'/]</p><span>{{items.topicCount}}</span></div>
+									<div class="wmes-space-add-attention">
+									
+									<span class="wmes-space-information-bottom-img1" memberId="{{items.memberId}}"  type="add" ng-if="items.isFocused==0"></span><span ng-if="items.isFocused==0">[@lang_res k='community.space.addFocus'/]</span>
+									<span class="wmes-space-information-bottom-img1 wmes-space-information-bottom-img0" memberId="{{items.memberId}}"  type="cancel" ng-if="items.isFocused==1"></span><span ng-if="items.isFocused==1">[@lang_res k='community.space.cancelFocus'/]</span>
+									
+									</div>
+									
+									
+									
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="clickmore" style="display:none;"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+					 <div class="wmes-nodata-tips no_list_tips">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  </div>
+                  
+				</div>
+				<div class="wmes-community-content-right">
+					<div class="wmes-community-content-right-bigtitle">[@lang_res k='community.community.search.historyRecord'/]</div>
+					<ul>
+					
+					
+					[#if historyList?exists && historyList?size gt 0]
+					[#list historyList as list]
+					<li>${list.searchContent}</li>
+					[/#list]
+					[#else]
+					<div class="wmes-nodata-tips" style="display:block;">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  	</div>
+					[/#if]
+					</ul>
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<input id="hidloginMemberType" type="hidden" value="${loginMemberType!}">
+	<input id="hidloginMemberId" type="hidden" value="${loginMemberId!}">
+<!---->
+[#include "../inc/foot_v2.html"/]
+<script type="text/javascript">
+    seajs.use('${base}/res/web/community/search.js');
+</script>

@@ -1,0 +1,129 @@
+[#include "../../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <div class="wmes-content">
+        <div class="proposal-view-wrap">
+            <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='proposal.confirm.proposal.title'/]</p>
+            <input id="hidProposal" type="hidden" value="${(proposal.id)!''}">
+            <div class="proposal-view-inf">
+                <div class="proposal-view-portrait">
+	                <a href="${base!}/front/community/space/ifaSpace.do?id=${(proposal.ifaMember.member.id)!}">
+	                	<img class="proposal-view-portrait-img" src="${base}${iconUrl!}">
+	                    <p class="proposal-view-portrait-name">${(member.nickName)!''}</p>
+	                </a>
+                </div>
+                <p class="proposal-view-phone">[@lang_res k='proposal.confirm.proposal.phone'/]: <span>[#if (member.mobileCode)?? || (member.mobileNumber)??]+[/#if]${(member.mobileCode)!''} ${(member.mobileNumber)!''}</span></p>
+                <p class="proposal-view-email">[@lang_res k='proposal.confirm.proposal.Email'/]: <span>${(member.email)!''}</span></p>
+            </div>
+             [#if proposal??]
+            <div class="proposal-view-button">
+                <a class="proposal-view-print" href="javascript:;">[@lang_res k='proposal.confirm.proposal.print'/]</a>
+                <a id="view-export" class="proposal-view-export" href="javascript:;">[@lang_res k='proposal.confirm.proposal.export'/]</a>
+            </div>
+             <iframe class="viewPdf-wrap" id="viewPdf" name="viewPdf" src="${base}/front/crm/proposal/proposalPreview.do?id=${(proposal.id)!''}&language=${lang!}" width="100%" height="800px"></iframe>
+             [#if approvalView?? && proposal.status=='1' && approvalView=='1']
+             <div class="order-setting-top" style="clear: both;margin: 20px 0;">
+           		<p class="order-setting-title">[@lang_res k='order.plan.check.opinon.title'/]</p>
+           	 </div>
+	         <div>
+           		<textarea id="txtOpinon" style="width: 98%;height:100px;border-radius: 4px;resize: none;" rows="" cols=""></textarea>
+           	 	<p style="display:none;color:red;margin-left:5px;" class="approval-opinon-empty">[@lang_res k='order.plan.check.opinon.not.empty'/]</p>
+           	 </div>
+             [/#if]
+             <div class="proposal-view-button">
+                <a id="reject" class="proposal-view-export" href="javascript:;">[@lang_res k='proposal.confirm.proposal.reject'/]</a>
+                <a id="confirm" class="proposal-view-export" href="javascript:;">[@lang_res k='proposal.confirm.proposal.confirm'/]</a>
+             </div>
+             [#else]
+           	<div class="wmes-nodata-tips profileTips" style="display:block;min-height: 400px;margin-top:50px;">
+                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+            </div>
+             [/#if]
+        </div>
+    </div>
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use(['jquery','layui'], function($){
+		//print
+		$('.proposal-view-print').click(function(){
+			$("#viewPdf").contents().find("#print")[0].click();
+		});
+		//export
+		$('#view-export').click(function(){
+			var proposalId = $('#hidProposal').val();
+			var iframe = $("<iframe>");
+			iframe.attr("style","display:none");
+			iframe.attr("name","downPdf");
+			iframe.attr("method","post");
+			iframe.attr('frameborder','0');
+			iframe.attr("src",base_root + '/front/crm/proposal/downPdf.do?proposalId=' + proposalId+'&language='+lang);
+			$("body").append(iframe);
+		});
+		//confirm
+		$('#confirm').click(function(){
+			layer.confirm('[@lang_res k="proposal.confirm.proposal.dialog.msg.1"/]', {
+			  title:'[@lang_res k="global.info"/]',btn: ['[@lang_res k="global.confirm"/]','[@lang_res k="global.cancel"/]'] //按钮
+			}, function(index){
+			  investorConfirmProposal(2);
+			  layer.close(index);
+			});
+		});
+		//reject
+		$('#reject').click(function(){
+			layer.confirm('[@lang_res k="proposal.confirm.proposal.dialog.msg.0"/]', {
+			  title:'[@lang_res k="global.info"/]',btn: ['[@lang_res k="global.confirm"/]','[@lang_res k="global.cancel"/]'] //按钮
+			}, function(index){
+			  investorConfirmProposal(-1);
+			  layer.close(index);
+			});
+		});
+		function investorConfirmProposal(status){
+			var opinon = $('#txtOpinon').val().trim();
+			if(status == '-1'){
+				if(!opinon || opinon.length < 1){
+					$('.approval-opinon-empty').show();
+					$('#txtOpinon').focus();
+					return;
+				}
+			}
+			var proposalId = $('#hidProposal').val();
+			var url = '${base}/front/crm/proposal/investorConfirmProposal.do?dataStr=' + new Date().getTime();
+			$.ajax({
+				url:url,
+				type:'post',
+				data:{
+					proposalId:proposalId,
+					opinon:opinon,
+					status:status
+				},
+				success:function(result){
+					if(result.flag){
+						layer.msg('[@lang_res k="global.successful.operation"/]',{icon:2});
+						sendSms(proposalId,status);
+					}else{
+						layer.msg('[@lang_res k="global.operation.failed"/]',{icon:1});
+					}
+				},error:function(){
+					layer.msg('[@lang_res k="global.operation.failed"/]',{icon:1});
+				}
+			});
+		}
+		function sendSms(proposalId,status){
+			// 投资方案确认提醒（确认、退回）
+			var url = '${base}/front/crm/proposal/smsProposalConfirmed.do?dataStr=' + new Date().getTime();
+			$.ajax({
+				url:url,
+				type:'post',
+				data:{
+					proposalId:proposalId,
+					status:status
+					},
+				success:function(result){
+					setTimeout(function(){
+						window.location.href = '${base!}/front/crm/proposal/previewProposal.do?dataStr=' + new Date().getTime() + '&proposalId=' + proposalId;
+					},1000);
+				}
+		   });
+		}
+	});
+</script>

@@ -1,0 +1,51 @@
+	<link rel="stylesheet" href="${base}/res/css/wmes_en.css">  
+	<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+					<div>
+                    	    <p class="Approval_table_title">Process History</p>
+                    		<table class="Approval_table">
+		                   		<tbody>
+		                   			<tr class="Approval_table_th">
+		                   				<th width="50">#</th>
+		                   				<th width="190">Date</th>
+		                   				<th width="140">Person</th>
+		                   				<th width="110">Actions</th>
+		                   				<th width="350">Remark</th>
+		                   				<th width="140">Flow Step</th>
+		                   			</tr>
+		                   			<tr>
+		                   				<td></td>
+		                   				<td>2016-05-25 16:23:51</td>
+		                   				<td>Kelvin wang</td>
+		                   				<td>approved</td>
+		                   				<td>Residential address error, Please fill it in again!</td>
+		                   				<td>Distributor </td>
+		                   			</tr>
+		                   			<tr>
+		                   				<td></td>
+		                   				<td>2016-05-25 16:23:51</td>
+		                   				<td>Kelvin wang</td>
+		                   				<td>approved</td>
+		                   				<td>Thank you for choosing us。</td>
+		                   				<td>Distributor </td>
+		                   			</tr>
+		                   			<tr>
+		                   				<td></td>
+		                   				<td>2016-05-25 16:23:51</td>
+		                   				<td>Kelvin wang</td>
+		                   				<td>approved</td>
+		                   				<td></td>
+		                   				<td>Distributor </td>
+		                   			</tr>
+		                   			<tr>
+		                   				<td></td>
+		                   				<td>2016-05-25 16:23:51</td>
+		                   				<td>Kelvin wang</td>
+		                   				<td>approved</td>
+		                   				<td></td>
+		                   				<td>Distributor </td>
+		                   			</tr>
+		                   			<tr>
+		                   		</tbody>
+		                   </table>
+
+                    	</div>

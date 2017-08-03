@@ -1,0 +1,101 @@
+package com.fsll.wmes.community.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import com.fsll.common.CommonConstants;
+import com.fsll.common.base.service.BaseService;
+import com.fsll.common.util.BeanUtils;
+import com.fsll.common.util.DateUtil;
+import com.fsll.common.util.JsonPaging;
+import com.fsll.wmes.common.CommonConstantsWeb;
+import com.fsll.wmes.community.service.CommunitySectionService;
+import com.fsll.wmes.community.vo.CommunitySectionVO;
+import com.fsll.wmes.entity.CommunitySection;
+
+@Service("communitySectionService")
+public class CommunitySectionServiceImpl extends BaseService implements CommunitySectionService {
+
+	/**
+	 *  社区栏目设置列表数据获取
+	 * @author wwluo
+	 * @date 2017-05-26
+	 * @param jsonPaging
+	 * @return jsonPaging
+	 */
+	@SuppressWarnings({ "unchecked" })
+	@Override
+	public JsonPaging getSections(JsonPaging jsonPaging) {
+		StringBuffer hql = new StringBuffer(""
+				+ " FROM CommunitySection c"
+				+ " WHERE c.parentId IS NULL OR c.parentId=''"
+				+ " ORDER BY c.orderBy ASC");
+		jsonPaging = this.baseDao.selectJsonPaging(hql.toString(), null, jsonPaging, false);
+		if(jsonPaging.getList() != null && !jsonPaging.getList().isEmpty()){
+			List<CommunitySection> sections = jsonPaging.getList();
+			iterationChildSections(sections);
+		}
+		return jsonPaging;
+	}
+
+	/**
+	 *  社区子栏目拼装
+	 * @author wwluo
+	 * @date 2017-05-26
+	 * @param menus
+	 */
+	private void iterationChildSections(List<CommunitySection> sections){
+		for (CommunitySection communitySection : sections) {
+			communitySection.setCreateTimeStr(DateUtil.dateToDateString(communitySection.getCreateTime(), CommonConstants.FORMAT_DATE_TIME));
+			if(communitySection.getChildSet() != null && !communitySection.getChildSet().isEmpty()){
+				communitySection.setChilds(new ArrayList<CommunitySection>(communitySection.getChildSet()));
+				iterationChildSections(communitySection.getChilds());
+			}
+		}
+	}
+
+	/**
+	 *  获取社区所有栏目
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @return List<CommunitySection> 社区栏目实体集合
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CommunitySection> findAllSection() {
+		List<CommunitySection> sections = null;
+		StringBuffer hql = new StringBuffer(" FROM CommunitySection");
+		sections = this.baseDao.find(hql.toString(), null, false);
+		return sections;
+	}
+
+	/**
+	 *  根据ID获取实体（CommunitySection）
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @return CommunitySection
+	 */
+	@Override
+	public CommunitySection findById(String sectionId) {
+		CommunitySection section = null;
+		if (StringUtils.isNotBlank(sectionId)) {
+			section = (CommunitySection) this.baseDao.get(CommunitySection.class, sectionId);
+		}
+		return section;
+	}
+
+	/**
+	 *  保存社区栏目信息
+	 * @author wwluo
+	 * @date 2017-06-01
+	 */
+	@Override
+	public void saveSection(CommunitySection section) {
+		this.baseDao.saveOrUpdate(section);
+	}
+	
+	
+}

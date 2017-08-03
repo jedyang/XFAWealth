@@ -1,0 +1,58 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css"> [#if Session["_FRONT_USER_LOGIN_"]?exists == true]
+<style type="text/css">
+	.wmes-content-con{background:#fff;padding:0 25px}
+</style>
+<input type="hidden" name="" id="loginCode" value="true"> [#else]
+<input type="hidden" name="" id="loginCode" value="false"> [/#if]
+<div class="wmes-top">
+	<a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+	<a href="javascript:;" class="header-over">IFA选择用户测试页面</a>
+</div>
+<div class="wmes-content" style="position: relative;">
+	<div class="wmes-content-con">
+		userType:
+	<select name="userType" id="userType">
+		<option value="prospect">prospect</option>
+		<option value="existing">existing</option>
+		<option value="client">client</option>
+		<option value="buddy">buddy</option>
+		<option value="colleague">colleague</option>
+	</select>
+	<br><br>
+	<div class="screener-attributes-button">
+		<a class="attributes-button" id="btnTest" href="javascript:;">IFA选择一种用户（多选）</a>
+	</div>
+	
+	<br> memberIds:
+	<br><textarea type="textarea" name="memberIdsResult" rows="3" cols="120" value="" id="memberIdsResult"></textarea><br> memberNames:
+	<br><textarea name="memberNamesResult" rows="3" cols="120" value="" id="memberNamesResult"></textarea> <br>
+	
+		
+	<br>
+	<div class="screener-attributes-button">
+		<a class="attributes-button" id="btnTest2" href="javascript:;">IFA选择一种用户（单选）</a>
+	</div>
+	<br> memberIds2:
+	<br><textarea type="textarea" name="memberIdsResult2" rows="3" cols="120" value="" id="memberIdsResult2"></textarea>
+	<br> memberNames2:
+	<br><textarea name="memberNamesResult2" rows="3" cols="120" value="" id="memberNamesResult2"></textarea> <br>
+	
+	
+	</div>
+	
+
+	
+
+	<div class="selectnamelistbox" style="display:none;position: absolute;top:0;left:0;background:rgba(0,0,0,0)">
+		<!-- 选择用户控件 -->
+	</div>
+
+</div>
+[#include "../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('${base}/res/web/ifa/selectNameListTest.js');
+	seajs.use('${base}/res/web/ifa/selectUser.js');
+	//seajs.use('${base}/res/web/ifa/selectNameListNew.js');
+</script>

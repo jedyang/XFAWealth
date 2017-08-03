@@ -1,0 +1,86 @@
+[#include "../inc/head_v2.html"/]
+<style>.swiper-container {width: 100%;height: 100%;}</style>
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+<link rel="stylesheet" href="${base}/res/css/ifa.css">  
+<style>
+.swiper-pagination{position: absolute;top:20px;height: 13px;} 
+.swiper-pagination-bullet{    margin: 0px 5px;}
+.investor-chioce-li-ss{height:50px;}
+.home-investor-right .investor-chioce .p-selected { color:#ffffff; background-color: #70bdfe;cursor:pointer;}
+.page_left {background: url('${base}/res/images/ifa/left_ico.png') no-repeat;;position: absolute;top: 45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;left: -10px;opacity: 0.7;right: auto;cursor: pointer;}
+.page_right {background: url('${base}/res/images/ifa/right_ico.png') no-repeat;position: absolute;top:45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;right: -10px;opacity: 0.7;left: auto;cursor: pointer;}
+.swiper-pagination-bullet{width: 12px;height: 12px;}
+</style>
+<div class="wmes-top">
+        <a href="javascript:;" class="header-over">Home</a>
+    </div>
+<div class="wmes-notop-content" >
+     <div class="swiper-container ifa-home-wrap">
+        <div class="swiper-wrapper ifa-home-contents-list">
+        <div class="swiper-slide ifa-home-rows">
+                <div class="ifa-home-contents">
+                    <p class="ifa-home-title">Find Investors</p>
+                    <div class="mid-inverstor-left">
+                            <div class="home-investor-left">
+                                    <p class="home-investors-total">A total of <span class="home-investors-sum">3</span> investors to meet your requirements</p>
+                                   <ul class="home-investor-list">
+                                 
+                                   </ul> 
+                            </div>
+                    </div>
+                    <div  class="home-investor-right">
+                       <ul class="investor-chioce">
+                            <li isopen="0" number="1">
+                                <a class="investor-chioce-button  investor-chioce-white" href="javascript:;">Language</a>
+                                <p class="investor-region-list" code="en"><span class="investor-chioce-condition">English</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list" code="sc"><span class="investor-chioce-condition">Chinese</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Spanish</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">French</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">German</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Japanese</span><span class="investor-choice-x">x</span></p>                  
+                            </li>
+                            <li  isopen="0" number="2"><a class="investor-chioce-button investor-chioce-white" href="javascript:;">Inv. Style</a>
+                            [#if styleList?exists && styleList?size gt 0][#list styleList as list]
+                                <p class="investor-region-list" code="${list.code!}"><span class="investor-chioce-condition">${list.name!}</span><span class="investor-choice-x">x</span></p>
+                                [/#list][/#if]
+                                <!--<p class="investor-region-list"><span class="investor-chioce-condition">Steady</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Growth</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Radical</span><span class="investor-choice-x">x</span></p>
+                            --></li>
+                            <li isopen="0" number="3"><a class="investor-chioce-button investor-chioce-white" href="javascript:;">Interest</a>
+                             [#if intresteList?exists && intresteList?size gt 0][#list intresteList as list]
+                                <p class="investor-region-list" code="${list.code!}"><span class="investor-chioce-condition">${list.name!}</span><span class="investor-choice-x">x</span></p>
+                                [/#list][/#if]
+                               
+                                <!--<p class="investor-region-list"><span class="investor-chioce-condition">Run</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Mountaineering</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Swimming</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Other</span><span class="investor-choice-x">x</span></p>
+                            --></li>
+                            <!--<li isopen="0" number="4">
+                                <a id="Country-btn" class="investor-chioce-button investor-chioce-white" href="javascript:;">Region</a>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Europe</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">North America</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">South America</span><span class="investor-choice-x">x</span></p>
+                                <p class="investor-region-list"><span class="investor-chioce-condition">Asia</span><span class="investor-choice-x">x</span></p>
+                            </li>
+                            --><li><p class="investor-chioce-button investor-chioce-white">Read My Insights</p></li>
+                            <li class="investor-list-line"></li>
+                            <li><a class="investor-chioce-button investor-chioce-white" id="btnNoIfa" href="javascript:;">No IFA Yet</a></li>
+                        </ul>
+                    </div>  
+                </div>
+            </div>
+            </div>
+        <div class="swiper-pagination" id="ifa-home-page"></div>
+    </div>  
+    
+</div>
+        
+[#include "../inc/foot_v2.html"/]
+
+<script type="text/javascript">
+ var investorList=${investorList};
+     seajs.use('${base}/res/web/ifa/findInvestor.js');
+</script>
+            

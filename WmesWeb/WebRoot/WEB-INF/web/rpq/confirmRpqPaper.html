@@ -1,0 +1,105 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<div class="wmes-content">
+	<div class="wmes-content-rpq">
+	<p class="wmes-wrap-title">[@lang_res k='kyc.rpq.paper.title'/]</p>
+    <div class="fill-rpq-wrap">
+         <div class="fill-rpq-information">
+            <div class="fill-rpq-portrait">
+                <img src="${base}${(rpqPaper.iconUrl)!}">
+                <p class="fill-rpq-name">${(rpqPaper.name)!}</p>
+            </div>
+            <p class="fill-rpq-phone">[@lang_res k='kyc.rpq.paper.mobile.phone'/]: <span>[#if rpqPaper?? && rpqPaper.mobilePhone?? && rpqPaper.mobilePhone!='']${(rpqPaper.mobilePhone)!}[#else]-[/#if]</span></p>
+            <p class="fill-rpq-email">[@lang_res k='kyc.rpq.paper.email'/]: <span>${(rpqPaper.email)!'-'}</span></p>
+        </div>
+        <div class="OpenAccount_liucheng">
+          <ul class="fill-rpq-liucheng">
+              <li class="liucheng_kuai liucheng_light"><div class="font_height">[@lang_res k='kyc.rpq.paper.step.one'/]</div></li>
+              <li>
+                <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_03.png"></div>
+              </li>
+              <li class="liucheng_kuai liucheng_orange"><div class="font_height">[@lang_res k='kyc.rpq.paper.step.two'/]</div></li>
+              <li>
+                <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_05.png"></div>
+              </li>
+              <li class="liucheng_kuai"><div class="font_height">[@lang_res k='kyc.rpq.paper.step.three'/]</div></li>
+          </ul>
+        </div>
+        <div class="rpqContent">
+            <p class="rpq-investment-topt">[@lang_res k='kyc.rpq.paper.investment.orientation.analysis'/]</p>
+           	[#if rpqLevel.result?? && rpqLevel.result!='']
+            <div class="rpqPageRemark">
+                <p class="rpq-investment-title" style="width: 810px;text-align: left;">[@lang_res k='kyc.rpq.paper.tips.based.on.answers'/]:</p>
+                <p style="clear:both;margin-top: 10px;" class="rpq-investment-word">${rpqLevel.result!}</p>
+            </div>
+            <div class="rpq-investment-brief">
+                <p class="rpq-brief-title">${rpqLevel.result!}:</p>
+                <p class="rpq-brief-word">[#if rpqLevel.remark?? && rpqLevel.remark!='']${rpqLevel.remark!}[#else]-[/#if]</p>
+            </div>
+            [/#if]
+            <div class="rpq-confirm-contents">
+                <p class="rpq-confirm-confirmation">[@lang_res k='kyc.rpq.paper.client.confirmation'/]</p>
+                <div class="rpq-confirm-rows rpq-confirm-rows-risk-level">
+                    <p class="rpq-confirm-title">[@lang_res k='kyc.rpq.paper.the.first.part'/]:</p>
+                    <div class="rpq-confirm-radio">
+                      <input type="radio" class="regular-radio" checked="checked" name="rpq_change_level" value="0" id="confirmOne">
+                      <label for="confirmOne"></label>
+                      <span class="font_gray_left">[@lang_res k='kyc.rpq.paper.tips.agree'/]</span>
+                    </div>
+                    <div class="rpq-confirm-radio rpq-confirm-radio-my-select">
+                      <input type="radio" class="regular-radio" name="rpq_change_level" value="1" id="rpq_change_level">
+                      <label for="rpq_change_level"></label>
+                      <span class="font_gray_left">[@lang_res k='kyc.rpq.paper.tips.better.reflect.my.actual.situation'/]</span>
+                    </div>
+                </div>
+                <div class="rpq-orientation-rows rpq-confirm-rows-user-risk-level" hidden>
+                    [#if lessRpqLevels?? && lessRpqLevels?size > 0]
+                    [#list lessRpqLevels as lev]
+                    [#if rpqLevel?? && rpqLevel.riskLevel?? && lev.riskLevel?? && lev.riskLevel == rpqLevel.riskLevel && lev.riskLevel == 1]
+                    <div class="rpq-confirm-radio">
+                    	<input type="radio" disabled="disabled" class="regular-radio" name="rpq_level" id="${lev.id}" checked="checked">
+                    	<label class="less_level" for="${lev.id}"></label>
+                      	<span class="rpq-orientation-gray">${lev.result}.</span>
+                      	<p class="rpq-orientation-word">${lev.remark}</p>
+                    </div>
+                    [#elseif lev.riskLevel?? && rpqLevel.riskLevel?? && lev.riskLevel != rpqLevel.riskLevel]
+                    <div class="rpq-confirm-radio">
+                    	<input type="radio" disabled="disabled" class="regular-radio" name="rpq_level" id="${lev.id}">
+                      	<label class="less_level" for="${lev.id}"></label>
+                      	<span class="rpq-orientation-gray">${lev.result}.</span>
+                      	<p class="rpq-orientation-word">${lev.remark}</p>
+                    </div>
+                    [/#if]
+                    [/#list]
+                    [/#if]
+                </div>
+                <p class="rpq-introduction-word">[@lang_res k='kyc.rpq.paper.tips.suitability.assessment'/]</p>
+                <div class="rpq-confirm-rows">
+                    <p class="rpq-confirm-title">[@lang_res k='kyc.rpq.paper.two.part'/]:</p>
+                    <p class="rpq-interested-word">[@lang_res k='kyc.rpq.paper.tips.interested.investing.services'/]</p>
+                    <p class="rpq-interested-word">[@lang_res k='kyc.rpq.paper.tips.investment.orientation.analysis.stored'/]</p>
+                </div>
+            </div>
+        </div>
+        <div class="rpq-button-wrap">
+            <a href="javascript:;" id="rpq_fill_cancel" pIndex="2" class="rpq-button-cancel">[@lang_res k='global.cancel'/]</a>
+            <a href="javascript:;" id="rpq_confirm_previous" class="rpq-button-previous">[@lang_res k='global.previous'/]</a>
+            <a href="javascript:;" id="rpq_confirm_next" class="rpq-button-next">[@lang_res k='global.ok'/]</a>
+        </div>
+        <form id="form_fillrpq">
+        	<input type="hidden" id="userLevelId" name="userLevelId" value=""/>
+        	<input type="hidden" name="levelId" value="${rpqLevel.id!}"/>
+        	<input type="hidden" name="score" value="${score!}"/>
+        	<input type="hidden" name="examId" value="${examId!}"/>
+        	<input type="hidden" name="pageId" value="${pageId!}"/>
+        </form>
+    </div>
+</div>
+</div>
+    [#include "../inc/foot_v2.html"/] 
+<script type="text/javascript">
+	var base_root = '${base}';
+	var props = [@load_prop k=''/];
+	seajs.use('${base}/res/web/rpq/fillRpqPaper.js');
+</script>
+

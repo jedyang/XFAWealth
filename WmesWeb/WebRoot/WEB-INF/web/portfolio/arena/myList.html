@@ -1,0 +1,225 @@
+[#include "../../inc/head_v2.html"/]
+<style>
+	.ifa_pagint_now span {
+		color: black;
+	}
+	.page_left {
+		background:rgba(0, 0, 0, 0) url("${base}/res/images/ifa/left_ico.png") no-repeat scroll 0 0;
+		width: 62px;
+		height: 62px;
+		position: absolute;
+		cursor: pointer;
+		font-size: 30px;
+		text-align: center;
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+		background-color: #ccc;
+		color: white;
+		line-height: 62px;
+		border-radius: 10%;
+		margin: auto;
+		left: 0px;
+		top: 250px;
+		bottom: 0;
+	}
+	.page_left:hover {
+		background-color: #4ba6de;
+	}
+	.page_right {
+		background:rgba(0,
+		0,
+		0,
+		0) url("${base}/res/images/ifa/right_ico.png") no-repeat scroll 0 0;
+		width: 62px;
+		height: 62px;
+		position: absolute;
+		font-size: 30px;
+		text-align: center;
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+		background-color: #ccc;
+		color: white;
+		line-height: 62px;
+		cursor: pointer;
+		border-radius: 10%;
+		margin: auto;
+		right: 1px;
+		top: 250px;
+		bottom: 0;
+	}
+	.page_right:hover {
+		background-color: #4ba6de;
+	}
+	.conservative-date-wrap{float:right;margin-top:6px;margin-right:60px;display: none;}
+	.account-choose-input-wrap{float:left;}
+	.account-choose-date{width:80px;}
+	.account-choose-name{float:left;}
+	.account-data-search{float: left;}
+	.ng-cloak,
+	.x-ng-cloak,
+	.ng-hide{display:none !important;}ng\:form{display:block;}
+	.ng-animate-start{clip:rect(0,auto,auto,0);-ms-zoom:1.0001;}
+	.ng-animate-active{clip:rect(-1px,auto,auto,0);-ms-zoom:1;}
+</style>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<div ng-app="ifaTable" ng-controller="ifaTableCtrl" class="wmes-content wmes-content-position">
+<input type="hidden" id="dateTimeFormat" value="${dateTimeFormat!}">
+	<input type="hidden" id="dateFormat" value="${dateFormat!}">
+	<div class="strategies_list_wrap" style="padding-top:20px;">
+		<div class="wmes-wrap-title">
+			[@lang_res k='portfolio.mylist.title'/]
+		</div>
+		<ul class="builder-tab application-information-tab">
+                    <li data-active="publish" class="tab-active">[@lang_res k='list.search.publish'/]<span></span></li>
+                    <li data-active="draft">[@lang_res k='list.search.draft'/]<span></span></li>
+        </ul>
+		<div class="ifa_keyserach_wrap">
+			<div class="mylist-new-bn">[@lang_res k='strategy.mylist.new'/]</div>
+			<div class="funds_keyserach ifa_keyserach">
+				<input type="text" id="fundName" placeholder="[@lang_res k='portfolio.info.form.portfolioName'/]">
+				<span class="icon_search" id="searchKeyBtn"></span>
+			</div>
+		</div>
+		<div class="tabcut">
+		<div class="strategies_list">
+				<div class="application-information-tabcon">
+				
+            	<table class="funds_search_information strategies_List myProposalList">
+			<tbody>
+				<tr class="funds_tables_th">
+					<th class="funds_tables_header" style="width:37%;text-align: center;">
+						[@lang_res k='portfolio.info.form.portfolioName'/]
+					</th>
+					<th class="funds_tables_header" style="width:14%;">
+						[@lang_res k='list.search.return'/]
+					</th>
+					<th class="funds_tables_header" style="width:6%">
+						
+					</th>
+					<th class="funds_tables_header" style="width:14%;text-align: left;">
+						[@lang_res k='list.search.issuedDate'/]
+					</th>
+					<th class="funds_tables_header" style="width:25%;">
+						[@lang_res k='list.search.action'/]
+					</th>
+				</tr>
+				<tr ng-repeat="items in dataList" ng-if="items.status=='1'" ng-cloak class="ng-cloak">
+					<td class="tdleft funds_tables_fnames">
+						<a href="${base}/front/portfolio/arena/detail.do?id={{items.id}}" ng-bind="items.portfolioName"></a><br/>
+						<span ng-bind="items.investmentGoal | limitTo: 150"></span>
+					</td>
+					<td class="funds_search_tdcenter">
+					[#if defDisplayColor?? && defDisplayColor=='2']
+						<span class="funds_search_negative" ng-if="items.totalReturn>=0">{{items.totalReturn | formatCurrency:'%'}}</span>
+						<span class="funds_search_positive" ng-if="items.totalReturn<0">{{items.totalReturn | formatCurrency:'%'}}</span>
+					[#elseif defDisplayColor?? && defDisplayColor=='1']
+						<span class="funds_search_positive" ng-if="items.totalReturn>=0">{{items.totalReturn | formatCurrency:'%'}}</span>
+						<span class="funds_search_negative" ng-if="items.totalReturn<0">{{items.totalReturn | formatCurrency:'%'}}</span>
+					[/#if]
+					</td>
+					<td class="funds_search_tdcenter"></td>
+					<td class="funds_search_tdcenter myProposalList_time">
+						<p ng-bind="items.lastUpdate|datetime:dateTimeFormat"></p>
+						<div>
+							<img src="${base}/res/images/discover/eve_ico.png" style="width:18px;height:10px;margin-top:6px;margin-right:5px"/><span ng-bind="items.visitCount"></span>
+							<div class="visited visitorsBtn" data-item-id="{{items.id}}">
+								<img src="${base}/res/images/fund/msg_ico.png" style="width:15px;height:18px;margin-top:4px;margin-right:5px" /><span ng-if="items.customerVisitCount>99">...</span>
+								<span ng-if="items.customerVisitCount<=99" ng-bind="items.customerVisitCount"></span>
+							</div>
+						</div>
+					</td>
+					<td class="funds_search_tdcenter">
+						<!--<a class="view" target="_self" href="${base!}/front/portfolio/arena/createPortfolioTwo.do?edit=1&portfolioId={{items.id}}" itemId="{{items.id}}"><img src="${base}/res/images/fund/change_ico.png" /></a>
+						--><a class="delete" href="javascript:void(0);" itemId="{{items.id}}"><img src="${base}/res/images/fund/delete_ico.png" /></a>
+						<a class="down" href="javascript:void(0);" itemId="{{items.id}}" ng-if="items.overhead=='1'"><img src="${base}/res/images/application/u292.png" style="width:21px;height:21px;" /></a>
+						<a class="up" href="javascript:void(0);" itemId="{{items.id}}" ng-if="items.overhead!='1'"><img src="${base}/res/images/fund/down_ico.png" /></a>
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+		<div class="no_list_tips">
+            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+        </div>
+		<ul  class="wmes_list_paging">
+            <li class="wmes_pagint_num" ng-repeat="items in page.ListPage" ng-class="{wmes_pagint_now: items.PageShow == page.nowPage}" ng-bind="{{'items.PageShow'}}" data-page="{{items.PageShow}}"></li>
+        </ul>
+		</div>
+			</div>
+		</div>
+		<div class="tabcut ifa-more-ico-hidden">
+		<div class="strategies_list">
+			<!--<div class="page_left"></div>
+				--><div class="application-information-tabcon">
+				
+            	<table class="funds_search_information strategies_List myProposalList">
+			<tbody>
+				<tr class="funds_tables_th">
+					<th class="funds_tables_header" style="width:37%;text-align: center;">
+						[@lang_res k='portfolio.info.form.portfolioName'/]
+					</th>
+					<th class="funds_tables_header" style="width:6%">
+						
+					</th>
+					<th class="funds_tables_header" style="width:14%;">
+						[@lang_res k='list.search.issuedDate'/]
+					</th>
+					<th class="funds_tables_header" style="width:25%;">
+						[@lang_res k='list.search.action'/]
+					</th>
+				</tr>
+				<tr ng-repeat="items in dataList" ng-if="items.status=='0'">
+					<td class="tdleft funds_tables_fnames">
+						<a target="_self" href="${base}/front/portfolio/arena/detail.do?id={{items.id}}" ng-bind="items.portfolioName"></a><br/>
+						<span ng-bind="items.investmentGoal | limitTo: 150"></span>
+					</td>
+					<td class="funds_search_tdcenter"></td>
+					<td class="funds_search_tdcenter myProposalList_time" style="text-align: center;">
+						<p ng-bind="items.lastUpdate|datetime:dateTimeFormat"></p>
+					</td>
+					<td class="funds_search_tdcenter">
+						<a class="view" target="_self" href="${base!}/front/portfolio/arena/createPortfolioTwo.do?edit=1&portfolioId={{items.id}}" itemId="{{items.id}}"><img src="${base}/res/images/fund/change_ico.png" /></a>
+						<a class="delete" href="javascript:void(0);" itemId="{{items.id}}"><img src="${base}/res/images/fund/delete_ico.png" /></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="no_list_tips">
+            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+        </div>
+		<ul class="wmes_list_paging">
+          	<li class="wmes_pagint_num" ng-repeat="items in page.ListPage" ng-class="{wmes_pagint_now: items.PageShow == page.nowPage}" ng-bind="{{'items.PageShow'}}" data-page="{{items.PageShow}}"></li>
+      	</ul>
+		</div>
+			</div>
+			<!--<div class="page_right"></div>
+		--></div>
+	</div>
+	<div class="visitedconlayer"></div>
+	<div class="visitedcon">
+		<p class="visitedcontitle">[@lang_res k='strategy.mylist.recentVisitors'/]</p>
+		<div class="visitedbox">
+		<ul>
+			<li ng-repeat="friend in friendList">
+				<img ng-src="${base!}{{friend.iconUrl}}" style="width:32px;height:32px;"/>
+				<div class="visitedinformation">
+					<p ng-bind="friend.member.loginCode"></p>
+					<p ng-if="friend.vistiPeriodType!=null && friend.vistiPeriodType=='H'">{{friend.vistiPeriodTime}} hour ago</p>
+					<p ng-if="friend.vistiPeriodType!=null && friend.vistiPeriodType=='M'">{{friend.vistiPeriodTime}} mins ago</p>
+					<p ng-if="friend.vistiPeriodType==null" ng-bind="friend.vistiTime|date:'yyyy-MM-dd'"></p>
+				</div>
+			</li>
+		</ul>			
+		</div>
+		<img style="display:none;" class="visitedleft" src="${base}/res/images/ifa/left_ico.png"/>
+		<img style="display:none;" class="visitedright" src="${base}/res/images/ifa/right_ico.png"/>
+	</div>	
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+seajs.use('${base}/res/web/portfolio/arena/myList.js');
+</script>

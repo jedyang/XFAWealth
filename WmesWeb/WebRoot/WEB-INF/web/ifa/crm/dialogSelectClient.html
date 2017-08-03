@@ -1,0 +1,288 @@
+
+<link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+<link rel="stylesheet" href="${base}/res/css/swiper.css">
+<style type="text/css">
+.swiper-button-next {
+	top: 50%;
+	background-image:
+		url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23bbbbbb'%2F%3E%3C%2Fsvg%3E")
+}
+
+.swiper-button-prev {
+	top: 50%;
+	background-image:
+		url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23bbbbbb'%2F%3E%3C%2Fsvg%3E");
+}
+</style>
+
+<div class="order-plan-sapce">
+	<div class="order-sapce-wrapper">
+		<div class="swiper-container">
+			<div class="order-sapce-hidden swiper-wrapper">
+				
+				[#if crmList?exists && crmList?size gt 0 ][#list crmList as list]
+				[#if list_index%8==0]
+				<div class="order-sapce-contents swiper-slide">
+				[/#if]
+					<div class="order-space-rows" invId="${list.id!}">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							${list.nickName!}
+						</p>
+					</div>
+					[#if list_index%8==7]
+					</div>
+					[/#if]
+					[/#list]
+					[/#if]
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+
+				</div>
+				<div class="order-sapce-contents swiper-slide">
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White2
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+				</div>
+				<div class="order-sapce-contents swiper-slide">
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White3
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+					<div class="order-space-rows">
+						<img class="order-space-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="order-space-name">
+							Alex White
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="swiper-button-next"></div>
+		<div class="swiper-button-prev"></div>
+	</div>
+</div>
+<!--<div class="ifa-space-popup ifa-space-active" id="ifa-pipeline-investors" style="text-align: center">
+
+			<p class="home-investors-total">
+				A total of
+				<span class="home-investors-sum">${total!}</span> investors to meet your requirements
+			</p>
+			<ul class="home-investor-list" style="list-style-type: none;">
+			<div type="portfolios"  class="page_left"></div>
+			[#if crmList?exists && crmList?size gt 0 ][#list crmList as list]
+				<li class="home-investor-list-li" invId="${list.id!}">
+					<p class="investor-list-name">
+						${list.nickName!}
+					</p>
+					<div class="investor-iof-wrap">
+						<p class="investor-list-title">
+							<img class="investor-list-img" src="${base}/res/images/ifa/ifa_phone_ico.png" alt="">
+							<span class="investor-list-ifo"></span>
+						</p>
+						<p class="investor-list-title">
+							<img class="investor-list-img" src="${base}/res/images/ifa/ifa_email_ico.png" alt="">
+							<span class="investor-list-ifo"></span>
+						</p>
+						<div class="investor-chat-wrap">
+							<img class="investor-list-img" src="${base}/res/images/ifa/investor_liaotian.png" alt="">
+							<div class="investor-hide-chat">
+								<img src="${base}/res/images/ifa/investor_wetchat.png" alt="">
+								<img src="${base}/res/images/ifa/investor_phone.png" alt="">
+								<img src="${base}/res/images/ifa/investor_line.png" alt="">
+							</div>
+						</div>
+					</div>
+					
+				</li>
+				[/#list]
+				[/#if]
+				<div type="portfolios"  class="page_right" ></div>
+			</ul>
+</div>
+-->
+
+
+<script type="text/javascript">
+	var base_root = '${base}';
+	var lang = '${Session["_LANG_CODE_"]!}';
+	var sub_user_type = '${Session["_FRONT_USER_TYPE_"]!}';
+	var className = '${class}';
+	
+</script>
+<script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+<script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+<<script type="text/javascript">
+seajs.use('${base}/res/web/strategy/dialogSelectClient.js');
+</script>

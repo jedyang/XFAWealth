@@ -1,0 +1,247 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+		<div class="tab-side-container">
+            <div class="page-header mt-10">
+                <h4><b>[@lang_res k='console.community.section.title'/]</b></h4>
+            </div>
+            <div class="clear"></div>
+            <div class="tab_wrap">
+                <form id="frm" class="form-horizontal" style="display:block;">
+                   	<div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="selParentId" class="label-control">[@lang_res l=Session["_LANG_CODE_"] k='console.sysmenu.form.parent'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                        	<select class="form-control " id="selParentId"  name="selParentId">
+                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                               [#if sections?? && sections?size gt 0]
+                                 [#list sections as tp]
+                                 	[#if section?? && (section.id) != tp.id]
+										<option value="${tp.id}" [#if section?? && section.parentId?? && section.parentId == tp.id]selected[/#if]>
+	                                   		[#if langCode?exists && langCode='sc']
+	                                   			${tp.sectionNameSc}
+	                                   		[/#if]
+	                                   		[#if langCode?exists && langCode='tc']
+	                                   			${tp.sectionNameTc}
+	                                   		[/#if]
+	                                   		[#if langCode?exists && langCode='en']
+	                                   			${tp.sectionNameEn}
+	                                   		[/#if]
+	                                   </option>
+									[/#if]
+                                 [/#list]
+                               [/#if]
+                            </select> 
+                        </div>
+                    </div>
+                    <!-- 中文名称 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                        	<span class="red">* </span>
+                            <label for="txtNameSc" class="label-control">[@lang_res  k='console.sysmenu.form.nameSc'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtNameSc" value="${(section.sectionNameSc)?if_exists}" >
+                        </div>
+                    </div>
+                   <!-- 繁体中文名称 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                        	<span class="red">* </span>
+                            <label for="txtNameTc" class="label-control">[@lang_res  k='console.sysmenu.form.nameTc'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtNameTc" value="${(section.sectionNameTc)?if_exists}" >
+                        </div>
+                    </div>
+                   <!-- 英文名称 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                        	<span class="red">* </span>
+                            <label for="txtNameEn" class="label-control">[@lang_res  k='console.sysmenu.form.nameEn'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtNameEn" value="${(section.sectionNameEn)?if_exists}" >
+                        </div>
+                    </div>
+                   <!-- 栏目编码 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtIconUrl" class="label-control">[@lang_res  k='console.community.section.th.code'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtCode" value="${(section.code)?if_exists}" >
+                        </div>
+                    </div>
+                   <!-- 板块图标 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtWebUrl" class="label-control">[@lang_res  k='console.community.section.th.icon'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtIconUrl" value="${(section.iconUrl)?if_exists}" >
+                        </div>
+                    </div>
+                   <!-- 栏目说明 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtWebUrl" class="label-control">[@lang_res  k='console.community.section.th.description'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <textarea class="form-control" id="areMemo" rows="6" style="resize: vertical;">${(section.memo)?if_exists}</textarea>
+                        </div>
+                    </div>
+                    <!-- 排序 -->
+                   <div class="form-group">
+                       <div class="col-md-3 text-right">
+                       	<span class="red">* </span>
+                           <label for="txtOrderBy" class="label-control">[@lang_res  k='console.community.section.th.orderBy'/]</label>
+                       </div>
+                       <div class="col-md-7">
+                           <input type="text" class="form-control" id="txtOrderBy" name="orderBy" value="${(section.orderBy)?if_exists}" >
+                       </div>
+                   </div>
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="isValidYes" class="label-control">[@lang_res k='console.community.section.th.status'/]</label>
+                        </div>
+                        <div class="col-md-7">                        
+                            <input type="radio" name="status" value="1"  [#if section?exists == false || section.status?exists == false || section.status == 1]checked[/#if]>
+                            <label class="form-font-normal">[@lang_res k='global.status.valid'/]</label>
+                            <input type="radio" name="status" value="0" [#if section?exists && section.status?exists && section.status == 0]checked[/#if]>
+                            <label class="form-font-normal"> [@lang_res k='global.status.invalid'/]</label>                                                
+                            <input type="radio" name="status" value="-1" [#if section?exists && section.status?exists && section.status == -1]checked[/#if]>
+                            <label class="form-font-normal"> [@lang_res k='global.status.deleted'/]</label>                                                
+                        </div>
+                    </div>
+                    <input id="hidId" type="hidden" value="${(section.id)?if_exists}" />
+	                <div class="text-center pd10">
+	               		<button id="btnSave"  type="submit"  class="btn btn-primary">
+							[@lang_res k='global.save'/]
+						</button>
+						<button id="btnBack" class="btn btn-primary" onclick="javascript:closeTab();;">
+							[@lang_res k='global.close'/]
+						</button>
+	                </div>
+                </form>    
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script src="${base}/res/console/js/jquery.form.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#frm").bootstrapValidator({
+		feedbackIcons : {
+			valid : "glyphicon glyphicon-ok",
+			invalid : "glyphicon glyphicon-remove",
+			validating : "glyphicon glyphicon-refresh"
+		},
+		fields : {
+			nameSc:{
+				message : "",
+				validators : {
+					notEmpty : {message : "[@lang_res  k='console.sysmenu.form.nameSc'/] [@lang_res k='global.empty.tip'/]"}
+				}
+			},
+			nameTc:{
+				message : "",
+				validators : {
+					notEmpty : {message : "[@lang_res  k='console.sysmenu.form.nameTc'/] [@lang_res k='global.empty.tip'/]"}
+				}
+			},
+			nameEn:{
+				message : "",
+				validators : {
+					regexp: {
+					    regexp:/[A-Za-z]+$/,
+	                    message:"[@lang_res k='console.country.countryEN.tips'/]"
+				    },
+					notEmpty : {message : "[@lang_res  k='console.sysmenu.form.nameEn'/] [@lang_res k='global.empty.tip'/]"}
+				}
+			},
+			orderBy:{
+				message : "",
+				validators : {
+					regexp: {
+					    regexp: "^[0-9]*$",
+					    message: "[@lang_res  k='console.country.orderBy.tips'/]"
+				    },
+					notEmpty : {message : "[@lang_res  k='console.sysmenu.form.orderBy'/] [@lang_res k='global.empty.tip'/]"}
+				}
+			}
+		}
+		}).on("success.form.bv", function(e) {
+			e.preventDefault();
+			saveData();
+	});
+	//保存数据
+	function saveData(id,parentId,code,nameSc,nameTc,nameEn,webUrl,orderBy,isValid){
+       	var id = getUrlParam('id');
+       	var parentId = $('#selParentId').val();
+       	var sectionNameSc = $('#txtNameSc').val();
+       	var sectionNameTc = $('#txtNameTc').val();
+       	var sectionNameEn = $('#txtNameEn').val();
+       	var iconUrl = $('#txtIconUrl').val();
+       	var code = $('#txtCode').val();
+       	var memo = $('#areMemo').val(); 	
+       	var orderBy = $('#txtOrderBy').val(); 	
+       	var status = $('input[name="status"]:checked').val();
+       	var data = {
+  			id:id,
+  			parentId:parentId,
+  			sectionNameSc:sectionNameSc,
+  			sectionNameTc:sectionNameTc,
+  			sectionNameEn:sectionNameEn,
+  			iconUrl:iconUrl,
+  			code:code,
+  			memo:memo,
+  			orderBy:orderBy,
+  			status:status
+       	};
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/community/section/save.do?datestr=' + new Date().getTime(),
+			data : data,
+			success : function(data) {
+				if (data.flag) {
+					$(window.parent.document).find("#btnSearch").trigger("click");
+					window.parent.layer.msg("[@lang_res k='global.success.save'/]");
+					closeTab();
+				} else {
+					layer.msg("[@lang_res k='global.failed.save'/]");
+				}	
+			}
+		});
+	}
+	/**
+	 * get url param
+	 */
+	function getUrlParam(name){  
+	    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");  
+	    var r = window.location.search.substr(1).match(reg);  
+	    if (r!=null) return unescape(r[2]);  
+	    return null;  
+	}
+});
+</script>
+</body>
+</html>

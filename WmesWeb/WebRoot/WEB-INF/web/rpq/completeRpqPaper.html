@@ -1,0 +1,70 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<style>
+.rpq-investment-title {width: 280px;}
+</style>
+<div class="wmes-content">
+	<div class="wmes-content-rpq">
+	<p class="wmes-wrap-title">[@lang_res k='kyc.rpq.paper.title'/]</p>
+    <div class="fill-rpq-wrap">
+        <div class="fill-rpq-information">
+            <div class="fill-rpq-portrait">
+                <img src="${base}${(rpqPaper.iconUrl)!}">
+                <p class="fill-rpq-name">${(rpqPaper.name)!}</p>
+            </div>
+            <p class="fill-rpq-phone">[@lang_res k='kyc.rpq.paper.mobile.phone'/]: <span>[#if rpqPaper?? && rpqPaper.mobilePhone?? && rpqPaper.mobilePhone!='']${(rpqPaper.mobilePhone)!}[#else]-[/#if]</span></p>
+            <p class="fill-rpq-email">[@lang_res k='kyc.rpq.paper.email'/]: <span>${(rpqPaper.email)!'-'}</span></p>
+        </div>
+        <div class="OpenAccount_liucheng">
+          <ul class="fill-rpq-liucheng">
+              <li class="liucheng_kuai liucheng_light"><div class="font_height">[@lang_res k='kyc.rpq.paper.step.one'/]</div></li>
+              <li>
+                <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"></div>
+              </li>
+              <li class="liucheng_kuai liucheng_light"><div class="font_height">[@lang_res k='kyc.rpq.paper.step.two'/]</div></li>
+              <li>
+                <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_03.png"></div>
+              </li>
+              <li class="liucheng_kuai liucheng_orange"><div class="font_height">[@lang_res k='kyc.rpq.paper.step.three'/]</div></li>
+          </ul>
+        </div>
+        <div class="rpqContent">
+            <div class="rpq-complete-rows">
+                <p class="rpq-investment-title">[@lang_res k='kyc.rpq.paper.tips.last.time.fill.questionnaire'/]:</p>
+                <p class="rpq-investment-date">${(exam.createTimeStr)!'-'}</p>
+            </div>
+            <div class="rpq-complete-rows">
+                <p class="rpq-investment-title">[@lang_res k='kyc.rpq.paper.expiration.time'/]:</p>
+                <p class="rpq-investment-date">${(exam.expireDateStr)!'-'}</p>
+            </div>
+            [#if exam.result?? && exam.result!='']
+            <div class="rpq-complete-rows">
+                <p class="rpq-investment-title">[@lang_res k='kyc.rpq.paper.evaluation.result'/]:</p>
+                <p class="rpq-investment-word">${exam.result!}</p>
+            </div>
+            [/#if]
+        </div>
+        <div class="rpq-complete-img" id="showRpqResult" style="margin-top: 20px;">
+            [#include "showRpqResult.html"/] 
+        </div>
+        <div class="rpq-button-wrap">
+            <a href="javascript:;" class="rpq-ja-button" id="rpq_print">[@lang_res k='kyc.rpq.paper.btn.print'/]</a>
+            <a href="javascript:;" class="rpq-ja-button" id="rpq_downpdf">[@lang_res k='kyc.rpq.paper.btn.dewnload.pdf'/]</a>
+            <a href="${base!}/front/investor/myAccountDetail.do?id=${exam.relateId!}" class="rpq-ja-button" id="rpq_complete_previous">[@lang_res k='global.return'/]</a>
+        </div>
+        <form id="rpq_form_complete">
+        	<input type="hidden" name="examId" value="${exam.id}"/>
+        	<input type="hidden" name="pageId" value="${exam.pageId}"/>
+        	<input type="hidden" name="totalScore" value="${exam.totalScore}"/>
+        	<!--
+        	<a href="${base}/front/rpq/detail.do?pageId=${exam.pageId}&totalScore=${exam.totalScore}&examId=${exam.id}">go detail</a>
+        	-->
+        </form>
+    </div>
+</div>
+</div>
+    [#include "../inc/foot_v2.html"/] 
+<script type="text/javascript">
+	var base_root = '${base}';
+	seajs.use('${base}/res/web/rpq/fillRpqPaper.js');
+</script>

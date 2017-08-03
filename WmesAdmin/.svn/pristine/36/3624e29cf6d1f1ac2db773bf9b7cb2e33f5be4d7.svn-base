@@ -1,0 +1,53 @@
+package com.fsll.wmes.notice.vo;
+
+import com.fsll.wmes.entity.Notice;
+
+public class NoticeVO extends Notice{
+	
+	private String filterTitle;
+	private String filterContent;
+	private String filterStatus;
+	private String filterStartTime;
+	private String filterEndTime;
+	
+	private String releaseDateStr;
+	
+	public String getFilterTitle() {
+		return filterTitle;
+	}
+	public void setFilterTitle(String filterTitle) {
+		this.filterTitle = filterTitle;
+	}
+	public String getFilterContent() {
+		return filterContent;
+	}
+	public void setFilterContent(String filterContent) {
+		this.filterContent = filterContent;
+	}
+	public String getFilterStatus() {
+		return filterStatus;
+	}
+	public void setFilterStatus(String filterStatus) {
+		this.filterStatus = filterStatus;
+	}
+	public String getFilterStartTime() {
+		return filterStartTime;
+	}
+	public void setFilterStartTime(String filterStartTime) {
+		this.filterStartTime = filterStartTime;
+	}
+	public String getFilterEndTime() {
+		return filterEndTime;
+	}
+	public void setFilterEndTime(String filterEndTime) {
+		this.filterEndTime = filterEndTime;
+	}
+	public String getReleaseDateStr() {
+		return releaseDateStr;
+	}
+	public void setReleaseDateStr(String releaseDateStr) {
+		this.releaseDateStr = releaseDateStr;
+	}
+	
+	
+}

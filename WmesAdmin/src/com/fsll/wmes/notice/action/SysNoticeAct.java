@@ -1,0 +1,164 @@
+package com.fsll.wmes.notice.action;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fsll.common.util.JsonUtil;
+import com.fsll.core.entity.AccessoryFile;
+import com.fsll.core.entity.SysAdmin;
+import com.fsll.core.service.AccessoryFileService;
+import com.fsll.wmes.base.WmesBaseAct;
+import com.fsll.wmes.common.CommonConstantsWeb;
+import com.fsll.wmes.entity.Notice;
+import com.fsll.wmes.notice.service.NoticeService;
+import com.fsll.wmes.notice.vo.NoticeVO;
+
+@Controller
+@RequestMapping("/sys/notice")
+public class SysNoticeAct extends WmesBaseAct{
+
+	@Autowired
+	private NoticeService noticeService;
+	@Autowired
+	private AccessoryFileService accessoryFileService;
+	
+	/**
+	 *  系统公告管理页面
+	 * @author wwluo
+	 * @date 2017-06-05
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String list(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		return "console/notice/sys/list";
+	}
+	
+	/**
+	 *  系统公告详情页面
+	 * @author wwluo
+	 * @date 2017-06-05
+	 */
+	@RequestMapping(value = "/input", method = RequestMethod.GET)
+	public String input(String id,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		String langCode = this.getLoginLangFlag(request);
+		NoticeVO vo = noticeService.findNoticeVOById(id, langCode);
+		List<AccessoryFile> accessoryFiles = accessoryFileService.getAccessoryFile(id, CommonConstantsWeb.ACCESSORY_FILE_MODULE_TYPE_NOTICE, null, null);
+		model.put("notice", vo);
+		model.put("accessoryFiles", accessoryFiles);
+		return "console/notice/sys/input";
+	}
+	
+	/**
+	 *  系统公告数据获取
+	 * @author wwluo
+	 * @date 2017-06-05
+	 */
+	@RequestMapping(value = "/getNotices", method = RequestMethod.POST)
+	public void getNotices(NoticeVO noticeVO,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		jsonPaging = this.getJsonPaging(request);
+		jsonPaging = noticeService.getSysNotices(jsonPaging, noticeVO);
+		this.toJsonString(response, jsonPaging);
+	}
+	
+	/**
+	 *  公告附件保存
+	 * @author wwluo
+	 * @date 2017-06-05
+	 */
+	@RequestMapping(value = "/uploadNoticeDoc", method = RequestMethod.POST)
+	public void uploadNoticeDoc(String id,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		SysAdmin admin = this.getLoginUser(request);
+		String filePath = toUTF8String(request.getParameter("filePath"));
+		String orifilename = toUTF8String(request.getParameter("orifilename"));
+		Map<String, Object> result = new HashMap<String, Object>();
+		Boolean flag = false;
+		AccessoryFile accessoryFile = null;
+		accessoryFile = noticeService.saveNoticeDoc(admin, id, filePath, orifilename);
+		if(accessoryFile != null){
+			flag = true;
+		}
+		result.put("flag", flag);
+		result.put("accessoryFile", accessoryFile);
+		JsonUtil.toWriter(result, response);
+	}
+	
+	/**
+	 *  公告附件删除
+	 * @author wwluo
+	 * @date 2017-06-05
+	 */
+	@RequestMapping(value = "/removeNoticeDoc", method = RequestMethod.POST)
+	public void removeNoticeDoc(String accessoryfileId,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		Map<String, Object> result = new HashMap<String, Object>();
+		Boolean flag = false;
+		flag = noticeService.delNoticeDoc(accessoryfileId);
+		result.put("flag", flag);
+		JsonUtil.toWriter(result, response);
+	}
+	
+	/**
+	 *  保存公告信息
+	 * @author wwluo
+	 * @date 2017-06-05
+	 */
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public void save(String id,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		SysAdmin admin = this.getLoginUser(request);
+		Map<String, Object> result = new HashMap<String, Object>();
+		Boolean flag = false;
+		Notice notice = noticeService.findById(id);
+		String subject = toUTF8String(request.getParameter("title"));
+		String content = toUTF8String(request.getParameter("content"));
+		String level = request.getParameter("level");
+		String accessoryFileId = toUTF8String(request.getParameter("accessoryFileId"));
+		if(notice != null){
+			notice.setSubject(subject);
+			notice.setContent(content);
+			notice.setLevel(level);
+			notice.setLastUpdate(new Date());
+			flag = true;
+		}else{
+			notice = new Notice();
+			notice.setTarget(CommonConstantsWeb.NOTICE_TARGET_ALL);
+			notice.setType("0");
+			notice.setSourceType(CommonConstantsWeb.NOTICE_SOURCE_TYPE_SYS);
+			notice.setCreateTime(new Date());
+			notice.setReleaseDate(new Date());
+			notice.setReleaseBy(admin.getId());
+			notice.setSubject(subject);
+			notice.setContent(content);
+			notice.setLevel(level);
+			notice.setLastUpdate(new Date());
+			notice.setIsValid("1");
+			flag = true;
+		}
+		notice = noticeService.save(notice);
+		if (StringUtils.isNotBlank(accessoryFileId)) {
+			List fileIds = JsonUtil.toListMap(accessoryFileId);
+			if(fileIds != null && !fileIds.isEmpty()){
+				for (Object fileId : fileIds) {
+					AccessoryFile accessoryFile = accessoryFileService.findAccessoryFileById((String) fileId);
+					if(accessoryFile != null){
+						accessoryFile.setRelateId(notice.getId());
+						accessoryFileService.saveOrUpdate(accessoryFile);
+					}
+				}
+			}
+		}
+		result.put("flag", flag);
+		result.put("notice", notice);
+		JsonUtil.toWriter(result, response);
+	}
+	
+}

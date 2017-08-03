@@ -1,0 +1,320 @@
+package com.fsll.wmes.entity;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+////@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Table(name = "fund_info")
+public class FundInfo implements java.io.Serializable {
+    @Id
+    @Column(name="id")
+    @GeneratedValue(generator = "paymentableGenerator")        
+    @GenericGenerator(name = "paymentableGenerator", strategy = "uuid.hex")
+    private String id;
+    
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "product_id")
+	@JsonIgnore
+	@NotFound(action = NotFoundAction.IGNORE)
+	private ProductInfo product;
+    
+    @Column(name = "isin_code")
+	private String isinCode;
+    
+    @Column(name = "risk_level")
+	private Integer riskLevel;
+    
+    @Column(name = "last_nav")
+	private Double lastNav;
+    
+    @Column(name = "last_nav_update")
+	private Date lastNavUpdate;
+    
+    @Column(name = "day_return")
+	private Double dayReturn;
+    
+    @Column(name = "issue_price")
+	private Double issuePrice;
+    
+    @Column(name = "issue_date")
+	private Date issueDate;
+    
+    @Column(name = "subscribe_fee")
+	private Double subscribeFee;
+    
+    @Column(name = "mgt_fee")
+	private Double mgtFee;
+    
+    @Column(name = "return_chart")
+	private String returnChart;
+    
+    @Column(name = "min_initial_amount")
+	private Double minInitialAmount;
+    
+    @Column(name = "min_subscribe_amount")
+	private Double minSubscribeAmount;
+    
+    @Column(name = "min_holding_amount")
+	private Double minHoldingAmount;
+    
+    @Column(name = "min_redemption_amount")
+	private Double minRedemptionAmount;
+    
+    @Column(name = "min_rsp_amount")
+	private Double minRspAmount;
+    
+    @Column(name = "create_time")
+	private Date createTime;
+    
+    @Column(name = "last_update")
+	private Date lastUpdate;
+    
+	@Column(name = "overhead")
+	private String overhead;
+	
+	@Column(name = "overhead_time")
+	private Date overheadTime;
+    
+    @Column(name = "is_valid")
+	private String isValid;
+    
+    @Column(name = "buy_count")
+	private Integer buyCount;
+    
+    @Column(name = "rec_count")
+	private Integer recCount;
+    
+    @Transient
+	private String xh;
+    
+    @Transient
+	private String tempFundName;
+    
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getIsinCode() {
+		return isinCode;
+	}
+
+	public void setIsinCode(String isinCode) {
+		this.isinCode = isinCode;
+	}
+
+	public Integer getRiskLevel() {
+		return riskLevel;
+	}
+
+	public void setRiskLevel(Integer riskLevel) {
+		this.riskLevel = riskLevel;
+	}
+
+	public Double getLastNav() {
+		return lastNav;
+	}
+
+	public void setLastNav(Double lastNav) {
+		this.lastNav = lastNav;
+	}
+
+	public Date getLastNavUpdate() {
+		return lastNavUpdate;
+	}
+
+	public void setLastNavUpdate(Date lastNavUpdate) {
+		this.lastNavUpdate = lastNavUpdate;
+	}
+
+	public Double getIssuePrice() {
+		return issuePrice;
+	}
+
+	public void setIssuePrice(Double issuePrice) {
+		this.issuePrice = issuePrice;
+	}
+
+	public Date getIssueDate() {
+		return issueDate;
+	}
+
+	public void setIssueDate(Date issueDate) {
+		this.issueDate = issueDate;
+	}
+
+	public Double getMinInitialAmount() {
+		return minInitialAmount;
+	}
+
+	public void setMinInitialAmount(Double minInitialAmount) {
+		this.minInitialAmount = minInitialAmount;
+	}
+
+	public Double getMinSubscribeAmount() {
+		return minSubscribeAmount;
+	}
+
+	public void setMinSubscribeAmount(Double minSubscribeAmount) {
+		this.minSubscribeAmount = minSubscribeAmount;
+	}
+
+	public Double getMinHoldingAmount() {
+		return minHoldingAmount;
+	}
+
+	public void setMinHoldingAmount(Double minHoldingAmount) {
+		this.minHoldingAmount = minHoldingAmount;
+	}
+
+	public Double getMinRedemptionAmount() {
+		return minRedemptionAmount;
+	}
+
+	public void setMinRedemptionAmount(Double minRedemptionAmount) {
+		this.minRedemptionAmount = minRedemptionAmount;
+	}
+
+	public Double getMinRspAmount() {
+		return minRspAmount;
+	}
+
+	public void setMinRspAmount(Double minRspAmount) {
+		this.minRspAmount = minRspAmount;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public String getIsValid() {
+		return isValid;
+	}
+
+	public void setIsValid(String isValid) {
+		this.isValid = isValid;
+	}
+
+	public Double getMgtFee() {
+		return mgtFee;
+	}
+
+	public void setMgtFee(Double mgtFee) {
+		this.mgtFee = mgtFee;
+	}
+
+	public String getXh() {
+		return xh;
+	}
+
+	public void setXh(String xh) {
+		this.xh = xh;
+	}
+
+	public Double getSubscribeFee() {
+		return subscribeFee;
+	}
+
+	public void setSubscribeFee(Double subscribeFee) {
+		this.subscribeFee = subscribeFee;
+	}
+
+	public Double getDayReturn() {
+		return dayReturn;
+	}
+
+	public void setDayReturn(Double dayReturn) {
+		this.dayReturn = dayReturn;
+	}
+
+	public ProductInfo getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductInfo product) {
+		this.product = product;
+	}
+
+	public String getOverhead() {
+		return overhead;
+	}
+
+	public void setOverhead(String overhead) {
+		this.overhead = overhead;
+	}
+
+	public Date getOverheadTime() {
+		return overheadTime;
+	}
+
+	public void setOverheadTime(Date overheadTime) {
+		this.overheadTime = overheadTime;
+	}
+
+	public String getReturnChart() {
+		return returnChart;
+	}
+
+	public void setReturnChart(String returnChart) {
+		this.returnChart = returnChart;
+	}
+
+	public Integer getBuyCount() {
+		return buyCount;
+	}
+
+	public void setBuyCount(Integer buyCount) {
+		this.buyCount = buyCount;
+	}
+
+	public Integer getRecCount() {
+		return recCount;
+	}
+
+	public void setRecCount(Integer recCount) {
+		this.recCount = recCount;
+	}
+	
+	@Transient
+	public String getTempFundName() {
+		return tempFundName;
+	}
+
+	public void setTempFundName(String tempFundName) {
+		this.tempFundName = tempFundName;
+	}
+	
+	
+}

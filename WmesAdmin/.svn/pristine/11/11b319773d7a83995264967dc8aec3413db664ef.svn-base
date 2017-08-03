@@ -1,0 +1,1960 @@
+global.submit=\u63D0\u4EA4
+global.confirm=\u786E\u5B9A
+global.save=\u4FDD\u5B58
+global.saveOrder=\u4FDD\u5B58\u6392\u5217\u987A\u5E8F
+global.query=\u67E5\u8BE2
+global.close=\u5173\u95ED
+global.closeWindow=\u5173\u95ED\u7A97\u53E3
+global.success=\u64CD\u4F5C\u6210\u529F
+global.success.save=\u4FDD\u5B58\u6210\u529F
+global.success.delete=\u5220\u9664\u6210\u529F
+global.failed.save=\u4FDD\u5B58\u5931\u8D25
+global.cancel=\u53D6\u6D88
+global.back=\u8FD4\u56DE
+global.delete=\u5220\u9664
+global.release=\u53D1\u5E03
+global.delete.submit=\u5220\u9664\u63D0\u4EA4
+global.admin.logout=\u9000\u51FA
+global.reset=\u91CD\u7F6E
+global.browse=\u6D4F\u89C8
+global.position=\u5F53\u524D\u4F4D\u7F6E
+global.list=\u5217\u8868
+global.add=\u6DFB\u52A0
+global.edit=\u4FEE\u6539
+global.update=\u66F4\u65B0
+global.refresh=\u5237\u65B0
+global.backToList=\u8FD4\u56DE\u5217\u8868
+sysrole.info.select=\u9009\u62E9
+global.operate=\u64CD\u4F5C\u9009\u9879
+global.mamager=\u7BA1\u7406
+global.failed=\u64CD\u4F5C\u5931\u8D25
+console.inverstor.account.options.isEffective=\u6709\u6548
+console.inverstor.account.options.isInvalid=\u65E0\u6548
+global.unlimit=\u4E0D\u9650\u5236
+global.false=\u5426
+global.all=\u6240\u6709
+global.allow=\u5141\u8BB8
+global.notAllow=\u4E0D\u5141\u8BB8
+global.have=\u6709
+global.none=--\u65E0--
+global.pleaseSelect=--\u8BF7\u9009\u62E9--
+global.default=--\u9ED8\u8BA4--
+global.width=\u5BBD
+global.height=\u9AD8
+global.prompt=\u63D0\u793A
+global.tab.prompt.content=\u6807\u7B7E\u9875\u6253\u5F00\u6570\u91CF\u5DF2\u8FBE\u4E0A\u9650\uFF0C\u8BF7\u5173\u95ED\u4E00\u4E9B\u6807\u7B7E\u9875\uFF0C\u518D\u6253\u5F00\u65B0\u6807\u7B7E\uFF0C\u8C22\u8C22\uFF01
+global.check=\u5BA1\u6838
+global.copy=\u590D\u5236
+global.true=\u662F
+global.copy.success=\u6210\u529F\u590D\u5236\u5230\u526A\u5207\u677F\!
+global.selectall=\u5168\u9009
+global.view=\u67E5\u770B
+global.admin.welcome=\u60A8\u597D, {0}
+global.admin.home=\u9996\u9875
+global.admin.index=\u6B22\u8FCE\u9875
+global.admin.viewFrontIndex=\u3010\u67E5\u770B\u9996\u9875\u3011
+global.confirm.logout=\u60A8\u786E\u5B9A\u9000\u51FA\u5417\uFF1F
+global.confirm.delete=\u60A8\u786E\u5B9A\u5220\u9664\u5417\uFF1F
+global.saving=\u6B63\u5728\u4FDD\u5B58\u6570\u636E\u4E2D...
+global.openNewTab=\u6253\u5F00\u65B0\u7684\u6807\u7B7E\u9875
+global.search.keyword=\u5173\u952E\u5B57
+global.search.noData=\u65E0\u67E5\u8BE2\u6570\u636E\uFF01
+global.selectedCondition=\u9009\u5B9A\u6761\u4EF6
+global.publish=\u53D1\u5E03
+global.expand=\u5C55\u5F00
+global.collapse=\u6536\u7F29
+global.action=\u64CD\u4F5C
+global.createTime=\u521B\u5EFA\u65F6\u95F4
+global.lastUpdate=\u6700\u8FD1\u66F4\u65B0\u65F6\u95F4
+global.status=\u72B6\u6001
+global.fund=\u57FA\u91D1
+global.bond=\u503A\u5238
+global.stock=\u80A1\u7968
+global.empty.tip=\u4E0D\u80FD\u4E3A\u7A7A
+global.searching=\u6B63\u5728\u641C\u7D22\u6570\u636E\uFF0C\u8BF7\u7A0D\u5019...
+global.exists.tip=\u5DF2\u5B58\u5728
+
+global.radio=\u5355\u9009
+global.checkbox=\u591A\u9009
+global.text=\u6587\u672C\u8F93\u5165
+global.textarea=\u591A\u884C\u6587\u672C
+global.select=\u4E0B\u62C9\u9009\u62E9
+global.delete.success=\u5220\u9664\u6210\u529F
+global.delete.failed=\u5220\u9664\u5931\u8D25
+global.status.valid=\u6709\u6548
+global.status.invalid=\u65E0\u6548
+global.operation=\u64CD\u4F5C
+global.fileUpload=\u4E0A\u4F20\u6587\u4EF6
+global.dateNotstart=\u5F00\u59CB\u65F6\u95F4\u4E0D\u80FD\u5927\u4E8E\u7ED3\u675F\u65F6\u95F4
+global.status.deleted=\u5DF2\u5220\u9664
+global.restore=\u6062\u590D
+
+error.unrecorded=\u672A\u8BB0\u5F55
+global.menuPermissions=\u83DC\u5355\u6743\u9650
+error.errorMessage=\u9519\u8BEF\u63D0\u793A
+error.required={0} \u4E3A\u5FC5\u586B\u9879
+error.maxLength={0} \u7684\u957F\u5EA6\u4E0D\u80FD\u5927\u4E8E {1}
+error.outOfLength={0} \u7684\u957F\u5EA6\u5FC5\u987B\u5728 {1} \u548C {2} \u4E4B\u95F4
+error.email={0} \u5FC5\u987B\u4E3A\u5408\u6CD5\u7684\u7535\u5B50\u90AE\u7BB1\u683C\u5F0F
+error.username={0} \u7528\u6237\u540D\u53EA\u5141\u8BB8\u5B57\u6BCD\u3001\u6570\u5B57\u3001\u4E2D\u6587\u5B57\u548C'_','-','@'
+error.notExist=\u5B9E\u4F53\u7C7B {0}, ID\={1}, \u4E0D\u5B58\u5728
+error.notInSite=\u5B9E\u4F53\u7C7B {0}, ID\={1}, \u975E\u672C\u7AD9\u6570\u636E
+error.noPermission=\u5B9E\u4F53\u7C7B {0}, ID\={1}, \u6CA1\u6709\u6743\u9650\u8BBF\u95EE
+error.noPermissionToRaiseRank=\u6CA1\u6709\u6743\u9650\u63D0\u9AD8\u7528\u6237{0}\u7B49\u7EA7
+error.findnofreefile=\u672A\u627E\u5230\u5931\u6548\u6587\u4EF6
+error.usernameExist=\u7528\u6237\u540D\u5DF2\u88AB\u4F7F\u7528
+error.emailExist=\u90AE\u7BB1\u5DF2\u88AB\u4F7F\u7528
+error.badCredentials=\u7528\u6237\u540D\u6216\u5BC6\u7801\u9519\u8BEF
+error.usernameNotExist=\u7528\u6237\u540D\u4E0D\u5B58\u5728
+error.userpwdFormat=\u7528\u6237\u540D\u6216\u8005\u683C\u5F0F\u9519\u8BEF
+error.invalidPassword=\u5BC6\u7801\u9519\u8BEF
+error.invalidCaptcha=\u9A8C\u8BC1\u7801\u9519\u8BEF
+error.userDisabled=\u7528\u6237\u88AB\u7981\u7528
+error.exceptionCaptcha=\u9A8C\u8BC1\u7801\u65E0\u6548
+error.channelPathExist=\u680F\u76EE\u8DEF\u5F84\u5DF2\u88AB\u4F7F\u7528
+error.checkRecord=\u8BF7\u9009\u62E9\u60A8\u8981\u64CD\u4F5C\u7684\u6570\u636E
+error.integrityViolation=\u6570\u636E\u88AB\u5F15\u7528\uFF0C\u4E0D\u80FD\u5220\u9664\u3002
+error.illegalStateException=\u7CFB\u7EDF\u9519\u8BEF
+error.uncaughtException=\u5176\u4ED6\u9519\u8BEF
+error.badSqlGrammar=sql\u8BED\u6CD5\u9519\u8BEF
+error.accessForbidden.title=\u8BBF\u95EE\u7981\u6B62
+error.accessForbidden=\u5BF9\u4E0D\u8D77\uFF0C\u60A8\u65E0\u6743\u8BBF\u95EE\u8BE5\u9875\u9762  
+error.noLogin= \u8BF7\u767B\u5F55
+	
+syslog.action=\u64CD\u4F5C
+syslog.list.role=\u89D2\u8272
+syslog.list.createDate=\u65F6\u95F4
+syslog.list.logincode=\u767B\u5F55\u5E10\u53F7
+syslog.list.name=\u7528\u6237\u540D\u79F0
+	
+	
+lang.sc=\u7B80\u4F53\u4E2D\u6587
+lang.tc=\u7E41\u4F53\u4E2D\u6587
+lang.en=\u82F1\u6587
+lang.saveButton=\u4FDD\u5B58
+lang.cancel=\u53D6\u6D88
+lang.success=\u64CD\u4F5C\u6210\u529F
+lang.error=\u64CD\u4F5C\u5931\u8D25
+lang.lang=\u8BED\u8A00
+lang.isMain=\u662F\u5426\u4E3B\u7AD9
+lang.path=\u8DEF\u5F84
+lang.shortName=\u7F51\u7AD9\u7B80\u79F0
+lang.siteName=\u7F51\u7AD9\u540D\u79F0
+lang.domain=\u57DF\u540D
+lang.title=\u8BED\u8A00\u8BBE\u7F6E
+lang.domain.tip=\u8BF7\u8F93\u5165\u57DF\u540D
+lang.siteName.tip=\u8BF7\u8F93\u5165\u7AD9\u70B9\u540D\u79F0
+lang.shortName.tip=\u8BF7\u8F93\u5165\u7AD9\u70B9\u7B80\u79F0
+lang.path.tip=\u8BF7\u8F93\u5165\u7F51\u7AD9\u5730\u5740
+lang.shortName.notEmpty=\u7F51\u7AD9\u7B80\u79F0\u4E0D\u80FD\u4E3A\u7A7A
+lang.siteName.notEmpty=\u7F51\u7AD9\u540D\u79F0\u4E0D\u80FD\u4E3A\u7A7A
+lang.siteName.exist=\u7F51\u7AD9\u540D\u79F0\u5DF2\u7ECF\u5B58\u5728
+lang.domain.notEmpty=\u57DF\u540D\u4E0D\u80FD\u4E3A\u7A7A
+lang.domain.exist=\u57DF\u540D\u5DF2\u7ECF\u5B58\u5728
+lang.sitePath.notEmpty=\u7F51\u7AD9\u5730\u5740\u4E0D\u80FD\u7A7A
+lang.isMaster.0=\u5426
+lang.isMaster.1=\u662F
+lang.addbtn=\u65B0\u589E
+lang.xh=\u5E8F\u53F7
+lang.list.domain=\u57DF\u540D
+lang.list.siteName=\u7F51\u7AD9\u540D\u79F0
+lang.list.shortName=\u7F51\u7AD9\u7B80\u79F0
+lang.list.lang=\u8BED\u8A00
+lang.list.action=\u64CD\u4F5C
+lang.list.lang.en=\u82F1\u6587
+lang.list.lang.tc=\u7E41\u4F53\u4E2D\u6587
+lang.list.lang.sc=\u7B80\u4F53\u4E2D\u6587
+lang.del=\u5220\u9664
+lang.edit=\u7F16\u8F91
+	
+	
+param.status.0=\u7981\u7528
+param.status.1=\u542F\u7528
+param.action=\u64CD\u4F5C
+param.edit=\u7F16\u8F91
+param.del=\u5220\u9664
+param.list.xh=\u5E8F\u53F7
+param.list.name=\u540D\u79F0
+param.list.parent.name=\u7236\u8282\u70B9\u540D\u79F0
+param.list.code=\u7F16\u7801
+param.list.parentType.name=\u5173\u8054\u7C7B\u578B
+param.list.status=\u72B6\u6001
+param.list.tab.title=\u57FA\u7840\u6570\u636E\t
+param.name=\u57FA\u7840\u6570\u636E\u540D\u79F0
+param.name.tip=\u8BF7\u8F93\u5165\u57FA\u7840\u6570\u636E\u540D\u79F0
+param.name.notEmpty=\u57FA\u7840\u6570\u636E\u540D\u79F0\u4E0D\u80FD\u4E3A\u7A7A
+param.parent.name.tip=\u8BF7\u9009\u62E9\u7236\u8282\u70B9
+param.error=\u64CD\u4F5C\u5931\u8D25
+param.title=\u57FA\u7840\u6570\u636E
+param.configCode.notEmpty=\u7F16\u7801\u4E0D\u80FD\u4E3A\u7A7A
+param.name.exist=\u57FA\u7840\u540D\u79F0\u5DF2\u7ECF\u5B58\u5728
+param.configCode.exist=\u7F16\u7801\u5DF2\u7ECF\u5B58\u5728
+param.remark.tip=\u8BF7\u8F93\u5165\u5907\u6CE8
+param.orderBy.notEmpty=\u6392\u5E8F\u4E0D\u80FD\u4E3A\u7A7A
+param.orderBy.error=\u8F93\u5165\u7684\u6392\u5E8F\u6709\u8BEF\uFF0C\u53EA\u80FD\u662F\u6570\u5B57
+param.configCode.tip=\u8BF7\u8F93\u5165\u7F16\u7801
+param.configCode.value.tip=\u8BF7\u8F93\u5165\u7F16\u7801\u503C
+param.orderBy.tip=\u8BF7\u4E3A\u57FA\u7840\u6570\u636E\u6392\u5E8F
+param.orderBy=\u6392\u5E8F
+param.config.value=\u503C
+param.config.code=\u7F16\u7801
+param.parent.name=\u7236\u8282\u70B9
+param.status=\u72B6\u6001
+param.type=\u5173\u8054\u7C7B\u578B
+param.remark=\u5907\u6CE8
+param.saveButton=\u4FDD\u5B58
+param.cancel=\u53D6\u6D88
+param.success=\u64CD\u4F5C\u6210\u529F
+param.children.exit=\u8BE5\u8282\u70B9\u5B58\u5728\u6709\u5B50\u70B9\u4E0D\u80FD\u5220\u9664
+param.confValue.notEmpty=\u57FA\u7840\u6570\u636E\u7F16\u7801\u503C\u4E0D\u80FD\u4E3A\u7A7A
+param.addbtn=\u65B0\u589E\u57FA\u7840\u6570\u636E
+param.list.nameEn = \u540D\u79F0(\u82F1\u6587)
+param.list.nameSc = \u540D\u79F0(\u7B80\u4F53\u4E2D\u6587)
+param.list.nameTc = \u540D\u79F0(\u7E41\u4F53\u4E2D\u6587)
+param.list.orderBy = \u6392\u5E8F
+param.list.search.paramType = \u5173\u8054\u7C7B\u578B
+param.list.search.keyword = \u5173\u952E\u5B57
+param.list.btn.search = \u67E5\u8BE2
+param.list.btn.add = \u65B0\u589E
+param.form.nameEn = \u540D\u79F0(\u82F1\u6587)
+param.form.nameSc = \u540D\u79F0(\u7B80\u4F53\u4E2D\u6587)
+param.form.nameTc = \u540D\u79F0(\u7E41\u4F53\u4E2D\u6587)
+param.form.valueEn = \u503C(\u82F1\u6587)
+param.form.valueSc = \u503C(\u7B80\u4F53\u4E2D\u6587)
+param.form.valueTc = \u503C(\u7E41\u4F53\u4E2D\u6587)
+param.form.isValid = \u662F\u5426\u6709\u6548
+param.form.isValid.1 = \u662F
+param.form.isValid.0 = \u5426
+param.form.typeid.notEmpty = \u5173\u8054\u7C7B\u578B\u4E0D\u80FD\u4E3A\u7A7A
+	
+	
+paramType.addbtn=\u65B0\u589E\u57FA\u7840\u6570\u636E\u7C7B\u578B
+paramType.title=\u57FA\u7840\u6570\u636E\u7C7B\u578B
+paramType.name=\u540D\u79F0
+paramType.name.tip=\u8BF7\u8F93\u5165\u57FA\u7840\u6570\u636E\u7C7B\u578B\u540D\u79F0
+paramType.typeCode=\u7F16\u7801
+paramType.typeCode.tip=\u8BF7\u8F93\u5165\u57FA\u7840\u7C7B\u578B\u7F16\u7801
+paramType.status=\u72B6\u6001
+paramType.remark=\u5907\u6CE8
+paramType.remark.tip=\u8BF7\u8F93\u5165\u5907\u6CE8
+paramType.saveButton=\u4FDD\u5B58
+paramType.cancel=\u53D6\u6D88
+paramType.success=\u64CD\u4F5C\u6210\u529F
+paramType.error=\u64CD\u4F5C\u5931\u8D25
+paramType.name.notEmpty=\u57FA\u7840\u6570\u636E\u7C7B\u578B\u540D\u79F0\u4E0D\u80FD\u4E3A\u7A7A
+paramType.name.exist=\u57FA\u7840\u6570\u636E\u7C7B\u578B\u540D\u79F0\u5DF2\u7ECF\u5B58\u5728
+paramType.typeCode.notEmpty=\u57FA\u7840\u6570\u636E\u7C7B\u578B\u7F16\u7801\u4E0D\u80FD\u4E3A\u7A7A
+paramType.typeCode.exist=\u57FA\u7840\u6570\u636E\u7C7B\u5F00\u7F16\u7801\u5DF2\u7ECF\u5B58\u5728
+paramType.action.chilren.exist=\u8BE5\u57FA\u7840\u6570\u636E\u7C7B\u578B\u56E0\u548C\u5176\u4ED6\u57FA\u7840\u6570\u636E\u6709\u5173\u8054,\u4E0D\u80FD\u5220\u9664
+paramType.action.status.noUpdate=\u8BE5\u57FA\u7840\u6570\u636E\u7C7B\u578B\u4E0E\u6570\u636E\u6709\u5173\u8054\u4E0D\u80FD\u7981\u7528
+paramType.status.1=\u542F\u7528
+paramType.status.0=\u7981\u7528
+paramType.edit=\u7F16\u8F91
+paramType.del=\u5220\u9664
+paramType.action=\u64CD\u4F5C
+paramType.list.xh=\u5E8F\u53F7
+paramType.list.name=\u540D\u79F0
+paramType.list.typecode=\u7F16\u7801
+paramType.list.btn.search = \u67E5\u8BE2
+paramType.list.btn.add = \u65B0\u589E
+paramType.list.search.keyword = \u5173\u952E\u5B57
+paramType.list.tab.title=\u57FA\u7840\u7C7B\u578B\t
+paramType.form.btn.save = \u4FDD\u5B58
+paramType.form.btn.cancel = \u53D6\u6D88
+	
+	
+sys.account.title=\u7BA1\u7406\u5458\u4FE1\u606F
+sys.account.name=\u540D\u79F0
+sys.account.name.notEmpty=\u540D\u79F0\u4E0D\u80FD\u4E3A\u7A7A
+sys.account.name.tip=\u8BF7\u8F93\u5165\u540D\u79F0
+sys.account.password.tipEdit=\u8BF7\u8F93\u5165\u5BC6\u7801\uFF0C\u5982\u679C\u65E0\u9700\u4FEE\u6539\u8BF7\u7559\u7A7A
+sys.account.loginCode.tip=\u8BF7\u8F93\u5165\u8D26\u53F7
+sys.account.loginCode.notEmpty=\u8D26\u53F7\u4E0D\u80FD\u4E3A\u7A7A
+sys.account.loginCode.exist=\u8D26\u53F7\u5DF2\u88AB\u4F7F\u7528
+sys.account.password=\u5BC6\u7801
+sys.account.password.tip=\u8BF7\u8F93\u5165\u5BC6\u7801
+sys.account.password.noEmpty=\u5BC6\u7801\u4E0D\u80FD\u4E3A\u7A7A
+sys.account.loginCode=\u8D26\u53F7
+sys.account.status=\u72B6\u6001
+sys.account.status.1=\u542F\u7528
+sys.account.status.0=\u7981\u7528
+sys.account.comfirePsw=\u786E\u8BA4\u5BC6\u7801
+sys.account.type.0=\u7CFB\u7EDF\u7BA1\u7406\u5458
+sys.account.type=\u7C7B\u578B
+sys.account.type.1=\u5E94\u7528\u7BA1\u7406\u5458
+sys.account.accountRole=\u8D26\u53F7\u89D2\u8272
+sys.account.cancel=\u5173\u95ED
+sys.account.success=\u64CD\u4F5C\u6210\u529F
+sys.account.error=\u64CD\u4F5C\u5931\u8D25
+sys.account.saveButton=\u786E\u5B9A
+	
+###fundinfo------begin##fundinfo------begin##fundinfo------begin##fundinfo------begin##fundinfo------begin##fundinfo------begin	
+wmes.title=\u8D44\u4EA7\u7BA1\u7406\u751F\u6001\u7CFB\u7EDF
+wmes.home=\u9996\u9875
+wmes.head.IFAsInfo=IFA\u4FE1\u606F
+wmes.head.IFAsInfo.IFAsList=IFA\u5217\u8868
+wmes.head.IFAsInfo.IFAInsight=IFA insight
+wmes.head.IFAsInfo.MyIFAFriends=\u6211\u7684IFA\u597D\u53CB
+wmes.head.FundsInfo=\u57FA\u91D1\u4FE1\u606F
+wmes.head.FundsInfo.FundsSelector=\u57FA\u91D1\u7B5B\u9009
+wmes.head.FundsInfo.FundsCompare=\u57FA\u91D1\u6BD4\u8F83
+wmes.head.FundsInfo.InvStrategy=\u6295\u8D44\u7B56\u7565
+wmes.head.MyInvAccount=\u6211\u7684\u8D26\u6237
+wmes.head.MyInvAccount.OpenAnAccount=\u6211\u8981\u5F00\u6237
+wmes.head.MyInvAccount.MyInvAccountList=\u6211\u7684\u6295\u8D44\u8D26\u6237
+wmes.head.MyInvAccount.MyInvApprovalList=\u6211\u7684\u5F00\u6237\u5BA1\u6279
+wmes.head.MyInvAccount.MyInvProposal=\u6211\u7684\u6295\u8D44\u65B9\u6848
+wmes.head.MyInvAccount.MyInvApplicationList=\u6211\u7684\u5F00\u6237\u7533\u8BF7
+wmes.head.InviteInvestor=\u9080\u8BF7\u5F00\u6237
+wmes.head.InvestmentManagement=\u6295\u8D44\u8D26\u6237
+wmes.head.InvestmentManagement.MyAssets=\u6211\u7684\u8D44\u4EA7
+wmes.head.InvestmentManagement.TradeOrderApproval=Trade order approval
+wmes.head.InvestmentManagement.CommissionHistory=Commission history
+wmes.head.InvestmentManagement.TransactionHistory=Transaction history
+wmes.head.FinancialNews=\u65B0\u95FB\u8D44\u8BAF
+	
+fund.info.Funds=\u57FA\u91D1
+fund.info.myfund=\u6211\u7684\u57FA\u91D1
+fund.info.fundsScreener=\u57FA\u91D1\u7B5B\u9009
+fund.info.comparison=\u57FA\u91D1\u6BD4\u8F83
+fund.info.distributor =\u57FA\u91D1\u4EE3\u7406
+fund.info.fundHouse =\u57FA\u91D1\u516C\u53F8
+fund.info.fundSize =\u57FA\u91D1\u89C4\u6A21
+fund.info.per =\u7D2F\u79EF\u8868\u73B0
+fund.info.lipperCR =\u7406\u67CF\u8BC4\u7EA7
+fund.info.fitch =\u60E0\u8A89\u8BC4\u7EA7
+fund.info.citywire=Citywire\u8BC4\u7EA7
+fund.info.minInitialInv=\u6700\u4F4E\u8BA4\u8D2D\u989D
+fund.info.mgtFee=\u57FA\u91D1\u7BA1\u7406\u8CBB
+fund.info.moreSelectors=\u9AD8\u7EA7\u7B5B\u9009 
+fund.info.selectedCondition=\u5DF2\u9009\u65B9\u6848
+fund.info.calculatedIn=\u8D27\u5E01
+fund.info.searchAll=\u5168\u90E8
+fund.info.searchTip=\u5171\u627E\u5230
+fund.info.searchTip_2=\u53EA\u57FA\u91D1\u7B26\u5408\u60A8\u7684\u8981\u6C42
+fund.info.resetFilter=\u5168\u90E8\u6E05\u9664
+fund.info.selectPlease=\u8BF7\u9009\u62E9
+fund.info.fundNAV=\u57FA\u91D1\u51C0\u503C
+fund.info.fundPerformance=\u57FA\u91D1\u8868\u73B0
+fund.info.fundRating=\u57FA\u91D1\u8BC4\u7EA7
+fund.info.fundName=\u57FA\u91D1\u540D\u79F0
+fund.info.riskrating=\u98CE\u9669\u8BC4\u7EA7
+fund.info.currency=\u57FA\u91D1\u8D27\u5E01
+fund.info.ACC_INC=\u7D2F\u79EF/\u6536\u76CA
+fund.info.ISIN=\u57FA\u91D1\u7F16\u7801
+fund.info.LastNAV_rating=\u6700\u65B0\u51C0\u503C\u4EF7\u683C
+fund.info.Growthrate=\u589E\u957F\u7387
+fund.info.dailyReturn=\u65E5\u56DE\u62A5
+fund.info.price_date=\u51C0\u503C\u65E5\u671F
+fund.info.Launch=\u53D1\u884C\u4EE5\u6765
+fund.info.launchDate=\u53D1\u884C\u65E5\u671F
+fund.info.YTD=\u4ECA\u5E74\u4EE5\u6765
+fund.info.YTDdate=\u8868\u73B0\u65E5\u671F
+fund.info.LastNAV=\u6700\u65B0\u51C0\u503C
+fund.info.LastNAVUpdate=\u6700\u65B0\u51C0\u503C\u65E5\u671F
+fund.info.lastNAVprice=\u6700\u65B0\u51C0\u503C\u4EF7\u683C
+fund.info.allocWeight=\u5206\u914D\u6743\u91CD
+fund.info.allocAmount=\u5206\u914D\u91CF
+fund.info.3YrRiskReturn=\u4E09\u5E74\u98CE\u9669\u56DE\u62A5\u7387
+fund.info.SharpeRatio=\u590F\u666E\u6BD4\u7387
+fund.info.RevalationDate=\u4F30\u503C\u65E5\u671F
+fund.info.cumPerMon_1=\u7D2F\u79EF\u8868\u73B0\u4E00\u4E2A\u6708
+fund.info.cumPerMon_3=\u7D2F\u79EF\u8868\u73B0\u4E09\u4E2A\u6708
+fund.info.cumPerMon_6=\u7D2F\u79EF\u8868\u73B0\u516D\u4E2A\u6708
+fund.info.cumPerYr_1=\u7D2F\u79EF\u8868\u73B0\u4E00\u5E74
+fund.info.cumPerYr_3=\u7D2F\u79EF\u8868\u73B0\u4E09\u5E74
+fund.info.cumPerYr_5=\u7D2F\u79EF\u8868\u73B0\u4E94\u5E74
+fund.info.cumPerLaunch=\u7D2F\u79EF\u8868\u73B0\u81F3\u4ECA
+fund.info.IssueDate=\u53D1\u884C\u65E5\u671F
+fund.info.AR=\u5E74\u5EA6\u56DE\u62A5
+fund.info.week=\u4E00\u5468
+fund.info.mon=\u4E00\u4E2A\u6708
+fund.info.mon_3=\u4E09\u4E2A\u6708
+fund.info.mon_6=\u516D\u4E2A\u6708
+fund.info.yr_1=\u4E00\u5E74
+fund.info.yr_3=\u4E09\u5E74
+fund.info.yr_5=\u4E94\u5E74
+fund.info.launch=\u81F3\u4ECA
+fund.info.keyWord=\u8BF7\u8F93\u5165\u57FA\u91D1\u540D\u79F0
+fund.info.notLessThan=\u4E0D\u5C0F\u4E8E
+fund.info.moreThan=\u5927\u4E8E
+fund.info.lessThan=\u5C0F\u4E8E
+fund.info.thousand=\u4E00\u5343
+fund.info.10thousand=\u4E00\u4E07
+fund.info.100thousand=\u5341\u4E07
+fund.info.million=\u4E00\u767E\u4E07
+fund.info.10million=\u4E00\u5343\u4E07
+fund.info.noFund.sorry=\u5F88\u62B1\u6B49\uFF0C\u6CA1\u6709\u627E\u5230\u7B26\u5408\u60A8\u8981\u6C42\u7684\u6570\u636E\uFF01
+fund.info.noFund.suggestion.one=\u5EFA\u8BAE\u60A8\uFF1A1\u3001\u9002\u5F53\u51CF\u5C11\u6216\u653E\u5BBD\u7B5B\u9009\u6761\u4EF6\uFF0C\u53EF\u4EE5\u83B7\u53D6\u66F4\u591A\u7684\u7ED3\u679C\u3002
+fund.info.noFund.suggestion.two=2\u3001\u5C1D\u8BD5\u9009\u62E9\u5176\u4ED6\u7B5B\u9009\u6761\u4EF6\u3002
+fund.info.moreSelectorsUp=\u6536\u8D77
+fund.info.shoppingCart=\u8D2D\u7269\u8F66
+fund.info.favourites=\u6536\u85CF
+fund.info.fundCurrency=\u57FA\u91D1\u8D27\u5E01
+fund.info.favouritesOk=\u5DF2\u5173\u6CE8
+	
+fund.info.detail=\u57FA\u91D1\u660E\u7EC6
+fund.info.detail.Sector=\u4E3B\u9898
+fund.info.detail.Type=\u57FA\u91D1\u7C7B\u578B
+fund.info.detail.Latestsize=\u6700\u65B0\u89C4\u6A21
+fund.info.detail.Manager=\u57FA\u91D1\u7ECF\u7406
+fund.info.detail.ManageCom=\u57FA\u91D1\u7BA1\u7406\u516C\u53F8
+fund.info.detail.GeoAllocation=\u5730\u57DF\u5206\u5E03
+fund.info.detail.FundPrice=\u57FA\u91D1\u884C\u60C5 
+fund.info.detail.Facts=\u57FA\u91D1\u8D44\u6599
+fund.info.detail.FeesNDoc=\u8D39\u7528\u53CA\u6587\u4EF6 
+fund.info.detail.Dividend=\u8FC7\u5F80\u80A1\u606F
+fund.info.detail.Announcements=\u57FA\u91D1\u516C\u544A
+fund.info.detail.one_month=\u4E00\u4E2A\u6708
+fund.info.detail.three_month=\u4E09\u4E2A\u6708
+fund.info.detail.YTD=\u5E74\u521D\u81F3\u4ECA
+fund.info.detail.six_month=\u516D\u4E2A\u6708
+fund.info.detail.one_yr=\u4E00\u5E74
+fund.info.detail.two_yr=\u4E24\u5E74
+fund.info.detail.three_Years=\u4E09\u5E74
+fund.info.detail.five_Years=\u4E94\u5E74
+fund.info.detail.MinSubscribeAmount=\u6700\u4F4E\u8D2D\u4E70\u91D1\u989D
+fund.info.detail.MinHoldingAmount=\u6700\u4F4E\u6301\u6709\u989D
+fund.info.detail.Fees=\u8D39\u7528
+fund.info.detail.Instructions=\u8BF4\u660E
+fund.info.detail.Documents=\u6587\u4EF6
+fund.info.detail.ExDividendDate=\u9664\u606F\u65E5
+fund.info.detail.DividenPerUnit=\u6BCF\u5355\u4F4D\u80A1\u606F
+fund.info.detail.AnnualDividendYield=\u5E74\u5316\u80A1\u606F\u7387
+fund.info.detail.AnnoNum=\u7F16\u53F7
+fund.info.detail.AnnoTitle=\u6807\u9898
+fund.info.detail.AnnoTime=\u53D1\u5E03\u65E5\u671F
+fund.info.detail.InvTarget=\u6295\u8D44\u76EE\u6807
+fund.info.detail.YearPer=\u5E74\u5EA6\u8868\u73B0
+fund.info.detail.Period=\u65F6\u95F4
+fund.info.detail.year=\u5E74\u5EA6
+fund.info.detail.Increase=\u6DA8\u5E45
+fund.info.detail.CumPer=\u7D2F\u79EF\u8868\u73B0
+fund.info.comparison.addFund=\u9009\u62E9\u57FA\u91D1
+fund.info.comparison.fundHouseSearch=\u8BF7\u9009\u62E9\u57FA\u91D1\u53D1\u884C\u516C\u53F8
+fund.info.comparison.CompareItem=\u6BD4\u8F83\u9879\u76EE
+fund.info.comparison.BasicInformation=\u57FA\u672C\u4FE1\u606F
+fund.info.comparison.Fundperformance=\u57FA\u91D1\u8868\u73B0
+fund.info.comparison.Fundrating=\u57FA\u91D1\u8BC4\u7EA7
+fund.info.comparison.IndustrialDistribution=\u884C\u4E1A\u5206\u5E03
+fund.info.comparison.RegionalDistribution=\u5730\u533A\u5206\u5E03
+fund.info.comparison.SelectAll=\u5168\u9009
+fund.info.comparison.Type=\u57FA\u91D1\u7C7B\u578B
+fund.info.comparison.ReturnSinceLaunch=\u7D2F\u8BA1\u8868\u73B0\u81F3\u4ECA
+fund.info.comparison.ReturnYTD=\u7D2F\u8BA1\u8868\u73B0\u4ECA\u5E74
+fund.info.comparison.Return1W=\u7D2F\u8BA1\u8868\u73B0\u4E00\u5468
+fund.info.comparison.Return1M=\u7D2F\u8BA1\u8868\u73B0\u4E00\u4E2A\u6708
+fund.info.comparison.Return3M=\u7D2F\u8BA1\u8868\u73B0\u4E09\u4E2A\u6708
+fund.info.comparison.Return6M=\u7D2F\u8BA1\u8868\u73B06\u4E2A\u6708
+fund.info.comparison.Return1y=\u7D2F\u8BA1\u8868\u73B0\u4E00\u5E74
+fund.info.comparison.Return3Y=\u7D2F\u8BA1\u8868\u73B0\u4E09\u5E74
+fund.info.NewsAndAnnouncement=\u65B0\u95FB\u4E0E\u516C\u544A
+###fundinfo------end #fundinfo------end #fundinfo------end #fundinfo------end #fundinfo------end #fundinfo------end #fundinfo------end 	
+####LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN 	
+login.loginTitle=\u767B\u5F55
+login.login= \u767B\u5F55
+login.useridTip=\u767B\u5F55\u8D26\u53F7
+login.passwordTip=\u767B\u5F55\u5BC6\u7801
+login.remember=\u8BB0\u4F4F\u6211\u4E24\u5468
+login.forgotPsw=\u5FD8\u8BB0\u5BC6\u7801
+login.register=\u6CE8\u518C
+	
+	
+	
+### console fund info -----begin	
+console.fund.info.list.title=\u57FA\u91D1\u4FE1\u606F
+console.fund.info.list.btn.search=\u67E5\u8BE2
+console.fund.info.list.search.keyword=\u5173\u952E\u5B57
+console.fund.info.list.table.title.isinCode=\u57FA\u91D1\u7F16\u7801
+console.fund.info.list.table.title.riskLevel=\u98CE\u9669\u8BC4\u7EA7
+console.fund.info.list.table.title.lastNav=\u6700\u65B0\u51C0\u503C
+console.fund.info.list.table.title.lastNavUpate=\u6700\u65B0\u8D44\u4EA7\u51C0\u503C\u65E5\u671F
+console.fund.info.list.table.title.issuePrice=\u53D1\u884C\u4EF7\u683C
+console.fund.info.list.table.title.fundCurrency=\u57FA\u91D1\u8D27\u5E01
+console.fund.info.list.table.title.issueDate=\u53D1\u884C\u65E5\u671F
+console.fund.info.list.table.title.mgtFee=\u57FA\u91D1\u7BA1\u7406\u8D39
+console.fund.info.list.table.title.dayReturn=\u65E5\u56DE\u62A5
+console.fund.info.list.table.title.subscribeFee=\u57FA\u91D1\u8BA4\u8D2D\u8D39
+console.fund.info.list.table.title.minInitialAmount=\u6700\u4F4E\u9996\u6B21\u8BA4\u8D2D\u91D1\u989D
+console.fund.info.list.table.title.minSubscribeAmount=\u6700\u4F4E\u7533\u8D2D\u6295\u8D44\u91D1\u989D
+console.fund.info.list.table.title.minHoldingAmount=\u6700\u4F4E\u6301\u6709\u91D1\u989D
+console.fund.info.list.table.title.minRedemptionAmount=\u6700\u4F4E\u8D4E\u56DE\u91D1\u989D
+console.fund.info.list.table.title.minRspAmount=\u6700\u4F4E\u5B9A\u671F\u6295\u8D44\u8BA1\u5212\u6295\u8D44\u989D
+
+console.fund.info.list.table.title.fundType=\u57FA\u91D1\u7C7B\u578B
+console.fund.info.list.table.title.sectorType=\u57FA\u91D1\u4E3B\u9898
+console.fund.info.list.table.title.geoAllocation=\u4EA4\u6613\u5E02\u573A
+console.fund.info.list.table.title.fundName=\u57FA\u91D1\u540D\u79F0
+console.fund.info.list.table.title.fundNamePinyin=\u57FA\u91D1\u540D\u79F0\u62FC\u97F3
+console.fund.fundhouse.edit=\u4FE1\u606F\u7F16\u8F91
+console.fund.fundhouse.info.chinese=\u7B80\u4F53\u57FA\u7840\u7F16\u8F91
+console.fund.fundhouse.info.english=\u82F1\u6587\u57FA\u7840\u7F16\u8F91
+console.fund.fundhouse.info.TraditionalChinese=\u7E41\u4F53\u57FA\u7840\u4FE1\u606F
+console.fund.info.list.table.title.domicileCode=\u6CE8\u518C\u5730
+console.fund.info.list.table.title.fundHouse=\u57FA\u91D1\u53D1\u884C\u516C\u53F8
+console.fund.info.list.table.title.fundHousePinyin=\u57FA\u91D1\u53D1\u884C\u516C\u53F8\u62FC\u97F3
+console.fund.info.list.table.title.fundManCo=\u57FA\u91D1\u7BA1\u7406\u516C\u53F8
+console.fund.info.list.table.title.fundManager=\u57FA\u91D1\u7BA1\u7406\u7ECF\u7406
+console.fund.info.list.table.title.fundSize=\u57FA\u91D1\u89C4\u6A21
+console.fund.info.list.table.title.invTarget=\u6295\u8D44\u76EE\u6807
+console.fund.info.list.table.title.keyRisks=\u4E3B\u8981\u98CE\u9669
+
+console.fund.info.list.table.title.overhead=\u662F\u5426\u7F6E\u9876
+	
+console.fund.info.list.table.oper.viewFundInfo=\u57FA\u91D1\u4FE1\u606F
+console.fund.info.list.table.oper.viewFeesItemList=\u8D39\u7528\u9879\u76EE
+console.fund.info.list.table.oper.viewDistributorList=\u4EE3\u7406\u5546
+console.fund.info.list.tab.title=\u57FA\u91D1\u4FE1\u606F\u7BA1\u7406
+	
+### ------ fund anno begin ======
+console.fund.infoSc.title=\u7B80\u4F53\u57FA\u7840\u4FE1\u606F
+console.fund.infoTc.title=\u7E41\u4F53\u57FA\u7840\u4FE1\u606F
+console.fund.infoEn.title=\u82F1\u6587\u57FA\u7840\u4FE1\u606F
+console.fund.anno.title=\u57FA\u91D1\u516C\u544A
+console.fund.anno.annoName=\u516C\u544A\u540D\u79F0
+console.fund.anno.annoContent=\u516C\u544A\u5185\u5BB9
+console.fund.anno.annoDate=\u516C\u544A\u65F6\u95F4
+console.fund.anno.langCode=\u516C\u544A\u8BED\u8A00
+### ------ fund anno end ======
+
+### ------ fund bonus begin ======
+console.fund.bonus.title=\u57FA\u91D1\u5206\u7EA2\u6D3E\u606F
+console.fund.bonus.exDividendDate=\u9664\u606F\u65E5\u671F
+console.fund.bonus.dividendPerUnit=\u6BCF\u5355\u4F4D\u80A1\u606F
+console.fund.bonus.annualDividendYield=\u5E74\u5316\u80A1\u606F\u7387%
+console.fund.bonus.year=\u5E74\u4EFD
+### ------ fund bonus end ======
+
+### ------ fund doc begin ======
+console.fund.doc.title=\u57FA\u91D1\u9644\u4EF6\u6587\u6863
+console.fund.doc.documentName=\u6587\u6863\u540D\u79F0
+console.fund.doc.upload=\u6587\u6863\u4E0A\u4F20
+### ------ fund doc end ======
+
+fund.feesitem.list.title=\u57FA\u91D1\u8D39\u7528\u9879\u76EE
+fund.feesitem.list.btn.search=\u67E5\u8BE2
+fund.feesitem.list.btn.add=\u65B0\u589E
+fund.feesitem.list.btn.back=\u8FD4\u56DE
+fund.feesitem.list.table.title.feesItem=\u8D39\u7528\u9879\u76EE
+fund.feesitem.list.table.title.fees=\u8D39\u7528\u9879\u76EE\u8BF4\u660E
+fund.feesitem.list.table.title.isValid=\u72B6\u6001
+	
+fund.feesitem.form.title=\u57FA\u91D1\u8D39\u7528\u9879\u76EE
+fund.feesitem.form.tab.en=\u82F1\u6587
+fund.feesitem.form.tab.sc=\u7B80\u4F53\u4E2D\u6587
+fund.feesitem.form.tab.tc=\u7E41\u4F53\u4E2D\u6587
+fund.feesitem.form.feesItem=\u8D39\u7528\u9879\u76EE
+fund.feesitem.form.fees=\u8D39\u7528\u9879\u76EE\u8BF4\u660E
+fund.feesitem.form.btn.save=\u4FDD\u5B58
+fund.feesitem.form.btn.cancel=\u8FD4\u56DE
+
+fund.feesitem.error.insert.fundinfo \u6CA1\u6709\u627E\u5230\u8BE5\u5339\u914D\u7684\u57FA\u91D1\u4FE1\u606F\uFF0C\u8BF7\u5148\u65B0\u589E\u5173\u8054\u7684\u57FA\u91D1\u4FE1\u606F\u3002
+
+####LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN ----#LOGIN 	
+####openAccount begin -----#openAccount begin----- #openAccount begin -----#openAccount begin -------#openAccount begin --------#openAccount begin	
+open.account.title=\u6295\u8D44\u5F00\u6237
+open.account.title.individual=\u4E2A\u4EBA\u5F00\u6237
+open.account.title.ifa=\u534F\u52A9\u5F00\u6237
+open.account.title.ifaInvite=\u9080\u8BF7\u5F00\u6237
+open.account.Start=\u6295\u8D44\u5F00\u6237
+open.account.Start.MyClient=\u6211\u7684\u5BA2\u6237
+open.account.Start.SelectIFA=\u9009\u62E9IFA
+open.account.Start.SelectDistributor=\u9009\u62E9\u4EE3\u7406\u5546
+open.account.Start.phone=\u7535\u8BDD
+open.account.Start.email=\u7535\u5B50\u90AE\u7BB1
+open.account.RPQ=\u586B\u5199RPQ\u95EE\u5377
+open.account.BasicInfo=\u586B\u5199\u5F00\u6237\u4FE1\u606F
+open.account.DocumentCheck=\u4E0A\u4F20\u5BA1\u67E5\u6587\u6863
+open.account.Declaration=\u58F0\u660E\u4FE1\u606F
+open.account.Submit=\u63D0\u4EA4\u5BA1\u6279
+open.account.Previous=\u4E0A\u4E00\u6B65
+open.account.Next=\u4E0B\u4E00\u6B65
+open.account.Draft=\u8349\u7A3F
+open.account.Cancel=\u53D6\u6D88
+open.account.submitToIFA=\u63D0\u4EA4\u7ED9\u57FA\u91D1\u7ECF\u7406
+open.account.sendToInvestor=\u53D1\u9001\u7ED9\u6295\u8D44\u4EBA\u786E\u8BA4
+open.account.sendToClient=\u53D1\u9001\u7ED9\u5BA2\u6237
+open.account.submitForApproval=\u63D0\u4EA4\u5BA1\u6279
+	
+open.account.AccountDetails=Account details
+open.account.MainapplicantsInfo=Main applicant's info
+open.account.JointApplicatntsInfo=Joint applicatnt's info
+open.account.BankAccountDetails=Bank account details
+open.account.FeePayment=Fee payment
+open.account.topTip = Please complete in BLOCK LETTERS. Please return the completed and signed form to Ageas Investment Management (Asia) Limited ("AIM") and Ageas Nominees Limited ("ANL") .
+open.account.AccountType=Account Type
+open.account.AccountType.ind=Individual Account
+open.account.AccountType.joint=Joint Account
+open.account.iInvestAccountType=i-Invest Account type
+open.account.iInvestAccountType.fund=i-Invest Fund Account
+open.account.iInvestAccountType.Portfolio=i-Invest Portfolio Account
+open.account.cies=Capital Investment Entrant Scheme ("CIES") Azccount
+open.account.cies.y=Yes
+open.account.cies.n=No
+open.account.noteTip=Note\: The Customer will have online trading access for all selected accounts
+open.account.DividendOption=Dividend Option
+open.account.DividendOption.rei=Reinvestment
+open.account.DividendOption.distrub=Distributed to Cash Account
+open.account.dividendoption.tip.a=only applicable to funds
+open.account.dividendoption.tip.b=* If no choice is made, dividends (if applicable) will be reinvested.
+open.account.BaseCurrency=Base Currency
+open.account.BaseCurrency.tip=choose one currency
+open.account.Purpose.Investment=Investment
+open.account.Purpose.Others=Others
+open.account.Purpose.tip=Purpose of Opening the Account
+open.account.contactTip=Please send all the Customer's daily statements and monthly statements by (choose one only)\: 
+open.account.contactType.a=Email
+open.account.contactType.b=Post
+	
+open.account.mainAppInfo=Main Applicant's Information (Mandatory)
+open.account.mainAppInfo.tip=Name as shown on HKID card / Passport
+open.account.MainApplicant=Main Applicant
+open.account.LastName=Last Name (in English)
+open.account.FirstName=First Name (in English)
+open.account.Alias=Alias
+open.account.NameinChinese=Name in Chinese
+open.account.CountryofBirth=Country of Birth
+open.account.DateofBirth=Date of Birth (dd/mm/yyyy)
+open.account.Sex=Sex
+open.account.HKID=HKID/Passport No.
+open.account.Nationality=Nationality
+open.account.PrimaryResidence=Country of Primary Residence
+	
+fund.distributor.list.title=\u57FA\u91D1\u4EE3\u7406\u5546\u4FE1\u606F
+fund.distributor.list.btn.search=\u67E5\u8BE2
+fund.distributor.list.btn.add=\u65B0\u589E
+fund.distributor.list.btn.back=\u8FD4\u56DE
+fund.distributor.list.table.title.companyName=\u8FD0\u8425\u516C\u53F8
+fund.distributor.list.table.title.distributorName=\u4EE3\u7406\u516C\u53F8
+fund.distributor.list.table.title.beginDate=\u5F00\u59CB\u65F6\u95F4
+fund.distributor.list.table.title.endDate=\u7ED3\u675F\u65F6\u95F4
+fund.distributor.list.table.title.createTime=\u8BBE\u7F6E\u65F6\u95F4
+fund.distributor.list.table.title.lastUpdate=\u6700\u8FD1\u66F4\u65B0\u65F6\u95F4
+fund.distributor.list.table.title.isValid=\u72B6\u6001
+	
+fund.distributor.form.title=\u57FA\u91D1\u4EE3\u7406\u5546
+fund.distributor.form.distributorId=\u4EE3\u7406\u516C\u53F8
+fund.distributor.form.companyId \u8FD0\u8425\u516C\u53F8
+fund.distributor.form.beginDate=\u5F00\u59CB\u65F6\u95F4
+fund.distributor.form.endDate=\u7ED3\u675F\u65F6\u95F4
+fund.distributor.form.createTime=\u521B\u5EFA\u65F6\u95F4
+fund.distributor.form.lastUpdate=\u6700\u8FD1\u66F4\u65B0\u65F6\u95F4
+fund.distributor.form.isPublish=\u662F\u5426\u53D1\u5E03
+fund.distributor.form.isPublish.1=\u662F
+fund.distributor.form.isPublish.0=\u5426
+fund.distributor.form.code \u4EA7\u54C1\u7F16\u7801
+fund.distributor.form.btn.save=\u4FDD\u5B58
+fund.distributor.form.btn.cancel=\u8FD4\u56DE
+console.role=\u63A7\u5236\u53F0\u89D2\u8272
+	
+	
+### console sys log -----begin	
+console.sys.log.list.title=\u7CFB\u7EDF\u65E5\u5FD7
+console.sys.log.list.btn.search=\u67E5\u8BE2
+console.sys.log.list.search.loginCode= \u767B\u5F55\u8D26\u53F7
+console.sys.log.list.search.remark=\u65E5\u5FD7\u5185\u5BB9
+console.sys.log.list.search.module=\u6240\u5C5E\u6A21\u5757
+console.sys.log.list.search.dateFrom=\u65E5\u5FD7\u65F6\u95F4
+console.sys.log.list.search.dateTo= \u81F3
+console.sys.log.list.table.title.loginCode=\u767B\u5F55\u8D26\u53F7
+console.sys.log.list.table.title.nickname=\u7528\u6237\u540D\u79F0
+console.sys.log.list.table.title.module=\u6240\u5C5E\u6A21\u5757
+console.sys.log.list.table.title.ip=IP
+console.sys.log.list.table.title.remark=\u65E5\u5FD7\u5185\u5BB9
+console.sys.log.list.table.title.createTime=\u521B\u5EFA\u65F6\u95F4
+console.sys.log.form.title=\u7CFB\u7EDF\u65E5\u5FD7
+console.sys.log.form.loginCode=\u767B\u5F55\u8D26\u53F7
+console.sys.log.form.nickname=\u7528\u6237\u540D\u79F0
+console.sys.log.form.module=\u6240\u5C5E\u6A21\u5757
+console.sys.log.form.ip=IP
+console.sys.log.form.createTime=\u521B\u5EFA\u65F6\u95F4
+console.sys.log.form.remark=\u65E5\u5FD7\u5185\u5BB9
+console.sys.log.form.btn.back=\u8FD4\u56DE
+console.sys.log.list.tab.title=\u7CFB\u7EDF\u65E5\u5FD7
+### console sys log -----end	
+	
+	
+### console web oper log -----begin	
+console.operlog.list.title=\u64CD\u4F5C\u65E5\u5FD7
+console.operlog.list.btn.search=\u67E5\u8BE2
+console.operlog.list.search.loginCode= \u767B\u5F55\u8D26\u53F7
+console.operlog.list.search.remark=\u65E5\u5FD7\u5185\u5BB9
+console.operlog.list.search.module=\u6240\u5C5E\u6A21\u5757
+console.operlog.list.search.dateFrom=\u65E5\u5FD7\u65F6\u95F4
+console.operlog.list.search.dateTo= \u81F3
+console.operlog.list.table.title.loginCode=\u767B\u5F55\u8D26\u53F7
+console.operlog.list.table.title.nickname=\u7528\u6237\u540D\u79F0
+console.operlog.list.table.title.module=\u6240\u5C5E\u6A21\u5757
+console.operlog.list.table.title.ip=IP
+console.operlog.list.table.title.remark=\u65E5\u5FD7\u5185\u5BB9
+console.operlog.list.table.title.createTime=\u521B\u5EFA\u65F6\u95F4
+console.operlog.form.title=\u64CD\u4F5C\u65E5\u5FD7
+console.operlog.form.loginCode=\u767B\u5F55\u8D26\u53F7
+console.operlog.form.nickname=\u7528\u6237\u540D\u79F0
+console.operlog.form.module=\u6240\u5C5E\u6A21\u5757
+console.operlog.form.ip=IP
+console.operlog.form.createTime=\u521B\u5EFA\u65F6\u95F4
+console.operlog.form.remark=\u65E5\u5FD7\u5185\u5BB9
+console.operlog.form.btn.back=\u8FD4\u56DE
+console.operlog.list.tab.title=\u64CD\u4F5C\u65E5\u5FD7\t
+### console web oper log -----end	
+	
+	
+### console web interface log -----begin	
+console.interfacelog.list.title=\u63A5\u53E3\u65E5\u5FD7
+console.interfacelog.list.btn.search=\u67E5\u8BE2
+console.interfacelog.list.search.invokerType= \u8C03\u7528\u7C7B\u578B
+console.interfacelog.list.search.module=\u6240\u5C5E\u6A21\u5757
+console.interfacelog.list.search.dateFrom=\u65E5\u5FD7\u65F6\u95F4
+console.interfacelog.list.search.dateTo= \u81F3
+console.interfacelog.list.table.title.invokerType=\u8C03\u7528\u7C7B\u578B
+console.interfacelog.list.table.title.resultFlag=\u72B6\u6001
+console.interfacelog.list.table.title.busKey=\u5173\u952E\u5B57\u6BB5
+console.interfacelog.list.table.title.module=\u6240\u5C5E\u6A21\u5757
+console.interfacelog.list.table.title.method=\u8C03\u7528\u7684\u65B9\u6CD5
+console.interfacelog.list.table.title.createTime=\u521B\u5EFA\u65F6\u95F4
+console.interfacelog.form.title=\u63A5\u53E3\u65E5\u5FD7
+console.interfacelog.form.invokerType=\u8C03\u7528\u7C7B\u578B
+console.interfacelog.form.resultFlag=\u72B6\u6001
+console.interfacelog.form.busKey=\u5173\u952E\u5B57\u6BB5
+console.interfacelog.form.module=\u6240\u5C5E\u6A21\u5757
+console.interfacelog.form.method=\u8C03\u7528\u7684\u65B9\u6CD5
+console.interfacelog.form.content=\u5185\u5BB9
+console.interfacelog.form.memo=\u5176\u4ED6\u8BF4\u660E
+console.interfacelog.form.createTime=\u521B\u5EFA\u65F6\u95F4
+console.interfacelog.form.btn.back=\u8FD4\u56DE
+console.interfacelog.options.resultFlag.1=\u6210\u529F
+console.interfacelog.options.resultFlag.0=\u5931\u8D25
+console.interfacelog.options.invokerType.I=\u8C03\u7528\u5E73\u53F0\u63A5\u53E3
+console.interfacelog.options.invokerType.F=\u8C03\u7528\u5916\u90E8\u63A5\u53E3
+console.interfacelog.list.tab.title=\u63A5\u53E3\u65E5\u5FD7
+### console web interface log -----end	
+	
+	
+### console web bus log -----begin	
+console.buslog.title=\u4E1A\u52A1\u65E5\u5FD7
+console.buslog.list.btn.search=\u67E5\u8BE2
+console.buslog.list.search.dateFrom=\u65E5\u5FD7\u65F6\u95F4
+console.buslog.list.search.dateTo= \u81F3
+console.buslog.loginCode=\u767B\u5F55\u8D26\u53F7
+console.buslog.clientType=\u6765\u6E90\u7684\u5BA2\u6237\u7AEF\u7C7B\u578B
+console.buslog.moduleType=\u6240\u5C5E\u6A21\u5757
+console.buslog.relateData=\u5173\u8054\u7684\u8BB0\u5F55
+console.buslog.createTime=\u521B\u5EFA\u65F6\u95F4
+console.buslog.remark=\u5185\u5BB9
+console.buslog.form.btn.back=\u8FD4\u56DE
+### console web bus log -----end		
+	
+	
+### console todo toread -----begin	
+console.todo.list.title=\u5F85\u529E\u5F85\u9605
+console.todo.list.tab.myTitle=\u6211\u7684\u5F85\u529E\u5F85\u9605
+console.todo.list.tab.todo=\u5F85\u529E
+console.todo.list.tab.toread=\u5F85\u9605
+console.todo.options.isread=\u9605\u8BFB\u72B6\u6001
+console.todo.options.isread.1=\u5DF2\u9605
+console.todo.options.isread.0=\u672A\u9605
+	
+console.todo.list.btn.search=\u67E5\u8BE2
+console.todo.list.search.owner= \u63A5\u6536\u4EBA
+console.todo.list.search.status=\u72B6\u6001
+console.todo.list.table.title.title=\u6807\u9898
+console.todo.list.table.title.from=\u53D1\u9001\u4EBA
+console.todo.list.table.title.owner=\u63A5\u6536\u4EBA
+console.todo.list.table.title.type=\u6D88\u606F\u7C7B\u578B
+console.todo.list.table.title.type.1=\u4EA4\u6613\u76F8\u5173\u6D88\u606F
+console.todo.list.table.title.type.2=\u4E00\u822C\u6027\u901A\u77E5
+console.todo.list.table.title.type.3=\u544A\u8B66\u3001\u63D0\u9192\u6D88\u606F
+console.todo.list.table.title.moduleType=\u6A21\u5757\u7C7B\u578B
+console.todo.list.table.title.isRead=\u9605\u8BFB\u72B6\u6001
+console.todo.list.table.title.createTime=\u521B\u5EFA\u65F6\u95F4
+
+console.todo.form.formTitle=\u5F85\u529E
+console.todo.form.title=\u6807\u9898
+console.todo.form.code=\u5F85\u529E\u7F16\u7801
+##-- under can delete
+console.todo.form.from=\u53D1\u9001\u4EBA
+console.todo.form.owner=\u63A5\u6536\u4EBA
+console.todo.form.url=\u94FE\u63A5
+console.todo.form.type=\u5F85\u529E\u7F16\u7801
+console.todo.form.createTime=\u521B\u5EFA\u65F6\u95F4
+console.todo.form.status=\u72B6\u6001
+##-- above can delete
+console.todo.form.btn.back=\u8FD4\u56DE
+
+console.toread.list.btn.search=\u67E5\u8BE2
+console.toread.list.search.owner= \u63A5\u6536\u4EBA
+console.toread.list.search.status=\u72B6\u6001
+console.toread.list.table.title.title=\u6807\u9898
+console.toread.list.table.title.from=\u53D1\u9001\u4EBA
+console.toread.list.table.title.owner=\u63A5\u6536\u4EBA
+console.toread.list.table.title.createTime=\u521B\u5EFA\u65F6\u95F4
+console.toread.list.table.title.status=\u72B6\u6001
+console.toread.form.formTitle=\u5F85\u9605
+console.toread.form.title=\u6807\u9898
+console.toread.form.code=\u5F85\u9605\u7F16\u7801
+console.toread.form.from=\u53D1\u9001\u4EBA
+console.toread.form.owner=\u63A5\u6536\u4EBA
+console.toread.form.url=\u94FE\u63A5
+console.toread.form.type=\u5F85\u9605\u7C7B\u578B
+console.toread.form.createTime=\u521B\u5EFA\u65F6\u95F4
+console.toread.form.status=\u72B6\u6001
+console.toread.form.btn.back=\u8FD4\u56DE
+
+	
+### console todo toread -----end	
+####memberBase--begin##memberBase--begin##memberBase--begin##memberBase--begin##memberBase--begin##memberBase--begin	
+member.front.MemberDataSetting=\u4F1A\u5458\u8D44\u6599\u8BBE\u7F6E\t
+member.front.PersonalPreferenceSetting=\u4E2A\u4EBA\u559C\u597D\u8BBE\u7F6E\t
+member.front.ChangePassword=\u4FEE\u6539\u5BC6\u7801\t
+member.front.MyBacklog=\u5F85\u529E\u5F85\u9605\u5217\u8868\t
+member.front.MyBacklog.Todo=\u5F85\u529E\u5217\u8868\t
+member.front.MyBacklog.Toread=\u5F85\u9605\u5217\u8868\t
+member.front.MyFollow=\u6211\u7684\u5173\u6CE8\t
+member.front.MyBuddy=\u6211\u7684\u597D\u53CB\t
+member.front.Logout=\u9000\u51FA\t
+member.front.cert_type=\u8BC1\u4EF6\u7C7B\u578B\t
+member.front.cert_type.1=\u8EAB\u4EFD\u8BC1\t
+member.front.cert_type.2=\u62A4\u7167\t
+##memberBase--end##memberBase--end##memberBase--end##memberBase--end##memberBase--end##memberBase--end##memberBase--end	
+member.role=\u524D\u53F0\u89D2\u8272\t
+member.list.keyword=\u5173\u952E\u5B57\t
+member.personalInfo=\u4E2A\u4EBA\u8D44\u6599\t
+member.accountInfo=\u8D26\u53F7\u4FE1\u606F
+member.baseInfo=\u57FA\u672C\u8D44\u6599\t
+member.additionalInfo=\u9644\u52A0\u8D44\u6599\t
+member.info.loginCode=\u767B\u5F55\u5E10\u53F7\t
+member.info.nickName=\u6635\u79F0\t
+member.info.password=\u5BC6\u7801
+member.info.surePassword=\u786E\u8BA4\u5BC6\u7801
+member.info.email=\u90AE\u7BB1\u5730\u5740\t
+member.info.mobileCode=\u624B\u673A\u533A\u53F7
+member.info.mobileNumber=\u624B\u673A\u53F7\u7801\t
+member.info.firstName=\u59D3\t
+member.info.lastName=\u540D\t
+member.info.lastnameinenglish=\u59D3\u6C0F(\u82F1\u6587)
+member.info.firstnameinenglish=\u540D\u5B57(\u82F1\u6587)
+member.info.country=\u51FA\u751F\u56FD\u5BB6\t
+member.info.nationality=\u56FD\u7C4D\t
+member.info.gender=\u6027\u522B\t
+member.info.nameChn=\u4E2D\u6587\u59D3\u540D\t
+member.info.certType=\u8BC1\u4EF6\u7C7B\u578B\t
+member.info.accountType=\u8D26\u53F7\u7C7B\u578B\t
+member.info.registerTime=\u6CE8\u518C\u65F6\u95F4\t
+member.info.lastLogin=\u4E0A\u4E00\u6B21\u767B\u5F55\u65F6\u95F4\t
+member.info.certNo=\u8BC1\u4EF6\u53F7\u7801\t
+member.info.born=\u751F\u65E5\t
+member.info.education=\u6559\u80B2\u7A0B\u5EA6\t
+member.info.employment=\u5C31\u4E1A\u60C5\u51B5\t
+member.info.occupation=\u804C\u4E1A\t
+member.info.address=\u5730\u5740\t
+member.info.telephone=\u56FA\u5B9A\u7535\u8BDD\t
+member.info.gender.female=\u5973\t
+member.info.gender.man=\u7537\t
+member.info.gender.M=\u7537\t
+member.info.gender.F=\u5973\t
+member.info.certType.idcard=\u8EAB\u4EFD\u8BC1\t
+member.info.certType.passport=\u62A4\u7167\t
+member.info.companyType=\u516C\u53F8\u7C7B\u578B\t
+member.info.companyIfafirm=Ifafirm\t
+member.info.position=\u804C\u4F4D\t
+member.info.ceNumber=CE\u7F16\u53F7\t
+member.info.cfaNumber=\u8D22\u52A1\u5206\u6790\u5E08\u7F16\u53F7\t
+member.info.cfpNumber=\u8D22\u52A1\u7B56\u5212\u5E08\u7F16\u53F7\t
+member.info.introduction=\u4E2A\u4EBA\u4ECB\u7ECD\t
+member.info.appellation=\u79F0\u8C13\t
+member.info.primaryResidence=\u4E3B\u8981\u5C45\u4F4F\u56FD\t
+member.info.companyName=\u516C\u53F8\u540D\u79F0\t
+member.info.entityType=\u516C\u53F8\u6027\u8D28\t
+member.info.entityOther=\u5176\u4ED6\u8BF4\u660E\t
+member.info.registerNo=\u6CE8\u518C\u4EE3\u7801\t
+member.info.isFinancial=\u662F\u5426\u91D1\u878D\u673A\u6784\t
+member.info.giin=\u5168\u7403\u4E2D\u4ECB\u673A\u6784\u8BC6\u522B\u53F7\u7801\t
+member.info.naturePurpose=\u4E1A\u52A1\u6027\u8D28\u53CA\u7ECF\u8425\u65B9\u5411\t
+member.info.incorporationDate=\u6CE8\u518C\u6210\u7ACB\u65E5\u671F\t
+member.info.incorporationPlace=\u6CE8\u518C\u56FD\u5BB6\t
+member.info.registeredAddress=\u516C\u53F8\u6CE8\u518C\u5730\u5740\t
+member.info.mailingAddress=\u516C\u53F8\u901A\u8BAF\u5730\u5740\t
+member.info.website=\u7F51\u7AD9\u5730\u5740\t
+member.info.entityType.PrivateLtdCo=\u79C1\u8425\u6709\u9650\u8D23\u4EFB\u516C\u53F8\t
+member.info.entityType.PrivateCo=\u79C1\u8425\u65E0\u9650\u8D23\u4EFB\u516C\u53F8\t
+member.info.entityType.TrustAccount=\u4FE1\u6258\u516C\u53F8\t
+member.info.entityType.ListedCo=\u4E0A\u5E02\u516C\u53F8\t
+member.info.entityType.Other=\u5176\u4ED6\u7C7B\u578B\u516C\u53F8\t
+member.info.status=\u6FC0\u6D3B\u72B6\u6001
+member.info.status0=\u5F85\u6FC0\u6D3B
+member.info.status1=\u5DF2\u6FC0\u6D3B
+member.memberType=\u8D26\u6237\u7C7B\u578B\t
+member.memberType.0=\u5E73\u53F0\u7EA7\u7528\u6237\t
+member.memberType.1=\u6295\u8D44\u4EBA\t
+member.memberType.2=IFA\t
+member.memberType.3=\u4EE3\u7406\u5546\t
+member.memberType.11=\u72EC\u7ACB\u6295\u8D44\u4EBA\t
+member.memberType.12=\u516C\u53F8\u8D26\u6237\t
+member.memberType.13=FI\u8D26\u6237\t
+member.memberType.21=IFA\u4E2A\u4EBA\t
+member.memberType.22=IFA\u516C\u53F8\t
+member.info.memberType=\u8D26\u6237\u7C7B\u578B\t
+member.info.memberType.platform=\u5E73\u53F0\u7EA7\u7528\u6237\t
+member.info.memberType.inverstor=\u6295\u8D44\u4EBA\t
+member.info.memberType.ifa=\u6295\u8D44\u4EBA\u987E\u95EE\t
+member.info.memberType.distributor=\u4EE3\u7406\u5546\t
+member.info.password.notConsistent.tip=\u5BC6\u7801\u4E0D\u4E00\u81F4
+member.info.password.edit.status.tip=\u4E3A\u7A7A\u4E0D\u4FEE\u6539
+member.info.loginCode.exist.tip=\u8D26\u53F7\u5DF2\u7ECF\u5B58\u5728
+member.changepass=\u66F4\u6539\u5BC6\u7801\t
+member.add=\u65B0\u589E\t
+member.detail=\u660E\u7EC6\t
+member.individual=\u4E2A\u4EBA\u6295\u8D44\u8005\t
+member.fi=FI\u6295\u8D44\u8005\t
+member.coporate=\u4F01\u4E1A\u6295\u8D44\u8005\t
+member.ifa=\u6295\u8D44\u987E\u95EE\t
+member.ifafirm=\u6295\u8D44\u987E\u95EE\u516C\u53F8\t
+member.distributor=\u4EE3\u7406\u5546
+member.changeIcon=\u4FEE\u6539\u5934\u50CF
+member.preference=\u559C\u597D
+
+### Role
+role.list.title=\u5DE5\u4F5C\u53F0\u89D2\u8272
+### Sys Role
+sysrole.list.title=\u540E\u53F0\u89D2\u8272\t
+sysrole.info.code=\u89D2\u8272\u7F16\u7801\t
+sysrole.info.name=\u89D2\u8272\u540D\u79F0\t
+sysrole.info.relate=\u5173\u8054\u8EAB\u4EFD
+sysrole.info.createTime=\u521B\u5EFA\u65F6\u95F4\t
+sysrole.info.createBy=\u521B\u5EFA\u4EBA\t
+sysrole.info.type=\u89D2\u8272\u7C7B\u578B\t
+sysrole.add=\u65B0\u589E\u89D2\u8272\t
+sysrole.detail=\u89D2\u8272\u660E\u7EC6\t
+sysrole.info.remark=\u5907\u6CE8\t
+sysrole.info.type.system=\u7CFB\u7EDF\u89D2\u8272\t
+sysrole.info.type.ifafirm=\u6295\u8D44\u987E\u95EE\u516C\u53F8\u89D2\u8272\t
+sysrole.info.type.distributor=\u5206\u9500\u5546\u89D2\u8272\t
+sysrole.info.userinfo=\u7528\u6237\u4FE1\u606F\t
+sysrole.info.selectUser=\u9009\u62E9\u7528\u6237\t
+sysrole.info.usergroup=\u7528\u6237\u7EC4\u4FE1\u606F\t
+sysrole.info.selectGroup=\u9009\u62E9\u7528\u6237\u7EC4\t
+		
+### console ifafirm  -----start	
+ifafirm.firm.name=\u540D\u79F0\t
+ifafirm.firm.entityType=\u6027\u8D28
+ifafirm.firm.registerNo=\u6CE8\u518C\u4EE3\u7801
+ifafirm.firm.list.name=\u516C\u53F8\u540D\u79F0\t
+ifafirm.firm.list.country=\u6240\u5C5E\u56FD\u5BB6\t
+ifafirm.firm.list.entityType=\u516C\u53F8\u6027\u8D28\t
+ifafirm.firm.list.isFinancial=\u662F\u5426\u91D1\u878D\u673A\u6784\t
+ifafirm.firm.list.incorporationDate=\u6CE8\u518C\u6210\u7ACB\u65E5\u671F\t
+ifafirm.ifa.noMemberCompany = ifa\u516C\u53F8\u672A\u5173\u8054\u8FD0\u8425\u516C\u53F8
+	
+ifafirm.list.org=\u7EC4\u7EC7\u67B6\u6784\t
+ifafirm.list.team=\u56E2\u961F
+ifafirm.list.distributor=\u4EE3\u7406\u5546\t
+ifafirm.list.selectIfafirm=\u8BF7\u9009\u62E9\u6295\u8D44\u987E\u95EE\u516C\u53F8\t
+ifafirm.list.selectDistributor=\u8BF7\u9009\u62E9\u4EE3\u7406\u5546
+ifafirm.list.selectCompany=\u8BF7\u9009\u62E9\u8FD0\u8425\u4F01\u4E1A
+ifafirm.list.saveOrder=\u4FDD\u5B58\u6392\u5E8F\t
+ifafirm.list.expand=\u5C55\u5F00\t
+ifafirm.list.collapse=\u6536\u7F29\t
+ifafirm.list.orgName=\u7EC4\u7EC7\u67B6\u6784\u540D\u79F0\t
+ifafirm.list.orgCode=\u7EC4\u7EC7\u67B6\u6784\u4EE3\u7801\t
+ifafirm.list.orgOrder=\u7EC4\u7EC7\u67B6\u6784\u5E8F\u53F7\t
+ifafirm.list.operation=\u64CD\u4F5C\t
+ifafirm.list.distributorName=\u4EE3\u7406\u5546\u540D\u79F0\t
+ifafirm.list.entityType=\u6027\u8D28\t
+ifafirm.list.registerNo=\u6CE8\u518C\u4EE3\u7801\t
+ifafirm.list.incorporationDate=\u6CE8\u518C\u6210\u7ACB\u65E5\u671F\t
+ifafirm.list.incorporationPlace=\u6CE8\u518C\u56FD\u5BB6\t
+ifafirm.list.dellink=\u5220\u9664\u5173\u8054\t
+ifafirm.list.addTeam=\u6DFB\u52A0\u56E2\u961F\t
+ifafirm.list.managementTeamUser=\u7BA1\u7406\u56E2\u961F\u6210\u5458\t
+ifafirm.message.promptNotSelectedIfafirm=\u8BF7\u9009\u62E9\u516C\u53F8\uFF01\t
+ifafirm.message.promptSaveTeamInfoLoading=\u4FDD\u5B58\u56E2\u961F\u4FE1\u606F\u4E2D\uFF0C\u8BF7\u7A0D\u5019\t
+ifafirm.title.editTeamInfo=\u7F16\u8F91\u56E2\u961F\u4FE1\u606F\t
+ifafirm.title.addChildTeam=\u6DFB\u52A0\u5B50\u56E2\u961F\t
+ifafirm.message.promptEmptyTeamName=\u8BF7\u8F93\u5165\u56E2\u961F\u540D\u79F0\t
+ifafirm.message.promptIsDelTeam=\u60A8\u786E\u8BA4\u8981\u5220\u9664\u8BE5\u56E2\u961F\u5417\uFF1F\t
+ifafirm.message.promptGetTeamListLoading=\u6B63\u5728\u83B7\u53D6\u56E2\u961F\u4FE1\u606F\u4E2D\uFF0C\u8BF7\u7A0D\u5019\t
+ifafirm.message.promptDealLoading=\u6B63\u5728\u5904\u7406\u4E2D\uFF0C\u8BF7\u7A0D\u5019\t
+ifafirm.message.promptIsSaveSelectedDistributor=\u4F60\u786E\u8BA4\u8981\u6DFB\u52A0\u6240\u9009\u62E9\u7684\u4EE3\u7406\u5546\u5417\uFF1F\t
+ifafirm.message.promptGetDistributorListLoading=\u6B63\u5728\u641C\u7D22\u4EE3\u7406\u5546\u6570\u636E\u4E2D\uFF0C\u8BF7\u7A0D\u5019\t
+ifafirm.message.promptEmptyDistributor=\u8BE5\u516C\u53F8\u6682\u65F6\u6CA1\u6709\u4EE3\u7406\u5546\u7684\u6570\u636E\t
+ifafirm.message.promptIsDelLink=\u5220\u9664\u540E\u5C06\u4E0D\u53EF\u6062\u590D\uFF0C\u60A8\u786E\u8BA4\u8981\u5220\u9664\u5417\uFF1F\t
+ifafirm.message.promptEmptyTeam=\u8BE5\u516C\u53F8\u6682\u65F6\u6CA1\u6709\u56E2\u961F\u7684\u6570\u636E
+	
+ifafirm.ifa.nickName=\u7528\u6237\u6635\u79F0\t
+ifafirm.ifa.nameCh=\u4E2D\u6587\u59D3\u540D\t
+ifafirm.ifa.country=\u51FA\u751F\u56FD\u5BB6\t
+ifafirm.ifa.createTime=\u6CE8\u518C\u65E5\u671F\t
+ifafirm.ifa.isSv=\u662F\u5426\t
+ifafirm.ifa.aeAccout=AE\u8D26\u6237
+ifafirm.ifa.aecode=AE\u7F16\u7801
+	
+ifafirm.team.name=\u56E2\u961F\u540D\u79F0\t
+ifafirm.team.code=\u56E2\u961F\u4EE3\u7801\t
+ifafirm.team.remark=\u5907\u6CE8\u4FE1\u606F\t
+ifafirm.team.order=\u6392\u5E8F
+ifafirm.team.delete.tip1=\u56E2\u961F\u5B58\u5728\u7528\u6237
+	
+ifafirm.distributor.name=\u540D\u79F0\t
+ifafirm.distributor.entityType=\u6027\u8D28\t
+ifafirm.distributor.incorporationPlace=\u6CE8\u518C\u56FD\u5BB6\t
+ifafirm.distributor.registerNo=\u6CE8\u518C\u4EE3\u7801\t
+	
+	
+### console sysmenu -----begin	
+console.sysmenu.list.title=\u7CFB\u7EDF\u83DC\u5355\t
+console.sysmenu.options.status.1=\u542F\u7528\t
+console.sysmenu.options.status.2=\u7981\u7528\t
+	
+console.sysmenu.list.btn.search=\u67E5\u8BE2\t
+console.sysmenu.list.btn.add=\u65B0\u589E\t
+console.sysmenu.list.btn.delete=\u5220\u9664\t
+console.sysmenu.list.search.keyword= \u5173\u952E\u5B57\t
+console.sysmenu.list.table.title.parent=\u7236\u7EA7\u83DC\u5355\t
+console.sysmenu.list.table.title.code=\u83DC\u5355\u7F16\u7801\t
+console.sysmenu.list.table.title.nameSc=\u540D\u79F0(\u7B80\u4F53\u4E2D\u6587)\t
+console.sysmenu.list.table.title.nameTc=\u540D\u79F0(\u7E41\u4F53\u4E2D\u6587)\t
+console.sysmenu.list.table.title.nameEn=\u540D\u79F0(\u82F1\u6587)\t
+console.sysmenu.list.table.title.webUrl=\u5730\u5740\t
+console.sysmenu.list.table.title.orderBy=\u6392\u5E8F\t
+console.sysmenu.list.table.title.status=\u72B6\u6001\t
+console.sysmenu.list.table.title.action=\u64CD\u4F5C\t
+console.sysmenu.list.table.action.addSubMenu=\u6DFB\u52A0\u5B50\u680F\u76EE\t
+	
+console.sysmenu.form.title=\u7CFB\u7EDF\u83DC\u5355\t
+console.sysmenu.form.parent=\u7236\u7EA7\u83DC\u5355\t
+console.sysmenu.form.code=\u83DC\u5355\u7F16\u7801\t
+console.sysmenu.form.nameSc=\u540D\u79F0(\u7B80\u4F53\u4E2D\u6587)\t
+console.sysmenu.form.nameTc=\u540D\u79F0(\u7E41\u4F53\u4E2D\u6587)\t
+console.sysmenu.form.nameEn=\u540D\u79F0(\u82F1\u6587)\t
+console.sysmenu.form.webUrl=\u5730\u5740\t
+console.sysmenu.form.orderBy=\u6392\u5E8F\t
+console.sysmenu.form.status=\u72B6\u6001\t
+console.sysmenu.form.status.0=\u7981\u7528\t
+console.sysmenu.form.status.1=\u542F\u7528\t
+console.sysmenu.form.btn.save=\u4FDD\u5B58\t
+console.sysmenu.form.btn.back=\u8FD4\u56DE\t
+console.sysmenu.form.btn.cancel=\u53D6\u6D88\t
+console.sysmenu.list.tab.title=\u7CFB\u7EDF\u83DC\u5355\t
+### console sysmenu -----end	
+	
+usergroup.list.title=\u7528\u6237\u7EC4\u7BA1\u7406\t
+usergroup.info.name=\u7528\u6237\u7EC4\u540D\u79F0\t
+usergroup.info.createTime=\u521B\u5EFA\u65F6\u95F4\t
+usergroup.info.createBy=\u521B\u5EFA\u4EBA\t
+usergroup.info.type=\u7528\u6237\u7EC4\u7C7B\u578B\t
+usergroup.add=\u65B0\u589E\u7528\u6237\u7EC4\t
+usergroup.detail=\u7528\u6237\u7EC4\u660E\u7EC6\t
+usergroup.info.remark=\u5907\u6CE8\t
+usergroup.info.type.system=\u7CFB\u7EDF\u7528\u6237\u7EC4\t
+usergroup.info.type.ifafirm=\u6295\u8D44\u987E\u95EE\u516C\u53F8\u7528\u6237\u7EC4\t
+usergroup.info.type.distributor=\u4EE3\u7406\u5546\u7528\u6237\u7EC4\t
+usergroup.info.userinfo=\u7528\u6237\u4FE1\u606F\t
+usergroup.info.selectUser=\u9009\u62E9\u7528\u6237\t
+usergroup.info.select=\u9009\u62E9\t
+
+member.admin.company=\u6240\u5C5E\u516C\u53F8\t
+member.admin.type=\u7BA1\u7406\u5458\u7C7B\u578B\t
+member.admin.type.platform=\u5E73\u53F0\u7BA1\u7406\u5458\t
+member.admin.type.ifa=\u6295\u8D44\u4EBA\u987E\u95EE\u516C\u53F8\u7BA1\u7406\u5458\t
+member.admin.type.distributor=\u4EE3\u7406\u5546\u7BA1\u7406\u5458\t
+member.admin.parent=\u7236\u8282\u70B9\t
+member.admin.add=\u65B0\u589E\u7BA1\u7406\u5458\t
+member.admin.detail=\u7BA1\u7406\u5458\u8BE6\u7EC6\u4FE1\u606F\t
+	
+console.emaillog.list.title=\u90AE\u4EF6\u7BA1\u7406\t
+console.emaillog.list.tab.mailManagement=\u90AE\u4EF6\u7BA1\u7406\u5217\u8868\t
+console.emaillog.list.label.recipientMailbox=\u6536\u4EF6\u4EBA\u90AE\u7BB1\t
+console.emaillog.tabel.title.recipientMailbox=\u6536\u4EF6\u4EBA\u90AE\u7BB1\t
+console.emaillog.tabel.title.recipients=\u6536\u4EF6\u4EBA\t
+console.emaillog.tabel.title.title=\u6807\u9898\t
+console.emaillog.tabel.title.sendTime=\u53D1\u9001\u65F6\u95F4\t
+console.emaillog.tabel.title.status=\u72B6\u6001\t
+console.emaillog.options.status.1=\u5DF2\u53D1\u9001\t
+console.emaillog.options.status.0=\u7B49\u5F85\u53D1\u9001\t
+console.emaillog.tabel.title.content=\u5185\u5BB9\t
+console.emaillog.detail.title=\u90AE\u4EF6\u8BE6\u7EC6\u4FE1\u606F\t
+console.emaillog.detail.mailDetails=\u90AE\u4EF6\u8BE6\u7EC6\u4FE1\u606F\t
+	
+console.website.mailServiceConfigure.title=\u90AE\u4EF6\u670D\u52A1\u8BBE\u7F6E\t
+console.website.mailServiceConfigure.formTitle=\u90AE\u4EF6\u670D\u52A1\u8BBE\u7F6E\t
+console.website.websiteBasedData.title=\u7F51\u7AD9\u57FA\u7840\u6570\u636E\u8BBE\u7F6E\t
+	
+console.country.list.title=\u56FD\u5BB6\u7BA1\u7406\t
+console.country.list.tab.title=\u56FD\u5BB6\u7BA1\u7406\t
+console.country.list.btn.add=\u65B0\u589E
+console.country.list.btn.edit=\u7F16\u8F91
+console.country.tabel.title.country.sc=\u56FD\u5BB6\uFF08\u4E2D\u6587\u540D\uFF09\t
+console.country.tabel.title.country.tc=\u56FD\u5BB6\uFF08\u7E41\u4F53\u4E2D\u6587\u540D\uFF09\t
+console.country.tabel.title.country.en=\u56FD\u5BB6\uFF08\u82F1\u6587\u540D\uFF09\t
+console.country.tabel.title.short=\u7F29\u5199\t
+console.country.tabel.title.abbreviation=\u7B80\u5199\t
+console.country.tabel.title.areaCode=\u5730\u533A\u7F16\u53F7\t
+console.country.tabel.title.orderBy=\u6392\u5E8F\t
+console.country.tabel.title.operate=\u64CD\u4F5C\t
+console.country.tab.add.title=\u6DFB\u52A0\u56FD\u5BB6\u4FE1\u606F\t
+console.country.countryEN.notEmpty=\u56FD\u5BB6\uFF08\u82F1\u6587\u540D\uFF09\u4E0D\u80FD\u4E3A\u7A7A
+console.country.short.notEmpty=\u7F29\u5199\u4E0D\u80FD\u4E3A\u7A7A
+console.country.abbreviation.notEmpty=\u7B80\u5199\u4E0D\u80FD\u4E3A\u7A7A
+
+console.distributor.list.tab.title=\u4EE3\u7406\u5546\u7BA1\u7406\t
+
+
+
+
+error.exceptionThrew=\u51FA\u73B0\u5F02\u5E38
+console.rpq.list.tab.title=\u95EE\u5377\u7BA1\u7406
+console.rpq.form.title=\u95EE\u5377\u4FE1\u606F
+console.rpq.list.table.operate.setQuestion=\u8BBE\u7F6E\u9898\u76EE
+console.rpq.list.table.operate.setLevel=\u8BBE\u7F6E\u7B49\u7EA7
+console.rpq.quest.list.title=\u95EE\u5377\u9898\u76EE\u4FE1\u606F
+### console web oper log -----end
+
+### console crm proposal -----begin
+console.crm.proposal.list.title=\u6295\u8D44\u65B9\u6848\u4FE1\u606F
+console.crm.proposal.list.tab.title=\u6295\u8D44\u65B9\u6848\u4FE1\u606F
+console.crm.proposal.options.status.-1=\u8349\u7A3F
+console.crm.proposal.options.status.1=\u5B8C\u6210
+console.crm.proposal.list.table.title.status.0=\u8349\u7A3F
+console.crm.proposal.list.table.title.status.1=\u5F85\u7B7E\u7EA6
+console.crm.proposal.list.table.title.status.2=\u5DF2\u7B7E\u7EA6
+console.crm.proposal.list.table.title.status.-1=\u9000\u56DE
+console.crm.proposal.list.table.title.status.-2=\u64A4\u9500
+console.crm.proposal.options.isvalid.0=\u5426
+console.crm.proposal.options.isvalid.1=\u662F
+
+console.crm.proposal.list.search.keyword= \u5173\u952E\u5B57
+console.crm.proposal.list.table.title.customer=\u5BA2\u6237
+console.crm.proposal.list.table.title.proposalName=\u65B9\u6848\u540D\u79F0
+console.crm.proposal.list.table.title.currencyType=\u8D44\u91D1\u8D27\u5E01
+console.crm.proposal.list.table.title.initialInvestAmount=\u521D\u59CB\u6295\u8D44\u91D1\u989D
+console.crm.proposal.list.table.title.totalInvestAmount=\u603B\u5171\u6295\u8D44\u91D1\u989D
+console.crm.proposal.list.table.title.currentStep=\u5F53\u524D\u9636\u6BB5
+console.crm.proposal.list.table.title.status=\u72B6\u6001
+console.crm.proposal.list.table.title.lastUpdate=\u6700\u540E\u66F4\u65B0\u65F6\u95F4
+console.crm.proposal.list.table.title.creator=\u521B\u5EFA\u4EBA
+
+console.crm.proposal.form.title=\u6295\u8D44\u65B9\u6848\u4FE1\u606F
+console.crm.proposal.form.customer=\u5BA2\u6237
+console.crm.proposal.form.proposalName=\u65B9\u6848\u540D\u79F0
+console.crm.proposal.form.currencyType=\u8D44\u91D1\u8D27\u5E01
+console.crm.proposal.form.initialInvestAmount=\u521D\u59CB\u6295\u8D44\u91D1\u989D
+console.crm.proposal.form.totalInvestAmount=\u603B\u5171\u6295\u8D44\u91D1\u989D
+console.crm.proposal.form.liquidityNeed=\u6D41\u52A8\u6027\u7EA6\u675F
+console.crm.proposal.form.timeFrame=\u6295\u8D44\u5E74\u9650
+console.crm.proposal.form.taxConcerns=\u76F8\u5173\u8D39\u7528
+console.crm.proposal.form.lrf=\u8C03\u6574\u8303\u56F4\u53CA\u6CD5\u5F8B\u6548\u5E94
+console.crm.proposal.form.unp=\u7279\u6B8A\u8981\u6C42
+console.crm.proposal.form.strategy=\u5173\u8054\u7684\u7B56\u7565
+console.crm.proposal.form.remark=\u8BF4\u660E
+console.crm.proposal.form.emailLog=\u90AE\u4EF6\u65E5\u5FD7
+console.crm.proposal.form.creator=\u521B\u5EFA\u4EBA
+console.crm.proposal.form.isValid=\u662F\u5426\u6709\u6548
+console.crm.proposal.form.currentStep=\u5F53\u524D\u9636\u6BB5
+console.crm.proposal.form.createTime=\u521B\u5EFA\u65F6\u95F4
+console.crm.proposal.form.lastUpdate=\u6700\u540E\u66F4\u65B0\u65F6\u95F4
+console.crm.proposal.form.status=\u72B6\u6001
+### console crm proposal -----end
+
+### console strategy -----begin
+console.strategyinfo.list.title=\u6295\u8D44\u7B56\u7565
+console.strategyinfo.list.tab.title=\u6295\u8D44\u7B56\u7565
+console.strategyinfo.options.ispublic.0=\u5426
+console.strategyinfo.options.ispublic.1=\u662F
+console.strategyinfo.options.overhead.0=\u5426
+console.strategyinfo.options.overhead.1=\u662F
+console.strategyinfo.options.isvalid.0=\u5426
+console.strategyinfo.options.isvalid.1=\u662F
+console.strategyinfo.options.status.0=\u8349\u7A3F
+console.strategyinfo.options.status.1=\u5DF2\u53D1\u5E03
+
+console.strategyinfo.list.search.keyword= \u5173\u952E\u5B57
+console.strategyinfo.list.table.title.strategyName=\u7B56\u7565\u540D\u79F0
+console.strategyinfo.list.table.title.isPublic=\u662F\u5426\u516C\u5F00
+console.strategyinfo.list.table.title.goal=\u6295\u8D44\u76EE\u6807
+console.strategyinfo.list.table.title.suitability=\u6295\u8D44\u8005\u9002\u5B9C\u6027
+console.strategyinfo.list.table.title.creator=\u521B\u5EFA\u4EBA
+console.strategyinfo.list.table.title.createTime=\u521B\u5EFA\u65F6\u95F4
+console.strategyinfo.list.table.title.lastUpdate=\u6700\u540E\u66F4\u65B0\u65F6\u95F4
+console.strategyinfo.list.table.title.status=\u72B6\u6001
+console.strategyinfo.list.table.title.action=\u64CD\u4F5C
+console.strategyinfo.list.oper.count=\u7EDF\u8BA1\u6570\u636E
+
+
+console.strategyinfo.form.title=\u6295\u8D44\u7B56\u7565
+console.strategyinfo.form.strategyName=\u7B56\u7565\u540D\u79F0
+console.strategyinfo.form.geoAllocation=\u5730\u7406\u533A\u57DF
+console.strategyinfo.form.sector=\u6295\u8D44\u9886\u57DF
+console.strategyinfo.form.goal=\u6295\u8D44\u76EE\u6807
+console.strategyinfo.form.suitability=\u6295\u8D44\u8005\u9002\u5B9C\u6027
+console.strategyinfo.form.description=\u63CF\u8FF0
+console.strategyinfo.form.creator=\u521B\u5EFA\u4EBA
+console.strategyinfo.form.createTime=\u521B\u5EFA\u65F6\u95F4
+console.strategyinfo.form.lastUpdate=\u6700\u540E\u66F4\u65B0\u65F6\u95F4
+console.strategyinfo.form.overhead=\u662F\u5426\u7F6E\u9876
+console.strategyinfo.form.overheadTime=\u7F6E\u9876\u64CD\u4F5C\u65F6\u95F4
+console.strategyinfo.form.status=\u72B6\u6001
+console.strategyinfo.form.isPublic=\u662F\u5426\u516C\u5F00
+console.strategyinfo.form.click=\u70B9\u51FB\u6570
+console.strategyinfo.form.isValid=\u662F\u5426\u6709\u6548
+
+console.strategycount.form.formTitle=\u7EDF\u8BA1\u6570\u636E
+console.strategycount.form.views=\u603B\u8BBF\u95EE\u6570
+console.strategycount.form.viewsMonth=\u6708\u8BBF\u95EE\u6570
+console.strategycount.form.viewsWeek=\u5468\u8BBF\u95EE\u6570
+console.strategycount.form.viewsDay=\u65E5\u8BBF\u95EE\u6570
+console.strategycount.form.comments=\u603B\u8BC4\u8BBA\u6570
+console.strategycount.form.commentsMonth=\u6708\u8BC4\u8BBA\u6570
+console.strategycount.form.commentsWeek=\u5468\u8BC4\u8BBA\u6570
+console.strategycount.form.commentsDay=\u65E5\u8BC4\u8BBA\u6570
+console.strategycount.form.ups=\u603B\u9876\u6570
+console.strategycount.form.upsMonth=\u6708\u9876\u6570
+console.strategycount.form.upsWeek=\u5468\u9876\u6570
+console.strategycount.form.upsDay=\u65E5\u9876\u6570
+console.strategycount.form.downs=\u603B\u8E29\u6570
+
+### console strategy -----end
+
+### front strategy -----begin
+strategy.title=\u6295\u8D44\u7B56\u7565
+strategy.info.list.title=\u6211\u7684\u6295\u8D44\u7B56\u7565\u5217\u8868
+strategy.info.list.tab.title=\u6295\u8D44\u7B56\u7565
+strategy.info.options.ispublic.0=\u5426
+strategy.info.options.ispublic.1=\u662F
+strategy.info.options.isvalid.0=\u5426
+strategy.info.options.isvalid.1=\u662F
+strategy.info.options.status.draft=\u8349\u7A3F
+strategy.info.options.status.using=\u5DF2\u4F7F\u7528
+strategy.info.options.status.unusing=\u672A\u4F7F\u7528
+
+strategy.info.list.search.keyword=\u5173\u952E\u5B57
+strategy.info.list.strategyName=\u7B56\u7565\u540D\u79F0
+strategy.info.list.isPublic=\u662F\u5426\u516C\u5F00
+strategy.info.list.riskLevel=\u98CE\u9669\u7EA7\u522B
+strategy.info.list.goal=\u6295\u8D44\u76EE\u6807
+strategy.info.list.investor=\u9002\u5408\u7684\u6295\u8D44\u8005
+strategy.info.list.reason=\u63A8\u8350\u7406\u7531
+strategy.info.list.creator=\u521B\u5EFA\u4EBA
+strategy.info.list.createTime=\u521B\u5EFA\u65F6\u95F4
+strategy.info.list.status=\u72B6\u6001
+
+strategy.info.form.title=\u6295\u8D44\u7B56\u7565
+strategy.info.form.strategyName=\u7B56\u7565\u540D\u79F0
+strategy.info.form.isPublic=\u662F\u5426\u516C\u5F00
+strategy.info.form.riskLevel=\u98CE\u9669\u7EA7\u522B
+strategy.info.form.goal=\u6295\u8D44\u76EE\u6807
+strategy.info.form.investor=\u9002\u5408\u7684\u6295\u8D44\u8005
+strategy.info.form.reason=\u63A8\u8350\u7406\u7531
+strategy.info.form.creator=\u521B\u5EFA\u4EBA
+strategy.info.form.createTime=\u521B\u5EFA\u65F6\u95F4
+strategy.info.form.status=\u72B6\u6001
+strategy.info.form.remark=\u8BF4\u660E
+strategy.info.form.isValid=\u662F\u5426\u6709\u6548
+strategy.info.form.newStrategy=\u65B0\u589E\u6295\u8D44\u7B56\u7565
+strategy.info.form.editStrategy=\u4FEE\u6539\u6295\u8D44\u7B56\u7565
+strategy.info.form.viewStrategy=\u67E5\u770B\u6295\u8D44\u7B56\u7565
+strategy.info.flow.start=\u57FA\u672C\u4FE1\u606F
+strategy.info.flow.allocation=\u8D44\u4EA7\u8C03\u914D
+strategy.info.flow.release=\u53D1\u5E03
+### front strategy -----end
+
+### console insight -----begin
+console.insightinfo.options.overhead.1=\u662F
+console.insightinfo.options.overhead.0=\u5426
+console.insightinfo.options.status.1=\u5DF2\u53D1\u5E03
+console.insightinfo.options.status.0=\u8349\u7A3F
+
+console.insightinfo.list.title=\u89C2\u70B9\u4FE1\u606F
+console.insightinfo.list.tab.title=\u89C2\u70B9\u4FE1\u606F
+console.insightinfo.list.search.keyword=\u5173\u952E\u5B57
+console.insightinfo.list.table.title.title=\u6807\u9898
+console.insightinfo.list.table.title.geoAllocation=\u6240\u5C5E\u5730\u7406\u533A\u57DF
+console.insightinfo.list.table.title.sector=\u6240\u5C5E\u7248\u5757
+console.insightinfo.list.table.title.content=\u5185\u5BB9
+console.insightinfo.list.table.title.upCounter=\u9876\u6B21\u6570
+console.insightinfo.list.table.title.downCounter=\u8E29\u6B21\u6570
+console.insightinfo.list.table.title.creator=\u521B\u5EFA\u4EBA
+console.insightinfo.list.table.title.lastUpdate=\u6700\u540E\u66F4\u65B0\u65F6\u95F4
+console.insightinfo.list.table.title.action=\u64CD\u4F5C
+console.insightinfo.list.oper.count=\u7EDF\u8BA1\u6570\u636E
+
+console.insightinfo.form.formTitle=\u89C2\u70B9\u4FE1\u606F
+console.insightinfo.form.title=\u6807\u9898
+console.insightinfo.form.geoAllocation=\u6240\u5C5E\u5730\u7406\u533A\u57DF
+console.insightinfo.form.sector=\u6240\u5C5E\u7248\u5757
+console.insightinfo.form.content=\u5185\u5BB9
+console.insightinfo.form.upCounter=\u9876\u6B21\u6570
+console.insightinfo.form.downCounter=\u8E29\u6B21\u6570
+console.insightinfo.form.creator=\u521B\u5EFA\u4EBA
+console.insightinfo.form.createTime=\u521B\u5EFA\u65F6\u95F4
+console.insightinfo.form.lastUpdate=\u6700\u540E\u66F4\u65B0\u65F6\u95F4
+console.insightinfo.form.overhead=\u662F\u5426\u7F6E\u9876
+console.insightinfo.form.overheadTime=\u7F6E\u9876\u64CD\u4F5C\u65F6\u95F4
+console.insightinfo.form.status=\u6587\u7AE0\u72B6\u6001
+console.insightinfo.form.pubdate=\u53D1\u5E03\u65E5\u671F
+
+console.insightcount.form.formTitle=\u7EDF\u8BA1\u6570\u636E
+console.insightcount.form.views=\u603B\u8BBF\u95EE\u6570
+console.insightcount.form.viewsMonth=\u6708\u8BBF\u95EE\u6570
+console.insightcount.form.viewsWeek=\u5468\u8BBF\u95EE\u6570
+console.insightcount.form.viewsDay=\u65E5\u8BBF\u95EE\u6570
+console.insightcount.form.comments=\u603B\u8BC4\u8BBA\u6570
+console.insightcount.form.commentsMonth=\u6708\u8BC4\u8BBA\u6570
+console.insightcount.form.commentsWeek=\u5468\u8BC4\u8BBA\u6570
+console.insightcount.form.commentsDay=\u65E5\u8BC4\u8BBA\u6570
+console.insightcount.form.ups=\u603B\u9876\u6570
+console.insightcount.form.upsMonth=\u6708\u9876\u6570
+console.insightcount.form.upsWeek=\u5468\u9876\u6570
+console.insightcount.form.upsDay=\u65E5\u9876\u6570
+console.insightcount.form.downs=\u603B\u8E29\u6570
+### front strategy -----end
+
+### console ifa -----begin
+console.ifa.team.list.title=IFA\u7EC4\u7EC7\u67B6\u6784\u7BA1\u7406 
+console.ifa.team.list.tab.title=IFA\u7EC4\u7EC7\u67B6\u6784\u7BA1\u7406
+console.ifa.team.list.table.title.organizationCode=\u7EC4\u7EC7\u7F16\u7801
+console.ifa.team.list.table.title.organization=\u7EC4\u7EC7\u67B6\u6784
+console.ifa.team.list.table.title.name=\u7EC4\u7EC7\u540D\u79F0
+console.ifa.team.list.table.title.ifaFirm=\u72EC\u7ACB\u6295\u8D44\u987E\u95EE\u516C\u53F8
+console.ifa.team.list.table.title.classLayer=\u5C42\u7EA7
+console.ifa.team.list.add.dialog.title=\u6295\u8D44\u987E\u95EE\u516C\u53F8\u7EC4\u7EC7\u67B6\u6784
+console.ifa.team.list.add.dialog.msg=\u662F\u5426\u79FB\u9664\u8BE5\u7EC4\u7EC7\uFF1F
+console.ifafirm.detail.title=\u6295\u8D44\u987E\u95EE\u516C\u53F8\u4FE1\u606F
+console.ifafirm.detail.tab.title=\u6295\u8D44\u987E\u95EE\u516C\u53F8\u4FE1\u606F
+console.ifafirm.detail.form.label.companyName=\u516C\u53F8\u540D\u79F0
+console.ifafirm.detail.form.label.companyLogo=\u516C\u53F8\u6807\u5FD7
+console.ifafirm.detail.form.label.entityType=\u516C\u53F8\u6027\u8D28
+console.ifafirm.detail.form.select.entityType.1=\u79C1\u8425\u6709\u9650\u8D23\u4EFB\u516C\u53F8
+console.ifafirm.detail.form.select.entityType.2=\u79C1\u8425\u65E0\u9650\u8D23\u4EFB\u516C\u53F8
+console.ifafirm.detail.form.select.entityType.3=\u4FE1\u6258\u516C\u53F8
+console.ifafirm.detail.form.select.entityType.4=\u4E0A\u5E02\u516C\u53F8
+console.ifafirm.detail.form.select.entityType.5=\u5176\u4ED6\u7C7B\u578B\u516C\u53F8
+console.ifafirm.detail.form.label.registerNo=\u6CE8\u518C\u4EE3\u7801
+console.ifafirm.detail.form.label.isFinancial=\u662F\u5426\u91D1\u878D\u673A\u6784
+console.ifafirm.detail.form.select.isFinancial.1=\u662F
+console.ifafirm.detail.form.select.isFinancial.0=\u5426
+console.ifafirm.detail.form.label.giin=\u8BC6\u522B\u53F7\u7801
+console.ifafirm.detail.form.label.naturePurpose=\u4E1A\u52A1\u6027\u8D28\u53CA\u7ECF\u8425\u65B9\u5411
+console.ifafirm.detail.form.label.incorporationDate=\u6210\u7ACB\u65F6\u95F4
+console.ifafirm.detail.form.label.incorporationPlace=\u6CE8\u518C\u56FD\u5BB6\u5730\u70B9
+console.ifafirm.detail.form.label.registeredAddress=\u6CE8\u518C\u5730\u70B9
+console.ifafirm.detail.form.label.mailingAddress=\u901A\u8BAF\u5730\u5740
+console.ifafirm.detail.form.label.country=\u6240\u5C5E\u56FD\u5BB6
+console.ifafirm.detail.form.label.website=\u7F51\u7AD9\u5730\u5740
+console.ifafirm.team.list.title=\u6295\u8D44\u987E\u95EE\u516C\u53F8\u7EC4\u7EC7\u673A\u6784\u56E2\u961F\u5217\u8868
+console.ifafirm.team.list.tab.1.title=\u6295\u8D44\u987E\u95EE\u516C\u53F8\u7EC4\u7EC7\u673A\u6784
+console.ifafirm.team.list.tab.2.title=\u6295\u8D44\u987E\u95EE\u516C\u53F8\u4FE1\u606F
+console.ifafirm.team.list.table.title.organizationCode=\u7EC4\u7EC7\u67B6\u6784\u7F16\u7801
+console.ifafirm.team.list.table.title.organizationName=\u7EC4\u7EC7\u67B6\u6784\u540D\u79F0
+console.ifafirm.team.list.table.operate.join=\u52A0\u5165
+console.ifafirm.team.list.table.operate.alreadyJoined=\u5DF2\u52A0\u5165
+console.ifa.team.list.add.join=\u67E5\u770B\u5168\u90E8\u56E2\u961F
+console.ifa.team.list.add.joinIfafirm=\u52A0\u5165\u56E2\u961F
+console.ifa.team.list.oprate.remove=\u79FB\u9664\u56E2\u961F
+console.ifa.approval.title=\u6295\u8D44\u987E\u95EE\u5BA1\u6279
+console.ifa.approval.tab=\u6295\u8D44\u987E\u95EE\u5BA1\u6279\u5217\u8868
+console.ifa.approval.label.loginCode=\u7528\u6237\u8D26\u53F7
+console.ifa.approval.label.isApproval=\u5BA1\u6279\u7C7B\u578B
+console.ifa.approval.select.isApproval.0=\u5F85\u5BA1\u6279
+console.ifa.approval.select.isApproval.1=\u901A\u8FC7
+console.ifa.approval.select.isApproval.2=\u62D2\u7EDD
+console.ifa.approval.table.th.name=\u59D3\u540D
+console.ifa.approval.table.th.country=\u56FD\u7C4D
+console.ifa.approval.table.th.investLife=\u6295\u8D44\u5E74\u9650
+console.ifa.approval.table.th.expertiseType=\u64C5\u957F\u9886\u57DF
+console.ifa.approval.table.th.companyName=\u516C\u53F8\u540D\u79F0
+console.ifa.approval.table.th.status=\u72B6\u6001
+console.ifa.approval.dialog.massage.1=\u662F\u5426\u5141\u8BB8\u5176\u52A0\u5165\u516C\u53F8\uFF1F
+console.ifa.approval.dialog.massage.2=\u662F\u5426\u62D2\u7EDD\u5176\u52A0\u5165\u516C\u53F8\uFF1F
+console.ifa.approval.dialog.title=\u5BA1\u6279
+console.ifafirm.list.title=\u6295\u8D44\u987E\u95EE\u516C\u53F8\u7BA1\u7406
+console.ifafirm.list.tab=\u6295\u8D44\u987E\u95EE\u516C\u53F8\u5217\u8868
+console.ifafirm.list.label.companyName=\u516C\u53F8\u540D\u79F0
+console.ifafirm.list.label.registerNo=\u6CE8\u518C\u4EE3\u7801
+console.ifafirm.list.label.entityType=\u7C7B\u578B
+console.ifafirm.list.select.entityType.default=\u8BF7\u9009\u62E9\u516C\u53F8\u7C7B\u578B
+console.ifafirm.list.select.entityType.1=\u79C1\u8425\u6709\u9650\u8D23\u4EFB\u516C\u53F8
+console.ifafirm.list.select.entityType.2=\u79C1\u8425\u65E0\u9650\u8D23\u4EFB\u516C\u53F8
+console.ifafirm.list.select.entityType.3=\u4FE1\u6258\u516C\u53F8
+console.ifafirm.list.select.entityType.4=\u4E0A\u5E02\u516C\u53F8
+console.ifafirm.list.select.entityType.5=\u5176\u4ED6\u7C7B\u578B\u516C\u53F8
+console.ifafirm.list.table.th.companyName=\u516C\u53F8\u540D\u79F0
+console.ifafirm.list.table.th.entityType=\u516C\u53F8\u7C7B\u578B
+console.ifafirm.list.table.th.country=\u6240\u5C5E\u56FD\u5BB6
+console.ifafirm.list.table.th.incorporationDate=\u6CE8\u518C\u6210\u7ACB\u65E5\u671F
+console.ifafirm.list.table.operate.childFirm=\u5408\u4F5C\u4F19\u4F34
+console.ifafirm.list.dialog.message=\u662F\u5426\u5220\u9664\u8BE5\u6295\u8D44\u987E\u95EE\u516C\u53F8\uFF1F
+### console ifa -----end
+sysrole.info.menu=\u89D2\u8272\u83DC\u5355
+
+
+### console inverstor -----begin
+console.inverstor.account.options.totalFlag.1=\u662F
+console.inverstor.account.options.totalFlag.0=\u5426
+console.inverstor.account.options.fromType.ifa=Ifa\u9080\u8BF7\u5F00\u6237
+console.inverstor.account.options.fromType.self=\u6295\u8D44\u4EBA\u81EA\u884C\u5F00\u6237
+console.inverstor.account.options.accType.I=\u4E2A\u4EBA\u8D26\u6237
+console.inverstor.account.options.accType.J=\u7EFC\u5408\u8D26\u6237
+console.inverstor.account.submit=\u63D0\u4EA4
+console.inverstor.account.basicDoc=\u6587\u6863\u5BA1\u67E5
+console.inverstor.account.basic=\u57FA\u672C\u4FE1\u606F
+console.inverstor.account.rpq=\u95EE\u5377\u8C03\u67E5
+console.inverstor.account.dec=\u7533\u660E\u6587\u4EF6
+console.inverstor.account.options.investType.F=\u8D44\u91D1\u8D26\u6237
+console.inverstor.account.options.investType.P=\u7EFC\u5408\u8D44\u4EA7\u8D26\u6237
+console.inverstor.account.options.cies.1=\u662F
+console.inverstor.account.options.cies.0=\u5426
+console.inverstor.account.options.dividend.R=\u518D\u6295\u8D44
+console.inverstor.account.options.dividend.D=\u5206\u914D\u5230\u8D44\u91D1\u8D26\u6237
+console.inverstor.account.options.isValid.1=\u662F
+console.inverstor.account.options.isValid.0=\u5426
+console.inverstor.account.options.purpose.I=\u6295\u8D44
+console.inverstor.account.options.purpose.O=\u5176\u4ED6
+console.inverstor.account.options.discFlag.1=\u662F
+console.inverstor.account.options.discFlag.0=\u5426
+console.inverstor.account.options.submitStatus.invest=\u6295\u8D44\u4EBA\u63D0\u4EA4
+console.inverstor.account.options.submitStatus.ifa=\u6295\u8D44\u987E\u95EE\u63D0\u4EA4
+
+console.inverstor.account.list.title=\u6295\u8D44\u8D26\u53F7\u4FE1\u606F
+console.inverstor.account.list.tab.title=\u6295\u8D44\u8D26\u53F7\u4FE1\u606F
+console.inverstor.account.list.search.keyword=\u5173\u952E\u5B57
+console.inverstor.account.list.table.title.nickName=\u6635\u79F0
+console.inverstor.account.list.table.title.accountNo=\u4EA4\u6613\u8D26\u53F7
+console.inverstor.account.list.table.title.fromType=\u5F00\u6237\u6765\u6E90
+console.inverstor.account.list.table.title.accountType=\u8D26\u6237\u7C7B\u578B
+console.inverstor.account.list.table.title.investType=\u6295\u8D44\u7C7B\u578B
+console.inverstor.account.list.table.title.baseCurrency=\u5176\u672C\u8D27\u5E01
+console.inverstor.account.list.table.title.createBy=\u521B\u5EFA\u4EBA
+console.inverstor.account.list.table.title.createTime=\u521B\u5EFA\u65F6\u95F4
+console.inverstor.account.list.table.title.action=\u64CD\u4F5C
+console.inverstor.account.list.table.title.subFlag=\u4E3B/\u5B50\u8D26\u6237
+console.inverstor.account.list.oper.approve=\u540C\u610F
+console.inverstor.account.list.oper.reject=\u9000\u56DE
+console.inverstor.account.list.oper.approveConfirm=\u540C\u610F
+console.inverstor.account.list.oper.rejectConfirm=\u9000\u56DE
+
+console.inverstor.account.form.formTitle=\u6295\u8D44\u8D26\u53F7\u4FE1\u606F
+console.inverstor.account.form.nickname=\u6635\u79F0
+console.inverstor.account.form.accountNo=\u4EA4\u6613\u8D26\u53F7
+console.inverstor.account.form.totalFlag=\u663E\u793A\u603B\u6295\u8D44\u91D1\u989D
+console.inverstor.account.form.fromType=\u5F00\u6237\u6765\u6E90
+console.inverstor.account.form.accType=\u8D26\u6237\u7C7B\u578B
+console.inverstor.account.form.investType=\u6295\u8D44\u7C7B\u578B
+console.inverstor.account.form.cies=\u8D44\u672C\u6295\u8D44\u4EBA\u5165\u5883\u8BA1\u5212\u8D26\u6237
+console.inverstor.account.form.dividend=\u80A1\u606F\u9009\u9879
+console.inverstor.account.form.baseCurrency=\u57FA\u672C\u8D27\u5E01
+console.inverstor.account.form.purpose=\u5F00\u6237\u76EE\u7684
+console.inverstor.account.form.purposeOther=\u5F00\u6237\u76EE\u7684\u5176\u4ED6\u8BF4\u660E
+console.inverstor.account.form.sentBy=\u53D1\u9001\u8D26\u5355\u65B9\u5F0F
+console.inverstor.account.form.discFlag=\u4E0B\u5355\u65F6\u662F\u5426\u9700\u8981\u6295\u8D44\u4EBA\u786E\u8BA4
+console.inverstor.account.form.distributor=\u5173\u8054\u4EE3\u7406\u5546
+console.inverstor.account.form.ifa=\u5173\u8054\u7684Ifa
+console.inverstor.account.form.rpq=RPQ
+console.inverstor.account.form.submitStatus=\u63D0\u4EA4\u6807\u8BC6
+console.inverstor.account.form.openStatus=\u5F00\u6237\u72B6\u6001
+console.inverstor.account.form.curStep=\u5F53\u524D\u9636\u6BB5
+console.inverstor.account.form.finishStatus=\u662F\u5426\u5B8C\u6210
+console.inverstor.account.form.flowId=\u5DE5\u4F5C\u6D41\u5B9E\u4F8B
+console.inverstor.account.form.flowStatus=\u6D41\u7A0B\u72B6\u6001
+console.inverstor.account.form.createBy=\u521B\u5EFA\u4EBA
+console.inverstor.account.form.createTime=\u521B\u5EFA\u65F6\u95F4
+console.inverstor.account.form.lastUpdate=\u6700\u8FD1\u66F4\u65B0\u65F6\u95F4
+console.inverstor.account.form.isValid=\u6570\u636E\u72B6\u6001
+console.inverstor.account.form.authorized=\u662F\u5426\u6388\u6743\u7ED9IFA
+### console inverstor -----end
+
+accessory.info.filename=\u9644\u4EF6\u540D\u79F0
+accessory.info.filepath=\u9644\u4EF6\u8DEF\u5F84
+accessory.info.filetype=\u9644\u4EF6\u7C7B\u578B
+accessory.info.moduletype=\u5BF9\u5E94\u6A21\u5757
+accessory.info.langcode=\u6240\u5C5E\u8BED\u8A00
+accessory.info.remark=\u5907\u6CE8
+accessory.info.createby=\u521B\u5EFA\u4EBA
+accessory.info.createtime=\u521B\u5EFA\u65F6\u95F4
+
+
+### front portfolio -----begin
+portfolio.title=\u6295\u8D44\u7EC4\u5408
+portfolio.info.list.title=\u6211\u7684\u6295\u8D44\u7EC4\u5408\u5217\u8868
+portfolio.info.list.tab.title=\u6295\u8D44\u7EC4\u5408
+portfolio.info.options.ispublic.0=\u5426
+portfolio.info.options.ispublic.1=\u662F
+portfolio.info.options.isvalid.0=\u5426
+portfolio.info.options.isvalid.1=\u662F
+portfolio.info.options.status.draft=\u8349\u7A3F
+portfolio.info.options.status.using=\u5DF2\u4F7F\u7528
+portfolio.info.options.status.unusing=\u672A\u4F7F\u7528
+
+portfolio.info.list.search.keyword=\u5173\u952E\u5B57
+portfolio.info.list.portfolioName=\u7EC4\u5408\u540D\u79F0
+portfolio.info.list.isPublic=\u662F\u5426\u516C\u5F00
+portfolio.info.list.riskLevel=\u98CE\u9669\u7EA7\u522B
+portfolio.info.list.goal=\u6295\u8D44\u76EE\u6807
+portfolio.info.list.investor=\u9002\u5408\u7684\u6295\u8D44\u8005
+portfolio.info.list.reason=\u63A8\u8350\u7406\u7531
+portfolio.info.list.creator=\u521B\u5EFA\u4EBA
+portfolio.info.list.createTime=\u521B\u5EFA\u65F6\u95F4
+portfolio.info.list.status=\u72B6\u6001
+
+portfolio.info.form.title=\u6295\u8D44\u7EC4\u5408
+portfolio.info.form.portfolioName=\u7EC4\u5408\u540D\u79F0
+portfolio.info.form.isPublic=\u662F\u5426\u516C\u5F00
+portfolio.info.form.riskLevel=\u98CE\u9669\u7EA7\u522B
+portfolio.info.form.goal=\u6295\u8D44\u76EE\u6807
+portfolio.info.form.investor=\u9002\u5408\u7684\u6295\u8D44\u8005
+portfolio.info.form.reason=\u63A8\u8350\u7406\u7531
+portfolio.info.form.creator=\u521B\u5EFA\u4EBA
+portfolio.info.form.createTime=\u521B\u5EFA\u65F6\u95F4
+portfolio.info.form.status=\u72B6\u6001
+portfolio.info.form.remark=\u8BF4\u660E
+portfolio.info.form.isValid=\u662F\u5426\u6709\u6548
+portfolio.info.form.newPortfolio=\u65B0\u589E\u6295\u8D44\u7EC4\u5408
+portfolio.info.form.editPortfolio=\u4FEE\u6539\u6295\u8D44\u7EC4\u5408
+portfolio.info.form.viewPortfolio=\u67E5\u770B\u6295\u8D44\u7EC4\u5408
+
+### front portfolio -----end
+
+
+### front crm pipeline -----begin=====
+pipeline.formTitle=My Pipeline
+pipeline.tab.prospect=Prospect
+pipeline.tab.existing=Existing
+pipeline.btn.greet=Greet
+pipeline.btn.schedule=Schedule
+pipeline.btn.proposal=Create Proposal
+pipeline.remind=Remind
+pipeline.remind.today=Today
+pipeline.remind.oneweek=One Week
+pipeline.remind.twoweek=Two Week
+pipeline.remind.onemonth=One Month
+pipeline.search.important=Important
+pipeline.search.keyword=Please enter keyword search
+pipeline.prospect.list.type.new=New
+pipeline.prospect.list.type.contact=Contact
+pipeline.prospect.list.type.proposal=Proposal
+pipeline.prospect.list.type.negotiating=Negotiating
+pipeline.prospect.list.type.close=Closed
+pipeline.list.more.important=Important
+pipeline.list.more.appointment=Set Appointment
+pipeline.list.more.remark=Remark
+pipeline.list.more.greet=Greet
+pipeline.list.more.delete=Delete
+
+pipeline.existing.list.type.customercare=Customer Care
+pipeline.existing.list.type.openaccount=Open Account
+pipeline.existing.list.type.proposal=Proposal
+pipeline.existing.list.type.portfolio=Portfolio
+pipeline.existing.list.type.notyetinvest=Not Yet Invest
+
+### front crm pipeline -----end=======
+
+console.sys.currency.title=\u8D27\u5E01\u5151\u6362\u7387\u7BA1\u7406
+console.sys.currency.fromCurrency=\u539F\u59CB\u8D27\u5E01
+console.sys.currency.toCurrency=\u76EE\u6807\u8D27\u5E01
+console.sys.currency.rate=\u6C47\u7387
+console.sys.currency.lastUpdateTime=\u6700\u540E\u66F4\u65B0\u65F6\u95F4
+console.sys.currency.status=\u72B6\u6001
+console.sys.currency.status.1=\u542F\u7528
+console.sys.currency.status.0=\u7981\u7528
+console.sys.currency.addTitle=\u8D27\u5E01\u5151\u6362\u7387
+
+
+### fund house ------begin======
+console.fund.fundhouse.title=\u57FA\u91D1\u53D1\u884C\u516C\u53F8
+console.fund.fundhouse.id=\u7F16\u53F7
+console.fund.fundhouse.createTime=\u521B\u5EFA\u65F6\u95F4
+console.fund.fundhouse.houseName=\u57FA\u91D1\u516C\u53F8\u540D\u79F0
+console.fund.fundhouse.spell=\u57FA\u91D1\u53D1\u884C\u516C\u53F8\u7684\u6C49\u8BED\u62FC\u97F3\u9996\u5B57\u6BCD
+### fund house ------end======
+
+
+### company ------begin======
+console.company.title=\u8FD0\u8425\u4F01\u4E1A
+console.company.code=\u4F01\u4E1A\u7F16\u7801
+console.company.webUrl=Web\u5730\u5740
+console.company.name=\u4F01\u4E1A\u540D\u79F0
+console.company.logoUrl=Logo\u56FE\u6807
+console.company.backgroundUrl=\u80CC\u666F\u56FE
+console.company.cssUrl=\u4E3B\u6837\u5F0F
+console.company.loginUrl=\u767B\u5F55\u9875
+console.company.sysName=\u7CFB\u7EDF\u540D\u79F0
+console.company.copyright=\u7248\u6743\u58F0\u660E
+### company ------end======
+
+
+### member company ------begin======
+console.membercompany.title=\u516C\u53F8\u7528\u6237\u7BA1\u7406
+console.membercompany.companyname=\u4F01\u4E1A\u540D\u79F0
+console.membercompany.membername=\u7528\u6237\u540D\u79F0
+### member company ------end======
+
+
+### member company ifafirm ------begin======
+console.membercompanyifafirm.title=\u516C\u53F8IFA Firm\u7BA1\u7406
+console.membercompanyifafirm.companyname=\u4F01\u4E1A\u540D\u79F0
+console.membercompanyifafirm.ifafirmname=\u6295\u8D44\u987E\u95EE\u516C\u53F8
+### member company ifafirm ------end======
+
+### product info ------ begin ======
+console.product.info.title=\u4EA7\u54C1\u4FE1\u606F
+console.product.info.isinCode=\u4EA7\u54C1\u7F16\u7801
+console.product.info.name=\u4EA7\u54C1\u540D\u79F0
+console.product.info.type=\u4EA7\u54C1\u7C7B\u578B
+console.product.info.currency=\u8D27\u5E01\u7C7B\u578B
+console.product.info.productInfo=\u4EA7\u54C1\u4FE1\u606F
+console.product.type=\u4EA7\u54C1\u7C7B\u578B
+console.product.type.fund=\u57FA\u91D1
+console.product.type.stock=\u80A1\u7968
+console.product.type.bond=\u503A\u5238
+### product info ------ end ======
+
+### product distributor ------begin======
+console.productdistributor.title=\u516C\u53F8\u4EA7\u54C1\u53CA\u4EE3\u7406\u516C\u53F8\u8BBE\u7F6E\u7BA1\u7406
+console.productdistributor.distributorname=\u4EE3\u7406\u516C\u53F8\u540D\u79F0
+console.productdistributor.productname=\u4EA7\u54C1\u540D\u79F0
+console.productdistributor.code=\u4EA7\u54C1\u7F16\u7801
+console.productdistributor.createtime=\u521B\u5EFA\u65F6\u95F4
+console.productdistributor.type.futures=\u671F\u8D27
+console.productdistributor.cies=CIES
+console.productdistributor.rpqLevel=\u98CE\u9669\u7B49\u7EA7
+console.productdistributor.transactionFeeRate=\u4EA4\u6613\u8D39\u7528\u6BD4\u7387
+console.productdistributor.transactionFeeMini=\u6700\u4F4E\u4EA4\u6613\u8D39
+console.productdistributor.transactionFeeCur=\u4EA4\u6613\u8D27\u5E01\u7C7B\u578B
+console.productdistributor.remark=\u5907\u6CE8
+### product distributor ------end======
+
+### product company ------begin======
+console.productcompany.title=\u516C\u53F8\u4EA7\u54C1\u53CA\u8FD0\u8425\u4F01\u4E1A\u8BBE\u7F6E\u7BA1\u7406
+console.productcompany.companyname=\u8FD0\u8425\u4F01\u4E1A\u540D\u79F0
+### product company ------end======
+
+### company distributor ------begin======
+console.companydistributor.title=\u516C\u53F8\u4EE3\u7406\u5546\u7BA1\u7406
+### company distributor ------end======
+
+member.validation.logincode.tips=7-20 \u4E2A\u5B57\u7B26\uFF0C\u53EF\u5305\u542B\u5B57\u6BCD\uFF0C\u6570\u5B57\uFF0C\u4E0B\u5212\u7EBF
+member.validation.logincode.exist=\u7F16\u7801\u5DF2\u7ECF\u5B58\u5728
+member.validation.logincode.error=\u4EE3\u7801\u552F\u4E00\u6821\u9A8C\u5931\u8D25
+member.validation.password.tips=7-20\u4E2A\u5B57\u7B26\uFF0C\u5FC5\u987B\u540C\u65F6\u5305\u542B\u5B57\u6BCD\uFF0C\u6570\u5B57\uFF0C\u7279\u6B8A\u5B57\u7B26\uFF08\u5982\uFF1Aexample\: @.&~%\#_\uFF09
+member.validation.mobileCode.tips=1-5\u4E2A\u6570\u5B57
+member.validation.mobile.tips=7-11 \u4E2A\u6570\u5B57
+member.validation.mobile.exist=\u624B\u673A\u53F7\u7801\u5DF2\u7ECF\u5B58\u5728
+member.validation.mobile.error=\u9519\u8BEF\u7684\u624B\u673A\u53F7\u7801
+member.validation.email.exist=\u90AE\u7BB1\u5DF2\u7ECF\u5B58\u5728
+member.validation.email.error=\u9519\u8BEF\u7684\u90AE\u7BB1\u683C\u5F0F
+member.validation.telephone.tips=\u7535\u8BDD\u53F7\u7801\u683C\u5F0F\u662F 0\#\#\#-\#\#\#\#\#\#\#\#, \u5982\: 020-88888888
+member.company=\u516C\u53F8
+
+### distributor management
+distributor.list.title=\u4EE3\u7406\u5546\u5217\u8868
+distributor.list.name=\u516C\u53F8\u540D\u79F0
+distributor.list.entityType=\u516C\u53F8\u6027\u8D28
+distributor.list.registerNo=\u6CE8\u518C\u7F16\u53F7
+distributor.list.incorporationDate=\u6CE8\u518C\u65E5\u671F
+distributor.list.incorporationPlace=\u6CE8\u518C\u5730
+distributor.form.title=\u4EE3\u7406\u5546\u4FE1\u606F
+distributor.form.name=\u516C\u53F8\u540D\u79F0
+distributor.form.entityType=\u516C\u53F8\u6027\u8D28
+distributor.form.entityOther=\u5176\u4ED6\u7C7B\u578B
+distributor.form.registerNo=\u6CE8\u518C\u7F16\u53F7
+distributor.form.incorporationDate=\u6CE8\u518C\u65E5\u671F
+distributor.form.incorporationPlace=\u6CE8\u518C\u5730
+distributor.form.isFinancial=\u662F\u5426\u91D1\u878D\u673A\u6784
+distributor.form.giin=\u5168\u7403\u4E2D\u4ECB\u673A\u6784\u8BC6\u522B\u7801
+distributor.form.naturePurpose=\u4E1A\u52A1\u6027\u8D28\u65B9\u5411
+distributor.form.registeredAddress=\u516C\u53F8\u6CE8\u518C\u5730\u5740
+distributor.form.mailingAddress=\u516C\u53F8\u901A\u8BAF\u5730\u5740
+distributor.form.country=\u56FD\u5BB6
+distributor.form.website=\u7F51\u5740
+distributor.form.logoFile=\u516C\u53F8logo\u56FE\u6807
+### distributor management
+entityType.option.1=\u79C1\u8425\u6709\u9650\u8D23\u4EFB\u516C\u53F8
+entityType.option.2=\u79C1\u8425\u65E0\u9650\u8D23\u4EFB\u516C\u53F8
+entityType.option.3=\u4FE1\u6258\u516C\u53F8
+entityType.option.4=\u4E0A\u5E02\u516C\u53F8
+entityType.option.5=\u5176\u5B83\u7C7B\u578B\u516C\u53F8
+ifaFirm.distributor.add.title =\u9009\u62E9\u4EE3\u7406\u5546
+ifaFirm.distributor.add.natureOfCompany =\u8BF7\u9009\u62E9\u516C\u53F8\u5C5E\u6027
+ifaFirm.distributor.add.registCountry =\u8BF7\u9009\u6CE8\u518C\u56FD\u5BB6
+ifaFirm.distributor.partner.subCompany =\u5B50\u516C\u53F8
+ifaFirm.distributor.partner.error1 =\u6DFB\u52A0\u5931\u8D25\uFF0C\u8BE5\u516C\u53F8\u5DF2\u6DFB\u52A0\uFF01
+ifaFirm.distributor.partner.error2 =\u6DFB\u52A0\u5931\u8D25\uFF0C\u8BF7\u9009\u62E9\u81EA\u8EAB\u4EE5\u5916\u7684\u516C\u53F8\uFF01
+
+console.rpq.questForm.questTitle =\u95EE\u5377\u9898\u76EE\u4FE1\u606F
+console.rpq.questForm.questDetail =\u9898\u76EE\u8BE6\u7EC6\u4FE1\u606F
+console.rpq.questForm.scBasicInfo =\u7B80\u4F53\u57FA\u7840\u4FE1\u606F
+console.rpq.questForm.tcBasicInfo =\u7E41\u4F53\u57FA\u7840\u4FE1\u606F
+console.rpq.questForm.enBasicInfo =\u82F1\u6587\u57FA\u7840\u4FE1\u606F
+console.company.imageTips=\u5927\u5C0F\:151 x 45 \u50CF\u7D20
+console.company.backgroundImg=\u5927\u5C0F\:1280 x 720 \u50CF\u7D20
+console.rpq.questForm.OptionsInformation =\u9009\u9879\u4FE1\u606F
+console.rpq.questForm.questName =\u9898\u76EE\u540D\u79F0
+console.rpq.questForm.questDesc =\u9898\u76EE\u8BF4\u660E
+console.rpq.questForm.isPublic =\u662F\u5426\u516C\u5F00
+console.rpq.questForm.questType =\u9898\u76EE\u7C7B\u578B
+console.rpq.questForm.adaptCustomer=\u9002\u5E94\u5BA2\u6237
+console.rpq.questForm.questionnaireLanguage=\u95EE\u5377\u8BED\u8A00
+console.rpq.questForm.whetherDefaultQuestionnaire=\u662F\u5426\u9ED8\u8BA4\u7684\u95EE\u5377
+console.rpq.questForm.whetherDefaultScore=\u662F\u5426\u8BA1\u7B97\u5206\u6570
+console.rpq.questForm.adaptType=\u9002\u5E94\u7C7B\u578B
+console.rpq.questForm.openRPQ=RPQ\u5F00\u6237
+console.rpq.questForm.investmentRPQ=\u6295\u8D44\u65B9\u6848\u7684RPQ
+console.rpq.questForm.KYCRPQ=KYC\u7684RPQ
+console.rpq.questForm.stateQuestionnaire=\u95EE\u5377\u72B6\u6001
+console.rpq.questForm.questionnaireShows=\u95EE\u5377\u8BF4\u660E
+console.rpq.questForm.nameIsNotEmpty=\u95EE\u5377\u540D\u79F0\u4E0D\u80FD\u4E3A\u7A7A\uFF0C\u8BF7\u8F93\u5165\u95EE\u5377\u7684\u540D\u79F0\u3002
+console.rpq.questForm.questStatus =\u9898\u76EE\u72B6\u6001
+console.rpq.questForm.addQuestiongItems =\u6DFB\u52A0\u9009\u9879
+console.rpq.questForm.title =\u9898\u76EE
+console.rpq.questForm.type =\u7C7B\u578B
+console.rpq.questForm.score =\u5206\u503C
+console.rpq.questForm.sort =\u6392\u5E8F
+console.rpq.questForm.option =\u64CD\u4F5C
+console.rpq.questForm.selectItem =\u9009\u62E9\u9879
+console.rpq.questForm.otherTextInput =\u5176\u4ED6\u6587\u672C\u8F93\u5165
+console.rpq.questForm.enterScoreNum =\u9009\u9879\u5206\u8BF7\u8F93\u5165\u6570\u5B57
+console.rpq.questForm.enterIndexNum =\u5E8F\u53F7\u8BF7\u8F93\u5165\u6570\u5B57
+console.rpq.questForm.optionManager =\u9009\u9879\u7BA1\u7406
+console.rpq.questForm.enterTitle =\u8BF7\u8F93\u5165\u6807\u9898
+console.rpq.questForm.using =\u4F7F\u7528\u4E2D
+console.rpq.questForm.unusing =\u672A\u4F7F\u7528
+console.rpq.questForm.draft =\u8349\u7A3F
+console.rpq.questForm.delete =\u5220\u9664
+console.rpq.questForm.radio =\u5355\u9009
+console.rpq.questForm.checkbox =\u591A\u9009
+console.rpq.questForm.customerType=\u5BA2\u6237\u7C7B\u578B
+console.rpq.questForm.deleteQuestionaire=\u60A8\u786E\u5B9A\u8981\u5220\u9664\u8BE5\u95EE\u5377\u5417\uFF1F
+console.rpq.questForm.setTopic=\u8BBE\u7F6E\u9898\u76EE
+console.rpq.questForm.text =\u6587\u672C\u8F93\u5165
+console.rpq.questForm.texearea =\u591A\u884C\u6587\u672C
+console.rpq.questForm.titleIsNotEmpty=\u6807\u9898\u4E0D\u80FD\u4E3A\u7A7A\uFF0C\u8BF7\u8F93\u5165\u3002
+
+console.fund.info.list.table.title.isPublish=\u72B6\u6001
+console.fund.info.list.table.title.isPublish.0=\u5F85\u53D1\u5E03
+console.fund.info.list.table.title.isPublish.1=\u4E0A\u67B6
+console.fund.info.list.table.title.isPublish.2=\u4E0B\u67B6
+console.rpq.questForm.setTopicLevel=\u8BBE\u7F6E\u7B49\u7EA7
+console.rpq.questForm.allQuestionState=\u6240\u6709\u9898\u5E93\u72B6\u6001
+console.rpq.questForm.release=\u53D1\u5E03
+console.rpq.recycling=\u56DE\u6536
+console.rpq.questForm.AllquestType=\u6240\u6709\u9898\u76EE\u7C7B\u578B
+console.rpq.questForm.dropdownChoice=\u4E0B\u62C9\u9009\u62E9
+console.rpq.questForm.state=\u72B6\u6001
+console.rpq.questForm.creationTime=\u521B\u5EFA\u65F6\u95F4
+console.rpq.questForm.deleteTopic=\u60A8\u786E\u8BA4\u8981\u5220\u9664\u8BE5\u9898\u76EE\u5417\uFF1F
+console.rpq.questForm.deleteFail=\u5220\u9664\u5931\u8D25
+console.rpq.questForm.deleteSuccess=\u5220\u9664\u6210\u529F
+console.fund.info.list.table.title.isPublish.3=\u51BB\u7ED3
+console.rpq.questForm.questionnaireInformation=\u95EE\u5377\u4FE1\u606F
+console.rpq.questForm.nameQuestionnaire=\u95EE\u5377\u7684\u540D\u79F0
+console.country.countryEN.tips=\u53EA\u80FD\u8F93\u5165\u82F1\u6587
+console.country.short.tips=\u53EA\u80FD\u8F93\u5165\u5927\u5199\u82F1\u6587\u5B57\u6BCD
+console.country.countrySC.notEmpty=\u56FD\u5BB6\uFF08\u4E2D\u6587\u540D\uFF09\u4E0D\u80FD\u4E3A\u7A7A
+console.country.countrySC.tips=\u53EA\u80FD\u8F93\u5165\u4E2D\u6587
+console.country.areaCode.notEmpty=\u5730\u533A\u7F16\u53F7\u4E0D\u80FD\u4E3A\u7A7A
+console.country.areaCode.tips=\u53EA\u80FD\u8F93\u5165\u6570\u5B57\u6216\u82F1\u6587\u5B57\u6BCD
+console.country.orderBy.notEmpty=\u6392\u5E8F\u4E0D\u80FD\u4E3A\u7A7A
+console.country.orderBy.tips=\u53EA\u80FD\u8F93\u5165\u6570\u5B57
+console.country.rate.tips=\u8BF7\u8F93\u5165\u5C0F\u6570\u6216\u6574\u6570
+console.currency.rate.select=\u8BF7\u9009\u62E9
+console.country.rate.notEmpty=\u6C47\u7387\u4E0D\u80FD\u4E3A\u7A7A
+console.currency.isValid=\u6709\u6548
+console.currency.Valid=\u65E0\u6548
+console.currency.Valid.status=\u6C47\u7387\u72B6\u6001
+console.workflow.singleTofinished=\u5355\u4E2A\u4EBA\u5B8C\u6210
+console.workflow.add=\u65B0\u589E
+console.workflow.query=\u67E5\u8BE2
+console.workflow.processNumber=\u6D41\u7A0B\u7F16\u7801
+console.workflow.nameProcess=\u6D41\u7A0B\u540D\u79F0
+console.workflow.list=\u5DE5\u4F5C\u6D41\u5217\u8868
+console.workflow.management=\u5DE5\u4F5C\u6D41\u7BA1\u7406
+console.workflow.determine=\u786E\u5B9A
+console.workflow.deleteProcess=\u5220\u9664\u6D41\u7A0B
+console.workflow.needEveryone=\u9700\u8981\u6240\u6709\u4EBA\u5B8C\u6210
+console.workflow.all=\u6240\u6709
+console.workflow.single=\u5355\u4E2A
+console.workflow.end=\u7ED3\u675F
+console.workflow.middleTerm=\u4E2D\u95F4\u73AF\u8282
+console.workflow.start=\u5F00\u59CB
+console.workflow.startMiddleEnd=\u5F00\u59CB\u4E2D\u95F4\u7ED3\u675F
+console.workflow.singleOrMutiple=\u5355\u4EBA\u6216\u591A\u4EBA\u5B8C\u6210
+console.workflow.sendAll=\u662F\u5426\u53D1\u9001\u6240\u6709\u4EBA
+console.workflow.approvalRole=\u5BA1\u6279\u89D2\u8272
+console.workflow.actionCoding=\u52A8\u4F5C\u7F16\u7801
+console.workflow.actionNumber=\u52A8\u4F5C\u540D\u79F0
+console.workflow.serialNumber=\u5E8F\u53F7
+console.workflow.information=\u6D41\u7A0B\u4FE1\u606F
+console.workflow.stopusing=\u505C\u7528
+console.workflow.deleteTips=\u5220\u9664\u540E\u5C06\u4E0D\u53EF\u6062\u590D\uFF0C\u60A8\u786E\u8BA4\u8981\u5220\u9664\u8BE5\u6D41\u7A0B\u5417\uFF1F
+console.workflow.linkDefine=\u73AF\u8282\u5B9A\u4E49
+console.workflow.operation=\u64CD\u4F5C
+console.workflow.status=\u72B6\u6001
+console.workflow.delete=\u5220\u9664
+console.workflow.startusing=\u542F\u7528
+console.inverstor.account.subAccount=\u5B50\u8D26\u6237
+console.inverstor.account.mainAccount=\u4E3B\u8D26\u6237
+console.inverstor.account.waitingForDistributor=\u7B49\u5F85\u4EE3\u7406\u5546\u5904\u7406
+console.inverstor.account.waitingForIFAFIRM=\u7B49\u5F85\u6295\u8D44\u987E\u95EE\u516C\u53F8\u5904\u7406
+console.inverstor.account.processDoesNotReturn=\u6D41\u7A0B\u5BA1\u6838\u4E0D\u901A\u8FC7\u7ED3\u675F\u8FD4\u56DE
+console.inverstor.account.processReviewReturning=\u6D41\u7A0B\u5BA1\u6838\u901A\u8FC7\u7ED3\u675F\u8FD4\u56DE
+console.inverstor.account.processProgress=\u6D41\u7A0B\u8FDB\u884C\u4E2D
+console.inverstor.account.notYetExecuted=\u8FD8\u672A\u6267\u884C
+console.inverstor.account.submitted=\u5DF2\u63D0\u4EA4
+console.inverstor.account.accountFailed=\u5F00\u6237\u5931\u8D25
+console.inverstor.account.OpenAccountSuccess=\u5F00\u6237\u6210\u529F
+console.inverstor.account.processing=\u5904\u7406\u4E2D
+console.inverstor.account.waitingForInvestors=\u7B49\u5F85\u6295\u8D44\u4EBA\u786E\u8BA4
+console.inverstor.account.draft=\u8349\u7A3F
+console.inverstor.account.return=\u9000\u56DE
+paramType.typeCode.existed.tips=\u7F16\u7801\u5DF2\u5B58\u5728
+paramType.name.notEmpty.tips=\u540D\u79F0\u4E0D\u80FD\u4E3A\u7A7A
+paramType.name.existed.tips=\u540D\u79F0\u5DF2\u5B58\u5728
+paramType.typeCode.notEmpty.tips=\u7F16\u7801\u4E0D\u80FD\u4E3A\u7A7A
+sysrole.info.member=\u6210\u5458
+sysrole.info.authority=\u6743\u9650
+console.fund.fundhouse.imageTips=\u5927\u5C0F\:180 x 70 \u50CF\u7D20,\u683C\u5F0F\:jpg,gif,png
+global.uploadImage=\u4E0A\u4F20\u56FE\u7247
+global.companyCodeTips=\u8BF7\u586B\u5199\u4F01\u4E1A\u7F16\u7801
+global.companyNameScTips=\u8BF7\u586B\u5199\u4F01\u4E1A\u540D\u79F0\uFF08\u7B80\u4F53\u4E2D\u6587\uFF09
+global.companyNameTcTips=\u8BF7\u586B\u5199\u4F01\u4E1A\u540D\u79F0\uFF08\u7E41\u4F53\u4E2D\u6587\uFF09
+global.companyNameEnTips=\u8BF7\u586B\u5199\u4F01\u4E1A\u540D\u79F0\uFF08\u82F1\u6587\uFF09
+global.companyUploadLogoTips=\u8BF7\u4E0A\u4F20logo\u56FE\u7247
+global.companyUploadBackgroundTips=\u8BF7\u4E0A\u4F20\u80CC\u666F\u56FE
+global.companyCodeExistTips=\u516C\u53F8\u7F16\u7801\u5DF2\u5B58\u5728\uFF0C\u8BF7\u91CD\u65B0\u8F93\u5165
+
+rpq.question.items.managerMentTitle=\u9009\u9879\u7BA1\u7406
+rpq.question.items.options=\u9009\u62E9\u9879
+rpq.question.items.otherTextInput=\u5176\u4ED6\u6587\u672C\u8F93\u5165\u9879
+console.sysmenu.form.codeTips=\u8BF7\u8F93\u5165\u4EE5qta_\u6216qtb_\u5F00\u5934\u7684\u83DC\u5355\u7F16\u7801
+console.sysmenu.form.consoleCodeTips=\u8BF7\u8F93\u5165\u4EE5csa_\u6216csb_\u5F00\u5934\u7684\u83DC\u5355\u7F16\u7801
+console.membercompany.memberType=\u7C7B\u578B
+console.membercompany.companies=\u516C\u53F8
+console.membercompany.investor=\u6295\u8D44\u8005
+console.membercompany.Company=\u516C\u53F8
+console.membercompany.Distributor=\u4EE3\u7406\u5546
+console.membercompany.ifaFirm=\u6295\u8D44\u987E\u95EE\u516C\u53F8
+console.emaillog.list.tab.timeLimit=\u65F6\u95F4\u8303\u56F4
+console.membercompany.memberList=\u4F1A\u5458\u5217\u8868
+console.membercompany.companyTip=\u8BF7\u9009\u62E9\u516C\u53F8
+console.membercompany.noMember=\u6CA1\u6709\u4F1A\u5458
+console.membercompany.memberListTis=\u8BF7\u9009\u62E9\u4F1A\u5458
+console.strategyinfo.options.ispublic.2=\u81EA\u5B9A\u4E49
+console.ifafirm.detail.form.SC=(\u7B80\u4F53)
+console.ifafirm.detail.form.TC=(\u7E41\u4F53)
+ifafirm.title.addTeam=\u6DFB\u52A0\u56E2\u961F
+console.ifafirm.detail.form.EN=(\u82F1\u6587)
+member.ifa.strategy.searchTips=\u7B56\u7565\u540D\u79F0
+member.ifa.strategy.area=\u6240\u5C5E\u533A\u57DF
+member.ifa.strategy.plate=\u6240\u5C5E\u677F\u5757
+
+
+console.product.list.addConfirm=\u6682\u65F6\u53EA\u63D0\u4F9B\u65B0\u589E\u57FA\u91D1\u4FE1\u606F
+console.product.list.bondDetailMiss=\u6682\u65E0\u503A\u5238\u8BE6\u7EC6\u4FE1\u606F
+console.product.list.functionMiss=\u8BE5\u529F\u80FD\u6682\u672A\u5F00\u53D1\uFF0C\u656C\u8BF7\u671F\u5F85
+
+console.product.fund.doc.fundEmpty=\u8BF7\u586B\u5199\u57FA\u91D1\u4FE1\u606F
+console.product.fund.doc.fundDocEmpty=\u8BF7\u4E0A\u4F20\u6587\u6863
+ifafirm.list.team.nameTips=\u56E2\u961F\u540D\u79F0\u4E0D\u80FD\u4E3A\u7A7A
+ifafirm.list.team.codeTips=\u56E2\u961F\u7F16\u7801\u4E0D\u80FD\u4E3A\u7A7A
+ifafirm.list.team.orderbyTips=\u56E2\u961F\u6392\u5E8F\u4E0D\u80FD\u4E3A\u7A7A
+member.ifa.keywordTip=\u767B\u5165\u8D26\u53F7\u3001\u6635\u79F0\u3001\u59D3\u540D
+member.ifa.viewCustomersInformation=\u67E5\u770B\u8D26\u6237\u4FE1\u606F
+member.ifa.strategy.creator=\u521B\u5EFA\u4EBA
+member.ifa.portfolioInformation=\u67E5\u770B\u6295\u8D44\u7EC4\u5408
+member.ifa.viewCustomers=\u67E5\u770B\u5BA2\u6237
+member.ifa.investmentStrategy=\u6295\u8D44\u7B56\u7565
+member.ifa.investmentProgram=\u6295\u8D44\u65B9\u6848
+member.ifa.portfolio=\u6295\u8D44\u7EC4\u5408
+
+member.info.nameInEng= \u82F1\u6587\u540D\u79F0
+console.emaillog.list.tab.addresser=\u53D1\u4EF6\u4EBA
+console.community.section.title=\u793E\u533A\u680F\u76EE
+console.community.section.th.nameSc=\u680F\u76EE\u540D\u79F0\uFF08\u7B80\u4F53\u4E2D\u6587\uFF09
+console.community.section.th.nameTc=\u680F\u76EE\u540D\u79F0\uFF08\u7E41\u4F53\u4E2D\u6587\uFF09
+console.community.section.th.nameEn=\u680F\u76EE\u540D\u79F0\uFF08\u82F1\u6587\uFF09
+console.community.section.th.description=\u680F\u76EE\u8BF4\u660E
+console.community.section.th.orderBy=\u680F\u76EE\u6392\u5E8F
+console.community.section.th.status=\u680F\u76EE\u72B6\u6001
+console.community.section.th.createDate=\u521B\u5EFA\u65E5\u671F
+console.community.section.detail.code=\u680F\u76EE\u7F16\u7801
+console.community.section.detail.icon=\u677F\u5757\u56FE\u6807
+console.community.newsComment.title=\u65B0\u95FB\u8BC4\u8BBA
+console.community.topicComment.title=\u5E16\u5B50\u8BC4\u8BBA
+console.community.target.topic=\u5E16\u5B50
+console.community.target.question=\u95EE\u9898
+console.community.questionComment.title=\u95EE\u9898\u8BC4\u8BBA
+console.community.label.title=\u6807\u9898
+console.community.label.content=\u5185\u5BB9
+console.community.label.commentator=\u8BC4\u8BBA\u4EBA
+console.community.label.news.title=\u65B0\u95FB\u6807\u9898
+console.community.label.news.content=\u8BC4\u8BBA\u5185\u5BB9
+console.community.label.IP=IP
+console.community.label.news.opTime=\u8BC4\u8BBA\u65F6\u95F4
+console.community.label.status=\u72B6\u6001
+console.community.label.targetType=\u76EE\u6807\u7C7B\u578B
+console.community.label.topic.title=\u5E16\u5B50\uFF08\u95EE\u9898\uFF09\u6807\u9898
+console.community.label.comment.content=\u8BC4\u8BBA\uFF08\u7B54\u6848\uFF09\u5185\u5BB9
+console.community.select=\u9009\u62E9
+console.community.replay=\u7BA1\u7406\u5458\u56DE\u590D
+console.community.reply.administrator.reply=\u3010\u7BA1\u7406\u5458\u56DE\u590D\u3011\:
+notice.status.0=\u8349\u7A3F
+notice.status.1=\u5DF2\u53D1\u5E03
+notice.status.2=\u5DF2\u8FC7\u671F
+notice.status.3=\u65E0\u6548
+notice.isPic.0=\u4E0D\u662F
+notice.isPic.1=\u662F
+notice.sys.title=\u7CFB\u7EDF\u516C\u544A
+
+crm.proposal.label.ifafirm=\u6295\u8D44\u987E\u95EE\u516C\u53F8
+crm.proposal.label.status=\u65B9\u6848\u72B6\u6001
+crm.proposal.label.proposalName=\u65B9\u6848\u540D\u79F0
+crm.proposal.label.clientName=\u5BA2\u6237\u540D\u79F0
+crm.proposal.label.currency=\u8D27\u5E01
+notice.sys.level.0=\u666E\u901A\u516C\u544A
+notice.sys.level.1=\u91CD\u8981\u516C\u544A
+
+notice.sys.content=\u5185\u5BB9
+notice.sys.level=\u516C\u544A\u7EA7\u522B
+notice.sys.releaseDate=\u53D1\u5E03\u65F6\u95F4
+notice.sys.attachment.upload=\u9644\u4EF6\u4E0A\u4F20
+notice.sys.delete.attachment=\u5220\u9664\u9644\u4EF6
+notice.sys.uploaded.successfully=\u4E0A\u4F20\u6210\u529F
+notice.sys.uploaded.failed=\u4E0A\u4F20\u5931\u8D25
+notice.sys.deleted.successfully=\u5220\u9664\u6210\u529F
+notice.sys.deleted.failed=\u5220\u9664\u5931\u8D25
+notice.sys.releaseBy=\u53D1\u5E03\u673A\u6784
+notice.sys.sourceType=\u516C\u544A\u6765\u6E90
+notice.sys.global=\u5168\u7F51
+notice.sys.target=\u516C\u544A\u76EE\u6807
+notice.console.title=\u4E1A\u52A1\u516C\u544A
+
+
+#合作方管理 -Partner Manage
+console.partner.ifafirm.ifafirmDetail=\u516C\u53F8\u8BE6\u60C5
+console.partner.ifafirm.ifaList=IFA \u5217\u8868
+console.partner.ifafirm.customerList=\u5BA2\u6237\u5217\u8868
+console.partner.ifafirm.partnerDis=\u5408\u4F5C\u4EE3\u7406\u5546
+console.partner.ifafirm.userList=\u7528\u6237\u5217\u8868
+console.partner.ifafirm.loginCode=\u767B\u5F55\u8D26\u53F7
+console.partner.ifafirm.name=\u59D3\u540D
+console.partner.ifafirm.email=\u7535\u5B50\u90AE\u7BB1
+console.partner.ifafirm.cellphoneNumber=\u624B\u673A\u53F7\u7801
+console.partner.ifafirm.primaryResidence=\u4E3B\u8981\u5C45\u4F4F\u56FD
+console.partner.ifafirm.ifaListDetail=IFA \u8BE6\u60C5
+console.partner.ifafirm.detail=\u67E5\u770B\u8BE6\u60C5
+console.partner.ifafirm.nationality=\u56FD\u7C4D
+console.partner.ifafirm.customerDetail=\u5BA2\u6237\u8BE6\u60C5
+console.partner.ifafirm.distributorDetail=\u4EE3\u7406\u5546\u8BE6\u60C5
+console.partner.distributor.actiingProduct=\u4EE3\u7406\u4EA7\u54C1
+console.partner.ifafirm.ifaFirmListDetail=IFAFirm \u8BE6\u60C5
+console.partner.distributor.investmentAccount=\u6295\u8D44\u8D26\u6237
+console.partner.distributor.lastNavupatde=\u51C0\u503C\u65E5\u671F
+console.partner.distributor.fundCompany=\u57FA\u91D1\u516C\u53F8
+console.partner.ifafirm.userDetail=\u7528\u6237\u8BE6\u60C5
+notice.sys.label.title=\u6807\u9898
+console.fund.anno.annoInfo=\u516C\u544A\u8BE6\u60C5
+
+#附件管理
+accessory.info.accessoryList=\u9644\u4EF6\u5217\u8868
+accessory.info.accessoryDownload=\u4E0B\u8F7D
+accessory.info.accessoryDetail=\u9644\u4EF6\u8BE6\u7EC6\u4FE1\u606F

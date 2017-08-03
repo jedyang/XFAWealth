@@ -1,0 +1,269 @@
+[#include "../../../inc/head_v2.html"/]
+<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+<link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+
+
+
+
+<input id="btnCloseIframe" type="hidden" />
+<div class="wmes-content" id="wmes_wraper">
+    <div class="tab_wrap dis_ifafirm_fund" id="tab_wrap">
+        <div class="wmes-wrap-title">
+            <p>[@lang_res k='console.distributor.ifafirm.agencyFund'/]</p>
+        </div>
+            <div class="clear"></div>
+            <!--<div class="tab_wrap" id="tab_wrap">-->
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                	<input type="hidden" id="disId" name="disId" value="${(disId)?if_exists}">
+                	<input type="hidden" id="ifaFirmId" name="ifaFirmId" value="${(ifaFirmId)?if_exists}">
+                    <div>
+	                    <div class="row pd10">
+	                        <div class="col-md-10">
+	                        	<label for="txtKeyword">[@lang_res  k='console.fund.info.list.search.keyword'/]</label>
+	                        	<input type="text" style="width:250px;" class="form-control searchCondition" id="txtKeyword" 
+	                        	placeholder="[@lang_res  k='console.fund.info.list.table.title.isinCode'/]、[@lang_res  k='console.fund.info.list.table.title.fundName'/]">
+	                        	<button type="button" id="btnSearch" class="btn btn-primary">
+	                    			[@lang_res  k='console.fund.info.list.btn.search'/]
+	                    		</button>
+	                        </div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20">
+                    	<button type="button" class="btn btn-blue-s" id="btnAdd">
+							<!--<a target="_blank" href="">[@lang_res k='global.add'/]</a>-->
+							[@lang_res k='global.add'/]
+						</button>
+                    </div>
+                    <div>
+                        <table id="fundList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+	                           <tr>
+	                               <th class="table-head">[@lang_res  k='console.fund.info.list.table.title.isinCode'/]</th>
+	                               <th width="15%" class="table-head">[@lang_res  k='console.fund.info.list.table.title.fundName'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.fund.info.list.table.title.lastNav'/]</th>
+	                               <th class="table-head">[@lang_res k='fund.info.price_date'/]</th>
+	                               <th class="table-head">[@lang_res  k='fund.info.fundHouse'/]</th>
+	                               <th class="table-head">[@lang_res  k='param.action'/]</th>
+	                            </tr>                                
+                            </tbody>
+                        </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+</div>
+<input type="hidden" id="ids" value="">
+<button type="button" id="popupWinReturn" style="display:none;"></button>
+[#include "../../../inc/foot_v2.html"/]
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script type="text/javascript">
+var grid_selector = "#fundList";
+var pageSize = 10;
+</script>
+<script type="text/javascript">
+$(function(){	
+	bindList(0);
+	setAutoSearch('.searchCondition',bindList,0);
+	$("#btnSearch").bind("click", function() {
+		bindList(0);
+	});
+	//按下回车键搜索
+	document.onkeydown = function(e) {
+		var ev = document.all ? window.event : e;
+		if (ev.keyCode == 13) {
+			bindList(0);
+		}
+	};
+	
+	//触发弹窗关闭
+	$('#btnCloseIframe').click(function() {
+		$(".close").click();			
+	});
+});
+
+
+
+  
+//分页绑定Table数据 
+function bindList(curPage){
+var disId = $('#disId').val();
+var ifaFirmId = $('#ifaFirmId').val();
+$.ajax({
+		type : 'post',
+		datatype : 'json',
+		url : '${base}/console/distributorifafirm/ifafirmFundlistJson.do?datestr='+new Date().getTime(),
+		data : {
+			'keyword': $("#txtKeyword").val(),
+			'disId' : disId,
+			'ifaFirmId' : ifaFirmId,
+			'page':curPage+1,
+			'rows':pageSize,
+			'sort':'',
+			'order':''
+		},
+		success : function(json) {
+			var total = json.total;
+			var table = json.rows;
+							
+			$("#fundList tbody tr:gt(0)").empty();
+		  var tr = "";
+             var list = json.rows;
+             $.each(list, function (index, array) { //遍历json数据列					
+
+                 var isinCode = array[0]['isinCode'] == null ? "" : array[0]['isinCode'];
+                 var lastNav = array[0]['lastNav'] == null ? "" : array[0]['lastNav'];
+                 var lastNavupatde = array[0]['lastNavUpdate'] == null ?"" : array[0]['lastNavUpdate'];
+                 var fundId = array[0]['id']==null?"":array[0]['id'];
+                 var isBublishTh = "";
+                 var isBublishOption="";
+                 var fundName = "";
+                 var fundHouse = "";
+                 if(array[1] == null){
+                 	fundName = "";
+                 	fundHouse = "";
+                 }else {
+                 	fundName = array[1]['fundName'] == null ? " " : array[1]['fundName'];
+                 	fundHouse = array[1]['fundHouse'] == null ? " " : array[1]['fundHouse'];
+                 }
+                 var fundInfoUrl = '${base}/console/fund/fees/detail.do?fundId='+fundId;
+                 var feesItemUrl = '${base}/console/fund/fees/list.do?fundId='+fundId;
+                 var distributorUrl = '${base}/console/fund/distributor/list.do?fundId='+fundId;
+                
+                 tr += "<tr><td>" + isinCode + "</td>"
+                     + "<td>" + fundName + "</td>"
+                     + "<td>" + lastNav + "</td>"
+                     + "<td>" + lastNavupatde + "</td>"
+                     + "<td>" + fundHouse + "</td>"
+                     + "<td><a href=\"javascript:void(0);\" onclick=\"deleteFund('"+fundId+"')\">" +'[@lang_res  k='console.ifa.team.add.remove'/]'+ "</a><br />"
+                     + "</td></tr>";
+                     
+             });
+             $("#fundList tbody").append(tr);
+			
+			 $("#pagination").pagination(total, {
+                       callback: pageselectCallback,
+                       numDetail: '',
+                       items_per_page: pageSize,
+                       num_display_entries: 4,
+                       current_page: curPage,
+                       num_edge_entries: 2
+                   });
+		}
+	})
+	 //回调
+    function pageselectCallback(page_id, jq) {
+        bindList(page_id);
+    }
+}
+
+
+//点击删除
+function deleteFund(fundId){
+	var disId = $('#disId').val();
+	var ifaFirmId = $('#ifaFirmId').val();
+	layer.confirm("[@lang_res  k='pipeline.clientType.delete.confirm'/]", 
+			{title:langMutilForJs["global.prompt"], 
+		icon: 3,
+		btn: [langMutilForJs["global.confirm"],langMutilForJs["global.cancel"]]},
+		function (index){
+			$.ajax({
+				url:'${base}/console/distributorifafirm/deleteFirmFund.do?disId='+disId + '&ifaFirmId=' + ifaFirmId + '&fundId=' + fundId,
+				type:'post',
+				dataType:'json',
+				data:{
+					disId: disId,
+					ifaFirmId: ifaFirmId,
+					fundId: fundId,
+				},
+				success:function(data){
+					if(data.result){
+						window.parent.layer.msg("[@lang_res  k='global.delete.success'/]",{icon:2,time:1000},
+							function(){
+								bindList(0);
+								closeTab();
+							}
+						);
+					}
+		        },
+				error:function(){
+					
+				}
+			});
+	    	
+	    	layer.close(index);
+	});
+}
+
+/**
+ * quick add
+ */
+   $("#btnAdd").on("click",quickAddFund);
+   function quickAddFund(){
+   	var url = base_root+"/front/fund/info/fundSelectorForAllocation.do";
+   	openResWin(url,935,650,"fundSelector");
+   }
+
+/**
+ * new window
+ */
+function openResWin(url,width,height,id){ 
+   var myw = screen.availWidth;   //定义一个myw，接受到当前全屏的宽    
+   var myh = screen.availHeight;  //定义一个myw，接受到当前全屏的高   
+   if (width>myw) width = myw;
+   if (height>myh) height = myh;
+   var top = (myh-height)/2-(window.screen.height-myh)/2;
+   if (top<0) top = 0;
+   var left = (myw-width)/2-(window.screen.width-myw)/2;
+   if (left<0) left = 0;
+   window.open(url,id,"height="+height+", width="+width+", top="+top+", left="+left+",location=no,menubar=no,toolbar=no,status=no,resizable=no,scrollbars=yes");   
+}
+
+$('#popupWinReturn').click(function(){
+	var disId = $('#disId').val();
+	var ifaFirmId = $('#ifaFirmId').val();
+	var ids = $('#ids').val();
+	$.ajax({
+		url:'${base}/console/distributorifafirm/saveFirmFund.do?disId='+ disId + '&ifaFirmId=' + ifaFirmId + '&ids=' + ids,
+		type:'post',
+		dataType:'json',
+		data:{
+			disId: disId,
+			ifaFirmId: ifaFirmId,
+			ids: ids
+		},
+		success:function(data){
+			if(data.result){
+				window.parent.layer.msg("[@lang_res  k='myfavourites.watchinglist.list.dialogSaveSuccess'/]",{icon:2,time:2000});
+				bindList(0);
+			}
+                    	
+        },
+		error:function(){
+			
+		}
+	});
+	
+});
+
+</script>
+

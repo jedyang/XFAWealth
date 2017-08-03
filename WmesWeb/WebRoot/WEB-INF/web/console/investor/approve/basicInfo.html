@@ -1,0 +1,2515 @@
+
+<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="${base}/res/css/wmes_en.css">
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<!--<div class="OpenAccount_BasicInfo_content">
+	<div>
+		-->
+<!--<div class="AccountDetails" style="display: block;">
+			Account details  begin -->
+<form action="" id="acc_detail" name="acc_detail" method="post" class="form-horizontal">
+	<input type="hidden" name="iAccount.id" value="${iAccount.id!}" id="accountId" />
+	<!--<div class="BasicInfo_content">-->
+	<div class="form-group">
+		<div class="note">
+			[@lang_res k='open.account.topTip'/]
+		</div>
+	</div>
+
+	<div class="form-group">
+
+		<div class="col-md-3   title ">
+			Account Type
+		</div>
+		<div class="col-md-8">
+
+			<div class="radio" name="iAccount.accType" value="${(iAccount.accType)?if_exists}">
+				<label>
+					<input type="radio" name="iAccount.accType" id="IndividualAccount" value="I" ng-model="accType" [#if iAccount.accType?exists && iAccount.accType=='I']checked[/#if]>
+					Individual Account
+				</label>
+				<label>
+					<input type="radio" name="iAccount.accType" id="JointAccount" value="J" ng-model="accType" [#if iAccount.accType?exists && iAccount.accType=='J']checked[/#if] >
+					Joint Account
+				</label>
+
+			</div>
+
+			<!--<ul class="BasicInfo_radio">
+				<li>
+					<input type="radio" name="iAccount.accType" value="I" class="regular-radio accTypeRadio validate[required]" id="IndividualAccount" ng-model="accType" [#if iAccount.accType?exists && iAccount.accType== 'I']checked[/#if] data-prompt-target="accTypeError">
+					<label for="IndividualAccount"></label>
+					<span class="font_gray_left">Individual Account</span>
+				</li>
+				<li>
+					<input type="radio" name="iAccount.accType" value="J" class="regular-radio accTypeRadio validate[required]" id="JointAccount" ng-model="accType" [#if iAccount.accType?exists && iAccount.accType== 'J']checked[/#if] data-prompt-target="accTypeError">
+					<label for="JointAccount"></label>
+					<span class="font_gray_left">Joint Account</span>
+				</li>
+				<li>
+					<span id="accTypeError"></span>
+				</li>
+			</ul>
+		-->
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-3 title">
+			i-Invest Account type
+		</div>
+		<div class="col-md-8">
+
+			<div class="radio" name="iAccount.investType" value="${(iAccount.investType)?if_exists}">
+				<label>
+					<input type="radio" name="iAccount.investType" id="FundAccount" value="F" ng-model="accType" [#if iAccount.investType?exists && iAccount.investType=='F']checked[/#if]>
+					i-Invest Fund Account
+				</label>
+				<label>
+					<input type="radio" name="iAccount.investType" id="PortfolioAccount" value="P" ng-model="accType" [#if iAccount.investType?exists && iAccount.investType=='P']checked[/#if] >
+					i-Invest Portfolio Account
+				</label>
+
+			</div>
+
+			<!--<ul class="BasicInfo_radio">
+				<li>
+					<input type="radio" name="iAccount.investType" value="F" class="regular-radio validate[required]" id="FundAccount" [#if iAccount.investType?exists && iAccount.investType== 'F']checked[/#if] data-prompt-target="investTypeError">
+					<label for="FundAccount"></label>
+					<span class="font_gray_left">i-Invest Fund Account</span>
+				</li>
+				<li>
+					<input type="radio" name="iAccount.investType" value="P" class="regular-radio validate[required]" id="PortfolioAccount" [#if iAccount.investType?exists && iAccount.investType== 'P']checked[/#if] data-prompt-target="investTypeError">
+					<label for="PortfolioAccount"></label>
+					<span class="font_gray_left">i-Invest Portfolio Account</span>
+				</li>
+				<li>
+					<span id="investTypeError"></span>
+				</li>
+			</ul>
+		-->
+		</div>
+	</div>
+	<div class="form-group" style="margin: 40px 0px;">
+		<div class="col-md-3 title">
+			Capital Investment Entrant Scheme (“CIES”) Azccount
+		</div>
+		<div class="col-md-8">
+
+			<div class="radio" name="iAccount.cies" value="${(individualvo.gender)?if_exists}">
+				<label>
+					<input type="radio" name="iAccount.cies" id="CIESYes" value="1" [#if iAccount.cies?exists && iAccount.cies=='1']checked[/#if]>
+					Yes
+				</label>
+				<label>
+					<input type="radio" name="iAccount.cies" id="CIESNo" value="0" [#if iAccount.cies?exists && iAccount.cies=='0']checked[/#if] >
+					No
+				</label>
+
+			</div>
+
+			<!--<ul class="BasicInfo_radio" style="margin-top: 20px;">
+			
+			
+									
+				<li>
+					<input type="radio" name="iAccount.cies" value="1" class="regular-radio validate[required]" id="CIESYes" [#if iAccount.cies?exists && iAccount.cies== '1']checked[/#if] data-prompt-target="ciesError">
+					<label for="CIESYes"></label>
+					<span class="font_gray_left">Yes</span>
+				</li>
+				<li>
+					<input type="radio" name="iAccount.cies" value="0" class="regular-radio validate[required]" id="CIESNo" [#if iAccount.cies?exists && iAccount.cies== '0']checked[/#if] data-prompt-target="ciesError">
+					<label for="CIESNo"></label>
+					<span class="font_gray_left">No</span>
+				</li>
+				<li>
+					<span id="ciesError"></span>
+				</li>
+			</ul>
+		-->
+		</div>
+	</div>
+	<div class="form-group">
+		<div class=" note">
+			Note: The Customer will have online trading access for all selected accounts
+		</div>
+	</div>
+	<div class="BasicInfo_xuxian"></div>
+	<div class="form-group">
+		<div class="col-md-3 title">
+			<span class="font_red" style="margin-right: 5px;">*</span>Dividend Option
+		</div>
+		<div class="col-md-8">
+			<div class="radio" name="iAccount.dividend" value="${(individualvo.gender)?if_exists}">
+				<label>
+					<input type="radio" name="iAccount.dividend" id="DividendReinvestment" value="R" [#if iAccount.dividend?exists && iAccount.dividend=='R']checked[/#if]>
+					Reinvestment
+				</label>
+				<label>
+					<input type="radio" name="iAccount.dividend" id="DividendDistributed" value="D" [#if iAccount.dividend?exists && iAccount.dividend=='D']checked[/#if] >
+					Distributed to Cash Account
+				</label>
+
+			</div>
+			<!--<ul class="BasicInfo_radio">
+				<li>
+					<input type="radio" name="iAccount.dividend" value="R" class="regular-radio validate[required]" id="DividendReinvestment" [#if iAccount.dividend?exists && iAccount.dividend== 'R']checked[/#if] data-prompt-target="divdendError">
+					<label for="DividendReinvestment"></label>
+					<span class="font_gray_left">Reinvestment</span>
+				</li>
+
+				<li>
+					<input type="radio" name="iAccount.dividend" value="D" class="regular-radio validate[required]" id="DividendDistributed" [#if iAccount.dividend?exists && iAccount.dividend== 'D']checked[/#if] data-prompt-target="divdendError">
+					<label for="DividendDistributed"></label>
+					<span class="font_gray_left">Distributed to Cash Account</span>
+				</li>
+				<li>
+					<span id="divdendError"></span>
+				</li>
+			</ul>
+		-->
+		</div>
+	</div>
+	<div class="form-group note">
+
+		only applicable to funds
+
+	</div>
+	<div class="form-group note">
+
+		* If no choice is made, dividends (if applicable) will be reinvested.
+
+	</div>
+	<div class="BasicInfo_xuxian"></div>
+	<div class="form-group">
+		<div class="col-md-3 title">
+			Base Currency
+		</div>
+		<div class="col-md-8">
+			<div class="radio" name="iAccount.baseCurrency" value="${(individualvo.gender)?if_exists}">
+				<label>
+					<input type="radio" name="iAccount.baseCurrency" id="BaseCurrencyHKD" value="HKD" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='HKD']checked[/#if]>
+					HKD
+				</label>
+				<label>
+					<input type="radio" name="iAccount.baseCurrency" id="BaseCurrencyCNY" value="CNY" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='CNY']checked[/#if] >
+					CNY
+				</label>
+				<label>
+					<input type="radio" name="iAccount.baseCurrency" id="BaseCurrencyUSD" value="USD" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency?exists&&iAccount.baseCurrency=='USD']checked[/#if] >
+					USD
+				</label>
+				<label>
+					<input type="radio" name="iAccount.baseCurrency" id="BaseCurrencyAUD" value="AUD" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='AUD']checked[/#if] >
+					AUD
+				</label>
+				<label>
+					<input type="radio" name="iAccount.baseCurrency" id="BaseCurrencyEUR" value="EUR" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='EUR']checked[/#if] >
+					EUR
+				</label>
+				<label>
+					<input type="radio" name="iAccount.baseCurrency" id="BaseCurrencyGBP" value="GBP" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='GBP']checked[/#if] >
+					GBP
+				</label>
+				<label>
+					<input type="radio" name="iAccount.baseCurrency" id="BaseCurrencyJPY" value="JPY" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='JPY']checked[/#if]>
+					JPY
+				</label>
+
+			</div>
+
+			<!--<ul class="BasicInfo_radio">
+				<li>
+					<input type="radio" name="iAccount.baseCurrency" data-prompt-target="baseCNYError" value="HKD" class="regular-radio validate[required]" id="BaseCurrencyHKD" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='HKD']checked[/#if]>
+					<label for="BaseCurrencyHKD"></label>
+					<span class="font_gray_left">HKD</span>
+				</li>
+				<li>
+					<input type="radio" name="iAccount.baseCurrency" data-prompt-target="baseCNYError" value="CNY" class="regular-radio validate[required]" id="BaseCurrencyCNY" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='CNY']checked[/#if]>
+					<label for="BaseCurrencyCNY"></label>
+					<span class="font_gray_left">CNY</span>
+				</li>
+				<li>
+					<input type="radio" name="iAccount.baseCurrency" data-prompt-target="baseCNYError" value="USD" class="regular-radio validate[required]" id="BaseCurrencyUSD" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency?exists&&iAccount.baseCurrency=='USD']checked[/#if]>
+					<label for="BaseCurrencyUSD"></label>
+					<span class="font_gray_left">USD</span>
+				</li>
+				<li>
+					<input type="radio" name="iAccount.baseCurrency" data-prompt-target="baseCNYError" value="AUD" class="regular-radio validate[required]" id="BaseCurrencyAUD" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='AUD']checked[/#if]>
+					<label for="BaseCurrencyAUD"></label>
+					<span class="font_gray_left">AUD</span>
+				</li>
+				<li>
+					<input type="radio" name="iAccount.baseCurrency" data-prompt-target="baseCNYError" value="EUR" class="regular-radio validate[required]" id="BaseCurrencyEUR" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='EUR']checked[/#if]>
+					<label for="BaseCurrencyEUR"></label>
+					<span class="font_gray_left">EUR</span>
+				</li>
+				<li>
+					<input type="radio" name="iAccount.baseCurrency" data-prompt-target="baseCNYError" value="GBP" class="regular-radio validate[required]" id="BaseCurrencyGBP" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='GBP']checked[/#if]>
+					<label for="BaseCurrencyGBP"></label>
+					<span class="font_gray_left">GBP</span>
+				</li>
+				<li>
+					<input type="radio" name="iAccount.baseCurrency" data-prompt-target="baseCNYError" value="JPY" class="regular-radio validate[required]" id="BaseCurrencyJPY" [#if iAccount.baseCurrency?exists && iAccount.baseCurrency=='JPY']checked[/#if]>
+					<label for="BaseCurrencyJPY"></label>
+					<span class="font_gray_left">JPY</span>
+				</li>
+				<li>
+					<span id="baseCNYError"></span>
+				</li>
+			</ul>
+
+		-->
+		</div>
+	</div>
+	<div class="form-group ">
+		<div class="col-md-3"></div>
+		<div class="col-md-8 note">
+			choose one currency
+		</div>
+
+
+	</div>
+	<div class="BasicInfo_xuxian"></div>
+	<div class="form-group">
+		<div class="col-md-3 title">
+			Purpose of Opening the Account
+		</div>
+		<div class="col-md-8">
+
+			<div class="radio" name="iAccount.purpose" value="${(individualvo.gender)?if_exists}">
+				<label>
+					<input type="radio" name="iAccount.purpose" id="PurposeInvestment" value="Investment" [#if iAccount.purpose?exists && iAccount.purpose=='Investment']checked[/#if]>
+					Investment
+				</label>
+				<label>
+					<input type="radio" name="iAccount.purpose" id="PurposeOthers" value="Others" [#if iAccount.purpose?exists && iAccount.purpose=='Others']checked[/#if] >
+					Others
+				</label>
+				<input type="text" name="iAccount.purposeOther" data-prompt-target="purposeError" id="otherTextInput" value="${iAccount.purposeOther!}" class="validate[condRequired[PurposeOthers]]">
+			</div>
+
+			<!--<ul class="BasicInfo_radio">
+				<li>
+					<input type="radio" data-prompt-target="purposeError" name="iAccount.purpose" value="Investment" class="regular-radio purposeRadio validate[required]" id="PurposeInvestment" [#if iAccount.purpose?exists && iAccount.purpose=='Investment']checked[/#if]>
+					<label for="PurposeInvestment"></label>
+					<span class="font_gray_left">Investment</span>
+				</li>
+				<li>
+					<input type="radio" data-prompt-target="purposeError" name="iAccount.purpose" value="Others" class="regular-radio purposeRadio validate[required]" id="PurposeOthers" [#if iAccount.purpose?exists && iAccount.purpose=='Others']checked[/#if]>
+					<label for="PurposeOthers"></label>
+					<span class="font_gray_left">Others</span>
+					<div class="BasicInfo_radio_text">
+						<input type="text" name="iAccount.purposeOther" data-prompt-target="purposeError" id="otherTextInput" value="${iAccount.purposeOther!}" class="validate[condRequired[PurposeOthers]]">
+					</div>
+				</li>
+				<li>
+					<span id="purposeError"></span>
+				</li>
+			</ul>
+		-->
+		</div>
+	</div>
+	<div class="BasicInfo_xuxian"></div>
+	<div class="form-group">
+		<ul class="BasicInfo_radio">
+			<li style="margin-top: 6px;">
+				Please send all the Customer’s daily statements and monthly statements by (choose one only):
+			</li>
+			<li>
+				<input type="radio" data-prompt-target="sentByError" name="iAccount.sentBy" value="Email" class="regular-radio validate[required]" id="statementsEmail" [#if iAccount.sentBy?exists && iAccount.sentBy=='Email']checked[/#if]>
+				<label for="statementsEmail"></label>
+				<span class="font_gray_left">Email</span>
+			</li>
+			<li>
+				<input type="radio" data-prompt-target="sentByError" name="iAccount.sentBy" value="Post" class="regular-radio validate[required]" id="statementsPost" [#if iAccount.sentBy?exists && iAccount.sentBy=='Post']checked[/#if]>
+				<label for="statementsPost"></label>
+				<span class="font_gray_left">Post</span>
+			</li>
+			<li>
+				<span id="sentByError"></span>
+			</li>
+		</ul>
+	</div>
+	<!-- </div>-->
+</form>
+<!-- Account details  end -->
+
+
+<div class="Mainapplicant">
+	<!-- main contact begin -->
+	<form action="" id="main_contact_detail" name="main_contact_detail" method="post">
+		<div class="BasicInfo_title">
+			<span class="BasicInfo_title_dabiao">Main Applicant's Information (Mandatory)</span>
+			<span class="BasicInfo_title_tishi_blue">Name as shown on HKID card / Passport</span>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Main Applicant</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" name="iContact.appellation" value="${iContact.appellation!}">
+					<input type="text" class="value_show validate[required]" value="${iContact.appellation!}" data-prompt-target="mainAppError" id="iContAppHidden">
+					<ul class="regiter_xiala_ul">
+						<li value="Dr">
+							Dr
+						</li>
+						<li value="Mr">
+							Mr
+						</li>
+						<li value="Mrs">
+							Mrs
+						</li>
+						<li value="Ms">
+							Ms
+						</li>
+						<li value="Miss">
+							Miss
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="mainAppError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Last Name (in English)</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContact.lastName" value="${iContact.lastName!''}" data-prompt-target="lastNameError">
+				<span id="lastNameError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">First Name (in English)</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContact.firstName" value="${iContact.firstName!''}" data-prompt-target="firstNameError">
+				<span id="firstNameError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Alias</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContact.nickName" value="${iContact.nickName!''}" data-prompt-target="aliasNameError">
+				<span id="aliasNameError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Name in Chinese</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContact.nameChn" value="${iContact.nameChn!''}" data-prompt-target="chnNameError">
+				<span id="chnNameError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Country of Birth</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" name="iContact.country.id" class="value_hidden" [#if iContact.country??]value="${iContact.country.id!}"[/#if]>
+					<input type="text" class="value_show validate[required]" value="[#if iContact.country??]${iContact.country.nameEn!}[/#if]" data-prompt-target="countryBirthError" />
+					<ul class="regiter_xiala_ul" id="main_contact_born_country">
+						<!-- 出生地 -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="countryBirthError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Sex</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" name="iContact.gender" class="value_hidden" value="${iContact.gender!''}" />
+					<input type="text" class="value_show validate[required]" value="${iContact.sexName!}" data-prompt-target="sexError">
+					<ul class="regiter_xiala_ul">
+						<li value="F">
+							Female
+						</li>
+						<li value="M">
+							Male
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="sexError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Date of Birth (dd/mm/yyyy)</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContact.born" readonly="" id="iContact_born" value="${iContact.born!}" data-prompt-target="dateBirthError">
+				<span id="dateBirthError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">HKID^/ Passport No. </span>
+				<input type="text" name="iContact.certNo" value="${iContact.certNo!}" class="BasicInfo_input validate[required]" id="iContactCertNo" data-prompt-target="iContaCertNoError">
+				<!--<span class="register_xiala_ico"></span>-->
+				<span id="iContaCertNoError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Nationality</span>
+				<div class="BasicInfo_xiala">
+					<input class="value_hidden" type="hidden" name="iContact.nationality.id" [#if iContact.nationality??]value="${iContact.nationality.id!}"[/#if]>
+					<input class="value_show validate[required]" type="text" value="[#if iContact.nationality??]${iContact.nationality.nameEn!}[/#if]" data-prompt-target="nationalityError">
+					<ul class="regiter_xiala_ul" id="main_contact_nationality">
+						<!-- 国籍 -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="nationalityError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Country of Primary Residence </span>
+				<div class="BasicInfo_xiala">
+					<input class="value_show" type="text" value="[#if iContact.primaryResidence??]${iContact.primaryResidence.nameEn!}[/#if]">
+					<input class="value_hidden validate[required]" type="hidden" [#if iContact.primaryResidence??] value="${iContact.primaryResidence.id!}" [/#if] name="iContact.primaryResidence.id" data-prompt-target="priResError">
+					<ul class="regiter_xiala_ul" id="main_contact_primary_res">
+						<!-- 主要居住国 -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="priResError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="BasicInfo_zhuxi">
+			For non-permanent HKID card holder, please provide a copy of travel document for nationality verification
+		</div>
+		<div class="BasicInfo_title BasicInfo_title_margin">
+			<span class="BasicInfo_title_dabiao">Level of Education</span>
+		</div>
+		<div class="form-group" style="margin-top: 40px;">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Level of Education </span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContact.levelOfEducation!}" name="iContact.levelOfEducation">
+					<input type="text" class="value_show validate[required]" data-prompt-target="levEduError" value="${iContact.eduLevelName!}">
+					<ul class="regiter_xiala_ul" id="main_contact_level_edu">
+						<!-- 教育程度 -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="levEduError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="BasicInfo_title BasicInfo_title_margin">
+			<span class="BasicInfo_title_dabiao">Main Applicant's Occupation Information</span>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Employment Details </span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" name="iContact.employmentDetail" value="${iContact.employmentDetail!}">
+					<input type="text" class="value_show validate[required]" value="${iContact.employmentDetail!}" data-prompt-target="empDetailError">
+					<ul class="regiter_xiala_ul" id="main_contact_emp_detail">
+						<li alue="Employed">
+							Employed
+						</li>
+						<li value="self-Employed">
+							self-Employed
+						</li>
+						<li value="Unemployed">
+							Unemployed
+						</li>
+						<li value="Retired">
+							Retired
+						</li>
+						<!--  -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="empDetailError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Name of Current Employer</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContact.employerName" value="${iContact.employerName!}" data-prompt-target='icontaCurrentEmpError'>
+				<span id="icontaCurrentEmpError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Nature of Business</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContact.employerBus" value="${iContact.employerBus!}" data-prompt-target='icontaNatureBusError'>
+				<span id="icontaNatureBusError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="BasicInfo_xuxian"></div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Occupation</span>
+				<div class="BasicInfo_xiala">
+					<input class="value_hidden" type="hidden" name="iContact.occupation" value="${iContact.occupation!}">
+					<input class="value_show validate[required]" type="text" data-prompt-target="occupationError" value="${iContact.occupationName!}">
+					<ul class="regiter_xiala_ul" id="main_contact_occupation">
+						<!-- 职业分类 -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="occupationError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<p class="font_gray_all_right">
+					Is the Customer a licensed representative of any licensed/registered persons of the Securities and Futures Commission in Hong Kong?
+				</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<div class="font_gray_all_right">
+					<ul class="BasicInfo_radio">
+						<li>
+							<input type="radio" name="iContact.licenseFlag" value="1" class="regular-radio validate[required]" id="CommissionYes" [#if iContact.licenseFlag?exists && iContact.licenseFlag== '1']checked[/#if] data-prompt-target="licFlagError">
+							<label for="CommissionYes"></label>
+							<span class="font_gray_left">Yes</span>
+						</li>
+						<li>
+							<input type="radio" name="iContact.licenseFlag" value="0" class="regular-radio validate[required]" id="CommissionNo" [#if iContact.licenseFlag?exists && iContact.licenseFlag== '0']checked[/#if] data-prompt-target="licFlagError">
+							<label for="CommissionNo"></label>
+							<span class="font_gray_left">No</span>
+						</li>
+						<li>
+							<span id="licFlagError"></span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<p class="font_gray_all_right">
+					If the answer is “Yes”, please provide a written consent from the relevant employer.
+				</p>
+			</div>
+		</div>
+		<div class="form-group" style="margin-top: 50px; margin-bottom: 5px;">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<p class="font_gray_all_right">
+					Is the Customer a relative of any employee or director of AIM?
+				</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<div class="font_gray_all_right">
+					<ul class="BasicInfo_radio">
+						<li>
+							<input type="radio" name="iContact.aimFlag " value="1" class="regular-radio validate[required] aimFlagRadio" id="directorYes" [#if iContact.aimFlag?exists && iContact.aimFlag== '1']checked[/#if] data-prompt-target="aimNameError">
+							<label for="directorYes"></label>
+							<span class="font_gray_left">Yes</span>
+							<div class="BasicInfo_radio_text">
+								<input type="text" name="iContact.aimName" value="${iContact.aimName!}" class="validate[condRequired[directorYes]]" id="aimNameText">
+							</div>
+						</li>
+						<li>
+							<input type="radio" name="iContact.aimFlag " value="0" class="regular-radio validate[required] aimFlagRadio" id="directorNo" [#if iContact.aimFlag?exists && iContact.aimFlag== '0']checked[/#if] data-prompt-target="aimNameError">
+							<label for="directorNo"></label>
+							<span class="font_gray_left">No</span>
+						</li>
+						<li>
+							<span id="aimNameError"></span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<p class="font_gray_all_right">
+					If the answer is “Yes”, please provide the name of relevant person(s).
+				</p>
+			</div>
+		</div>
+		<div class="BasicInfo_xuxian"></div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Source of Funds and Wealth</span>
+				<div class="font_gray_all_right">
+
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Gift or Inheritance" name="iContact.fundsSource" id="fundsSource_01" class="validate[minCheckbox[1]]" [#if iContact.fundsSource?? && iContact.fundsSource?index_of("Gift or Inheritance")!=-1]checked[/#if]>
+							<label for="fundsSource_01"></label>
+						</div>
+						<span class="login_checkbox_font">a. Gift or Inheritance</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Investment Income" name="iContact.fundsSource" id="fundsSource_02" class="validate[minCheckbox[1]]" [#if iContact.fundsSource?? && iContact.fundsSource?index_of("Investment Income")!=-1]checked[/#if]>
+							<label for="fundsSource_02"></label>
+						</div>
+						<span class="login_checkbox_font">b. Investment Income</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Sale of Asset" name="iContact.fundsSource" id="fundsSource_03" class="validate[minCheckbox[1]]" [#if iContact.fundsSource?? && iContact.fundsSource?index_of("Sale of Asset")!=-1]checked[/#if]>
+							<label for="fundsSource_03"></label>
+						</div>
+						<span class="login_checkbox_font">c. Sale of Asset</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Savings" name="iContact.fundsSource" id="fundsSource_04" class="validate[minCheckbox[1]]" [#if iContact.fundsSource?? && iContact.fundsSource?index_of("Savings")!=-1]checked[/#if]>
+							<label for="fundsSource_04"></label>
+						</div>
+						<span class="login_checkbox_font">d. Savings</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Self-employment Income" name="iContact.fundsSource" id="fundsSource_05" class="validate[minCheckbox[1]]" [#if iContact.fundsSource?? && iContact.fundsSource?index_of("Self-employment Income")!=-1]checked[/#if]>
+							<label for="fundsSource_05"></label>
+						</div>
+						<span class="login_checkbox_font">e. Self-employment Income</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Settlement of Insurance" name="iContact.fundsSource" id="fundsSource_06" class="validate[minCheckbox[1]]" [#if iContact.fundsSource?? && iContact.fundsSource?index_of("Settlement of Insurance")!=-1]checked[/#if]>
+							<label for="fundsSource_06"></label>
+						</div>
+						<span class="login_checkbox_font">f. Settlement of Insurance</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Wages" name="iContact.fundsSource" id="fundsSource_07" class="validate[minCheckbox[1]]" [#if iContact.fundsSource?? && iContact.fundsSource?index_of("Wages")!=-1]checked[/#if]>
+							<label for="fundsSource_07"></label>
+						</div>
+						<span class="login_checkbox_font">g. Wages</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div" style="width: 450px;">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Others" name="iContact.fundsSource" id="fundsSource_08" class="validate[minCheckbox[1]]" [#if iContact.fundsSource?? && iContact.fundsSource?index_of("Others")!=-1]checked[/#if]>
+							<label for="fundsSource_08"></label>
+						</div>
+						<span class="login_checkbox_font">h. Others (Please Specify)</span>
+						<div class="BasicInfo_radio_text">
+							<input type="text" name="iContact.fundsSourceDesc">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="BasicInfo_xuxian"></div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Annual Income</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContact.annualIncome!}" name="iContact.annualIncome">
+					<input type="text" class="value_show validate[required]" value="${iContact.annualIncome!}" data-prompt-target="accIncomeNameError">
+					<ul class="regiter_xiala_ul" id="main_contact_annIncome">
+						<li value="< HK$ 250,000">
+							&lt; HK$ 250,000
+						</li>
+						<li value="HK$ 250,000-HK$ 749,999">
+							HK$ 250,000-HK$ 749,999
+						</li>
+						<li value="HK$ 750,000-HK$ 1,999,999">
+							HK$ 750,000-HK$ 1,999,999
+						</li>
+						<li value="HK$ 2,000,000-HK$ 4,999,999">
+							HK$ 2,000,000-HK$ 4,999,999
+						</li>
+						<li value="> HK$ 5,000,000">
+							&gt; HK$ 5,000,000
+						</li>
+						<!-- 全年收入 -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="accIncomeNameError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Net Worth</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContact.netWorth!}" name="iContact.netWorth">
+					<input type="text" class="value_show validate[required]" value="${iContact.netWorth!}" data-prompt-target="netWorthError">
+					<ul class="regiter_xiala_ul" id="main_contact_netWorth">
+						<li value="< HK$ 250,000">
+							&lt; HK$ 250,000
+						</li>
+						<li value="HK$ 250,000-HK$ 749,999">
+							HK$ 250,000-HK$ 749,999
+						</li>
+						<li value="HK$ 750,000-HK$ 1,999,999">
+							HK$ 750,000-HK$ 1,999,999
+						</li>
+						<li value="HK$ 2,000,000-HK$ 4,999,999">
+							HK$ 2,000,000-HK$ 4,999,999
+						</li>
+						<li value=">HK$ 5,000,000">
+							&gt; HK$ 5,000,000
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="netWorthError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Liquid Asset</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContact.liquidAsset!}" name="iContact.liquidAsset">
+					<input type="text" class="value_show validate[required]" value="${iContact.liquidAsset!}" data-prompt-target="liqueAssError">
+					<ul class="regiter_xiala_ul" id="main_contact_liquidAsset">
+						<li value="< HK$ 250,000">
+							&lt; HK$ 250,000
+						</li>
+						<li value="HK$ 250,000-HK$ 749,999">
+							HK$ 250,000-HK$ 749,999
+						</li>
+						<li value="HK$ 750,000-HK$ 1,999,999">
+							HK$ 750,000-HK$ 1,999,999
+						</li>
+						<li value="HK$ 750,000-HK$ 1,999,999">
+							HK$ 750,000-HK$ 1,999,999
+						</li>
+						<li value=">HK$ 5,000,000">
+							&gt; HK$ 5,000,000
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="liqueAssError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="BasicInfo_xuxian"></div>
+		<div class="BasicInfo_fenlei" style="margin-bottom: 30px;">
+			Investment Objective and Experience
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Risk Profile</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContact.riskProfile!}" name="iContact.riskProfile">
+					<input type="text" class="value_show validate[required]" value="${iContact.riskProfile!}" data-prompt-target="riskProError">
+					<ul class="regiter_xiala_ul" id="main_contact_riskProfile">
+						<li value="Conservative">
+							1 - Conservative
+						</li>
+						<li value="Moderately Conservative">
+							2 - Moderately Conservative
+						</li>
+						<li value="Balanced">
+							3 - Balanced
+						</li>
+						<li value="Moderately Aggressive">
+							4 - Moderately Aggressive
+						</li>
+						<li value="Aggressive">
+							5 - Aggressive
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="riskProError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Investment Horizon</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContact.investHorizon!}" name="iContact.investHorizon">
+					<input type="text" class="value_show validate[required]" data-prompt-target="investHozError" value="${iContact.investHorizon!}">
+					<ul class="regiter_xiala_ul" id="main_contact_investHorizon">
+						<li value="<1y">
+							Less than 1 year
+						</li>
+						<li value="1-3y">
+							1 year to 3 years
+						</li>
+						<li value=">3Y">
+							More than 3 years
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="investHozError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Investment Objective</span>
+				<div class="font_gray_all_right">
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="aa" name="iContact.investObj" id="m_c_investObj_01" class="validate[minCheckbox[1]]" [#if iContact.investObj?? && iContact.investObj?index_of("aa")!=-1]checked[/#if]>
+							<label for="m_c_investObj_01"></label>
+						</div>
+						<span class="login_checkbox_font">Capital Preservation</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="bb" name="iContact.investObj" id="m_c_investObj_02" class="validate[minCheckbox[1]]" [#if iContact.investObj?? && iContact.investObj?index_of("bb")!=-1]checked[/#if]>
+							<label for="m_c_investObj_02"></label>
+						</div>
+						<span class="login_checkbox_font">Capital Gain</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="cc" name="iContact.investObj" id="m_c_investObj_03" class="validate[minCheckbox[1]]" [#if iContact.investObj?? && iContact.investObj?index_of("cc")!=-1]checked[/#if]>
+							<label for="m_c_investObj_03"></label>
+						</div>
+						<span class="login_checkbox_font">Retirement Planning</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="dd" name="iContact.investObj" id="m_c_investObj_04" class="validate[minCheckbox[1]]" [#if iContact.investObj?? && iContact.investObj?index_of("dd")!=-1]checked[/#if]>
+							<label for="m_c_investObj_04"></label>
+						</div>
+						<span class="login_checkbox_font">Saving for Children</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div" style="width: 450px;">
+						<div class="login_checkbox">
+							<input type="checkbox" value="ee" name="iContact.investObj" id="m_c_investObj_05" class="validate[minCheckbox[1]]" [#if iContact.investObj?? && iContact.investObj?index_of("ee")!=-1]checked[/#if]>
+							<label for="m_c_investObj_05"></label>
+						</div>
+						<span class="login_checkbox_font">Others</span>
+						<div class="BasicInfo_radio_text">
+							<input type="text" name="iContact.investObjDesc" value="${iContact.investObjDesc!}">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Investment Experience</span>
+				<div class="font_gray_all_right">
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_01" name="iContact.investExperience" id="m_c_investExp_01" class="validate[minCheckbox[1]]" [#if iContact.investExperience?? && iContact.investExperience?index_of("investExp_01")!=-1]checked[/#if]>
+							<label for="m_c_investExp_01"></label>
+						</div>
+						<span class="login_checkbox_font">Funds</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_02" name="iContact.investExperience" id="m_c_investExp_02" class="validate[minCheckbox[1]]" [#if iContact.investExperience?? && iContact.investExperience?index_of("investExp_02")!=-1]checked[/#if]>
+							<label for="m_c_investExp_02"></label>
+						</div>
+						<span class="login_checkbox_font">Hong Kong and Overseas Stocks</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_03" name="iContact.investExperience" id="m_c_investExp_03" class="validate[minCheckbox[1]]" [#if iContact.investExperience?? && iContact.investExperience?index_of("investExp_03")!=-1]checked[/#if]>
+							<label for="m_c_investExp_03"></label>
+						</div>
+						<span class="login_checkbox_font">Bonds</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_04" name="iContact.investExperience" id="m_c_investExp_04" class="validate[minCheckbox[1]]" [#if iContact.investExperience?? && iContact.investExperience?index_of("investExp_04")!=-1]checked[/#if]>
+							<label for="m_c_investExp_04"></label>
+						</div>
+						<span class="login_checkbox_font">Options / Warrants</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_05" name="iContact.investExperience" id="m_c_investExp_05" class="validate[minCheckbox[1]]" [#if iContact.investExperience?? && iContact.investExperience?index_of("investExp_05")!=-1]checked[/#if]>
+							<label for="m_c_investExp_05"></label>
+						</div>
+						<span class="login_checkbox_font">Other Derivatives</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_06" name="iContact.investExperience" id="m_c_investExp_06" class="validate[minCheckbox[1]]" [#if iContact.investExperience?? && iContact.investExperience?index_of("investExp_06")!=-1]checked[/#if]>
+							<label for="m_c_investExp_06"></label>
+						</div>
+						<span class="login_checkbox_font">N/A</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="BasicInfo_xuxian"></div>
+
+		<div class="BasicInfo_fenlei">
+			US Taxation Status of the Applicant
+		</div>
+		<div class="BasicInfo_wenjuan">
+			<div class="BasicInfo_font_gray">
+				Currently file tax return in the US?
+			</div>
+			<div class="BasicInfo_radio">
+				<ul>
+					<li>
+						<input type="radio" name="iContact.usFaxFlag" id="CurrentlyYes" class="regular-radio validate[required]" value="1" [#if iContact.usFaxFlag?exists && iContact.usFaxFlag== '1']checked[/#if] data-prompt-target="usFaxError">
+						<label for="CurrentlyYes"></label>
+						<span class="font_gray_left">Yes</span>
+					</li>
+					<li>
+						<input type="radio" name="iContact.usFaxFlag" id="CurrentlyNo" class="regular-radio validate[required]" value="0" [#if iContact.usFaxFlag?exists && iContact.usFaxFlag== '0']checked[/#if] data-prompt-target="usFaxError">
+						<label for="CurrentlyNo"></label>
+						<span class="font_gray_left">No</span>
+					</li>
+					<li>
+						<span id="usFaxError"></span>
+					</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			<br>
+
+			<div class="BasicInfo_font_gray">
+				Is (i) the Customer; and/or (ii) the Customer’s spouse, partner, child(ren) and/or parent(s); and/or (iii) spouse(s) or partner(s) of the Customer’s child(ren); and/or (iv) the Customer’s close associate(s)## currently or previously entrusted with prominent public functions (e.g. Heads of State,
+				Heads of government, senior politicians/important political party officials, senior government officials, senior judicial officials, senior military officials, senior executives of any state-owned enterprises or religious leaders) for any city, region or country?
+			</div>
+			<div class="BasicInfo_radio">
+				<ul>
+					<li>
+						<input type="radio" name="iContact.closeRelateFlag" class="regular-radio closeFlagRadio validate[required]" value="1" [#if iContact.closeRelateFlag?exists && iContact.closeRelateFlag== '1']checked[/#if] id="radio-1-1" data-prompt-target="closeRelateError">
+						<label for="radio-1-1"></label>
+						<span class="font_gray_left">Yes&nbsp;&nbsp;&nbsp;(please specify)</span>
+						<div class="BasicInfo_radio_text" style="width: 900px;">
+							<input type="text" value="${iContact.closeRelateDesc!}" name="iContact.closeRelateDesc" id="closeFlagDesc" class="validate[condRequired[radio-1-1]]">
+						</div>
+					</li>
+					<li>
+						<input type="radio" name="iContact.closeRelateFlag" class="regular-radio closeFlagRadio validate[required]" value="0" [#if iContact.closeRelateFlag?exists && iContact.closeRelateFlag== '0']checked[/#if] id="radio-1-2" data-prompt-target="closeRelateError">
+						<label for="radio-1-2"></label>
+						<span class="font_gray_left">No</span>
+					</li>
+					<li>
+						<span id="closeRelateError"></span>
+					</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			<br>
+			<div class="BasicInfo_radio_zhuxi">
+				## a person is a “close associate” of an individual if the person is: (a) an individual who has close business relations with the first-mentioned individual, including an individual who is a beneficial owner of a legal person or trust of which the first-mentioned individual is also a beneficial
+				owner; or (b) an individual who is the beneficial owner of a legal person or trust that is set up for the benefit of the first-mentioned individual.
+			</div>
+		</div>
+		<div class="BasicInfo_show">
+			<div class="BasicInfo_title BasicInfo_title_margin">
+				<span class="BasicInfo_title_dabiao">Residential Address</span>
+				<span class="BasicInfo_title_ico"><img src="${base}/res/images/ico_07.png" width="24" height="24" alt=""> </span>
+				<span class="BasicInfo_title_ico_hide"><img src="${base}/res/images/ico_08.png" width="24" height="24" alt=""> </span>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Room / Flat</span>
+					<input class="BasicInfo_input validate[required]" type="text" name="iContactAddr_r.room" value="${iContactAddr_r.room!}" id="resAddr_room" data-prompt-target="icontact_resAddr_room_error">
+					<span id="icontact_resAddr_room_error" class="formError-customer-span"></span>
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Floor</span>
+					<input class="BasicInfo_input validate[required]" type="text" name="iContactAddr_r.floor" value="${iContactAddr_r.floor!}" id="resAddr_floor" data-prompt-target="icontact_resAddr_floor_error">
+					<span id="icontact_resAddr_floor_error" class="formError-customer-span"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Block / Building</span>
+					<input class="BasicInfo_input validate[required]" type="text" name="iContactAddr_r.building" value="${iContactAddr_r.building!}" id="resAddr_building" data-prompt-target="icontact_resAddr_building_error">
+					<span id="icontact_resAddr_building_error" class="formError-customer-span"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">Name of Estate / Court</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long validate[required]" type="text" name="iContactAddr_r.nameOfEstate" value="${iContactAddr_r.nameOfEstate!}" id="resAddr_court" data-prompt-target="icontact_resAddr_court_error">
+						<span id="icontact_resAddr_court_error" class="formError-customer-span"></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">No. and Name of Street / Road</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long validate[required]" type="text" name="iContactAddr_r.streetNo" value="${iContactAddr_r.streetNo!}" id="resAddr_road" data-prompt-target="icontact_resAddr_road_error">
+						<span id="icontact_resAddr_road_error" class="formError-customer-span"></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">District</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long validate[required]" type="text" name="iContactAddr_r.district" value="${iContactAddr_r.district!}" id="resAddr_district" data-prompt-target="icontact_resAddr_district_error">
+						<span id="icontact_resAddr_district_error" class="formError-customer-span"></span>
+						<div class="BasicInfo_zhuxi">
+							<span>* HK / KLN / NT</span>
+							</br>
+							<span>* Please delete as appropriate.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Province</span>
+					<div class="BasicInfo_xiala">
+						<input type="text" value="" name="iContactAddr_r.province" id="resAddr_province" class="validate[required]" data-prompt-target="addr_r_provinceError">
+						<span class="register_xiala_ico"></span>
+					</div>
+					<span id="addr_r_provinceError" class="formError-customer-span"></span>
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Country</span>
+					<div class="BasicInfo_xiala">
+						<input type="hidden" class="value_hidden" name="iContactAddr_r.country.id" [#if iContactAddr_r.country?exists]value="${iContactAddr_r.country.id!}" [/#if] id="resAddr_country">
+						<input type="text" class="value_show validate[required]" [#if iContactAddr_r.country?exists] value="${iContactAddr_r.country.nameEn!}" [/#if] id="resAddr_country_name" data-prompt-target="addr_r_countryError">
+						<ul class="regiter_xiala_ul" id="icont_addr_r_country">
+							<!-- 主账户-居住地址--所在国家 -->
+						</ul>
+						<span class="register_xiala_ico"></span>
+					</div>
+					<span id="addr_r_countryError" class="formError-customer-span"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Postal Code</span>
+					<input class="BasicInfo_input validate[required]" type="text" name="iContactAddr_r.postCode" value="${iContactAddr_r.postCode!}" id="resAddr_postCode" data-prompt-target="addr_r_postCodeError">
+					<span id="addr_r_postCodeError" class="formError-customer-span"></span>
+				</div>
+			</div>
+			<div class="BasicInfo_zhuxi">
+				# Must be completed for addresses out of HK
+				<br>
+				<br>
+				Please submit address proof. Post office box will not be accepted
+			</div>
+		</div>
+		<div class="BasicInfo_show">
+			<div class="BasicInfo_title BasicInfo_title_margin">
+				<span class="BasicInfo_title_dabiao">Permanent Address</span>
+				<span class="BasicInfo_title_tishi_gray">(if different from the above residential address)</span>
+				<span class="BasicInfo_title_ico"><img src="${base}/res/images/ico_07.png" width="24" height="24" alt=""> </span>
+				<span class="BasicInfo_title_ico_hide"><img src="${base}/res/images/ico_08.png" width="24" height="24" alt=""> </span>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Room / Flat</span>
+					<input class="BasicInfo_input" type="text" name="iContactAddr_p.room" value="${iContactAddr_p.room!}" id="perAddr_room">
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Floor</span>
+					<input class="BasicInfo_input" type="text" name="iContactAddr_p.floor" value="${iContactAddr_p.floor!}" id="perAddr_floor">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Block / Building</span>
+					<input class="BasicInfo_input" type="text" name="iContactAddr_p.building" value="${iContactAddr_p.building!}" id="perAddr_building">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">Name of Estate / Court</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactAddr_p.nameOfEstate" value="${iContactAddr_p.nameOfEstate!}" id="perAddr_court">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">No. and Name of Street / Road</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactAddr_p.streetNo" value="${iContactAddr_p.streetNo!}" id="perAddr_road">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">District</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactAddr_p.district" value="${iContactAddr_p.district!}" id="perAddr_district">
+						<br>
+						<div class="BasicInfo_zhuxi">
+							* HK / KLN / NT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Please delete as appropriate.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Province</span>
+					<div class="BasicInfo_xiala">
+						<input type="text" name="iContactAddr_p.province" value="${iContactAddr_p.province!}" id="perAddr_province">
+						<span class="register_xiala_ico"></span>
+					</div>
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Country</span>
+					<div class="BasicInfo_xiala">
+						<input type="hidden" name="iContactAddr_p.country.id" [#if iContactAddr_p.country?exists]value="${iContactAddr_p.country.id!}" [/#if] id="perAddr_country">
+						<input type="text" class="value_show" [#if iContactAddr_p.country?exists]value="${iContactAddr_p.country.nameEn!}" [/#if]  id="perAddr_country_name">
+						<ul class="regiter_xiala_ul" id="icont_addr_p_country">
+							<!-- 主账户-永久地址--所在国家 -->
+						</ul>
+						<span class="register_xiala_ico"></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Postal Code</span>
+					<input class="BasicInfo_input" type="text" name="iContactAddr_p.postCode" value="${iContactAddr_p.postCode!}" id="perAddr_postCode">
+				</div>
+			</div>
+			<div class="BasicInfo_zhuxi">
+				# Must be completed for addresses out of HK
+				<br>
+				<br>
+				Please submit address proof. Post office box will not be accepted
+			</div>
+		</div>
+		<div class="BasicInfo_show">
+			<div class="BasicInfo_title BasicInfo_title_margin">
+				<span class="BasicInfo_title_dabiao">Correspondence Address</span>
+				<span class="BasicInfo_title_tishi_gray">(if different from the above residential address)</span>
+				<span class="BasicInfo_title_ico"><img src="${base}/res/images/ico_07.png" width="24" height="24" alt=""> </span>
+				<span class="BasicInfo_title_ico_hide"><img src="${base}/res/images/ico_08.png" width="24" height="24" alt=""> </span>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Room / Flat</span>
+					<input class="BasicInfo_input" type="text" name="iContactAddr_c.room" value="${iContactAddr_c.room!}" id="corAddr_room">
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Floor</span>
+					<input class="BasicInfo_input" type="text" name="iContactAddr_c.floor" value="${iContactAddr_c.floor!}" id="corAddr_floor">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Block / Building</span>
+					<input class="BasicInfo_input" type="text" name="iContactAddr_c.building" value="${iContactAddr_c.building!}" id="corAddr_building">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">Name of Estate / Court</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactAddr_c.nameOfEstate" value="${iContactAddr_c.nameOfEstate!}" id="corAddr_court">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">No. and Name of Street / Road</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactAddr_c.streetNo" value="${iContactAddr_c.streetNo!}" id="corAddr_road">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">District</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactAddr_c.district" value="${iContactAddr_c.district!}" id="corAddr_district">
+						<br>
+						<div class="BasicInfo_zhuxi">
+							* HK / KLN / NT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Please delete as appropriate.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Province</span>
+					<div class="BasicInfo_xiala">
+						<input type="text" name="iContactAddr_c.province" id="corAddr_province">
+						<span class="register_xiala_ico"></span>
+					</div>
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Country</span>
+					<div class="BasicInfo_xiala">
+						<input type="hidden" class="value_hidden" name="iContactAddr_c.country.id" [#if iContactAddr_c.country?exists]value="${iContactAddr_c.country.id!}" [/#if] id="corAddr_country">
+						<input type="text" class="value_show" [#if iContactAddr_c.country?exists]value="${iContactAddr_c.country.nameEn!}" [/#if] id="corAddr_country_name">
+						<ul class="regiter_xiala_ul" id="icont_addr_c_country">
+							<!-- 主账户-通信地址--所在国家 -->
+						</ul>
+						<span class="register_xiala_ico"></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Postal Code</span>
+					<input class="BasicInfo_input" type="text" name="iContactAddr_c.postCode" id="corAddr_postCode">
+				</div>
+			</div>
+			<div class="BasicInfo_zhuxi">
+				# Must be completed for addresses out of HK
+				<br>
+				<br>
+				Please submit address proof. Post office box will not be accepted
+			</div>
+		</div>
+		<div class="BasicInfo_title BasicInfo_title_margin">
+			<span class="BasicInfo_title_dabiao">Telephone/Fax/Email Contact Details</span>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Residential</span>
+				<input class="BasicInfo_input BasicInfo_input_before" type="text" name="iContact.residentialCountryCode" value="${iContact.residentialCountryCode!}">
+				<input class="BasicInfo_input BasicInfo_input_after validate[required]" type="text" name="iContact.residentialPhoneNumber" value="${iContact.residentialPhoneNumber!}" data-prompt-target="resiDentialError">
+				<span id="resiDentialError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Fax</span>
+				<input class="BasicInfo_input BasicInfo_input_before" type="text" name="iContact.faxCountryCode" value="${iContact.faxCountryCode!}">
+				<input class="BasicInfo_input BasicInfo_input_after validate[required]" type="text" name="iContact.faxPhoneNumber" value="${iContact.faxPhoneNumber!}" data-prompt-target="mailContaFaxError">
+				<span id="mailContaFaxError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Mobile</span>
+				<input class="BasicInfo_input BasicInfo_input_before" type="text" name="iContact.mobileCountryCode" value="${iContact.mobileCountryCode!}">
+				<input class="BasicInfo_input BasicInfo_input_after validate[required]" type="text" name="iContact.mobilePhoneNumber" value="${iContact.mobilePhoneNumber!}" data-prompt-target="mailContaMobileError">
+				<span id="mailContaMobileError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Email</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContact.email" value="${iContact.email!}" data-prompt-target="mailContaEmailError">
+				<span id="mailContaEmailError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Office</span>
+				<input class="BasicInfo_input BasicInfo_input_before" type="text" name="iContact.officeCountryCode" value="${iContact.officeCountryCode!}">
+				<input class="BasicInfo_input BasicInfo_input_after validate[required]" type="text" name="iContact.officePhoneNumber" value="${iContact.officePhoneNumber!}" data-prompt-target="mailContaOfficeError">
+				<span id="mailContaOfficeError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="BasicInfo_zhuxi">
+			* For Individual Account, this mobile and email will be used for receiving i-Invest platform password and statement email notification.
+			<br>
+			<br>
+			For Joint Account, please refer to section 4f.
+		</div>
+		<input type="hidden" name="iContact.id" value="${iContact.id!}" id="iContactId" />
+		<input type="hidden" name="iContactAddr_r.id" value="${iContactAddr_r.id!}" id="iAddr_r" />
+		<input type="hidden" name="iContactAddr_p.id" value="${iContactAddr_p.id!}" id="iAddr_p" />
+		<input type="hidden" name="iContactAddr_c.id" value="${iContactAddr_c.id!}" id="iAddr_c" />
+	</form>
+	<!-- main contact end -->
+</div>
+
+<div class="Jointapplicatnt">
+	<!-- joint contact begin -->
+	<form action="" id="joint_contact_detail" name="joint_contact_detail" method="post" [#if iAccount.accType?exists==false || iAccount.accType== 'I']style="display: none"[/#if]>
+
+		<div class="BasicInfo_title">
+			<span class="BasicInfo_title_dabiao">Joint Applicant's Information (Mandatory)</span>
+			<span class="BasicInfo_title_tishi_blue">Name as shown on HKID card / Passport</span>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Joint Applicant</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContactJoint.appellation!}" name="iContactJoint.appellation">
+					<input type="text" class="value_show validate[required]" data-prompt-target="jContactAppError" value="${iContactJoint.appellation!}">
+					<ul class="regiter_xiala_ul">
+						<li value="Dr">
+							Dr
+						</li>
+						<li value="Mr">
+							Mr
+						</li>
+						<li value="Mrs">
+							Mrs
+						</li>
+						<li value="Ms">
+							Ms
+						</li>
+						<li value="Miss">
+							Miss
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactAppError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Last Name (in English)</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContactJoint.lastName" value="${iContactJoint.lastName!}" data-prompt-target="jContactLastNameError">
+				<span id="jContactLastNameError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">First Name (in English)</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContactJoint.firstName" value="${iContactJoint.firstName!}" data-prompt-target="jContactFirstNameError">
+				<span id="jContactFirstNameError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Alias</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContactJoint.nickName" value="${iContactJoint.nickName!}" data-prompt-target="jContactNickNameError">
+				<span id="jContactNickNameError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Name in Chinese</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContactJoint.nameChn" value="${iContactJoint.nameChn!}" data-prompt-target="jContactNameChnError">
+				<span id="jContactNameChnError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Country of Birth</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" name="iContactJoint.country.id" [#if iContactJoint.country?exists]value="${iContactJoint.country.id!}"[/#if]>
+					<input type="text" class="value_show validate[required]" [#if iContactJoint.country?exists]value="${iContactJoint.country.nameEn!}" [/#if]  data-prompt-target="jContactcountryNameError" />
+					<ul class="regiter_xiala_ul" id="joint_contact_born_country">
+						<!-- 出生地 -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactcountryNameError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Sex</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" name="iContactJoint.gender" class="value_hidden" value="${iContactJoint.gender!}" />
+					<input type="text" class="value_show validate[required]" value="${iContactJoint.sexName!}" data-prompt-target="jContactGenderError">
+					<ul class="regiter_xiala_ul">
+						<li value="F">
+							Female
+						</li>
+						<li value="M">
+							Male
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactGenderError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Date of Birth (dd/mm/yyyy)</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContactJoint.born" readonly="" id="iContactJoint_born" value="${iContactJoint.born!}" data-prompt-target="jContactBornError">
+				<span id="jContactBornError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">HKID^/ Passport No. </span>
+				<div class="BasicInfo_xiala">
+					<input type="text" value="${iContactJoint.certNo!}" name="iContactJoint.certNo" class="validate[required]" data-prompt-target="jContactcertNoError">
+					<span id="jContactcertNoError" class="formError-customer-span"></span>
+				</div>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Nationality</span>
+				<div class="BasicInfo_xiala">
+					<input class="value_hidden" type="hidden" name="iContactJoint.nationality.id">
+					<input class="value_show validate[required]" type="text" [#if iContactJoint.nationality??]value="iContactJoint.nationality.nameEn!" [/#if] data-prompt-target="jContactNationError">
+					<ul class="regiter_xiala_ul" id="joint_contact_nationality">
+						<!-- 国籍 -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactNationError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Country of Primary Residence </span>
+				<div class="BasicInfo_xiala">
+					<input class="value_hidden" type="hidden" name="iContactJoint.primaryResidence.id">
+					<input class="value_show validate[required]" type="text" [#if iContactJoint.primaryResidence??]value="${iContactJoint.primaryResidence.name!}" [/#if] data-prompt-target="jContactPrimaryError">
+					<ul class="regiter_xiala_ul" id="joint_contact_primary_res">
+						<!-- 主要居住国 -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactPrimaryError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Relationship with Main Applicant:</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContactJoint.relateTypeDesc" value="${iContactJoint.relateTypeDesc!}" data-prompt-target="jContactRelateTypeError">
+				<span id="jContactRelateTypeError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="BasicInfo_zhuxi">
+			For non-permanent HKID card holder, please provide a copy of travel document for nationality verification
+		</div>
+		<div class="BasicInfo_title BasicInfo_title_margin">
+			<span class="BasicInfo_title_dabiao">Level of Education</span>
+		</div>
+		<div class="form-group" style="margin-top: 40px;">
+			· 1
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Level of Education </span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContactJoint.levelOfEducation!}" name="iContactJoint.levelOfEducation">
+					<input type="text" class="value_show validate[required]" value="${iContactJoint.eduLevelName!}" data-prompt-target="jContactEduLevelError">
+					<ul class="regiter_xiala_ul" id="joint_contact_level_edu">
+						<!-- 教育程度 -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactEduLevelError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="BasicInfo_title BasicInfo_title_margin">
+			<span class="BasicInfo_title_dabiao">Joint Applicant's Occupation Information</span>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Employment Details </span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContactJoint.employmentDetail!}" name="iContactJoint.employmentDetail">
+					<input type="text" class="value_show validate[required]" value="${iContactJoint.employmentDetail!}" data-prompt-target="jContactEpmDetailError">
+					<ul class="regiter_xiala_ul" id="joint_contact_emp_detail">
+						<li alue="Employed">
+							Employed
+						</li>
+						<li value="self-Employed">
+							self-Employed
+						</li>
+						<li value="Unemployed">
+							Unemployed
+						</li>
+						<li value="Retired">
+							Retired
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactEpmDetailError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Name of Current Employer</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContactJoint.employerName" value="${iContactJoint.employerName!}" data-prompt-target="jContactEpmNameError">
+				<span id="jContactEpmNameError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Nature of Business</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContactJoint.employerBus" value="${iContactJoint.employerBus!}" data-prompt-target="jContactEpmBusError">
+				<span id="jContactEpmBusError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="BasicInfo_xuxian"></div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Occupation</span>
+				<div class="BasicInfo_xiala">
+					<input class="value_hidden" type="hidden" name="iContactJoint.occupation" value="${iContactJoint.occupation!}">
+					<input class="value_show validate[required]" type="text" value="${iContactJoint.occupationName!}" data-prompt-target="jContactOccupationError">
+					<ul class="regiter_xiala_ul" id="joint_contact_occupation">
+						<!-- 职业分类 -->
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactOccupationError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<p class="font_gray_all_right">
+					Is the Customer a licensed representative of any licensed/registered persons of the Securities and Futures Commission in Hong Kong?
+				</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<div class="font_gray_all_right">
+					<ul class="BasicInfo_radio">
+						<li>
+							<input type="radio" name="iContactJoint.licenseFlag" value="1" class="regular-radio validate[required]" id="jointCommissionYes" [#if iContactJoint.licenseFlag?exists && iContactJoint.licenseFlag== '1']checked[/#if] data-prompt-target="jContactCommisonError">
+							<label for="jointCommissionYes"></label>
+							<span class="font_gray_left">Yes</span>
+						</li>
+						<li>
+							<input type="radio" name="iContactJoint.licenseFlag" value="0" class="regular-radio validate[required]" id="jointCommissionNo" [#if iContactJoint.licenseFlag?exists && iContactJoint.licenseFlag== '0']checked[/#if] data-prompt-target="jContactCommisonError">
+							<label for="jointCommissionNo"></label>
+							<span class="font_gray_left">No</span>
+						</li>
+						<li>
+							<span id="jContactCommisonError" class="formError-customer-span"></span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<p class="font_gray_all_right">
+					If the answer is “Yes”, please provide a written consent from the relevant employer.
+				</p>
+			</div>
+		</div>
+		<div class="form-group" style="margin-top: 50px; margin-bottom: 5px;">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<p class="font_gray_all_right">
+					Is the Customer a relative of any employee or director of AIM?
+				</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<div class="font_gray_all_right">
+					<ul class="BasicInfo_radio">
+						<li>
+							<input type="radio" name="iContactJoint.aimFlag " value="1" class="regular-radio validate[required]" id="jointdirectorYes" [#if iContactJoint.aimFlag?exists && iContactJoint.aimFlag== '1']checked[/#if] data-prompt-target="jContactAimflagError">
+							<label for="jointdirectorYes"></label>
+							<span class="font_gray_left">Yes</span>
+							<div class="BasicInfo_radio_text">
+								<input type="text" value="${iContactJoint.aimName!}" name="iContactJoint.aimName" class="validate[condRequired[jointdirectorYes]]" data-prompt-target="jContactAimnameError">
+								<span id="jContactAimnameError" class="formError-customer-span"></span>
+							</div>
+						</li>
+						<li>
+							<input type="radio" name="iContactJoint.aimFlag " value="0" class="regular-radio validate[required]" id="jointdirectorNo" [#if iContactJoint.aimFlag?exists && iContactJoint.aimFlag== '0']checked[/#if] data-prompt-target="jContactAimflagError">
+							<label for="jointdirectorNo"></label>
+							<span class="font_gray_left">No</span>
+						</li>
+						<li>
+							<span id="jContactAimflagError" class="formError-customer-span"></span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left"></span>
+				<p class="font_gray_all_right">
+					If the answer is “Yes”, please provide the name of relevant person(s).
+				</p>
+			</div>
+		</div>
+		<div class="BasicInfo_xuxian"></div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Source of Funds and Wealth</span>
+				<div class="font_gray_all_right">
+
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Gift or Inheritance" class="validate[minCheckbox[1]]" name="iContactJoint.fundsSource" id="joint_fundsSource_01" [#if iContactJoint.fundsSource?exists && iContactJoint.fundsSource?index_of("Gift or Inheritance")!=-1]checked[/#if]>
+							<label for="joint_fundsSource_01"></label>
+						</div>
+						<span class="login_checkbox_font">a. Gift or Inheritance</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Investment Income" class="validate[minCheckbox[1]]" name="iContactJoint.fundsSource" id="joint_fundsSource_02" [#if iContactJoint.fundsSource?exists && iContactJoint.fundsSource?index_of("Investment Income")!=-1]checked[/#if]>
+							<label for="joint_fundsSource_02"></label>
+						</div>
+						<span class="login_checkbox_font">b. Investment Income</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Sale of Asset" class="validate[minCheckbox[1]]" name="iContactJoint.fundsSource" id="joint_fundsSource_03" [#if iContactJoint.fundsSource?exists && iContactJoint.fundsSource?index_of("Sale of Asset")!=-1]checked[/#if]>
+							<label for="joint_fundsSource_03"></label>
+						</div>
+						<span class="login_checkbox_font">c. Sale of Asset</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Savings" class="validate[minCheckbox[1]]" name="iContactJoint.fundsSource" id="joint_fundsSource_04" [#if iContactJoint.fundsSource?exists && iContactJoint.fundsSource?index_of("Savings")!=-1]checked[/#if]>
+							<label for="joint_fundsSource_04"></label>
+						</div>
+						<span class="login_checkbox_font">d. Savings</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Self-employment Income" class="validate[minCheckbox[1]]" name="iContactJoint.fundsSource" id="joint_fundsSource_05" [#if iContactJoint.fundsSource?exists && iContactJoint.fundsSource?index_of("Self-employment Income")!=-1]checked[/#if]>
+							<label for="joint_fundsSource_05"></label>
+						</div>
+						<span class="login_checkbox_font">e. Self-employment Income</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Settlement of Insurance" class="validate[minCheckbox[1]]" name="iContactJoint.fundsSource" id="joint_fundsSource_06" [#if iContactJoint.fundsSource?exists && iContactJoint.fundsSource?index_of("Settlement of Insurance")!=-1]checked[/#if]>
+							<label for="joint_fundsSource_06"></label>
+						</div>
+						<span class="login_checkbox_font">f. Settlement of Insurance</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Wages" class="validate[minCheckbox[1]]" name="iContactJoint.fundsSource" id="joint_fundsSource_07" [#if iContactJoint.fundsSource?exists && iContactJoint.fundsSource?index_of("Wages")!=-1]checked[/#if]>
+							<label for="joint_fundsSource_07"></label>
+						</div>
+						<span class="login_checkbox_font">g. Wages</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div" style="width: 450px;">
+						<div class="login_checkbox">
+							<input type="checkbox" value="Others" class="validate[minCheckbox[1]]" name="iContactJoint.fundsSource" id="joint_fundsSource_08" [#if iContactJoint.fundsSource?exists && iContactJoint.fundsSource?index_of("Others")!=-1]checked[/#if]>
+							<label for="joint_fundsSource_08"></label>
+						</div>
+						<span class="login_checkbox_font">h. Others (Please Specify)</span>
+						<div class="BasicInfo_radio_text">
+							<input type="text" name="iContactJoint.fundsSourceDesc" value="${iContactJoint.fundsSourceDesc!}">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="BasicInfo_xuxian"></div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Annual Income</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContactJoint.annualIncome!}" name="iContactJoint.annualIncome">
+					<input type="text" class="value_show validate[required]" value="${iContactJoint.annualIncome!}" data-prompt-target="jContactAnnIncomeError">
+					<ul class="regiter_xiala_ul" id="joint_contact_annIncome">
+						<li value="< HK$ 250,000">
+							&lt; HK$ 250,000
+						</li>
+						<li value="< HK$ 250,000">
+							HK$ 250,000-HK$ 749,999
+						</li>
+						<li value="< HK$ 250,000">
+							HK$ 750,000-HK$ 1,999,999
+						</li>
+						<li value="< HK$ 250,000">
+							HK$ 2,000,000-HK$ 4,999,999
+						</li>
+						<li value="< HK$ 250,000">
+							&gt; HK$ 5,000,000
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactAnnIncomeError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Net Worth</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContactJoint.netWorth!}" name="iContactJoint.netWorth">
+					<input type="text" class="value_show validate[required]" data-prompt-target="jContactNetWorthError" value="${iContactJoint.netWorth!}">
+					<ul class="regiter_xiala_ul" id="joint_contact_netWorth">
+						<li value="< HK$ 250,000">
+							&lt; HK$ 250,000
+						</li>
+						<li value="< HK$ 250,000">
+							HK$ 250,000-HK$ 749,999
+						</li>
+						<li value="< HK$ 250,000">
+							HK$ 750,000-HK$ 1,999,999
+						</li>
+						<li value="< HK$ 250,000">
+							HK$ 2,000,000-HK$ 4,999,999
+						</li>
+						<li value="< HK$ 250,000">
+							&gt; HK$ 5,000,000
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactNetWorthError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Liquid Asset</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContactJoint.liquidAsset!}" name="iContactJoint.liquidAsset">
+					<input type="text" class="value_show validate[required]" data-prompt-target="jContactLiquidError" value="${iContactJoint.liquidAsset!}">
+					<ul class="regiter_xiala_ul" id="joint_contact_liquidAsset">
+						<li value="< HK$ 250,000">
+							&lt; HK$ 250,000
+						</li>
+						<li value="< HK$ 250,000">
+							HK$ 250,000-HK$ 749,999
+						</li>
+						<li value="< HK$ 250,000">
+							HK$ 750,000-HK$ 1,999,999
+						</li>
+						<li value="< HK$ 250,000">
+							HK$ 2,000,000-HK$ 4,999,999
+						</li>
+						<li value="< HK$ 250,000">
+							&gt; HK$ 5,000,000
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactLiquidError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="BasicInfo_xuxian"></div>
+		<div class="BasicInfo_fenlei" style="margin-bottom: 30px;">
+			Investment Objective and Experience
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Risk Profile</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContactJoint.riskProfile!}" name="iContactJoint.riskProfile">
+					<input type="text" class="value_show validate[required]" data-prompt-target="jContactRiskProfileError" value="${iContactJoint.riskProfile!}">
+					<ul class="regiter_xiala_ul" id="joint_contact_riskProfile">
+						<li value="Conservative">
+							1 - Conservative
+						</li>
+						<li value="Moderately Conservative">
+							2 - Moderately Conservative
+						</li>
+						<li value="Balanced">
+							3 - Balanced
+						</li>
+						<li value="Moderately Aggressive">
+							4 - Moderately Aggressive
+						</li>
+						<li value="Aggressive">
+							5 - Aggressive
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactRiskProfileError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Investment Horizon</span>
+				<div class="BasicInfo_xiala">
+					<input type="hidden" class="value_hidden" value="${iContactJoint.investHorizon!}" name="iContactJoint.investHorizon">
+					<input type="text" class="value_show validate[required]" data-prompt-target="jContactInvestError" value="${iContactJoint.investHorizon!}">
+					<ul class="regiter_xiala_ul" id="joint_contact_investHorizon">
+						<li value="<1y">
+							Less than 1 year
+						</li>
+						<li value="1-3y">
+							1 year to 3 years
+						</li>
+						<li value=">3Y">
+							More than 3 years
+						</li>
+					</ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+				<span id="jContactInvestError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Investment Objective</span>
+				<div class="font_gray_all_right">
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="aa" name="iContact.investObj" class="validate[minCheckbox[1]]" id="j_c_investObj_01" [#if iContact.investObj?exists && iContact.investObj?index_of("aa")!=-1]checked[/#if]>
+							<label for="j_c_investObj_01"></label>
+						</div>
+						<span class="login_checkbox_font">Capital Preservation</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="bb" name="iContactJoint.investObj" class="validate[minCheckbox[1]]" id="j_c_investObj_02" [#if iContact.investObj?exists && iContact.investObj?index_of("bb")!=-1]checked[/#if]>
+							<label for="j_c_investObj_02"></label>
+						</div>
+						<span class="login_checkbox_font">Capital Gain</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="cc" name="iContactJoint.investObj" class="validate[minCheckbox[1]]" id="j_c_investObj_03" [#if iContact.investObj?exists && iContact.investObj?index_of("cc")!=-1]checked[/#if]>
+							<label for="j_c_investObj_03"></label>
+						</div>
+						<span class="login_checkbox_font">Retirement Planning</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="dd" name="iContactJoint.investObj" class="validate[minCheckbox[1]]" id="j_c_investObj_04" [#if iContact.investObj?exists && iContact.investObj?index_of("dd")!=-1]checked[/#if]>
+							<label for="j_c_investObj_04"></label>
+						</div>
+						<span class="login_checkbox_font">Saving for Children</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div" style="width: 450px;">
+						<div class="login_checkbox">
+							<input type="checkbox" value="ee" name="iContactJoint.investObj" class="validate[minCheckbox[1]]" id="j_c_investObj_05" [#if iContact.investObj?exists && iContact.investObj?index_of("ee")!=-1]checked[/#if]>
+							<label for="j_c_investObj_05"></label>
+						</div>
+						<span class="login_checkbox_font">Others</span>
+						<div class="BasicInfo_radio_text">
+							<input type="text" name="iContactJoint.investObjDesc" value="${iContactJoint.investObjDesc!}">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Investment Experience</span>
+				<div class="font_gray_all_right">
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_01" class="validate[minCheckbox[1]]" name="iContactJoint.investExperience" id="j_c_investExp_01" [#if iContactJoint.investExperience?exists && iContactJoint.investExperience?index_of("investExp_01")!=-1]checked[/#if]>
+							<label for="j_c_investExp_01"></label>
+						</div>
+						<span class="login_checkbox_font">Funds</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_02" class="validate[minCheckbox[1]]" name="iContactJoint.investExperience" id="j_c_investExp_02" [#if iContactJoint.investExperience?exists && iContactJoint.investExperience?index_of("investExp_02")!=-1]checked[/#if]>
+							<label for="j_c_investExp_02"></label>
+						</div>
+						<span class="login_checkbox_font">Hong Kong and Overseas Stocks</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_03" class="validate[minCheckbox[1]]" name="iContactJoint.investExperience" id="j_c_investExp_03" [#if iContactJoint.investExperience?exists && iContactJoint.investExperience?index_of("investExp_03")!=-1]checked[/#if]>
+							<label for="j_c_investExp_03"></label>
+						</div>
+						<span class="login_checkbox_font">Bonds</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_04" class="validate[minCheckbox[1]]" name="iContactJoint.investExperience" id="j_c_investExp_04" [#if iContactJoint.investExperience?exists && iContactJoint.investExperience?index_of("investExp_04")!=-1]checked[/#if]>
+							<label for="j_c_investExp_04"></label>
+						</div>
+						<span class="login_checkbox_font">Options / Warrants</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_05" class="validate[minCheckbox[1]]" name="iContactJoint.investExperience" id="j_c_investExp_05" [#if iContactJoint.investExperience?exists && iContactJoint.investExperience?index_of("investExp_05")!=-1]checked[/#if]>
+							<label for="j_c_investExp_05"></label>
+						</div>
+						<span class="login_checkbox_font">Other Derivatives</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div">
+						<div class="login_checkbox">
+							<input type="checkbox" value="investExp_06" class="validate[minCheckbox[1]]" name="iContactJoint.investExperience" id="j_c_investExp_06" [#if iContactJoint.investExperience?exists && iContactJoint.investExperience?index_of("investExp_06")!=-1]checked[/#if]>
+							<label for="j_c_investExp_06"></label>
+						</div>
+						<span class="login_checkbox_font">N/A</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="BasicInfo_xuxian"></div>
+
+		<div class="BasicInfo_fenlei">
+			US Taxation Status of the Applicant
+		</div>
+		<div class="BasicInfo_wenjuan">
+			<div class="BasicInfo_font_gray">
+				Currently file tax return in the US?
+			</div>
+			<div class="BasicInfo_radio">
+				<ul>
+					<li>
+						<input type="radio" name="iContactJoint.usFaxFlag" id="jointCurrentlyYes" class="regular-radio validate[required]" value="1" [#if iContactJoint.usFaxFlag?exists && iContactJoint.usFaxFlag== '1']checked[/#if] data-prompt-target="jContactUsFaxError">
+						<label for="jointCurrentlyYes"></label>
+						<span class="font_gray_left">Yes</span>
+					</li>
+					<li>
+						<input type="radio" name="iContactJoint.usFaxFlag" id="jointCurrentlyNo" class="regular-radio validate[required]" value="0" [#if iContactJoint.usFaxFlag?exists && iContactJoint.usFaxFlag== '0']checked[/#if] data-prompt-target="jContactUsFaxError">
+						<label for="jointCurrentlyNo"></label>
+						<span class="font_gray_left">No</span>
+					</li>
+					<li>
+						<span id="jContactUsFaxError" class="formError-customer-span"></span>
+					</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			<br>
+
+			<div class="BasicInfo_font_gray">
+				Is (i) the Customer; and/or (ii) the Customer’s spouse, partner, child(ren) and/or parent(s); and/or (iii) spouse(s) or partner(s) of the Customer’s child(ren); and/or (iv) the Customer’s close associate(s)## currently or previously entrusted with prominent public functions (e.g. Heads of State,
+				Heads of government, senior politicians/important political party officials, senior government officials, senior judicial officials, senior military officials, senior executives of any state-owned enterprises or religious leaders) for any city, region or country?
+			</div>
+			<div class="BasicInfo_radio">
+				<ul>
+					<li>
+						<input type="radio" name="iContactJoint.closeRelateFlag" class="regular-radio validate[required]" value="1" id="jointradio-1-1" [#if iContactJoint.closeRelateFlag?exists && iContactJoint.closeRelateFlag== '1']checked[/#if] data-prompt-target="jContactClostFlagError">
+						<label for="jointradio-1-1"></label>
+						<span class="font_gray_left">Yes&nbsp;&nbsp;&nbsp;(please specify)</span>
+						<div class="BasicInfo_radio_text" style="width: 900px;">
+							<input type="text" name="iContactJoint.closeRelateDesc" value="${iContactJoint.closeRelateDesc!}" class="validate[condRequired[jointradio-1-1]]" data-prompt-target="jContactCloseRelateDescError">
+							<span id="jContactCloseRelateFlagError" class="formError-customer-span"></span>
+						</div>
+					</li>
+					<li>
+						<input type="radio" name="iContactJoint.closeRelateFlag" class="regular-radio validate[required]" value="0" id="jointradio-1-2" [#if iContactJoint.closeRelateFlag?exists && iContactJoint.closeRelateFlag== '0']checked[/#if] data-prompt-target="jContactClostFlagError">
+						<label for="jointradio-1-2"></label>
+						<span class="font_gray_left">No</span>
+					</li>
+					<li>
+						<span id="jContactClostFlagError" class="formError-customer-span"></span>
+					</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			<br>
+			<div class="BasicInfo_radio_zhuxi">
+				## a person is a “close associate” of an individual if the person is: (a) an individual who has close business relations with the first-mentioned individual, including an individual who is a beneficial owner of a legal person or trust of which the first-mentioned individual is also a beneficial
+				owner; or (b) an individual who is the beneficial owner of a legal person or trust that is set up for the benefit of the first-mentioned individual.
+			</div>
+		</div>
+		<div class="BasicInfo_show">
+			<div class="BasicInfo_title BasicInfo_title_margin">
+				<span class="BasicInfo_title_dabiao">Residential Address</span>
+				<div class="BasicInfo_duoxuan_div">
+					<div class="login_checkbox">
+						<input type="checkbox" id="reAddrAsMain">
+						<label for="reAddrAsMain"></label>
+					</div>
+					<span class="login_checkbox_font">As Main Applicants</span>
+				</div>
+				<span class="BasicInfo_title_ico"><img src="${base}/res/images/ico_07.png" width="24" height="24" alt=""> </span>
+				<span class="BasicInfo_title_ico_hide"><img src="${base}/res/images/ico_08.png" width="24" height="24" alt=""> </span>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Room / Flat</span>
+					<input class="BasicInfo_input validate[required]" type="text" name="iContactJointAddr_r.room" id="j_resAddr_room" value="${iContactJointAddr_r.room!}" data-prompt-target="jContactAddr_r_room_Error">
+					<span id="jContactAddr_r_room_Error" class="formError-customer-span"></span>
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Floor</span>
+					<input class="BasicInfo_input validate[required]" type="text" name="iContactJointAddr_r.floor" id="j_resAddr_floor" value="${iContactJointAddr_r.floor!}" data-prompt-target="jContactAddr_r_floor_Error">
+					<span id="jContactAddr_r_floor_Error" class="formError-customer-span"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Block / Building</span>
+					<input class="BasicInfo_input validate[required]" type="text" name="iContactJointAddr_r.building" id="j_resAddr_building" value="${iContactJointAddr_r.building!}" data-prompt-target="jContactAddr_r_build_Error">
+					<span id="jContactAddr_r_build_Error" class="formError-customer-span"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">Name of Estate / Court</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long validate[required]" type="text" name="iContactJointAddr_r.nameOfEstate" id="j_resAddr_court" value="${iContactJointAddr_r.nameOfEstate!}" data-prompt-target="jContactAddr_r_Estate_Error">
+						<span id="jContactAddr_r_Estate_Error" class="formError-customer-span"></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">No. and Name of Street / Road</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long validate[required]" type="text" name="iContactJointAddr_r.streetNo" id="j_resAddr_road" value="${iContactJointAddr_r.streetNo!}" data-prompt-target="jContactAddr_r_StreetNo_Error">
+						<span id="jContactAddr_r_StreetNo_Error" class="formError-customer-span"></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">District</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long validate[required]" type="text" name="iContactJointAddr_r.district" id="j_resAddr_district" value="${iContactJointAddr_r.district!}" data-prompt-target="jContactAddr_r_District_Error">
+						<span id="jContactAddr_r_District_Error" class="formError-customer-span"></span>
+						<br>
+						<div class="BasicInfo_zhuxi">
+							* HK / KLN / NT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Please delete as appropriate.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Province</span>
+					<div class="BasicInfo_xiala">
+						<input type="text" id="j_resAddr_province" class="validate[required]" data-prompt-target="jContactAddr_r_Province_Error">
+						<span class="register_xiala_ico"></span>
+					</div>
+					<span id="jContactAddr_r_Province_Error" class="formError-customer-span"></span>
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Country</span>
+					<div class="BasicInfo_xiala">
+						<input type="hidden" class="value_hidden" name="iContactJointAddr_r.country.id" id="j_resAddr_country">
+						<input type="text" class="value_show validate[required]" id="j_resAddr_country_name" data-prompt-target="jContactAddr_r_country_Error" [#if iContactJointAddr_r.country??]value="${iContactJointAddr_r.country.nameEn!}"[/#if]>
+						<ul class="regiter_xiala_ul" id="icontJoint_addr_r_country">
+							<!-- 关联账户-居住地址--所在国家 -->
+						</ul>
+						<span class="register_xiala_ico"></span>
+					</div>
+					<span id="jContactAddr_r_country_Error" class="formError-customer-span"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Postal Code</span>
+					<input class="BasicInfo_input validate[required]" type="text" name="iContactJointAddr_r.postCode" id="j_resAddr_postCode" value="${iContactJointAddr_r.postCode!}">
+				</div>
+			</div>
+			<div class="BasicInfo_zhuxi">
+				# Must be completed for addresses out of HK
+				<br>
+				<br>
+				Please submit address proof. Post office box will not be accepted
+			</div>
+		</div>
+		<div class="BasicInfo_show">
+			<div class="BasicInfo_title BasicInfo_title_margin">
+				<span class="BasicInfo_title_dabiao">Permanent Address</span>
+				<span class="BasicInfo_title_tishi_gray">(if different from the above residential address)</span>
+				<div class="BasicInfo_duoxuan_div">
+					<div class="login_checkbox">
+						<input type="checkbox" id="perAddrAsMain">
+						<label for="perAddrAsMain"></label>
+					</div>
+					<span class="login_checkbox_font">As Main Applicants</span>
+				</div>
+				<span class="BasicInfo_title_ico"><img src="${base}/res/images/ico_07.png" width="24" height="24" alt=""> </span>
+				<span class="BasicInfo_title_ico_hide"><img src="${base}/res/images/ico_08.png" width="24" height="24" alt=""> </span>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Room / Flat</span>
+					<input class="BasicInfo_input" type="text" name="iContactJointAddr_p.room" id="j_perAddr_room" value="${iContactJointAddr_p.room!}">
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Floor</span>
+					<input class="BasicInfo_input" type="text" name="iContactJointAddr_p.floor" id="j_perAddr_floor" value="${iContactJointAddr_p.floor!}">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Block / Building</span>
+					<input class="BasicInfo_input" type="text" name="iContactJointAddr_p.building" id="j_perAddr_building" value="${iContactJointAddr_p.building!}">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">Name of Estate / Court</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactJointAddr_p.nameOfEstate" id="j_perAddr_court" value="${iContactJointAddr_p.nameOfEstate!}">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">No. and Name of Street / Road</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactJointAddr_p.streetNo" id="j_perAddr_road" value="${iContactJointAddr_p.streetNo!}">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">District</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactJointAddr_p.district" id="j_perAddr_district" value="${iContactJointAddr_p.district!}">
+						<br>
+						<div class="BasicInfo_zhuxi">
+							* HK / KLN / NT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Please delete as appropriate.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Province</span>
+					<div class="BasicInfo_xiala">
+						<input type="text" id="j_perAddr_province">
+						<span class="register_xiala_ico"></span>
+					</div>
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Country</span>
+					<div class="BasicInfo_xiala">
+						<input type="hidden" class="value_hidden" name="iContactJointAddr_p.country.id" id="j_perAddr_country">
+						<input type="text" class="value_show" id="j_perAddr_country_name">
+						<ul class="regiter_xiala_ul" id="icontJoint_addr_p_country">
+							<!-- 关联账户-通信地址--所在国家 -->
+						</ul>
+						<span class="register_xiala_ico"></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Postal Code</span>
+					<input class="BasicInfo_input" type="text" name="iContactJointAddr_p.postCode" id="j_perAddr_postCode" value="${iContactJointAddr_p.postCode!}">
+				</div>
+			</div>
+			<div class="BasicInfo_zhuxi">
+				# Must be completed for addresses out of HK
+				<br>
+				<br>
+				Please submit address proof. Post office box will not be accepted
+			</div>
+		</div>
+		<div class="BasicInfo_show">
+			<div class="BasicInfo_title BasicInfo_title_margin">
+				<span class="BasicInfo_title_dabiao">Correspondence Address</span>
+				<span class="BasicInfo_title_tishi_gray">(if different from the above residential address)</span>
+				<div class="BasicInfo_duoxuan_div">
+					<div class="login_checkbox">
+						<input type="checkbox" id="corAddrAsMain">
+						<label for="corAddrAsMain"></label>
+					</div>
+					<span class="login_checkbox_font">As Main Applicants</span>
+				</div>
+				<span class="BasicInfo_title_ico"><img src="${base}/res/images/ico_07.png" width="24" height="24" alt=""> </span>
+				<span class="BasicInfo_title_ico_hide"><img src="${base}/res/images/ico_08.png" width="24" height="24" alt=""> </span>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Room / Flat</span>
+					<input class="BasicInfo_input" type="text" name="iContactJointAddr_c.room" id="j_corAddr_room" value="${iContactJointAddr_c.room!}">
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Floor</span>
+					<input class="BasicInfo_input" type="text" name="iContactJointAddr_c.floor" id="j_corAddr_floor" value="${iContactJointAddr_c.floor!}">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">Block / Building</span>
+					<input class="BasicInfo_input" type="text" name="iContactJointAddr_c.building" id="j_corAddr_building" value="${iContactJointAddr_c.building!}">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">Name of Estate / Court</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactJointAddr_c.nameOfEstate" id="j_corAddr_court" value="${iContactJointAddr_c.nameOfEstate!}">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">No. and Name of Street / Road</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactJointAddr_c.streetNo" id="j_corAddr_road" value="${iContactJointAddr_c.streetNo!}">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_all">
+					<span class="font_gray_all_left">District</span>
+					<div class="font_gray_all_right BasicInfo_div_long">
+						<input class="BasicInfo_input BasicInfo_input_long" type="text" name="iContactJointAddr_c.district" id="j_corAddr_district" value="${iContactJointAddr_c.district!}">
+						<br>
+						<div class="BasicInfo_zhuxi">
+							* HK / KLN / NT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Please delete as appropriate.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Province</span>
+					<div class="BasicInfo_xiala">
+						<input type="text" id="j_corAddr_province">
+						<span class="register_xiala_ico"></span>
+					</div>
+				</div>
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Country</span>
+					<div class="BasicInfo_xiala">
+						<input type="hidden" class="value_hidden" name="iContactJointAddr_c.country.id" id="j_corAddr_country">
+						<input type="text" class="value_show" id="j_corAddr_country_name" [#if iContactJointAddr_c.country??]value="${iContactJointAddr_c.country.nameEn}"[/#if]>
+						<ul class="regiter_xiala_ul" id="icontJoint_addr_c_country">
+							<!-- 关联账户-通信地址--所在国家 -->
+						</ul>
+						<span class="register_xiala_ico"></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="BasicInfo_gray_half">
+					<span class="font_gray_half">#Postal Code</span>
+					<input class="BasicInfo_input" type="text" name="iContactJointAddr_c.postCode" id="j_corAddr_postCode" value="${iContactJointAddr_c.postCode!}">
+				</div>
+			</div>
+			<div class="BasicInfo_zhuxi">
+				# Must be completed for addresses out of HK
+				<br>
+				<br>
+				Please submit address proof. Post office box will not be accepted
+			</div>
+		</div>
+		<div class="BasicInfo_title BasicInfo_title_margin">
+			<span class="BasicInfo_title_dabiao">Telephone/Fax/Email Contact Details</span>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Residential</span>
+				<input class="BasicInfo_input BasicInfo_input_before" type="text" name="iContactJoint.residentialCountryCode" value="${iContactJoint.residentialCountryCode!}">
+				<input class="BasicInfo_input BasicInfo_input_after validate[required]" type="text" name="iContactJoint.residentialPhoneNumber" value="${iContactJoint.residentialPhoneNumber!}" data-prompt-target="jcontactDetailResidentialError">
+				<span id="jcontactDetailResidentialError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Fax</span>
+				<input class="BasicInfo_input BasicInfo_input_before" type="text" name="iContactJoint.faxCountryCode" value="${iContactJoint.faxCountryCode!}">
+				<input class="BasicInfo_input BasicInfo_input_after validate[required]" type="text" name="iContactJoint.faxPhoneNumber" value="${iContactJoint.faxPhoneNumber!}" data-prompt-target="jcontactDetailFaxError">
+				<span id="jcontactDetailFaxError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Mobile</span>
+				<input class="BasicInfo_input BasicInfo_input_before" type="text" name="iContactJoint.mobileCountryCode" value="${iContactJoint.mobileCountryCode!}">
+				<input class="BasicInfo_input BasicInfo_input_after validate[required]" type="text" name="iContactJoint.mobilePhoneNumber" value="${iContactJoint.mobilePhoneNumber!}" data-prompt-target="jcontactDetailMobileError">
+				<span id="jcontactDetailMobileError" class="formError-customer-span"></span>
+			</div>
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Email</span>
+				<input class="BasicInfo_input validate[required]" type="text" name="iContactJoint.email" value="iContactJoint.email" data-prompt-target="jcontactDetailEmailError">
+				<span id="jcontactDetailEmailError" class="formError-customer-span"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_half">
+				<span class="font_gray_half">Office</span>
+				<input class="BasicInfo_input BasicInfo_input_before" type="text" name="iContactJoint.officeCountryCode" value="${iContactJoint.officeCountryCode!}">
+				<input class="BasicInfo_input BasicInfo_input_after validate[required]" type="text" name="iContactJoint.officePhoneNumber" value="${iContactJoint.officePhoneNumber!}" data-prompt-target="jcontactDetailOfficeError">
+				<span id="jcontactDetailOfficeError" class="formError-customer-span"></span>
+			</div>
+
+		</div>
+		<div class="BasicInfo_zhuxi">
+			* For Individual Account, this mobile and email will be used for receiving i-Invest platform password and statement email notification.
+			<br>
+			<br>
+			For Joint Account, please refer to section 4f.
+		</div>
+		<input type="hidden" name="iContactJoint.id" value="${iContactJoint.id!}" id="jointContactId" />
+		<input type="hidden" name="iContactJointAddr_r.id" value="${iContactJointAddr_r.id!}" id="jointAddr_r" />
+		<input type="hidden" name="iContactJointAddr_p.id" value="${iContactJointAddr_p.id!}" id="jointAddr_p" />
+		<input type="hidden" name="iContactJointAddr_c.id" value="${iContactJointAddr_c.id!}" id="jointAddr_c" />
+	</form>
+	<!-- joint contact end -->
+</div>
+
+<div class="BankAccount">
+	<!-- bank begin -->
+	<form action="" id="bank_account_detial" name="bank_account_detial" method="post">
+		<div class="BasicInfo_title">
+			<span class="BasicInfo_title_dabiao">For Payment Purposes (Mandatory for all customers)</span>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Name of Bank</span>
+				<div class="font_gray_all_right BasicInfo_div_long">
+					<input class="BasicInfo_input BasicInfo_input_long validate[required]" type="text" name="iBank.nameOfBank" value="${iBank.nameOfBank!}" data-prompt-target="nameOfBankError">
+					<span id="nameOfBankError" class="formError-customer-span"></span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Name of Bank Account Holder</span>
+				<div class="font_gray_all_right BasicInfo_div_long">
+					<input class="BasicInfo_input BasicInfo_input_long validate[required]" type="text" name="iBank.nameOfHolder" value="${iBank.nameOfHolder!}" data-prompt-target="accountHolderError">
+					<span id="accountHolderError" class="formError-customer-span"></span>
+					<br>
+					<p>
+						must be in the name of the applicant
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Bank Account No.</span>
+				<div class="font_gray_all_right BasicInfo_div_long">
+					<input class="BasicInfo_input BasicInfo_input_long BasicInfo_input_long_30 validate[required]" placeholder="Bank Code" type="text" name="iBank.bankCode" value="${iBank.bankCode!}" data-prompt-target="accountNoError" data-errormessage-value-missing="请填写完成银行账号">
+					<span class="BasicInfo_input_long_heng">-</span>
+					<input class="BasicInfo_input BasicInfo_input_long BasicInfo_input_long_30 validate[required]" placeholder="Branch Code" type="text" name="iBank.branchCode" value="${iBank.branchCode!}" data-prompt-target="accountNoError" data-errormessage-value-missing="请填写完成银行账号">
+					<span class="BasicInfo_input_long_heng">-</span>
+					<input class="BasicInfo_input BasicInfo_input_long BasicInfo_input_long_30 validate[required]" placeholder="Account No" type="text" name="iBank.branchAccountNo" value="${iBank.branchAccountNo!}" data-prompt-target="accountNoError" data-errormessage-value-missing="请填写完成银行账号">
+					<span id="accountNoError" class="formError-customer-span"></span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Bank SWIFT Code</span>
+				<div class="font_gray_all_right BasicInfo_div_long">
+					<input class="BasicInfo_input BasicInfo_input_long validate[required]" type="text" name="iBank.swiftCode" value="${iBank.swiftCode!}" data-prompt-target="swiftCodeError">
+					<span id="swiftCodeError" class="formError-customer-span"></span>
+					<br>
+					<p class="BasicInfo_div_long_msg">
+						must be in 11 characters
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Currency of the bank account provided</span>
+				<div class="font_gray_all_right BasicInfo_div_long">
+					<div class="BasicInfo_duoxuan_div BasicInfo_percentage">
+						<div class="login_checkbox">
+							<input type="checkbox" value="USD" class="validate[minCheckbox[1]]" name="iBank.currencyType" id="ib_cuType_01" [#if iBank.currencyType?exists && iBank.currencyType?index_of("USD")!=-1]checked[/#if]>
+							<label for="ib_cuType_01"></label>
+						</div>
+						<span class="login_checkbox_font">USD</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div BasicInfo_percentage">
+						<div class="login_checkbox">
+							<input type="checkbox" value="EUR" class="validate[minCheckbox[1]]" name="iBank.currencyType" id="ib_cuType_02" [#if iBank.currencyType?exists && iBank.currencyType?index_of("EUR")!=-1]checked[/#if]>
+							<label for="ib_cuType_02"></label>
+						</div>
+						<span class="login_checkbox_font">EUR</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div BasicInfo_percentage">
+						<div class="login_checkbox">
+							<input type="checkbox" value="GBP" class="validate[minCheckbox[1]]" name="iBank.currencyType" id="ib_cuType_03" [#if iBank.currencyType?exists && iBank.currencyType?index_of("GBP")!=-1]checked[/#if]>
+							<label for="ib_cuType_03"></label>
+						</div>
+						<span class="login_checkbox_font">GBP</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div BasicInfo_percentage">
+						<div class="login_checkbox">
+							<input type="checkbox" value="HKD" class="validate[minCheckbox[1]]" name="iBank.currencyType" id="ib_cuType_04" [#if iBank.currencyType?exists &&iBank.currencyType?index_of("HKD")!=-1]checked[/#if]>
+							<label for="ib_cuType_04"></label>
+						</div>
+						<span class="login_checkbox_font">HKD</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div BasicInfo_percentage">
+						<div class="login_checkbox">
+							<input type="checkbox" value="AUD" class="validate[minCheckbox[1]]" name="iBank.currencyType" id="ib_cuType_05" [#if iBank.currencyType?exists &&iBank.currencyType?index_of("AUD")!=-1]checked[/#if]>
+							<label for="ib_cuType_05"></label>
+						</div>
+						<span class="login_checkbox_font">AUD</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div BasicInfo_percentage">
+						<div class="login_checkbox">
+							<input type="checkbox" value="JPY" class="validate[minCheckbox[1]]" name="iBank.currencyType" id="ib_cuType_06" [#if iBank.currencyType?exists &&iBank.currencyType?index_of("JPY")!=-1]checked[/#if]>
+							<label for="ib_cuType_06"></label>
+						</div>
+						<span class="login_checkbox_font">JPY</span>
+					</div>
+					<div class="BasicInfo_duoxuan_div BasicInfo_percentage">
+						<div class="login_checkbox">
+							<input type="checkbox" value="CNY" class="validate[minCheckbox[1]]" name="iBank.currencyType" id="ib_cuType_07">
+							<label for="ib_cuType_07"></label>
+						</div>
+						<span class="login_checkbox_font">CNY</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="BasicInfo_title">
+			<span class="BasicInfo_title_dabiao">Below additional fields apply to overseas TT only</span>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Name of Intermediary Bank</span>
+				<div class="font_gray_all_right BasicInfo_div_long">
+					<input class="BasicInfo_input BasicInfo_input_long validate[required]" type="text" name="iBank.nameOfInter" value="${iBank.nameOfInter!}" data-prompt-target="nameOfInterError">
+					<span id="nameOfInterError" class="formError-customer-span"></span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="BasicInfo_gray_all">
+				<span class="font_gray_all_left">Intermediary Bank SWIFT Code</span>
+				<div class="font_gray_all_right BasicInfo_div_long">
+					<input class="BasicInfo_input BasicInfo_input_long validate[required]" type="text" name="iBank.swiftOfInter" value="${iBank.swiftOfInter!}" data-prompt-target="interSwiftCodeError">
+					<span id="interSwiftCodeError" class="formError-customer-span"></span>
+					</br>
+					<p>
+						must be in 11 characters
+					</p>
+				</div>
+			</div>
+		</div>
+		<div style="margin-top: 50px;" class="BasicInfo_zhuxi">
+			Note: Name of Bank Account Holder must be the name of AIM Applicant.
+		</div>
+		<input type="hidden" name="iBank.id" value="${iBank.id!}" id="ibank_id" />
+	</form>
+	<!-- bank end -->
+</div>
+
+<div class="Feepayment" style="display: none">
+	<!-- fee payMent begin -->
+	<!-- 暂不用20160723-scshi -->
+	<p class="BasicInfo_zhuxi" style="line-height: 30px;">
+		Subject to Schedule 2 Fees and Charges of the Terms and Conditions, please complete the table below for fees which are negotiated and agreed between the Customer and the Customer's advisor.For other fees,please refer to Schedule 2 Fees and Charges in the Terms and Conditions.
+	</p>
+	<div class="BasicInfo_title">
+		<span class="BasicInfo_title_dabiao">For i-Invest Fund Account Only</span>
+	</div>
+	<div class="form-group">
+		<div class="BasicInfo_gray_half">
+			<span class="font_gray_half">Transaction Fee</span>
+			<input class="BasicInfo_input validate[required]" type="text">
+		</div>
+		<p class="BasicInfo_gray_half BasicInfo_div_long_payment_msg">
+			% of transaction amount of each transaction,subject to a minimum of HK $150.
+		</p>
+	</div>
+	<div class="form-group">
+		<div class="BasicInfo_gray_half">
+			<span class="font_gray_half">Advisory Fee</span>
+			<input class="BasicInfo_input validate[required]" type="text">
+		</div>
+		<p class="BasicInfo_gray_half BasicInfo_div_long_payment_msg">
+			% of the value of the i-Invest Account on a monthly basis.
+		</p>
+	</div>
+	<div class="BasicInfo_title">
+		<span class="BasicInfo_title_dabiao">For i-Invest Portfolio Account Only</span>
+	</div>
+	<div class="BasicInfo_fenlei" style="margin-bottom: 30px;">
+		Transaction Fee
+	</div>
+	<div class="form-group">
+		<div class="BasicInfo_gray_half">
+			<span class="font_gray_half">Mutual Funds</span>
+			<input class="BasicInfo_input validate[required]" type="text">
+		</div>
+		<p class="BasicInfo_gray_half BasicInfo_div_long_payment_msg">
+			% of transaction amount of each transaction,subject to a minimum of HK$ 150.
+		</p>
+	</div>
+	<div class="form-group">
+		<div class="BasicInfo_gray_half">
+			<span class="font_gray_half">ETFs</span>
+			<input class="BasicInfo_input validate[required]" type="text">
+		</div>
+		<p class="BasicInfo_gray_half BasicInfo_div_long_payment_msg">
+			% of transaction amount of each transaction,subject to a minimum of HK$ 150.
+		</p>
+	</div>
+	<div class="form-group">
+		<div class="BasicInfo_gray_half">
+			<span class="font_gray_half">Bonds</span>
+			<input class="BasicInfo_input validate[required]" type="text">
+		</div>
+		<p class="BasicInfo_gray_half BasicInfo_div_long_payment_msg">
+			% of transaction amount of each transaction,subject to a minimum of HK$ 150.
+		</p>
+	</div>
+	<div class="BasicInfo_fenlei" style="margin-bottom: 30px;">
+		Advisory Fee
+	</div>
+	<div class="form-group">
+		<div class="BasicInfo_gray_half">
+			<span class="font_gray_half">Advisory Fee</span>
+			<input class="BasicInfo_input validate[required]" type="text">
+		</div>
+		<p class="BasicInfo_gray_half BasicInfo_div_long_payment_msg">
+			% of the value of the i-Invest Account on a monthly basis.
+		</p>
+	</div>
+	<p class="BasicInfo_zhuxi" style="line-height: 30px;">
+		The Customer(s) hereby confirm that the Customer(s) agree to pay the above mentioned fees and that the Customer(s) authorize AIM and/or ANL to deduct the amounts which are due and payable from the Customer(s)' s i-Invest Account. The Customer(s) further confirm that the Customer(s) have read and
+		that the Customer(s) agree to and understand the content of Schedule 2 Fees and Charges in the Terms and Conditions.
+	</p>
+	<!-- fee payMent end -->
+</div>
+<!--</div>
+
+</div>-->
+
+<style type="text/css">
+.title {
+	color: #5e5e5e;
+	margin-top: 10px !important;
+	text-align: right;
+}
+
+.note {
+	color: #5e5e5e;
+	margin-top: 10px !important;
+	text-align: left;
+	padding-left: 50px;
+}
+</style>

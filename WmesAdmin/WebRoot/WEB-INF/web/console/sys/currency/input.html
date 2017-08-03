@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[#if exchange.id?exists][@lang_res k="global.edit"/][#else][@lang_res k="global.add"/][/#if]</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/bootstrap/css/bootstrapValidator.css" rel="stylesheet" type="text/css" />
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+		<div class="tab-side-container">
+            <div class="page-header mt-10">
+                <h4><b>[@lang_res l=Session["_LANG_CODE_"] k='console.sys.currency.title'/]</b></h4>
+            </div>
+            
+            <div class="clear"></div>
+            <div class="tab_wrap">
+                <!-- tab 1  -->
+                <form class="form-horizontal" style="display:block;" id="frm" method="post">
+                	<!-- 原始货币 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtName" class="label-control">[@lang_res k='console.sys.currency.fromCurrency'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="hidden" class="form-control" value="${(exchange.fromCurrency)?if_exists}" name="fromCurrency" id="fromCurrency">
+                            <select class="form-control " name="txtFromCurrency" onchange="fromChange(this.options[this.options.selectedIndex])">
+                            <option value="" code="">[@lang_res k='global.pleaseSelect'/]</option>
+                            [#if currencyList?exists && currencyList?size gt 0]
+	                            [#list currencyList as currencyCodes]
+	                            	<option [#if exchange.fromCurrency?exists  && exchange.fromCurrency==currencyCodes.itemCode]selected[/#if] code="${currencyCodes.itemCode!}">
+	                            		${currencyCodes.name!}
+	                            	</option>
+	                            [/#list]
+                            [/#if]
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- 目标货币 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtTypeCode" class="label-control">[@lang_res  k='console.sys.currency.toCurrency'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                           	<input type="hidden" class="form-control"  value="${(exchange.toCurrency)?if_exists}" name="toCurrency" id="toCurrency">
+                        	<select class="form-control " name="txtToCurrency" onchange="toChange(this.options[this.options.selectedIndex])">
+                        	<option value="" code="">[@lang_res k='global.pleaseSelect'/]</option>
+                        	[#if currencyList?exists && currencyList?size gt 0]
+	                        	[#list currencyList as currencyCodes]
+	                        	<option [#if exchange.toCurrency?exists && exchange.toCurrency==currencyCodes.itemCode]selected[/#if] code="${currencyCodes.itemCode!}" class="toOption" >
+	                        		${currencyCodes.name!} 
+	                        	</option>
+	                        	[/#list]
+                        	[/#if]
+                        	</select>    
+                        </div>
+                    </div>
+                    
+                    <!-- 汇率 -->
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtTypeCode" class="label-control">[@lang_res  k='console.sys.currency.rate'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtRate"  value="${(exchange.rate)?if_exists}" name="rate">
+                        </div>
+                    </div>
+                                    
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="isValidYes" class="label-control">[@lang_res k='console.sys.currency.status'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="radio" name="isValid" id="isValidYes" value="1"  [#if exchange?exists ==false || exchange.isValid?exists == false || exchange.isValid == '1']checked[/#if]>
+                            <label for="isValidYes" class="form-font-normal">[@lang_res k='console.sys.currency.status.1'/]</label>
+                            <input type="radio" name="isValid" id="isValidNO" value="0" [#if exchange?exists &&exchange.isValid?exists && exchange.isValid == '0']checked[/#if]>
+                            <label for="isValidNO" class="form-font-normal"> [@lang_res k='console.sys.currency.status.0'/]</label>
+                        </div>
+                    </div>
+                    
+	                <div class="text-center pd10">
+	                   	<!--<a href="#" id="btnSave" class="btn-blue-s2">[@lang_res k='global.submit'/]</a>
+	                    <a href="#" id="btnBack" class="btn-blue-s2">[@lang_res k='global.close'/]</a>-->
+	                    <button id="btnSave" type="submit" class="btn btn-primary">
+							    [@lang_res k='global.save'/]
+						</button>
+						<button id="btnClose" class="btn btn-primary" onclick="javascript:closeTab();">
+								[@lang_res k='global.close'/]
+						</button>
+	                </div>
+	                <input type="hidden" value="${exchange.id!}" name="id" id="textId"/>
+	                <input type="hidden" value="${exchange.createTime?string('yyyy-MM-dd HH:mm:ss')}" name="createTime" id="textCreateTime"/>
+                </form>    
+                           
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/laydate/laydate.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	$(function(){
+        //绑定关闭事件   modify wwluo 160809   
+        $("#btnBack").click(function () {  
+			closeTab();	        
+        });	
+    	/**validator();
+        $("#btnSave").click(function () {  
+        	validator();
+        	saveData();//提交数据
+        });
+        **/
+        
+	});
+  	//表单验证
+  	//function validator(){
+        $('#frm').bootstrapValidator({
+	        feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+	        },
+	        fields: {
+				txtFromCurrency:{
+				  	message: "[@lang_res k='console.currency.rate.select'/]",
+				  	validators: {
+				              notEmpty: {
+				                  message: "[@lang_res k='console.currency.rate.select'/]"
+				              }
+				      	}
+				},txtToCurrency:{
+					message: "[@lang_res k='console.currency.rate.select'/]]",
+					validators: {
+				             notEmpty: {
+				                 message: "[@lang_res k='console.currency.rate.select'/]"
+				             }
+				     }
+				},rate:{
+					message: "[@lang_res k='console.country.rate.notEmpty'/]",
+					validators: {
+				             notEmpty: {
+				                 message: "[@lang_res k='console.country.rate.notEmpty'/]"
+				             },
+					         regexp: {
+		                        regexp:/[1-9][0-9]*$/,
+		                        message:"[@lang_res k='console.country.rate.tips'/]"
+		                   	}
+				     }
+				}
+	       }
+	   }).on('success.form.bv', function(e) {
+	        e.preventDefault();
+	        saveData();//提交数据
+	   }); 
+  	//}
+
+  	//保存数据
+	function saveData(){
+		//var params = $('#frm').serialize();
+		var id = $('#textId').val();
+		var fromCurrency = $('#fromCurrency').val();
+		var toCurrency = $('#toCurrency').val();
+		var rate = $('#txtRate').val();
+		var isValid = $('input:radio[name="isValid"]:checked').val();
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/sys/currency/currencySave.do?datestr='+new Date().getTime(),
+			data :{'id':id,'fromCurrency':fromCurrency,'toCurrency':toCurrency,'rate':rate,'isValid':isValid},
+			success : function(json) {
+				if(null != json){
+					//alert(json.msg);
+					if(true == json.result || 'true' == json.result){
+						//window.location.href = '${base}/console/sys/paramType/list.do';
+				    //add wwluo 160809
+						  $('#btnSave').attr({'disabled':'disabled'});
+						  //window.parent.bindList(0);//刷新列表
+						  layer.msg("[@lang_res k='global.success.save'/]", { icon: 1, time: 2000 });
+					}else{
+						  layer.msg("[@lang_res k='global.failed.save'/]", { icon: 0, time: 2000 });
+					//end
+					}
+				}
+			}
+		});
+	};
+  	
+  	function fromChange(selectOption){
+  		//console.log(selectOption.getAttribute("code"));
+  		var currencyCode = selectOption.getAttribute("code");
+  		$("#fromCurrency").val(currencyCode);
+  		$.ajax({
+  			url:'${base}/console/sys/currency/currencyNoExists.do?type=0&code='+currencyCode+'&r='+Math.random(),
+  			type:'get',
+  			dataType:'json',
+  			success:function(data){
+  				for(var x=0;x<data.length;x++){
+  					var obj = data[x];
+  					var toCurrencyCode = obj.toCurrency;
+  					/*$(".toOption").each(function(){
+  						var toOption = $(this).attr("code");
+  						if(toOption==toCurrencyCode){
+  							
+  							$(this).hide();
+  						}
+  					})*/
+  				}
+  			},
+  			error:function(data){
+  			}
+  		})
+  	}
+  	
+  	function toChange(selectOption){
+  		var currencyCode = selectOption.getAttribute("code");
+  		$("#toCurrency").val(currencyCode);
+  		
+  	}
+</script>
+</body>
+</html>

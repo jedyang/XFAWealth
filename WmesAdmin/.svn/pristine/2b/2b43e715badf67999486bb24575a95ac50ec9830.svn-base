@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sys menu</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" >
+    <style type="text/css">
+    	#menuList .fixwidth{max-width:150px;overflow: hidden; text-overflow:ellipsis; white-space: nowrap;}
+    </style>
+</head>
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container">
+            <ul class="tab" id="tab-search">
+                <li id="tab-li-fixed" class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res  k='console.sysmenu.list.tab.title'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+	                    <div class="row pd10">
+	                        <div class="col-md-4">
+	                        	<label for="searchKeyWord">[@lang_res  k='console.sysmenu.list.search.keyword'/]</label>
+	                        	<input type="text"  class="form-control searchCondition" id="searchKeyWord">
+	                        </div>
+	                        <div class="col-md-4">
+								<label for="s-1">
+									[@lang_res k='member.role'/]
+								</label>
+								<select id="selRoleType" class="form-control searchCondition" name="selEntityType">
+									<option value="investor" selected="selected">
+										[@lang_res k='member.individual'/]
+									</option>
+									<option value="ifa">
+										[@lang_res k='member.ifa'/]
+									</option>
+									<option value="ifafirm">
+										[@lang_res k='member.ifafirm'/]
+									</option>
+									<option value="distributor">
+										[@lang_res k='member.distributor'/]
+									</option>
+								</select>
+							</div>
+	                        <div class="col-md-4">
+	                        	<button type="button" id="btnSearch" class="btn btn-primary">
+	                    			 [@lang_res  k='console.sysmenu.list.btn.search'/]</button>
+	               			</div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20">
+                        <button type="button" class="btn btn-blue-s" id="btnAdd">
+							 [@lang_res k='global.add'/]
+						</button>
+                    </div>
+                    <div>
+                        <table id="menuList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+                            	<tr>
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.nameEn'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.nameSc'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.nameTc'/]</th>
+	                               <!-- <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.code'/]</th> -->
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.webUrl'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.orderBy'/]</th>
+	                               <th class="table-head">[@lang_res  k='paramType.status'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.action'/]</th>
+	                            </tr>  
+                            </tbody>
+                        </table>
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm"></ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/js/base.js" type="text/javascript"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script type="text/javascript">
+	var pageSize = 100;
+	$(function(){
+        //绑定查询按钮事件
+        $("#btnSearch").click(function () {                
+        	bindList(0);
+        });
+        bindList(0);
+		$('#btnAdd').click(function() {
+		    var url = '${base}/console/frontMenu/add.do';
+			showform('console-sys-menu','[@lang_res k="param.list.btn.add"/]',url);
+		});
+	});
+  	//分页绑定Table数据
+	function bindList(curPage){
+  		var roleCode = $("#selRoleType").val();
+  		var keyWord = $("#searchKeyWord").val();
+  		var url = '${base}/console/frontMenu/getFrontMenus.do?datestr=' + new Date().getTime();
+  		var data = {
+			page : curPage + 1,
+			rows : pageSize,
+			keyWord : keyWord,
+			roleCode : roleCode
+  		};
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : url,
+			data : data,
+			success : function(re) {//console.log(re);
+				var total = re.total;
+				$("#menuList tbody tr:gt(0)").empty();
+                var list = re.rows;
+                var tr = iterationFrontChildMenus(list);
+              $("#menuList tbody").append(tr);
+			  $("#menuList").treetable(getTreeTableOption());
+			  $("#pagination").pagination(total, {
+                 callback: pageselectCallback,
+                 numDetail: '',
+                 items_per_page: pageSize,
+                 num_display_entries: 4,
+                 current_page: curPage,
+                 num_edge_entries: 2
+              });
+			}
+		});
+	 	//回调
+        function pageselectCallback(page_id, jq) {
+            bindList(page_id);
+            $("#menuList").treetable(getTreeTableOption);
+        }
+	}
+  	function iterationFrontChildMenus(list){
+  		var tr = '';
+  		var roleType = $("#selRoleType").val();
+  		$.each(list, function (index, array) { 				
+            var id = array['id'] == null ? "" : array['id'];
+            var parentId = array['parentId'] == null ? "" : array['parentId'];
+            //var code = array['code'] == null ? "" : array['code'];
+            var nameSc = array['nameSc'] == null ? "" : array['nameSc'];
+            var nameTc = array['nameTc'] == null ? "" : array['nameTc'];   
+            var nameEn = array['nameEn'] == null ? "" : array['nameEn'];  
+            var webUrl = array['webUrl'] == null ? "" : array['webUrl'];  
+            var orderBy = array['orderBy'] == null ? "" : array['orderBy']; 
+            var isValid = array['isValid'] == null ? "" : array['isValid'];;
+            if(1 == isValid){
+            	isValidStatus = '<span style="color:blue;padding:0;">[@lang_res l=Session["_LANG_CODE_"] k='paramType.status.1'/]</span>';
+            }else{
+            	isValidStatus = '<span style="color:red;padding:0;">[@lang_res l=Session["_LANG_CODE_"] k='paramType.status.0'/]</span>';
+            }              
+            if('${Session["_LANG_CODE_"]!}' == 'en') var title = nameEn;
+			  else if('${Session["_LANG_CODE_"]!}' == 'tc') var title = nameTc;
+			  else var title = nameSc;                	           
+            var viewMenuInfoUrl = '${base}/console/frontMenu/input.do?roleType='+roleType+'&id='+id;
+            var addSubMenuInfoUrl = '${base}/console/frontMenu/add.do?roleType='+roleType+'&parentId='+id;
+            tr += "<tr id='"+id+"' data-tt-id='"+id+"' data-tt-parent-id='"+parentId+"'>"
+                + "<td>" + nameEn + "</td>"
+                + "<td>" + nameSc + "</td>"
+                + "<td>" + nameTc + "</td>"
+                //+ "<td>" + code + "</td>"
+                + "<td class='fixwidth' title='"+webUrl+"'>" + webUrl + "</td>"
+                + "<td>" + orderBy + "</td>"
+                + "<td>" + isValidStatus + "</td>"
+                + "<td nowrap>" 
+				  + "<a href='javascript:void(0)' onclick=\"viewMenuInfo('view-"+id+"','"+title+"&nbsp;[@lang_res  k='global.edit'/]','"+viewMenuInfoUrl+"')\">[@lang_res  k='global.edit'/]</a>&nbsp;&nbsp;&nbsp;&nbsp;" 
+                + "<a href='javascript:void(0)' onclick=\"addSubMenuInfo('addSub-"+id+"','"+title+"&nbsp;[@lang_res  k='console.sysmenu.list.table.action.addSubMenu'/]','"+addSubMenuInfoUrl+"')\">[@lang_res  k='console.sysmenu.list.table.action.addSubMenu'/]</a>" 
+                + "</td>"
+                + "</tr>"; 
+             if(array.childs != null && array.childs.length > 0){
+            	 tr += iterationFrontChildMenus(array.childs);
+             }
+        });
+  		return tr;
+  	}
+  	function getTreeTableOption(){
+		var option = {
+			expandable : true,
+	        onNodeExpand : function() {},
+	        onNodeCollapse : function() {}
+	    };
+		return option;
+  	}
+	function viewMenuInfo(id,title,url) {
+		$(window).scrollTop("0")//modify rqwang 20170517使条形框返回顶部
+		showform(id,title,url);
+	}
+	function addSubMenuInfo(id,title,url) {
+		showform(id,title,url);
+	}
+    //删除
+    function deleteMenuInfo(id){
+    	layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/frontMenu/delete.do?datestr="+new Date().getTime(),
+				data : {"id":id},
+				success : function(json) {
+					if (json != undefined && json.result == true) {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]", {
+							title : "[@lang_res k='global.prompt'/]",
+							icon : 1,
+							time : 1000
+						});
+						bindList(0);
+					} else {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]", {
+							title : "[@lang_res k='global.prompt'/]",
+							icon : 5,
+							time : 1000
+						});
+					}
+				}
+			});
+		});
+    }
+</script>
+</body>
+</html>

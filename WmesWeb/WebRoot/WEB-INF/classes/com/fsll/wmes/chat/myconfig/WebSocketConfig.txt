@@ -1,0 +1,33 @@
+/*
+ * Copyright (c) 2016-2019 by fsll
+ * All rights reserved.
+ */
+package com.fsll.wmes.chat.myconfig;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+
+/**
+ * 注册服务
+ * @author 黄模建 E-mail:mjhuang@fsll.cn
+ * @version 1.0.0
+ * Created On: 2016-9-18
+ */
+@Configuration
+@EnableWebSocket
+public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocketConfigurer{
+	@Override
+	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+		registry.addHandler(systemWebSocketHandler(), "/webSocketServer.do").addInterceptors(new MyHandshakeInterceptor());
+		registry.addHandler(systemWebSocketHandler(), "/sockjs/webSocketServer.do").addInterceptors(new MyHandshakeInterceptor()).withSockJS();
+	}
+	@Bean
+	public WebSocketHandler systemWebSocketHandler(){
+		return new SystemWebSocketHandler();
+	}
+}

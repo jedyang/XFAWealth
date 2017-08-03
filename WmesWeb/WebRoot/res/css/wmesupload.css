@@ -1,0 +1,147 @@
+ .trans-rotate{
+    -webkit-transition: transform .25s linear;
+    -moz-transition: transform .25s linear;
+    -o-transition: transform .25s linear;
+    transition: transform .25s linear;
+}/* 加上这个样式后，才会在0.25秒内旋转完毕。否则只会显示立刻旋转完的结果 */
+ 
+ /*上传样式*/
+.upload-box{ position:relative; display:inline-block; height:32px; vertical-align:middle; zoom:1; *display:inline;}
+	.upload-box .upload-btn{ display:inline-block; width:127px; height:81px; zoom:1; *display:inline;  }
+	.upload-box .upload-progress{ position:absolute; top:0; left:0; padding:2px 5px; width:115px; height:26px; border:1px solid #d7d7d7; background:#fff; overflow:hidden; }
+	.upload-box .upload-progress .txt{ display:block; padding-right:10px; font-weight:normal; font-style:normal; font-size:11px; line-height:18px; height:18px; text-overflow:ellipsis; overflow:hidden; }
+	.upload-box .upload-progress .bar{ position:relative; display:block; width:112px; height:4px; border:1px solid #1da76b; }
+	.upload-box .upload-progress .bar b{ display:block; width:0%; height:4px; font-weight:normal; text-indent:-99em; background:#28B779; overflow:hidden; }
+	.upload-box .upload-progress .close{ position:absolute; display:block; top:1px; right:1px; width:14px; height:14px; text-indent:-99em; background:url(skin_icons.png) -56px -196px no-repeat; cursor:pointer; overflow:hidden; }
+	
+/*图片相册样式*/
+.photo-list{margin:0; padding:10px 0 0 0 !important;}
+	.photo-list ul{ margin:0 0 0 -15px; }
+	.photo-list ul li{position:relative;width:82px;height:82px;float:left; margin-left:15px; text-align:center; *width:118px;     border: 1px solid #C0C0C0;padding: 5px;margin-bottom: 5px; }
+	.photo-list ul li .img-box{max-height:82px;position:relative;margin:0px auto;  border:3px #efefed solid; cursor:pointer; overflow:hidden; }
+	.photo-list ul li .img-box.selected{ border:0px #f60 solid; }
+	.photo-list ul li .img-box img{width:100%; height:100%; opacity:1;  cursor: pointer;  transition: all 0.6s;}
+	 .photo-list ul li .img-box img:hover{ transform: scale(1.4);}  
+	.photo-list ul li .img-box .remark{ position:absolute; display:block; left:0; right:0; bottom:0; margin:0; padding:3px 2px; height:18px; line-height:18px; background:#000; filter:alpha(opacity=50); opacity:0.5; -moz-opacity:0.5; text-align:left; overflow:hidden;}
+	.photo-list ul li .img-box .remark:hover{ top:0; bottom:0; height:100%; }
+	.photo-list ul li .img-box .remark i{ position:relative; font-size:12px; color:#fff; font-style:normal; line-height:18px; }
+	.photo-list ul li a{ padding-right:1em; }
+	
+	.video-list{ margin:0; padding:10px 0 0 0; }
+	.p-filename{ padding-top:5px; padding-bottom:5px; color:Blue;}
+	
+/*=====================以下部分是WebUploader必须的====================*/
+.webuploader-container{ position:relative; }
+.webuploader-element-invisible{ position:absolute !important; clip: rect(1px 1px 1px 1px); /* IE6, IE7 */ clip: rect(1px,1px,1px,1px); }
+.webuploader-pick11{ position:relative; display:inline-block; width:127px; line-height:81px; height:81px; border:1px solid #e1e1e1; cursor:pointer; background:#fff; color:#333; text-align:center; overflow:hidden; zoom:1; *display:inline; background:url(../images/docadd.png) center no-repeat;}
+/*.webuploader-pick-hover{ border:1px Yellow Solid;  /*-webkit-transform: rotate(360deg);  -moz-transform: rotate(360deg); transform: rotate(360deg);*/  } /*background:#fafafa;*/*/
+.webuploader-pick-disable{ opacity:0.6; pointer-events:none; }
+/*=====================以上部分是WebUploader必须的====================*/
+
+/*fdsfdsfds*/
+.webuploader-pick-imgtype-5{  width:240px; line-height:160px; height:160px;  background:url(../images/upload_img_5.png) center no-repeat;}
+.webuploader-pick-imgtype-4{  width:127px; line-height:81px; height:81px;  background:url(../images/upload_img_4.png) center no-repeat;}
+.webuploader-pick-imgtype-3{  width:84px; line-height:55px; height:55px;  background:url(../images/upload_img_3.png) center no-repeat;}
+.webuploader-pick-imgtype-2{  width:62px; line-height:43px; height:43px;  background:url(../images/upload_img_2.png) center no-repeat;}
+/*.webuploader-pick-imgtype-1{  width:38px; line-height:26px; height:26px;  background:url(../images/upload_img_1.png) center no-repeat;}*/
+.webuploader-pick-imgtype-1{  width:39px; line-height:38px; height:38px;  background:url(../images/upload_img_11.png) center no-repeat;}
+.webuploader-pick-imgtype-0{ position:relative; display:inline-block; width:105px; line-height:30px; height:30px; border:1px solid #e1e1e1; cursor:pointer; background:#fff; color:#333; text-align:center; overflow:hidden; zoom:1; *display:inline; }
+.webuploader-pick-1{ position:relative; display:inline-block; width:105px; line-height:30px; height:30px; border:1px solid #e1e1e1; cursor:pointer; background:#fff; color:#333; text-align:center; overflow:hidden; zoom:1; *display:inline; }
+.a-href{color: #000000;}
+.a-href:hover,.ifa-add-friends span:hover{color: #159aea;cursor:pointer;}
+.class-delimg{position: absolute;display: inline-block;bottom:6px;right:6px;padding:0 !important;width:16px;height:16px;background:url(../images/application/delete.png) no-repeat;}
+.class-download{position: absolute;display: inline-block;bottom:6px;left:6px;padding:0 !important;width:16px;height:16px;background:url(../images/application/icon_xiazai.png) no-repeat;background-size:100% 100%;}
+.delatebc{background:rgba(0,0,0,0.3);height:28px;position: absolute;bottom:0;width:100%;left:0;}
+
+/**删除/预览按钮样式*/
+	.fileList li{
+		 font-size: 12px;
+	     margin: 8px;
+	     overflow: hidden;
+	     position: relative;
+	     text-align: center;
+	     float:left;
+	}
+	.fileList div.file-panel {
+        background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
+        height: 0;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 300;
+    }
+    
+	.fileList div.file-panel span {
+        background: rgba(0, 0, 0, 0) url("../images/icons.png") no-repeat scroll 0 0;
+        cursor: pointer;
+        display: inline;
+        float: right;
+        height: 24px;
+        margin: 5px 1px 1px;
+        overflow: hidden;
+        text-indent: -9999px;
+        width: 24px;
+    }
+    
+	.fileList div.file-panel span.cancel {
+        background-position: -48px -24px;
+    }
+    
+	.fileList div.file-panel span.cancel:hover {
+        background-position: -48px 0;
+    }
+    
+	.fileList div.file-panel span.thumb {
+        background-position: -70px -24px;
+    }
+    
+	.fileList div.file-panel span.thumb:hover {
+        background-position: -70px -1px;
+    }   
+    
+    /*swiper插件需要用到样式*/
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+.swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #000;
+        
+    }
+ .swiper-slide img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      -ms-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      position: absolute;
+      left: 50%;
+      top: 50%;
+    }
+    .gallery-top {
+        height: 80%;
+        width: 100%;
+    }
+    .gallery-thumbs {
+        height: 20%;
+        box-sizing: border-box;
+        padding: 10px 0;
+    }
+    .gallery-thumbs .swiper-slide {
+        width: 25%;
+        height: 100%;
+        opacity: 0.3;
+        cursor: pointer;
+        border: 3px solid transparent;
+    }
+    .gallery-thumbs .swiper-slide-active {
+        opacity: 1;
+    }
+    

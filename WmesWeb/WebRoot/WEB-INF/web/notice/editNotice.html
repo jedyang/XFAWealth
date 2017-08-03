@@ -1,0 +1,296 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/wmesupload.css">
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+<link href="${base}/res/third/laydate/need/laydate.css" rel="stylesheet">
+<link href="${base}/res/third/laydate/skins/yalan/laydate.css" rel="stylesheet">
+<link rel="stylesheet" href="${base}/res/css/ifa.css">  
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css"> 
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+ <link rel="stylesheet" href="${base}/res/css/wmesupload.css"> 
+<style>
+.notice_radio_setting {
+    font-size: 15px;
+    height: 30px;
+}
+.notice_radio_setting li:nth-child(1) {
+    text-align: left;
+}
+.notice_radio_setting li {
+    float: left;
+    line-height: 30px;
+    height: 30px;
+    margin-right: 2%;
+    width: 130px;
+}
+.required_span{
+	color: #fd2525;
+    margin-right: 5px;
+}
+.notice_scope_let_me_specify{
+	margin-left: 130px;
+	border-top: 1px dashed #eef0f2;
+    padding-top: 15px;
+}
+.notice-row-title{
+	float: left;
+    width: 100px;
+    text-align: -webkit-right;
+    margin-right: 20px;
+}
+.clear{
+	clear:both;
+}
+.notice-input-title{
+	float: left;
+    width: 520px;
+    height: 28px;
+    border: #dcdadb 1px solid;
+    border-radius: 3px;
+    font-size: 14px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+}
+.stepOne-rows{
+    margin-top: 15px;
+}
+.notice-image-size-tip{
+	color: #b7b5b5;
+    margin-left: 15px;
+}
+.ifa_choose_condition{
+    padding-bottom: 150px;
+}
+.default-input{
+	border: 0px;
+}
+.notice_add_image_input{
+    margin-top: -7px;
+	border: 0px;
+	font-weight: bold;
+    color: blue;
+    cursor: pointer;
+    width: 80px;
+    float: left;
+    height: 28px;
+    font-size: 14px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+}
+.dialog-notice{
+    position: fixed;
+    top: 0px;
+    z-index: 999999;
+    margin-left: 80px;
+}
+.dispaly-active{
+	height: 100%;
+ 	width: calc(100% - 110px);
+}
+.selectSector-title-sub{
+	float:left;
+	font-size: 14px;
+    padding-bottom: 15px;
+    color:#b7b5b5;
+    margin-left:25px;
+}
+.notice-content{
+	clear: both;
+    margin: 0 2%;
+}
+.notice-content-bottom{
+	margin-top: 30px;
+    text-align: -webkit-right;
+    margin-right: 12%;
+}
+.dialog-notice-company{
+	margin-bottom: 5px;
+}
+.selectedshadow1{
+	display: block;
+    position: absolute;
+    height: 55px;
+    width: 100%;
+    background: #000;
+    filter: alpha(opacity=40);
+    -moz-opacity: 0.4;
+    -khtml-opacity: 0.4;
+    opacity: 0.4;
+}
+.notice-empty-tip{
+	display:none;
+	margin: 5px;
+    color: red;
+}
+ .webuploader-pick-remove-hover:hover{ background:#fafafa; }
+ .webuploader-pick{
+    position: relative;
+    display: inline-block;
+    width: 105px;
+    line-height: 30px;
+    height: 30px;
+    border: 1px solid #e1e1e1;
+    cursor: pointer;
+    background: #fff;
+    color: #333;
+    text-align: center;
+    overflow: hidden;
+    zoom: 1;
+}
+</style>
+<div class="wmes-content">
+   <div class="ifa_choose_condition">
+   		<p class="wmes-wrap-title">
+   			[#if (notice.id)??]
+   				[@lang_res k='notice.edit.title.edit'/]
+   			[#else]
+   				[@lang_res k='notice.edit.title.create'/]
+   			[/#if]
+   		</p>
+    	<div class="insight-tab-content">
+        	 <div class="insight-row">
+                 <p class="insight-row-title"><span>*</span>[@lang_res k='notice.edit.input.title'/]</p>
+                 <input id="txtTitle" class="insight-input-title" type="text" name="title" value="${(notice.subject)!}" >
+                 <p class="notice-empty-tip notice-empty-title-tip">[@lang_res k='notice.edit.alert.input.empty.title'/]</p>
+             </div>
+        	 <div class="insight-row">
+                 <p class="insight-row-title"><span>*</span>[@lang_res k='notice.edit.input.content'/]</p>
+             	 <textarea id="textContent" style="display: none;">${(notice.content)!}</textarea>
+             	 <p class="notice-empty-tip notice-empty-content-tip">[@lang_res k='notice.edit.alert.input.empty.content'/]</p>
+             </div>
+     	</div>
+     	<div class="stepOne-rows">
+           	<ul class="notice_radio_setting">
+				<li>
+					[@lang_res k='notice.level'/]
+				</li>
+				<li>
+					<input name="level" type="radio" value="0" [#if notice?exists == false || notice.level?exists == false || notice.level == '0']checked="checked"[/#if]>[@lang_res k='notice.level.0'/]
+				</li>
+				<li>
+					<input name="level" type="radio" value="1" [#if notice?? && notice.level?? && notice.level == '1']checked="checked"[/#if]>[@lang_res k='notice.level.1'/]
+				</li>
+			</ul>
+        </div>
+     	<div class="stepOne-rows">
+           	<ul class="notice_radio_setting">
+				<li>
+					[@lang_res k='notice.edit.input.scope'/]
+				</li>
+				<li>
+					<input name="target" type="radio" value="ALL" [#if notice?exists == false || notice.target?exists == false || notice.target == 'ALL']checked="checked"[/#if]>[@lang_res k='notice.target.ALL'/]
+				</li>
+				[#if sourceType?? && sourceType == 'ifafirm']
+				<li>
+					<input name="target" type="radio" value="I1" [#if notice?? && notice.target?? && notice.target=='I1']checked="checked"[/#if]>[@lang_res k='notice.target.I1'/]
+				</li>
+				<li>
+					<input name="target" type="radio" value="I2" [#if notice?? && notice.target?? && notice.target=='I2']checked="checked"[/#if]>[@lang_res k='notice.target.I2'/]
+				</li>
+				[#elseif sourceType?? && sourceType == 'distributor']
+				<li>
+					<input name="target" type="radio" value="D1" [#if notice?? && notice.target?? && notice.target=='D1']checked="checked"[/#if]>[@lang_res k='notice.target.D1'/]
+				</li>
+				<li>
+					<input name="target" type="radio" value="D2" [#if notice?? && notice.target?? && notice.target=='D2']checked="checked"[/#if]>[@lang_res k='notice.target.D2'/]
+				</li>
+				[/#if]
+			</ul>
+        </div>
+        <div class="stepOne-rows clear">
+           	<ul class="notice_radio_setting notice_attachment_upload" style="height: 100px;">
+				<li>
+					[@lang_res k='notice.attachment.upload'/]
+				</li>
+				<li>
+				[#if accessoryFiles?? && accessoryFiles?size gt 0]
+				[#list accessoryFiles as items]
+					<div class="noticeDoc">
+						<div style="float: left;margin-right: 50px;width: 400px;" class="">
+							<a class="noticeDocName" style="color: blue;" href="[#if items.filePath??]${base!}/download.do?fileName=${(items.filePath)!}[#else]javascript:void(0)[/#if]">
+								${(items.fileName)!}
+							</a>
+						</div>
+			          	<div accessoryFile="${(items.id)!}" style="display:none;vertical-align: middle;margin: 5px 0;" class="removeNoticeDoc webuploader-pick webuploader-pick-remove-hover">
+			          		[@lang_res k='notice.delete.attachment'/]
+			          	</div>
+					</div>
+		        [/#list]
+		        [/#if]
+		         	<div class="upload-box upload-album"></div>
+				</li>
+			</ul>
+        </div>
+        [#if notice??]
+        <div class="stepOne-rows clear">
+           	<ul class="notice_radio_setting">
+				<li>
+					[@lang_res k='notice.edit.input.releaseBy'/]
+				</li>
+				<li>
+					<input id="hidCurMemberName" type="hidden">
+					<input id="txtReleaseBy" value="${(notice.releaseByName)!'-'}" class="notice-input-title default-input" readonly="readonly">
+					<input id="txtSourceByName" type="hidden" value="${(notice.sourceName)!'-'}">
+				</li>
+			</ul>
+        </div>
+        <div class="stepOne-rows clear">
+           	<ul class="notice_radio_setting">
+				<li>
+					[@lang_res k='notice.edit.input.createTime'/]
+				</li>
+				<li>
+					<input value="${(notice.createTimeStr)!'-'}" class="notice-input-title default-input" readonly="readonly">
+				</li>
+			</ul>
+        </div>
+        <div class="stepOne-rows clear">
+           	<ul class="notice_radio_setting">
+				<li>
+					[@lang_res k='notice.edit.input.releaseDate'/]
+				</li>
+				<li>
+					<input id="txtReleaseDate" value="${(notice.releaseDateStr)!'-'}" class="notice-input-title default-input" readonly="readonly">
+				</li>
+			</ul>
+        </div>
+        [/#if]
+        <div class="proposal-button-wrap">
+   			<a class="proposal-button" href="javascript:;" id="btnPreview">[@lang_res k='global.preview'/]</a>
+   			<a class="proposal-button" href="javascript:;" id="btnPublish">[@lang_res k='global.publish'/]</a>
+   		</div>
+   		<input id="hidId" type="hidden" value="${(notice.id)!}">
+	</div>
+</div>
+<!-- preview notice -->
+<div id="previewNoticeDialog" class="wmes-content-position dialog-notice" style="background: rgba(0,0,0,0.3);display:none;width:100%;">
+	<div class="selectSector" style="left:8%">
+		<div class="investment-wrap investment-hide">
+			<div class="investment-plan-wrap">
+				<div class="wmes-close"></div>
+				<p style="margin-bottom: 15px;font-size:25px;text-align: -webkit-center;" class="selectSector-title notice-dialog-title"></p>
+				<div style="margin: 0 20%;">
+					<p class="selectSector-title-sub">[@lang_res k='notice.edit.dialog.notice.preview.releaseDate'/] : <span class="notice-dialog-release-date-time"></span></p>
+					<p class="selectSector-title-sub">[@lang_res k='notice.edit.dialog.notice.preview.releaseBy'/] : <span class="notice-dialog-release-by"></span></p>
+				</div>
+				<div class="notice-content dialog-notice-content" style="height: 450px;overflow: auto;">	
+				</div>
+				<div class="character-button-rows"></div>
+			</div>
+		</div>
+	</div>
+</div>
+[#include "../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var props = [@load_prop k=''/];
+	/**
+	 * 语言设置，用于umeditor
+	 */
+	[#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']
+	    var lang="en";
+	[#elseif Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']
+		var lang="zh-tc";
+	[#else]
+		var lang="zh-cn";
+	[/#if]
+    seajs.use('${base}/res/web/notice/editNotice.js');
+</script>        

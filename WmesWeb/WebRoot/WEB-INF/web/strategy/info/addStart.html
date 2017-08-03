@@ -1,0 +1,180 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+ <link rel="stylesheet" href="${base}/res/css/jquery.range.css">
+<style type="text/css">
+	
+	.conservative-date-wrap{float:right;margin-top:6px;margin-right:60px;display: none;}
+	.account-choose-input-wrap{float:left;}
+	.account-choose-date{width:80px;}
+	.account-choose-name{float:left;}
+	.account-data-search{float: left;}
+	.training-contentarea{padding-right: 0px;}
+	.createflowtitle{margin-bottom: 5px;}
+	.ifa-more-ico{    margin-bottom: 5px;}
+	.ifa_keyserach_hidden{height: 36px;}
+</style>
+<div class="wmes-content wmes-content-position">
+ <form id="addForm">
+	<div class="strategies_list_wrap">
+		<div class="wmes-wrap-title" style="height:32px;">
+			<a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a><p>[#if isNew?? && isNew=="1"][@lang_res k='strategy.info.form.newStrategy'/][#else][@lang_res k='strategy.info.form.editStrategy'/][/#if]</p>
+		</div>
+		<div class="proposal-step-wrap">
+    			<ul class="proposal-step">
+    				<li class="proposal-step-title proposal-step-now">[@lang_res k='strategy.info.flow.start'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">[@lang_res k='strategy.info.flow.allocation'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title">[@lang_res k='strategy.info.flow.release'/]</li>
+    			</ul>
+    </div>
+		<p class="createflowtitle"><span class="price_negative">*</span>[@lang_res k='strategy.info.form.strategyName'/]</p>
+		<div class="training-contentarea">
+		    <textarea class="member-comment-text1 comtent_text" id="strategyName" maxLength="50"   name="strategyName">${(strategyVO.strategyName)?if_exists}</textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 50 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">50</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+			</div>
+		</div>
+		<p class="createflowtitle"><span class="price_negative">*</span>[@lang_res k='strategy.abstract'/]</p>
+		<div class="training-contentarea">
+			<textarea class="member-comment-text2 comtent_text" id="reason"  maxLength="500"  name="reason">${(strategyVO.reason)?if_exists}</textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+			</div>
+		</div>
+		<p class="createflowtitle"><span class="price_negative">*</span>[@lang_res  k='strategy.info.form.goal'/]</p>
+		<div class="training-contentarea">
+			<textarea class="member-comment-text2 comtent_text" id="investmentGoal" maxLength="500"  name="investmentGoal">${(strategyVO.investmentGoal)?if_exists}</textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+			</div>
+		</div>
+		<p class="createflowtitle"><span class="price_negative">*</span>[@lang_res k='strategy.info.form.investor'/]</p>
+		<div class="training-contentarea">
+			<textarea class="member-comment-text2 comtent_text" id="suitability"  maxLength="500" name="suitability">${(strategyVO.suitability)?if_exists}</textarea>
+			<div class="member-comment-topper">
+				<p class="member-number-words member-number-words-application">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span class="inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span class="left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]
+			</div>
+		</div>
+		<p class="createflowtitle"><span class="price_negative">*</span>[@lang_res k='list.search.riskLevel'/]</p>
+		<div class="training-contentarea" style="height:30px;margin-bottom:10px;">
+			<div class="investor-xiala risk_xiala" style="width:200px">
+			   [#if riskRatingTypes?? && riskRatingTypes?size gt 0 && strategyVO.riskLevel?? ]
+                [#list riskRatingTypes as x]
+		            [#if strategyVO.riskLevel?? && x.value==strategyVO.riskLevel]
+		            <input type="text" value="${x.name!}" placeholder="" class="riskName" readonly="" style="width:155px">
+		            [/#if]
+		        [/#list]
+		        [#else]
+		        <input type="text" value="" placeholder=""  readonly="" class="riskName" style="width:155px">
+                [/#if]
+		        <input type="hidden" name="riskLevel" id="riskLevel" value="${(strategyVO.riskLevel)?if_exists}">
+		        <span class="icon_xiala"></span>
+		        <ul style="width: 200px;top: 27px;">
+		        [#if riskRatingTypes?? && riskRatingTypes?size gt 0 ]
+                [#list riskRatingTypes as x]
+		            <li value="${x.value!}">${x.name!}</li>
+		        [/#list]
+                [/#if]
+		        </ul>
+		    </div>
+		</div>
+        <div class="tabcut">
+		<div class="ifa_keyserach_wrap">
+			
+		<div class="creattitle">
+			<p>[@lang_res k='strategy.info.form.productallocation'/]</p>
+		</div>
+		<div class="Create_Strategylevel_content Create_Strategyoverview_content">
+					<div class="Create_Strategylevelleft">
+						<div class="createAddcon">
+							<div id="prodAllocation" id="prodAllocation" name="prodAllocation" class="investor-xiala pro_xiala" style="width:160px;">
+		        				<input type="text" class="productTypes" value="" typeCode="" placeholder="[@lang_res k='strategy.info.form.selectproduct'/]" readonly="" style="width:120px">
+		        				<span class="icon_xiala"></span>
+		        				<ul style="width: 160px;top: 27px;">
+		        				[#if productTypes?exists && productTypes?size gt 0 ]
+                				[#list productTypes as x]
+                				[#if x.id!='cash']
+		            				<li value="${x.id}" displayColor="${x.displayColor!}">[@lang_res k='allocation.${x.id!}'/]</li>
+		            				[/#if]
+		        				[/#list]
+                				[/#if]
+		        				</ul>
+		    				</div>
+							<select  style="width:157px;height:29px;display: none;">
+									<option value="">[@lang_res k='strategy.info.form.selectproduct'/]</option>
+									[#if productTypes?exists && productTypes?size gt 0 ]
+                                    [#list productTypes as x]
+                                       <option value="${x.value!}">${x.name!}</option>
+                                    [/#list]
+                                    [/#if]
+								</select>
+								<a class="createadd">[@lang_res k='global.add'/]</a>
+							</div>
+						<div class="createlistcon" [#if allocation?exists && allocation?size gt 0]style="display:block;"[#else]style="display:none;"[/#if]>
+							<ul class="createlisttitle" >
+									<li>[@lang_res k='strategy.info.form.product'/]</li>
+									<li>[@lang_res k='strategy.info.form.weight'/]</li>
+								</ul>
+							<div class="createlist ranges-init" id="allocationTable"  data-temp="100">
+								[#if allocation?exists && allocation?size gt 0]
+								[#list allocation as list]
+								<ul class="createlistcontent" data-name="${list.itemCode!}" data-value="${list.itemWeight!}" displayColor="${list.displayColor!}">
+									<li><span>[@lang_res k='allocation.${list.itemCode!}'/]</span></li>
+									<li>
+										<div class="funds-slider-wrap">
+										<input type="hidden" class="funds-single-slider" value="${list.itemWeight!}"></div>
+										<input class="strategy-slider-input" type='text' value='${list.itemWeight!}' readonly="" />%
+										<input type="hidden" class="itemCode" name="" value="${list.itemCode!}">
+									</li>
+									<li><img class="delete" src="${base}/res/images/application/laji1.png" /></li>
+								</ul>
+								[/#list]
+								[/#if]
+								<ul class="createlistcontentall" data-name="Total" data-value="100">
+									<li>[@lang_res k='global.total'/]</li>
+									<li><span class="total"></span>%</li>
+									<li></li>
+								</ul>
+								
+							</div>
+						</div>
+					</div>
+					<div class="Create_Strategylevelright">
+						<!--<div class="Create_Strategylevelrightselect">
+							<select id="riskLevel" name="riskLevel">
+								 [#if riskRatingTypes?? && riskRatingTypes?size gt 0 ]
+                                [#list riskRatingTypes as x]
+                                    <option value="${x.value}" [#if strategyVO.riskLevel?? && strategyVO.riskLevel==x.value]selected[/#if]>${x.name}</option>
+                                [/#list]
+                                [/#if]
+							</select>
+							<span>[@lang_res k='list.search.riskLevel'/]:</span>
+						</div>
+						--><div id="Create_Strategylevel" style="display:none;"></div>
+					</div>
+				</div>
+		
+		</div>
+		<div class="creatlistbn">
+			<div class="craetbnSave" id="btnSave">[@lang_res k='global.save'/]</div>
+			<div class="craetbnNext" id="btnNext">[@lang_res k='global.next'/]</div>
+			<div class="craetbnCancel" id="btnCancle">[@lang_res k='global.cancel'/]</div>
+			 <input type="hidden" id="id" name="id" value="${(strategyVO.id)?if_exists}">
+             <input type="hidden" id="next" value="false">
+             <input type="hidden" id="prdAllocations" name="prdAllocations" value="${(strategyVO.fundType)?if_exists}">
+             <input type="hidden" id="prdAllocationsWeight" name="prdAllocationsWeight" value="">
+		</div>
+			</div>
+			<!--<div class="page_right"></div>
+		--></div>
+		</form>
+	</div>
+<div class="clear"></div>
+<div id="div_setrange" style="display:none;"></div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+seajs.use('${base}/res/web/strategy/info/addStart.js');
+</script>

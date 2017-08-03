@@ -1,0 +1,421 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<!--<style>
+	.fundTransactiondemomask{background:rgba(0,0,0,0.4);width:100%;height:100%;position:absolute;top:0;left:0;z-index:99999999;}
+	.fundTransactiondemo{background-color: white;padding: 1% 1.5%;width: 40%;top: 10px;border-radius: 4px;box-shadow: 2.5px 4.33px 35px 0px #000;margin:10% auto 0 auto;}
+	.fundTransactiondemo{}
+</style>-->
+
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='strategy.title'/]</a>
+</div>
+<form id="paramsForm" name="paramsForm" action="" method="post" onkeydown="if(event.keyCode==13){return false;}">
+
+<div class="wmes-content" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+ <input type="hidden" id="dateFormat" value="${dateFormat!}">
+<div class="ifa_choose_condition">
+		<div class="wmes-wrap-title" style="margin-bottom:0;">
+			<p style="float:left;">债券列表</p>
+		</div>
+        <div class="client-more-screen-wrap">
+		  <div class="funds_choice_wrap funds_choice_wrap_hidden">
+			<p class="funds_choice_title">发行货币</p>
+			<ul class="funds_choice">
+				<li class="fund_choice_active funds_all fund_choice_active2 funds_all_Sector" data-name="sectorA" data-key="" data-value="SectorA_00">All</li>
+				<li data-name="sectorA_1" data-key="sectorA_my" data-value="sectorA_01">美元</li>
+				<li data-name="sectorA_2" data-key="sectorA_gy" data-value="sectorA_02">港元</li>
+				<li data-name="sectorA_3" data-key="sectorA_rmb" data-value="sectorA_03">人民币</li>
+				<li data-name="sectorA_4" data-key="sectorA_ay" data-value="sectorA_04">澳元</li>
+			</ul>
+			<!--<div class="funds_choice_wrap_hiddenclick">
+				<img src="${base}/res/images/application/hideen.png">
+			</div>-->
+		  </div>
+		  <div class="funds_choice_wrap">
+			<p class="funds_choice_title">派息次数</p>
+			<ul class="funds_choice">
+				<li class="fund_choice_active  funds_all fund_choice_active2" data-name="sectorB" data-key="" data-value="">All</li>
+				<li data-name="sectorB_1" data-key="sectorB_dqr" data-value="sectorB_01">到期日到付</li>
+				<li data-name="sectorB_2" data-key="sectorB_mj" data-value="sectorB_02">每季</li>
+				<li data-name="sectorB_3" data-key="sectorB_mbn" data-value="sectorB_03">每半年</li>
+				</ul>
+		  </div>
+          <div class="funds_choice_wrap">
+			<p class="funds_choice_title">产品风险程度</p>
+			<ul class="funds_choice">
+				<li class="fund_choice_active  funds_all fund_choice_active2" data-name="sectorC" data-key="" data-value="">All</li>
+				<li data-name="sectorC_1" data-key="sectorC_001" data-value="sectorC_01">1</li>
+				<li data-name="sectorC_2" data-key="sectorC_002" data-value="sectorC_02">2</li>
+				<li data-name="sectorC_3" data-key="sectorC_003" data-value="sectorC_03">3</li>
+				</ul>
+		  </div>
+        </div>
+		<div class="wmes-menu-hide">
+			<div class="wmes-menu-hidecon"><b>筛选条件</b><span></span></div>
+		</div>
+		<!--<div class="wmes-menu-hide">
+			<div class="jiantou"></div>
+		</div>-->
+	</div>
+    <div class="strategies_list_wrap">
+     <table class="funds_search_information strategies_List myProposalList">
+			<tbody>
+				<tr class="funds_tables_th">
+					<th class="funds_tables_header" style="text-align: center;">
+						发行者
+					</th>
+					<th class="funds_tables_header" style="">
+						信贷评级
+					</th>
+					<th class="funds_tables_header" style="">
+						发行货币
+					</th>
+					<th class="funds_tables_header" style="">
+						票面息率
+					</th>
+					<th class="funds_tables_header" style="">
+						派息次数
+					</th>
+					<th class="funds_tables_header" style="">
+						到期日
+					</th>
+					<th class="funds_tables_header" style="">
+						产品风险程度
+					</th>
+					<th class="funds_tables_header" style="">
+						最少购买金额
+					</th>
+					<th class="funds_tables_header" style="">
+						
+					</th>
+				</tr>
+				<tr>
+					<td class="tdleft funds_tables_fnames">
+						<a href="${base}/front/strategy/info/fundsSearchEngineDetail.do">中国农业银行（透过其香港分行）</a>
+					</td>
+					<td class="funds_search_tdcenter">
+						--
+					</td>
+					<td class="funds_search_tdcenter">
+						美元
+					</td>
+					<td class="funds_search_tdcenter">
+						0.900%
+					</td>
+					<td class="funds_search_tdcenter">
+						到期日支付
+					</td>
+					<td class="funds_search_tdcenter">
+						2017年11月27日
+					</td>
+					<td class="funds_search_tdcenter">
+						1
+					</td>
+					<td class="funds_search_tdcenter">
+						50,000
+					</td>
+					<td class="funds_search_tdcenter">
+						<img src="${base}/res/images/application/buy.png" style="width:20px;height:20px;"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdleft funds_tables_fnames">
+						WING LUNG BANK LTD
+					</td>
+					<td class="funds_search_tdcenter">
+						--
+					</td>
+					<td class="funds_search_tdcenter">
+						港元
+					</td>
+					<td class="funds_search_tdcenter">
+						0.650%
+					</td>
+					<td class="funds_search_tdcenter">
+						到期日支付
+					</td>
+					<td class="funds_search_tdcenter">
+						2017年11月22日
+					</td>
+					<td class="funds_search_tdcenter">
+						1
+					</td>
+					<td class="funds_search_tdcenter">
+						50,000
+					</td>
+					<td class="funds_search_tdcenter">
+						<img src="${base}/res/images/application/buy.png" style="width:20px;height:20px;"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdleft funds_tables_fnames">
+						中国工商银行（亚洲）有限公司
+					</td>
+					<td class="funds_search_tdcenter">
+						--
+					</td>
+					<td class="funds_search_tdcenter">
+						人民币
+					</td>
+					<td class="funds_search_tdcenter">
+						3.850%
+					</td>
+					<td class="funds_search_tdcenter">
+						到期日支付
+					</td>
+					<td class="funds_search_tdcenter">
+						2017年10月13日
+					</td>
+					<td class="funds_search_tdcenter">
+						2
+					</td>
+					<td class="funds_search_tdcenter">
+						50,000
+					</td>
+					<td class="funds_search_tdcenter">
+						<img src="${base}/res/images/application/buy.png" style="width:20px;height:20px;"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdleft funds_tables_fnames">
+						中国建设银行股份有限公司香港分行
+					</td>
+					<td class="funds_search_tdcenter">
+						A1 | A
+					</td>
+					<td class="funds_search_tdcenter">
+						美元
+					</td>
+					<td class="funds_search_tdcenter">
+						0.880%
+					</td>
+					<td class="funds_search_tdcenter">
+						每季
+					</td>
+					<td class="funds_search_tdcenter">
+						2017年09月12日
+					</td>
+					<td class="funds_search_tdcenter">
+						1
+					</td>
+					<td class="funds_search_tdcenter">
+						50,000
+					</td>
+					<td class="funds_search_tdcenter">
+						<img src="${base}/res/images/application/buy.png" style="width:20px;height:20px;"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdleft funds_tables_fnames">
+						中国农业银行（透过其香港分行）
+					</td>
+					<td class="funds_search_tdcenter">
+						--
+					</td>
+					<td class="funds_search_tdcenter">
+						港元
+					</td>
+					<td class="funds_search_tdcenter">
+						0.830%
+					</td>
+					<td class="funds_search_tdcenter">
+						到期日支付
+					</td>
+					<td class="funds_search_tdcenter">
+						2018年05月30日
+					</td>
+					<td class="funds_search_tdcenter">
+						1
+					</td>
+					<td class="funds_search_tdcenter">
+						50,000
+					</td>
+					<td class="funds_search_tdcenter">
+						<img src="${base}/res/images/application/buy.png" style="width:20px;height:20px;"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdleft funds_tables_fnames">
+						澳大利亚联邦银行
+					</td>
+					<td class="funds_search_tdcenter">
+						Aa2 | AA-
+					</td>
+					<td class="funds_search_tdcenter">
+						澳元
+					</td>
+					<td class="funds_search_tdcenter">
+						4.250%
+					</td>
+					<td class="funds_search_tdcenter">
+						每半年
+					</td>
+					<td class="funds_search_tdcenter">
+						2018年01月25日
+					</td>
+					<td class="funds_search_tdcenter">
+						3
+					</td>
+					<td class="funds_search_tdcenter">
+						200,000
+					</td>
+					<td class="funds_search_tdcenter">
+						<img src="${base}/res/images/application/buy.png" style="width:20px;height:20px;"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdleft funds_tables_fnames">
+						PETROLIAM NASIONAL BERHD
+					</td>
+					<td class="funds_search_tdcenter">
+						A1 | A-
+					</td>
+					<td class="funds_search_tdcenter">
+						美元
+					</td>
+					<td class="funds_search_tdcenter">
+						7.625%
+					</td>
+					<td class="funds_search_tdcenter">
+						每半年
+					</td>
+					<td class="funds_search_tdcenter">
+						2026年10月25日
+					</td>
+					<td class="funds_search_tdcenter">
+						3
+					</td>
+					<td class="funds_search_tdcenter">
+						100,000
+					</td>
+					<td class="funds_search_tdcenter">
+						<img src="${base}/res/images/application/buy.png" style="width:20px;height:20px;"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdleft funds_tables_fnames">
+						澳大利亚和新西兰银行集团有限公司
+					</td>
+					<td class="funds_search_tdcenter">
+						Aa2 | AA-
+					</td>
+					<td class="funds_search_tdcenter">
+						澳元
+					</td>
+					<td class="funds_search_tdcenter">
+						4.500%
+					</td>
+					<td class="funds_search_tdcenter">
+						每半年
+					</td>
+					<td class="funds_search_tdcenter">
+						2018年11月06日
+					</td>
+					<td class="funds_search_tdcenter">
+						3
+					</td>
+					<td class="funds_search_tdcenter">
+						100,000
+					</td>
+					<td class="funds_search_tdcenter">
+						<img src="${base}/res/images/application/buy.png" style="width:20px;height:20px;"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdleft funds_tables_fnames">
+						新加坡科技工程有限公司
+					</td>
+					<td class="funds_search_tdcenter">
+						Aaa | AAA
+					</td>
+					<td class="funds_search_tdcenter">
+						美元
+					</td>
+					<td class="funds_search_tdcenter">
+						4.800%
+					</td>
+					<td class="funds_search_tdcenter">
+						每半年
+					</td>
+					<td class="funds_search_tdcenter">
+						2019年07月16日
+					</td>
+					<td class="funds_search_tdcenter">
+						2
+					</td>
+					<td class="funds_search_tdcenter">
+						100,000
+					</td>
+					<td class="funds_search_tdcenter">
+						<img src="${base}/res/images/application/buy.png" style="width:20px;height:20px;"/>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+     
+     
+    </div>
+    
+	</div>
+    <input type="hidden" value="" name="period" id="period"/>
+    <input type="hidden" value="" name="source" id="source"/>
+    <input type="hidden" value="" name="regions" id="regions"/>
+    <input type="hidden" value="" name="sectors" id="sectors"/>
+    <input type="hidden" value="" name="riskLevel" id="riskLevel"/>
+    <input type="hidden" value="" name="keyWord" id="keyWord"/>
+    <input type="hidden" value="1" name="status" id="status"/>
+</form>
+<style>
+	.layui-layim-close{display:none;}
+	.fundTransactiondemomask{background:rgba(0,0,0,0.4);width:100%;height:100%;position:absolute;top:0;left:0;z-index:99999999;}
+	.fundTransactiondemo{background-color: white;padding: 1% 1.5%;width: 40%;top: 10px;border-radius: 4px;box-shadow: 2.5px 4.33px 35px 0px #000;position:absolute;top:10%;left:26%;padding-bottom:40px;}
+	.fundTransactiondemo ul{overflow:hidden;margin:30px 0;}
+	.fundTransactiondemo ul li{float:left;}
+	.fundTransactiondemo ul li:nth-child(1){width:80px;}
+	.fundTransactiondemo ul li:nth-child(3){float:right;width:120px;text-align:right;margin-right:50px;}
+	.fundTransactiondemo ul li:nth-child(4){float:right;width:120px;text-align:right;margin-right:20px;}
+	.order-setting-cycle{float: left;line-height: 20px;margin: 0px 3px;padding-bottom: 5px;cursor: pointer;}
+	.order-setting-cycle > span{padding:0 15px;}
+	.order-cycle-active{color: #10a1ec;border-bottom: 2px solid #10a1ec;}
+	.little-title{font-size:16px;font-weight:bold;}
+	.fundTransactiondemo input{border: 1px solid #e3e3e3;padding: 5px 5px;line-height: normal;float: none;width: 100px;border-radius: 4px;}
+	.setting-control{height: 37px;margin-top: 40px;}
+	.setting-summit{height: 37px;padding: 0 30px;color: #fff;background: #2d80ce;text-align: center;line-height: 37px;border-radius: 3px;float: left;margin-left:calc(50% - 98px);margin-right: 25px;cursor: pointer;}
+	.setting-cancel{height: 37px;padding: 0 30px;background: #e5e5e5;text-align: center;line-height: 37px;border-radius: 3px;float: left;cursor: pointer;}
+</style>
+<!--<div class="fundTransactiondemomask">
+	<div class="fundTransactiondemo">
+		<div class="wmes-close"></div>
+		<div class="little-title">兰克林互惠欧洲基金A (acc)USD</div>
+		<ul><li>当前净值:</li><li>28.58美元</li></ul>
+		<ul><li>交易方式:</li><li><p class="order-setting-cycle order-cycle-active"><span style="border-right: 1px solid #e3e3e3;">申购/认购</span></p><p class="order-setting-cycle"><span>赎回</span></p></li></ul>
+		<ul><li>交易账户:</li><li><select><option>008945900</option></select></li><li>2,354,000.00 港币</li><li>可用现金:</li></ul>
+		<ul><li>交易费率:</li><li>1.00%</li><li>1000.00 港币</li><li>最低交易费用:</li></ul>
+		<ul><li style="height:28px;line-height:28px;">买入份额:</li><li><input type="text" value="1000.00"/></li></ul>
+		<div style="margin-left:80px;">(222,784.00港币)</div>
+		<div class="setting-control">
+			<div class="setting-summit" id="saveInvest">确认</div>
+			<div class="setting-cancel">取消</div>
+		</div>
+	</div>
+</div>-->
+<!--<div class="fundTransactiondemomask">
+	<div class="fundTransactiondemo">
+		<div class="wmes-close"></div>
+		<div class="little-title">中国建设银行股份有限公司香港分行<br/>PCBCFC17018</div>
+		<ul><li>发行货币:</li><li>美元</li></ul>
+		<ul><li>交易账户:</li><li><select><option>008945900</option></select></li><li>2,354,000.00 港币</li><li>可用现金:</li></ul>
+		<ul><li>交易费率:</li><li>1.00%</li><li>50,000.00 港币</li><li>最少购买金额:</li></ul>
+		<ul><li>面值:</li><li>50</li></ul>
+		<ul><li style="height:28px;line-height:28px;">买入数量:</li><li><input type="text" value="50.00"/>张</li></ul>
+		<div class="setting-control">
+			<div class="setting-summit" id="saveInvest">确认</div>
+			<div class="setting-cancel">取消</div>
+		</div>
+	</div>
+</div>-->
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+seajs.use('${base}/res/web/strategy/info/fundsSearchEngine.js');
+</script>

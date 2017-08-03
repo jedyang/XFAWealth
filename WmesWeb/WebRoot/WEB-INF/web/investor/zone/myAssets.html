@@ -1,0 +1,385 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+  
+<style type="text/css">
+	.swiper-button-next{top: 80px;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23bbbbbb'%2F%3E%3C%2Fsvg%3E")}
+	.swiper-button-prev{top: 80px;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23bbbbbb'%2F%3E%3C%2Fsvg%3E");}
+	.tips-div{text-align:center;    background: white;padding-top:20px;}
+	.buddy-btn{
+		margin:15px 35px;
+    height: 37px;
+    color: #fff;
+    background: #1c9ddc;
+    text-align: center;
+    line-height: 37px;
+    border-radius: 3px;
+    font-size:14px;
+    cursor: pointer;
+    font-weight: 700;}
+  .buddy-btn:hover{background:#0976dc;}
+  .PortfoliosTips{color:#999;}
+  .ifa-zone-taccount .tips-div{background:none;color:#fff;}
+  .ifa-zone-row-hide{height:30px}
+  .search-button{    background: #2d80ce; color: white; padding: 0px 30px; margin-right: 15px; border-radius: 4px; float: right;font-size: 14px;}
+</style>
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">My Zone</a>
+</div>
+<div class="wmes-content">
+[#if accountNumber.totalCount?? && accountNumber.totalCount>0]
+	<div class="ifa-zone-row">
+		<p class="wmes-wrap-title">[@lang_res k='assets.myAssets'/] <a class="search-button" href="${base}/front/transaction/transactionRecord.do">[@lang_res k='assets.orderHistory'/]</a></p>
+		<div class="my-assets-wrap" style="margin:25px 0 15px 0;">
+				<div class="my-assets-rows">
+					<p class="my-assets-title">[@lang_res k='assets.totalAsset'/] (${currency!})</p>
+					<p class="my-assets-word"><span class="eve-hide" data-num="[@num_fmt  s='${assetsVO.totalMarketValue!}'  f='#,##0.00'/]">[@num_color  s='${assetsVO.totalAssets!}' c='${displayColor!}' f='#,##0.00'/]</span><img class="eve_ico" src="${base}/res/images/ifa/eves_ico_02.png"></p>
+				</div>
+				<div class="my-assets-rows">
+					<p class="my-assets-title">[@lang_res k='assets.totalReturn'/] (${currency!})</p>
+					<p class="my-assets-word">
+					<span class="eve-hide" data-num="[@num_color  s='${assetsVO.totalReturnValue!}' c='${displayColor!}' f='#,##0.00'/]">[@num_color  s='${assetsVO.totalReturnValue!}' c='${displayColor!}' f='#,##0.00'/]</span>
+					</p>
+				</div>
+				<div class="my-assets-rows">
+					<p class="my-assets-title">[@lang_res k='assets.totalReturn.rate'/]</p>
+					<p class="my-assets-word">
+					<span class="eve-hide" data-num="[@num_color  s='${assetsVO.totalReturnRate!}' c='${displayColor!}'/]">[@num_color  s='${assetsVO.totalReturnRate!}' c='${displayColor!}'/]</span>
+					
+					</p>
+				</div>
+		</div>
+		<div class="my-assets-wrap">
+			<ul class="portfolios_list">
+			[#if portfolioList?exists && portfolioList?size gt 0]
+			[#list portfolioList as list]
+				<li class="portfolios_list_blue">
+					<a href="${base}/front/strategy/info/conservativePortfolio.do?id=${list.portfolioId!}"><p class="portfolios_list_title">${list.portfolioName!}</p></a>
+					<ul class="portfolios_list_content">
+						<li>
+							<div class="c100 p${list.totalAssetsRate!}" style="background:#f3e9d4;transform: scale(0.8);">
+								<span style="color:#000">${list.totalAssetsRate!}%</span>
+								<div class="slice">
+									<div class="bar"></div>
+									<div class="fill"></div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<p class="my-assets-title">[@lang_res k='assets.totalAsset'/]</p>
+							<p class="my-assets-word"><span class="eve-hide" data-num="[@num_fmt  s='${list.totalAssets!}'  f='#,##0.00'/]">[@num_color  s='${list.totalAssets!}' c='${displayColor!}' f='#,##0.00'/]</span> <span class="my-assets-cur">${currency!}</span><img class="eve_ico" src="${base}/res/images/ifa/eves_ico_02.png"></p>
+						</li>
+						<li>
+							<p class="my-assets-title">[@lang_res k='assets.totalReturn'/]</p>
+							<p class="my-assets-word">
+								<span class="eve-hide" data-num="[@num_color  s='${list.totalReturnValue!}' c='${displayColor!}' f='#,##0.00'/]">[@num_color  s='${list.totalReturnValue!}' c='${displayColor!}' f='#,##0.00'/]</span><span class="my-assets-cur">${currency!}</span>
+							</p>
+						</li>
+						<li>
+							<p class="my-assets-title">[@lang_res k='assets.totalReturn.rate'/]</p>
+							<p class="my-assets-word">
+								<span class="eve-hide" data-num="[@num_color  s='${list.totalReturnRate!}' c='${displayColor!}'/]">[@num_color  s='${list.totalReturnRate!}' c='${displayColor!}'/]</span>
+							</p>
+						</li>
+						<li>
+							<a class="my-balance-button" href="${base}/front/transaction/rebalanceMixer.do?id=${list.portfolioId!}">[@lang_res k='portfolio.hold.detail.rebalance'/]</a>
+						</li>
+					</ul>
+				</li>
+				[/#list]
+				[/#if]
+				
+				<li class="portfolios_list_orange" style="display:none">
+					<p class="portfolios_list_title">Cash</p>
+					<ul class="portfolios_list_content">
+						<li>
+							<div class="c100 p29" style="background:#f3e9d4;transform: scale(0.8);">
+								<span style="color:#000">29%</span>
+								<div class="slice">
+									<div class="bar" style="transform:rotate(126deg);"></div>
+									<div class="fill"></div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<p class="my-assets-title">Available Amount</p>
+							<p class="my-assets-word"><span class="eve-hide" data-num="[@num_color  s='${assetsVO.totalMarketValue!}' c='${displayColor!}' f='#,##0.00'/]">[@num_color  s='${assetsVO.totalMarketValue!}' c='${displayColor!}' f='#,##0.00'/]</span> <span class="my-assets-cur">${currency!}</span><img class="eve_ico" src="${base}/res/images/ifa/eves_ico_02.png"></p>
+						</li>
+						<li>
+							<p class="my-assets-title">Total Cash Balance</p>
+							<p class="my-assets-word"><span class="eve-hide" data-num="[@num_color  s='${assetsVO.totalMarketValue!}' c='${displayColor!}' f='#,##0.00'/]">[@num_color  s='${assetsVO.totalMarketValue!}' c='${displayColor!}' f='#,##0.00'/]</span> <span class="my-assets-cur">${currency!}</span><img class="eve_ico" src="${base}/res/images/ifa/eves_ico_02.png"></p>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<a class="my-portfolio-button" href="${base}/front/transaction/investorOrderPlan.do">[@lang_res k='portfolio.info.form.newPortfolio'/]</a>
+		</div>
+		<div class="my-main-assets">
+			<div class="my-cassets-tab">
+				<p class="period-time">[@lang_res k='assets.timePeriod'/]</p>
+				<ul class="my-period-list">
+				       <li period="1W" >[@lang_res k='search.period.1w'/]</li>
+                        <li period="2W" >[@lang_res k='search.period.2w'/]</li>
+                        <li period="1M" >[@lang_res k='search.period.1m'/]</li>
+                        <li period="3M" >[@lang_res k='search.period.3m'/]</li>
+                        <li period="6M" class="period-active">[@lang_res k='search.period.6m'/]</li>
+                        <li period="1Y" >[@lang_res k='search.period.1y'/]</li>
+                        <li period="3Y" >[@lang_res k='search.period.3y'/]</li>
+                        <li period="5Y" >[@lang_res k='search.period.5y'/]</li>
+                        <li period="YTD" >[@lang_res k='search.period.ytd'/]</li>
+				</ul>
+			</div>
+			<div class="my-period-choose">
+				<p class="my-period-active">[@lang_res k='assets.cumulativProfitAndLoss'/]</p>
+				<p>[@lang_res k='assets.dailyProfitAndLoss'/]</p>
+			</div>
+			<div class="my-period-chart">
+				<div class="asset-cart" id="asset-cart"  ></div>
+				 <div class="wmes-nodata-tips assetsTips">
+                             <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                             <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                       </div> 
+			</div>
+		</div>
+	</div>
+	
+	<div class="ifa-zone-taccount">
+		<div class="zone-taccount-rows" onclick="window.location.href='${base}/front/investor/myAccountList.do'" style="height:245px">
+			<div class="zone-taccount-ico">
+				<span class="zone-taccount-people"></span>
+			</div>
+			[#if accountNumber.totalCount?? && accountNumber.totalCount>0]
+			<p class="zone-taccount-title"><span>[@lang_res k='assets.account'/]</span></p>
+			<p class="zone-taccount-word">
+			[@lang_res k='assets.account.tips.total'/] ${accountNumber.totalCount!}
+			[#if accountNumber.totalCount > 1] [@lang_res k='assets.account.tips.accounts'/]
+			[#else][@lang_res k='assets.account.tips.account'/][/#if],
+			${accountNumber.toConfirmCoun!'0'} 
+			[#if accountNumber.toConfirmCount?? && accountNumber.toConfirmCount>1][@lang_res k='assets.account.tips.accounts'/] [@lang_res k='assets.account.tips.areapproved'/]
+			[#else] [@lang_res k='assets.account.tips.account'/] [@lang_res k='assets.account.tips.isapproved'/][/#if]
+			
+			</p>
+			[#else]
+			<p class="zone-taccount-title"><span><a >[@lang_res k='assets.account'/]</a></span></p>
+			<div class="tips-div">
+				<a class="PortfoliosTips" style=" margin-top: 30px;">[@lang_res k='assets.account.notips'/]</a>
+			</div>
+			[/#if]
+		</div>
+		<div class="zone-taccount-rows" onclick="window.location.href='${base}/front/crm/proposal/myProposal.do'" style="height:245px">
+			<div class="zone-taccount-ico">
+				<span class="zone-taccount-pen"></span>
+			</div>
+			[#if proposalNumber.totalCount?? && proposalNumber.totalCount>0]
+			<p class="zone-taccount-title"><span><a href="${base}/front/crm/proposal/myProposal.do">[@lang_res k='assets.proposal'/]</a></span></p>
+			<p class="zone-taccount-word">
+			${proposalNumber.tips!}
+			</p>
+			[#else]
+			<p class="zone-taccount-title"><span><a >[@lang_res k='assets.proposal'/]</a></span></p>
+			<div class="tips-div"> <a class="PortfoliosTips"  style=" margin-top: 30px;">[@lang_res k='assets.proposal.notips'/]</a></div>
+			[/#if]
+		</div>
+	</div>
+	[#else]
+	 <div class="wmes-nodata-tips tips-div">
+           <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+           <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+     </div>
+	[/#if]
+	
+      <div class="ifa-zone-row">
+      
+		<p class="ifa-zone-title"><a href="${base}/front/ifa/info/myfavorites.do">[@lang_res k='assets.myFavourites'/]</a><span class="ifa-more-ico"></span></p>
+		
+		<ul class="ifa-zone-favorites">
+			<li class="hvr-float-shadow" onclick="window.location.href='${base}/front/ifa/info/myfavorites.do?jp=0'">
+				<div class="zone-favorites-title zone-favorites-one">
+					<p class="zone-favorites-name">[@lang_res k='assets.portfolios'/]</p>
+					<p class="zone-favorites-num [#if !favouryPortfolio.allCount?? || favouryPortfolio.allCount==0]zone-favorites-zero[/#if]">${favouryPortfolio.allCount!}</p>
+					<img class="zone-favorites-stars" src="${base}/res/images/ifa/favorites_stars.png">
+				</div>
+				<div class="zone-favorites-contents">
+				[#if favouryPortfolio.allCount?? && favouryPortfolio.allCount gt 0 ]
+					<div class="zone-favorites-left">
+						<!--<img class="zone-favorites-porimg" src="${base}/res/images/ifa/porimg.png">
+						<img class="zone-favorites-pointer" src="${base}/res/images/ifa/propointer.png">
+						--><span class="lump-equity-grade funds_leveal_${favouryPortfolio.riskLevel!}" style="margin-right:30px" title="Risk Level ${favouryPortfolio.riskLevel!}">${favouryPortfolio.riskLevel!}</span>
+					</div>
+					<div class="zone-favorites-right">
+						<p class="zone-favorites-word portfolio-title"  portfolioId="${favouryPortfolio.portfolioId!}" data-ellipsis="true" data-ellipsis-max-line="3" title="${favouryPortfolio.portfolioName!}">[#if favouryPortfolio.portfolioName?length gt 20]${favouryPortfolio.portfolioName?substring(0,20)!}...[#else]${favouryPortfolio.portfolioName!}[/#if]</p>
+						<p class="zone-favorites-percentage">[@num_color s='${favouryPortfolio.returnRate!}' c='${displayColor!}' f='#,##0.00%'/]</p>
+						<p class="zone-favorites-time">${favouryPortfolio.lastUpdate!} </p>
+					</div>
+					[#else]
+					<div class="tips-div">
+						<img src="${base}/res/images/ifa/strategies_nodata.png"/>
+						<p class="no_data">[@lang_res k='global.nodata.tips'/]</p>
+					</div>
+					[/#if]
+				</div>
+				<img class="zhejiao_ico" src="${base}/res/images/ifa/zhejiao_ico.png">
+			</li>
+			<li class="hvr-float-shadow" onclick="window.location.href='${base}/front/ifa/info/myfavorites.do?jp=1'">
+				<div class="zone-favorites-title zone-favorites-two">
+					<p class="zone-favorites-name">[@lang_res k='assets.watchlists'/]</p>
+					<p class="zone-favorites-num [#if   (favouryWatchlists.allCount?? || favouryWatchlists.allCount=='0')]zone-favorites-zero[/#if]" style="display:none">[#if favouryWatchlists.allCount??]${favouryWatchlists.allCount!}[#else]0[/#if]</p>
+					<img class="zone-favorites-stars" src="${base}/res/images/ifa/favorites_stars.png" style="display:none">
+				</div>
+				<div class="zone-favorites-contents">	
+			     	[#if favouryWatchlists?? &&favouryWatchlists.allCount?? && (favouryWatchlists.allCount?number) gt 0 ]
+					<p class="zone-favorites-word " onclick="window.href='${base}/front/ifa/info/myfavorites.do'">[@lang_res k='myfavourites.watchinglist.type.${favouryWatchlists.typeName!}'/]</p>
+					<p class="zone-favorites-funds">(${favouryWatchlists.fundsCount!}[@lang_res k='assets.fav.watchlist.managedfunds'/])</p>
+					<p class="zone-favorites-time">${favouryWatchlists.lastUpdate!}</p>
+					[#else]
+					<div class="tips-div">
+						<img src="${base}/res/images/ifa/strategies_nodata.png"/>
+						<p class="no_data">[@lang_res k='global.nodata.tips'/]</p>
+					</div>
+					[/#if]
+				</div>
+				<img class="zhejiao_ico" src="${base}/res/images/ifa/zhejiao_ico.png">
+			</li>
+			<li class="hvr-float-shadow" onclick="window.location.href='${base}/front/ifa/info/myfavorites.do?jp=2'">
+				<div class="zone-favorites-title zone-favorites-three">
+					<p class="zone-favorites-name">[@lang_res k='assets.strategies'/]</p>
+					<p class="zone-favorites-num [#if !favouryStrategy.allCount?? || favouryStrategy.allCount==0]zone-favorites-zero[/#if]">${favouryStrategy.allCount!}</p>
+					<img class="zone-favorites-stars" src="${base}/res/images/ifa/favorites_stars.png">
+				</div>
+				<div class="zone-favorites-contents">
+				[#if favouryStrategy.allCount?? && favouryStrategy.allCount gt 0 ]	
+					<p class="zone-favorites-word strategy-title" strategyId="${favouryStrategy.strategyId!}"  data-ellipsis="true" data-ellipsis-max-line="3" title="${favouryStrategy.strategyName!}">[#if favouryStrategy.strategyName?length gt 20]${favouryStrategy.strategyName?substring(0,20)!}...[#else]${favouryStrategy.strategyName!}[/#if]</p>
+					<p class="zone-favorites-funds">(${favouryStrategy.fundCount!} [@lang_res k='assets.managedFunds'/])</p>
+					<p class="zone-favorites-time">${favouryStrategy.lastUpdate} </p>
+					[#else]
+                    <div class="tips-div">
+						<img src="${base}/res/images/ifa/strategies_nodata.png"/>
+						<p class="no_data">[@lang_res k='global.nodata.tips'/]</p>
+					</div>
+					
+					[/#if]
+					
+				</div>
+				<img class="zhejiao_ico" src="${base}/res/images/ifa/zhejiao_ico.png">
+			</li>
+			
+		</ul>
+		
+	</div>
+	<div class="ifa-zone-row">
+		<p class="ifa-zone-title">[@lang_res k='member.register.ifa'/]<span class="ifa-more-ico"></span></p>
+		<div class="zone-ifa-wrap">
+			<div class="zone-ifa-left">
+				<div class="zone-ifa-title">
+					<div class="zone-ifa-block"></div>
+					[@lang_res k='assets.myIfa'/]
+				</div>
+				<div class="zone-personal-wrapper">
+				[#if ifaList?exists && ifaList?size gt 0 ]
+					<div class="zone-ifa-personal swiper-container">
+						<div class="zone-personal-swiper swiper-wrapper">
+						[#list ifaList as list]
+							<img data-name=" ${list.firstName!} ${list.lastName!}" class="zone-ifa-img swiper-slide" title="${list.lastName!} ${list.firstName!}" src="${base}[@user_head  u='${list.member.iconUrl!}' g='${list.gender}'/]" onclick="window.location.href='${base}/front/community/space/ifaSpace.do?id=${list.member.id!}'" href="_blank">
+						[/#list]
+						
+						</div>
+					</div>				
+					<p class="zone-ifa-name" id="zone-ifa"></p>
+					<div class="swiper-button-next swiper-button-gray"></div>
+					<div class="swiper-button-prev swiper-button-gray"></div>
+					[#else]
+					 <div class="tips-div"> <a class="PortfoliosTips"  href="${base}/front/ifa/info/list.do" style=" margin-top: 30px;">[@lang_res k='assets.ifa.notips'/]</a></div>
+					[/#if]
+					
+				</div>
+				<div class="buddy-btn" onclick="window.location.href='${base}/front/ifa/info/list.do'"  >
+					<img src="${base}/res/images/application/find_ifa.png" style="vertical-align: middle;margin-top:-2px;"/>
+					[@lang_res k='assets.findIfa'/]
+				</div>
+			</div>
+			<div class="zone-ifa-right">
+				<div class="zone-ifa-title">
+					<div class="zone-ifa-block"></div>
+					<a href="${base}/front/investor/mybuddy.do">[@lang_res k='assets.myBuddy'/]</a>
+					
+				</div>
+				<div class="zone-ifa-list">
+				[#if buddyList?exists && buddyList?size gt 0 ]
+				
+					<ul class="zone-ifa-ul">
+					
+					[#list buddyList as list]
+					[#if list_index<3]
+						<li>
+							<a href="${base}/front/ifa/info/cornerDetail.do?memberId=${list.memberId!}">
+								<img src="${base}[@user_head u='${list.iconUrl!}' gender='${list.gender!}'/]">
+								<p class="zone-ifaList-name">[#if Session["_LANG_CODE_"]=='en']${list.firstName!} ${list.lastName!}[#else]${list.nameChn!}[/#if]</p>
+							</a>
+						</li>
+						[/#if]
+						[/#list]
+						</ul>
+						[#else]
+						<div class="tips-div " > <a class="PortfoliosTips"  href="${base}/front/ifa/info/list.do" style=" margin-top: 30px;">[@lang_res k='assets.buddy.notips'/]</a></div>
+						[/#if]
+						
+				</div>
+				<div class="zone-ifa-title" href="${base}">
+					<div class="zone-ifa-block" ></div>
+					<a href="${base}/front/ifa/info/list.do">[@lang_res k='assets.myFollowing'/]</a>
+				</div>
+				<div class="zone-ifa-list">
+					<div>
+						[#if ifaSpaceVisitList?exists && ifaSpaceVisitList?size gt 0]
+						<ul class="zone-focus-ifa-ul">
+						[#list ifaSpaceVisitList as list]
+						[#if list.name??  && list.name!="" && list_index<3]
+							<li class="hvr-shadow-radial">
+							<img class="zone-focus-ifa-img" src="${base}[@user_head u='${list.iconUrl!}' gender=''/]">
+								<p class="zone-focus-ifa-name"  data-ellipsis="true" data-ellipsis-max-line="3" title="${list.name!}">
+								[#if Session["_LANG_CODE_"]=='en']${list.firstName!} ${list.lastName!}[#else]${list.nameChn!}[/#if]
+								</p>
+								<p class="zone-focus-ifa-score">${list.visitDateTime?string(dateFormat)}</p>
+							</li>
+							[/#if]
+							[/#list]
+							</ul>
+							[/#if]
+							<div class="tips-div spaceTips" style="display:none">
+							 <a class="PortfoliosTips"  href="${base}/front/ifa/info/list.do" style=" margin-top: 30px;">[@lang_res k='assets.follow.notips'/]</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+var totalMarketValue=${assetsVO.totalMarketValue!};
+var totalCashValue=${assetsVO.totalCashValue!};
+var _checkList='${checkList!}';
+var _accountType="${accountType!}";
+var base_root="${base}";
+var display_color="${displayColor!}";
+     seajs.use('${base}/res/web/portfolio/myAssets.js');
+     
+     function callbackloginresult(json){
+	 	 seajs.use('jquery', function($){
+		 	console.log(json);
+		 	var count=0;
+		 	$.each(json,function(i,n){
+			 	if(n.status="1"){
+			 	count++;
+		 	    }
+		 	})
+		 	if(count>0){
+		 	 setTimeout(function(){
+		       window.location.url= window.location.url+"?check=1";
+		     },1000);
+		    }
+	    });
+ 	}
+ 	
+</script>

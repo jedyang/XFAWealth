@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>[@lang_res k='sysrole.list.title'/]</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+	    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+	    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+	    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	</head>
+	<body>
+		<input type="hidden" id="roleId" value="${roleId?if_exists}">
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="tab-side container-fluid">
+				<div class="tab-side-container">
+					<div class="clear"></div>
+					<div class="tab_wrap" id="tab_wrap">
+						<div class="form-inline divUser">
+								<div>
+									<div class="row pd10">
+										<div class="col-sm-5">
+											<label for="s-1">
+												[@lang_res k='member.list.keyword'/]
+											</label>
+											<input id='txtkeyword' type="text" class="form-control" id="s-1">
+										</div>
+										<div class="col-sm-5">
+											<button type="button" class="btn btn-primary" onclick="bindRoleUser(0);">
+												 [@lang_res k='global.query'/]
+											</button>
+										</div>
+									</div>
+									<div class="clear"></div>
+									<div class="pdt20">
+										<a href="#" id="btnAdd" class="btn-blue-s">[@lang_res k='global.add'/]</a>
+									</div>
+									<div>
+										<table id="userlist" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+											<thead>
+												<tr>
+													<th class="table-head">
+														[@lang_res k='member.info.loginCode'/]
+													</th>
+													<th class="table-head">
+														[@lang_res k='member.info.nickName'/]
+													</th>
+													<th class="table-head">
+														[@lang_res k='member.info.email'/]
+													</th>
+													<th class="table-head">
+														[@lang_res k='global.operate'/]
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+										<ul id='userPagination' class="pagination pull-right now">
+										</ul>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script src="${base}/res/console/js/jquery.form.js"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/zTree/js/jquery.ztree.all.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function() {  
+		bindRoleUser(0);
+	});
+	//获取数据
+	function bindRoleUser(curPage) {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/sysRole/roleMember.do?datestr=' + new Date().getTime(),
+			data : {
+				'keyword' : $("#txtkeyword").val(),
+				'roleId' : $("#roleId").val(),
+				'page' : curPage + 1,
+				'rows' : 10,
+				'sort' : '',
+				'order' : ''
+			},
+			success : function(json) {
+				var html = "";
+				var userTotal = json.total;
+				var userTable = json.rows;
+				$.each(userTable, function(i, n) {
+					html += "<tr><td><a href='${base}/console/sys/role/detail.do?id=" + n.id + "'>" + n.loginCode + "</td><td>" + n.nickName + "</td><td>" + n.email + "</td><td><a href='#' onclick='javascript:deleteUser(\"" + n.id + "\");'>[@lang_res  k='global.delete'/]<a/>&nbsp;&nbsp;</td></tr>";
+				});
+				$("#userlist tbody").empty().append(html);
+				$("#userPagination").pagination(userTotal, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 10,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+			bindRoleUser(page_id);
+		}
+	}
+	//删除角色用户
+	function deleteUser(adminId) {
+		var roleId = $("#roleId").val();
+		layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/sysRole/deleteRoleMember.do",
+				data : {"adminId":adminId,"roleId":roleId},
+				success : function(json) {
+					if (json != undefined && json.result == true) {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]", {
+							title : "[@lang_res k='global.prompt'/]",
+							icon : 1,
+							time : 1000
+						});
+						bindRoleUser(0);
+					} else {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]", {
+							title : "[@lang_res k='global.prompt'/]",
+							icon : 5,
+							time : 1000
+						});
+					}
+				}
+			});
+		});
+	}
+	$("#btnAdd").bind("click", function() {
+			BootstrapDialog.show({
+				title : "[@lang_res k='sysrole.info.selectUser'/]",
+				cssClass : 'login-dialog',
+				type : BootstrapDialog.TYPE_PRIMARY,
+				size : BootstrapDialog.SIZE_WIDE,
+				draggable : true,
+				message : $('<div></div>').load('dialogMember.do?'),
+				buttons : [ {
+					label : "[@lang_res k='global.confirm'/]",
+					cssClass : 'btn-primary',
+					action : function(dialogItself) {
+
+						var ids = "";
+						var selected = $("#userdatalist").find(":checkbox:checked");
+						if (selected == undefined || selected.length == 0) {
+							layer.alert("[@lang_res k='sysrole.info.selectUser'/]", {
+								icon : 0
+							});
+							return;
+						} else {
+							$.each(selected, function(i, n) {
+								var id = $(n).attr("userid");
+								ids += id + ",";
+							});
+							$.ajax({
+								type : 'post',
+								datatype : 'json',
+								url : "${base}/console/sysRole/saveRoleMember.do",
+								data : {
+									"roleId" : $("#roleId").val(),
+									"userIds" : ids
+								},
+								success : function(json) {
+									if (json.result) {
+									bindRoleUser(0);
+										layer.msg("[@lang_res k='global.success.save'/]",{icon:1,time:1000})
+									} else {
+										layer.msg("[@lang_res k='global.failed.save'/]",{icon:5,time:1000});
+									}
+								}
+							})
+						}
+						
+
+						dialogItself.close();
+					}
+				}, {
+					label : "[@lang_res k='global.close'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
+		});
+	
+</script>
+</body>
+</html>

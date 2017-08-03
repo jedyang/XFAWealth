@@ -1,0 +1,151 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" href="${base}/res/js/library/ueditor/themes/default/css/umeditor.css"> 
+	<link rel="stylesheet" href="${base}/res/js/library/ueditor/themes/default/css/umeditor.css">  
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/webuploader.css">  
+   	<link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+	<link rel="stylesheet" href="${base}/res/css/Funds.css">
+	<link rel="stylesheet" href="${base}/res/css/ifa.css">
+	<style>
+	.mask-layer1 {position: absolute;top: -20%;left: 0;z-index: 9999;background: rgba(0,0,0,0.2);}
+	.create_groupbox {
+	    width: 100px;
+	    left: 45%;
+	    background: rgba(0,0,0,0);;
+	}
+	</style>
+    <div class="wmes-content">
+        <div class="proposal-wrap">
+            <p class="wmes-wrap-title" style="padding: 25px 0 25px 0px;">
+            [#if edit?? && edit=='1']
+    			[@lang_res k='crm.proposal.edit'/]
+    		[#else]
+    			[@lang_res k='create.proposal.step.title'/]
+    		[/#if]
+            </p>
+            <div class="proposal-step-wrap">
+                <div class="proposal-step-portrait">
+                    <img class="step-portrait-img" style="width: 50px;border-radius: 20px;" src="${base}${iconUrl!}" alt="">
+                    <div class="step-portrait-name-wrap">
+                        <p class="step-portrait-name" id="invName" valuelist="" >[#if name??]${name!}[/#if]</p>
+                    </div>
+                </div>
+                <ul class="proposal-step">
+                    <li class="proposal-step-title proposal-step-old">[@lang_res k='create.proposal.step.questionnaire'/]</li>
+                    <li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+                    <li class="proposal-step-title proposal-step-old">[@lang_res k='create.proposal.step.selectInv.Model'/]</li>
+                    <li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+                    <li class="proposal-step-title proposal-step-old">[@lang_res k='create.proposal.step.proposalBuilder'/]</li>
+                    <li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+                    <li class="proposal-step-title proposal-step-now">[@lang_res k='create.proposal.step.proposalReport'/]</li>
+                </ul>
+            </div> 
+            <div class="stepOne-rows">
+                <p class="stepFour-rows-title">[@lang_res k='create.proposal.step.four.printProposal'/]</p>
+                <div class="stepOne-rows-fillin">
+                    <p class="stepOne-rows-input-title" style="margin-top: -5px;">[@lang_res k='create.proposal.step.four.reportLanguage'/]</p>
+                    <div class="stepOne-rows-text-wrap">
+                    <input id="proposalId" type="hidden" value="${crmProposal.id!}">
+                        <div class="proposal_xiala stepFour-xiala" style="width: 160px;">
+                        	[#assign lang=Session["_LANG_CODE_"] /]
+                            <input id="reportLanguage" data-value="en" type="text" style="width: 120px;" value="
+                            [#if lang=='en']
+                            [@lang_res k='lang.list.lang.en'/]
+                            [#elseif lang=='sc']
+                            [@lang_res k='lang.list.lang.sc'/]
+                            [#elseif lang=='tc']
+                            [@lang_res k='lang.list.lang.tc'/]
+                            [/#if]
+                            " placeholder="English" readonly="" >
+                            <span class="icon_xiala"></span>
+                            <ul id="proposal-choice" style="width: 135px;top: 30px;">
+                                <li data-value="en">[@lang_res k='lang.list.lang.en'/]</li>
+                                <li data-value="sc">[@lang_res k='lang.list.lang.sc'/]</li>
+                                <li data-value="tc">[@lang_res k='lang.list.lang.tc'/]</li>
+                            </ul>
+                        </div>
+                         <div class="stepFour-rows-button">
+                            <!--<a id="print" href="javascript:;">Print</a>
+                            --><a id="preview" target="_blank" href="${base}/front/crm/proposal/proposalPreview.do?isPrint=1&id=${crmProposal.id!}&language=en">[@lang_res k='create.proposal.step.four.preview'/]</a>
+                            <a id="exportToPDF" href="javascript:;">[@lang_res k='create.proposal.step.four.exportToPDF'/]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="stepOne-rows">
+                <p class="stepFour-rows-title"><span>[@lang_res k='create.proposal.step.four.mailToClient'/]</span><a href="${base!}/front/crm/proposal/emailRecords.do?id=${(crmProposal.id)!}" target="_blank" style="margin-left:20px;font-weight: 500;font-size: 14px;color: #2d80ce;cursor: pointer;">[@lang_res k='create.proposal.step.four.view.email.record'/]</a></p>
+                <div class="stepOne-rows-fillin">
+                </div>
+                <div class="stepOne-rows-fillin">
+                    <p class="stepOne-rows-input-title">[@lang_res k='create.proposal.step.four.extraEmail'/]</p>
+                    <div class="stepOne-rows-text-wrap">
+                        <input id="txtExtraEmail" class="stepOne-rows-input100" type="" name="" value="[#if crmProposal?? && crmProposal.member??]${crmProposal.member.email!}[/#if]">
+                    </div>
+                </div>
+                <div class="stepOne-rows-fillin">
+                    <p class="stepOne-rows-input-title">[@lang_res k='create.proposal.step.four.CC'/]</p>
+                    <div class="stepOne-rows-text-wrap">
+                        <input id="txtCC" class="stepOne-rows-input100" type="" name="" value="">
+                    </div>
+                </div>
+                <div class="stepOne-rows-fillin">
+                    <p class="stepOne-rows-input-title">[@lang_res k='create.proposal.step.four.title'/]</p>
+                    <div class="stepOne-rows-text-wrap">
+                        <input id="txtSubject" class="stepOne-rows-input30" type="" name="" value="Investment Proposal, [#if crmProposal?? && crmProposal.member??]${name!}, ${.now?string('yyy-MM-dd')}[/#if]">
+                    </div>
+                </div>
+                <div class="stepOne-rows-fillin">
+                    <p class="stepOne-rows-input-title">[@lang_res k='create.proposal.step.four.body'/]</p>
+                    <div class="stepOne-rows-text-wrap">
+                       <!-- 加载编辑器的容器 -->
+                        <div class="uedWrap" style="width:auto;padding-right:30px;padding-bottom:0px;">
+                           <script id="container"  type="text/plain" style="width:100%;min-height:250px;height:350px;"></script> 
+                        </div>
+                        <input type="hidden" value="" name="content" id="insightContent" required="required"/>
+                        <div style="display:none;" id="preContent">
+	                        <p style="font-family: arial; padding: 0px; border: 0px; font-stretch: inherit; line-height: 40px; word-break: break-word; white-space: normal; background-color: rgb(255, 255, 255);">
+							    <span style="font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit;">Dear [#if crmProposal?? && crmProposal.member??]${name!}[/#if]</span>
+							</p>
+							<p style="font-family: arial; padding: 0px; border: 0px; font-stretch: inherit; line-height: 40px; word-break: break-word; white-space: normal; background-color: rgb(255, 255, 255);">
+							    <span style="font-family: inherit; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit;"></span><span style="font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit;margin-left:20px;">Thank you for taking the time to share the details of your financial situation with us. This is surely an important decision ; and we appreciate your consideration of XFAWealth Partners as a responsible home for your investments.</span>
+							</p>
+							<p style="font-family: arial; padding: 0px; border: 0px; font-stretch: inherit; line-height: 40px; word-break: break-word; white-space: normal; background-color: rgb(255, 255, 255);">
+							    <span style="font-family: inherit; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit;margin-left:20px;">We have prepared the following proposal based on our understanding from the discussions we had with your advisor, [#if crmProposal?? && crmProposal.ifaMember?? && crmProposal.ifaMember.member??][#assign member = crmProposal.ifaMember.member]${member.nickName!}[/#if]. Based on the preliminary details provided, and subject to further discussion, we have prepared this analysis of your current portfolio along with our proposed alternative and its benefits.</span><br/>
+							    <span style="font-family: inherit; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit;margin-left:20px;">We thank you again for your consideration of our services. We look forward to discussing the details of this proposal with you</span>
+							</p>
+							<p style="font-family: arial; padding: 0px; border: 0px; font-stretch: inherit; line-height: 40px; word-break: break-word; white-space: normal; background-color: rgb(255, 255, 255);">
+							    <span style="font-family: inherit; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit;">Yours truly</span>
+							</p>
+							<p style="font-family: arial; padding: 0px; border: 0px; font-stretch: inherit; line-height: 40px; word-break: break-word; white-space: normal; background-color: rgb(255, 255, 255);">
+							    <span style="font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit;">IFA:[#if crmProposal?? && crmProposal.ifaMember?? && crmProposal.ifaMember.member??][#assign member = crmProposal.ifaMember.member]${member.nickName!}[/#if]</span><br/>
+							</p>
+							<p style="font-family: arial; padding: 0px; border: 0px; font-stretch: inherit; line-height: 40px; word-break: break-word; white-space: normal; background-color: rgb(255, 255, 255);">
+							    <span style="font-family: inherit; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit;">XFA Wealth</span>
+							</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="proposal-button-wrap">
+                <a id="btnPrevious" class="proposal-button" href="javascript:void(0)">[@lang_res k='global.previous'/]</a>
+                <a id="btnSendMail" class="proposal-button" href="javascript:void(0)">[@lang_res k='create.proposal.step.four.sendToClient'/]</a>
+            </div>
+        </div>
+       </div>
+<div class="load-gif mask-layer1">
+	<div class="create_groupbox">
+		<img style="width: 100px;" src="${base}/res/images/saving.gif">
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var props = [@load_prop k=''/];
+		[#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']
+		    var lang="en";
+		[#elseif Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']
+			var lang="zh-tc";
+		[#else]
+			var lang="zh-cn";
+		[/#if]
+      seajs.use('${base}/res/web/proposal/createProposal/createProposalSetFour.js');
+</script>

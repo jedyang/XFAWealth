@@ -1,0 +1,150 @@
+[#include "../../inc/head_v2.html"/]
+
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+        <div class="wmes-top">
+            <a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+            <a href="javascript:;" class="header-over">Portfolio Detail</a>
+        </div>
+        <div class="wmes-content">
+        		<div class="strategies_list_wrap">
+        			<p class="strategies_detail_title">Portfolio for Growth and Income</p>
+        			<div class="strategies_detail_fav"><img src="${base}/res/images/fund/strategies_fav.png"></div>
+        			<div class="strategies_detail_inf">
+        				<div class="strategies_inf_left" style="width:100%;">
+        					<img class="porfolios_riskimg" src="${base}/res/images/strategy/risk_level_05.png">
+
+                            <div class="strategies_inf_right">
+                                <img class="strategies_inf_img" src="${base}/res/images/ifa2.png">
+                                <p class="strategies_list_ifaname">CAROLYN SUN</p>
+                            </div>
+        				</div>
+                        <div class="strategies_inf_left">
+                            <p class="porfolios_total_return">41.19%</p>
+                            <p class="strategies_date_Issued">Total Return:</p>
+                        </div>
+        				<div class="strategies_inf_right">
+                            
+							<p class="strategies_time_word">2016-03-03 15:09</p>
+							<p class="strategies_date_Issued">Issued Date</p>
+        				</div>
+                        
+        			</div>
+        			<div class="strategies_inf_word">
+        				<div class="strategies_inf_goal">
+        					<p class="strategies_inf_title">Investment Goal</p>
+        					<p class="strategies_top_word">Former Federal Reserve's Bank of Richmond Marvin Goodfriend told CNBC said if the US falls into recession in the coming few years, the US Federal Reserves may have to trim the federal funds rate to -2% to boost economic recovery.</p>
+        				</div>
+        				<div class="strategies_inf_reason">
+        					<p class="strategies_inf_title">Investor Suitability</p>
+        					<p class="strategies_top_word">International oil prices hit two-week low, dragged by strong USD. New York oil futures for October delivery fell US$0.63, or 1.3%, to close at US$46.35/barrel, hitting 2-week low. It last fell 0.2% in Asian session this morning.</p>
+        				</div>
+        			</div>
+        			<div class="strategies_inf_subitability">
+        				<p class="strategies_inf_title">Recommended Reason</p>
+        				<p class="strategies_top_word">Gold and precious metals stocks risk: Gold and precious metals are subject to broad price fluctuations, which tends to make stocks associated with these metals more volatile than the market generally.Single sector risk: By being concentrated in one economic sector, the fund could suffer greater volatility compared to funds that follow a more diversified policy.</p>
+        			</div>
+        		</div>
+        		<div class="strategies_list_wrap" id="strategies_list" ng-controller="Strategies"  ng-app="myStrategies">       			
+    	    			<div class="strategies_detail_list">
+    	    				<p class="strategies_detail_product">Product list <span class="strategies_detail_sum">20</span></p>
+    	    				<span class="strategies_more"></span>
+    	    			</div>
+                        <table class="funds_search_information strategies_List">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                    <th class="funds_tables_fnames">
+                                        Product Name
+                                    </th>
+                                    <th class="funds_tables_header">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.riskrating'/]    
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        CUR
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        ACC./INC.
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.ISIN'/]
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon_3'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon_6'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            Weight
+                                    </th>
+                                    <!--<th class="funds_tables_header">Actions</th>-->
+                                </tr>
+                                <tr ng-repeat="items in dataList">
+                                    <td class="tdleft funds_tables_fnames">
+                                        <a href="${base}/front/fund/info/fundsdetail.do?id={{items.fundId}}" ng-bind="{{'items.fundName'}}"></a>
+                                    </td>
+                                    <td class="funds_search_tdcenter" ng-bind="{{'items.fundInfo.riskLevel'}}"></td>
+                                    <td class="funds_search_tdcenter" ng-bind="{{'items.fundCurrency'}}"></td>
+                                    <td class="funds_search_tdcenter">ACC</td>
+                                    <td class="funds_search_tdcenter" ng-bind="{{'items.fundInfo.isinCode'}}"></td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="funds_search_negative" ng-if="items.fundReturnOneMonth < 0 " ng-bind="{{'items.fundReturnOneMonth'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnOneMonth >= 0 " ng-bind="{{'items.fundReturnOneMonth'}}"></span>
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="funds_search_negative" ng-if="items.fundReturnThreeMonth < 0 " ng-bind="{{'items.fundReturnThreeMonth'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnThreeMonth >= 0 " ng-bind="{{'items.fundReturnThreeMonth'}}"></span>
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="funds_search_negative" ng-if="items.fundReturnSixMonth < 0 " ng-bind="{{'items.fundReturnSixMonth'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnSixMonth >= 0 " ng-bind="{{'items.fundReturnSixMonth'}}"></span>
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        15%
+                                    </td>
+                                    <!-- 
+                                    <td>
+                                        <span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}"></span>
+                                        <span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}" title="[@lang_res l=Session["_LANG_CODE_"] k='fund.info.favourites'/]"></span>
+                                        <span class="funds_cart" title="[@lang_res l=Session["_LANG_CODE_"] k='fund.info.shoppingCart'/]"></span>
+                                    </td>
+                                     -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    <ul class="ifa_list_paging">
+                        <li class="ifa_pagint_num">1</li>
+                        <li class="ifa_pagint_num">2</li>
+                        <li class="ifa_pagint_num ifa_pagint_now">3</li>
+                        <li class="ifa_pagint_some">...</li>
+                        <li class="ifa_pagint_num">10</li>
+                    </ul>
+        		</div>
+        		
+				<div class="strategies_list_wrap">       			
+   	    			<div class="strategies_detail_list">
+   	    				<p class="strategies_detail_product">Allocation Overview</p>
+   	    				<span class="strategies_more"></span>
+   	    			</div>
+   	    			<div>
+   	    				<div style="width:31%;padding:0 10px;float:left">
+   	    					<p style="text-align:center;">By Sector</p>
+  	    					<img src="${base}/res/images/strategy/pro_001.png">
+   	    				</div>
+   	    				<div style="width:31%;padding:0 10px;float:left">
+   	    					<p style="text-align:center;">By Region</p>
+  	    					<img src="${base}/res/images/strategy/pro_002.png">
+   	    				</div>
+   	    				<div style="width:31%;padding:0 10px;float:left">
+   	    					<p style="text-align:center;">By Funds Type</p>
+  	    					<img src="${base}/res/images/strategy/pro_003.png">
+   	    				</div>
+   	    			</div>
+    	    	</div>
+        </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/porfoliosdetail.js');
+</script>

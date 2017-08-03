@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[@lang_res k='fund.info.selector.title'/]</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link href="${base}/res/images/xfalogo_s.png" type="image/x-icon" rel="shortcut icon"> 
+<!-- 
+功能名：基金选择器
+用途： 投资策略、组合的基金选择
+弹出窗尺寸：925x600
+
+调用前提：
+1）父窗口定义ids对象，用于保存所选的基金id值
+2）父窗口定义popupWinReturn的隐藏对象，用于选择了新基金后，回调父窗口的基金列表刷新函数
+3）父窗口定义popupWinReturn的click事件，父窗口的基金列表刷新函数
+
+输入：
+regions - 地区编码列表，用逗号分隔
+sectors - 领域编码列表，用逗号分隔
+types   - 基金类型编码列表，用逗号分隔
+houseId - 基金公司id
+keyword - 关键词，用户基金名称查询
+
+输出：
+1）把所选的基金id值追加到父窗口的ids对象
+
+调用例子：
+http://localhost/wmes/front/fund/info/fundSelectorForAllocation.do?regions=Region_Asia_01,Region_China,Region_BRIC&sectors=fund_sector_02,fund_sector_03,fund_sector_04,fund_sector_07
+ -->    
+    <script>
+        var base_root = '${base}';
+        var lang = '${Session["_LANG_CODE_"]!}';
+        var lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        if(lang=='en'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_EN.js";  
+        }else if(lang=='tc'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_TC.js";
+        }else if(lang=='sc'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        }        
+    </script>
+    <script type="text/javascript" src="${base}/res/js/base.js"></script>
+    <script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+    <script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+    <script type="text/javascript" src="${base}/res/third/layer/layer.js"></script>
+    <script src="${base}/res/js/util.js"></script>
+        
+    <link rel="stylesheet" href="${base}/res/css/Funds.css">
+    <link href="${base}/res/console/css/pagination.css" rel="stylesheet">
+	<style type="text/css">
+	.funds_keyword{float: left;margin-left: 20px;margin-right: 10px;}
+	.funds_keyword_div{position: relative;cursor: pointer;padding-right: 25px;border: 0px;float: left;background: url('${base}/res/images/xiala_ico.png') right no-repeat;border: #dcdadb 1px solid;border-radius: 3px;margin-left:0px;}
+	.funds_keyword_div input{cursor: pointer;color: #606060;outline: none;height: 25px;line-height: 25px;width:150px;border: 0px;padding-left: 5px;}
+	.funds_keyword_xiala{display: none;border:1px solid #e0dfdf;z-index: 10;width: 430px;height:300px;overflow:auto;color: black;position: absolute;background-color: white;padding:0px 0px 0px 0px;}
+	.funds_keyword_xiala li{background-color: white;height: 30px;line-height: 30px; padding-left: 5px;   color: #606060;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+	.funds_keyword_xiala li:hover{  background-color: #4ba6de;color: white;}
+	
+	.funds_keyword_search{position: relative;cursor: pointer;width:210px;padding-right: 25px;border: 0px;float: left;background: url('${base}/res/images/u47_16.png') right no-repeat;border: #dcdadb 1px solid;border-radius: 3px;margin-left:0px;padding-left:0px;}
+	.funds_keyword_input {cursor: pointer;color: #606060;outline: none;height: 25px;line-height: 25px;width: 230px;border: 0px;padding-left: 5px;}
+	.funds_keyword_search ul{width: 430px;overflow-y:hidden}
+	.funds_keyword_search_xiala{border:1px solid #e0dfdf;z-index: 9;width: 430px;height:300px;overflow:auto;color: black;position:fixed;background-color: white;padding:1px 0;font-size:16px; }
+	.funds_keyword_search_xiala li{background-color: white;height: 30px;line-height: 30px; padding-left: 5px;   color: #606060;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+	.funds_keyword_search_xiala li:hover{  background-color:#4ba6de;color: white;}
+	.funds_keyword_search_xiala .selected_active{color: #4ba6de;}
+	
+    .btn_middle_div{ clear:both; text-align:center;}
+	.btn_middle{ width:100px; height:35px;z-index: 13; line-height:35px; color:#fff; font-size:16px; text-align:center; background:#2d80ce; border-radius:3px; display:inline-block;text-decoration:none;}
+	
+	.label {padding-left:80px;}
+	.label li{display:inline-block;padding:2px 5px 2px 5px; width:auto; height:20px;
+	            text-align:center;line-height:20px;overflow:hidden;}	
+	.region-choose{background-color: #3a87ad;color:white;padding: 0px 15px;border-radius: 3px;}
+    .sector-choose{background-color: #468847;color:white;padding: 0px 10px;border-radius: 3px;}
+    .type-choose{background-color: #FAB00A;color:white;padding: 0px 10px;border-radius: 3px;}
+  .funds_keyword_active{z-index:101;}
+  .show_prev{width:432px;height:18px;position: absolute;top:192px;z-index: 100;background:#e6e6e6;margin-left:1px;cursor:pointer;}
+  .show_next{width:432px;height:18px;position: absolute;top:509px;z-index: 100;background:#e6e6e6;margin-left:1px;cursor:pointer;}
+  .show_prev:hover,.show_next:hover{background:#ccc;}
+  .choose-fund-list{border-collapse:collapse;margin-top:45px;width:100%;max-width:662px;min-width:662px;}
+  .choose-fund-list td,.choose-fund-list th{border:1px solid #dddddd;padding:3px 6px;}
+  .choose-fund-list-liac{background:#4ba6de;color:#fff;}
+  .choose-fund-list td{cursor:pointer;}
+  
+  .wmes_list_paging{text-align: center;}
+.wmes_list_paging > li{display: inline-block;cursor: pointer;}
+.wmes_pagint_num{width: 35px;height: 35px;line-height: 35px;background-color: white;border-radius: 50%;margin: 0px 5px;border: 1px solid #e4e4e4;}
+.wmes_pagint_now{background-color: #2d80ce;color: white;}
+.page-total{margin-left: 30px; }
+.page-total input{border: 1px solid #ddd; width: 35px; padding: 0px 5px; height: 25px; line-height: 25px; margin-left: 10px; }
+.no-items{text-align: center;}
+  .ifa_list_paging{text-align: center;}
+.ifa_list_paging > li{display: inline-block;}
+.ifa_pagint_some{}
+.ifa_pagint_num{text-decoration:none;text-align: center;cursor: pointer;width: 25px;height: 25px;line-height: 25px;background-color: white;border-radius: 50%;margin: 0px 1px;border: 1px solid #e4e4e4;}
+.ifa_pagint_now{background-color: #2d80ce;color: white;text-decoration:none;}
+.ifa_pagint_now a{color: white;text-decoration:none;}
+.no_list_tips{width:50%;margin:0 auto;display: none;text-align: center;}
+.notipswrap{display: inline-block;}
+.noResult{text-align: left;color: #00385a;height: 45px;margin: 80px auto 0;padding-left: 50px;}
+.noResultText{text-align:left;color: #00385a;margin: 20px auto 80px;}
+.ifa_list_more{background-color: #ebebeb;color: #999999;text-align: center;padding: 10px 0;margin-top: 20px;cursor: pointer;}
+.ifa_list_more:hover{color: #4f7395;box-shadow: 1px 4px 12px #ccc7c7;}
+	</style>
+  </head>
+  
+  <body>
+    <div class="blue_background">
+        <div class="kaihu_div">
+            <div class="white_background funds_background">
+                <input type="hidden" id="id">
+                <table style="width:1200px;border:0px;">
+                    <tr>
+                        <td align="center" colspan="2" style="background-color:#1897cc;height:35px;font-weight:bold;color:white;">[@lang_res k='fund.picker.title'/]</td>
+                    </tr>
+                    <tr class="tittlebox">
+                        <td style="width:450px;font-weight:bold;height:35px;padding-left:30px;">[@lang_res k='fund.info.comparison.addFund'/]</td>
+                        [#if (regionList?exists && regionList?size gt 0) || (sectorList?exists && sectorList?size gt 0)|| (fundTypeList?exists && fundTypeList?size gt 0)|| (distributorList?exists && distributorList?size gt 0)]
+                        <td style="width:350px;font-weight:bold;height:35px;padding-left:30px;">
+	                        <input id="cheAccording" checked="checked" type="checkbox">[@lang_res k='fund.picker.according.to.the.sreening'/]<br>
+	                       <!--  [@lang_res k='fund.picker.strategy'/] -->
+                        </td>
+                        [/#if]
+                    </tr>
+                    <tr class="centerbox">
+                        <td valign="top">
+	                        <table>
+			                    <tr valign="top" style="height:380px;">
+			                        <td>
+			                        <div class="funds_keyword">
+	                                  <!--<div class="show_prev"><a onclick="javascript:;" style="position: absolute;top:5px;transform: rotate(180deg);margin-left:200px;width:12px;height:7px;display:inline-block;background:url(${base}/res/images/application/hideen.png);"></a></div>
+	                                  <div class="show_next"><a onclick="javascript:;" style="position: absolute;top:5px;margin-left:200px;width:12px;height:7px;display:inline-block;background:url(${base}/res/images/application/hideen.png);"></a></div>-->
+			                            <div class="funds_keyword_search">
+			                                <input type="text" id="keyword_input" class="funds_keyword_input" placeholder="[@lang_res k='fund.selector.keyword'/]">
+			                                <!--<ul class="funds_keyword_search_xiala" style="margin-top: 33px;">
+			                                </ul>-->
+			                            </div>
+			                            <div class="funds_keyword">
+				                        <div class="funds_keyword_div funds_keyword_div1">
+				                            <input type="text" placeholder="[@lang_res k='fund.selector.selectHouse'/]" readonly>
+				                            <ul class="funds_keyword_xiala funds_keyword_xiala1" style="">
+				                               <li data-id=''><-- [@lang_res k='fund.selector.selectHouse'/] --></li>
+				                            [#if fundHouseList??]
+				                            [#list fundHouseList as rec]
+				                                <li data-id='${rec.id!""}'>${rec.name!""}</li>
+				                            [/#list]
+				                            [/#if]
+				                            </ul>
+				                        </div>
+				                        <div class="funds_keyword_div funds_keyword_div2" style="margin-left:20px;">
+				                            <input type="text" placeholder="请选择基金类型" readonly>
+				                            <ul class="funds_keyword_xiala funds_keyword_xiala2" style="">
+				                               <li data-id=''><-- [@lang_res k='fund.selector.selectHouse'/] --></li>
+				                            [#if searchFundTypeList??]
+				                            [#list searchFundTypeList as rec]
+				                                <li data-id='${rec.itemCode!""}'>${rec.name!""}</li>
+				                            [/#list]
+				                            [/#if]
+				                            </ul>
+				                        </div>
+				                    </div>
+			                            <table id="tb_fundlist" class="choose-fund-list" style="display:block;">
+			                                	<tr class="funds_tables_head">
+			                                		<th style="width:13%;">[@lang_res k='console.productdistributor.symbol'/]</th>
+			                                		<th style="width:54%;">[@lang_res k='fund.info.fundName'/]</th>
+			                                		<th style="width:13%;">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.currency'/]</th>
+			                                		<th style="width:20%;">[@lang_res k='console.fund.info.list.table.title.fundType'/]</th>
+			                                	</tr>
+			                                	
+			                                </table>
+			                                <ul id='pagination' class="wmes_list_paging">  </ul>
+			                        </div>
+			                        </td>
+			                    </tr>
+			                    <tr></tr>
+	                        </table>
+                        </td>
+                        [#if (regionList?exists && regionList?size gt 0) 
+	                        || (sectorList?exists && sectorList?size gt 0)
+	                        || (fundTypeList?exists && fundTypeList?size gt 0)|| (distributorList?exists && distributorList?size gt 0)]
+                        <td valign="top">
+                            [#if regionList?exists && regionList?size gt 0 ]
+		                    <p style="width:160px;text-align:left;padding-left:30px;">[@lang_res k='fund.picker.geo'/] :</p>
+		                    <ul class="label">
+		                        [#list regionList as x]
+		                            <li class="region-choose" data-name="region" data-key="${x.name!}" data-value="${x.itemCode!}">${x.name!}</li>
+		                        [/#list]
+		                    </ul>
+                            [/#if]
+                            [#if sectorList?exists && sectorList?size gt 0 ]
+                            <p style="width:160px;text-align:left;padding-left:30px;padding-top:10px;">[@lang_res k='fund.picker.sector'/] :</p>
+                            <ul class="label">
+                                [#list sectorList as x]
+                                    <li class="sector-choose" data-name="sector" data-key="${x.name!}" data-value="${x.itemCode!}">${x.name!}</li>
+                                [/#list]
+                            </ul>
+                            [/#if]
+                            [#if fundTypeList?exists && fundTypeList?size gt 0 ]
+                            <p style="width:160px;text-align:left;padding-left:30px;padding-top:10px;">[@lang_res k='fund.picker.type'/] :</p>
+                            <ul class="label">
+                                [#list fundTypeList as x]
+                                    <li class="type-choose" data-name="sector" data-key="${x.name!}" data-value="${x.itemCode!}">${x.name!}</li>
+                                [/#list]
+                            </ul>
+                            [/#if]
+                            
+                            [#if distributorList?exists && distributorList?size gt 0 ]
+                            <p style="width:160px;text-align:left;padding-left:30px;padding-top:10px;">[@lang_res k='member.distributor'/] :</p>
+                            <ul class="label">
+                            	[#list distributorList as x]
+                            	  <li class="type-choose" data-name="distributor" data-key="${x.companyName!}" data-value="${x.id!}">${x.companyName!}</li>
+                                [/#list]
+                            </ul>
+                            [/#if]
+                        </td>
+                        [/#if]
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="2">
+                            <div class="btn_middle_div">
+                            <a href="javascript:;" id="btnOK" class="btn_middle">[@lang_res k='global.confirm'/]</a>
+                            <a href="javascript:window.close();" id="btnCancel" class="btn_middle">[@lang_res k='global.cancel'/]</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
+<script type="text/javascript">
+seajs.use(['jquery','layer','pagination'], function($){
+    var selectedIds = "";//存储id的全局变量，用于返回结果
+    var iPAGE = 1;//当前页
+    var sumPage = 0;//总页数
+    var rows = 8;//每页记录数
+
+    getDataList(0);
+    $(".funds_keyword_search_xiala").show();
+    //refreshSelList($(this));
+    
+    $(".funds_keyword_div").on("click",function(){      
+
+        if( $(this).find("ul").hasClass("funds_keyword_active") ){
+            $(this).find("ul").removeClass("funds_keyword_active").hide();
+        }else{
+            $(this).find("ul").addClass("funds_keyword_active").show();
+        }
+        
+    });
+    var houseId = '';
+    $(".funds_keyword_xiala1 li").on("click",function(){
+        if ($(this).attr("data-id"))
+            $(".funds_keyword_div1").find("input").val($(this).html());
+        else
+            $(".funds_keyword_div1").find("input").val("");
+        houseId = $(this).attr("data-id");
+        //refreshSelList($(this));
+        getDataList(0);
+    });
+	
+	var fundType = '';
+    $(".funds_keyword_xiala2 li").on("click",function(){ 
+        if ($(this).attr("data-id"))
+            $(".funds_keyword_div2").find("input").val($(this).html());
+        else
+            $(".funds_keyword_div2").find("input").val("");
+        fundType = $(this).attr("data-id");
+        //refreshSelList($(this));
+        getDataList(0);
+    });
+	
+    
+/*    $(".funds_keyword_search_xiala").on("click",function(){
+        refreshSelList($(this));
+    });*/
+    $(".funds_keyword_search_xiala").on("click","li",function(){//可多选，如果已选则取消选择
+        //$(".funds_keyword_input").val($(this).html());
+        if ($(this).hasClass("selected_active"))
+            $(this).removeClass("selected_active");
+        else
+            $(this).addClass("selected_active");
+            
+        var id = $(this).attr("data-id");
+        if (selectedIds.indexOf(id+",")<0)
+            selectedIds += id+",";//不存在，则添加
+        else{
+            //console.log("p1:"+selectedIds.substring(0,selectedIds.indexOf(id+",")));
+            //console.log("p2:"+selectedIds.substr(selectedIds.indexOf(id+",")+id.length+1));
+            selectedIds = selectedIds.substring(0,selectedIds.indexOf(id+","))
+                +selectedIds.substr(selectedIds.indexOf(id+",")+id.length+1); //存在，则移除
+        }
+        //console.log(selectedIds);
+    });
+     $(".funds_keyword_search").on("click",function(){        
+		getDataList(0);
+    //  if( $(this).find("ul").hasClass("funds_keyword_active") ){
+    //      $(this).find("ul").removeClass("funds_keyword_active").hide();
+    //  }else{
+    //      $(this).find("ul").addClass("funds_keyword_active").show();
+    //  }
+     });
+    var scrollFunc = function (e) {
+        var direct = 0;
+        e = e || window.event;
+        if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件             
+            if (e.wheelDelta > 0) { //当滑轮向上滚动时
+            		--iPAGE;
+            		if (iPAGE<1) 
+            		iPAGE = 1;
+        				else
+            		refreshSelList($(this));
+            }
+            if (e.wheelDelta < 0) { //当滑轮向下滚动时
+                ++iPAGE;
+                if (iPAGE > sumPage) 
+            		iPAGE = sumPage;
+        				else
+            		refreshSelList($(this));
+            }
+        } else if (e.detail) {  //Firefox滑轮事件
+            if (e.detail> 0) { //当滑轮向上滚动时
+            		--iPAGE;
+            		if (iPAGE<1) 
+            		iPAGE = 1;
+        				else
+            		refreshSelList($(this));
+            }
+            if (e.detail< 0) { //当滑轮向下滚动时
+            	  ++iPAGE;
+                if (iPAGE > sumPage) 
+            		iPAGE = sumPage;
+        				else
+            		refreshSelList($(this));
+            }
+        }
+    };
+    window.onmousewheel  = scrollFunc;  
+ 
+    $(".funds_keyword_input").on("focus",function(){
+        $(this).parent().find("ul").addClass("funds_keyword_active").show();
+        //refreshSelList($(this));
+    });
+   /*$(".funds_keyword_input").on("blur",function(){
+        var _this = $(this);
+        setTimeout(function(){
+            _this.parent().find("ul").removeClass("funds_keyword_active").hide();
+        },200);
+        
+    });*/
+    $(".funds_keyword_input").on("keyup",function(){
+        //refreshSelList($(this));
+        getDataList(0);
+    });
+    function refreshSelList(obj){
+        $(".funds_keyword_search_xiala").children().remove();
+        var regions = "";
+        var sectors = "";
+        var types = "";
+        var distributors = "";
+        if($('#cheAccording').prop('checked')){
+        	regions = "${regions!}";
+            sectors = "${sectors!}";
+            types = "${types!}";
+            distributors = "${distributors!}";
+        }
+        var params = {'distributors':distributors,'houseId':houseId,'keyword':$("#keyword_input").val(),'regions':regions,'sectors':sectors,'types':types,'page':iPAGE,'rows':rows}
+        $.post(base_root+"/front/fund/info/getFundListForAllocationJson.do",params, function (data) {
+            console.log(data);
+            var data = $.parseJSON( data ); //json字符串转对象
+            var values = data.list;
+            var total = data.total;
+            //iPAGE = data.page;
+            rows = data.rows;
+            sumPage = Math.ceil(total/rows);
+            
+            //console.log(iPAGE);
+            if (iPAGE==1) $(".show_prev").hide();
+            else $(".show_prev").show();
+            
+            if (iPAGE==sumPage) $(".show_next").hide();
+            else $(".show_next").show();
+            
+            var len = values.length;//暂不限显示头10条记录。
+//            $(".funds_keyword_search_xiala").append('<li data-id="'+values[i].fundId+'">'+ values[i].fundName +'</li>');
+            for (var i=0;i<len;i++){
+                if (selectedIds.indexOf(values[i].fundId+",")<0)
+                    $(".funds_keyword_search_xiala").append('<li data-id="'+values[i].fundId+'">'+ values[i].fundName +'</li>');
+                else
+                    $(".funds_keyword_search_xiala").append('<li data-id="'+values[i].fundId+'" class="selected_active">'+ values[i].fundName +'</li>');
+            }
+        }); 
+    }
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    //执行搜索数据
+	function getDataList(pageid) {
+		//var keywords = $('#txtKeywords').val();
+		//var data =  "langCode="+lang+"&rows=5&page=" + (pageid+1) + "&keyword=" + keywords ;
+		$(".funds_keyword_search_xiala").children().remove();
+        var regions = "";
+        var sectors = "";
+        var types = "";
+        var distributors = "";
+        if($('#cheAccording').prop('checked')){
+        	regions = "${regions!}";
+            sectors = "${sectors!}";
+            types = "${types!}";
+            distributors = "${distributors!}";
+        }
+        if(fundType!=''&&fundType!=undefined){
+        	types = fundType;
+        }
+        
+        var params = {'distributors':distributors,'houseId':houseId,'keyword':$("#keyword_input").val(),'regions':regions,'sectors':sectors,'types':types,'page':(pageid+1),'rows':rows}
+
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : base_root + "/front/fund/info/getFundListForAllocationJson.do?datestr="+ new Date().getTime(),
+			data : params,
+			beforeSend: function () {},
+            complete: function () {},
+			success : function(json) {
+				console.log(json);
+				var data = $.parseJSON(json);
+				var total = data.total;
+
+				
+				var list = data.list;
+				console.log(list);
+				if(pageid == 1)$("#ul_ifa_list").empty();
+				
+				var table_html = '';
+				$('#tb_fundlist .funds_tables_head').siblings().remove();
+				$.each(list,function(i, n) {
+					var fundname = n.fundName; 
+					var symbolCode = n.symbolCode;
+					var fundId = n.fundId;
+					var fundCurrency = n.fundCurrency;
+					var fundType = n.fundType;
+
+					var tr_html = '<tr class="tr_data" id="'+fundId+'"><td>'+symbolCode+'</td><td>'+fundname+'</td><td>'+fundCurrency+'</td><td>'+fundType+'</td></tr>';
+					table_html += tr_html;
+					var idelement = '#'+id;
+					//$(idelement).bind('click',function(){});
+					
+				});
+				$('#tb_fundlist').append(table_html);
+				
+				$("#pagination").pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 8,
+					num_display_entries : 4,
+					current_page : pageid,
+					num_edge_entries : 2
+				});
+			}
+		});
+		
+		function pageselectCallback(page_id, jq) {
+			getDataList(page_id);
+		}
+	}
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    
+    //上一页。
+    $(".show_prev").on("click",function(){
+        --iPAGE;
+        if (iPAGE<1) 
+            iPAGE = 1;
+        else
+            refreshSelList($(this));
+    });
+    //下一页。
+    $(".show_next").on("click",function(){
+        ++iPAGE;
+        if (iPAGE > sumPage) 
+            iPAGE = sumPage;
+        else
+            refreshSelList($(this));
+    });
+    
+    $("#btnOK").on("click",function(){
+    
+    	var fundIds = '';
+	    $('.tr_data').each(function(i,n){
+	    	if($(this).hasClass('choose-fund-list-liac')){
+	    		var tmpid = $(this).attr('id');
+	    		if(tmpid!=null&&tmpid!=''&&tmpid!=undefined)fundIds+=tmpid+',';
+	    	}
+	    });
+    
+        var id = fundIds;//selectedIds;
+        if (id.endWith(",")) id = id.substr(0,id.length-1);
+        //console.log(id);
+        /*
+        $(".selected_active").each(function() {
+            if (id.length>0) id += ",";
+                id += $(this).attr("data-id");
+　　　　});*/
+
+        if (!id){
+            //alert("Please select a fund.");
+            layer.alert("[@lang_res k='fund.selector.pleaseSelect'/]");
+            return;
+        }
+        if (!window.opener){
+            //alert("Getting opener unsuccessfully.\nThe result can not be return:\n"+id);
+            layer.alert("[@lang_res k='fund.selector.openerError'/]"+id);
+            return;
+        }
+        
+        //获取父窗口的id对象，添加新id值
+        var parent_parm_ids = window.opener.document.getElementById("ids");
+        if (!parent_parm_ids){
+            //alert("Getting opener object unsuccessfully.\nThe result can not be return:\n"+id);
+            layer.alert("[@lang_res k='fund.selector.openerObjError'/]"+id);
+            return;
+        } 
+        var _ids_ = "";
+        try{
+            _ids_ = parent_parm_ids.value;
+        }catch(e){
+            _ids_ = "";
+        }
+        if (_ids_.length>0)
+            _ids_ += ","+id;
+        else _ids_ = id;
+        //alert(_ids_);
+        parent_parm_ids.value=_ids_;
+        //alert(_ids_);
+        //alert(parent_parm_ids.value);
+        //调用父窗口的基金列表刷新方法
+        window.opener.document.getElementById("popupWinReturn").click();
+        window.close();
+    });
+    
+    if($('.centerbox').children().length==1){
+    	$('.tittlebox td').css('padding-left','260px');
+    	$('.centerbox td > table').css('margin-left','230px');
+    };
+    
+    $('#cheAccording').change(function(){
+    	iPAGE = 1;
+    	//refreshSelList($(this));
+    	getDataList(0);
+    });
+    
+    $(document).on('click','.tr_data',function(){ $(this).toggleClass('choose-fund-list-liac'); });
+    
+    $('.choose-fund-list tr:gt(0)').on('click',function(){
+    	$(this).toggleClass('choose-fund-list-liac');
+    });
+});    
+</script>

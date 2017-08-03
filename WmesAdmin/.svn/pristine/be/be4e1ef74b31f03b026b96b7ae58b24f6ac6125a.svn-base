@@ -1,0 +1,591 @@
+html, body{font-size: 14px;}
+/*开户*/
+.OpenAccount_title{ width:100%; height:53px; border-bottom:#eef0f2 1px solid;}
+.OpenAccount_title h2{ font-size:16px; font-weight:600; color:#4c5373; line-height:53px; margin-left:20px; float:left;}
+
+.OpenAccount_tab{width: 98%;margin:0px auto;height:auto;border-bottom:#eef0f2 1px solid;margin-top:15px;}
+.OpenAccount_tab ul{overflow: hidden;}
+.OpenAccount_tab ul li{ float:left; font-size:14px;height: 46px;}
+.OpenAccount_tab ul li a{ color:#91a3a8; line-height:44px; display:inline-block; padding:0 8px; margin-right:8px;}
+.OpenAccount_tab ul li a.now,.OpenAccount_tab ul li a:hover{ color:#3c9ef4; border-bottom:2px #2196f3 solid;}
+.OpenAccount_show{  display: block;}
+.OpenAccount_chioce{  border: 1px solid red;}
+.OpenAccount_BasicInfo_div > div{display: none;}
+.openAccount_tab_error{color:#FF0000!important; border-bottom:2px #FF0000 solid;}
+
+
+/*投资人自己开户*/
+
+/*statr*/
+.OpenAccount_xfa_choice{  width: 90%;height: 150px;margin: 0 auto;overflow: hidden;text-align: center; ;border-bottom: 1px solid #e3e3e3;}
+.OpenAccount_select_tilte{  padding-left: 5%;font-size: 16px;margin-bottom: 50px}
+.OpenAccount_start_wrap{overflow: hidden;}
+.OpenAccount_startifa_name{ padding-left: 20px;font-size: 16px;padding-top: 15px;float: left;}
+.OpenAccount_startifa_tou{ padding-left: 5%;float: left;}
+.OpenAccount_startifa_row{ padding-left: 120px;font-size: 16px;padding-top: 15px;float: left;font-weight: bold;}
+.OpenAccount_startifa_title{  padding-left: 5%;font-size: 16px;margin-bottom: 20px;}
+.OpenAccount_startifa_tips{text-align: right;}
+.ifahelped,.ifamyself{  border-radius: 3px;cursor: pointer;width: 220px;height:90px; margin: 0px 20px;border: 1px solid #d4e6ee;display: inline-block;}
+.ifaTypeActive{  background: #fef7e3;border: 1px solid #ffc75a;}
+.ifaActive{border: 2px solid #65c1df;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}
+.ifahelped img,.ifamyself img{  float: left;margin-top: 20px;margin-left: 25px;}
+.ifahelped p,.ifamyself p{   height: 90px; line-height: 90px;  color: #3cb6ee;font-size: 18px;}
+.OpenAccount_xfa_select{  padding-top: 40px;width: 90%;margin: 0 auto;}
+.OpenAccount_xfa_ifa{width: 100%;text-align: center;  margin-bottom: 20px;display: none;}
+.OpenAccount_ifa{width: 30%;margin:10px 1%;display: inline-block;height: 100px;background-color: #e9f8fe;cursor: pointer;box-sizing:border-box;-moz-box-sizing:border-box; -webkit-box-sizing:border-box;}
+.OpenAccount_ifa img{  width: 20%;float: left;margin-top: 10px;margin-left: 7%;border-radius: 50%;border: 3px solid white;}
+.Select_ifa_right{float: right;width: 65%;text-align: left;padding-top: 10px;}
+.ifa_name{font-weight:bold;}
+.ifa_choice_type{ margin: 5px 0px;}
+.noIfa{color: #676767;display: none;}
+.OpenAccount_xfa_Dstributor{margin-top: 30px;display: none;}
+.OpenAccount_xfa_Dstributor p{margin-bottom: 20px;color: #676767;}
+.OpenAccount_xfa_Dstributor img{;margin: 0px 10px;cursor: pointer;}
+
+
+/*doc*/
+.webuploader-container {position: relative;}
+.webuploader-element-invisible {position: absolute !important;clip: rect(1px 1px 1px 1px); /* IE6, IE7 */clip: rect(1px,1px,1px,1px);}
+
+
+.OpenAccount_big_title{ width:100%; height:46px; padding-top:28px;}
+.OpenAccount_big_title h2{ font-size:24px; /*font-weight:600;*/ color:#315788; margin-left:26px; float:left;}
+
+.OpenAccount_ifa_big_title{ width:100%; height:46px; padding-top:28px;}
+.OpenAccount_ifa_big_title h2{ font-size:24px; color:#315788;float:left;}
+.OpenAccount_liucheng_div{ margin:0 20px;overflow: hidden;}
+.OpenAccount_liucheng{ width:100%;overflow: hidden;}
+.OpenAccount_liucheng ul li{ float:left; height:39px; text-align:center; line-height:39px; font-size:16px;}
+.liucheng_jiantou{ width:20px;}
+.liucheng_first{border-radius: 5px 0px 0px 5px; background:#edeff0; width:15.2%; height:39px; color:#8d9094;}
+.liucheng_kuai{ background:#edeff0; width:15.2%; height:39px; color:#8d9094;}
+.liucheng_last{border-radius:0px 5px 5px 0px; background:#edeff0; width:15.2%; height:39px; color:#8d9094;}
+
+.liucheng_light{ background:#fedbad; color:#c34907;} 
+.liucheng_orange{ background:#f6a03a; color:#fff;} 
+
+.OpenAccount_liucheng_content{ clear:both; margin:0 20px; padding-top:34px; font-size:14px;}
+.OpenAccount_liucheng_content_tishi{ color:#b36a39;}
+
+.wenti{ width:99%; border-bottom:#eef0f2 1px solid; padding: 10px 0;}
+.wenti_xuanzhe{}
+.wenti_xuanzhe ul li{ float:none!important;}
+.wenti_xuanzhe ul li a{ color:#6b6a6a; display:inline-block; padding:8px 12px; border:#e5e5e5 1px solid; background:#fff; margin:15px 15px 0 0;}
+.wenti_xuanzhe ul li a.now{ color:#d3821a; border:#f29e32 1px solid; background:#fef5e8;}
+
+.doc_tr td{padding-left: 15px;border-bottom:1px solid #e3e3e3;}
+.doc_name{font-weight:bold; color: #333399;margin:20px 0px;}
+.doc_forow{padding-bottom: 10px;}
+/*rpq*/
+.rpqContent{padding: 0px 20px;}
+.rpqPageRemark{margin-bottom: 40px;overflow: hidden;}
+.rpqIntroduction{font-size: 18px;margin-bottom: 15px;font-weight: bold;}
+.rpqSummary{display: none;margin-top: 20px;margin-bottom: 40px;border: 1px solid #91c0de;padding: 0px 25px;}
+.rpqSummaryTitle{width: 100%;padding: 35px 0px;text-align: center;font-size: 18px;font-weight: bold;border-bottom: 1px solid #91c0de;}
+.rpqSummaryMain{width: 100%;overflow: hidden;}
+.rpqSummaryLeft{text-align: center;}
+.rpaSummarW{margin: 40px 0px;margin: 30px 0px;}
+.rpqSummaryType{font-size: 24px;    margin-left: 10px;color: #ee8f41;}
+.rpqSummeryHere{font-size: 16px;color: #0083ff;cursor: pointer;margin: 0px 3px;text-decoration: underline;}
+.rpqSummeryRight{margin: 50px 0px;}
+.rpqRightTitle{font-weight: bold;margin-bottom: 20px;}
+.rpqRightContent{line-height: 20px;}
+.wenti_btn{ text-align:center; padding:50px 0;}
+.wenti_btn_bule,.wenti_btn_LightBlue{ width:110px; height:37px; background:#2d80ce; color:#fff; font-size:14px; line-height:37px; text-align:center; display:inline-block; border-radius:3px; margin:5px 5px;}
+.wenti_btn_LightBlue{ background:#66a5df;}
+.wenti_btn_organ{ width:110px; height:37px; background:#eb8500; color:white; font-size:14px; line-height:37px; text-align:center; display:inline-block; border-radius:3px; margin:5px 5px;}
+
+.document_table{ border-collapse:collapse; font-size:14px; color:#323232;}
+.document_table th{ background:#f5fafe; border-bottom:#c4e5fe 2px solid; color:#86b1d4; font-weight:600; line-height:18px; padding:10px 5px;}
+.document_table td{ padding-left:5px; border-bottom:#eef0f2 1px solid; height:62px;}
+.gary_background{ background:#f9fafb;}
+
+.document_table_time{ color:#b7b7b7;}
+.a_file{ color:#2196f3;}
+.a_file:hover{ text-decoration:underline;}
+
+
+.Declaration_content{width: 98%;margin:0px auto;}
+.Declaration_content h4{ font-size:16px; font-weight:bold; color:#262626;}
+.Declaration_content_file{ color:#2196f3; cursor:pointer; margin-bottom:16px; display:inline-block;}
+
+.duoxuan_font{ float:left; line-height:24px; width:97%;}
+.document_line{ clear:both; width:100%; height:35px; border-bottom:#ebebeb 1px solid; margin-bottom:30px;}
+
+
+.Summit_text{width: 88%;margin: 0px auto;color: #2b2b2b;font-size: 16px;line-height: 26px;margin-bottom: 20px;}
+.Summit_text_a{ color:#2196f3;}
+.Summit_myClient_title{margin-bottom: 20px;    font-size: 18px;}
+.Summit_myClient_name > img{float: left;}
+.Summit_myClient_name > span{margin-left: 30px;font-weight: bold;margin-right: 15px;}
+.Summit_myClient_name, .Summit_myClient_phone, .Summit_myClient_Email{float: left;line-height: 34px;margin-right: 60px;}
+.Summit_left_title{margin-right: 10px;font-weight: bold;}
+.Summit_row_title{border-bottom: 2px solid #6d6e6f;padding-bottom: 5px;margin: 10px 0px;font-weight: bold;font-size: 17px;}
+.Summit_row_content{line-height: 20px;overflow: hidden;padding: 15px 0 50px 0px;}
+.Summit_language{float: left;margin-right: 35px;}
+.Summit_language_select{padding: 3px 0px;width: 120px;}
+.Summit_button_green{color: white;background: #398698;padding: 7px 35px; margin-left:50px;}
+.Summit_img_wrap{float:left;margin-right:10px;overflow:hidden;}
+.Summit_img_wrap > li{float:right!important;margin: 0px 20px;}
+.Summit_img_wrap img{max-width:132px;max-height:197px;}
+.OpenAccount_summit_row{overflow: hidden;width: 100%;}
+#img_zone{margin: 3%;max-width: 94%;max-height: 94%;}
+.OpenAccount_addWrap_title{margin-bottom: 20px;color: #2b2b2b;}
+.OpenAccount_addContent{width: 100%;height: 180px;resize: none;}
+.OpenAccount_subTouxiang{float: right;margin-right: 15px;margin-top: 15px;}
+.OpenAccount_subTouxiang a{float: left;margin-left: 15px;}
+.OpenAccount_subTouxiang .wenti_btn_bule{width: auto;padding:0px 15px;}
+/*basic*/
+
+.OpenAccount_BasicInfo_content{clear:both;padding-top: 5px;font-size:14px;}
+.OpenAccount_BasicInfo_div{ margin:38px 26px 0 26px;}
+.BasicInfo_title{margin-bottom: 30px; clear:both; font-size:14px; text-align:left; background:#f5f5f5; height:auto; width:100%; overflow: hidden;padding: 15px 0px;}
+.BasicInfo_title_dabiao{ color:#000; font-weight:bold; margin:0 15px 0 18px; float:left;}
+.BasicInfo_title_tishi_blue{ color:#6cabcb; float:left;margin: 0px 15px;}
+.BasicInfo_title_tishi_gray{ color:#b4b4b4; float:left;}
+.BasicInfo_title_ico{ width:24px; height:24px; float:right; cursor:pointer; margin:7px 10px 0 0;}
+.BasicInfo_title_margin{ margin:10px 0 10px 0;}
+
+/*main*/
+.BasicInfo_Main_left{float: left;width: 15%;margin-top: 12px;text-align: right;color: #5e5e5e;}
+.BasicInfo_Main_right{float: left;margin-left: 2%;width: 82%;color: #5e5e5e;}
+
+/*newbasic*/
+
+.BasicInfo_content{font-size:14px; color:#a5a5a5;width: 97%; margin:0px auto; margin-top:40px;}
+.BasicInfo_row{width: 100%;margin-bottom: 10px;color: #a5a5a5;}
+.BasicInfo_gray_left{float: left;width: 15%; margin-top: 12px;text-align: right;color: #5e5e5e;}
+.BasicInfo_gray_right{float: left;margin-left: 2%;  width: 82%; color: #5e5e5e;}
+.BasicInfo_radio{overflow: hidden;}
+.BasicInfo_radio li{float: left;margin-right: 45px;overflow: hidden;margin-bottom: 5px;padding-top: 10px;}
+
+.BasicInfo_gray_half{height: 45px;width: 47%;display: inline-block;overflow: hidden;}
+.font_gray_half{float: left;width: 30%;text-align: right;color: #5e5e5e;margin-top: 8px;display: inline-block;}
+
+
+.BasicInfo_input,.BasicInfo_xiala{width:49%;/**padding-left: 1%; color:#bebdbd;*/margin-left: 2%;height:32px;background:#fff;border:#dcdadb 1px solid;border-radius:3px;font-size:14px;float:left;position:relative;padding-left: 5px;}
+.BasicInfo_input_before{width: 19%;}
+.BasicInfo_input_after{width: 26%;}
+.BasicInfo_gray_all{width: 100%;overflow: hidden;}
+.font_gray_all_left{  float: left;width: 20.5%;text-align: right;color: #5e5e5e;margin-top: 8px;display: inline-block;}
+.font_gray_all_right{  float: left;margin-left: 2%;width: 75%;}
+
+.BasicInfo_select{width:49%;/**padding-left: 1%; color:#bebdbd;*/margin-left: 2%;height:32px;background:#fff;border:#dcdadb 1px solid;border-radius:3px;font-size:14px;float:left;position:relative;padding-left: 5px;}
+.BasicInfo_textarea{width:49%;/**padding-left: 1%; color:#bebdbd;*/margin-left: 2%;height:40px;background:#fff;border:#dcdadb 1px solid;border-radius:3px;font-size:14px;float:left;position:relative;padding-left: 5px;}
+
+
+.BasicInfo_xiala input{ width:91%; float:left; line-height:26px; font-size:14px; padding-left:4px; border:#fff 1px solid;}
+.BasicInfo_input_long{width:85%; height:30px; border:#dcdadb 1px solid;border-radius:3px; font-size:14px; padding-left:5px; /**color:#bebdbd;*/ margin-left: 0px;}
+.BasicInfo_div_long{  margin-left: 1%;}
+
+.BasicInfo_input_long_30{width: 26%;}
+.BasicInfo_input_long_heng{float:left;line-height:34px;margin:0px 1%;}
+.BasicInfo_div_long_msg{  color: #bbbbbb;}
+.BasicInfo_div_long_payment_msg{padding-top: 5px;}
+/*newbasic*/
+.BasicInfo_table{ border-collapse:collapse; font-size:14px; color:#282a31; margin:0px auto; margin-top:40px;}
+.BasicInfo_table td{ padding-left:10px; height:58px; vertical-align:top; }
+
+
+
+.BasicInfo_zhuxi{ color:#bbbbbb; margin:15px 0 10px 10px;}
+.BasicInfo_xuxian{ height:10px; border-bottom:#dddddd 1px dashed; margin:40px 0px;}
+
+.BasicInfo_radio{ margin:5px 0;}
+.BasicInfo_radio ul li{ float:left; margin-right:45px;}
+.BasicInfo_radio_zhuxi{ clear:both; color:#bbbbbb; margin:15px 0 10px 0px;}
+.BasicInfo_radio_text{   padding-left: 10px;height:28px; width:200px; border-bottom:#e0e0e0 1px solid; display:inline-block; margin:0 0 0 3px;}
+.BasicInfo_radio_text input{ height:24px; width:98%; border:none; font-size:14px;  outline: none}
+.BasicInfo_radio .font_gray_left{float:none;margin: 0px;display: block;}
+
+.BasicInfo_duoxuan_div{float:left; width:33%; margin:6px 0 15px 0;}
+.BasicInfo_percentage{width: auto;margin-right: 2%;}
+.BasicInfo_fenlei{ color:#000; padding:15px 0 0 10px;}
+.BasicInfo_wenjuan{ width:97%; margin:0px auto; padding:10px 0;}
+.BasicInfo_font_gray{ color:#898887; margin-top:8px; display:inline-block; line-height:22px;}
+
+.font_red{ color:#ff3e3e;}
+
+
+
+
+/*.BasicInfo_show{overflow: hidden;}*/
+.BasicInfo_title_ico_hide{display: none;  width: 24px;height: 24px;float: right;cursor: pointer;margin: 7px 10px 0 0;}
+
+/*单选框*/
+.regular-radio {display: none;}
+.regular-radio + label {cursor:pointer;-webkit-appearance: none;background-color: #fafafa;border: 1px solid #cdcccc;box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);padding: 8px;border-radius: 50px;float: left;position: relative;vertical-align: middle;margin-right: 8px;}
+
+.regular-radio:checked + label:after {content: ' ';width: 10px;height: 10px;border-radius: 50px;position: absolute;top: 3px;background: #21a1f3;box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);text-shadow: 0px;left: 3px;font-size: 32px;}
+
+.regular-radio:checked + label {background-color: #e9ecee;color: #99a1a7;border: 1px solid #adb8c0;box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1), inset 0px 0px 10px rgba(0,0,0,0.1);}
+
+.regular-radio + label:active, .regular-radio:checked + label:active {box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);}
+/*单选框 结束*/
+
+/*审批表格*/
+.account_list_table{overflow: hidden;width: 100%;padding: 0px 2%;text-align: center;}
+.account_list_th{  background-color: #f6fafe;height: 50px;color: #75a5cb;border-bottom: 2px solid #c7e7fe;}
+.account_list_table td{padding: 10px 0px;border-top: 0px; }
+
+
+.list_keyserach{border: 1px solid #e0dfdf;height: 30px;width: 200px;float: right;border-radius: 4px;margin-bottom: 15px;}
+.list_keyserach input{border: 0px ;height: 28px;width: 160px;padding-left: 5px;}
+.icon_search{width: 16px;height: 16px;background: url('../images/icon_search.png') no-repeat;float: right;  margin: 7px 7px;cursor: pointer;}
+
+.account_list_new{  float: left;margin: 20px 10px;cursor: pointer;padding: 10px 20px;border-radius: 4px;background-color: #4ba6de;color: white;}
+
+.account_list_xiala{  width:140px;margin-left: 2%;height: 32px;background: #fff;border: #dcdadb 1px solid;border-radius: 3px;font-size: 14px;color: #bebdbd;float: right;}
+.account_list_xiala input {width: 115px;float: left;line-height: 26px;font-size: 14px;padding-left: 4px;border: #fff 1px solid;}
+.account_list_xiala_text{height: 32px;line-height: 32px;float: right;margin-right: 10px;}
+
+.OpenAccount_Approval_content > div{display: none;}
+.openlist_logo{width: 100px;height: 40px;}
+.opeanAccount_advisor{margin-top: 30px;color: #5D4D4D;}
+.opeanAccount_advisor img{float: left;height: 70px;margin-right: 30px;}
+.advisor_name{font-weight: bold;margin-bottom: 10px;font-size: 16px;}
+.advisor_title{  color: #999999;margin-right: 15px;}
+.advisor_biaoti{margin-bottom: 15px;}
+.advisor_value{  color: #FF6600;margin-bottom: 15px;}
+.advisor_value span{margin-right: 25px;}
+.Approval_history{text-align: center;}
+.Approval_table{width: 95%;margin:0 auto;}
+.Approval_table_th{background-color: #f6fafe;height: 50px;color: #75a5cb;border-bottom: 2px solid #c7e7fe}
+.Approval_table td{padding: 10px 0px;border: 1px solid #eff1f3;border-top: 0px;text-align: left; padding-left: 5px;}
+
+.Approval_comments{width: 90%;padding: 0px 5%;margin-top: 50px;margin-bottom: 20px;}
+.Approval_comments textarea{  width: 100%;  border: #e5e4e4 1px solid;margin: 15px 0px;}
+
+.Approval_wenti{  text-align: right;}
+.Approval_stauts{float: right;margin-right: 40px;font-size: 16px;}
+.Approval_stauts span{color: #0000CC;font-weight: bold;}
+
+.OpenAccount_ifa_title{border-bottom: 1px solid #888888;padding-bottom: 10px;font-weight: bold;font-size: 16px;}
+.opeanAccount_advisor > div{float: left;}
+.OpenAccount_ifa_list li{float: left;padding-right: 3%;width: 15%;line-height: 20px;}
+.Approval_table_title{font-size: 16px;font-weight: bold;color: #262626;padding: 15px 0px;}
+
+#DeclarifaBack{display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;opacity: 0.4;background: #000000}
+#Declarifa{display: none;position: fixed;top: 89px;width: 100%;height: 100%;text-align: center;}
+#DeclarifaWrap{width: 80%;height: 80%;max-width: 1320px;}
+/*投资人自己开户-流程*/
+@media screen and  (min-width:1090px) and (max-width: 1225px){
+.liucheng_first{width:15%;}
+.liucheng_kuai{width:15%;}
+.liucheng_last{ width:15%;}
+}
+
+@media screen and  (min-width:1025px) and (max-width: 1089px){
+.liucheng_first{width:14.8%;}
+.liucheng_kuai{width:14.9%;}
+.liucheng_last{ width:14.8%;}
+}
+
+@media screen and  (min-width:1000px) and (max-width: 1024px){
+.OpenAccount_liucheng ul li{ font-size:0.92em;}
+.liucheng_first{width:14.7%;}
+.liucheng_kuai{width:14.8%;}
+.liucheng_last{ width:14.7%;}
+}
+
+@media screen and  (min-width:900px) and (max-width: 999px){
+.OpenAccount_liucheng ul li{ font-size:0.9em;}
+.liucheng_first{width:14.6%;}
+.liucheng_kuai{width:14.6%;}
+.liucheng_last{ width:14.6%;}
+}
+
+@media screen and  (min-width:873px) and (max-width: 899px){
+.OpenAccount_liucheng ul li{ font-size:0.85em; line-height:18px;}
+.liucheng_first{width:14.4%;}
+.liucheng_kuai{width:14.6%;}
+.liucheng_last{ width:14.4%;}
+.font_height{ padding-top:10px;}
+}
+
+@media screen and  (min-width:826px) and (max-width: 872px){
+.OpenAccount_liucheng ul li{ font-size:0.85em; line-height:18px;}
+.liucheng_first{width:14.4%;}
+.liucheng_kuai{width:14.4%;}
+.liucheng_last{ width:14.4%;}
+.font_height{ padding-top:10px;}
+}
+
+@media screen and  (min-width:795px) and (max-width: 825px){
+.OpenAccount_liucheng ul li{ font-size:0.85em; line-height:18px;}
+.liucheng_first{width:14.3%;}
+.liucheng_kuai{width:14.3%;}
+.liucheng_last{ width:14.3%;}
+.font_height{ padding-top:10px;}
+}
+
+@media screen and  (min-width:765px) and (max-width: 794px){
+.OpenAccount_liucheng ul li{ font-size:0.85em; line-height:18px;}
+.liucheng_first{width:14.2%;}
+.liucheng_kuai{width:14.2%;}
+.liucheng_last{ width:14.2%;}
+.font_height{ padding-top:10px;}
+}
+/*投资人自己开户-流程*/
+
+
+/****文档审核**/
+    .docController .filelist div.file-panel {
+        background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
+        height: 0;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 300;
+    }
+    
+    .docController .filelist div.file-panel span {
+        background: rgba(0, 0, 0, 0) url("../images/icons.png") no-repeat scroll 0 0;
+        cursor: pointer;
+        display: inline;
+        float: right;
+        height: 24px;
+        margin: 5px 1px 1px;
+        overflow: hidden;
+        text-indent: -9999px;
+        width: 24px;
+    }
+    
+    .docController .filelist div.file-panel span.cancel {
+        background-position: -48px -24px;
+    }
+    
+    .docController .filelist div.file-panel span.cancel:hover {
+        background-position: -48px 0;
+    }
+    
+    .docController .filelist div.file-panel span.thumb {
+        background-position: -70px -24px;
+    }
+    
+    .docController .filelist div.file-panel span.thumb:hover {
+        background-position: -70px -1px;
+    }   
+
+    .docController .filelist {
+        list-style: outside none none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .docController .filelist li {
+        /*background: rgba(0, 0, 0, 0) url("../images/bg.png") no-repeat scroll 0 0;*/
+        font-size: 12px;
+        margin: 8px;
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+        float:left;
+    }   
+    .doc_imgWrap{
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        top: -45px;
+        text-align: center;
+        padding-top: 10%;
+    }
+    .doc_img{
+        display: inline-block;
+        position: relative;
+        width: 900px;
+        background: rgba(0,0,0,0.6);
+        min-height: 500px;
+        border: 1px solid #e3e3e3;
+    }
+    .doc_img_close{
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 16px;
+    }
+    .doc_close_ico{
+        color: white;
+        font-size: 21px;
+        cursor: pointer;
+    }
+@media screen and  (min-width:768px) and (max-width: 1024px){
+.login_white{ width:90%; height:529px; margin:0px auto;}
+.login_content{ padding:47px 0 0 26%;}
+
+.register_div{ width:90%; margin:0px auto;}
+.register_conter_1{padding-left: 150px;}
+.register_conter_2{padding-left: 90px;}
+
+.white_background{ width:96%; }
+
+
+}
+
+
+@media screen and  (min-width:768px) and (max-width: 1000px){
+.register_liucheng{ padding: 16px 0;}
+.register_liucheng ul li{ width:21%;}
+.register_jiantou{ margin:0 2px;}
+
+.register_conter_1{padding-left: 10%;}
+.register_big_ico {width: 28%;}
+.register_ico_140{margin: 0 0px 6px 0px;}
+
+.register_conter_2{padding-left:3%;}
+.register_small_ico_individual{top: -75px; right: -30px;}
+.register_small_ico_corporate {top: 35px;right: -70px;}
+.register_small_ico_fi {top: 145px;right: -30px;}
+.register_big_ico_margin {margin-left: 60px;}
+
+.register_small_ico_IFAUser {top: -32px;right: -60px;}
+.register_small_ico_IFAFirm {top: 95px;right: -60px;}
+
+
+}
+@media screen and  (max-width:600px){
+.BasicInfo_input, .BasicInfo_xiala{width: 62%;} 
+.font_gray_half{width: 34%;}
+.BasicInfo_gray_left,.font_gray_all_left{width: 100%;text-align: left;}
+.font_gray_half{text-align: left;}
+.BasicInfo_gray_half,.font_gray_all_right,.BasicInfo_duoxuan_div{width: 100%;}
+.BasicInfo_input_long{width: 95%;}
+.BasicInfo_input_before{width: 25%;}
+.BasicInfo_input_after{width: 35%;}
+.BasicInfo_input_long_30{width: 28%;}
+}
+
+/*会员中心*/
+
+.member_div{  width: 80%;margin: 0px auto;border: #fff 0px solid;}
+
+/*.Personaldata .huiyuan_table td{width: 10%;padding-right: 2%;}*/
+.PersonalWrap{width: 1200px; margin: 0px auto; background: #fff; padding-bottom: 30px;}
+.zhongxin_right{ float:left;width: 100%;}
+.zhongxin_right_content{padding: 23px 40px 0 40px;}
+
+.zhongxin_left ul li{ display:inline-block; margin-bottom:15px;}
+.zhongxin_left ul li .ico{ width:12px; height:12px; display:inline-block; background:url(../images/hyzx_ico_03.png) no-repeat; margin:6px 5px 0 0; float:left;}
+.zhongxin_left ul li a{ color:#266fb2; font-size:16px; line-height:24px; float:left; width:196px;}
+.zhongxin_left ul li a:hover{ color:#218eff;}
+
+.member_psw{color:#266fb2;line-height:24px; float:left; width:196px;}
+.zhongxin_right_title{ color:#6aaddb; font-size:22px; font-weight:bold; padding:30px 42px 0 42px;}
+/*.zhongxin_touxiang{ width:128px; height:128px; float:left; background:url(../images/hyzx_touxiang_07.png) no-repeat; margin:0px 40px 0 20px; }
+.zhongxin_touxiang2{ width:128px; height:128px; float:left; background:url(../images/hyzx_touxiang_08.png) no-repeat; margin:0px 40px 0 20px; }
+*/
+.member_touxiang{width: 90px;float: left;/* margin-top: 10px; */margin-right: 5%;border-radius: 50%;border: 3px solid white;}
+.zhongxin_ziliao{ float:left; color:#000;}
+.zhongxin_ziliao h2{ font-size:20px; font-weight:600; display: inline-block;margin-right: 15px;}
+.zhongxin_ziliao_jiange{ margin-bottom:15px;}
+
+.personalWrap .register_xiala_long{    width: 288px;    margin-left: 10px; color: #333;}
+.personalWrap .BasicInfo_input, .personalWrap .BasicInfo_xiala{    color: #333;}
+.personalWrap input{color: #333;}
+.red_font{ color:#ff1e1e;}
+.gray_font{ color:#909090;}
+.chongfayoujian{ color:#0074eb; margin-left:25px;}
+.chongfayoujian:hover{ text-decoration:underline;}
+
+.gary_title{ background:#f5f5f5; height:40px; line-height:40px; color:#171717; font-weight:bold; margin:20px 0 30px 0; padding-left:20px;}
+
+.huiyuan_table{ color:#171717;}
+.huiyuan_table td{ padding-left:5px; height:40px;}
+.huiyuan_input,.huiyuan_input_145,.huiyuan_input_70,.huiyuan_input_220{ width:300px; height:27px; border: #dcdadb 1px solid; font-size:16px; font-family: "Microsoft YaHei", "Arial Narrow", arial; padding-left: 5px; margin-right:8px; background: #fff;}
+.huiyuan_input_145{ width:145px; }
+.huiyuan_input_70{ width:50px; text-align: right;margin-right: 0px; padding-right: 5px;}
+.huiyuan_input_220{ width:120px; }
+
+
+.huiyuan_tishi{ font-size:14px; color:#c8c8c8;}
+.huiyuan_radio{ vertical-align:middle; margin-top:-2px; margin-right:4px;}
+.huiyuan_select{ width:305px; height:29px; border:#b7bcc2 1px solid; font-size:16px; font-family: "Microsoft YaHei", "Arial Narrow", arial; padding-left:3px; margin-right:8px;}
+
+.huiyuan_duoxuan{ float:left; width:170px; margin-right:40px; margin-bottom:20px;}
+.huiyuan_duoxuan input{ vertical-align:middle; margin-top:-2px; margin-right:4px;}
+
+
+.huiyuan_duoxuan_yihang{ margin-bottom:20px;}
+.huiyuan_duoxuan_yihang input{ vertical-align:middle; margin-top:-2px; margin-right:4px;}
+
+.huiyuan_btn_div{ text-align:center;}
+.btn_gengxin,.btn_chongzhi{width: 133px; height: 40px; display: inline-block; background: #ff7302;font-size: 18px; color: #fff; line-height: 40px;border-radius: 3px; margin:35px 9px 15px 5px;}
+.btn_chongzhi{background: #b18460; }
+
+.account_list_div > div{display: none;}
+.account_list_a {margin-right: 5px;}
+
+.Rpq_paper_ul{overflow: hidden;width: 98%;}
+.Rpq_paper_ul_title{font-weight: bold;width: 20%;line-height: 20px;margin-right: 20px;}
+.Rpq_paper_ul li{overflow: hidden;width: 100%;}
+.Rpq_paper_ul p {float: left;margin-right:10%;}
+.Rpq_paper_contents_Total{font-weight: bold;margin-right: 20px;font-size: 16px;}
+.Rpq_paper_contents_num{color: #FF0000; font-size: 16px;}
+.wenti_btn_green{width: 100px;padding: 0px 15px;height: 37px;background: #009933;color: #fff;font-size: 14px;line-height: 37px;text-align: center;display: inline-block;border-radius: 3px;margin: 5px 5px;}
+.Rpq_paper_li_title{font-weight: bold;margin-bottom: 15px;margin-top: 10px;}
+.Rpq_paper_li_questions{font-size: 16px;}
+.Ppq_paper_main{overflow: hidden;padding-top:15px;}
+.Ppq_paper_main ul{float: left;}
+.Rpq_paper_contents_ul > li{ border-bottom: #dddddd 1px dashed;}
+.Ppq_paper_main ul li{width: 45%;float: left;margin-bottom: 15px;}
+.Ppq_paper_main ul li span{}
+.Ppq_paper_main p{float: left;line-height: 75px;}
+.Rpq_paper_Modify{color: #0000CC;margin-right: 15px;}
+.Rpq_paper_Delete{color: #FF0000;}
+
+/*声明*/
+.statement_wrap{font-family:  arial;width: 94%;margin: 0px auto;margin-top: -8px;background: #fff;overflow: hidden;padding: 0px 3%;}
+.statement_title{margin: 30px 0px;text-align: center;font-weight: bold;font-size: 24px;line-height: 30px;}
+.statement_dt{font-weight: bold;font-size: 18px;text-align: left;margin-bottom: 20px;}
+.statement_ct{font-size: 16px;line-height: 30px;margin-bottom: 30px;overflow: hidden;}
+.statement_space{height: 15px;width: 100%;float: left;}
+.statement_tips{font-size: 14px;color: #666666;margin: 20px 0px;margin-bottom: 30px;}
+.statement_suo{padding-left: 35px;margin: 5px 0px;display: inline-block;width: 100%;}
+.wenti_btn_yellow{width: 110px;height: 37px;background: #f06943;color: #fff;font-size: 14px;line-height: 37px;text-align: center;display: inline-block;border-radius: 3px;margin: 5px 5px;}
+.statement_wrap a{    text-decoration: none;}
+
+/* fill rpq*/
+.fill-rpq-wrap{background-color: white;padding: 20px 25px;padding-top: 40px;margin-bottom: 20px;position: relative;overflow: hidden;}
+.fill-rpq-information{line-height: 50px;overflow: hidden;margin-bottom: 25px;}
+.fill-rpq-portrait{overflow: hidden;float: left;margin-right: 40px;}
+.fill-rpq-portrait > img{width: 50px;border-radius: 50%;float: left;margin-right: 15px;}
+.fill-rpq-name{float: left;font-weight: bold;}
+.fill-rpq-phone{float: left;color: #999999;margin-right: 25px;}
+.fill-rpq-email{float: left;color: #999999;margin-right: 55px;}
+.fill-rpq-passport{color: #999999;margin-right: 25px;}
+.fill-rpq-passport > span{margin-left: 5px;}
+.fill-rpq-liucheng .liucheng_kuai{width: 31%;}
+.fill-rpq-liucheng{overflow: hidden;margin-bottom: 30px;}
+.rpq-button-wrap{margin-top: 40px;text-align: center;overflow: hidden;}
+.rpq-button-cancel{padding: 0px 35px;height: 37px;background: #909090;color: #fff;font-size: 14px;line-height: 37px;text-align: center;border-radius: 3px;margin: 5px 5px;float: left;}
+.rpq-button-next{padding: 0px 35px;height: 37px;background: #2d80ce;color: #fff;font-size: 14px;line-height: 37px;text-align: center;border-radius: 3px;margin: 5px 5px;float: right;}
+.rpq-button-previous{padding: 0px 35px;height: 37px;background: #66a5df;color: #fff;font-size: 14px;line-height: 37px;text-align: center;border-radius: 3px;margin: 5px 5px;float: right;}
+.rpq-investment-topt{font-size: 22px;margin-bottom: 40px;}
+.rpq-investment-title{float: left;line-height: 20px;width: 210px;text-align: right;margin-right: 15px;font-size: 16px;}
+.rpq-investment-word{float: left;padding: 2px 5px;color: #ff9b19;border: 1px solid #ff9b19;margin-right: 15px;margin-bottom: 5px;cursor: pointer;margin-left: 15px;}
+.rpq-investment-brief{overflow: hidden;margin-bottom: 35px;}
+.rpq-brief-title{float: left;font-weight: bold;margin-right: 15px;}
+.rpq-brief-word{display: block;float: left;width: 85%;}
+.rpq-orientation-title{margin-bottom: 10px;}
+.rpq-confirm-confirmation{font-size: 18px;}
+.rpq-confirm-rows{margin-top: 30px;}
+.rpq-confirm-title{overflow: hidden;background: #f8f8f8;padding: 0px 10px;line-height: 40px;font-size: 15px;border: 1px solid #e4e4e4;margin-bottom: 30px;}
+.rpq-confirm-radio{margin-bottom: 15px;overflow: hidden;padding-left: 15px;}
+.rpq-confirm-contents .font_gray_left{float:none;margin: 0px;display: block;color: #000000;}
+.rpq-orientation-rows{padding-left: 38px;}
+.rpq-orientation-gray{color: #000000;float: left;width: 10%;}
+.rpq-orientation-word{float: left;width: 80%;color: #999999;}
+.rpq-introduction-word{color: #0000CC;margin-top: 25px;}
+.rpq-interested-word{margin-bottom: 35px;}
+.rpq-complete-rows{overflow: hidden;margin-bottom: 15px;padding-left: 40px;}
+.rpq-investment-date{    font-size: 16px;}
+.rpq-complete-rows .rpq-investment-word{margin: 0px;}
+.rpq-complete-word{padding-left: 210px;}
+.rpq-ja-button{padding: 0px 35px;height: 37px;background: #2d80ce;color: #fff;font-size: 14px;line-height: 37px;text-align: center;border-radius: 3px;margin: 5px 5px;display: inline-block;}
+.rpq-complete-img{margin-top: 30px;width:980px;height:450px;margin:0 auto;overflow: scroll;}
+.rpq-complete-img img{width: 100%;}

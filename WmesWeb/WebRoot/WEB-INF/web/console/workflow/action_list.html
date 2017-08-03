@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作流管理</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+	<body>
+	<input type="hidden" value="${(procedureId)?if_exists}" id="hidprocedureId" />
+	<table id="actiondatalist" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+	                           <tr>
+	                           	   <th class="table-head">序号</th>
+	                               <th class="table-head">动作名称</th>
+	                               <th class="table-head">动作编码</th>
+	                               <th class="table-head">审批角色</th>
+	                               <th class="table-head">是否发送所有人</th>
+	                               <th class="table-head">单人或多人完成</th>
+	                               <th class="table-head">开始中间结束</th>
+	                            </tr>                                
+                            </tbody>
+                        </table>
+                   
+
+			            
+
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+	<script type="text/javascript">
+	$(function() {
+
+		bindList(0);
+
+		$('#btnToDoSearch').click(function() {
+			bindList(0);
+		});
+
+		var types = [ BootstrapDialog.TYPE_DEFAULT, BootstrapDialog.TYPE_INFO,
+				BootstrapDialog.TYPE_PRIMARY, BootstrapDialog.TYPE_SUCCESS,
+				BootstrapDialog.TYPE_WARNING, BootstrapDialog.TYPE_DANGER ];
+		$(document).on('click', '.show_action', function() {
+
+		});
+
+	});
+
+	//分页绑定Table数据
+	function bindList(pageid) {
+		var procedureid = $('#hidprocedureId').val();
+		var name = $('#txtName').val();
+		if (name == undefined)
+			name = "";
+		$
+				.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : "${base}/console/workflow/listActionJson.do?procedureid="+procedureid+"&datestr="
+							+ new Date().getTime(),
+					data : {
+						procedureid : procedureid,
+						page : pageid + 1,
+						rows : 8
+					},
+					success : function(json) {
+						var total = json.total;
+						var table = json.rows;
+						var html = '';
+						$("#actiondatalist tbody tr:gt(0)").empty();
+						
+						$.each(
+										table,
+										function(i, n) {
+											var flow_code = n.flowCode;
+											var flowName = n.flowName;
+											var flowRoleAlluser = n.flowRoleAlluser;
+											var beginOrEnd = n.beginOrEnd;
+											var flowCompleted = n.flowCompleted;
+											var orderNo = n.orderNo;
+											
+											if (beginOrEnd == '0') //0-开始，1-中间环节，2、结束
+												beginOrEnd = '开始';
+											else if(beginOrEnd=='1')
+												beginOrEnd = '中间环节';
+											else if(beginOrEnd=='2')
+												beginOrEnd = '结束';
+												
+											if (flowRoleAlluser == '0') //是否需要发送待办给角色所有用户，1-所有，0-单个
+												flowRoleAlluser = '单个';
+											else if(beginOrEnd=='1')
+												flowRoleAlluser = '所有';
+											else 
+												flowRoleAlluser = '';
+	
+											if (flowCompleted == 'A') //A-需要所有人完成才能进入下一流程，S-单个人完成即可
+												flowCompleted = '需要所有人完成';
+											else if(flowCompleted=='S')
+												flowCompleted = '单个人完成';
+											else 
+												flowCompleted = '';
+
+												
+											html += '<tr><td>'+ orderNo +'</td><td><a href="#" onclick="showform(\''
+													+ n.id
+													+ ' \')">'
+													+ flowName
+													+ '</a></td><td>'
+													+ flow_code
+													+ '</td><td></td><td>'
+													+ flowRoleAlluser
+													+ '</td><td>' + flowCompleted +'</td><td>' + beginOrEnd
+													+ '</td></tr>'
+										});
+						$('#actiondatalist tbody').append(html);
+
+						$("#action_pagination").pagination(total, {
+							callback : pageselectCallback,
+							numDetail : '',
+							items_per_page : 8,
+							num_display_entries : 4,
+							current_page : pageid,
+							num_edge_entries : 2
+						});
+					}
+				})
+		//回调
+		function pageselectCallback(page_id, jq) {
+			bindList(page_id);
+		}
+	}
+
+	function showform(id) {
+		//window.location.href = '${base}/console/emaillog/detail.do?id=' + id;
+	}
+</script>

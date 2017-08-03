@@ -1,0 +1,333 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" href="${base}/res/third/bootstrap/css/bootstrap.css"> 
+	<link rel="stylesheet" href="${base}/res/third/slider/bootstrap-slider.css">  
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+	<link rel="stylesheet" href="${base}/res/css/jquery.range.css">
+	<link rel="stylesheet" href="${base}/res/css/Funds.css">
+	<style>
+	.proposal-mask-mainer {
+    width: 85%;}
+    .order-setting-list-name {
+    width: 110px;}
+    .order-choice-date {
+    float: left;
+    display: none;
+    margin-left: 40px;
+	}
+	.portfolio-table-inf {
+    overflow: hidden;
+    margin-top: 20px;
+    width: 100%;
+    font-size: 15px;
+	}
+    .strategy_chart_tinput {width: 35px; border: 1px solid #d8d8d8;float: left;padding: 5px 3px;text-align: center;}
+    .funds-slider-wrap {float: left;width: calc(100% - 95px)}
+    .portfolio-table-inf{overflow: hidden;margin-top: 20px;width: 100%;font-size:14px;}
+    .strategy_chart_sign{float: left;margin-left: 5px;line-height: 33px;}
+    .aipstate_button{float: left;  width: 42px; height: 20px; background: url('${base}/res/images/ifa/op_choose_01.png') no-repeat; cursor: pointer; margin-right: 10px;margin-top: 10px; }
+	.aipstate_button_active{background: url('${base}/res/images/ifa/op_choose_02.png') no-repeat;}
+	.order-choice-date {
+	    float: left;
+	    display: none;
+	    margin-left: 5%;
+	}
+	</style>
+    <div class="wmes-content">
+        <div class="proposal-wrap">
+       		<p class="wmes-wrap-title">
+       		[#if edit?? && edit=='1']
+    			[@lang_res k='portfolio.info.form.editPortfolio'/]
+    		[#else]
+    			[@lang_res k='create.portfolio.title'/]
+    		[/#if]
+       		</p>
+            <div class="createflow">
+                <div class="Straegy_Old" style="width: 20%;">[@lang_res k='create.portfolio.step.selectCreateMethod'/]</div>
+                <div class="createflownext" style="width: 6.5%;">></div>
+                <div class="Straegy_Old" style="width: 20%;">[@lang_res k='create.portfolio.step.overView'/]</div>
+                <div class="createflownext" style="width: 6.5%;">></div>
+                <div class="Straegy_Define" style="width: 20%;">[@lang_res k='create.portfolio.step.allocationMethod'/]</div>
+                <div class="createflownext" style="width: 6.5%;">></div>
+                <div class="Release" style="width: 20%;">[@lang_res k='create.portfolio.step.release'/]</div>
+			</div>
+            <div class="stepThree-rows">
+                 <p class="builder-title">[@lang_res k='order.plan.rebalance.portfolioDetail'/]<span id="portfolio-Detail-ico" class="proposal-more-ico"></span></p>
+                 <div class="portfolio-builder-edit-wrap" id="portfolio-Detail">
+                     <div class="portfolio-edit-rows">
+                         <form id="overview-form" method="post">
+                             <div style="width:100%" class="portfolio-edit-rows-left">
+                                 <p class="portfolio-edit-rows-title">[@lang_res k='order.plan.rebalance.portfolioName'/]</p>
+                                 <input style="width:80%" class="portfolio-edit-name" id="txtPortfolioName" type="text" title="${(portfolioArena.portfolioName)?if_exists}" value="${(portfolioArena.portfolioName)?if_exists}" name="portfolioName" readonly>
+    							 <!-- portfolioId -->
+    							 <input id="hidPortfolioId" type="hidden" value="${(portfolioId)?if_exists}" name="portfolioId">
+    							 <input id="hidStrategyId" type="hidden" value="${(strategyId)?if_exists}" name="strategyId">
+    							 <input id="portfolioProduct" type="hidden" value="" name="portfolioProduct">
+                             </div>
+                             <div style="clear:both;">
+    	                        <div style="float:left;" class="portfolio-edit-rows-left">
+    	                            <p class="portfolio-edit-rows-title">[@lang_res k='order.plan.rebalance.CUR'/]</p>
+    	                            <div class="proposal_xiala" style="width: 100px;">
+    	                                <input id="hidDefCurrency" value="${defCurrency!}" type="hidden">
+    	                                <input id="portfolio-currency" style="width: 63px;" class="portfolio-currency" data-code="USD" type="text"  value="${defCurrency!}" readonly>
+    	                                <span class="icon_xiala portfolio-currency"></span>
+    	                                <ul id="currency-choice" style="width:99px;">
+    	                                </ul>
+    	                            </div>
+    	                            <!-- AIP 开关 -->
+					               	<div style="clear: both;">
+					                	<p  class="portfolio-edit-rows-title">
+					                		[@lang_res k='order.plan.rebalance.AIP.status'/]
+					                	</p>
+					                	<a id="aipState" 
+					                		class="aipstate_button [#if portfolioArena?? && portfolioArena.aipFlag?? && portfolioArena.aipFlag=='1']aipstate_button_active[/#if]" 
+					                		data-state="${(portfolioArena.aipFlag)!}" 
+											href="javascript:;">	 
+										</a>
+										<img style="margin-bottom: 20px;float: left;display:[#if portfolioArena?? && portfolioArena.aipFlag?? && portfolioArena.aipFlag=='1']block[#else]none[/#if]" class="portfolio-edit-img" id="aipChange" src="${base!}/res/images/strategy/strategy_edit_ico.png">
+					               	</div>
+    	                        </div>
+	    	                    <!-- Risk Level -->
+	                         	<div style="float:right;margin-right: 20px;">
+	                             	  <p class="allocation-chart-level" style="float:left;">[@lang_res k='order.plan.rebalance.riskLevel'/]</p>
+	                             	  <div style="float:left;">
+	                                 	 	<p><span id="risk-level-average" style="color:red;margin: 0px 10px 0 25px;">N/A</span><span style="color: #999999;">( [@lang_res k='order.plan.rebalance.riskLevel.weightedAverage'/] )</span></p>
+	                                     	<p><span id="risk-level-max" style="color:red; margin: 0 10px 0 25px;">N/A</span><span style="color: #999999;">( [@lang_res k='order.plan.rebalance.riskLevel.max'/] )</span></p>  
+	                             	  </div>
+	                         	</div>
+                             </div>
+    	                 </form>
+                     </div>
+                 </div>
+        	</div>
+        	<div class="stepThree-rows">
+    			 <p class="builder-title">[@lang_res k='create.portfolio.step.three.productList'/]<span class="proposal-more-ico"></span></p>
+                 <div class="portfolio-edit-button">
+                    <a id="btnAddFund" class="portfolio-button" href="javascript:;">[@lang_res k='order.plan.rebalance.quickAdd'/]</a>
+                 	<a id="btnReset" class="portfolio-button" href="javascript:;">[@lang_res k='order.plan.rebalance.reset'/]</a>
+                 </div>
+                 <div class="products-list-wrap">
+                	 <div id="div_strategyFund" style="display:none;"></div>
+                 </div>
+                 <div ng-app="proposalTable" ng-controller="proposalTableCtrl" class="products-list-wrap ranges-init" data-temp="100">
+                    <table class="portfolio-table">
+                        <tbody>
+                            <tr class="portfolio-table-th">
+                                <th class="portfolio_tables_fnames portfolio-tr-20">[@lang_res k='order.plan.rebalance.table.productName'/]</th>
+                                <th class="portfolio_tables_header portfolio-tr-10">[@lang_res k='order.plan.account.table.basic.cur'/]</th>
+                                <th class="portfolio_tables_header portfolio-tr-10">[@lang_res k='order.plan.rebalance.table.lastNav'/]</th>
+                                <th class="portfolio_tables_header portfolio-tr-25">[@lang_res k='order.plan.rebalance.table.weight'/]</th>
+                                <th class="portfolio_tables_header portfolio-tr-10"></th>
+                            </tr>
+                            <tr ng-repeat="items in fundInfoList" ng-if="items.fundId!=null" class="portfolio-table-data ng-cloak" id="{{items.fundId}}">
+                                <td class="portfolio_tables_fnames portfolio-tr-25">
+                                    <a class="portfolio_table_names" target="_blank" href="${base!}/front/fund/info/fundsdetail.do?id={{items.fundId}}" ng-bind="items.fundName"></a>
+                                    <div class="portfolio_tables_nameWord">
+                                        <p class="portfolio_tables_risk" ng-if="items.fundInfo.riskLevel !=''"><span class="td-riskLevel">{{items.fundInfo.riskLevel}}</span> [@lang_res k='order.plan.rebalance.table.risk'/]</p>
+                                        <p class="portfolio_tables_risk" ng-bind="items.fundType"></p>
+                                    </div>
+                                </td>
+                                <td class="portfolio-tdcenter portfolio-tr-10" ng-bind="items.fundCurrency"></td>
+                               	<td class="portfolio-tdcenter portfolio-tr-10">
+                                	<span  class="conversion-flag" ng-bind="items.fundInfo.lastNav|formatCurrency"></span> <span class="to-currency" ng-if="items.fundInfo.lastNav!=null" ng-bind="items.toCurrencyName"></span><br><p ng-if="items.dayReturn!=null">(<span ng-bind-html="items.dayReturn|currencyColor:'%':${displayColor!'1'}"></span>)</p>
+                               	</td>
+                                <td class="portfolio-tdcenter portfolio-slider portfolio-tr-25">
+                                    <div class="funds-slider-wrap" style="width: 250px;">
+                                    	<input data-fund="{{items.fundId}}" type="hidden" class="funds-single-slider" value="{{items.productWeight}},{{items.productWeight}}">
+                                    </div>
+                                   <input class="strategy_chart_tinput" type="text" value="{{items.productWeight}}" name=""><span class="strategy_chart_sign">%</span>
+                                </td>
+                                <td class="portfolio-tdcenter portfolio-tr-10"><img class="portfolio-del" src="${base}/res/images/ifa/garbage_ico.png"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- fundIds  -->
+               		<input type="hidden" id="ids" value="">
+               		<input type="hidden" id="selectFunds" value="{{fundIds}}">
+               		<button type="button" ng-click="popupWinReturn()" id="popupWinReturn" style="display:none;"></button>
+                    <div class="portfolio-table-inf ng-cloak">
+                        <p class="portfolio-table-cash" style="text-align: right;">[@lang_res k='order.plan.rebalance.table.total'/]</p>
+                        <p id="tableTotalWeight" style="padding-left: 8.5%;" class="portfolio-table-allocation"></p>
+                    </div>
+                    <table class="ng-cloak wmes-nodata-table" style="width: 50%;margin: 0 auto;text-align: center;">
+                        <tbody>
+                            <tr class="">
+	                            <td colspan="5">
+	                            	<div class="wmes-nodata-tips" style="display:block">
+		                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+		                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+		                       	    </div>
+	                            </td>
+	                        </tr>
+                        </tbody>
+                    </table>
+	             </div>
+	        </div>
+            <div class="stepThree-rows">
+                <p class="builder-title">[@lang_res k='order.plan.rebalance.analysisChart'/]<span id="analysis-chart-ico" class="proposal-more-ico"></span></p>
+                <div id="analysis-chart">
+	                <ul class="builder-tab" style="margin-bottom: 10px">
+	                    <li class="tab-active">[@lang_res k='order.plan.rebalance.performanceChart'/]<span></span></li>
+	                    <li>[@lang_res k='order.plan.rebalance.allocationMap'/]<span></span></li>
+	                </ul>
+	                <div class="builder-main-contents">
+	                    <div class="builder-chart" style="display:block">
+	                        <ul class="builder-chart-tab" style="margin-bottom: 40px">
+	                            <li class="tab-active chart-tab" id="builder-chart-aggregate">[@lang_res k='order.plan.rebalance.aggregate'/]</li>
+	                            <li class="chart-tab" id="builder-chart-separateness">[@lang_res k='order.plan.rebalance.individual'/]</li>
+	                        </ul>
+	                        <div class="builder-chart-wrap">
+	                            <ul class="builder-chart-date">
+	                                <li data-month="1M">[@lang_res k='order.plan.rebalance.1M'/]</li>
+	                                <li data-month="3M">[@lang_res k='order.plan.rebalance.3M'/]</li>
+	                                <li data-month="6M">[@lang_res k='order.plan.rebalance.6M'/]</li>
+	                                <li class="now" data-month="1Y">[@lang_res k='order.plan.rebalance.1Y'/]</li>
+	                                <li data-month="3Y">[@lang_res k='order.plan.rebalance.3Y'/]</li>
+	                                <li data-month="5Y">[@lang_res k='order.plan.rebalance.5Y'/]</li>
+	                                <li data-month="YTD">[@lang_res k='order.plan.rebalance.YTD'/]</li>
+	                            </ul>
+	                            <div class="builder-chart-one" id="builder-chart-one"></div>
+	                        </div> 
+	                        <div class="allocation-chart-title-0-emtpy" style="display:none;margin-top: -350px;margin-left: -90px">
+                             	<div class="wmes-nodata-tips" style="display:block">
+             						<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+             						<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+          						</div>
+                            </div>
+	                    </div>
+	                    <div class="allocation-map">
+	                        <div class="allocation-chart">
+	                            <div class="allocation-left-chart">
+	                                <p class="allocation-chart-title allocation-chart-title-1" style="display:none;margin-top: 50px;margin-left: -100px;">[@lang_res k='order.plan.rebalance.geoAllocation'/]</p>
+	                                <div id="allocation-chart-propose" style="margin:0 auto;margin-bottom: 50px;"></div>
+	                            </div>
+	                            <div class="allocation-right-chart">
+	                                <p class="allocation-chart-title allocation-chart-title-2" style="display:none;margin-top: 50px;margin-left: -150px;">[@lang_res k='order.plan.rebalance.sectorType'/]</p>
+	                               	<div id="allocation-chart-change"></div>
+	                            </div>
+	                        </div>
+	                        <div class="allocation-chart-title-1-emtpy" style="display:none;margin-top: -350px;margin-left: -90px">
+                             	<div class="wmes-nodata-tips" style="display:block">
+             						<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+             						<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+          						</div>
+                            </div>
+	                    </div>
+	                </div>
+                </div>
+            </div>
+            <div id="div_setrange" class="div_setrange"></div>
+            <div class="proposal-button-wrap">
+                <div class="proposal-button-wrap-left">
+               		<input type="hidden" id="ids" value="${fundIds!}">
+               		<button type="button" id="popupWinReturn" style="display:none;"></button>
+                </div>
+                <div style="margin-top:100px" class="proposal-button-wrap-right">
+                    <a id="btnNextTwo" class="proposal-button" href="javascript:void(0)">[@lang_res k='global.previous'/]</a>
+                    <a id="btnNextFour" class="proposal-button" href="javascript:void(0)">[@lang_res k='global.next'/]</a>
+                    <a id="btnSave" class="proposal-button" href="javascript:;">[@lang_res k='global.save'/]</a>
+                    <a id="btnCancel" class="proposal-button" style="background: #888888;" href="${base}/front/portfolio/arena/myList.do">[@lang_res k='global.cancel'/]</a>
+                </div>
+       		</div>
+        </div>
+    </div>
+    <input id="hidGeoAllocation" type="hidden" value="${(portfolioArena.geoAllocation)!}">
+    <input id="hidSector" type="hidden" value="${(portfolioArena.sector)!}">
+    <input id="hidFundType" type="hidden" value="${(fundType)!}">
+    <!-- 定投 -->
+    <div class="proposal-mask-wrap"></div>
+    <div class="proposal-mask-contents">
+    	<div style="width:90%" class="proposal-mask-mainer aipdetail-wrap" id="aip-info">
+    		<div class="wmes-close" id="proposal-mask-close"></div>
+    		<p class="wmes-wrap-title">[@lang_res k='create.portfolio.step.three.aip.title'/]</p>
+	    	<div class="order-setting-wrapper">
+	    		<div class="order-setting-left">
+	    			<ul class="order-setting-list">
+	    				<li class="order-setting-rows li-aip-exec-cycle">
+	    					<p class="order-setting-list-name"><span style="color: red;margin-right:5px">*</span>[@lang_res k='order.plan.rebalance.AIP.execCycle'/] :</p>
+	    					<p class="order-setting-cycle aip-exec-cycle [#if aip?? && aip.aipExecCycle?? && (aip.aipExecCycle == 'b'||aip.aipExecCycle == 'm')][#else]order-cycle-active[/#if]" data-day="w"><span>[@lang_res k='order.plan.rebalance.AIP.execCycle.w'/]</span></p>
+	    					<p class="order-setting-cycle aip-exec-cycle [#if aip?? && aip.aipExecCycle?? && aip.aipExecCycle == 'b']order-cycle-active[/#if]" data-day="b"><span>[@lang_res k='order.plan.rebalance.AIP.execCycle.b'/]</span></p>
+	    					<p class="order-setting-cycle aip-exec-cycle [#if aip?? && aip.aipExecCycle?? && aip.aipExecCycle == 'm']order-cycle-active[/#if]" data-day="m"><span>[@lang_res k='order.plan.rebalance.AIP.execCycle.m'/]</span></p>
+	    				</li>
+	    				<li class="order-setting-rows">
+	    					<p class="order-setting-list-name">[@lang_res k='order.plan.rebalance.AIP.timeDistance'/] :</p>
+	    					<input id="hidAipTimeDistance" class="order-money-input" value="${(aip.aipTimeDistance)!}" data-cycle="" type="hidden" name="aipTimeDistance">
+	    					<select id="selChargeDay" class="order-setting-cdate" style="width:70px;border-radius: 4px;">
+	    						[#if aip?? && aip.aipExecCycle?? && aip.aipExecCycle == 'm']
+	    							<option value="${(aip.aipTimeDistance)!}">${(aip.aipTimeDistance)!}</option>
+	    						[#else]
+	    							<option value="2" [#if aip?? && aip.aipTimeDistance?? && aip.aipTimeDistance == 2]selected="selected"[/#if]>[@lang_res k='create.portfolio.step.three.mon'/]</option>
+		    						<option value="3" [#if aip?? && aip.aipTimeDistance?? && aip.aipTimeDistance == 3]selected="selected"[/#if]>[@lang_res k='create.portfolio.step.three.tue'/]</option>
+		    						<option value="4" [#if aip?? && aip.aipTimeDistance?? && aip.aipTimeDistance == 4]selected="selected"[/#if]>[@lang_res k='create.portfolio.step.three.wed'/]</option>	
+		    						<option value="5" [#if aip?? && aip.aipTimeDistance?? && aip.aipTimeDistance == 5]selected="selected"[/#if]>[@lang_res k='create.portfolio.step.three.thu'/]</option>
+		    						<option value="6" [#if aip?? && aip.aipTimeDistance?? && aip.aipTimeDistance == 6]selected="selected"[/#if]>[@lang_res k='create.portfolio.step.three.fri'/]</option>	
+	    						[/#if]
+	    					</select>
+	    					<p class="order-setting-last-word">
+	    						<span style="color: red;margin-right:5px">*</span>
+	    						[@lang_res k='order.plan.rebalance.AIP.amount'/] :
+	    						<input id="txtAipAmount" style="line-height: normal;float:none;width:100px;border-radius: 4px;" class="order-money-input conversion-flag" value="[@num_fmt s='${(aip.aipAmount)?if_exists}'/]" type="text" name=""/>
+	    						<span class="to-currency"></span>
+	    					</p>
+	    				</li>
+	    				<li class="order-setting-rows">
+	    					<p style="width: 180px;" class="order-setting-list-name aip-theNextRepaymentDate">
+	    					[@lang_res k='order.plan.rebalance.AIP.theNextRepaymentDate'/] :</p>
+	    					<span class="aip-detail-next-charge-date">[#if aip?? && aip.aipInitTime??]${(aip.aipInitTime)?string('yyyy-MM-dd')}[/#if]</span>
+	    				</li>
+	    			</ul>
+	    		</div>
+	    		<div class="order-setting-right">
+	    			<ul class="order-setting-list">
+	    				<li class="order-setting-rows aip-end-type">
+	    					<p class="order-setting-list-name">[@lang_res k='order.plan.rebalance.AIP.expirationCondition'/] :</p>
+	    					<p data-value="1" class="order-setting-cycle order-setting-end [#if aip?? && aip.aipEndType?? && (aip.aipEndType == '2'||aip.aipEndType == '3')][#else]order-cycle-active[/#if]"><span>[@lang_res k='order.plan.rebalance.AIP.endDate'/]</span></p>
+	    					<p data-value="2" class="order-setting-cycle order-setting-end [#if aip?? && aip.aipEndType?? && aip.aipEndType == '2']order-cycle-active[/#if]"><span>[@lang_res k='order.plan.rebalance.AIP.endCount'/]</span></p>
+	    					<p data-value="3" class="order-setting-cycle order-setting-end [#if aip?? && aip.aipEndType?? && aip.aipEndType == '3']order-cycle-active[/#if]"><span>[@lang_res k='order.plan.rebalance.AIP.endTotalAmont'/]</span></p>
+	    				</li>
+	    			</ul>
+	    			<div class="order-choice-list">
+	    				<div class="order-choice-date" style="display:[#if aip?? && aip.aipEndType?? && (aip.aipEndType == '2'||aip.aipEndType == '3')]none[#else]block[/#if];">
+	        				<p class="order-choice-title">
+	        				<span style="color: red;margin-right:5px">*</span>
+	        				[@lang_res k='order.plan.rebalance.AIP.endDate.input'/]:
+	        				</p>
+	        				<input id='hidAipEndDate' type="hidden" value="[#if aip?? && aip.aipEndDate??]${(aip.aipEndDate)?string('yyyy-MM-dd')}[/#if]">
+                            <input id='txtAipEndDate' readonly="" type="text" class="laydate-icon" style="width: 180px;height: 22px;"
+                                    name="txtAipEndDate" value="[#if aip?? &&  aip.aipEndDate??]${(aip.aipEndDate)?string('yyyy-MM-dd')}[/#if]">
+	        			</div>  
+	        			<div class="order-choice-date" style="display:[#if aip?? && aip.aipEndType?? && aip.aipEndType == '2']block[#else]none[/#if]">
+	        				<p class="order-choice-title">
+	        				<span style="color: red;margin-right:5px">*</span>
+	        				[@lang_res k='order.plan.rebalance.AIP.endCount.input'/]:
+	        				</p>
+	        				<input id="order-number-choice" type="" value="${(aip.aipEndCount)!}" name="" onKeyUp="this.value=this.value.replace(/[^\.\d]/g,'');this.value=this.value.replace('.','');">
+	        				<div class="order-number-sroll">
+	        					<a class="order-number-top" href="javascript:;"></a>
+	        					<a class="order-number-bottom" href="javascript:;"></a>
+	        				</div>
+	        			</div>
+	        			<div class="order-choice-date" style="display:[#if aip?? && aip.aipEndType?? && aip.aipEndType == '3']block[#else]none[/#if]">
+	        				<p class="order-choice-title">
+	        				<span style="color: red;margin-right:5px">*</span>
+	        				[@lang_res k='order.plan.rebalance.AIP.endTotalAmont.input'/]:
+	        				</p>
+	        				<input id="order-money-choice" class="conversion-flag" value="[@num_fmt s='${(aip.aipEndTotalAmount)!}'/]">
+	        				<p class="order-choice-title to-currency" style="color:#000;margin-left:10px;float:right">USD</p>
+	        			</div>
+	    			</div>
+	    		</div>
+	    	</div>		
+    		<div class="proposal-mask-button-wrap">
+    			<a id="btnSaveAip" class="proposal-mask-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+    			<a class="proposal-mask-button-cancel" href="javascript:;">[@lang_res k='global.cancel'/]</a>	
+    		</div>
+		</div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var globalProp = [@load_prop k='global'/]; 
+	 var prop = [@load_prop k='create.portfolio'/];
+	 var props = [@load_prop k=''/];
+     seajs.use('${base}/res/web/portfolio/createPortfolio/createPortfolioThree.js');
+</script>

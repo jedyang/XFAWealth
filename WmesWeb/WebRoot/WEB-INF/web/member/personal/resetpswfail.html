@@ -1,0 +1,51 @@
+[#include "../../inc/head_no_menu.html"/]
+<link rel="stylesheet" href="${base}/res/css/member.css">
+<link rel="stylesheet" href="${base}/res/third/formValidator/css/validationEngine.jquery.css"/>
+<style>
+.registrationcon{background:#fff;display:none;position:absolute;left:20%;top:20%;width:60%;border-radius:15px;border:1px solid #999;padding:40px 10px 40px 10px;text-align: left;}
+</style>
+[#include "../../inc/regist_head.html"/]  
+<div class="wmes-content wmes-content-position" style="margin-left:0px;">
+    <div class="regist-bg">
+    <div class="member-contents">
+            <p class="wmes-wrap-title">[@lang_res k='member.resetPassword.title'/]</p>
+            <div class="member-step-wrap">
+                  <div class="member-step member-step-old">[@lang_res k='member.resetPassword.1'/]</div>
+                  <div class="member-step-ico">></div>
+                  <div class="member-step member-step-old">[@lang_res k='member.resetPassword.2'/]</div>
+                  <div class="member-step-ico">></div>
+                  <div class="member-step member-step-active">[@lang_res k='member.resetPassword.3'/]</div>
+            </div>
+        
+        	<div class="register_text">
+            	hi:<span class="font_blue" id="resetemail">123</span>
+                <br><br>
+                [@lang_res k='member.resetPassword.fail'/]
+                <br><br>
+                <div>
+                <font color="red" style="font-style:italic;margin-left:100px;">${errMsg!""}</font>
+                </div>
+                <br><br>
+                <a href="${base}/index.do" class="font_blue">[@lang_res k='member.resetPassword.backToHome'/]</a>          
+            </div>
+        	
+        	<div class="btn_next_div2">
+            	<a class="btn_next" href="${base}/front/viewLogin.do">[@lang_res k='global.home'/]</a>
+            </div>
+        </div>            
+    </div>
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+    function GetQueryString(name)
+    {
+         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+         var r = decodeURI(window.location.search).substr(1).match(reg);
+         //原始地址没有参数，返回all
+         if(r!=null)return  unescape(r[2]); return "";
+    }
+    var emailContent = document.getElementById("resetemail");
+
+        emailContent.innerHTML  = GetQueryString('email');
+
+</script>

@@ -1,0 +1,69 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/community.css">
+<link rel="stylesheet" href="${base}/res/css/swiper.css">
+<style>
+.myzone-notice-list{width:100%;}
+.myzone-notice-list li{margin-bottom:15px;border-bottom:1px dashed #e3e5e6;padding-bottom:15px;}
+.dialog-notice{
+    position: fixed;
+    top: 0px;
+    z-index: 999999;
+    padding-left: 100px;
+    margin-left: 70px;
+}
+.selectSector-title-sub{
+	float:left;
+	font-size: 14px;
+    padding-bottom: 15px;
+    color:#b7b5b5;
+    margin-left:25px;
+}
+.notice-content{
+	clear: both;
+    margin: 0 2%;
+}
+.dispaly-active{
+	height: 100%;
+ 	width: calc(100% - 110px);
+}
+</style>
+<div class="wmes-content">
+	<div class="wmes-notice-list-con">
+		<div class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>Forms Download</div>
+		<ul class="myzone-notice-list myzone-notice-list-amend">
+			<li>
+				<span class="formsdownload"></span>
+				<p class="notice-preview" style="line-height:32px;"><a target="_self" href="${base!}/res/images/1-fc09947b6d.jpg">Account application forms</a></p>
+				<i>admin</i>
+				<b>2017-04-01 19:00:49</b>
+			</li>
+			<li>
+				<span class="formsdownload"></span>
+				<p class="notice-preview" style="line-height:32px;"><a target="_self" href="${base!}/res/images/1-fc09947b6d.jpg">Dividend Forms</a></p>
+				<i>admin</i>
+				<b>2017-03-28 19:00:49</b>
+			</li>
+			<li>
+				<span class="formsdownload"></span>
+				<p class="notice-preview" style="line-height:32px;"><a target="_self" href="${base!}/res/images/1-fc09947b6d.jpg">Market research forms</a></p>
+				<i>admin</i>
+				<b>2017-03-28 19:00:49</b>
+			</li>
+			<li>
+				<span class="formsdownload"></span>
+				<p class="notice-preview" style="line-height:32px;"><a target="_self" href="${base!}/res/images/1-fc09947b6d.jpg">Transaction application forms</a></p>
+				<i>admin</i>
+				<b>2017-03-22 19:00:49</b>
+			</li>
+		</ul>
+		<div class="wmes-page">
+        	<ul class="wmes_list_paging"></ul>
+        </div>
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+var props = [@load_prop k=''/];
+seajs.use('${base}/res/web/notice/previewNotices.js');
+</script>

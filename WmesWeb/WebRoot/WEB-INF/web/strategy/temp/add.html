@@ -1,0 +1,117 @@
+[#include "../../inc/head.html"/]
+ <link rel="stylesheet" href="${base}/res/css/openaccount.css">
+ <link rel="stylesheet" href="${base}/res/css/Funds.css">
+ <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+ <link rel="stylesheet" href="${base}/res/css/ifa.css"> 
+<div class="blue_background">
+    <div class="white_background funds_background">   
+		<div class="zhongxin_right">
+            <div class="OpenAccount_big_title">
+                <h2>[@lang_res k='strategy.info.form.title'/]</h2>
+            </div>
+            <div class="insight-left-content">
+                <form class="form-horizontal">
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>[@lang_res k='strategy.info.form.strategyName'/]</p>
+                            <input class="insight-input-title" type="text" id="txtStrategyName"  value="${(strategyVO.strategyName)?if_exists}" >
+                    </div>      
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>[@lang_res  k='strategy.info.form.goal'/]</p>
+                            <textarea class="insight-input-title" id="txtInvestmentGoal" rows="2">${(strategyVO.investmentGoal)?if_exists}</textarea>
+                    </div>
+                    <div class="insight-row">
+                            <p class="insight-row-title">[@lang_res k='strategy.info.form.investor'/]</p>
+                            <textarea class="insight-input-title"  id="txtInvestorSuitability" rows="2">${(strategyVO.investorSuitability)?if_exists}</textarea>
+                        </div>
+                    </div>
+
+                    <a href="${base}/front/strategy/add.do" id="btnAdd" class="btn_middle" style="width:180px;">Add product</a>
+                    <div class="gary_title">Product List</div>
+                    <div class="proeuct_list" style="padding:0px 0px 20px 0px;">
+                        <table id="tableList" class="account_list_table">
+                            <tbody>
+                                <tr class="account_list_th">
+                                    <th>Fund Name</th>
+                                    <th>Risk Rating</th>
+                                    <th>CUR</th>
+                                    <th>ACC./INC.</th>
+                                    <th>ISIN</th>
+                                    <th>Cum. Per. 1 Mon</th>
+                                    <th>Cum. Per. 3 Mon</th>
+                                    <th>Cum. Per. 6 Mon</th>
+                                    <th>CUR</th>
+                                    <th>YTD(%)</th>
+                                    <th>Actions</th>
+                                </tr>
+                                [#if dataList?exists && dataList?size gt 0 ]
+                                [#list dataList as x]
+                                    
+                                <tr class="account_list_td">
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                [/#list]
+                                [/#if]
+                            </tbody>
+                       </table>
+                    </div>
+                    <div class="gary_title">Additional setting</div>
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>View permit setting:</p>
+                            <input type="radio" name="permit">All
+                            <input type="radio" name="permit">Let me specify
+                            <a href="#">Advance setting</a>
+                    </div>      
+                    <div class="insight-row">
+                        <input type="checkbox" name="permit2">My Client
+                        <input type="checkbox" name="permit2">My Prospect
+                        <input type="checkbox" name="permit2">My Buddy
+                        <input type="checkbox" name="permit2">My Colleague
+                    </div>      
+                    
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>Pust to setting:</p>
+                            <input type="radio" name="permit">Only me
+                            <input type="radio" name="permit">Let me specify
+                            <a href="#">Advance setting</a>
+                    </div>      
+                    <div class="insight-row">
+                        <input type="checkbox" name="permit2">My Client
+                        <input type="checkbox" name="permit2">My Prospect
+                        <input type="checkbox" name="permit2">My Buddy
+                        <input type="checkbox" name="permit2">My Colleague
+                    </div>      
+
+                </form>
+                <div class="btn_middle_div">
+                    <a href="#" id="btnSave" class="btn_middle">[@lang_res k='global.save'/]</a>
+                    <a href="#" id="btnPub" class="btn_middle">Publish</a>
+                    <a href="#" id="btnClose" class="btn_middle">[@lang_res k='global.cancel'/]</a>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+[#include "../../inc/foot.html"/] 

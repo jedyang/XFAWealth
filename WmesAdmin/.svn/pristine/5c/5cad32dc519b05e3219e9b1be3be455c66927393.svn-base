@@ -1,0 +1,94 @@
+package com.fsll.wmes.common;
+
+/**
+ * 模块常量参数配置类
+ * @author mqzou
+ * @date 2016-07-19
+ */
+public class CommonConstantsWeb {
+
+	public static final int MEMBERBASE_MEMBERTYPE_SYSTEM=0;//平台级用户
+	public static final int MEMBERBASE_MEMBERTYPE_INVESTOR=1;//投资人
+	public static final int MEMBERBASE_MEMBERTYPE_IFA=2;//IFA
+	public static final int MEMBERBASE_MEMBERTYPE_DISTRIBUTOR=3;//代理商
+	
+	public static final int MEMBERBASE_SUB_MEMBERTYPE_INDIVIDUAL=11;//独立投资账户
+	public static final int MEMBERBASE_SUB_MEMBERTYPE_COPORATE=12;//公司投资账户
+	public static final int MEMBERBASE_SUB_MEMBERTYPE_FI=13;//FI账户
+	public static final int MEMBERBASE_SUB_MEMBERTYPE_IFA=21;//IFA个人
+	public static final int MEMBERBASE_SUB_MEMBERTYPE_IFAFIRM=22;//ifafirm
+	public static final int MEMBERBASE_SUB_MEMBERTYPE_DISTRIBUTOR=31;//代理商
+	
+	public static final String MEMBERADMIN_TYPE_SYSTEM="0";//平台级用户
+	public static final String MEMBERADMIN_TYPE_IFA="1";//IFA
+	public static final String MEMBERADMIN_TYPE_DISTRIBUTOR="2";//代理商
+	
+	//定义查看权限表的module type
+	public static final String WEB_VIEW_MODULE_INSIGHT="insight";//观点
+	public static final String WEB_VIEW_MODULE_NEWS="news";//新闻
+	public static final String WEB_VIEW_MODULE_STRATEGY="strategy";//策略
+	public static final String WEB_VIEW_MODULE_PORTFOLIO_INFO="portfolio_info";//组合
+	public static final String WEB_VIEW_MODULE_PORTFOLIO_ARENA="portfolio_arena";//组合
+	public static final String WEB_VIEW_MODULE_LIVE_FINO="live_info";//直播
+	
+	//定义推送权限明细表的type
+	public static final String WEB_VIEW_DETAIL_TYPE_CLIENT="Client";
+	public static final String WEB_VIEW_DETAIL_TYPE_PROSPECT="Prospect";
+	public static final String WEB_VIEW_DETAIL_TYPE_BUDDY="Buddy";
+	public static final String WEB_VIEW_DETAIL_TYPE_TEAM="Team";
+	public static final String WEB_VIEW_DETAIL_TYPE_COLLEAGUE="Colleague";
+
+	//定义推送权限表的module type
+	public static final String WEB_PUSH_MODULE_INSIGHT="insight";//观点
+	public static final String WEB_PUSH_MODULE_NEWS="news";//新闻
+	public static final String WEB_PUSH_MODULE_STRATEGY="strategy";//策略
+	public static final String WEB_PUSH_MODULE_PORTFOLIO_INFO="portfolio_info";//组合
+	public static final String WEB_PUSH_MODULE_PORTFOLIO_ARENA="portfolio_arena";//组合
+	public static final String WEB_PUSH_MODULE_LIVE_FINO="live_info";//直播
+	
+	//定义推送权限明细表的type
+	public static final String WEB_PUSH_DETAIL_TYPE_CLIENT="Client";
+	public static final String WEB_PUSH_DETAIL_TYPE_PROSPECT="Prospect";
+	public static final String WEB_PUSH_DETAIL_TYPE_BUDDY="Buddy";
+	public static final String WEB_PUSH_DETAIL_TYPE_TEAM="Team";
+	public static final String WEB_PUSH_DETAIL_TYPE_COLLEAGUE="Colleague";
+
+	//定义产品信息类型product_info.type ：fund基金,stock股票,bond债券,futures期货
+	public static final String WEB_PRODUCT_TYPE_FUND="fund";
+	public static final String WEB_PRODUCT_TYPE_STOCK="stock";
+	public static final String WEB_PRODUCT_TYPE_BOND="bond";
+	public static final String WEB_PRODUCT_TYPE_FUTURES="futures";
+	
+	//分配方法,G:Geographical,S:Sector,F:Funds Type
+	public static final String WEB_ALLOCATION_TYPE_GEOGRAPHICAL="G";
+	public static final String WEB_ALLOCATION_TYPE_SECTOR="S";
+	public static final String WEB_ALLOCATION_TYPE_FUNDTYPE="F";
+
+	//基础参数类型key
+	public static final String SYS_PARM_TYPE_GEOGRAPHICAL="region";//片区划分
+	public static final String SYS_PARM_TYPE_SECTOR="fund_sector";//主题分类
+	public static final String SYS_PARM_TYPE_FUNDTYPE="fund_type";//基金类型
+	public static final String SYS_PARM_TYPE_PRODUCT_ALLOCATION="product_allocation";//产品分配
+	
+	public static final String SYS_PARM_TYPE_TASK="task_type";//任务类型
+	public static final String SYS_PARM_TYPE_HOBBY="hobby_type";//兴趣爱好
+	public static final String SYS_PARM_TYPE_INVEST_FIELD="invest_field";//投资领域
+	public static final String SYS_PARM_TYPE_SECTION="section_type";//版块类型
+	public static final String SYS_PARM_TYPE_EXPERTISE="expertise_type";//擅长领域
+
+	//WEB_READ_TO_DO 消息类型，1：交易相关消息，2：一般性通知，3：告警、提醒消息
+	public static final String WEB_READ_MESSAGE_TYPE_EXCHANGE="1";
+	public static final String WEB_READ_MESSAGE_TYPE_NORMAL="2";
+	public static final String WEB_READ_MESSAGE_TYPE_WARNIGN="3";
+
+	//WEB_READ_TO_DO 发送消息模块：insight关点,news新闻
+	public static final String WEB_READ_MODULE_INSIGHT="insight";
+	public static final String WEB_READ_MODULE_NEWS="news";
+	
+	//WEB_TASK_LIST 发送任务模块,K:KYC,P:Proposal,A:Appointment,M:Meeting
+	public static final String WEB_TASK_MODULE_KYC="K";
+	public static final String WEB_TASK_MODULE_PROPOSAL="P";
+	public static final String WEB_TASK_MODULE_APPOINTMENT="A";
+	public static final String WEB_TASK_MODULE_MEETING="M";
+	
+}

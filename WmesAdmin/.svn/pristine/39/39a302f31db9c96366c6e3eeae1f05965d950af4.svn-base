@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择ifa</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="row">
+       <div class="col-md-12">
+           <form class="form-inline" style="display:block;">
+               <div class="funds_keyword_search">
+                <div class="row pd10">
+                    <div class="col-md-4">
+                    	<label for="s-1">
+							[@lang_res k='member.list.keyword'/]
+						</label>
+						<input id='txtkeyword' type="text" class="form-control" id="s-1" placeholder="登入账号、昵称、姓名">
+                    </div>
+                    <div class="col-md-2">
+						<button type="button" class="btn btn-primary" id="btnSearch">
+							 [@lang_res k='global.query'/]
+						</button>
+					</div>
+                </div>
+               </div>
+               <div class="clear"></div>
+               <div>
+                   <table id="ifaselectlist" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                       <tbody>
+                       <tr>
+                       	   <th class="table-head">[@lang_res k='member.info.loginCode'/]</th>
+		              	   <th class="table-head">[@lang_res k='member.info.firstName'/]</th>
+		              	   <th class="table-head">[@lang_res k='member.info.lastName'/]</th>
+                           <th class="table-head">[@lang_res k='member.info.nameChn'/]</th>
+                           <th class="table-head">[@lang_res k='member.info.companyName'/]</th>
+                           <th class="table-head">[@lang_res k='ifafirm.ifa.createTime'/]</th>
+                        </tr>                                
+                       </tbody>
+                   </table>
+	        	   <nav  class="pull-right">
+		              <!-- 分页 -->
+		             <ul id='team_select_pagination' class="pagination pull-right">
+			   		 </ul>
+		          </nav>
+      		  	  <div class="clear"></div>                      
+             </div>
+         </form>               
+      </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+
+<script type="text/javascript">
+$(function() {
+	//点击选择
+	var selectedIds = "";
+	var selectedNames = "";
+	//查询
+	$("#btnSearch").on("click",function(){
+		bindIfaList(0);
+	});
+	//选择
+	$(document).on("click", ".seluser", function() { 
+		var name = $(this).attr("selname");
+		var id = $(this).attr("selid");
+		selectifa(name,id);
+	});
+	//删除选择
+	$(document).on("click", ".badge", function() { 
+		selectedIds = "";
+		selectedNames = "";
+		$(this).parent().remove();
+	});
+	
+	bindIfaList(0);
+	//根据公司与团队ID获取所有的成员数据，做成分页
+	function bindIfaList(pageid) {
+		var keyword = $("#txtkeyword").val();
+		$("#ifaselectlist tbody tr:gt(0)").empty();
+		$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/ifa/ifalist.do?datestr="+ new Date().getTime(),
+				data : {"keyword":keyword,"page":pageid + 1,"rows":6},
+				success : function(json) {
+					var total = json.total;
+					var table = json.rows;
+					var html = "";
+					$.each(table, function(i, n) {
+						var loginCode = n.loginCode;
+						var nameChn = n.nameChn; 
+						var ifaid = n.id; 
+						var firstName = n.firstName; 
+						var lastName = n.lastName; 
+						var companyIfafirm = n.companyIfafirm;
+						var createTime = n.createTime; 
+					    html += "<tr data-id='"+ifaid+"'>"+
+						    "	<td><a class='seluser' selname='"+loginCode+"' selid='"+ifaid+"' href='javascript:;'>"+loginCode+"</a></td>"+
+						    "	<td>"+firstName+"</td>"+
+						    "	<td>"+lastName+"</td>"+
+						    "	<td>"+nameChn+"</td>"+
+						    "	<td>"+companyIfafirm+"</td>"+
+						    "	<td>"+createTime+"</td>"+
+						    "</tr>";
+	               	});
+					$("#ifaselectlist").append(html); 
+					$("#team_select_pagination").pagination(total, {
+						callback : pageselectCallback,
+						numDetail : "",
+						items_per_page : 6,
+						num_display_entries : 4,
+						current_page : pageid,
+						num_edge_entries : 2
+					});
+				}
+			});
+		//分页回调
+		function pageselectCallback(page_id, jq) {
+			bindIfaList(page_id);
+		}
+	}
+	
+	function selectifa(name,id) { 
+		//是否单选
+		var isSingle = "${(isSingle)?if_exists}";
+		if(isSingle == "1"){
+			selectedIds = id;
+			selectedNames = name;
+		}else{
+			if(selectedIds == ""){
+				selectedIds = id;
+				selectedNames = name;
+			}
+			else{
+				selectedIds = selectedIds+","+id;
+				selectedNames = selectedNames+","+name;
+			}
+		}
+		$("#ifa_selected").remove();
+		$(".bootstrap-dialog-footer-buttons").prepend('<button id="ifa_selected" ifaNames="'+selectedNames+'" ifaIds="'+selectedIds+'" class="btn btn-default " type="button">'+selectedNames+' <span class="badge">X</span></button>');
+	}
+});
+</script>
+</body>
+</html>

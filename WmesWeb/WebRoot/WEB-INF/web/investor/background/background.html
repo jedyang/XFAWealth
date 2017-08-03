@@ -1,0 +1,340 @@
+[#include "../../inc/head.html"/]
+	<link rel="stylesheet" href="${base}/res/third/bootstrap/css/bootstrap.css">  
+	<script src="${base}/res/js/jquery.min.js" type="text/javascript"></script>
+	<script src="${base}/res/third/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+	<script type="text/javascript">
+    $(function() {
+    	$('#myTab a:first').tab('show')
+    	
+    	$('#btn-add-background').on('click',showBackgroundModal);
+    	$('#btn-add-training').on('click',showTrainingModal);
+    	
+    	function showBackgroundModal(){
+    		$('#btn-save').show();
+			$('#form-backgrond input').removeAttr("readonly").removeAttr("disabled");
+			$('#form-backgrond textarea').removeAttr("readonly").removeAttr("disabled");
+			$('#form-backgrond select').removeAttr("readonly").removeAttr("disabled");
+			$('#form-backgrond select').removeAttr("readonly").removeAttr("disabled");
+    		$('#myModal').modal('show');
+    	}
+    	
+    	function showTrainingModal(){
+    	$('#trainingModal').modal('show');
+    	}
+    	
+    	$('#btn-save').on('click',save);
+    	$('#btn-training-save').on('click',trainingSave);
+    	
+    	function trainingSave(){
+    	//序列化表单数据
+    		var serializeValue = $("#form-training").serialize();
+    		console.log(serializeValue);
+    		//inlineRadioOptions=Reuters&inlineRadioOptions=Manual&result=11111111&comment=22222222222222
+    		var data =  "langCode=sc&" + serializeValue ;
+			$.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : base_root + "/front/investor/saveInvestorTraining.do?datestr="+ new Date().getTime(),
+					data : data,
+					beforeSend: function () {},
+                    complete: function () {},
+					success : function(json) {
+						console.log(json);
+						var obj = jQuery.parseJSON(json); 
+						if(obj.result==true){
+							window.location.href = window.location.href;
+							$('#myModal').modal('hide');
+						}
+					}
+				});
+    	}
+    	
+    	function save(){
+    		//序列化表单数据
+    		var serializeValue = $("#form-backgrond").serialize();
+    		console.log(serializeValue);
+    		//inlineRadioOptions=Reuters&inlineRadioOptions=Manual&result=11111111&comment=22222222222222
+    		var data =  "langCode=sc&" + serializeValue ;
+			$.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : base_root + "/front/investor/saveInvestorBackground.do?datestr="+ new Date().getTime(),
+					data : data,
+					beforeSend: function () {},
+                    complete: function () {},
+					success : function(json) {
+						console.log(json);
+						var obj = jQuery.parseJSON(json); 
+						if(obj.result==true){
+							//window.location.href = window.location.href;
+							$('#myModal').modal('hide');
+						}
+					}
+				});
+				
+    		
+    	}
+    	
+    	//btn-background-view
+    	$("body").on('click', '.btn-background-view', '', function () {
+			var bid = $(this).attr('bid');
+			if(bid!=''){
+				//获取信息
+				$.ajax({
+					type : 'get',
+					datatype : 'json',
+					url : base_root + "/front/investor/getInvestorBackground.do?datestr="+ new Date().getTime(),
+					data : {'id':bid},
+					beforeSend: function () {},
+                    complete: function () {},
+					success : function(json) {
+						console.log(json);
+						var obj = jQuery.parseJSON(json); 
+						$('#ddlStatus').val(obj.status);
+						$('#txtResult').val(obj.result);
+						$('#txtComment').val(obj.comment);
+						$('#hidIbId').val(obj.id);
+						$('#btn-save').hide();
+						$('#form-backgrond input').attr("readonly","readonly").attr("disabled","disabled");
+						$('#form-backgrond textarea').attr("readonly","readonly").attr("disabled","disabled");
+						$('#form-backgrond select').attr("readonly","readonly").attr("disabled","disabled");
+						$('#form-backgrond select').attr("readonly","readonly").attr("disabled","disabled");
+						$('#myModal').modal('show');
+						
+					}
+				});
+			}
+		});
+		
+		//btn-background-edit
+    	$("body").on('click', '.btn-background-edit', '', function () {
+			var bid = $(this).attr('bid');
+			if(bid!=''){
+				//获取信息
+				$.ajax({
+					type : 'get',
+					datatype : 'json',
+					url : base_root + "/front/investor/getInvestorBackground.do?datestr="+ new Date().getTime(),
+					data : {'id':bid},
+					beforeSend: function () {},
+                    complete: function () {},
+					success : function(json) {
+						console.log(json);
+						var obj = jQuery.parseJSON(json); 
+						$('#ddlStatus').val(obj.status);
+						$('#txtResult').val(obj.result);
+						$('#txtComment').val(obj.comment);
+						$('#hidIbId').val(obj.id);
+						$('#btn-save').show();
+						$('#form-backgrond input').removeAttr("readonly").removeAttr("disabled");
+						$('#form-backgrond textarea').removeAttr("readonly").removeAttr("disabled");
+						$('#form-backgrond select').removeAttr("readonly").removeAttr("disabled");
+						$('#form-backgrond select').removeAttr("readonly").removeAttr("disabled");
+						$('#myModal').modal('show');
+						
+					}
+				});
+			}
+		});
+		
+		//btn-background-del
+    	$("body").on('click', '.btn-background-del', '', function () {
+			var bid = $(this).attr('bid');
+			if(bid!=''){
+				//获取信息
+				$.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : base_root + "/front/investor/delInvestorBackground.do?datestr="+ new Date().getTime(),
+					data : {'id':bid},
+					beforeSend: function () {},
+                    complete: function () {},
+					success : function(json) {
+						console.log(json);
+						var obj = jQuery.parseJSON(json); 
+						if(obj.result){
+							window.location.href = window.location.href;
+						}
+					}
+				});
+			}
+		});
+    });
+	</script>
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+
+ <div style="margin-top:85px; margin-left:5px; margin-right:5px; margin-bottom:10px;">
+ <ul class="nav nav-tabs" role="tablist" id="myTab">
+  <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab">Background Review</a></li>
+  <li role="presentation"><a href="#profile" role="tab" data-toggle="tab">Training Record</a></li>
+</ul>
+
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="home">
+  <p></p>
+	 <button id="btn-add-background" type="button" class="btn btn-primary">Add</button>
+<table class="table table-hover list_data table-striped" id="datalist" >
+                <thead>
+                    <tr >
+                    <th  style="width:15%;">Review time</th>
+                    <th  style="width:20%;text-align:center;">Data source</th>
+                    <th  style="width:20%;">Result</th>
+                    <th style="width:20%;">Officer's comment</th>
+                    <th style="width:10%;">Status</th>
+                    <th style="">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+				[#if blist?exists && blist?size gt 0]
+                 [#list blist as each]
+                 <tr>
+                 	<td>${each.reviewTime!}</td>
+                 	<td>${each.sourceFrom!}</td>
+                 	<td>${each.result!}</td>
+                 	<td>${each.comment!}</td>
+                 	<td>${each.status!}</td>
+                 	<td>
+                 		<button bid="${each.id!}" type="button" class="btn btn-primary btn-sm btn-background-view">View</button>
+                 		<button bid="${each.id!}" type="button" class="btn btn-info btn-sm btn-background-edit">Edit</button>
+                 		<button bid="${each.id!}" type="button" class="btn btn-danger btn-sm btn-background-del">Del</button>
+                 	</td>
+                 </tr>
+                 [/#list]
+                 [/#if]
+              </tbody>
+              </table>
+</div>
+  <div role="tabpanel" class="tab-pane" id="profile">
+	<p></p>
+	 <button id="btn-add-training" type="button" class="btn btn-primary">Add</button>
+<table class="table table-hover list_data table-striped" id="datalist" >
+                <thead>
+                    <tr >
+                    <th  style="width:25%;">Training time</th>
+                    <th  style="width:30%;text-align:center;">Training name</th>
+                    <th  style="width:30%;">Training organization</th>
+                    <th style="">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+				[#if trainingList?exists && trainingList?size gt 0]
+                 [#list trainingList as each]
+                 <tr>
+                 	<td>${each.startTime!} ~ ${each.endTime!}</td>
+                 	<td>${each.name!}</td>
+                 	<td>${each.organization!}</td>
+                 	<td>
+                 		<button type="button" class="btn btn-primary btn-sm">View</button>
+                 		<button type="button" class="btn btn-info btn-sm">Edit</button>
+                 		<button type="button" class="btn btn-danger btn-sm">Del</button>
+                 	</td>
+                 </tr>
+                 [/#list]
+                 [/#if]
+              </tbody>
+              </table>
+</div>
+</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Background Review</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" id="form-backgrond">
+              <div class="form-group">
+        	  	<label for="exampleInputEmail1">Data sources:</label>
+        	  	<div class="checkbox" style="margin-top:0px;">
+				   <label class="checkbox-inline">
+				  <input type="checkbox" name="sourceFrom" id="inlineRadio1" value="China Public Security Bureau"> China Public Security Bureau
+				</label>
+				<label class="checkbox-inline">
+				  <input type="checkbox" name="sourceFrom" id="inlineRadio2" value="Reuters"> Reuters
+				</label>
+				<label class="rcheckbox-inline">
+				  <input type="checkbox" name="sourceFrom" id="inlineRadio3" value="Manual"> Manual
+				</label>
+			  </div>
+        	  </div>
+        	  
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Status:</label>
+			    <select name="status" id="ddlStatus" class="form-control">
+				  <option value="Checking">Checking</option>
+				  <option value="Complete">Complete</option>
+				</select>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Result:</label>
+			    <textarea name="result" id="txtResult" class="form-control" rows="3"></textarea>
+			  </div>
+			   <div class="form-group">
+			    <label for="exampleInputPassword1">Officer's comment:</label>
+			    <textarea name="comment" id="txtComment" class="form-control" rows="3"></textarea>
+			  </div>
+			  <input type="hidden" id="hidIbId" name="ibId" value="" ></input>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="btn-save" type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 培训Modal -->
+<div class="modal fade" id="trainingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Training Record</h4>
+      </div>
+      <div class="modal-body">
+        <form id="form-training" role="form">
+             <div class="form-group">
+			    <label for="exampleInputEmail1">Training Name:</label>
+			    <input name="name" type="text" class="form-control" id="exampleInputEmail1" placeholder="">
+			  </div>
+			  <div class="form-group row">
+			   <div class="col-sm-3">
+			     <b>Training Time:</b>
+			    </div>
+			    <div class="col-sm-4">
+			    <input name="starttime" type="text" class="form-control" id="inputPassword2" placeholder="start_time">
+			    </div>
+			     <div class="col-sm-1">
+			     <b>~</b>
+			    </div>
+			     <div class="col-sm-4">
+			    <input name="endtime" type="text" class="form-control" id="inputPassword2" placeholder="end_time">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Training Organization:</label>
+			    <textarea name="organization" id="txtResult" class="form-control" rows="3"></textarea>
+			  </div>
+			   <div class="form-group">
+			    <label for="exampleInputPassword1">Training Description:</label>
+			    <textarea name="description" id="txtComment" class="form-control" rows="3"></textarea>
+			  </div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="btn-training-save" type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+[#include "../../inc/foot_v2.html"/]

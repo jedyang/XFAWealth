@@ -1,0 +1,327 @@
+package com.fsll.wmes.community.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import com.fsll.common.CommonConstants;
+import com.fsll.common.base.service.BaseService;
+import com.fsll.common.util.BeanUtils;
+import com.fsll.common.util.DateUtil;
+import com.fsll.common.util.JsonPaging;
+import com.fsll.common.util.StrUtils;
+import com.fsll.wmes.common.CommonConstantsWeb;
+import com.fsll.wmes.community.service.TopicCommentService;
+import com.fsll.wmes.community.vo.NewsCommentVO;
+import com.fsll.wmes.community.vo.TopicCommentVO;
+import com.fsll.wmes.entity.CommunityComment;
+import com.fsll.wmes.entity.CommunityQuestion;
+import com.fsll.wmes.entity.CommunityTopic;
+import com.fsll.wmes.entity.NewsComment;
+import com.fsll.wmes.entity.NewsInfo;
+
+@Service("topicCommentService")
+public class TopicCommentServiceImpl extends BaseService implements TopicCommentService {
+
+	/**
+	 *  帖子评论(包含问题答案)数据获取
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param jsonPaging
+	 * @param newsCommentVO 过滤条件
+	 * @param langCode 多语言标识
+	 * @return jsonPaging
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public JsonPaging getTopicComments(JsonPaging jsonPaging,
+			TopicCommentVO topicCommentVO, String langCode) {
+		StringBuffer hql = new StringBuffer(""
+				+ " SELECT"
+				+ " t,c,q"
+				+ " FROM"
+				+ " CommunityComment c"
+				+ " LEFT JOIN"
+				+ " CommunityTopic t"
+				+ " ON"
+				+ " c.target=?"
+				+ " AND"
+				+ " c.targetId=t.id"
+				+ " LEFT JOIN"
+				+ " CommunityQuestion q"
+				+ " ON"
+				+ " c.target=?"
+				+ " AND"
+				+ " c.targetId=q.id"
+				+ " LEFT JOIN"
+				+ " MemberBase b"
+				+ " ON"
+				+ " b.id=c.creator.id"
+				+ " LEFT JOIN"
+				+ " MemberIndividual mi"
+				+ " ON"
+				+ " mi.member.id=c.creator.id"
+				+ " LEFT JOIN"
+				+ " MemberIfa ma"
+				+ " ON"
+				+ " ma.member.id=c.creator.id"
+				+ " WHERE 1=1"
+				+ "");
+		List<Object> params = new ArrayList<Object>();
+		params.add(CommonConstantsWeb.COMMUNITY_COMMENT_TARGET_TOPIC);
+		params.add(CommonConstantsWeb.COMMUNITY_COMMENT_TARGET_QUESTION);
+		if (StringUtils.isNotBlank(topicCommentVO.getFilterTitle())) {
+			hql.append(" AND "
+					+ "("
+					+ " t.title LIKE ? OR"
+					+ " q.title LIKE ? "
+					+ ")");
+			params.add("%" + topicCommentVO.getFilterTitle() + "%");
+			params.add("%" + topicCommentVO.getFilterTitle() + "%");
+		}
+		if (StringUtils.isNotBlank(topicCommentVO.getFilterComment())) {
+			hql.append(" AND c.content LIKE ?");
+			params.add("%" + topicCommentVO.getFilterComment() + "%");
+		}
+		if (StringUtils.isNotBlank(topicCommentVO.getFilterMemberName())) {
+			hql.append(" AND"
+					+ "("
+					+ " b.nickName LIKE ? OR"
+					+ " mi.nameChn LIKE ? OR"
+					+ " mi.lastName LIKE ? OR"
+					+ " mi.firstName LIKE ? OR"
+					+ " ma.nameChn LIKE ? OR"
+					+ " ma.lastName LIKE ? OR"
+					+ " ma.firstName LIKE ?"
+					+ ")"
+					+ "");
+			params.add("%" + topicCommentVO.getFilterMemberName() + "%");
+			params.add("%" + topicCommentVO.getFilterMemberName() + "%");
+			params.add("%" + topicCommentVO.getFilterMemberName() + "%");
+			params.add("%" + topicCommentVO.getFilterMemberName() + "%");
+			params.add("%" + topicCommentVO.getFilterMemberName() + "%");
+			params.add("%" + topicCommentVO.getFilterMemberName() + "%");
+			params.add("%" + topicCommentVO.getFilterMemberName() + "%");
+		}
+		if (StringUtils.isNotBlank(topicCommentVO.getFilterStartTime()) && StringUtils.isNotBlank(topicCommentVO.getFilterEndTime())) {
+			hql.append(" AND c.createTime BETWEEN ? AND ?");
+			params.add(DateUtil.StringToDate(topicCommentVO.getFilterStartTime(), CommonConstants.FORMAT_DATE_TIME));
+			params.add(DateUtil.StringToDate(topicCommentVO.getFilterEndTime(), CommonConstants.FORMAT_DATE_TIME));
+		}
+		jsonPaging = this.baseDao.selectJsonPaging(hql.toString(), params.toArray(), jsonPaging, false);
+		if(jsonPaging.getList() != null && !jsonPaging.getList().isEmpty()){
+			List<Object[]> objs = jsonPaging.getList();
+			List<TopicCommentVO> vos = new ArrayList<TopicCommentVO>();
+			for (Object[] objects : objs) {
+				TopicCommentVO vo = new TopicCommentVO();
+				CommunityTopic topic = (CommunityTopic) objects[0];
+				CommunityComment topicComment = (CommunityComment) objects[1];
+				CommunityQuestion question = (CommunityQuestion) objects[2];
+				BeanUtils.copyProperties(topicComment, vo);
+				String targetId = null;
+				String targetTitle = null;
+				if(CommonConstantsWeb.COMMUNITY_COMMENT_TARGET_TOPIC.equals(topicComment.getTarget())
+						&& topic != null){
+					targetId = topic.getId();
+					targetTitle = topic.getTitle();
+				}else if(CommonConstantsWeb.COMMUNITY_COMMENT_TARGET_QUESTION.equals(topicComment.getTarget())
+						&& question != null){
+					targetId = question.getId();
+					targetTitle = question.getTitle();
+				}
+				vo.setTargetId(targetId);
+				vo.setTargetTitle(targetTitle);
+				if(topicComment.getCreator() != null){
+					vo.setMemberName(getCommonMemberName(topicComment.getCreator().getId(), langCode, "2"));
+				}
+				if(topicComment.getCreateTime() != null){
+					vo.setCreateTimeStr(DateUtil.dateToDateString(topicComment.getCreateTime(), CommonConstants.FORMAT_DATE_TIME));
+				}
+				vos.add(vo);
+			}
+			jsonPaging.getList().clear();
+			jsonPaging.getList().addAll(vos);
+		}
+		return jsonPaging;
+	}
+
+	/**
+	 *  获取评论的回复数据
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param newsCommentId 评论实体
+	 * @return 
+	 */
+	@Override
+	public Boolean deleteCommunityComments(String ids) {
+		Boolean flag = false;
+		if (StringUtils.isNotBlank(ids)) {
+			String[] temp = null;
+			if(ids.indexOf(",") > -1){
+				ids = StrUtils.reHeavy(ids);
+				temp = ids.split(",");
+			}else{
+				temp = new String[]{ids};
+			}
+			for (String id : temp) {
+				CommunityComment comment = (CommunityComment) this.baseDao.get(CommunityComment.class, id);
+				comment.setStatus(-1);
+				if(comment != null){
+					deleteCommentChilds(comment.getId());
+					this.baseDao.update(comment);
+				}
+			}
+			flag = true;
+		}
+		return flag;
+	}
+
+	/**
+	 *  获取评论的回复数据
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param newsCommentId 评论实体
+	 * @return 
+	 */
+	private List<CommunityComment> getCommentForReply(String commentId){
+		List<CommunityComment> comments = null;
+		if (StringUtils.isNotBlank(commentId)) {
+			StringBuffer hql = new StringBuffer(""
+					+ " FROM"
+					+ " CommunityComment c"
+					+ " WHERE"
+					+ " c.parent.id=?"
+					+ " ORDER BY"
+					+ " c.createTime"
+					+ " DESC"
+					+ "");
+			List<Object> params = new ArrayList<Object>();
+			params.add(commentId);
+			comments = this.baseDao.find(hql.toString(), params.toArray(), false);
+		}
+		return comments;
+	}
+	
+	/**
+	 *  迭代删除子评论
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param id 评论实体
+	 * @return 
+	 */
+	private void deleteCommentChilds(String id){
+		List<CommunityComment> comments = getCommentForReply(id);
+		if(comments != null && !comments.isEmpty()){
+			for (CommunityComment comment : comments) {
+				deleteCommentChilds(comment.getId());
+				comment.setStatus(-1);
+				this.baseDao.update(comment);
+			}
+		}
+	}
+
+	/**
+	 *  根据ID获取评论信息,返回VO实体
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param id
+	 * @param langCode 多语言标识
+	 * @return NewsCommentVO
+	 */
+	@Override
+	public TopicCommentVO findCommentVOById(String id, String langCode) {
+		TopicCommentVO vo = null;
+		CommunityComment comment = findById(id);
+		if(comment != null){
+			vo = new TopicCommentVO();
+			BeanUtils.copyProperties(comment, vo);
+			String targetId = null;
+			String targetTitle = null;
+			if(CommonConstantsWeb.COMMUNITY_COMMENT_TARGET_TOPIC.equals(comment.getTarget())){
+				CommunityTopic topic = findCommunityTopicById(comment.getTargetId());
+				if(topic != null){
+					targetId = topic.getId();
+					targetTitle = topic.getTitle();
+				}
+			}else if(CommonConstantsWeb.COMMUNITY_COMMENT_TARGET_QUESTION.equals(comment.getTarget())){
+				CommunityQuestion question = findCommunityQuestionById(comment.getTargetId());
+				if(question != null){
+					targetId = question.getId();
+					targetTitle = question.getTitle();
+				}
+			}
+			vo.setTargetId(targetId);
+			vo.setTargetTitle(targetTitle);
+			if(comment.getCreator() != null){
+				vo.setMemberName(getCommonMemberName(comment.getCreator().getId(), langCode, "2"));
+			}
+			if(comment.getCreateTime() != null){
+				vo.setCreateTimeStr(DateUtil.dateToDateString(comment.getCreateTime(), CommonConstants.FORMAT_DATE_TIME));
+			}
+		}
+		return vo;
+	}
+	
+	/**
+	 *  根据ID获取评论实体
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param id
+	 * @return CommunityComment
+	 */
+	@Override
+	public CommunityComment findById(String id) {
+		CommunityComment comment = null;
+		if (StringUtils.isNotBlank(id)) {
+			comment = (CommunityComment) this.baseDao.get(CommunityComment.class, id);
+		}
+		return comment;
+	}
+	
+	/**
+	 *  根据ID获取社区帖子实体
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param id
+	 * @return CommunityTopic
+	 */
+	@Override
+	public CommunityTopic findCommunityTopicById(String id) {
+		CommunityTopic comment = null;
+		if (StringUtils.isNotBlank(id)) {
+			comment = (CommunityTopic) this.baseDao.get(CommunityTopic.class, id);
+		}
+		return comment;
+	}
+	
+	/**
+	 *  根据ID获取社区问题实体
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param id
+	 * @return CommunityQuestion
+	 */
+	@Override
+	public CommunityQuestion findCommunityQuestionById(String id) {
+		CommunityQuestion comment = null;
+		if (StringUtils.isNotBlank(id)) {
+			comment = (CommunityQuestion) this.baseDao.get(CommunityQuestion.class, id);
+		}
+		return comment;
+	}
+
+	/**
+	 *  保存社区评论信息
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param id
+	 * @return CommunityComment
+	 */
+	@Override
+	public CommunityComment save(CommunityComment comment) {
+		return (CommunityComment) this.baseDao.saveOrUpdate(comment);
+	}
+
+}

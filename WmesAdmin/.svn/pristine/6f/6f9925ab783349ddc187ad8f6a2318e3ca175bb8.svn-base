@@ -1,0 +1,105 @@
+<script type="text/javascript">
+var dataGridHeight = 0;
+var menuJson = "";
+if (window.innerHeight)
+dataGridHeight = window.innerHeight;
+else if ((document.body) && (document.body.clientHeight))
+dataGridHeight = document.body.clientHeight;
+$(function(){
+    $(window).resize(function () {
+        $(grid_selector).datagrid('resize', {
+            width: $(window).width() - 10,
+            height: $(window).height() - 35
+        }).datagrid('resize', {
+            width: $(window).width() - 10,
+            height: $(window).height() - 35
+        });
+    }); 
+    
+    $("#searchKeyWord").bind('keydown',function(event){
+      if(event.keyCode==13){
+         gridReload();; //按回车键提交表单
+      } 
+    }); 
+});    
+    
+function changLangWin(langFlag) {
+  $.get("${base}/console/sys/account/changLang.do?langFlag="+langFlag+"&accountId=", function(data, status, Request){
+	  if(data != null){
+	     window.location.href=window.location.href;
+	  }
+  });
+}
+
+    
+function logoutWin() {
+    r = confirm("您确定要退出本次登录吗?");
+    if (r) {
+       location.href = '${base}/logout.do';
+    }
+}
+
+</script>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            <a class="navbar-brand logo" href="#"></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="defaultNavbar1">
+            <ul class="nav navbar-nav" id="top_nav">
+                <li class="active">
+                    <a href="${base}/console/sys/param/list.do">首页<span class="sr-only">(current)</span></a>
+                </li>
+                <li>
+                    <a href="${base}/console/sys/paramType/list.do">数据类型</a>
+                </li>
+                <li>
+                    <a href="${base}/console/sys/param/list.do">基础数据</a>
+                </li>
+            </ul>
+            
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i> admin <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="${base}/console/sys/account/input.do?id=">个人资料</a>
+                        </li>
+                        <li>
+                            <a data-target="#editPsw" data-toggle="modal" href="${base}/console/sys/account/editPsw.do">修改密码</a>
+                        </li>
+                        <li class="divider">
+                        </li>
+                        <li>
+                            <a href="javascript:changLangWin('sc')">简体中文[#if Session["_USER_LOGIN_"]?exists == true && Session["_USER_LOGIN_"].langFlag?exists == true && Session["_USER_LOGIN_"].langFlag == 'sc']&nbsp;√[/#if]</a>
+                        </li>
+                        <li>
+                            <a href="javascript:changLangWin('tc')">繁體中文[#if Session["_USER_LOGIN_"]?exists == true && Session["_USER_LOGIN_"].langFlag?exists == true && Session["_USER_LOGIN_"].langFlag == 'tc']&nbsp;√[/#if]</a>
+                        </li>
+                        <li>
+                            <a href="javascript:changLangWin('en')">English[#if Session["_USER_LOGIN_"]?exists == true && Session["_USER_LOGIN_"].langFlag?exists == true && Session["_USER_LOGIN_"].langFlag == 'en']&nbsp;√[/#if]</a>
+                        </li>
+                        <li class="divider">
+                        </li>
+                        <li>
+                            <a href="javascript:logoutWin()">退出</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search">
+                <div class="input-group input-group-sm">
+                <input type="text" class="form-control " placeholder="请输入关键词"  id="searchKeyWord">
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button"  onclick="gridReload()">搜索</button>
+                </span>
+            </div>
+            </form>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</nav>

@@ -1,0 +1,323 @@
+[#include "../../inc/head_no_menu.html"/]  
+
+<link rel="stylesheet" href="${base}/res/third/formValidator/css/validationEngine.jquery.css"/>
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+
+<!-- protocol begin -->
+<style>
+.registrationcon{background:#fff;display:none;position:absolute;left:20%;top:20%;width:60%;border-radius:15px;border:1px solid #999;padding:40px 10px 40px 10px;text-align: left;z-index: 3;}
+</style>
+	
+<!-- protocol end -->
+[#include "../../inc/regist_head.html"/]  
+<div class="wmes-content wmes-content-position" style="margin-left:0px;">
+    <div class="regist-bg">
+		<div class="register_div">
+			<p class="regist-big-title">[@lang_res k='member.register.title'/]</p>
+			<div class="register_liucheng">
+				<ul class="basicliucheng">
+					<li>
+                        <span class="circle_yellow">1</span>
+                        <span class="font_yellow">[@lang_res k='member.register.step1'/]</span>
+                    </li>
+                    <li class="jiantou_width">
+                    	<span class="register_jiantou"></span>
+                    </li>
+                    <li>
+                        <span class="circle_orange">2</span>
+                        <span class="font_orange">[@lang_res k='member.register.step2'/]</span>
+                    </li>
+                    <li class="jiantou_width">
+                    	<span class="register_jiantou"></span>
+                    </li>
+                    <li>
+                        <span class="circle_gray">3</span>
+                        <span>[@lang_res k='member.register.step3'/]</span>
+                    </li>
+                    <li class="jiantou_width">
+                    	<span class="register_jiantou"></span>
+                    </li>
+                    <li>
+                        <span class="circle_gray">4</span>
+                        <span>[@lang_res k='member.register.step4'/]</span>
+                    </li>
+                </ul>
+                <ul class="Firmliucheng">
+                    <li>
+                        <span class="circle_yellow">1</span>
+                        <span class="font_yellow">[@lang_res k='member.register.step1'/]</span>
+                    </li>
+                    <li class="jiantou_width">
+                      <span class="register_jiantou"></span>
+                    </li>
+                    <li>
+                        <span class="circle_orange">2</span>
+                        <span class="font_orange">[@lang_res k='member.register.step2'/]</span>
+                    </li>
+                    <li class="jiantou_width">
+                      <span class="register_jiantou"></span>
+                    </li>
+                    <li>
+                        <span class="circle_gray">3</span>
+                        <span>[@lang_res k='member.register.step4'/]</span>
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>  
+			<form action="" id="register_msg" name="register_msg" method="post">
+            	<input type="hidden" value="" name="iconUrl" >
+              	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+                    <tbody>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                        	<span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.register.loginid'/]</span>
+                        </td>
+                        <td class="register_table_right">
+                        	<input class="register_input validate[required,minSize[7],maxSize[20],custom[loginCodeReg]]" id="loginCode" name="loginCode" type="text" maxlength="20" data-prompt-position="inline" data-prompt-target="codeError" value="${(memberBase.loginCode)!}">
+                          <span id="codeError"></span>
+                          <div class="register_input_tishi">[@lang_res k='member.register.logincode.tips'/]</div>
+                            <br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                        	<span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.register.password'/]</span>
+                        </td>
+                        <td><input class="register_input validate[required,minSize[7],maxSize[20],custom[pswRuleCustome]]" type="password" name="password" id="password" maxlength="20" data-prompt-position="inline" data-prompt-target="pswError" value="${(memberBase.password)!}">
+                        <span id="pswError"></span>
+                        <div class="register_input_tishi">[@lang_res k='member.register.password.tips'/]</div>
+                            <br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                        	<span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.register.strength'/]</span>
+                        </td>
+                        <td class="paw_level">
+                        	<div class="register_strength">
+                          	<ul>
+                              	  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                                  <li></li>
+                              </ul>
+                          </div>
+                          <span class="register_strength_font"></span>
+                          <span class="register_strength_font">[@lang_res k='member.register.msgveryweak'/]</span>     
+                          <span class="register_strength_font">[@lang_res k='member.register.msgweak'/]</span>         
+                          <span class="register_strength_font">[@lang_res k='member.register.msgmiddle'/]</span>       
+                          <span class="register_strength_font">[@lang_res k='member.register.msgbetter'/]</span>       
+                          <span class="register_strength_font">[@lang_res k='member.register.msgstrength'/]</span>     
+                          <span class="register_strength_font">[@lang_res k='member.register.msgverystrength'/]</span> 
+                          <span class="register_strength_font">[@lang_res k='member.register.msgexcellent'/]</span>    
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                        	<span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.register.confirmpassword'/]</span>
+                        </td>
+                        <td>
+                        <input class="register_input validate[required,equals[password]]" type="password" id="passwordok" maxlength="20" data-prompt-position="inline" data-prompt-target="passwordokError" value="${(memberBase.password)!}">
+                        <span id="passwordokError"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right" valign="top">
+                        	<span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.register.email'/]</span>
+                        </td>
+                        <td>
+                       		<input class="register_input validate[required,custom[email]]" name="email" id="email" type="text" maxlength="30" data-prompt-position="inline" data-prompt-target="emailError" value="${(memberBase.email)!}">
+                          	<span id="emailError"></span>
+                          	<div class="register_input_tishi">[@lang_res k='member.register.emailmessage'/]</div>
+                          	<br>
+                        </td>
+                      </tr>
+                      <tr>
+                      <td align="right">
+                      <span class="font_red">*</span>
+                        <span class="font_gray_left">[@lang_res k='member.register.mobilenumber'/]</span>
+                      </td>
+                      <td>
+                         <span>+</span>
+                         <input class="register_input phone_code" type="text" style="width:108px;" id="regPhoneCode" name="mobileCode" value="${(memberBase.mobileCode)!}">
+                         <input class="register_input_217" type="text"  id="regPhoneKey" name="mobileNumber" data-prompt-position="inline" data-prompt-target="moblieError" value="${(memberBase.mobileNumber)!}">
+                         <input class="register_input_217" type="hidden" name="mobile" id="FiraPhone">
+                         <span id="mobileError"></span>
+                      </td>
+                    </tr>
+                    
+                    <tr>
+                    	<td align="right">
+                        	<span class="font_gray_left">[@lang_res k='member.register.invite'/]</span>
+                        </td>
+                        <td>
+	                        <input class="register_input" type="text" id="inviteCode" name="inviteCode" data-prompt-position="inline" data-prompt-target="inviteCodeError" value="${(memberBase.inviteCode)!}">
+	                        <span id="inviteCodeError"></span>
+                        </td>
+                    </tr>
+                    
+                      <tr>
+                        <td align="right">
+                        	<span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.register.verificationcode'/]</span>
+                        </td>
+                        <td>
+                          <input class="register_input_102 validate[required]" id="CheckCode"  type="text" maxlength="10" data-prompt-position="inline" data-prompt-target="validCodeError">
+                          <img class="register_yanzhengma" id="changeCode" onclick="this.src=this.src+'?'" src="${base}/authImg.svl" alt="" /> 
+                          <span class="changeyzm">[@lang_res k='member.register.refreshValidCode'/]</span>
+                          <span id="validCodeError"></span>
+                          <br><br><br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                        	<div class="login_checkbox">
+                              <input type="checkbox" id="Agreement" data-prompt-position="inline" data-prompt-target="agreeMentErroe"/>
+                              <label for="login_checkboxInput"></label>
+                          </div>
+                            <!--<a href="${base}/front/regist/registrationProtocol.do">-->
+ 
+                        	<span class="font_gray showProtocol" style="cursor: pointer;">[@lang_res k='member.register.registeragreement'/]</span>
+                        	<!--</a>
+                        	--><span id="agreeMentErroe"></span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+             </form>
+            <form action="" id="distributor_msg">
+            <input type="hidden" value="" name="iconUrl" >
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+                    <tbody>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.companyname'/]</span>
+                        </td>
+                        <td class="register_table_right">
+                          <input class="register_input validate[required]" type="text" name="companyName" id="companyName" maxlength="60" data-prompt-target="cNameError">
+                          <span id="cNameError"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.contact'/]</span>
+                        </td>
+                        <td class="register_table_right">
+                          <input class="register_input validate[required]" type="text" name="contact" id="contact" maxlength="60" data-prompt-target="cotError">
+                          <span id="cotError"></span>
+                        </td>
+                      </tr> 
+                      <tr>
+                        <td align="right" class="register_table_left">
+                          <span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.register.email'/]</span>
+                        </td>
+                        <td>
+                          <input class="register_input validate[required,custom[email]]" name="email" id="distributorEmail" type="text" maxlength="30" data-prompt-target="emlError">
+                          <span id="emlError"></span>
+                          <div class="register_input_tishi">[@lang_res k='member.register.emailmessage'/]</div>
+                          <br>
+                        </td>
+                      </tr>
+                      <tr>
+                      <td align="right">
+                      <span class="font_red">*</span>
+                        <span class="font_gray_left">[@lang_res k='member.register.mobilenumber'/]</span>
+                      </td>
+                      <td>
+                         <span>+</span>
+                         <input class="register_input phone_code validate[required]" type="text" style="width:108px;" id="disPhoneCode" name="mobileCode">
+                         <input class="register_input_217 validate[required]" type="text"  id="disPhoneKey" name="mobileNumber" data-prompt-target="mbNumError">
+                         <input class="register_input_217" type="hidden" name="mobile" id="FiraPhone">
+                         <span id="mbNumError"></span>
+                      </td>
+                    </tr>                    
+                      <tr>
+                        <td align="right">
+                          <span class="font_red">*</span> <span class="font_gray_left">[@lang_res k='member.register.verificationcode'/]</span>
+                        </td>
+                        <td>
+                          <input class="register_input_102 validate[required]" id="FirmCheckCode"  type="text" maxlength="10" data-prompt-target="vCodeError">
+                          <img class="register_yanzhengma" onclick="this.src=this.src+'?'" src="${base}/authImg.svl" alt=""/> 
+                          <span class="changeyzm">[@lang_res k='member.register.refreshValidCode'/]</span>
+                          <span id="vCodeError"></span>
+                          <br><br><br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                          <div class="login_checkbox">
+                              <input type="checkbox" id="Agreement_idv" />
+                              <label for="login_checkboxInput"></label>
+                          </div>
+                          <!--<a href="${base}/front/regist/registrationProtocol.do">-->
+
+                          	<span class="font_gray showProtocol" style="cursor: pointer;">[@lang_res k='member.register.registeragreement'/]</span><!--
+                          </a>
+                        --></td>
+                      </tr>
+                    </tbody>
+                  </table>
+             </form>
+            	<div class="btn_next_div2">
+                	<a class="btn_previous" href="javascript:;">[@lang_res k='member.register.previous'/]</a>
+                	<a id="btn_next" class="btn_next" href="javascript:;">[@lang_res k='member.register.next'/]</a>
+                	<input type="hidden" name="langCode" value="${Session["_LANG_CODE_"]!'sc'}" />
+                </div>            
+            	<div class="clear"></div>
+           </div> 
+        
+	<!-- protocol begin --> 
+	<div class="registrationcon">
+		<p>
+			一、总则<br/>
+			1.1 所有权和运营权归xxx有限公司所有。 <br/>
+			1.2 用户在注册之前，应当仔细阅读本协议，并同意遵守本协议后方可成为注册用户。一旦注册成功，则用户与保宝网之间自动形成协议关系，用户应当受本协议的约束。用户在使用特殊的服务或产品时，应当同意接受相关协议后方能使用。 <br/>
+			1.3 本协议则可由xxx随时更新，用户应当及时关注并同意本站不承担通知义务。本站的通知、公告、声明或其它类似内容是本协议的一部分。
+		</p>
+		<p>
+			一、总则<br/>
+			1.1 所有权和运营权归xxx有限公司所有。 <br/>
+			1.2 用户在注册之前，应当仔细阅读本协议，并同意遵守本协议后方可成为注册用户。一旦注册成功，则用户与保宝网之间自动形成协议关系，用户应当受本协议的约束。用户在使用特殊的服务或产品时，应当同意接受相关协议后方能使用。 <br/>
+			1.3 本协议则可由xxx随时更新，用户应当及时关注并同意本站不承担通知义务。本站的通知、公告、声明或其它类似内容是本协议的一部分。
+		</p>
+		<p>
+			一、总则<br/>
+			1.1 所有权和运营权归xxx有限公司所有。 <br/>
+			1.2 用户在注册之前，应当仔细阅读本协议，并同意遵守本协议后方可成为注册用户。一旦注册成功，则用户与保宝网之间自动形成协议关系，用户应当受本协议的约束。用户在使用特殊的服务或产品时，应当同意接受相关协议后方能使用。 <br/>
+			1.3 本协议则可由xxx随时更新，用户应当及时关注并同意本站不承担通知义务。本站的通知、公告、声明或其它类似内容是本协议的一部分。
+		</p>
+		<p>
+			一、总则<br/>
+			1.1 所有权和运营权归xxx有限公司所有。 <br/>
+			1.2 用户在注册之前，应当仔细阅读本协议，并同意遵守本协议后方可成为注册用户。一旦注册成功，则用户与保宝网之间自动形成协议关系，用户应当受本协议的约束。用户在使用特殊的服务或产品时，应当同意接受相关协议后方能使用。 <br/>
+			1.3 本协议则可由xxx随时更新，用户应当及时关注并同意本站不承担通知义务。本站的通知、公告、声明或其它类似内容是本协议的一部分。
+		</p>
+		<p>
+			一、总则<br/>
+			1.1 所有权和运营权归xxx有限公司所有。 <br/>
+			1.2 用户在注册之前，应当仔细阅读本协议，并同意遵守本协议后方可成为注册用户。一旦注册成功，则用户与保宝网之间自动形成协议关系，用户应当受本协议的约束。用户在使用特殊的服务或产品时，应当同意接受相关协议后方能使用。 <br/>
+			1.3 本协议则可由xxx随时更新，用户应当及时关注并同意本站不承担通知义务。本站的通知、公告、声明或其它类似内容是本协议的一部分。
+		</p>
+		<div class="btn_next_div3" style="text-align:center;">
+			<a class="btn_close" style="cursor: pointer;height:35px;line-height: 35px;margin-top:10px;">[@lang_res k='global.back'/]</a>
+		</div>
+	</div>
+	<!-- protocol end -->
+</div>
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+    var registerType = "${registerType!}";
+    var memberType = "${memberType!}";
+    var subMemberType = "${subMemberType!}";
+	seajs.use('${base}/res/web/member/regist/strength.js');
+	seajs.use('${base}/res/web/member/regist/information.js');
+</script>

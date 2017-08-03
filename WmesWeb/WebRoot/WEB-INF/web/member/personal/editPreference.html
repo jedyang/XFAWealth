@@ -1,0 +1,75 @@
+[#include "../../inc/head_v2.html"/]
+ <link rel="stylesheet" href="${base}/res/css/openaccount.css">
+ <link rel="stylesheet" href="${base}/res/css/Funds.css">
+ <link rel="stylesheet" href="${base}/res/js/library/cropbox/style.css">
+ <link rel="stylesheet" href="${base}/res/css/range.css">
+ 
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='member.preference'/]</a>
+</div>
+<div class="blue_background personalWrap">
+	<form id="preference_form" method="post">
+	
+	<input type="hidden" id="defCurrency" value="${memberBase.defCurrency!''}" />
+	<input type="hidden" id="langCode" value="${memberBase.langCode!''}" />
+	<input type="hidden" id="defDisplayColor" value="${memberBase.defDisplayColor!''}" />
+	<input type="hidden" id="dateFormat" value="${memberBase.dateFormat!''}" />
+	<input type="hidden" id="privacyContact" value="${memberBase.privacyContact!''}" />
+	
+	<div>
+		Base Currency:
+        <select name="defCurrency">
+          <option value="HKD">HKD</option>
+          <option value="USD">USD</option>
+          <option value="ERU">ERU</option>
+        </select>
+    </div>
+    
+    <div>
+		Default Language:
+        <select name="langCode">
+          <option value="en">English</option>
+          <option value="sc">Simplified Chinese</option>
+          <option value="tc">Traditional Chinese</option>
+        </select>
+    </div>
+    
+    <div>
+    	Display Color:
+    	<input type="radio" name="defDisplayColor" value="1"  /> 绿涨红跌
+    	<input type="radio" name="defDisplayColor" value="0" />红涨绿跌
+    </div>
+	
+	<div>
+		Date Format:
+		<select name="dateFormat">
+          <option value="">System Setting</option>
+          <option value="yyyy-mm-dd">yyyy-mm-dd</option>
+          <option value="dd-mm-yyyy">dd-mm-yyyy</option>
+          <option value="mm-dd-yyyy">mm-dd-yyyy</option>
+          <option value="MM-dd-yyyy">MM-dd-yyyy</option>
+          <option value="dd-MM-yyyy">dd-MM-yyyy</option>
+        </select>
+        &nbsp;&nbsp;&nbsp;now:<span id="dateChage"></span>
+	</div>
+	
+	<div>
+	---------个人隐私设置------------
+	</div>
+	<div>
+		公开联系信息？
+		<input type="radio" name="privacyContact" value="1" /> 完全公开
+    	<input type="radio" name="privacyContact" value="2" />仅向我的好友公开
+	</div>
+	<input type="button" value="保存" id="savePreference">
+	<input type="button" value="取消" id="cancelPreference">
+	<br/><br/><br/><br/>
+	<input type="hidden" class="slider-input" value="23" />
+	</form>
+
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var base_root = '${base}';
+	seajs.use('${base}/res/web/member/personal/changePreference.js');
+</script>

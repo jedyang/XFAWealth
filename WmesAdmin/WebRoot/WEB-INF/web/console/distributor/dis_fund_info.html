@@ -1,0 +1,1135 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fund info</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <style>
+	    #psw_div{position:relative;}
+		#psw_div .red{position:absolute;right:-80px;top:6px;font-size:12px;}
+		.red{color:red}
+		.form-horizontal .form-group-special{width:50%;float:left;margin:0 15px 5px -15px;}
+		.has-feedback .form-control {
+    			 padding-right: 20px; 
+		}
+	</style>
+<body>
+<input type="hidden" id="fundId" value="${id!}">
+<input type="hidden" id="isAdd" value="${isAdd!}">
+<div class="container-fluid pd0" id="wmes_wraper">
+		<div class="tab-side container-fluid">
+		<div class="tab-side-container">
+			<ul class="tab" id="tab-search">
+            	<li class="tab-li-crr">
+                   <a href="javascript:;">[@lang_res  k='console.fund.infoSc.title'/]</a>
+               	</li>
+                <li class="tab-li">
+                   <a href="javascript:;">[@lang_res  k='console.fund.infoTc.title'/]</a>
+               	</li>
+                <li class="tab-li">
+                   <a href="javascript:;">[@lang_res  k='console.fund.infoEn.title'/]</a>
+               	</li>
+               	<li class="tab-li" id="fund-fee">
+                   <a href="javascript:;">[@lang_res  k='fund.feesitem.list.title'/]</a>
+               	</li>
+               	<li class="tab-li" id="fund-anno">
+                   <a href="javascript:;">[@lang_res  k='console.fund.anno.title'/]</a>
+               	</li>
+                <li class="tab-li" id="fund-bonus">
+                   <a href="javascript:;">[@lang_res  k='console.fund.bonus.title'/]</a>
+               	</li>
+                <li class="tab-li" id="fund-doc">
+                   <a href="javascript:;">[@lang_res  k='console.fund.doc.title'/]</a>
+               	</li>
+           	</ul>
+        <div class="clear"></div>
+		<div>
+		<div class="tab_wrap">
+		<!-- tab 1 Sc -->
+		<form class="form-horizontal" style="display:block;">
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金编码 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtIsinCodeSc">
+						[@lang_res  k='console.fund.info.list.table.title.isinCode'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtIsinCodeSc" value="${(info.isinCode)?if_exists}" >
+					</div>
+				</div>
+				<!-- 基金名称 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundNameSc">
+						[@lang_res  k='console.fund.info.list.table.title.fundName'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtFundNameSc" value="${(infoSc.fundName)?if_exists}" >
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金名称拼音 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundNamePinyinSc">
+						[@lang_res  k='console.fund.info.list.table.title.fundNamePinyin'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtFundNamePinyinSc" value="${(infoSc.fundNamePinyin)?if_exists}" >
+					</div>
+				</div>
+				<!-- 风险评级 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtRiskLevelSc">
+						[@lang_res  k='console.fund.info.list.table.title.riskLevel'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtRiskLevelSc" value="${(info.riskLevel)?if_exists}" >
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 最新资产净值价格 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtLastNavSc">
+						[@lang_res  k='console.fund.info.list.table.title.lastNav'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtLastNavSc" value="${(info.lastNav)?if_exists}" >
+					</div>
+				</div>
+				<!-- 最新资产净值日期 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtLastNavUpdateSc">
+						[@lang_res  k='console.fund.info.list.table.title.lastNavUpate'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtLastNavUpdateSc" value="${(info.lastNavUpdate)?if_exists}" >
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 发行价格 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtIssuePriceSc">
+						[@lang_res  k='console.fund.info.list.table.title.issuePrice'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtIssuePriceSc" value="${(info.issuePrice)?if_exists}" >
+					</div>
+				</div>
+				<!-- 基金货币 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selFundCurrencySc">
+						[@lang_res  k='console.fund.info.list.table.title.fundCurrency'/]
+					</label>
+					<div class="col-md-4">
+						<select class="form-control " id="selFundCurrencySc"  name="selFundCurrencySc">
+                           	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                              [#if currencyListSc?exists && currencyListSc?size gt 0]
+                                [#list currencyListSc as md]
+                                  <option value="${md.itemCode!}" [#if infoSc?exists&&infoSc.fundCurrencyCode?exists&&infoSc.fundCurrencyCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                                [/#list]
+                              [/#if]
+	                    </select> 
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金类型 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selFundTypeSc">
+						[@lang_res  k='console.fund.info.list.table.title.fundType'/]
+					</label>
+					<div class="col-md-4">
+						 <select class="form-control " id="selFundTypeSc"  name="selFundTypeSc">
+	                        <option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                            [#if fundTypeListSc?exists && fundTypeListSc?size gt 0]
+                              [#list fundTypeListSc as md]
+                                <option value="${md.itemCode!}" [#if infoSc?exists&&infoSc.fundTypeCode?exists&&infoSc.fundTypeCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                              [/#list]
+                            [/#if]
+	                     </select>
+					</div>
+				</div>
+				<!-- 基金主题 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selSectorTypeSc">
+						[@lang_res  k='console.fund.info.list.table.title.sectorType'/]
+					</label>
+					<div class="col-md-4">
+						<select class="form-control " id="selSectorTypeSc"  name="selSectorTypeSc" >
+                       	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                          [#if fundSectorListSc?exists && fundSectorListSc?size gt 0]
+                            [#list fundSectorListSc as md]
+                              <option value="${md.itemCode!}" [#if infoSc?exists&&infoSc.sectorTypeCode?exists&&infoSc.sectorTypeCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                            [/#list]
+                          [/#if]
+                       </select> 
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 交易市场 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selGeoAllocationSc">
+						[@lang_res  k='console.fund.info.list.table.title.geoAllocation'/]
+					</label>
+					<div class="col-md-4">
+						 <select class="form-control " id="selGeoAllocationSc"  name="selGeoAllocationSc">
+                       	 <option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                          [#if regionListSc?exists && regionListSc?size gt 0]
+                            [#list regionListSc as md]
+                              <option value="${md.itemCode!}" [#if infoSc?exists&&infoSc.geoAllocationCode?exists&&infoSc.geoAllocationCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                            [/#list]
+                          [/#if]
+                        </select> 
+					</div>
+				</div>
+				<!-- 发行日期 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtIssueDateSc">
+						[@lang_res  k='console.fund.info.list.table.title.issueDate'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtIssueDateSc" value="${(info.issueDate)?if_exists}" >
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金管理费 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtMgtFeeSc">
+						[@lang_res  k='console.fund.info.list.table.title.mgtFee'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtMgtFeeSc" value="${(info.mgtFee)?if_exists}" > 
+					</div>
+				</div>
+				<!-- 日回报 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtDayReturnSc">
+						[@lang_res  k='console.fund.info.list.table.title.dayReturn'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtDayReturnSc" value="${(info.dayReturn)?if_exists}" >
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金认购费 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtSubscribeFeeSc">
+						[@lang_res  k='console.fund.info.list.table.title.subscribeFee'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtSubscribeFeeSc" value="${(info.subscribeFee)?if_exists}" >
+					</div>
+				</div>
+				<!-- 最低首次认购金额 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtMinInitialAmountSc">
+						[@lang_res  k='console.fund.info.list.table.title.minInitialAmount'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtMinInitialAmountSc" value="${(info.minInitialAmount)?if_exists}" >
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 最低申购投资金额 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtMinSubscribeAmountSc">
+						[@lang_res  k='console.fund.info.list.table.title.minSubscribeAmount'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtMinSubscribeAmountSc" value="${(info.minSubscribeAmount)?if_exists}" >
+					</div>
+				</div>
+				<!-- 最低持有金额 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtMinHoldingAmountSc">
+						[@lang_res  k='console.fund.info.list.table.title.minHoldingAmount'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtMinHoldingAmountSc" value="${(info.minHoldingAmount)?if_exists}" >
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 最低赎回金额 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtMinRedemptionAmountSc">
+						[@lang_res  k='console.fund.info.list.table.title.minRedemptionAmount'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtMinRedemptionAmountSc" value="${(info.minRedemptionAmount)?if_exists}" >
+					</div>
+				</div>
+				<!-- 最低定期投资计划投资额 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtMinRspAmountSc">
+						[@lang_res  k='console.fund.info.list.table.title.minRspAmount'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtMinRspAmountSc" value="${(info.minRspAmount)?if_exists}" >
+					</div>
+				</div>
+			</div>
+				
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 注册地 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selDomicileCodeSc">
+						[@lang_res k='console.fund.info.list.table.title.domicileCode'/]
+					</label>
+					<div class="col-md-4">
+						<select class="form-control " id="selDomicileCodeSc"  name="selDomicileCodeSc">
+                       	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                          [#if domicileList?exists && domicileList?size gt 0]
+                            [#list domicileList as md]
+                              <option value="${md.id!}" [#if infoSc?exists&&infoSc.domicileCode?exists&&infoSc.domicileCode == md.id]selected[/#if]>${md.nameSc!}</option>
+                            [/#list]
+                          [/#if]
+                        </select>
+					</div>
+				</div>
+				<!-- 基金发行公司 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selFundHouseSc">
+						[@lang_res k='console.fund.info.list.table.title.fundHouse'/]
+					</label>
+					<div class="col-md-4">
+						<select class="form-control " id="selFundHouseSc"  name="selFundHouseSc">
+                       	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                          [#if fundHouseList?exists && fundHouseList?size gt 0]
+                            [#list fundHouseList as md]
+                              <option value="${md[1].id!}" [#if infoSc?exists&&infoSc.fundHouseId?exists&&md[1].id??&&infoSc.fundHouseId.id == md[1].id]selected[/#if]>${md[1].houseName!}</option>
+                            [/#list]
+                          [/#if]
+                        </select> 
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金发行公司拼音 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundHousePinyinSc">
+						[@lang_res  k='console.fund.info.list.table.title.fundHousePinyin'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtFundHousePinyinSc" value="${(infoSc.fundHousePinyin)?if_exists}" >
+					</div>
+				</div>
+				<!-- 基金管理公司 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundManCoSc">
+						[@lang_res  k='console.fund.info.list.table.title.fundManCo'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtFundManCoSc" value="${(infoSc.fundManCo)?if_exists}" > 
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金管理经理 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundManagerSc">
+						[@lang_res  k='console.fund.info.list.table.title.fundManager'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtFundManagerSc" value="${(infoSc.fundManager)?if_exists}" >
+					</div>
+				</div>
+				<!-- 基金规模 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundSizeSc">
+						[@lang_res  k='console.fund.info.list.table.title.fundSize'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtFundSizeSc" value="${(infoSc.fundSize)?if_exists}" >
+					</div>
+				</div>
+			</div>
+			
+			<!-- 投资目标 -->					
+			<div class="form-group" style="margin-bottom: 5px">
+				<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtInvTargetSc">
+					[@lang_res  k='console.fund.info.list.table.title.invTarget'/]
+				</label>
+				<div class="col-md-10" style="width:95%;">
+					<textarea id="txtInvTargetSc" class="form-control" rows="5">${(infoSc.invTarget)?if_exists}</textarea>
+				</div>
+			</div>
+			<!-- 主要风险 -->					
+			<div class="form-group" style="margin-bottom: 5px">
+				<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtKeyRisksSc">
+					[@lang_res  k='console.fund.info.list.table.title.keyRisks'/]
+				</label>
+				<div class="col-md-10" style="width:95%;">
+					<textarea id="txtKeyRisksSc" class="form-control" rows="5">${(infoSc.keyRisks)?if_exists}</textarea>
+				</div>
+			</div>
+	</form>
+	
+	<!-- tab2 Tc -->
+	<form class="form-horizontal" style="display:none;">
+		<div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金名称 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundNameTc">
+						[@lang_res  k='console.fund.info.list.table.title.fundName'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtFundNameTc" value="${(infoTc.fundName)?if_exists}" >
+					</div>
+				</div>
+				<!-- 基金名称拼音 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundNamePinyinTc">
+						[@lang_res  k='console.fund.info.list.table.title.fundNamePinyin'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtFundNamePinyinTc" value="${(infoTc.fundNamePinyin)?if_exists}" >
+					</div>
+				</div>
+		 </div>
+		 
+		 <div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金货币 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selFundCurrencyTc">
+						[@lang_res  k='console.fund.info.list.table.title.fundCurrency'/]
+					</label>
+					<div class="col-md-4">
+						<select class="form-control " id="selFundCurrencyTc"  name="selFundCurrencyTc">
+                         	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                            [#if currencyListSc?exists && currencyListSc?size gt 0]
+                              [#list currencyListSc as md]
+                                <option value="${md.itemCode!}" [#if infoTc?exists&&infoTc.fundCurrencyCode?exists&&infoTc.fundCurrencyCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                              [/#list]
+                            [/#if]
+                         </select>
+					</div>
+				</div>
+				<!-- 基金类型 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selFundTypeTc">
+						[@lang_res  k='console.fund.info.list.table.title.fundType'/]
+					</label>
+					<div class="col-md-4">
+						<select class="form-control " id="selFundTypeTc"  name="selFundTypeTc">
+                         	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                            [#if fundTypeListTc?exists && fundTypeListTc?size gt 0]
+                              [#list fundTypeListTc as md]
+                                <option value="${md.itemCode!}" [#if infoTc?exists&&infoTc.fundTypeCode?exists&&infoTc.fundTypeCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                              [/#list]
+                            [/#if]
+                         </select>
+					</div>
+			  </div>
+		 </div>
+		 
+		 <div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金主题 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selSectorTypeTc">
+						[@lang_res  k='console.fund.info.list.table.title.sectorType'/]
+					</label>
+					<div class="col-md-4">
+						 <select class="form-control " id="selSectorTypeTc"  name="selSectorTypeTc">
+                          	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                             [#if fundSectorListTc?exists && fundSectorListTc?size gt 0]
+                               [#list fundSectorListTc as md]
+                                 <option value="${md.itemCode!}" [#if infoTc?exists&&infoTc.sectorTypeCode?exists&&infoTc.sectorTypeCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                               [/#list]
+                             [/#if]
+                          </select>
+					</div>
+				</div>
+				<!-- 交易市场 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selGeoAllocationTc">
+						[@lang_res  k='console.fund.info.list.table.title.geoAllocation'/]
+					</label>
+					<div class="col-md-4">
+						 <select class="form-control " id="selGeoAllocationTc"  name="selGeoAllocationTc">
+                         	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                            [#if regionListTc?exists && regionListTc?size gt 0]
+                              [#list regionListTc as md]
+                                <option value="${md.itemCode!}" [#if infoTc?exists&&infoTc.geoAllocationCode?exists&&infoTc.geoAllocationCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                              [/#list]
+                            [/#if]
+                         </select> 
+					</div>
+			  </div>
+		 </div>
+		 
+		 <div class="form-group" style="margin:0 0 5px 0">
+				<!-- 注册地 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selDomicileCodeTc">
+						[@lang_res k='console.fund.info.list.table.title.domicileCode'/]
+					</label>
+					<div class="col-md-4">
+						 <select class="form-control " id="selDomicileCodeTc"  name="selDomicileCodeTc">
+                          	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                             [#if domicileList?exists && domicileList?size gt 0]
+                               [#list domicileList as md]
+                                 <option value="${md.id}" [#if infoTc?exists&&infoTc.domicileCode?exists&&infoTc.domicileCode == md.id]selected[/#if]>${md.nameTc}</option>
+                               [/#list]
+                             [/#if]
+                          </select> 
+					</div>
+				</div>
+				<!-- 基金发行公司 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selFundHouseTc">
+						[@lang_res k='console.fund.info.list.table.title.fundHouse'/]
+					</label>
+					<div class="col-md-4">
+						 <select class="form-control " id="selFundHouseTc"  name="selFundHouseTc">
+                          	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                             [#if fundHouseList?exists && fundHouseList?size gt 0]
+                               [#list fundHouseList as md]
+                                 <option value="${md[2].id!}" [#if infoTc?? &&infoTc.fundHouseId?? && md[2].id?? &&infoTc.fundHouseId.id == md[2].id]selected[/#if]>${md[2].houseName!}</option>
+                               [/#list]
+                             [/#if]
+                          </select>
+					</div>
+			  </div>
+		 </div>
+		 
+		 <div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金发行公司拼音 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundHousePinyinTc">
+						[@lang_res  k='console.fund.info.list.table.title.fundHousePinyin'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtFundHousePinyinTc" value="${(infoTc.fundHousePinyin)?if_exists}" >
+					</div>
+				</div>
+				<!-- 基金管理公司 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundManCoTc">
+						[@lang_res  k='console.fund.info.list.table.title.fundManCo'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtFundManCoTc" value="${(infoTc.fundManCo)?if_exists}" >
+					</div>
+			  </div>
+		 </div>
+		 
+		 <div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金管理经理 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundManagerTc">
+						[@lang_res  k='console.fund.info.list.table.title.fundManager'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtFundManagerTc" value="${(infoTc.fundManager)?if_exists}" >
+					</div>
+				</div>
+				<!-- 基金规模 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundSizeTc">
+						[@lang_res  k='console.fund.info.list.table.title.fundSize'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtFundSizeTc" value="${(infoTc.fundSize)?if_exists}" >
+					</div>
+			  </div>
+		 </div>
+		 
+		<!-- 投资目标 -->					
+		<div class="form-group" style="margin-bottom: 5px">
+			<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtInvTargetTc">
+				[@lang_res  k='console.fund.info.list.table.title.invTarget'/]
+			</label>
+			<div class="col-md-10" style="width:95%;">
+				 <textarea id="txtInvTargetTc" class="form-control" rows="5">${(infoTc.invTarget)?if_exists}</textarea>
+			</div>
+		</div>
+		<!-- 主要风险 -->					
+		<div class="form-group" style="margin-bottom: 5px">
+			<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtKeyRisksTc">
+				[@lang_res  k='console.fund.info.list.table.title.keyRisks'/]
+			</label>
+			<div class="col-md-10" style="width:95%;">
+				<textarea id="txtKeyRisksTc" class="form-control" rows="5">${(infoTc.keyRisks)?if_exists}</textarea>
+			</div>
+		</div>
+	</form>
+	
+	<!-- tab 3 En -->
+	<form class="form-horizontal" style="display:none;">               
+			 <div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金名称 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundNameEn">
+						[@lang_res  k='console.fund.info.list.table.title.fundName'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtFundNameEn" value="${(infoEn.fundName)?if_exists}" >
+					</div>
+				</div>
+				<!-- 基金名称拼音 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundNamePinyinEn">
+						[@lang_res  k='console.fund.info.list.table.title.fundNamePinyin'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtFundNamePinyinEn" value="${(infoEn.fundNamePinyin)?if_exists}" >
+					</div>
+			  </div>
+		 </div>
+		 
+		 <div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金货币 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selFundCurrencyEn">
+						[@lang_res  k='console.fund.info.list.table.title.fundCurrency'/]
+					</label>
+					<div class="col-md-4">
+						<select class="form-control " id="selFundCurrencyEn"  name="selFundCurrencyEn">
+                         	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                            [#if currencyListEn?exists && currencyListEn?size gt 0]
+                              [#list currencyListEn as md]
+                                <option value="${md.itemCode!}" [#if infoEn?exists&&infoEn.fundCurrencyCode?exists&&infoEn.fundCurrencyCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                              [/#list]
+                            [/#if]
+                         </select>
+					</div>
+				</div>
+				<!-- 基金类型 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selFundTypeEn">
+						[@lang_res  k='console.fund.info.list.table.title.fundType'/]
+					</label>
+					<div class="col-md-4">
+						 <select class="form-control " id="selFundTypeEn"  name="selFundTypeEn">
+                          	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                             [#if fundTypeListEn?exists && fundTypeListEn?size gt 0]
+                               [#list fundTypeListEn as md]
+                                 <option value="${md.itemCode!}" [#if infoEn?exists&&infoEn.fundTypeCode?exists&&infoEn.fundTypeCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                               [/#list]
+                             [/#if]
+                          </select>
+					</div>
+			  </div>
+		 </div>
+		 
+		 <div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金主题 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selSectorTypeEn">
+						[@lang_res  k='console.fund.info.list.table.title.sectorType'/]
+					</label>
+					<div class="col-md-4">
+						<select class="form-control " id="selSectorTypeEn"  name="selSectorTypeEn">
+                          	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                             [#if fundSectorListEn?exists && fundSectorListEn?size gt 0]
+                               [#list fundSectorListEn as md]
+                                 <option value="${md.itemCode!}" [#if infoEn?exists&&infoEn.sectorTypeCode?exists&&infoEn.sectorTypeCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                               [/#list]
+                             [/#if]
+                        </select>
+					</div>
+				</div>
+				<!-- 交易市场 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selGeoAllocationEn">
+						[@lang_res  k='console.fund.info.list.table.title.geoAllocation'/]
+					</label>
+					<div class="col-md-4">
+						 <select class="form-control " id="selGeoAllocationEn"  name="selGeoAllocationEn">
+                         	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                            [#if regionListEn?exists && regionListEn?size gt 0]
+                              [#list regionListEn as md]
+                                <option value="${md.itemCode!}" [#if infoEn?exists&&infoEn.geoAllocationCode?exists&&infoEn.geoAllocationCode == md.itemCode]selected[/#if]>${md.name!}</option>
+                              [/#list]
+                            [/#if]
+                         </select> 
+					</div>
+			  </div>
+		 </div>
+		 
+		 <div class="form-group" style="margin:0 0 5px 0">
+				<!-- 注册地 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selDomicileCodeEn">
+						[@lang_res k='console.fund.info.list.table.title.domicileCode'/]
+					</label>
+					<div class="col-md-4">
+						<select class="form-control " id="selDomicileCodeEn"  name="selDomicileCodeEn">
+                          	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                             [#if domicileList?exists && domicileList?size gt 0]
+                               [#list domicileList as md]
+                                 <option value="${md.id}" [#if infoEn?exists&&infoEn.domicileCode?exists&&infoEn.domicileCode == md.id]selected[/#if]>${md.nameEn}</option>
+                               [/#list]
+                             [/#if]
+                          </select> 
+					</div>
+				</div>
+				<!-- 基金发行公司 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selFundHouseEn">
+						[@lang_res k='console.fund.info.list.table.title.fundHouse'/]
+					</label>
+					<div class="col-md-4">
+						<select class="form-control " id="selFundHouseEn"  name="selFundHouseEn">
+                         	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                            [#if fundHouseList?exists && fundHouseList?size gt 0]
+                              [#list fundHouseList as md]
+                                <option value="${md[3].id!}" [#if infoEn?? &&infoEn.fundHouseId?? && md[3].id?? &&infoEn.fundHouseId.id == md[3].id]selected[/#if]>${md[3].houseName!}</option>
+                              [/#list]
+                            [/#if]
+                         </select> 
+					</div>
+			  </div>
+		 </div>
+		 
+		 <div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金发行公司拼音 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundHousePinyinEn">
+						[@lang_res  k='console.fund.info.list.table.title.fundHousePinyin'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtFundHousePinyinEn" value="${(infoEn.fundHousePinyin)?if_exists}" >
+					</div>
+				</div>
+				<!-- 基金管理公司 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundManCoEn">
+						[@lang_res  k='console.fund.info.list.table.title.fundManCo'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtFundManCoEn" value="${(infoEn.fundManCo)?if_exists}" >
+					</div>
+			  </div>
+		 </div>
+		 
+		 <div class="form-group" style="margin:0 0 5px 0">
+				<!-- 基金管理经理 -->
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundManagerEn">
+						[@lang_res  k='console.fund.info.list.table.title.fundManager'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="txtFundManagerEn" value="${(infoEn.fundManager)?if_exists}" >
+					</div>
+				</div>
+				<!-- 基金规模 -->
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFundSizeEn">
+						[@lang_res  k='console.fund.info.list.table.title.fundSize'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" class="form-control" id="txtFundSizeEn" value="${(infoEn.fundSize)?if_exists}" >
+					</div>
+			  </div>
+		 </div>
+		 
+		 <!-- 投资目标 -->					
+		<div class="form-group" style="margin-bottom: 5px">
+			<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtInvTargetEn">
+				[@lang_res  k='console.fund.info.list.table.title.invTarget'/]
+			</label>
+			<div class="col-md-10" style="width:95%;">
+				 <textarea id="txtInvTargetEn" class="form-control" rows="5">${(infoEn.invTarget)?if_exists}</textarea>
+			</div>
+		</div>
+		<!-- 主要风险 -->					
+		<div class="form-group" style="margin-bottom: 5px">
+			<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtKeyRisksEn">
+				[@lang_res  k='console.fund.info.list.table.title.keyRisks'/]
+			</label>
+			<div class="col-md-10" style="width:95%;">
+				<textarea id="txtKeyRisksEn" class="form-control" rows="5">${(infoEn.keyRisks)?if_exists}</textarea>
+			</div>
+		</div>
+   </form>                
+    <!-- 基金费用 -->
+	<form class="form-horizontal" style="display:none;">
+    	<iframe style="width: 100%; height: 600px; scrolling:no; border:0;"
+    	 src=""></iframe>
+	</form>
+	<!-- 基金公告 -->
+	<form class="form-horizontal" style="display:none;">
+    	<iframe style="width: 100%; height: 600px; scrolling:no; border:0;"
+    	 src=""></iframe>
+	</form>
+	<!-- 基金派息 -->
+	<form class="form-horizontal" style="display:none;">
+		<iframe style="width: 100%; height: 600px; scrolling:no; border:0;"
+		 src=""></iframe>
+	</form>
+	<!-- 基金文档 -->
+	<form class="form-horizontal" style="display:none; height: 800px; scrolling:no; border:0;">
+		<iframe style="width: 100%; height: 600px; scrolling:no; border:0;"
+		 src=""></iframe>
+	</form>
+	</div>
+	<div class="clear">
+		<br>
+	</div>
+	</div>
+	</div>
+	</div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+
+<script type="text/javascript">
+var fundId = $('#fundId').val();
+$(function(){
+	//当select值改变时，把值带到其他语言的选择框
+	$('select').on('change',function(){
+		//获取当前id名称
+		var id = $(this).attr('id');
+		//获取当前值
+		var val = $(this).val();
+		//获取当前选择框的语言
+		var langCode = id.substr(id.length-2);
+		//给其他语言框赋值
+		if('Sc'==langCode){
+			var id_1 = id.substr(0,id.length-2)+'Tc';
+			$('#'+id_1).val(val);
+			var id_2 = id.substr(0,id.length-2)+'En';
+			$('#'+id_2).val(val);
+		} else if('Tc'==langCode){
+			var id_1 = id.substr(0,id.length-2)+'Sc';
+			$('#'+id_1).val(val);
+			var id_2 = id.substr(0,id.length-2)+'En';
+			$('#'+id_2).val(val);
+		} else if('En'==langCode){
+			var id_1 = id.substr(0,id.length-2)+'Sc';
+			$('#'+id_1).val(val);
+			var id_2 = id.substr(0,id.length-2)+'Tc';
+			$('#'+id_2).val(val);
+		}
+	});
+});
+
+//保存题目与选项信息
+$('.btnSave').on('click',save);
+
+function save() {
+	var isAdd = $('#isAdd').val();
+	//题目相关信息
+	var fundId = $('#fundId').val();
+	//Sc
+	var isinCodeSc = $('#txtIsinCodeSc').val();
+	var riskLevelSc = $('#txtRiskLevelSc').val();
+	var lastNavSc = $('#txtLastNavSc').val();
+	var lastNavUpdateSc = $('#txtLastNavUpdateSc').val();
+	var issuePriceSc = $('#txtIssuePriceSc').val();
+	var issueDateSc = $('#txtIssueDateSc').val();
+	var mgtFeeSc = $('#txtMgtFeeSc').val();
+	var dayReturnSc = $('#txtDayReturnSc').val();  
+	var subscribeFeeSc = $('#txtSubscribeFeeSc').val();
+	var minInitialAmountSc = $('#txtMinInitialAmountSc').val();
+	var minSubscribeAmountSc = $('#txtMinSubscribeAmountSc').val();  
+	var minHoldingAmountSc = $('#txtMinHoldingAmountSc').val();
+	var minRedemptionAmountSc = $('#txtMinRedemptionAmountSc').val();  
+	var minRspAmountSc = $('#txtMinRspAmountSc').val();
+	
+	//Sc
+	var fundNameSc = $('#txtFundNameSc').val();
+	if(null==fundNameSc || ""==fundNameSc){
+		layer.msg('请填写基金名称(简体中文)');
+		return ;
+	}
+	var fundNamePinyinSc = $('#txtFundNamePinyinSc').val();
+	var domicileCodeSc = $('#selDomicileCodeSc').val();
+	var domicileSc = "";
+	if(""!=domicileCodeSc){
+		domicileSc = $('#selDomicileCodeSc').find("option:selected").text();
+	}
+	var fundCurrencyCodeSc = $('#selFundCurrencySc').val();
+	if(null==fundCurrencyCodeSc || ""==fundCurrencyCodeSc){
+		layer.msg('请选择基金货币');
+		return ;
+	}
+	var fundCurrencySc = "";
+	if(""!=fundCurrencyCodeSc){
+		fundCurrencySc = $('#selFundCurrencySc').find("option:selected").text();  
+	}
+	
+	var fundHouseIdSc = $('#selFundHouseSc').val();
+	var fundHouseSc = "";
+	if(""!=fundHouseIdSc){
+		fundHouseSc = $('#selFundHouseSc').find("option:selected").text();
+	}
+	var fundHousePinyinSc = $('#txtFundHousePinyinSc').val();
+	var fundManCoSc = $('#txtFundManCoSc').val();
+	var fundManagerSc = $('#txtFundManagerSc').val();
+	var fundSizeSc = $('#txtFundSizeSc').val(); 
+	var fundTypeCodeSc = $('#selFundTypeSc').val();
+	var fundTypeSc = "";
+	if(""!=fundTypeCodeSc){
+		fundTypeSc = $('#selFundTypeSc').find("option:selected").text();
+	}
+	var sectorTypeCodeSc = $('#selSectorTypeSc').val(); 
+	var sectorTypeSc = "";
+	if(""!=sectorTypeCodeSc){
+		sectorTypeSc = $('#selSectorTypeSc').find("option:selected").text();
+	}
+	var geoAllocationCodeSc = $('#selGeoAllocationSc').val();
+	var geoAllocationSc = "";
+	if(""!=geoAllocationCodeSc){
+		geoAllocationSc = $('#selGeoAllocationSc').find("option:selected").text();
+	} 
+	var invTargetSc = $('#txtInvTargetSc').val();
+	var keyRisksSc = $('#txtKeyRisksSc').val();
+	
+	//Tc 
+	var fundNameTc = $('#txtFundNameTc').val();
+	if(null==fundNameTc || ""==fundNameTc){
+		layer.msg('请填写基金名称(繁体中文)');
+		return ;
+	}
+	var fundNamePinyinTc = $('#txtFundNamePinyinTc').val();
+	var domicileCodeTc = $('#selDomicileCodeTc').val(); 
+	var domicileTc = "";
+	if(""!=domicileCodeTc){
+		domicileTc = $('#selDomicileCodeTc').find("option:selected").text();
+	}
+	var fundCurrencyCodeTc = $('#selFundCurrencyTc').val();
+	if(null==fundCurrencyCodeTc || ""==fundCurrencyCodeTc){
+		layer.msg('请选择基金货币');
+		return ;
+	}
+	var fundCurrencyTc = "";
+	if(""!=fundCurrencyCodeTc){
+		fundCurrencyTc = $('#selFundCurrencyTc').find("option:selected").text(); 
+	}
+	
+	var fundHouseIdTc = $('#selFundHouseTc').val();
+	var fundHouseTc = "";
+	if(""!=fundHouseIdTc){
+		fundHouseTc = $('#selFundHouseTc').find("option:selected").text();
+	} 
+	var fundHousePinyinTc = $('#txtFundHousePinyinTc').val();
+	var fundManCoTc = $('#txtFundManCoTc').val();
+	var fundManagerTc = $('#txtFundManagerTc').val();
+	var fundSizeTc = $('#txtFundSizeTc').val(); 
+	var fundTypeCodeTc = $('#selFundTypeTc').val();
+	var fundTypeTc = "";
+	if(""!=fundTypeCodeTc){
+		fundTypeTc = $('#selFundTypeTc').find("option:selected").text(); 
+	}
+	var sectorTypeCodeTc = $('#selSectorTypeTc').val(); 
+	var sectorTypeTc = "";
+	if(""!=sectorTypeCodeTc){
+		sectorTypeTc = $('#selSectorTypeTc').find("option:selected").text();
+	}
+	var geoAllocationCodeTc = $('#selGeoAllocationTc').val();
+	var geoAllocationTc = "";
+	if(""!=geoAllocationCodeTc){
+		geoAllocationTc = $('#selGeoAllocationTc').find("option:selected").text();
+	} 
+	var invTargetTc = $('#txtInvTargetTc').val();
+	var keyRisksTc = $('#txtKeyRisksTc').val();
+	
+	//En 
+	var fundNameEn = $('#txtFundNameEn').val();
+	if(null==fundNameTc || ""==fundNameTc){
+		layer.msg('请填写基金名称(英文)');
+		return ;
+	}
+	var fundNamePinyinEn = $('#txtFundNamePinyinEn').val();
+	var domicileCodeEn = $('#selDomicileCodeEn').val();
+	var domicileEn = "";
+	if(""!=domicileCodeEn){
+		domicileEn = $('#selDomicileCodeEn').find("option:selected").text();
+	} 
+	var fundCurrencyCodeEn = $('#selFundCurrencyEn').val();
+	if(null==fundCurrencyCodeEn || ""==fundCurrencyCodeEn){
+		layer.msg('请选择基金货币');
+		return ;
+	}
+	var fundCurrencyEn = "";
+	if(""!=fundCurrencyCodeEn){
+		fundCurrencyEn = $('#selFundCurrencyEn').find("option:selected").text();
+	}
+	
+	var fundHouseIdEn = $('#selFundHouseEn').val();
+	var fundHouseEn = "";
+	if(""!=fundHouseIdEn){
+		fundHouseEn = $('#selFundHouseEn').find("option:selected").text();
+	} 
+	var fundHousePinyinEn = $('#txtFundHousePinyinEn').val();
+	var fundManCoEn = $('#txtFundManCoEn').val();
+	var fundManagerEn = $('#txtFundManagerEn').val();
+	var fundSizeEn = $('#txtFundSizeEn').val();  
+	var fundTypeCodeEn = $('#selFundTypeEn').val();
+	var fundTypeEn = "";
+	if(""!=fundTypeCodeEn){
+		fundTypeEn = $('#selFundTypeEn').find("option:selected").text();
+	}
+	var sectorTypeCodeEn = $('#selSectorTypeEn').val(); 
+	var sectorTypeEn = "";
+	if(""!=sectorTypeCodeEn){
+		sectorTypeEn = $('#selSectorTypeEn').find("option:selected").text();
+	}
+	var geoAllocationCodeEn = $('#selGeoAllocationEn').val();
+	var geoAllocationEn = "";
+	if(""!=geoAllocationCodeEn){
+		geoAllocationEn = $('#selGeoAllocationEn').find("option:selected").text();
+	}
+	var invTargetEn = $('#txtInvTargetEn').val();
+	var keyRisksEn = $('#txtKeyRisksEn').val();
+	
+	var postData = {
+		'isAdd':isAdd,
+		'fundId':fundId,
+		//Sc
+		'isinCodeSc': isinCodeSc, 
+		'riskLevelSc': riskLevelSc, 
+		'lastNavSc': lastNavSc,
+		'lastNavUpdateSc' : lastNavUpdateSc,
+		'issuePriceSc': issuePriceSc, 
+		'issueDateSc' : issueDateSc,
+		'mgtFeeSc' : mgtFeeSc,		
+		'dayReturnSc' : dayReturnSc,  
+		'subscribeFeeSc' : subscribeFeeSc,
+		'minInitialAmountSc' : minInitialAmountSc,
+		'minSubscribeAmountSc' : minSubscribeAmountSc, 
+		'minHoldingAmountSc' : minHoldingAmountSc,
+		'minRedemptionAmountSc' : minRedemptionAmountSc,
+		'minRspAmountSc' : minRspAmountSc,
+		//'overheadSc' : overheadSc,
+
+		'fundNameSc': fundNameSc,
+		'fundNamePinyinSc' : fundNamePinyinSc,
+		'domicileCodeSc' : domicileCodeSc,
+		'domicileSc' : domicileSc,
+		'fundCurrencyCodeSc': fundCurrencyCodeSc,
+		'fundCurrencySc': fundCurrencySc,
+		
+		'fundHouseIdSc' : fundHouseIdSc,
+		'fundHouseSc' : fundHouseSc,
+		'fundHousePinyinSc' : fundHousePinyinSc,
+		'fundManCoSc' : fundManCoSc,
+		'fundManagerSc' : fundManagerSc,
+		'fundSizeSc' : fundSizeSc,
+		'fundTypeSc' : fundTypeSc,
+		'fundTypeCodeSc' : fundTypeCodeSc,
+		'sectorTypeSc' : sectorTypeSc,
+		'sectorTypeCodeSc' : sectorTypeCodeSc,
+		'geoAllocationSc' : geoAllocationSc,
+		'geoAllocationCodeSc' : geoAllocationCodeSc,
+		'invTargetSc' : invTargetSc,
+		'keyRisksSc' : keyRisksSc,
+		
+		//Tc
+		'fundNameTc': fundNameTc,
+		'fundNamePinyinTc' : fundNamePinyinTc,
+		'domicileCodeTc' : domicileCodeTc,
+		'domicileTc' : domicileTc,
+		'fundCurrencyTc': fundCurrencyTc,
+		'fundCurrencyCodeTc': fundCurrencyCodeTc,
+		
+		'fundHouseIdTc' : fundHouseIdTc,
+		'fundHouseTc' : fundHouseTc,
+		'fundHousePinyinTc' : fundHousePinyinTc,
+		'fundManCoTc' : fundManCoTc,
+		'fundManagerTc' : fundManagerTc,
+		'fundSizeTc' : fundSizeTc,
+		'fundTypeTc' : fundTypeTc,
+		'fundTypeCodeTc' : fundTypeCodeTc,
+		'sectorTypeTc' : sectorTypeTc,
+		'sectorTypeCodeTc' : sectorTypeCodeTc,
+		'geoAllocationTc' : geoAllocationTc,
+		'geoAllocationCodeTc' : geoAllocationCodeTc,
+		'invTargetTc' : invTargetTc,
+		'keyRisksTc' : keyRisksTc,
+		
+		//En
+		'fundNameEn': fundNameEn,
+		'fundNamePinyinEn' : fundNamePinyinEn,
+		'domicileCodeEn' : domicileCodeEn,
+		'domicileEn' : domicileEn,
+		'fundCurrencyEn': fundCurrencyEn,
+		'fundCurrencyCodeEn': fundCurrencyCodeEn,
+		
+		'fundHouseIdEn' : fundHouseIdEn,
+		'fundHouseEn' : fundHouseEn,
+		'fundHousePinyinEn' : fundHousePinyinEn,
+		'fundManCoEn' : fundManCoEn,
+		'fundManagerEn' : fundManagerEn,
+		'fundSizeEn' : fundSizeEn,
+		'fundTypeEn' : fundTypeEn,
+		'fundTypeCodeEn' : fundTypeCodeEn,
+		'sectorTypeEn' : sectorTypeEn,
+		'sectorTypeCodeEn' : sectorTypeCodeEn,
+		'geoAllocationEn' : geoAllocationEn,
+		'geoAllocationCodeEn' : geoAllocationCodeEn,
+		'invTargetEn' : invTargetEn,
+		'keyRisksEn' : keyRisksEn
+	}; 
+
+   	$.ajax({
+           type: "post",
+           url : "${base}/console/fund/info/save.do?datestr="+ new Date().getTime(),
+           data: postData,
+           async: false,
+           dataType: "json",
+           beforeSend: function () { layer.msg("正在保存数据中......", { time: 50000 });},
+           complete: function () {},
+           error: function (XMLHttpRequest, textStatus, errorThrown) {},
+           success: function (data, textStatus) {
+         	   var result = data.result;
+              if(result==true) { 
+              		layer.msg('保存成功', {icon: 1}, function () { 
+              			setTimeout(function(){
+              				parent.document.getElementById("btnSearch").click();
+                  			parent.document.getElementById("btnCloseIframe").click(); 
+              			},1000)
+              			
+              		});          			
+              } else { 
+           	   layer.msg('保存失败', {icon: 0, time: 2000}, function () {   });
+              }
+       	}
+   	});
+}
+
+//点击加载数据
+$("#fund-fee").on("click",function(){
+	$("form").eq($(this).index()).find("iframe").attr("src","${base}/console/fund/fees/list.do?fundId="+fundId);
+});
+$("#fund-anno").on("click",function(){
+	$("form").eq($(this).index()).find("iframe").attr("src","${base}/console/fund/info/fundAnnoList.do?fundId="+fundId);
+});
+$("#fund-bonus").on("click",function(){
+	$("form").eq($(this).index()).find("iframe").attr("src","${base}/console/fund/info/fundBonusList.do?fundId="+fundId);
+});
+$("#fund-doc").on("click",function(){
+	$("form").eq($(this).index()).find("iframe").attr("src","${base}/console/fund/info/fundDocList.do?fundId="+fundId);
+});
+</script>
+
+
+</body>
+</html>

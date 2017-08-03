@@ -1,0 +1,365 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[@lang_res k='distributor.form.title'/]</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="${base}/res/css/wmesupload.css"> 
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	<style>
+	    #psw_div{position:relative;}
+		#psw_div .red{position:absolute;right:-80px;top:6px;font-size:12px;}
+		.red{color:red}
+		.form-horizontal .form-group-special{width:50%;float:left;margin:0 15px 5px -15px;}
+		.has-feedback .form-control {
+    			 padding-right: 20px; 
+		}
+	</style>
+	<script type="text/javascript">
+        var base_root = '${base}';
+    </script>
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+		<div class="tab-side container-fluid">
+		<div class="tab-side-container">
+		<div>
+		<form id="frm" class="form-horizontal" method="post">
+			<input type="hidden" name="id" value="${(distributor.id)?if_exists}">
+			<p class="form-group-title">[@lang_res k='member.baseInfo'/]</p>
+			<div class="form-group form-group-special">
+				<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtCompanyName">
+					[@lang_res k='distributor.form.name'/]
+				</label>
+				<div class="col-md-4">
+					<input class="form-control " id=txtCompanyName name="companyName" maxlength="100" type="text"    value="${(distributor.companyName)?if_exists}">
+				</div>
+				
+				<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtRegisterNo">
+					[@lang_res k='distributor.form.registerNo'/]
+				</label>
+				<div class="col-md-4">
+					<input id=txtRegisterNo type="text" class="form-control " name="registerNo" maxlength="25" value="${(distributor.registerNo)?if_exists}">
+				</div>
+				
+			</div>
+
+			<div class="form-group form-group-special">
+				<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selEntitytype">
+				    
+					[@lang_res k='distributor.form.entityType'/]
+				</label>
+				<div class="col-md-4">
+					<select id="selEntitytype" name="entityType" class="form-control">
+                         <option value='1'>[@lang_res k='entityType.option.1'/]</option>
+                         <option value='2'>[@lang_res k='entityType.option.2'/]</option>
+                         <option value='3'>[@lang_res k='entityType.option.3'/]</option>
+                         <option value='4'>[@lang_res k='entityType.option.4'/]</option>
+                         <option value='5'>[@lang_res k='entityType.option.5'/]</option>
+                    </select> 
+				</div>
+			
+				<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtEntityOther">
+					[@lang_res k='distributor.form.entityOther'/]
+				</label>
+				<div class="col-md-4">
+					<input type="text" id="txtEntityOther" name="entityOther" maxlength="30" class="form-control" value="${(distributor.entityOther)?if_exists}">
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin:0 0 5px 0">
+				<div style="width:50%;float:left;margin-left:-15px;">
+				<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selIsFinancial">
+					[@lang_res k='distributor.form.isFinancial'/]
+				</label>
+				<div class="col-md-4">
+					<select id="selIsFinancial" name="isFinancial" class="form-control">
+                         <option value='1'>[@lang_res k='global.true'/]</option>
+                         <option value='0'>[@lang_res k='global.false'/]</option>
+                    </select>
+				</div>
+				</div>
+				
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtGiin">
+						[@lang_res k='distributor.form.giin'/]
+					</label>
+					<div class="col-md-4">
+						<input type="text" id="txtGiin" name="giin" maxlength="30" class="form-control" value="${(distributor.giin)?if_exists}">
+					</div>
+				</div>
+			</div>
+			
+			<p class="form-group-title">[@lang_res k='member.additionalInfo'/]</p>
+
+			<div class="form-group form-group-special">
+				<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selIncorporationPlace">
+					[@lang_res k='distributor.form.incorporationPlace'/]
+				</label>
+				<div class="col-md-4">
+					<select id="selIncorporationPlace" name="incorporationPlace" class="form-control" sel="${(distributor.incorporationPlace)?if_exists}">
+                    </select> 
+				</div>
+			
+				<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="dtIncorporationDate">
+					[@lang_res k='distributor.form.incorporationDate'/]
+				</label>
+				<div class="col-md-4">
+					<input type="text" id="dtIncorporationDate" name="incorporationDate" class="laydate-icon form-control form-control-laydate" style="height: 34px;padding: 6px 12px;" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" value="${(distributor.incorporationDate?string('yyyy-MM-dd'))?if_exists}">
+				</div>
+			</div>
+			
+			
+			<div class="form-group form-group-special">
+                <label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtRegisteredAddress">
+                    [@lang_res k='distributor.form.registeredAddress'/]
+                </label>
+                <div class="col-md-4">
+                   <input type="text" id="txtRegisteredAddress" name="registeredAddress" maxlength="200" class="form-control " value="${(distributor.registeredAddress)?if_exists}">
+                </div>
+                            								
+				<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtMailingAddress">
+					[@lang_res k='distributor.form.mailingAddress'/]
+				</label>
+				<div class="col-md-4">
+					<input type="text" id="txtMailingAddress" name="mailingAddress" maxlength="200" class="form-control " value="${(distributor.mailingAddress)?if_exists}">
+				</div>
+			</div>
+
+			<div class="form-group" style="margin:0 0 5px 0">
+				<div style="width:50%;float:left;margin-left:-15px;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="selCountry">
+						[@lang_res k='distributor.form.country'/]
+					</label>
+					<div class="col-md-4">
+						<select id="selCountry" name="country" class="form-control" sel="${(distributor.country)?if_exists}">
+		                </select>
+					</div>
+				</div>
+				
+				<div style="width:50%;float:left;">
+					<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtWebsite">
+						[@lang_res k='distributor.form.website'/]
+					</label>
+					<div class="col-md-4">
+						 <input type="text" id="txtWebsite" name="website" maxlength="100" class="form-control " value="${(distributor.website)?if_exists}">
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" style="margin-bottom: 5px">
+				<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtNaturePurpose">
+					[@lang_res k='distributor.form.naturePurpose'/]
+				</label>
+				<div class="col-md-10" style="width:95%;">
+					<textarea id='txtNaturePurpose' type="text" class="form-control " rows="3" maxlength="250" name="naturePurpose" value="${(distributor.naturePurpose)?if_exists}">${(distributor.naturePurpose)?if_exists}</textarea>
+				</div>
+			</div>
+			
+			<div class="form-group">
+                <div class="col-md-10">
+                	<label for="imgFile" class="label-control">
+                        [@lang_res k='console.ifafirm.detail.form.label.companyLogo'/]
+                    </label>
+                    <div class="upload-box upload-album"></div>
+                    <div>
+                        <img id="imgFile" style="width:90px;height:35px;" src="${base}[@user_head u='${distributor.logoFile!}' t='d'/]" value="${distributor.logoFile!}"/>
+                        <input type="hidden" id="logoFile" name="logoFile" value="${distributor.logoFile!}" >
+                    </div>
+                </div>
+           </div>
+	</form>
+
+	</div>
+	<div class="clear">
+		<br>
+	</div>
+	</div>
+	</div>
+</div>
+
+
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script src="${base}/res/console/js/jquery.form.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/laydate/laydate.js"></script>
+<script type="text/javascript" src="${base}/res/js/base.js"></script>
+<script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+<script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+<script type="text/javascript">
+define(function(require) {
+	var $ = require('jquery');
+		require('layer');
+		require("wmes_upload");
+		
+	$(document).ready(function(){
+		//页面第一次加载时选第一个类别			
+		$(".upload-album").InitUploader({ 
+			btntext: "", 
+			multiple: true, 
+			water: true, 
+			thumbnail: true, 
+			filesize: "8000",
+			modulerelate:"portrait",
+			successCallBack:function(filePath,orifilename){
+				$('#imgFile').val(filePath);
+				//刷新预览
+				$('#imgFile').attr('src',base_root+"/loadImgSrcByPath.do?filePath="+filePath);
+				//console.log(orifilename);
+			}
+		});
+	});
+
+});
+
+	$(function() {
+		//先gen出国家数据
+		loadCountry();
+		//保存公司信息
+		$('#btnSave1').on('click',saveFirm);
+		//gen出国家数据
+		
+		//设定已选
+		$("#selEntitytype").find("option[value='${(distributor.entityType)?if_exists}']").attr("selected",true);
+		$("#selIsFinancial").find("option[value='${(distributor.isFinancial)?if_exists}']").attr("selected",true);
+		
+		function loadCountry()
+		{
+			$.ajax({
+            type: "post",
+            url : "${base}/console/country/langListJson.do?datestr="+ new Date().getTime(),
+            data: {},
+            async: false,
+            dataType: "json",
+            beforeSend: function () {
+                    },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+            success: function (json) {
+            	var selCountry = $("#selCountry").attr("sel");
+            	var selPlace = $("#selIncorporationPlace").attr("sel");
+            	if (json != undefined && json.result == true) {
+						var data = JSON.parse(json.countryJson);
+						var html = "<option value=''>[@lang_res k='global.pleaseSelect'/]</option>";
+						$.each(data, function(i, n) {
+							html += "<option value='"+n.id+"'>" + n.name + "</option>";
+						});
+						$("#selIncorporationPlace").append(html);
+						$("#selCountry").append(html);
+						
+						//设定已选
+						$("#selIncorporationPlace").find("option[value='"+selPlace+"']").attr("selected",true);
+						$("#selCountry").find("option[value='"+selCountry+"']").attr("selected",true);
+					}
+	            }
+        	});
+		}
+		//提交验证
+		$("#frm").bootstrapValidator({
+			feedbackIcons : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			fields : {
+				companyName : {
+                    validators : {
+                        notEmpty : {
+                            message : "[@lang_res k='distributor.form.name'/] [@lang_res k='global.empty.tip'/]"
+                        }
+                    }
+                },
+                registerNo : {
+                    validators : {
+                        notEmpty : {
+                            message : "[@lang_res k='distributor.form.registerNo'/] [@lang_res k='global.empty.tip'/]"
+                        }
+                    }
+                },
+                incorporationPlace : {
+                    validators : {
+                        notEmpty : {
+                            message : "[@lang_res k='distributor.form.incorporationPlace'/] [@lang_res k='global.empty.tip'/]"
+                        }
+                    }
+                },
+                registeredAddress:{
+                    validators : {
+                        notEmpty : {
+                            message : "[@lang_res k='distributor.form.registeredAddress'/] [@lang_res k='global.empty.tip'/]"
+                        }
+                    }
+                }
+			}
+		}).on('success.form.bv', function(e) {
+			e.preventDefault();
+			saveFirm();
+		});
+		
+		//保存
+		function saveFirm() {
+		/*
+			var id = getQueryString('id');
+			var companyName = $('#txtCompanyName').val();
+			var entitytype = $('#selEntitytype').val();
+			var registerNo = $('#txtRegisterNo').val();
+			var isFinancial = $('#selIsFinancial').val();
+			var giin = $('#txtGiin').val();
+			var incorporationPlace = $('#selIncorporationPlace').val();
+			var registeredAddress = $('#txtRegisteredAddress').val();
+			var mailingAddress = $('#txtMailingAddress').val();
+			var naturePurpose = $('#txtNaturePurpose').val();
+			var country = $('#selCountry').val();
+			var website = $('#txtWebsite').val();
+			var incorporationDate = $('#dtIncorporationDate').val();
+			var postData = { 'id':id,'companyName': companyName, 'entitytype': entitytype, 'registerNo': registerNo, 'isFinancial': isFinancial, 'giin': giin, 'incorporationPlace': incorporationPlace, 'registeredAddress': registeredAddress, 'mailingAddress': mailingAddress, 'country': country,'naturePurpose':naturePurpose,'website':website,'incorporationDate':incorporationDate};
+			*/
+			
+			var logoFile = $('#imgFile').val();
+	        //console.log(logoFile);//上传控件问题：1）上传完，看不到图，路径要转换； 2）打开编辑，能看到图，但再保存时，读取不到val()，所以原图片路径会被置空
+	        if (logoFile && logoFile!="")
+                $('#logoFile').val(logoFile) ;
+            
+			var postData = $("#frm").serialize(); 
+        	$.ajax({
+	            type: "post",
+	            url : "${base}/console/distributor/saveDistributorInfo.do?datestr="+ new Date().getTime(),
+	            data: postData,
+	            async: false,
+	            dataType: "json",
+	            beforeSend: function () {
+                },
+	            error: function (XMLHttpRequest, textStatus, errorThrown) {
+	
+	            },
+	            success: function (data, textStatus) {
+	               var result = data.result;
+	               if(result==true)
+	               { 
+		               	layer.msg('[@lang_res k='global.success.save'/]', { icon: 1, time: 1500 },function(){
+	                        window.parent.bindList(0);
+	                        closeTab();
+		               	});
+	               }
+	               else layer.msg('[@lang_res k='global.failed.save'/]', { icon: 0, time: 1500}, function () {  });
+                }
+            });
+		}
+	});
+
+	
+</script>
+</body>
+</html>

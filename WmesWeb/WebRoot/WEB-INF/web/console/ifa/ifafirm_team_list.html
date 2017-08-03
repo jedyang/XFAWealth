@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[@lang_res k='console.ifa.team.add.title'/]</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+	<link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet"  >
+		
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	<style type="text/css">
+	table.treetable thead tr th {
+	    border: 1px solid #F4F4F4;
+	    font-weight: 400;
+	    padding: .6em 1em .6em 1em;
+	    text-align: left;
+	    font-size: 1.2em;
+	    color: #000;
+	}
+	.table-head{font-weight:bold;}
+	</style>
+	<script>
+	   var base_root = "${base!}";
+	   var lang = '${Session["_LANG_CODE_"]!'sc'}';
+	</script>
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+	<input type="hidden" id="ifaId" name="ifaId" value="${ifaId?if_exists}"/>
+    <div class="tab-side container-fluid">
+        <div class="tab-side-container">
+            <div class="clear"></div>
+            <div class="tab_wrap">
+             <form class="form-inline" style="display:block;">
+                <div class="pdt20" style="padding-top: 5px;">
+                    <a id="spreadControl" href="javascript:void(0);" class="btn-blue-s">[@lang_res k='global.expand'/]</a>
+                </div>
+                <div>
+                    <table id="ifaFirmTeamList" border="0" id="tree" cellpadding="0" cellspacing="0" class="table table-hover">
+                    	<thead>
+                    		<tr>
+							    <th class="table-head">
+									[@lang_res k='ifafirm.list.orgCode'/]
+								</th>
+								<th class="table-head">
+									[@lang_res k='ifafirm.list.orgName'/]
+								</th>
+								<th class="table-head">
+									[@lang_res k='global.operate'/]
+								</th>
+							</tr>
+                    	</thead>
+                    	<tbody>	
+						</tbody>
+                    </table>
+         		<nav  class="pull-right">
+                	<ul id='pagination' class="pagination pagination-sm"></ul>
+                </nav>
+       			<div class="clear"></div>                      
+                </div>
+              </form>
+             
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+    <script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+    <script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+<script type="text/javascript">
+seajs.use('${base}/res/third/layer/layer.js');
+$(function() {
+	var ifaId = $("#ifaId").val();
+	var ifaTeamJson = ${ifaTeamJson!''};
+	bindTeamList(0,ifaTeamJson);
+	//绑定收缩展示
+	$("#spreadControl").bind("click", function() {
+		ctrlTreeTable();
+	});
+	function bindTeamList(curPage,ifaTeamJson) {
+		$.ajax({
+				type : 'post',
+				datatype : 'json',
+				//url : '${base}/console/ifa/firmTeamJson.do?datestr=' + new Date().getTime(),
+                url : '${base}/console/ifafirm/info/listfirmteamJson.do?datestr=' + new Date().getTime(),
+				data : {
+					'keyword' : $("#txtKeyword").val(),
+					'ifaId':ifaId,
+					'page' : curPage + 1,
+					'rows' : 4,
+					'sort' : '',
+					'order' : ''
+				},
+				success : function(json) {
+					//var total = json.total;
+					var table = json.teamJson;//json.rows;
+					console.log(table);
+					$('#ifaFirmTeamList tbody').empty();
+					var tr = '';
+					var ifafirmId = '';
+					$.each(JSON.parse(table), function(index, array) {
+						var flag = 'false';
+						var id = array.id == null ? "" : array.id;
+						$.each(ifaTeamJson.list,function(index1, array1) {
+						   var teamId = array1.id == null ? "" : array1.id;
+						   if(id == teamId){
+						   		flag = 'true';
+						   		return true;
+						   }
+						});
+						ifafirmId = array.ifafirm.id == null ? "" : array.ifafirm.id;
+						var companyName = array.ifafirm.companyName == null ? "" : array.ifafirm.companyName;
+						var code = array.code == null ? "" : array.code;
+						var name = array.name == null ? "" : array.name;
+						var classLayer = array.classLayer == null ? "" : array.classLayer;
+                        if (!classLayer) classLayer=0;
+                        
+						if(null != array.parent && null != array.parent.id){
+							var parentId = array.parent.id;
+						}
+						var ifafirmUrl = '${base}/console/ifa/ifa_firm_detail.do?ifafirmId=' + ifafirmId;
+						
+			            tr += '<tr classlayer="' + classLayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id="' + parentId + '">'
+			               +'<td><span class="folder class_planname">' + code + '</span></td>'
+			               +'<td  class="class_startdate">' + name + '</td>';
+			               if('false' == flag){
+			                tr += '<td><ul class="nav nav-pills"><li role="presentation"><a classlayer="1" teamid="' + id + '" ifafirmId=\''+ifafirmId+'\' id=\''+id+'\' ifaId=\''+ifaId+'\' class="btndelnode" href="javascript:;">'
+			                	    + "[@lang_res k='console.ifa.team.add.join'/]"+'</a></li></ul></td></tr>';
+			               }else if('true' == flag){
+			                tr += '<td><ul class="nav nav-pills"><li role="presentation" class="disabled"><a classlayer="1" teamid="' + id + '" class="btndelnode">'
+			                	    + "[@lang_res k='console.ifafirm.team.list.table.operate.alreadyJoined'/]"+'</a></li></ul></td></tr>';
+			               }
+					   });
+						$('#ifaFirmTeamList tbody').append(tr);
+				        $('#ifaFirmTeamList').treetable({ expandable: true,clickableNodeNames:true });
+				        $('#ifaFirmTeamList').treetable('expandAll'); //加载时直接结构全部显示出来
+				        $('tr[classLayer = 1]').each(function(){
+							$(this).css('fontWeight','bold');
+						}); 
+						$('.btndelnode').css('fontWeight','bold');
+						/*
+						$('#pagination').pagination(total, {
+							callback : pageselectCallback,
+							numDetail : '',
+							items_per_page : 4,
+							num_display_entries : 4,
+							current_page : curPage,
+							num_edge_entries : 2
+						});*/
+						
+						//绑定加入团队
+						$(".btndelnode").bind("click", function() {
+							var ifafirmId = $(this).attr("ifafirmId");
+							var teamId = $(this).attr("teamId");
+							var ifaId = $(this).attr("ifaId");
+							addTeam(ifafirmId,teamId,ifaId);
+						});
+				}
+			});
+			function pageselectCallback(page_id, jq) {
+				bindTeamList(page_id,ifaTeamJson);
+			}
+			//重新加载js和css，初始化treetable的tr
+			loadResource();
+		}
+		//add Team
+		function addTeam(ifafirmId,teamId,ifaId){
+			$.ajax({
+				type:'post',
+				url:'${base}/console/ifa/addTeam.do?datestr='+ new Date().getTime(),
+				data:{
+					ifafirmId : ifafirmId,
+					teamId : teamId,
+					ifaId : ifaId
+					},
+				success:function(flag){
+					if (flag){
+						var a = $('a[teamid="' + teamId + '"]');
+					    a.parent().addClass('disabled');
+					    a.html('<i class="glyphicon glyphicon-star text-bold"></i>[@lang_res k="console.ifafirm.team.list.table.operate.alreadyJoined"/]');
+					    a.attr('href','javascript:void(0)');
+					 	window.parent.layer.msg("[@lang_res k='global.success'/]");
+					 	//刷新父页面
+						$(window.parent.document).find("#btnSearch").trigger('click');
+					}else
+					 	window.parent.layer.msg("[@lang_res k='Operation failed'/]");
+				}
+			});
+		}
+		//expand or scoll tree
+		function ctrlTreeTable(){
+		    var height = window.document.documentElement.scrollHeight;
+			var span = ($('.indenter').children())[0];
+			if (typeof(span) != "undefined"){
+				var title = span.title;
+			    if('Expand'==title){
+			        var height = window.outerHeight;
+					$('#Info1',parent.document).attr('height',height);
+			    	$('#ifaFirmTeamList').treetable('expandAll');
+			    	$('#spreadControl').html(' [@lang_res k="global.collapse"/]');
+			        $('#spreadControl').find('i').remove();
+			    	return false;
+			    }else if('Collapse'==title){
+			    	$('#ifaFirmTeamList').treetable('collapseAll');
+			    	$('#spreadControl').html(' [@lang_res k="global.expand"/]');
+			    	$('#spreadControl').find('i').remove();
+			        var height = window.document.documentElement.scrollHeight;
+					$('#Info1',parent.document).attr('height',height);
+			        return false;
+			    }
+			}
+	    }
+    	function loadResource(){
+		    loadjscssfile("${base}/res/console/js/jquery-1.11.2.min.js","js");
+		    loadjscssfile("${base}/res/third/jqueryui/jquery-ui.js","js");
+		    loadjscssfile("${base}/res/console/js/js.js","js");
+		    loadjscssfile("${base}/res/console/js/jquery.pagination.js","js");
+		    loadjscssfile("${base}/res/third/treetable/jquery.treetable.js","js");
+   		}
+});
+
+</script>
+</body>
+</html>

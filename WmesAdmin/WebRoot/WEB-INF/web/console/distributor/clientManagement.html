@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>投资帐号列表</title>
+		<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	    <![endif]-->
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js"></script>
+		<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+		<script src="${base}/res/console/web/clientManagementForDis.js"></script>
+		<script src="${base}/res/js/echarts.min.js"></script>
+	</head>
+	<body>
+
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="right-side container-fluid">
+				<div class="r-side-container">
+					<!--
+				<div class="wmes-top">
+					<a href="javascript:;" class="header-over">Client Account Management</a>
+				</div>
+				-->
+					<div class="tab_wrap">
+						<div class="account-wrap">
+							<div class="conservative-choice-wrap">
+								<p class="conservative-choice-title">
+									Distributor
+								</p>
+								<ul class="conservative-choice">
+									<li class=" conservative_all conservative-choice-active">
+										All
+									</li>
+									[#if ifafirmList?exists && ifafirmList?size gt 0 ] [#list ifafirmList as ifafirm]
+									<li data-name="ifafirm" data-key="${ifafirm.companyName}" data-value="${ifafirm.id}">
+										${ifafirm.companyName}
+									</li>
+									[/#list] [/#if]
+								</ul>
+							</div>
+							<div class="conservative-choice-wrap">
+								<p class="conservative-choice-title">
+									Client Name
+								</p>
+								<input class="conservative-choice-input" type="" name="" id="txtKeyWord">
+								<a class="conservative-choice-button" href="javascript:;">Search</a>
+							</div>
+						</div>
+						<div class="funds_list_selected">
+							<p class="funds_selected_title">
+								已选方案
+							</p>
+							<ul class="selection_criteria">
+								<p class="funds_title_selection">
+									全部清除
+								</p>
+							</ul>
+						</div>
+						<div class="account-wrap">
+							<div class="account-list-choose">
+								<div class="account-checkbox">
+									<input type="checkbox" value="" [#if in_use?exists & in_use='1' ]checked="true" [/#if] id="in_use">
+									<label for="in_use"></label>
+								</div>
+								<span class="account-checkbox-font">In Use</span>
+
+								<div class="account-checkbox">
+									<input type="checkbox" value="" [#if inApproval?exists & inApproval='1' ]checked="true" [/#if] id="InApproval">
+									<label for="InApproval"></label>
+								</div>
+								<span class="account-checkbox-font">InApproval</span>
+
+								<div class="account-checkbox">
+									<input type="checkbox" value="" [#if cancellation?exists & cancellation='1' ]checked="true" [/#if] id="Cancellation">
+									<label for="Cancellation"></label>
+								</div>
+								<span class="account-checkbox-font">Cancellation</span>
+								<div class="account-choose-left">
+									<p class="account-xiala-title">
+										CUR
+									</p>
+									<div class="proposal_xiala">
+										<input type="text" [#if cur?exists & cur!='' ]value="${cur}" [#else]placeholder="USD" [/#if] readonly="" id="currency">
+										<span class="icon_xiala"></span>
+										<ul>
+											<li>RMB</li>
+						                    <li>HKD</li>
+						                    <li>USD</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="account-rows">
+								<div class="builder-title">
+									<p class="builder-list builder-arrow-top">
+										Total Aum
+										<span class="builder-arrow"></span>
+									</p>
+									<p class="builder-list builder-arrow-dowm">
+										Product Value
+										<span class="builder-arrow"></span>
+									</p>
+									<p class="builder-list">
+										Cash
+										<span class="builder-arrow"></span>
+									</p>
+								</div>
+								<div id="list">
+									[#if accountList?exists && accountList?size gt 0 ] [#list accountList as list] [#if list.openStatus='1']
+									<div class="account-list-contsnts">
+										<div class="client-list-cleft">
+											<div class="client-list-nwrap">
+												<p class="client-list-name">
+													<a style="color:black" href="/wmes/front/investor/myAccountDetail.do?id=${list.id}">${list.accountNo}</a> ${list.loginCode}
+												</p>
+												<ul class="client-list-describe">
+													[#if list.subFlag?exists && list.subFlag!='' ]
+													<li>
+														[#if list.subFlag='0']Master Account [#elseif list.subFlag='1']Sub Account[/#if]
+													</li>
+													[/#if]
+													<li>
+														4 Risk
+													</li>
+													[#if list.cies?exists && list.cies!='']
+													<li>
+														${list.cies}
+													</li>
+													[/#if] [#if list.faca?exists && list.faca!='']
+													<li>
+														${list.faca}
+													</li>
+													[/#if]
+												</ul>
+											</div>
+											<div class="client-list-days">
+												<img class="client-invest-ico" src="${base}/res/images/ifa/invest_ico.png">
+												<div class="client-half-day">
+													<div>
+														<p class="client-half-word">
+															${list.nextRPQDate}
+															<span>Days</span>
+														</p>
+														<p class="client-half-time">
+															Next RPQ Time
+														</p>
+													</div>
+													<div>
+														<p class="client-half-word">
+															${list.nextDCDate}
+															<span>Days</span>
+														</p>
+														<p class="client-half-time">
+															Next Document Check Time
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="client-list-cright">
+											<p class="client-chart-cur">
+												Basic CUR
+												<span>${list.baseCurrency}</span>
+											</p>
+											<p class="client-total">
+												${list.totalAssest}
+											</p>
+											<p class="client-total-word">
+												Total AuM
+											</p>
+											<div class="client-list-chart">
+												<div class="client-chart"></div>
+											</div>
+											<div class="client-list-total">
+												<p class="client-list-hkd">
+													${list.cash}
+												</p>
+												<p class="client-list-hkd">
+													${list.productValue}
+												</p>
+											</div>
+										</div>
+
+									</div>
+									[#else]
+									<div class="client-list-approval">
+										<div class="client-list-cleft">
+											<div class="client-list-nwrap">
+												<p class="client-list-name">
+													<span>N/A</span> ${list.loginCode}
+												</p>
+												<ul class="client-list-describe">
+													[#if list.subFlag?exists && list.subFlag!='' ]
+													<li>
+														[#if list.subFlag='0']Master Account [#elseif list.subFlag='1']Sub Account[/#if]
+													</li>
+													[/#if]
+													<li>
+														4 Risk
+													</li>
+													[#if list.cies?exists && list.cies!='']
+													<li>
+														${list.cies}
+													</li>
+													[/#if] [#if list.faca?exists && list.faca!='']
+													<li>
+														${list.faca}
+													</li>
+													[/#if]
+												</ul>
+											</div>
+											<div class="client-list-days">
+												<img class="client-invest-ico" src="${base}/res/images/ifa/invest_ico_02.png">
+												<div class="client-half-day">
+													<div>
+														<p class="client-half-word">
+															N/A
+														</p>
+														<p class="client-half-time">
+															Next RPQ Time
+														</p>
+													</div>
+													<div>
+														<p class="client-half-word">
+															N/A
+														</p>
+														<p class="client-half-time">
+															Next Document Check Time
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<img class="account-list-old" src="${base}/res/images/client/in_old_ico.png">
+									</div>
+
+									[/#if] [/#list] [/#if]
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>

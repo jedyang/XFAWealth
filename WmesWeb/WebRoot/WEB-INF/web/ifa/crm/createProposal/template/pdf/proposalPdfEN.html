@@ -1,0 +1,163 @@
+		<div class="wrap" style="height:auto;padding:1% 4%;">
+			<div style="height:50px"></div>
+			<div class="header" style="text-align: center;font-size:36px;font-weight: bold;margin:300px 0 0 0;">${proposal.proposalName!}<br></br></div>
+			<div class="subhead" style="text-align: center;font-size: 24px;height:40px;margin: 50px 0 600px 0;">
+				<img src="${basePath!}${iconUrl!}" style="height:40px;width:40px;border-radius: 50%;margin:0 22px;vertical-align:middle;"/>
+				<span>${clientName!}</span><br></br>
+				<p>
+				${ifaName!}<br></br>
+				<#if proposal??>${proposal.lastUpdate?string('yyy-MM-dd')}</#if>
+				</p>
+			</div>
+			<div class="title" style="color:rgb(227,107,10);margin-top:40px;height:30px;border-bottom:1px solid #e8e8e8;font-weight: bold;">
+				Investment Constrains
+			</div>
+			<#if  proposal?? && proposal.liquidityNeed??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				Liquidity Needs
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.liquidityNeed!}
+			</p>
+			</#if>
+			<#if  proposal?? && proposal.timeFrame??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				Time Frame
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.timeFrame!}
+			</p>
+			</#if>
+			<#if  proposal?? && proposal.taxConcerns??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				Tax Concerns
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.taxConcerns!}
+			</p>
+			</#if>
+			<#if  proposal?? && proposal.lrf??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				Legal and Regulatory Factors
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.lrf!}
+			</p>
+			</#if>
+			<#if  proposal?? && proposal.unp??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				Unique Needs and Preferences
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.unp!}
+			</p>
+			</#if>
+			<div class="title" style="color:rgb(227,107,10);margin-top:40px;height:30px;border-bottom:1px solid #e8e8e8;font-weight: bold;">
+				Portfolio Detail
+			</div>
+			<#if  proposal?? && proposal.initialInvestAmount??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				Initial Invest Amount
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.initialInvestAmount!}<span style="margin-left:10px">${currencyName!}</span>
+			</p>
+			</#if>
+			<#if (portfolio.aipFlag)?? && portfolio.aipFlag=='1'>
+			<div class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				Automatic Investment Plan Setting
+			</div>
+			<div class="plansetting">
+				<div class="plansettingleft">
+					<p>
+					<span style="text-align: left;color: #b6b6b6; width: 120px;">Exec Cycle：</span>
+					<#if aip?? && (aip.aipExecCycle)?? && aip.aipExecCycle=='w'>
+						<span class="plansettingleft1" style="display: inline-block;height: 20px;line-height: 20px;padding: 0 8px;color: #000;">Weekly</span>
+					<#elseif (aip.aipExecCycle)?? && aip.aipExecCycle=='b'>
+						<span class="plansettingleft1" style="display: inline-block;height: 20px;line-height: 20px;padding: 0 8px;color: #000;">Biweekly</span>
+					<#elseif (aip.aipExecCycle)?? && aip.aipExecCycle=='m'>
+						<span class="plansettingleft1" style="display: inline-block;height: 20px;line-height: 20px;padding: 0 8px;color: #000;">Monthly</span>
+					</#if>
+					</p>
+					<p><span style="text-align: left;color: #b6b6b6; width: 120px;">Amount：</span><span>${(aip.aipAmount)!}</span><span style="margin-left:10px">${currencyName!}</span></p>
+					<p><span style="text-align: left;width: 130px;color: #b6b6b6;">Time Distance：</span><span>${(aip.aipTimeDistance)!'-'}</span></p>
+					<p><span style="text-align: left;width: 160px;color: #b6b6b6;">The AIP Init Date：</span><span><#if aip?? && aip.aipInitTime??>${aip.aipInitTime?string('yyy-MM-dd')}</#if></span></p>
+					<p>
+					<#if (aip.aipEndDate)??>
+					<span style="text-align: left;color: #b6b6b6; width: 120px;" class="plansettingrightac">End Date:</span>
+					<span style="color: black;">${aip.aipEndDate?string('yyy-MM-dd')}</span>
+					<#elseif (aip.aipEndCount)?? && (aip.aipEndCount) gt 0>
+					<span style="text-align: left;" class="plansettingrightac">End Count:</span>
+					<span style="color: black;">${aip.aipEndCount!} times</span>
+					<#elseif (aip.aipEndTotalAmount)?? && aip.aipEndTotalAmount gt 0>
+					<span style="text-align: left;" class="plansettingrightac">End Total Amount:</span>
+					<span style="color: black;">${aip.aipEndTotalAmount}</span>
+					</#if>
+					</p>
+				</div>
+			</div>
+			</#if>
+			<#if portfolio.riskLevel??>
+			<div class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				Risk Level
+			</div>
+			<p class="textcontent">
+				${(portfolio.riskLevel)!'-'}
+			</p>
+			</#if>
+			<#if products?? && products?size gt 0>
+			<div class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				Funds holdings
+			</div>
+			<table class="tble" style="width:100%;border-collapse: collapse;border-spacing: 0;display: table;margin-top:25px;padding-left:4%;">
+				<tr class="tble_th" style="background:#f6fafe;border-bottom:2px solid #c7e7fe;height:66px;">
+					<th style="width:30%;text-align: center;">Funds</th>
+					<th style="width:18%;text-align: center;">Weight</th>
+					<th style="width:32%;text-align: center;">Candidate</th>
+				</tr >
+					<#list products as p>
+					<tr style="height:90px;">
+						<td class="funds" style="padding-left:4%;text-align: center;">${p.fundName!}</td>
+						<td class="weight" style="text-align: center;">${p.allocationRate!} %</td>
+						<td style="text-align: center;">
+							<#if p.productDetails?? && p.productDetails?size gt 0>
+								<#list p.productDetails as sp>
+									<#if sp_index == p.productDetails?size-1>
+									${sp.spareFundName!}
+									<#else>
+									${sp.spareFundName!}<br/>
+									</#if>
+								</#list>
+							<#else>
+								<span style="margin: 0 45%;">-</span>
+							</#if>
+						</td>
+					</tr>
+					</#list>
+			</table>
+			</#if>
+			<#if geoAllocationUrl?? && sectorTypeUrl??>
+				<div class="title" style="color:rgb(227,107,10);margin-top:40px;height:30px;border-bottom:1px solid #e8e8e8;font-weight: bold;">
+				Recommended allocation
+			</div>
+			<div>
+				<img src="${basePath!}${geoAllocationUrl!}" style="width:45%;height:80%;float:left"/>
+				<img src="${basePath!}${sectorTypeUrl!}" style="width:45%;height:80%;float:right"/>
+			</div>
+			</#if>
+			<div class="title" style="clear:both;color:rgb(227,107,10);margin-top:40px;height:30px;border-bottom:1px solid #e8e8e8;font-weight: bold;">
+				Portfolio illustration
+			</div>
+			<#if proposal?? && aggregateUrl??>
+			<p>The chart below shows you the performance if you had invested ${(proposal.initialInvestAmount)!} ${currencyName!} in the recommended portfolio from ${proposal.lastUpdate?string("yyy-MM-dd")}</p>
+			<div><img src="${basePath!}${aggregateUrl!}" style="width:100%;height:auto"></img></div>
+			</#if>
+			<#if proposal?? && separatenesUrl??>
+			<p>
+			The chart below shows the income of the fund from ${proposal.lastUpdate?string("yyy-MM-dd")}.
+			</p>
+			<div>
+			<img src="${basePath!}${separatenesUrl!}" style="width:100%;height:auto"></img>
+			</div>
+			</#if>
+		</div>

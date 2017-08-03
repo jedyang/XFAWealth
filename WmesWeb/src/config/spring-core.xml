@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+           http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd  
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd  
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+
+    <!-- 自动扫描的包注解  -->
+	<context:component-scan base-package="com.fsll">
+	  <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	  <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	</context:component-scan>
+    
+	<!-- 对静态资源文件的访问      --> 
+	<mvc:resources mapping="/d/**" location="/,/d/"/>
+	<mvc:resources mapping="/res/**" location="/,/res/"/>
+	<mvc:resources mapping="/u/**" location="/,/u/"/>
+           
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="-1"/>
+		<property name="basenames" value="#{propertyUtils.getList('messages.webLang.')}"/>
+	</bean>
+	
+	<!-- 上传文件相关的配置 上传拦截，如最大上传值及最小上传值
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8" />
+		<property name="maxUploadSize" value="104857600" />
+		<property name="maxInMemorySize" value="4096" />
+	</bean>
+	 --> 
+	<!-- 解释器注入 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="com.fsll.common.web.springmvc.BindingInitializer"/>
+		</property>
+	</bean>
+	
+    <!-- 拦截器注入 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!-- 
+            <mvc:exclude-mapping path="/front/viewLogin.do"/> 
+            <mvc:exclude-mapping path="/front/login.do"/> 
+            <mvc:exclude-mapping path="/front/logout.do"/> 
+             -->
+            <mvc:exclude-mapping path="/front/regist/*"/> 
+            <mvc:exclude-mapping path="/front/member/personal/resetpsw*"/> 
+            <mvc:exclude-mapping path="/front/member/personal/sendtemppass.do"/> 
+            <mvc:exclude-mapping path="/front/member/personal/goresetpsw.do"/> 
+            <mvc:exclude-mapping path="/front/investor/loadParamConfigJson.do"/> 
+            <mvc:exclude-mapping path="/front/portfolio/info/getCorefundNavList.do"/> 
+            <mvc:exclude-mapping path="/front/crm/proposal/proposalPreviewApp.do"/>
+            <mvc:exclude-mapping path="/front/notice/detail.do"/>
+            <mvc:exclude-mapping path="/front/chat/*"/>
+            <bean class="com.fsll.core.interceptor.AdminContextInterceptor">
+		        <property name="auth" value="true"/>
+		        <property name="loginUrl" value="/front/viewLogin.do"/>
+		        <property name="excludeUrls">
+		            <list>
+		                <value>/front/viewLogin.do</value>
+		                <value>/front/login.do</value>
+		                <value>/front/logout.do</value>
+		                <value>/front/site/changLang.do</value>
+		                <value>/loadImgSrcByPathNoLogin.do</value>
+		                <value>/front/ifa/info/getAllUnreadCount.do</value>
+		                <value>/front/comfirmDisclaimer.do</value>
+		            </list>
+		        </property>
+	        </bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/> 
+            <bean class="com.fsll.core.interceptor.SqlInjectIntercepter" />
+        </mvc:interceptor>        
+    </mvc:interceptors>
+    
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieName" value="clientlanguage"/>
+		<property name="cookieMaxAge" value="-1"/>
+	</bean>
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframework.web.bind.MissingServletRequestParameterException">/error/requiredParameter</prop>
+				<prop key="org.springframework.beans.TypeMismatchException">/error/mismatchParameter</prop>
+				<prop key="org.springframework.web.bind.ServletRequestBindingException">/error/bindException</prop>
+				<prop key="com.fsll.common.security.AuthenticationException">/redirect:/viewLogin.do</prop>
+			</props>
+		</property>
+	</bean>
+	
+    <!--JSP视图解析器-->
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+        <property name="prefix" value="/WEB-INF/web/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="order" value="1"/>
+    </bean>
+	
+	<bean id="freemarkerViewResolver" class="com.fsll.common.web.springmvc.RichFreeMarkerViewResolver">
+		<property name="prefix" value="/web/"/>
+		<property name="suffix" value=".html"/>
+		<!-- 如果有多种解释器,添加下面这行,让freeMarker解释器优先 -->
+		<property name="order" value="0"/>
+		<property name="contentType" value="text/html; charset=UTF-8"/>
+		<property name="exposeRequestAttributes" value="false"/>
+		<property name="exposeSessionAttributes" value="false"/>
+		<property name="exposeSpringMacroHelpers" value="true"/>
+	</bean>
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF"/>
+		<property name="freemarkerVariables">
+			<map>
+				<!-- 自定义标签 -->
+				<entry key="uuid" value-ref="uuid"/>
+				<entry key="process_time" value-ref="process_time"/>
+				<entry key="text_cut" value-ref="text_cut"/>
+				<entry key="html_cut" value-ref="html_cut"/>
+				<entry key="lang_res" value-ref="lang_res"/>
+				<entry key="num_fmt" value-ref="num_fmt"/>
+                <entry key="num_pct" value-ref="num_pct"/>
+                <entry key="num_color" value-ref="num_color"/>
+                <entry key="date_fmt" value-ref="date_fmt"/>
+                <entry key="load_prop" value-ref="load_prop"/>
+                <entry key="user_head" value-ref="user_head"/>
+                <entry key="lang_img" value-ref="lang_img"/>
+			</map>
+		</property>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="tag_syntax">auto_detect</prop>
+				<prop key="template_update_delay">0</prop>
+				<prop key="defaultEncoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="boolean_format">true,false</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="number_format">0.######</prop>
+				<prop key="whitespace_stripping">true</prop>
+				<prop key="auto_import">/ftl/spring.ftl as s</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!--执行时间标签-->
+	<bean id="uuid" class="com.fsll.common.web.freemarker.UUIDDirective"/>
+	<bean id="process_time" class="com.fsll.common.web.freemarker.ProcessTimeDirective"/>
+	<bean id="text_cut" class="com.fsll.common.web.freemarker.TextCutDirective"/>
+	<bean id="html_cut" class="com.fsll.common.web.freemarker.HtmlCutDirective"/>
+	<bean id="lang_res" class="com.fsll.common.web.freemarker.LangResDirective"/>
+	<bean id="num_fmt" class="com.fsll.common.web.freemarker.NumberFormatDirective"/>
+    <bean id="num_pct" class="com.fsll.common.web.freemarker.NumberPercentDirective"/>
+    <bean id="num_color" class="com.fsll.common.web.freemarker.NumberColorDirective"/>
+    <bean id="date_fmt" class="com.fsll.common.web.freemarker.DateFormatDirective"/>
+    <bean id="load_prop" class="com.fsll.common.web.freemarker.LoadLangResDirective"/>
+    <bean id="user_head" class="com.fsll.common.web.freemarker.UserHeaderDirective"/>
+    <bean id="lang_img" class="com.fsll.common.web.freemarker.LangImgDirective"/>
+	
+	<!-- JSON转换器 -->
+    <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+                <value>application/json; charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Client -->
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list>
+                <ref bean="jsonConverter" />
+            </list>
+        </property>
+    </bean>
+    
+</beans>

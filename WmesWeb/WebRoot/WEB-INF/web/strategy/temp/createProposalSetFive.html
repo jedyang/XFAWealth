@@ -1,0 +1,18 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <div class="wmes-top">
+        <a href="javascript:;" class="header-over">Create Proposal</a>
+    </div>
+    <div class="wmes-content">
+        <a href="${base}/front/ifa/info/mypipeline.do"><img src="${base}/res/images/allimg/Proposalstep5.png" style="width:100%;"></a>
+       <iframe id="myiframe" width="100%" height="100%"  
+       src="${base}/res/third/PDFShow/web/viewer.html?file=09.pdf" scrolling="no" onLoad="iFrameHeight()"> 
+        
+        </iframe> 
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     // seajs.use('${base}/res/web/strategy/createProposalSetThree.js');
+      var ifm= document.getElementById("myiframe");
+ifm.height=document.documentElement.clientHeight;
+</script>

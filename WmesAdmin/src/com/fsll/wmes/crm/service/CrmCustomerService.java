@@ -1,0 +1,168 @@
+package com.fsll.wmes.crm.service;
+
+import com.fsll.common.util.JsonPaging;
+import com.fsll.wmes.crm.vo.CrmCustomerVO;
+import com.fsll.wmes.entity.CrmCustomer;
+import com.fsll.wmes.entity.MemberIfa;
+import com.fsll.wmes.entity.PortfolioInfo;
+import com.fsll.wmes.member.vo.IfaVO;
+
+public interface CrmCustomerService {
+	/**
+	 * 获取ifa的客户列表
+	 * @author qgfeng
+	 * @date 2016-11-21
+	 */
+    public JsonPaging findInvestorByIfa(JsonPaging jsonPaging,IfaVO ifaVO,String langCode);
+    
+    
+    /**
+     * 获取客户的投资组合列表
+     * @author mqzou
+     * @date 2016-08-23
+     * @param jsonPaging
+     * @param portfolioInfo
+     * @return
+     */
+    public JsonPaging findPortfolioByCustomer(JsonPaging jsonPaging,PortfolioInfo portfolioInfo);
+    
+    /**
+     * 获取投资组合详细信息
+     * @author mqzou
+     * @date 2016-08-24
+     * @param id
+     * @return
+     */
+    public PortfolioInfo findPortfolioInfo(String id);
+    
+	/**
+	 * 获取客户信息
+	 * @author zxtan
+	 * @date 2016-09-13
+	 * @param langCode
+	 * @param ifaMemberId
+	 * @param customerMemberId
+	 * @return
+	 */
+	public CrmCustomerVO findCustomerDetailForIfa(String customerId,String langCode);
+	
+	/**
+	 * 获取ifa的所有客户
+	 * @author mqzou
+	 * @date 2016-09-23
+	 * @param ifaId
+	 * @return
+	 */
+	public JsonPaging findCustomerByIfa(JsonPaging jsonPaging,MemberIfa memberIfa);
+    
+	/**
+	 * 获取客户列表
+	 * @author zxtan
+	 * @date 2016-09-26
+	 */
+	public JsonPaging findCustomerListForIfa(JsonPaging jsonPaging,String ifaMemberId,String areaId,String period,String saleStageId,String keyword);
+	
+	/**
+	 * 获取客户生日提醒
+	 * @author zxtan
+	 * @date 2016-09-26
+	 */
+	public Long findCustomerBirthdayRemindForIfa(String ifaMemberId,String clientType,String period);
+
+	/**
+	 * 获取客户日程提醒
+	 * @author zxtan
+	 * @date 2016-09-26
+	 */
+	public Long findCustomerAppointmentRemindForIfa(String ifaMemberId,String clientType,String period);
+
+	/**
+	 * 获取客户投资组合提醒
+	 * @author zxtan
+	 * @date 2016-09-29
+	 */
+	public Long findCustomerPortfolioRemindForIfa(String ifaMemberId,String clientType);
+
+
+	/**
+	 * 获取客户KYC提醒
+	 * @author zxtan
+	 * @date 2016-09-29
+	 */
+	public Long findCustomerKYCRemindForIfa(String ifaMemberId,String clientType,String period);
+	
+	/**
+	 * 获取客户信息
+	 * @author zxtan
+	 * @date 2016-09-27
+	 * @param obj
+	 * @return
+	 */
+	public CrmCustomer findCustomerById(String id);
+	
+	/**
+	 * 保存客户信息
+	 * @author zxtan
+	 * @date 2016-09-27
+	 * @param obj
+	 * @return
+	 */
+	public CrmCustomer saveCustomer(CrmCustomer obj);
+	
+	/**
+	 * 更新客户重要性
+	 * @author zxtan
+	 * @date 2016-09-27
+	 * @param obj
+	 * @return
+	 */
+	public Boolean updateImportant(String id,String isImportant);
+	
+	/**
+	 * 更新客户信息备注
+	 * @author zxtan
+	 * @date 2016-10-08
+	 * @param id
+	 * @param remark
+	 * @return
+	 */
+	public Boolean updateRemark(String id,String remark);
+	
+	/**
+	 * 删除客户信息
+	 * @author zxtan
+	 * @date 2016-09-27
+	 * @param obj
+	 * @return
+	 */
+	public void deleteCustomer(String id);
+	
+	/**
+	 * 获取已存在的客户
+	 * @author zxtan
+	 * @date 2016-09-27
+	 * @param obj
+	 * @return
+	 */
+	public JsonPaging findExistingCustomerListForIfa(JsonPaging jsonPaging,String ifaMemberId,String areaId,String period,String clientStatus,String keyword);
+
+	/**
+	 * 根据IFAFirm查找客户列表
+	 * @author rqwang
+	 * @date 2017-06-06
+	 * @return
+	 */
+
+	public JsonPaging firmFindInvestorByIfa(JsonPaging jsonPaging,
+			String ifafirmId, IfaVO ifaVO, String langCode);
+
+
+	/**
+	 * 根据代理商查找客户列表
+	 * @author rqwang
+	 * @date 2017-06-07
+	 * @return
+	 */
+	public JsonPaging disFindInvestor(JsonPaging jsonPaging, String id,
+			IfaVO ifaVO,String langCode);
+}

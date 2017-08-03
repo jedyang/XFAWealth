@@ -1,0 +1,83 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="/wmes/res/css/strategy.css">
+<div class="wmes-top">
+<a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt="">
+	</a>
+	<a href="javascript:;" class="header-over">推荐新闻</a>
+</div>
+<div class="wmes-content">
+	<p style="font-size: 18px; margin-bottom: 10px;">
+		Recommend the news
+	</p>
+	<div style="height: 100px; margin-top: 20px;">
+		<div style="float: left; width: 200px;">
+			<img style="width: 150px; height: 100px" src="${newsInfo.iconUrl!}">
+		</div>
+		<div style="margin-left: 10px;">
+			<p class="strategies_inf_title">
+				${newsInfo.title!}
+			</p>
+			<p style="margin-top: 20px">
+				${newsInfo.createTime!}
+			</p>
+		</div>
+	</div>
+	<div style="text-align: left; margin-top: 20px;">
+		<p style="font-size: 14px;">
+			Recommend Reason：
+		</p>
+		<div style="margin-top: 20px; width: 500px;">
+
+			<textarea id="txtReason" style="width: 500px; height: 100px;">${recommended.reason!}</textarea>
+			<p style="text-align: right; color: #5d616a;">
+				Total 500 characters, 0 inputed, 500 left.
+			</p>
+		</div>
+
+	</div>
+	<div style="text-align: left; margin-top: 20px;">
+		<p style="font-size: 14px;">
+			Push To Setting：
+		</p>
+		<input type="hidden" id="pushSetting" name="pushSetting" value="${webPushVO.scopeFlag!}">
+		<div style="margin-top: 20px; width: 600px;">
+			<input type="radio" name="push" id="push0" value="0" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag== "0"]checked="checked"[/#if] >
+			None
+			<input type="radio" name="push" id="push1" value="1" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag== "1"]checked="checked"[/#if] >
+			All
+			<input type="radio" name="push" id="push2" value="2" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag== "2"]checked="checked"[/#if] >
+			Let me specify
+			<a id="tips" style="color: #0066FF; display: none">Advance Setting</a>
+			<div id="specifyType" style="margin-top: 10px; margin-left: 150px; display: none">
+				<input type="checkbox" class="setting" id="push_client" name="push_client" value="${webPushVO.clientFlag!}" [#if webPushVO.clientFlag?? && webPushVO.clientFlag== '1']checked="checked"[/#if]>
+				My Client
+				<input type="checkbox" class="setting" id="push_prospect" name="push_prospect" value="${webPushVO.prospectFlag!}" [#if webPushVO.prospectFlag?? && webPushVO.prospectFlag== '1']checked="checked"[/#if]>
+				My Prospect
+				<input type="checkbox" class="setting" id="push_buddy" name="push_buddy" value="${webPushVO.buddyFlag!}" [#if webPushVO.buddyFlag?? && webPushVO.buddyFlag== '1']checked="checked"[/#if]>
+				My Buddy
+				<input type="checkbox" class="setting" id="push_colleague" name="push_colleague" value="${webPushVO.colleagueFlag!}" [#if webPushVO.colleagueFlag?? && webPushVO.colleagueFlag== '1']checked="checked"[/#if]>
+				My Colleague
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="push_clients" id="push_clients" value="${webPushVO.clients!}">
+	<input type="hidden" name="push_prospects" id="push_prospects" value="${webPushVO.prospects!}">
+	<input type="hidden" name="push_buddies" id="push_buddies" value="${webPushVO.buddies!}">
+	<input type="hidden" name="push_colleagues" id="push_colleagues" value="${webPushVO.colleagues!}">
+	<input type="hidden" id="cnt_clients" value="${cnt_clients!0}">
+	<input type="hidden" id="cnt_prospects" value="${cnt_prospects!0}">
+	<input type="hidden" id="cnt_buddies" value="${cnt_buddies!0}">
+	<input type="hidden" id="cnt_colleagues" value="${cnt_colleagues!0}">
+	<a id="refreshSelection" href="javascript:;" style="display:none;"></a>    
+	<div class="proposal-button-wrap">
+		<a class="proposal-button" href="javascript:;" id="btnOk">OK</a>
+		<a class="proposal-button" href="${base}/front/ifa/space/ifarecommendnews.do" id="btnCancel">Cancel</a>
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var base_root = '${base}';
+	var _id='${recommended.id!}';
+	var _newsId='${newsInfo.id!}';
+	seajs.use('${base}/res/web/ifa/ifaRecommendNewsSetting.js');
+</script>

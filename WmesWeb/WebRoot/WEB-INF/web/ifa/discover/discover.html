@@ -1,0 +1,622 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+<link rel="stylesheet" href="${base}/res/css/discover.css"> 
+<style type="text/css">
+.swiper-pagination{ left: 50%;top: 20px;} .swiper-pagination-bullet{    margin: 0px 5px;height: 12px;width: 12px;} .discover-wrap{min-height:596px;}
+.photo-list ul {
+    /* margin: 0 0 0 -15px; */
+    /* height: auto; */
+    /* margin: 0px auto; */
+    /* width: 1000px; */
+    /* border: 1px solid Red; */
+    overflow: hidden;
+    margin-left: 120px;
+    margin-right: auto;
+}
+.system-message-ul li{position: relative;}
+.message_num{width:30px;height:30px;background:red;color:#fff;position: absolute;left:78px;border-radius:50%;text-align: center;line-height:30px}
+</style>
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">Discover</a>
+</div>
+<div class="wmes-content">
+<div class="discover-circular"></div>
+<div class="swiper-container discover-wrapper">
+	<div class="swiper-wrapper">
+		<div class="swiper-slide">
+			<div class="discover-wrap">
+				<p class="discover-title">[@lang_res k='ifa.corner.messages'/]</p>
+				<ul class="system-message-ul">
+					<li>
+						<img class="system-message-ico" src="${base}/res/images/discover/deals_ico.png">
+						[#if dealsOneCount>0]<div class="message_num">${dealsOneCount}</div>[/#if]
+						<p class="system-message-title"><a class="discover-a-href" href="${base}/front/ifa/info/discoverMsg.do?typeCode=1">[@lang_res k='ifa.corner.deals'/]</a></p>
+						[#if dealsOne??]
+							[#if dealsOne.title??]
+							<p class="system-message-brief">${dealsOne.title!}</p>
+							<p class="system-message-time">${dealsOne.createTimeFmt!}</p>
+							[#else]
+								<p class="system-message-brief">[@lang_res k='ifa.discover.deals.nodata'/]</p>	
+							[/#if]
+						[/#if]
+					</li>
+					<li>
+						<img class="system-message-ico" src="${base}/res/images/discover/notes_ico.png">
+						[#if notesOneCount>0]<div class="message_num">${notesOneCount}</div>[/#if]
+						<p class="system-message-title"><a class="discover-a-href" href="${base}/front/ifa/info/discoverMsg.do?typeCode=2">[@lang_res k='ifa.corner.notes'/]</a></p>
+						[#if notesOne??]
+							[#if notesOne.title??]
+							<p class="system-message-brief">${notesOne.title!}</p>
+							<p class="system-message-time">${notesOne.createTimeFmt!}</p>
+							[#else]
+								<p class="system-message-brief">[@lang_res k='ifa.discover.notes.nodata'/]</p>	
+							[/#if]
+						[/#if]
+						
+					</li>
+					<li>
+						<img class="system-message-ico" src="${base}/res/images/discover/alerts_ico.png">
+						[#if alertsOneCount>0]<div class="message_num">${alertsOneCount}</div>[/#if]
+						<p class="system-message-title"><a class="discover-a-href" href="${base}/front/ifa/info/discoverMsg.do?typeCode=3">[@lang_res k='ifa.corner.alerts'/]</a></p>
+						[#if alertsOne??]
+							[#if alertsOne.title??]
+							<p class="system-message-brief">${alertsOne.title!}</p>
+							<p class="system-message-time">${alertsOne.createTimeFmt!}</p>
+							[#else]
+								<p class="system-message-brief">[@lang_res k='ifa.discover.alerts.nodata'/]</p>	
+							[/#if]
+						[/#if]
+					</li>
+					<li>
+						<img class="system-message-ico" src="${base}/res/images/discover/announcement.png">
+						<p class="system-message-title">
+							[#if memberType=3]
+							<a class="discover-a-href" href="${base}/console/notice/list.do">
+								[@lang_res k='notice.list.title'/]
+							</a>
+							[#else]
+							<a class="discover-a-href" href="${base}/front/notice/previewNotices.do">
+								[@lang_res k='notice.list.title'/]
+							</a>
+							[/#if]
+						</p>
+						<!-- <p class="system-message-brief">[@lang_res k='ifa.discover.alerts.nodata'/]</p> -->
+					</li>
+				</ul>
+				<div class="dialogue-system-ul">
+					<ul class="dialogue-message-ul">
+						<!--<li>
+							<img class="system-message-portrait" src="${base}/res/images/discover/Jennifer.png">
+							<p class="system-message-title">Jennifer</p>
+							<p class="system-message-brief">The chart shows the performance of...</p>
+							<p class="system-message-time">12:12</p>
+						</li>
+						<li>
+							<img class="system-message-portrait" src="${base}/res/images/discover/Leo.png">
+							<p class="system-message-title">Leo</p>
+							<p class="system-message-brief">(PIC).</p>
+							<p class="system-message-time">12:20</p>
+						</li>
+					--></ul>
+				</div>
+			</div>
+		</div>
+		<!--  <div class="swiper-slide">
+			<div class="discover-wrap">
+				<p class="discover-title">
+					<a href="${base}/front/investor/mybuddy.do" title="My Buddy"><span class="discover-corners-mybuddy">My Buddy</span></a>
+					[@lang_res k='ifa.corner.cornername'/] [#if memberType=2]
+					<a href="${base}/front/ifa/info/cornerForm.do" title="Add Corners Info"><span class="discover-corners-add">+</span></a>
+					[/#if]
+				</p>
+				<ul class="discover-corners-ul">
+					[#if cornerInfoList?exists && cornerInfoList?size gt 0 ]
+					[#list cornerInfoList as each] 
+						<li>
+						<div class="discover-corners-iof">
+								<a href="${base}/front/ifa/info/cornerDetail.do?memberId=${each.author.id!}"><img class="discover-corners-portrait" src="${base}[@user_head u='${each.author.iconUrl!}' g='' /]" ></a>
+								<a href="${base}/front/ifa/info/cornerDetail.do?memberId=${each.author.id!}"><p class="discover-corners-name">${each.author.nickName!}</p></a>
+								<p class="discover-corners-shows">${each.topic!}</p>
+								<div class="discover-corners-msg">
+									${each.content!}
+								</div>
+						</div>					
+						<div class="discover-corners-ico">
+							<p class="discover-corners-time"><img src="${base}/res/images/discover/time_ico.png">${each.createTimeFmt!}</p>
+							<p class="discover-corners-posts"><img src="${base}/res/images/discover/posts_ico.png">[#if each.replyCount?exists]${each.replyCount!}[#else]0[/#if] posts</p>
+							<p class="discover-corners-friend"><img src="${base}/res/images/discover/friend_ico.png">${each.ifaFollows!} follows</p>
+						</div>
+					</li>
+					[/#list]
+					[#else]
+					<div class="wmes-nodata-tips portfolioTips" style="display:block;padding:150px 0;margin-bottom:200px;">
+                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                      </div>
+					[/#if]-->
+					<!-- <li>
+						<div class="discover-corners-iof">
+							<a href="${base}/front/ifa/info/connerDetail.do">
+								<img class="discover-corners-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+								<p class="discover-corners-name">Jennifer</p>
+								<p class="discover-corners-shows">The chart shows the performances of...</p>
+								<div class="discover-corners-msg">
+									<p>1. you need to know which type of investor you are</p>
+									<p>2. you need to understand what kind of product that suitable for you or you desire</p>
+									<p>3. study monthly fact sheet and study their past performance chart, eg. dividend history, NAV price history etc.</p>
+								</div>
+							</a>
+						</div>					
+						<div class="discover-corners-ico">
+							<p class="discover-corners-time"><img src="${base}/res/images/discover/time_ico.png">9:13</p>
+							<p class="discover-corners-posts"><img src="${base}/res/images/discover/posts_ico.png">59 posts</p>
+							<p class="discover-corners-friend"><img src="${base}/res/images/discover/friend_ico.png">320 follows</p>
+						</div>
+					</li>
+					<li>
+						<div class="discover-corners-iof">
+							<a href="${base}/front/ifa/info/connerDetail.do">
+								<img class="discover-corners-portrait" src="${base}/res/images/discover/Leo.png">
+								<p class="discover-corners-name">Leo</p>
+								<p class="discover-corners-shows">The chart shows the performances of...</p>
+								<div class="discover-corners-msg">
+									<p>1. you need to know which type of investor you are</p>
+									<p>2. you need to understand what kind of product that suitable for you or you desire</p>
+									<p>3. study monthly fact sheet and study their past performance chart, eg. dividend history, NAV price history etc.</p>
+								</div>
+							</a>
+							<div class="discover-corners-forward">
+								<p class="discover-forward-title">This chart shows how tough mining conditions still are</p>
+								<img class="discover-forward-img" src="${base}/res/images/ifa/inv-news.png">
+								<p class="discover-forward-word">Glencore's will continue to curtail production in zinc,copper and other metals - it's clear why.</p>
+							</div>
+						</div> 				
+						<div class="discover-corners-ico">
+							<p class="discover-corners-time"><img src="${base}/res/images/discover/time_ico.png">9:13</p>
+							<p class="discover-corners-posts"><img src="${base}/res/images/discover/posts_ico.png">59 posts</p>
+							<p class="discover-corners-friend"><img src="${base}/res/images/discover/friend_ico.png">320 follows</p>
+						</div>
+					</li>-->
+				</ul>
+			</div>
+		</div> 
+		
+		<!--<div class="swiper-slide">
+			<div class="discover-wrap">
+				<p class="discover-title">Headline</p>
+				<ul class="discover-gpipe-ul"> 
+					<li class="discover-gpipe-contents">
+						<div class="discover-gpipe-title-wrap">
+							<div class="discover-gpipe-title discover-weekly-title">XFA Weekly</div>
+						</div>
+						<div class="discover-gpipe-news">
+							<div class="discover-gpipe-news-left xfaWeekly" style="cursor:pointer">
+								<img src="${base}/res/images/discover/Headline01.png">
+							</div>
+							<p class="discover-gpipe-news-title xfaWeekly" style="cursor:pointer">Premier Li highlights industries for developing new economy</p>
+							<p class="discover-gpipe-news-word">Premier Li Keqiang has always mentioned new economy and new kinetic energy in his speeches since this year.</p>
+							<p class="discover-gpipe-news-date">2016 Issue 33</p>
+						</div>
+					</li>
+					<li class="discover-gpipe-contents">
+						<div class="discover-gpipe-title-wrap">
+							<div class="discover-gpipe-title discover-market-title">XFA Market</div>
+						</div>
+						<div class="discover-gpipe-news">
+							<div class="discover-gpipe-news-left xfaMarket" style="cursor:pointer">
+								<img src="${base}/res/images/discover/Headline02.png">
+							</div>
+							<p class="discover-gpipe-news-title xfaMarket" style="cursor:pointer">XFA Market</p>
+							<p class="discover-gpipe-news-word">Early Bird 15-August-2016<br>[Today's Guide]<br>Output and sales of passenger vehicles surge in July, expected to maintain strong growth<br>Shenzhou XI spacecraft arrives at launching site, manned spacecraft to see rapid development<br>B-soft  to acquire IT operation and maintenance service provider, Markor International Home Furnishings proposes to expand main business<br>Bauing Construction Holdi</p>
+						</div>
+					</li>
+					<li class="discover-gpipe-contents">
+						<div class="discover-gpipe-title-wrap">
+							<div class="discover-gpipe-title discover-webcast-title">XFA Webcast</div>
+						</div>
+						<div class="discover-gpipe-news">
+							<div class="discover-gpipe-news-left xfaWebcast" style="cursor:pointer">
+								<img src="${base}/res/images/discover/Headline03.png">
+							</div>
+							<p class="discover-gpipe-news-title xfaWebcast" style="cursor:pointer">Ask The Experts: Shane Oliver: 2016 Will Be A Year For Equities</p>
+							<p class="discover-gpipe-news-word">Dr Shane Oliver, Director of Investment Strategy & Chief Economist at AMP Capital Investors shares his views on 2011.</p>
+							<p class="discover-gpipe-news-date">Broadcast Time: Aug 20, 2016  10:00AM</p>
+						</div>
+					</li>
+					<li class="discover-gpipe-contents">
+						<div class="discover-gpipe-title-wrap">
+							<div class="discover-gpipe-title discover-book-title">Book</div>
+						</div>
+						<div class="discover-gpipe-news">
+							<div class="discover-gpipe-news-left">
+								<img src="${base}/res/images/discover/Headline04.png">
+							</div>
+							<p class="discover-gpipe-news-title">English for the Financial Sector: Student's Book</p>
+							<p class="discover-gpipe-news-word">Providing at least 50 hours of classroom material, this course builds financial language and teaches students about key financial concepts. English for the Financial Sector also focuses on the communication skills necessary for working effectively within the industry. </p>
+							<p class="discover-gpipe-news-date">MacKenzie, Ian ,2008</p>
+						</div>
+					</li>
+					<li class="discover-gpipe-contents">
+						<div class="discover-gpipe-title-wrap">
+							<div class="discover-gpipe-title discover-education-title">Education</div>
+						</div>
+						<div class="discover-gpipe-news">
+							<div class="discover-gpipe-news-left">
+								<img src="${base}/res/images/discover/Headline05.png">
+							</div>
+							<p class="discover-gpipe-news-title">What is your investment horizon?</p>
+							<p class="discover-gpipe-news-word">When making an investment decision, it is likely that you will have a specific objective in mind – such as planning for retirement – and the biggest variable you are likely to face is the amount of time you have to reach that goal. 
+							It is recommended that you view investments as long term, i.e. at least five years. However, if your time horizon is five years as opposed to 25 years, then you are likely to have a very different attitude towards risk. </p>
+						</div>
+					</li>
+					<li class="discover-gpipe-contents">
+						<div class="discover-gpipe-title-wrap">
+							<div class="discover-gpipe-title discover-app-title">APP</div>
+						</div>
+						<div class="discover-gpipe-news">
+							<div class="discover-gpipe-news-left">
+								<img src="${base}/res/images/discover/Headline06.png">
+							</div>
+							<p class="discover-gpipe-news-title">XFA Market APP</p>
+							<p class="discover-gpipe-news-word">Offers 3 distinctive news feeds. They offer investors different aspects from analysts’ report, market news to market insight etc., the most valuable information of listed A-share companies on both Shanghai and Shenzhen Stock Exchange. Our subscribers will always be better informed and stay ahead of the market. </p>					
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="swiper-slide" >
+			<div class="discover-wrap">
+				<p class="discover-title">Live</p>
+				<ul class="discover-live-tab">
+					<li>Most Viewed</li>
+					<li>Follow</li>
+					<li class="now">Insights</li>
+					<li>Knowledge</li>
+					<li>Others</li>
+					<li>XFA Webcast</li>
+				</ul>
+				<div class="discover-live-contents">
+					<div class="discover-live-rows">
+						<div class="discover-live-rows-left">
+							<img class="live-play" src="${base}/res/images/discover/play_ico.png"></img>
+							<img src="${base}/res/images/discover/livevideo02.jpg">
+						</div>
+						<div class="discover-live-rows-right">
+							<p class="discover-live-title">Where is the next boom in Africa</p>
+							<p class="discover-live-word">India has named a new top central banker.
+							Urjit Patel will assume the role with the Reserve Bank of India on September 4.
+							His predecessor, Raghuram Rajan, announced in June that he would step down as RBI governor, setting off a wave of speculation over the circumstances of his departure and the future of India's economy.</p>
+						</div>
+					</div>
+					<div class="discover-live-rows">
+						<div class="discover-live-rows-left">
+							<img class="live-play" src="${base}/res/images/discover/play_ico.png"></img>
+							<img src="${base}/res/images/discover/live01.png">
+						</div>
+						<div class="discover-live-rows-right">
+							<p class="discover-live-title">European clients</p>
+							<p class="discover-live-word">
+							His predecessor, Raghuram Rajan, announced in June that he would step down as RBI governor, setting off a wave of speculation over the circumstances of his departure and the future of India's economy.</p>
+						</div>
+					</div>
+					<div class="discover-live-rows discover-insights-rows" style="display:block;">
+						<div class="discover-live-rows-left">
+							<img class="live-play" src="${base}/res/images/discover/play_ico.png"></img>
+							<img src="${base}/res/images/discover/live02.png">
+						</div>
+						<div class="discover-live-rows-right">
+							<ul class="discover-live-line">
+								<li class="discover-live-active">
+									<a href="${base}/front/ifa/info/discoverLive.do">
+										<p class="discover-line-origin"></p>
+										<p class="discover-line-origin-mask"></p>
+										<p class="discover-line-date">2016/08/25</p>
+										<p class="discover-line-title">White House cracks down on for-profit colleges<img src="${base}/res/images/discover/video_ico.png"></p>
+									</a>
+								</li>
+								<li class="discover-live-active">
+									<a href="${base}/front/ifa/info/discoverLive.do">
+										<p class="discover-line-origin"></p>
+										<p class="discover-line-origin-mask"></p>
+										<p class="discover-line-date">2016/08/25</p>
+										<p class="discover-line-title">Urjit Patel will assume the role with the Reserve Bank of India on September 4.<img src="${base}/res/images/discover/timer_ico.png"></p>
+									</a>
+								</li>
+								<li>
+									<a href="${base}/front/ifa/info/discoverLive.do">
+										<p class="discover-line-origin"></p>
+										<p class="discover-line-origin-mask"></p>
+										<p class="discover-line-date">2016/08/25</p>
+										<p class="discover-line-title">His predecessor, Raghuram Rajan, announced in June that he would step down as RBI governor<img src="${base}/res/images/discover/timer_ico.png"></p>
+									</a>
+								</li>
+								<li>
+									<a href="${base}/front/ifa/info/discoverLive.do">
+										<p class="discover-line-origin"></p>
+										<p class="discover-line-origin-mask"></p>
+										<p class="discover-line-date">2016/08/25</p>
+										<p class="discover-line-title">setting off a wave of speculation over the circumstances of his departure and the future of India's economy.India has named a new top central.<img src="${base}/res/images/discover/timer_ico.png"></p>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="discover-live-rows">
+						<div class="discover-live-rows-left">
+							<img class="live-play" src="${base}/res/images/discover/play_ico.png"></img>
+							<img src="${base}/res/images/discover/live08.jpg">
+						</div>
+						<div class="discover-live-rows-right">
+							<p class="discover-live-title">customer Service</p>
+							<p class="discover-live-word">
+							Urjit Patel will assume the role with the Reserve Bank of India on September 4.
+							His predecessor, Raghuram Rajan, announced in June that he would step down as RBI governor, setting off a wave of speculation over the circumstances of his departure and the future of India's economy.India has named a new top central .</p>
+						</div>
+					</div>
+					<div class="discover-live-rows">
+						<div class="discover-live-rows-left">
+							<img class="live-play" src="${base}/res/images/discover/play_ico.png"></img>
+							<img src="${base}/res/images/discover/live09.jpg">
+						</div>
+						<div class="discover-live-rows-right">
+							<p class="discover-live-title">Where is the next boom in Africa</p>
+							<p class="discover-live-word">India has named a new top central banker.
+							Urjit Patel will assume the role with the Reserve Bank of India on September 4.
+							His predecessor, Raghuram Rajan, announced in June that he would step down as RBI governor, setting off a wave of speculation over the circumstances of his departure and the future of India's economy.</p>
+						</div>
+					</div>
+					<div class="discover-live-rows">
+						<div class="discover-live-rows-left">
+							<img class="live-play" src="${base}/res/images/discover/play_ico.png"></img>
+							<img src="${base}/res/images/discover/Headline03.png">
+						</div>
+						<div class="discover-live-rows-right">
+							<p class="discover-live-title">Ask The Experts: Shane Oliver: 2016 Will Be A Year For Equities</p>
+							<p class="discover-live-word">Dr Shane Oliver, Director of Investment Strategy & Chief Economist at AMP Capital Investors shares his views on 2011.</p>
+						</div>
+					</div>
+				</div>
+				<div class="discover-new-li discover-new-live">
+	        		<div class="discover-news-rows">
+	        			<img src="${base}/res/images/discover/new_017.jpg" width="243px" height="136" >
+	        			<p class="discover-news-titles">U.S. Fed Chair says case for another rate hike has strengthened</p>
+	        			<p class="discover-news-times">0:30AM 27/08/2016</p>
+	        		</div>
+	        		<div class="discover-news-rows">
+	        			<img src="${base}/res/images/discover/new_018.jpg" width="243px" height="136" >
+	        			<p class="discover-news-titles">Japan's core consumer prices fall for 5th straight month in July</p>
+	        			<p class="discover-news-times">9:30AM 26/08/2016</p>
+	        		</div>
+	        		<div class="discover-news-rows">
+	        			<img src="${base}/res/images/discover/new_019.jpg" width="243px" height="136" >
+	        			<p class="discover-news-titles">U.S. initial jobless claims fall to five-week low</p>
+	        			<p class="discover-news-times">2:30AM 26/08/2016</p>
+	        		</div>
+	        		<div class="discover-news-rows">
+	        			<img src="${base}/res/images/discover/new_020.jpg" width="243px" height="136" >
+	        			<p class="discover-news-titles">2016 Economic Policy Symposium held, policymakers ponder more firepower</p>
+	        			<p class="discover-news-times">3:25PM 25/08/2016</p>
+	        		</div>
+	        	</div>
+			</div>
+		</div>
+		<div class="swiper-slide">
+			<div class="discover-wrap">
+				<p class="discover-title">Community</p>
+				<div class="community-top-wrap">
+					<div class="community-ask">
+						<span class="community-ask-ico">?</span>
+						<span class="community-word">I want to ask.</span>
+					</div>
+					<div class="discover-keyserach">
+                        <input type="text" placeholder="Please enter keyword search">
+                        <span class="icon_search"></span>
+                    </div>
+				</div>
+				<div class="community-contents">
+					<div class="community-contents-left">
+						<div class="community-top-title">
+							<p class="community-channel">Channel</p>
+							<ul class="community-tab">
+								<li class="community-active">Recommend</li>
+								<li>Fund</li>
+								<li>Financial</li>
+								<li>Futures</li>
+							</ul>
+						</div>
+						<div class="community-choose">
+							<p class="community-active">Latest Topic</p>
+							<p>Hot Topic</p>
+						</div>
+						<ul class="community-list-wrap">
+							<li>
+								<p class="community-list-title"><a class="discover-a-href" href="${base}/front/ifa/info/topicDetail.do">Financial Crisis - Finding the root cause, any answer for it so that we can learn from mistake.</a></p>
+								<div class="community-bottom-wrap">
+									<div class="community-financial">
+										<img src="${base}/res/images/discover/pen_ico.png">
+										<p>Financial</p>
+									</div>
+									<p class="community-list-name">Andy Low</p>
+									<p class="community-list-time">1 Hour</p>
+									<div class="community-list-from">
+										<p class="community-from-title">From</p>
+										<img class="community-from-img" src="${base}/res/images/ifa/ifa3.png">
+										<p class="community-from-name">Denny Liu</p>
+									</div>
+									<div class="community-list-ico">
+										<img src="${base}/res/images/discover/eve_ico.png">
+										<p class="community-list-eves">9</p>
+										<img src="${base}/res/images/discover/wechat_ico.png">
+										<p class="community-list-comm">12</p>
+									</div>
+								</div>
+							</li>
+							<li>
+								<p class="community-list-title"><a class="discover-a-href" href="${base}/front/ifa/info/topicDetail.do">Need help urgently regarding purchase i accidentally voided after i paid for it.</a></p>
+								<div class="community-bottom-wrap">
+									<div class="community-financial">
+										<img src="${base}/res/images/discover/pen_ico.png">
+										<p>Financial</p>
+									</div>
+									<p class="community-list-name">Kelvin Wang</p>
+									<p class="community-list-time">2 Hour</p>
+									<div class="community-list-from">
+										<p class="community-from-title">From</p>
+										<img class="community-from-img" src="${base}/res/images/ifa/ifa4.png">
+										<p class="community-from-name">Denny Liu</p>
+									</div>
+									<div class="community-list-ico">
+										<img src="${base}/res/images/discover/eve_ico.png">
+										<p class="community-list-eves">3</p>
+										<img src="${base}/res/images/discover/wechat_ico.png">
+										<p class="community-list-comm">5</p>
+									</div>
+								</div>
+							</li>
+							<li>
+								<p class="community-list-title"><a class="discover-a-href" href="${base}/front/ifa/info/topicDetail.do">Financial Crisis - Finding the root cause, any answer for it so that we can learn from mistake.</a></p>
+								<div class="community-bottom-wrap">
+									<div class="community-financial">
+										<img src="${base}/res/images/discover/pen_ico.png">
+										<p>Financial</p>
+									</div>
+									<p class="community-list-name">Andy Low</p>
+									<p class="community-list-time">1 Hour</p>
+									<div class="community-list-from">
+										<p class="community-from-title">From</p>
+										<img class="community-from-img" src="${base}/res/images/ifa/ifa1.png">
+										<p class="community-from-name">Denny Liu</p>
+									</div>
+									<div class="community-list-ico">
+										<img src="${base}/res/images/discover/eve_ico.png">
+										<p class="community-list-eves">9</p>
+										<img src="${base}/res/images/discover/wechat_ico.png">
+										<p class="community-list-comm">12</p>
+									</div>
+								</div>
+							</li>
+							<li>
+								<p class="community-list-title"><a class="discover-a-href" href="${base}/front/ifa/info/topicDetail.do">Financial Crisis - Finding the root cause, any answer for it so that we can learn from mistake.</a></p>
+								<div class="community-bottom-wrap">
+									<div class="community-financial">
+										<img src="${base}/res/images/discover/pen_ico.png">
+										<p>Financial</p>
+									</div>
+									<p class="community-list-name">Andy Low</p>
+									<p class="community-list-time">1 Hour</p>
+									<div class="community-list-from">
+										<p class="community-from-title">From</p>
+										<img class="community-from-img" src="${base}/res/images/ifa/ifa2.png">
+										<p class="community-from-name">Denny Liu</p>
+									</div>
+									<div class="community-list-ico">
+										<img src="${base}/res/images/discover/eve_ico.png">
+										<p class="community-list-eves">9</p>
+										<img src="${base}/res/images/discover/wechat_ico.png">
+										<p class="community-list-comm">12</p>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="community-contents-right">
+						<p class="community-hot-title">Hot IFA</p>
+						<ul class="community-hot-list">
+							<li>
+								<div class="community-hot-contents">
+									<a href="${base}/front/ifa/info/discoverIfa.do"><img class="community-hot-img" src="${base}/res/images/ifa/ifa1.png"></a>
+									<p class="community-hot-name">Gustav Booch</p>
+									<div class="community-hot-ability">
+										<p class="community-ability">Ability</p>
+										<p class="community-hot-word">Fund</p>
+										<p class="community-hot-word">Futures</p>
+									</div>
+								</div>
+								<div class="community-hot-bottom">
+									<p>Topic 124</p>
+									<p>1 Day</p>
+								</div>
+							</li>
+							<li>
+								<div class="community-hot-contents">
+									<a href="${base}/front/ifa/info/discoverIfa.do"><img class="community-hot-img" src="${base}/res/images/ifa/ifa2.png"></a>
+									<p class="community-hot-name">Robin Jakki Tod</p>
+									<div class="community-hot-ability">
+										<p class="community-ability">Ability</p>
+										<p class="community-hot-word">Financial</p>
+									</div>
+								</div>
+								<div class="community-hot-bottom">
+									<p>Topic 108</p>
+									<p>2 Day</p>
+								</div>
+							</li>
+							<li>
+								<div class="community-hot-contents">
+									<a href="${base}/front/ifa/info/discoverIfa.do">
+									<img class="community-hot-img" src="${base}/res/images/ifa/ifa3.png"></a>
+									<p class="community-hot-name">Ben He</p>
+									<div class="community-hot-ability">
+										<p class="community-ability">Ability</p>
+										<p class="community-hot-word">Fund</p>
+										<p class="community-hot-word">Futures</p>
+									</div>
+								</div>
+								<div class="community-hot-bottom">
+									<p>Topic 113</p>
+									<p>1 Day</p>
+								</div>
+							</li>
+							<li>
+								<div class="community-hot-contents">
+									<a href="${base}/front/ifa/info/discoverIfa.do">
+									<img class="community-hot-img" src="${base}/res/images/ifa/ifa4.png"></a>
+									<p class="community-hot-name">Thomas Grönholm</p>
+									<div class="community-hot-ability">
+										<p class="community-ability">Ability</p>
+										<p class="community-hot-word">Fund</p>
+										<p class="community-hot-word">Futures</p>
+									</div>
+								</div>
+								<div class="community-hot-bottom">
+									<p>Topic 88</p>
+									<p>7 Day</p>
+								</div>
+							</li>
+							<li>
+								<div class="community-hot-contents">
+									<a href="${base}/front/ifa/info/discoverIfa.do">
+									<img class="community-hot-img" src="${base}/res/images/ifa/linshi_ifa_01.png"></a>
+									<p class="community-hot-name">Leo Rakes</p>
+									<div class="community-hot-ability">
+										<p class="community-ability">Ability</p>
+										<p class="community-hot-word">Fund</p>
+										<p class="community-hot-word">Futures</p>
+									</div>
+								</div>
+								<div class="community-hot-bottom">
+									<p>Topic 108</p>
+									<p>4 Day</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		-->
+	</div>
+</div>
+<!-- <div class="swiper-slide">
+			<div class="discover-wrap">
+				<img style="width:100%;" src="${base}/res/images/allimg/client/Discover-Community.png">
+			</div>
+		</div> -->
+<div class="swiper-pagination"></div>
+<!-- 弹出层 -->
+</div>
+<script type="text/javascript">
+    seajs.use('${base}/res/web/ifa/discover.js');
+</script>
+
+[#include "../../inc/foot_v2.html"/] 

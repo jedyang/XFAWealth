@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<title></title>
+<script>
+Date.prototype.format = function(format) {
+   var o = {
+	   "M+": this.getMonth() + 1,
+	   // month
+	   "d+": this.getDate(),
+	   // day
+	   "h+": this.getHours(),
+	   // hour
+	   "m+": this.getMinutes(),
+	   // minute
+	   "s+": this.getSeconds(),
+	   // second
+	   "q+": Math.floor((this.getMonth() + 3) / 3),
+	   // quarter
+	   "S": this.getMilliseconds()
+	   // millisecond
+   };
+   if (/(y+)/.test(format) || /(Y+)/.test(format)) {
+	   format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+   }
+   for (var k in o) {
+	   if (new RegExp("(" + k + ")").test(format)) {
+		   format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+	   }
+   }
+   return format;
+};
+</script>
+</head>
+<body>
+         
+</body>
+<!-- IE8及以下支持JSON -->
+<!--[if lt IE 9]>
+	<script src="https://g.alicdn.com/aliww/ww/json/json.js" charset="utf-8"></script>
+<![endif]-->
+<!-- WSDK-->
+<script src="https://g.alicdn.com/aliww/h5.openim.sdk/1.0.6/scripts/wsdk.js"></script>
+<!--你的js
+<script src="your.js"></script>
+-->
+<script>
+	var sdk = new WSDK();
+
+	//登录
+	function login(appkey,userId,userPwd) {
+		sdk.Base.login({
+			uid:userId,
+			appkey:appkey,
+			credential:userPwd,
+			timeout:5000,
+			success: function(data){
+			   //{code: 1000, resultText: 'SUCCESS'}
+			   //alert(data.code);
+			   //console.log('login success', data);
+			},
+			error: function(error){
+			   //{code: 1002, resultText: 'TIMEOUT'}
+			   //console.log('login fail', error);
+			}
+		}); 
+	}
+
+
+	//登出
+	function logout() {
+		sdk.Base.logout();
+	}
+
+	//本地销毁WSDK及退出登录
+	function destroy() {
+		sdk.Base.destroy();
+		sdk = null;
+	}
+
+	//未读消息
+	function getUnreadMsgCount() {
+		var recentTribe = [];
+		sdk.Base.getUnreadMsgCount({
+			count: 10,
+			success: function(data){
+				console.log('get unread msg count success' ,data);
+				var list = data.data;
+				var str = '';
+				list.forEach(function(item){
+					if(item.contact.substring(0, 8) === 'chntribe'){//chntribe表示群组消息
+						recentTribe.push(item);
+					}else{
+						//console.log(item.contact.substring(8) + '在' + new Date(parseInt(item.timestamp)*1000) + ',');
+						//console.log('给我发了' + item.msgCount + '条消息，最后一条消息是在' + new Date(parseInt(item.lastmsgTime)*1000) + '发的');
+						str = item.contact.substring(8) + '在' + (new Date(parseInt(item.timestamp)*1000)).format("yyyy-MM-dd hh:mm:ss") + ',';
+						str +='给我发了' + item.msgCount + '条消息，最后一条消息是在' + (new Date(parseInt(item.lastmsgTime)*1000)).format("yyyy-MM-dd hh:mm:ss") + '发的';
+					}
+				});
+				//alert(str);
+				recentTribe.length && console.log('最近给我发消息的群', recentTribe);
+			},
+			error: function(error){
+				console.log('get unread msg count fail' ,error);
+			}
+		});
+	}
+
+
+	//最近联系人
+	function getRecentContact() {
+		sdk.Base.getRecentContact({
+			count: 10,
+			success: function(data){
+				console.log('get recent contact success' ,data);
+				data = data.data;
+				var list = data.cnts,type = ''; 
+				list.forEach(function(item){
+					console.log(item.uid.substring(8) + '在' + new Date(parseInt(item.time)*1000).format("yyyy-MM-dd hh:mm:ss") + '联系了你');
+					console.log('他说：' + item.type == 2 ? '[语音]' : item.type == 1 ? '[图片]' : (item.msg && item.msg[1]));
+				});
+			},
+			error: function(error){
+				console.log('get recent contact success' ,error);
+			}
+		});
+	}
+
+	//监听所有消息，包括成功和失败的消息: START_RECEIVE_ALL_MSG
+	//所有成功的消息： MSG_RECEIVED
+	//只监听成功的单聊消息：CHAT.MSG_RECEIVED
+	//只监听成功的群聊消息：TRIBE.MSG_RECEIVED
+
+	//启动接收当前登录用户所有的聊天消息
+	function startListenAllMsg() {
+		sdk.Event.on('MSG_RECEIVED', function(data){
+			console.log(data.);
+		});
+		sdk.Base.startListenAllMsg();
+	}
+
+	//停止接收当前登录用户所有的聊天消息
+	function stopListenAllMsg() {
+		sdk.Event.on('MSG_RECEIVED', function(data){
+			console.log(data);
+		});
+		sdk.Base.stopListenAllMsg();
+	}
+
+	//启动接收与某个用户的聊天消息
+	function startListenAllMsgByUid(toUserId) {
+		sdk.Event.on('CHAT.MSG_RECEIVED', function(data){
+			   console.log(data);
+		});
+		sdk.Chat.startListenMsg({touid:toUserId});
+	}
+
+	//停止接收与某个用户的聊天消息
+	function stopListenAllMsg(toUserId) {
+		sdk.Event.on('CHAT.MSG_RECEIVED', function(data){
+			console.log(data);
+		});
+		sdk.Chat.startListenMsg();
+	}
+
+	//获取用户在线状态
+	//userIdJson格式为:['iwangxinvisitor1','iwangxinvisitor2','iwangxinvisitor3']
+	function getUserStatus(userIdJson) {
+		sdk.Chat.getUserStatus({
+			uids: userIdJson,
+			hasPrefix: true,
+			success: function(data){
+				console.log('visitor1的状态为'+data.result.status[0]);
+			},
+			error: function(){
+				console.log('getUserStatus fail');
+			}
+		 });
+	}
+
+
+	//发送消息
+	function sendMsg(toUserId,toMsg) {
+		sdk.Chat.sendMsg({
+		   touid: 'touid',
+		   msg: '你好啊',
+		   success: function(data){
+			 console.log('send success', data);
+		   },
+		   error: function(error){
+			 console.log('send fail', error);
+		   }
+		});
+	}
+
+	//设置消息已读
+	function setReadState() {
+		sdk.Chat.setReadState({
+			 touid: 'touid',
+			 timestamp: Math.floor((+new Date())/1000),
+			 success: function(data){
+			   console.log('set read state success', data);
+			 },
+			 error: function(error){
+			   console.log('set read state fail', error);
+			 }
+		});
+	}
+
+	//获得历史消息
+	function getHistory(toUserId,nextKey) {
+			sdk.Chat.getHistory({
+			  touid: 'touid',
+			  nextkey: nextKey,
+			  count: 10,
+			  success: function(data){
+				console.log('get history msg success', data);
+				nextkey = data.data && data.data.next_key;
+			   },
+			  error: function(error){
+				console.log('get history msg fail', error);
+			  }
+			});
+	}
+
+   login('23573928','ifa002','123456');
+   setTimeout(function(){
+	 getUnreadMsgCount();
+	 getRecentContact();
+	 startListenAllMsgByUid('ifa001');
+   },2000);
+
+</script>
+</html>

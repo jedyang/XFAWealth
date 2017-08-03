@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fund fees item</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+		<div class="tab-side-container">
+            <div class="page-header mt-10">
+                <h4><b>[@lang_res l=Session["_LANG_CODE_"] k='console.sysmenu.form.title'/]</b></h4>
+            </div>
+            
+            <div class="clear"></div>
+            <div class="tab_wrap">
+                <!-- tab 1  -->
+                <form id="frm" class="form-horizontal" style="display:block;">
+                	<!-- 父节点类型 -->
+                   	<div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="selParentId" class="label-control">[@lang_res l=Session["_LANG_CODE_"] k='console.sysmenu.form.parent'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                        	<select class="form-control " id="selParentId"  name="selParentId">
+                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                               [#if menuList?exists && menuList?size gt 0]
+                                 [#list menuList as tp]
+                                   <option value="${tp.id}" [#if menu.parent?exists&&menu.parent.id == tp.id]selected[/#if]>${tp.nameEn}</option>
+                                 [/#list]
+                               [/#if]
+                            </select> 
+                        </div>
+                    </div>
+                	<!-- 编码 -->
+                   	<div class="form-group">
+                        <div class="col-md-3 text-right">
+                        	<span class="red">* </span>
+                            <label for="txtCode" class="label-control">[@lang_res l=Session["_LANG_CODE_"] k='console.sysmenu.form.code'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtCode" name="code" value="${(menu.code)?if_exists}" >
+                        </div>
+                    </div>
+                    
+                    <!-- 中文名称 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                        	<span class="red">* </span>
+                            <label for="txtNameSc" class="label-control">[@lang_res  k='console.sysmenu.form.nameSc'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtNameSc" name="nameSc" value="${(menu.nameSc)?if_exists}" >
+                        </div>
+                    </div>
+                    
+                   <!-- 繁体中文名称 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">	
+                        	<span class="red">* </span>
+                            <label for="txtNameTc" class="label-control">[@lang_res  k='console.sysmenu.form.nameTc'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtNameTc" name="nameTc" value="${(menu.nameTc)?if_exists}" >
+                        </div>
+                    </div>
+                    
+                   <!-- 英文名称 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                        	<span class="red">* </span>
+                            <label for="txtNameEn" class="label-control">[@lang_res  k='console.sysmenu.form.nameEn'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtNameEn" name="nameEn" value="${(menu.nameEn)?if_exists}" >
+                        </div>
+                    </div>
+                    
+                   <!-- WebUrl -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtWebUrl" class="label-control">[@lang_res  k='console.sysmenu.form.webUrl'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtWebUrl"  value="${(menu.webUrl)?if_exists}" >
+                        </div>
+                    </div>
+                    
+                   <!-- 排序 -->
+                   <div class="form-group">
+                        <div class="col-md-3 text-right">
+                        	<span class="red">* </span>
+                            <label for="txtOrderBy" class="label-control">[@lang_res  k='console.sysmenu.form.orderBy'/]</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="txtOrderBy" name="orderBy" value="${(menu.orderBy)?if_exists}" >
+                        </div>
+                    </div>
+                                    
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="isValidYes" class="label-control">[@lang_res k='console.sysmenu.form.status'/]</label>
+                        </div>
+                        <div class="col-md-7">                        
+                            <input type="radio" name="isValid" id="isValidYes" value="1"  [#if menu?exists ==false || menu.isValid?exists == false || menu.isValid == '1']checked[/#if]>
+                            <label for="isValidYes" class="form-font-normal">[@lang_res k='console.sysmenu.form.status.1'/]</label>
+                            <input type="radio" name="isValid" id="isValidNO" value="0" [#if menu?exists &&menu.isValid?exists && menu.isValid == '0']checked[/#if]>
+                            <label for="isValidNO" class="form-font-normal"> [@lang_res k='console.sysmenu.form.status.0'/]</label>                                                
+                        </div>
+                    </div>
+                    
+	                <div class="text-center pd10">
+	                	<button id="btnSave"  type="submit"  class="btn btn-primary">
+							[@lang_res k='global.save'/]
+						</button>
+						<button id="btnBack" class="btn btn-primary" onclick="javascript:closeTab();;">
+							[@lang_res k='global.close'/]
+						</button>
+	                </div>
+                </form>    
+                           
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script src="${base}/res/console/js/jquery.form.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$("#frm").bootstrapValidator({
+		feedbackIcons : {
+			valid : "glyphicon glyphicon-ok",
+			invalid : "glyphicon glyphicon-remove",
+			validating : "glyphicon glyphicon-refresh"
+		},
+		fields : {
+			code : { 
+				message : "",
+				validators : {
+					notEmpty : {message : "[@lang_res  k='console.sysmenu.form.code'/] [@lang_res k='global.empty.tip'/]"}
+				}
+			},
+			nameSc:{
+				message : "",
+				validators : {
+					/*regexp: {
+					    regexp:/[\u4e00-\u9fa5]+$/,
+	                    message:"[@lang_res k='console.country.countrySC.tips'/]"
+				    },*/
+					notEmpty : {message : "[@lang_res  k='console.sysmenu.form.nameSc'/] [@lang_res k='global.empty.tip'/]"}
+				}
+			},
+			nameTc:{
+				message : "",
+				validators : {
+					/*regexp: {
+					    regexp:/[\u4e00-\u9fa5]+$/,
+	                    message:"[@lang_res k='console.country.countrySC.tips'/]"
+				    },*/
+					notEmpty : {message : "[@lang_res  k='console.sysmenu.form.nameTc'/] [@lang_res k='global.empty.tip'/]"}
+				}
+			},
+			nameEn:{
+				message : "",
+				validators : {
+					regexp: {
+					    regexp:/[A-Za-z]+$/,
+	                    message:"[@lang_res k='console.country.countryEN.tips'/]"
+				    },
+					notEmpty : {message : "[@lang_res  k='console.sysmenu.form.nameEn'/] [@lang_res k='global.empty.tip'/]"}
+				}
+			},
+			orderBy:{
+				message : "",
+				validators : {
+					regexp: {
+					    regexp: "^[0-9]*$",
+					    message: "[@lang_res  k='console.country.orderBy.tips'/]"
+				    },
+					notEmpty : {message : "[@lang_res  k='console.sysmenu.form.orderBy'/] [@lang_res k='global.empty.tip'/]"}
+				}
+			}
+		}
+		}).on("success.form.bv", function(e) {
+			e.preventDefault();
+			saveData();
+	});
+	//保存数据
+	function saveData(){
+		var id = getUrlParam('id');
+       	var parentId = $('#selParentId').val();
+       	var code = $('#txtCode').val();
+       	var nameSc = $('#txtNameSc').val();
+       	var nameTc = $('#txtNameTc').val();
+       	var nameEn = $('#txtNameEn').val();
+       	var webUrl = $('#txtWebUrl').val();
+       	var orderBy = $('#txtOrderBy').val(); 	
+       	var isValid = $('input[name="isValid"]:checked').val();
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/sys/menu/save.do?datestr='+new Date().getTime(),
+			data : {
+				'id': id,'parentId': parentId,'code':code,'nameSc':nameSc,'nameTc':nameTc,'nameEn':nameEn,'webUrl':webUrl,'orderBy':orderBy,'isValid':isValid
+			},
+			success : function(data) {
+				if (data.result) {
+					$(window.parent.document).find("#btnSearch").trigger("click");
+					window.parent.layer.msg("[@lang_res k='global.success.save'/]");
+					closeTab();
+				} else {
+					layer.msg("[@lang_res k='global.failed.save'/]");
+				}	
+			}
+		});
+	}
+        
+});
+	
+</script>
+</body>
+</html>

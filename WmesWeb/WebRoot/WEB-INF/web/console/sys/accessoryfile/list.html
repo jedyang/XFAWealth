@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>附件列表</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	</head>
+
+	<body>
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="right-side container-fluid">
+				<div class="r-side-container">
+					<div class="clear"></div>
+					<ul class="tab" id="tab-search">
+						<li class="tab-li-crr">
+							<a href="javascript:;">附件列表</a>
+						</li>
+
+					</ul>
+					<div class="tab_wrap">
+						<!-- tab一 -->
+						<form class="form-inline" style="display: block;">
+							<div>
+								<div class="row pd10">
+									<div class="col-md-8">
+										<label for="txtKeyWord">
+											[@lang_res k='accessory.info.filename'/]
+										</label>
+										<input type="text" class="form-control keyWord" id="txtKeyWord">
+										<label for="txtModule">
+											[@lang_res k='accessory.info.moduletype'/]
+										</label>
+										<input type="text" class="form-control keyWord" id="txtModule">
+
+									</div>
+									<div class="col-md-4">
+										<button type="button" id="btnSearch" class="btn btn-primary">
+											<i class="glyphicon glyphicon-search"></i> [@lang_res k='console.sys.log.list.btn.search'/]
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="clear"></div>
+							<div class="pdt20">
+							</div>
+							<div>
+								<table id="logList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+									<thead>
+										<tr>
+											<th class="table-head">
+												[@lang_res k='accessory.info.filename'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='accessory.info.moduletype'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='accessory.info.langcode'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='accessory.info.createby'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='accessory.info.createtime'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='global.operate'/]
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+
+								<nav class="pull-right">
+									<!-- log分页 -->
+									<ul id='pagination' class="pagination pagination-sm">
+
+									</ul>
+								</nav>
+								<div class="clear"></div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/jquery.pagination.js"></script>
+		<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+		<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+		<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+
+		<script type="text/javascript">
+	var grid_selector = "#logList";
+	var pageSize = 10;
+</script>
+		<script type="text/javascript">
+	$(function() {
+
+		//绑定查询按钮事件
+		$("#btnSearch").click(function() {
+			bindList(0);
+		});
+
+		bindList(0);
+		setAutoSearch('.keyWord',bindList,0);
+	});
+	//按下回车键搜索
+	this.document.onkeydown = function(e) {
+		var ev = document.all ? window.event : e;
+		if (ev.keyCode == 13) {
+			bindList(0);
+		}
+	}
+	//分页绑定Table数据
+	function bindList(curPage) {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/sys/accessory/jsonList.do?datestr=' + new Date().getTime(),
+			data : {
+				'keyWord' : $("#txtKeyWord").val(),
+				'module' : $("#txtModule").val(),
+				'page' : curPage + 1,
+				'rows' : pageSize,
+				'sort' : 'createTime',
+				'order' : 'desc'
+			},
+			success : function(json) {
+				var total = json.total;
+				var table = json.rows;
+
+				$("#logList tbody ").empty();
+				var tr = "";
+				var list = json.rows;
+
+				$.each(list, function(index, n) { //遍历json数据列					
+					var urlstr = "${base}/console/sys/accessory/detail.do?id=" + n.id;
+					tr += "<tr><td><a href='#' onclick='showform(\"" + n.id + "\",\"" + n.fileName + "\",\"" + urlstr + "\")'>" + n.fileName + "</a></td>"
+
+					+ "<td>" + n.moduleType + "</td>" + "<td>" + n.langCode + "</td>" + "<td>" + n.createBy + "</td>" + "<td>" + n.createTime + "</td>";
+					if (browserIsIe()) {
+						tr += "<td><a href='javascript:downloadFile(\"" + n.filePath + "\",\"" + n.fileName + "\");' >下载</a></td></tr>";
+					} else {
+						tr += "<td><a href='/wmes" + n.filePath + "' download='/wmes" + n.filePath + "'>下载</a></td></tr>";
+					}
+
+				});
+				$("#logList tbody").empty().append(tr);
+
+				$("#pagination").pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : pageSize,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+			}
+		})
+		//回调
+		function pageselectCallback(page_id, jq) {
+			bindList(page_id);
+		}
+	}
+
+	function downloadFile(url, fileName) {
+		url = "/wmes" + url;
+
+		if (browserIsIe()) {
+			DownLoadReportIMG(url, fileName);
+		} else {
+			window.location.href = url; //window.location.href = url;
+		}
+	}
+
+	
+</script>
+	</body>
+</html>

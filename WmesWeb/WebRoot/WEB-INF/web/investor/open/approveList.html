@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="${base}/res/css/other.css">
+<div class="applications-tabcontrol">
+    <p class="Approval_table_title">[@lang_res k='open.account.approval.processHis'/]</p>
+	<table class="application-table">
+        <tr>
+            <th>#</th>
+            <th>[@lang_res k='open.account.approval.processHis.date'/]</th>
+            <th>[@lang_res k='open.account.approval.processHis.person'/]</th>
+            <th>[@lang_res k='open.account.approval.processHis.action'/]</th>
+            <th>[@lang_res k='open.account.approval.processHis.remark'/]</th>
+            <th>[@lang_res k='open.account.approval.processHis.flow'/]</th> 
+        </tr>
+        [#if approveHis?exists && approveHis?size gt 0]
+        [#list approveHis as list]
+        <tr>
+            <td></td>
+            <td>${list.approveData!}</td>
+            <td>${list.approver!}</td>
+            <td>${list.action!}</td>
+            <td>${list.comment!}</td>
+            <td>${list.flowStep!}</td>
+        </tr>
+        [/#list]
+        [/#if]
+    </table>
+
+</div>

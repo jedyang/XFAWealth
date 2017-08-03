@@ -1,0 +1,418 @@
+[#include "../../inc/head_v2.html"/]
+<script type="text/javascript">
+     function fundDetail(url){
+         location.href = url;
+     }
+</script>
+<style type="text/css">
+	.comparisionFixed{position:fixed;}
+	.li_ctrl{height:335px;width:349px;overflow:auto;}
+	.li_ctrl_search{height:335px;width:295px;overflow:auto;}
+	.funds_fixed{background-color: #fff;top:0}
+	.white_background{overflow: hidden;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;width:100%;padding: 20px 25px;margin:0px auto;background:#fff;}
+	.kaihu_div{  width:99%;margin-left:9px;}
+	.blue_background{width: 100%;padding-top: 80px;padding-bottom:5px;padding-left: 76px;box-sizing: border-box;min-height: 600px;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+</style>
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<!-- 
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res  k='wmes.head.FundsInfo.FundsCompare'/]</a>
+</div> -->
+<div class="blue_background">
+        <div class="kaihu_div">
+            <div class="white_background funds_background" style="margin-top: -80px;">
+            <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='wmes.head.FundsInfo.FundsCompare'/]</p>
+            <!-- 	<div class="funds_title_wrap">
+	                <p class="funds_title">[@lang_res k='wmes.head.FundsInfo.FundsCompare'/]</p>
+                </div> -->
+                <div claa="selectFundCompare">
+	                <div class="funds_comparison_xiala_wrap">
+						<p class="funds_comparison_title">[@lang_res k='fund.info.comparison.addFund'/]</p>
+						<div class="funds_keyword">
+							<div class="funds_keyword_div" style="position: absolute;z-index: 9">
+								<input type="text" placeholder="[@lang_res k='fund.info.comparison.fundHouseSearch'/]" readonly>
+								<ul class="funds_keyword_xiala">
+			                    [#list fundHouseList as rec]
+			                        <li title="${rec.name!""}" data-id='${rec.id!""}'>${rec.name!""}</li>
+			                    [/#list]
+								</ul>
+							</div>
+							<div class="funds_keyword_search" style="position: absolute;margin-left: 380px;z-index: 9">
+								<input type="text" id="funds_keyword_input" class="funds_keyword_input" placeholder="[@lang_res k='fund.info.keyWord'/]">
+								<ul class="funds_keyword_xiala_search">
+								
+								</ul>
+							</div>
+							
+						</div>
+						<div class="clear"></div>				
+					</div>
+					<div class="funds_comparison_wrap">
+						<p class="funds_comparison_title"><span style="margin-right:5px">[#if fundInfoList??]${fundInfoList?size}[/#if]</span>[@lang_res k='fund.info.comparison'/]</p>
+						<ul class="funds_comparison_name">
+						[#list fundInfoList as fundInfoVO]
+							[#if (Session["_LANG_CODE_"])?? && (Session["_LANG_CODE_"]) == 'sc']
+		                		<li style="width: 250px;white-space:nowrap;max-height:17px"><span class="fundName_left" data-fund-name="${fundInfoVO.fundName}">[#if fundInfoVO.fundName?length gte 16]${fundInfoVO.fundName?substring(0,15)}...[#else]${fundInfoVO.fundName}[/#if]</span><span style="" data-id="${fundInfoVO.fundId}" class="funds_comparison_name_deldete"></span></li>
+		                	[#elseif (Session["_LANG_CODE_"])?? && (Session["_LANG_CODE_"]) == 'tc']
+		                		<li style="width: 250px;white-space:nowrap;max-height:17px"><span class="fundName_left" data-fund-name="${fundInfoVO.fundName}">[#if fundInfoVO.fundName?length gte 16]${fundInfoVO.fundName?substring(0,15)}...[#else]${fundInfoVO.fundName}[/#if]</span><span style="" data-id="${fundInfoVO.fundId}" class="funds_comparison_name_deldete"></span></li>
+		                	[#elseif (Session["_LANG_CODE_"])?? && (Session["_LANG_CODE_"]) == 'en']
+		                		<li style="width: 155px;white-space:nowrap;max-height:17px"><span class="fundName_left" data-fund-name="${fundInfoVO.fundName}">[#if fundInfoVO.fundName?length gte 16]${fundInfoVO.fundName?substring(0,15)}...[#else]${fundInfoVO.fundName}[/#if]</span><span style="" data-id="${fundInfoVO.fundId}" class="funds_comparison_name_deldete"></span></li>
+		                	[/#if]
+						    
+	          			[/#list]
+						</ul>					
+					</div>
+				</div>
+				<div id="funds_comparison_chart"></div>
+            </div>
+            <div class="white_background funds_background" style="margin-top:10px;">
+           
+            <div class="tasklist-header" style="background-color: #fff;">
+            	<div class="funds_title_wrap">
+	                <p class="funds_title">[@lang_res k='fund.info.comparison.CompareItem'/]</p>
+                </div>
+                <div class="funds_comparison_duoxuan">
+                   	<div class="funds_duoxuan_div">
+                        <div class="funds_checkbox" data-dom="comparison_information">
+                            <input type="checkbox" value="Compare_information" name="" id="Compare_information" checked>
+                            <label for=""></label>
+                        </div>
+                        <a class="span_mao" href="#comparison_information"><span class="funds_checkbox_font">[@lang_res k='fund.info.comparison.BasicInformation'/]</span></a>
+	                </div>	
+	                <div class="funds_duoxuan_div">
+                        <div class="funds_checkbox" data-dom="comparison_performanve">
+                            <input type="checkbox" value="Compare_performance" name="" id="Compare_performance" checked>
+                            <label for=""></label>
+                        </div>
+                        <a class="span_mao" href="#comparison_performanve"><span class="funds_checkbox_font">[@lang_res k='fund.info.comparison.Fundperformance'/]</span></a>
+	                </div>
+	             <!--    <div class="funds_duoxuan_div">
+                        <div class="funds_checkbox" data-dom="comparison_manger">
+                            <input type="checkbox" value="Compare_manager" name="" id="Compare_manager" checked>
+                            <label for="Compare_manager"></label>
+                        </div>
+                        <span class="funds_checkbox_font">Fund manager</span>
+	                </div>	 -->
+	                <div class="funds_duoxuan_div">
+                        <div class="funds_checkbox" data-dom="comparison_fundrating">
+                            <input type="checkbox" value="Compare_rating" name="" id="Compare_rating" checked>
+                            <label for=""></label>
+                        </div>
+                        <a class="span_mao" href="#comparison_fundrating"><span class="funds_checkbox_font">[@lang_res k='fund.info.comparison.Fundrating'/]</span></a>
+	                </div>	
+	                <div class="funds_duoxuan_div">
+                        <div class="funds_checkbox" data-dom="comparison_distribution">
+                            <input type="checkbox" value="Compare_Industrial" name="" id="Compare_Industrial" checked>
+                            <label for=""></label>
+                        </div>
+                        <a class="span_mao" href="#comparison_distribution"><span class="funds_checkbox_font">[@lang_res k='fund.info.comparison.IndustrialDistribution'/]</span></a>
+	                </div>
+	                <div class="funds_duoxuan_div">
+                        <div class="funds_checkbox" data-dom="comparison_Regional">
+                            <input type="checkbox" value="Compare_Regional" name="" id="Compare_Regional" checked>
+                            <label for=""></label>
+                        </div>
+                        <a class="span_mao" href="#comparison_Regional"><span class="funds_checkbox_font">[@lang_res k='fund.info.comparison.RegionalDistribution'/]</span></a>
+	                </div>	
+	                <div class="funds_duoxuan_div">
+                        <div class="funds_checkbox" data-dom="" id="comparison_all_select">
+                            <input type="checkbox" value="Compare_Selectall" name="" id="Compare_Selectall" checked>
+                            <label for=""></label>
+                        </div>
+                        <span class="funds_checkbox_font">[@lang_res k='fund.info.comparison.SelectAll'/]</span>
+	                </div>			          
+                </div>
+                <div class="funds_fundname_wrap">
+                	<ul class="funds_fundname_collection_wrap">
+                   <p class="funds_fundname  funds_fundname_li_${fundInfoList?size}">[@lang_res k='fund.info.fundName'/]</p>
+                    [#list fundInfoList as fundInfoVO]
+                        <li class="funds_fundname_collection funds_fundname_li_${fundInfoList?size}">
+                            <p><a href="javascript:void(0)" onclick="fundDetail('${base}/front/fund/info/fundsdetail.do?id=${fundInfoVO.fundInfo.id!}')" style="color:#000000">
+                            ${fundInfoVO.fundName!""}</a></p>
+                            [#if Session["_FRONT_USER_LOGIN_"]?exists == true]
+                                <span class="funds_cart"></span>
+                                [#if fundInfoVO.followStatus?exists && fundInfoVO.followStatus=='1']
+                                <span class="funds_heart funds_heart_active funds_heart${fundInfoVO.fundInfo.id!}" followFlag="Delete" fundId="${fundInfoVO.fundInfo.id!}" productId="${fundInfoVO.productId!}" title="[@lang_res k='fund.info.favourites'/]"></span>
+                                [#else]
+                                <span class="funds_heart funds_heart${fundInfoVO.fundInfo.id!}" followFlag="Follow" fundId="${fundInfoVO.fundInfo.id!}" productId="${fundInfoVO.productId!}" title="[@lang_res k='fund.info.favourites'/]"></span>
+                                [/#if]
+                            [#else]
+                                <span class="funds_cart noLogin""></span>
+                                <span class="funds_heart noLogin"></span>
+                            [/#if]
+                        </li>
+                    [/#list]
+                	</ul>               	
+                </div>
+               </div> 
+                
+                
+                <div class="line-wrap">
+                <div id="comparison_information" class="comparison_col">
+	                <p class="funds_comparison_word">[@lang_res k='fund.info.comparison.BasicInformation'/]</p>
+	                <table class="funds_comparison_table" cellspacing="0" cellpadding="0" border="0">
+	                	<tbody>
+	                		<tr>
+                			     <td class="comparison_title funds_fundname_li_${fundInfoList?size}">[@lang_res k='fund.info.detail.Type'/]</td>
+                    [#list fundInfoList as fundInfoVO]
+                            <td class="comparison_word funds_fundname_li_${fundInfoList?size}">${fundInfoVO.fundType!""}</td>
+                    [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.riskrating'/]</td>
+                    [#list fundInfoList as fundInfoVO]
+                            <td class="comparison_word">${fundInfoVO.fundInfo.riskLevel!""}</td>
+                    [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.currency'/]</td>
+                    [#list fundInfoList as fundInfoVO]
+                            <td class="comparison_word">${fundInfoVO.fundCurrency!""}</td>
+                    [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.fundSize'/]</td>
+                    [#list fundInfoList as fundInfoVO]
+                            <td class="comparison_word">[@num_fmt s='${fundInfoVO.fundSize!""}'/] ${fundInfoVO.fundCurrency!""}</td>
+                    [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.detail.Sector'/]</td>
+                    [#list fundInfoList as fundInfoVO]
+                            <td class="comparison_word">${fundInfoVO.sectorType!""}</td>
+                    [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.detail.GeoAllocation'/]</td>
+                    [#list fundInfoList as fundInfoVO]
+                            <td class="comparison_word">${fundInfoVO.geoAllocation!""}</td>
+                    [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.lastNAVprice'/]</td>
+                    [#list fundInfoList as fundInfoVO]
+                            <td class="comparison_word">[@num_fmt s='${fundInfoVO.fundInfo.lastNav!""}'/] ${fundInfoVO.fundCurrency!""}</td>
+                    [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.IssueDate'/]</td>
+                    [#list fundInfoList as fundInfoVO]
+                            <td class="comparison_word">[#if fundInfoVO?? && fundInfoVO.fundInfo?? && fundInfoVO.fundInfo.issueDate??]${fundInfoVO.fundInfo.issueDate?date}[/#if]</td>
+                    [/#list]
+	                		</tr>
+	                	</tbody>
+	                </table>	
+                </div>
+                <div id="comparison_performanve" class="comparison_col">
+	                <p class="funds_comparison_word">[@lang_res k='fund.info.comparison.Fundperformance'/]</p>
+	                <table class="funds_comparison_table" cellspacing="0" cellpadding="0" border="0">
+	                	<tbody>
+	                		<tr>
+	                			<td class="comparison_title funds_fundname_li_${fundInfoList?size}">[@lang_res k='fund.info.comparison.ReturnSinceLaunch'/]</td>
+	                    [#list fundInfoList as fundInfoVO]
+                                <td class="comparison_word funds_fundname_li_${fundInfoList?size}">[@num_color s='${fundInfoVO.fundReturnLaunch!""}'/]</td>
+	                    [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.comparison.ReturnYTD'/]</td>
+                        [#list fundInfoList as fundInfoVO]
+                                <td class="comparison_word">[@num_color s='${fundInfoVO.fundReturnYTD!""}'/]</td>
+                        [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.comparison.Return1W'/]</td>
+                        [#list fundInfoList as fundInfoVO]
+                                <td class="comparison_word">[@num_color s='${fundInfoVO.fundReturnOneWeek!""}'/]</td>
+                        [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.comparison.Return1M'/]</td>
+                        [#list fundInfoList as fundInfoVO]
+                                <td class="comparison_word">[@num_color s='${fundInfoVO.fundReturnOneMonth!""}'/]</td>
+                        [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.comparison.Return3M'/]</td>
+                        [#list fundInfoList as fundInfoVO]
+                                <td class="comparison_word">[@num_color s='${fundInfoVO.fundReturnThreeMonth!""}'/]</td>
+                        [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.comparison.Return6M'/]</td>
+                        [#list fundInfoList as fundInfoVO]
+                                <td class="comparison_word">[@num_color s='${fundInfoVO.fundReturnSixMonth!""}'/]</td>
+                        [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.comparison.Return1y'/]</td>
+                        [#list fundInfoList as fundInfoVO]
+                                <td class="comparison_word">[@num_color s='${fundInfoVO.fundReturnOneYear!""}'/]</td>
+                        [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.comparison.Return3Y'/]</td>
+                        [#list fundInfoList as fundInfoVO]
+                                <td class="comparison_word">[@num_color s='${fundInfoVO.fundReturnThreeYear!""}'/]</td>
+                        [/#list]
+	                		</tr>
+	                	</tbody>
+	                </table>	
+                </div>
+                <div id="comparison_fundrating" class="comparison_col">
+	                <p class="funds_comparison_word">[@lang_res k='fund.info.comparison.Fundrating'/]</p>
+	                <table class="funds_comparison_table" cellspacing="0" cellpadding="0" border="0">
+	                	<tbody>
+	                		<tr>
+	                			<td class="comparison_title funds_fundname_li_${fundInfoList?size}">[@lang_res k='fund.info.lipperCR'/]</td>
+	                			[#list fundInfoList as fundInfoVO]
+		                			[#if fundInfoVO.lipperCR?? && fundInfoVO.lipperCR>0 ]
+		                			[#assign item = fundInfoVO.lipperCR!""]
+                              <td class="comparison_word funds_fundname_li_${fundInfoList?size}">
+		                			[#list 1..item as t]
+                                <img src="${base}/res/images/Solidstars.png" alt="">
+                          [/#list]
+	                			</td>
+		                			[#else]
+	                            <td class="comparison_word funds_fundname_li_${fundInfoList?size}">N/A</td>
+                          [/#if]
+	                			[/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.fitch'/]</td>
+	                			[#list fundInfoList as fundInfoVO]
+                                    [#if fundInfoVO.fitch?? && fundInfoVO.fitch>0 ]
+                                    [#switch fundInfoVO.fitch]
+                                      [#case 1]
+                                      <td class="comparison_word">C</td>
+                                      [#break]
+                                      [#case 2]
+                                      <td class="comparison_word">CC</td>
+                                      [#break]
+                                      [#case 3]
+                                      <td class="comparison_word">CCC</td>
+                                      [#break]
+                                      [#case 4]
+                                      <td class="comparison_word">B</td>
+                                      [#break]
+                                      [#case 5]
+                                      <td class="comparison_word">BB</td>
+                                      [#break]
+                                      [#case 6]
+                                      <td class="comparison_word">BBB</td>
+                                      [#break]
+                                      [#case 7]
+                                      <td class="comparison_word">A</td>
+                                      [#break]
+                                      [#case 8]
+                                      <td class="comparison_word">AA</td>
+                                      [#break]
+                                      [#case 9]
+                                      <td class="comparison_word">AAA</td>
+                                      [#break]
+                                      [#default]
+                                         <td class="comparison_word">A</td>
+                                    [/#switch]
+
+                                    [#else]
+                                <td class="comparison_word">N/A</td>
+                                    [/#if]
+                                [/#list]
+	                		</tr>
+	                		<tr>
+	                			<td class="comparison_title">[@lang_res k='fund.info.citywire'/]</td>
+	                			[#list fundInfoList as fundInfoVO]
+                                    [#if fundInfoVO.citywire?? && fundInfoVO.citywire>0 ]
+                                    [#switch fundInfoVO.citywire]
+                                      [#case 1]
+                                      <td class="comparison_word">C</td>
+                                      [#break]
+                                      [#case 2]
+                                      <td class="comparison_word">CC</td>
+                                      [#break]
+                                      [#case 3]
+                                      <td class="comparison_word">CCC</td>
+                                      [#break]
+                                      [#case 4]
+                                      <td class="comparison_word">B</td>
+                                      [#break]
+                                      [#case 5]
+                                      <td class="comparison_word">BB</td>
+                                      [#break]
+                                      [#case 6]
+                                      <td class="comparison_word">BBB</td>
+                                      [#break]
+                                      [#case 7]
+                                      <td class="comparison_word">A</td>
+                                      [#break]
+                                      [#case 8]
+                                      <td class="comparison_word">AA</td>
+                                      [#break]
+                                      [#case 9]
+                                      <td class="comparison_word">AAA</td>
+                                      [#break]
+                                      [#default]
+                                         <td class="comparison_word">A</td>
+                                    [/#switch]
+
+                                    [#else]
+                                <td class="comparison_word">N/A</td>
+                                    [/#if]
+                                [/#list]
+	                		</tr>
+	                	</tbody>
+	                </table>	
+                </div>
+                <div id="comparison_distribution" class="comparison_col">
+	                <p class="funds_comparison_word">[@lang_res k='fund.info.comparison.IndustrialDistribution'/]</p>
+	                <table class="funds_comparison_table" cellspacing="0" cellpadding="0" border="0">
+	                	<tbody>
+	                	[#if portfolioListByIndustry??]
+	                	[#list portfolioListByIndustry as portfolio]
+                            <tr>
+                                <td class="comparison_title funds_fundname_li_${fundInfoList?size}">${portfolio.name!""}</td>
+                            [#assign item = portfolio.portfolioList!""]
+                            [#if item??]
+	                            [#list item as rec]
+	                                <td class="comparison_word funds_fundname_li_${fundInfoList?size}">[@num_pct s='${rec.value!""}'/]</td>
+	                            [/#list]
+                            [/#if]
+                            </tr>
+                        [/#list]
+                        [/#if]
+	                	</tbody>
+	                </table>	
+                </div>
+				      <div id="comparison_Regional" class="comparison_col">
+	                <p class="funds_comparison_word">[@lang_res k='fund.info.comparison.RegionalDistribution'/]</p>
+	                <table class="funds_comparison_table" cellspacing="0" cellpadding="0" border="0">
+	                	<tbody>
+	                	[#if portfolioListByRegion??]
+                        [#list portfolioListByRegion as portfolio]
+                            <tr>
+                                <td class="comparison_title funds_fundname_li_${fundInfoList?size}">${portfolio.name!""}</td>
+                            [#assign item = portfolio.portfolioList!""]
+                            [#if item??]
+                                [#list item as rec]
+                                    <td class="comparison_word funds_fundname_li_${fundInfoList?size}">[@num_pct s='${rec.value!""}'/]</td>
+                                [/#list]
+                            [/#if]
+                            </tr>
+                        [/#list]
+                        [/#if]
+	                	</tbody>
+	                </table>	
+                </div>
+                </div>
+                
+                
+                
+            </div>
+    		
+        </div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+    var _root_ = '${base}';
+    var _ids_ = '${id}';
+    seajs.use('${base}/res/web/fund/info/fundscomparison.js');
+</script>

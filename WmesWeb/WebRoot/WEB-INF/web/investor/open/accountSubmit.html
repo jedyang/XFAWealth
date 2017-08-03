@@ -1,0 +1,102 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='open.account.title'/]</a>
+</div>
+<div class="wmes-content">
+    <div class="kaihu_div white_background">
+    <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='open.account.title'/]</p>
+            <div class="white_background" >   
+                <!-- <div class="OpenAccount_big_title">
+                  <h2>Open account</h2>
+                </div> -->
+                
+                <div class="OpenAccount_liucheng_div">
+                    <div class="OpenAccount_liucheng">
+                        <ul>
+                        <!-- 
+                            <li class="liucheng_first liucheng_light"><div class="font_height">[@lang_res k='open.account.Start'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"/></div>
+                            </li> -->
+                            <li class="liucheng_kuai liucheng_light"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou liucheng_light"><img src="${base}/res/images/liucheng_02.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_light"><div class="font_height">[@lang_res k='open.account.BasicInfo'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_light"><div>[@lang_res k='open.account.DocumentCheck'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"></div>
+                            </li>
+                            <li class="liucheng_kuai  liucheng_light"><div class="font_height">[@lang_res k='open.account.Declaration'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_03.png"></div>
+                            </li>
+                            <li class="liucheng_last liucheng_orange"><div class="font_height">[@lang_res k='open.account.Submit'/]</div></li>
+                        </ul>
+                    </div>    
+                </div>
+                <div class="OpenAccount_liucheng_content">                  
+                    <div class="Summit_text" style="text-align:center;"> 
+                    <br><br>
+                    [#if account?? && account.finishStatus=='1']
+                        Your application has been submited to your IFA, you can use “<a class="Summit_text_a" href="${base}/front/investor/myAccountList.do ">My Account List</a>” to trace the process。
+                        [#if account.flowStatus=='2']<!-- 流程退回 -->
+                        [#elseif account.flowStatus=='1']<!-- 流程通过 -->
+                        [#elseif account.flowStatus=='0']<!-- 审批中 -->
+                        [/#if]
+                    [#else]
+                        Please confirm your application, and submit to your IFA.
+                    [/#if]                   
+                    </div>
+                    <div class="OpenAccount_addwrap">
+                    [#if account?? && account.finishStatus?? && account.finishStatus=='1']<!-- 完成填写，提交审批 -->
+                        [#if account.flowStatus=='2']<!-- 流程退回 -->
+                        <p class="OpenAccount_addWrap_title">Additional Message</p>
+                        <textarea class="OpenAccount_addContent" id="msg" name="msg" rows="8" cols="60"></textarea>
+                        [#else]<!-- 等待审批 -->
+                        <br><br><br><br><br><br><br><br>
+                        [/#if]
+                    [#else]<!-- 草稿 -->
+                        <br><br><br><br><br><br><br><br>
+                    [/#if]
+                        <div class="OpenAccount_subTouxiang">
+                            [#if account?? && account.finishStatus?? && (account.finishStatus=='0' || (account.finishStatus=='1' && account.flowStatus=='2'))]<!-- 草稿 或 提交后被退回 -->
+                            <a id='submitToIFA' class="wenti_btn_bule" href="javascript:;">[@lang_res k='open.account.submitToIFA'/]</a>
+                            [/#if]
+                            [#if account?? && account.ifa??]<!-- 显示IFA信息 -->
+                                    <a href="javascript:void(0)" class="showMore" title="Show your IFA information.">
+                                     <span class="wmes_touxiang">
+                                     <img src="${base}[#if account.ifa?? && account.ifa.member??][@user_head u=account.ifa.member.iconUrl /][/#if]" alt="" width="38px" height="38px"/>
+                                     </span>
+                                        ${account.ifa.firstName!} ${account.ifa.lastName!}
+                                    </a>
+                            [/#if]
+                        </div>
+                    </div>
+                    
+                    <br>
+                    <div class="wenti_btn">
+                        <a class="wenti_btn_bule" href="${base}/front/investor/accountDeclare.do?accountId=${accountId!}">[@lang_res k='open.account.Previous'/]</a>
+                        <a class="wenti_btn_LightBlue" href="javascript:;">[@lang_res k='open.account.Cancel'/]</a>
+                    </div>
+                </div>
+            </div>
+    
+
+        </div>
+</div>
+
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+[#if validity?exists && validity == "false" ]
+  alert( "抱歉，当前开户关联的accountId有误，请检查开户流程是否正确？" );
+  window.location.href = "${base}/front/investor/accountStart.do?accountId=${accountId!''}"+"&r="+Math.random();
+[/#if]
+    seajs.use('${base}/res/web/openAccount/openAccountSubmit.js');
+    var accountId = "${accountId!}";
+    var submitBy = "investor";
+</script>

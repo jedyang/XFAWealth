@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+	<head>
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title></title>
+	    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+	    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+	    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+	</head>
+	<body>
+		<div  style="margin: auto" class="tab_wrap dialog_tab_wrap">
+			<form id="add-form" class="form-horizontal required-validate">
+				<input id="hidId" value="${(group.id)!}" type="hidden"/>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">
+						<label for="txtGroupName" class="label-control"><sapn style="color:red;margin-left:5px">*</sapn>[@lang_res k='member.group.th.group.name'/]</label>
+					</div>
+					<div class="col-sm-7">
+						<input id="txtGroupName" name="groupName" type="text" class="form-control" value="${(group.groupName)!}">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">
+						<label for="txtRemark" class="label-control">[@lang_res k='member.group.th.description'/]</label>
+					</div>
+					<div class="col-sm-7">
+						<textarea id="txtRemark" style="resize: none;" rows="8" type="text" class="form-control">${(group.remark)!}</textarea>
+					</div>
+				</div>
+				[#if group?? && group.id??]
+				<div class="form-group">
+					<div class="col-sm-3 text-right">
+						<label for="isValid-1" class="label-control"><sapn style="color:red;margin-left:5px">*</sapn>[@lang_res k='member.group.th.status'/]</label>
+					</div>
+					<div class="col-sm-3">
+						<input [#if group??==false||group.isValid??==false||group.isValid=='1']checked="checked"[/#if] id="isValid-1" name="isValid" type="radio" value="1">
+						<label class="label-control">[@lang_res k='global.status.valid'/]</label>
+						<input [#if group??&&group.isValid??&&group.isValid=='0']checked="checked"[/#if] id="isValid-0" name="isValid" type="radio" value="0">
+						<label class="label-control">[@lang_res k='global.status.invalid'/]</label>
+						<input [#if group??&&group.isValid??&&group.isValid=='-1']checked="checked"[/#if] id="isValid-0" name="isValid" type="radio" value="0">
+						<label class="label-control">[@lang_res k='global.status.deleted'/]</label>
+					</div>
+				</div>
+				[/#if]
+			</form>
+		</div>
+	</body>
+</html>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script type="text/javascript">
+</script>

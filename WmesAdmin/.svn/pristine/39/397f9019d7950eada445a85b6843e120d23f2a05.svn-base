@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>后台用户</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="right-side container-fluid">
+				<div class="r-side-container">
+					<ul class="tab" id="tab-search">
+						<li class="tab-li-crr">
+							<a href="javascript:;" onclick="javascript:selectSysAdmin(0);">后台用户列表</a>
+						</li>
+					</ul>
+					<div class="clear"></div>
+					<div class="tab_wrap">
+						<div class="form-inline">
+							<div>
+								<div class="row pd10">
+									<div class="col-md-4">
+										<label for="txtkeyword">
+											[@lang_res k='member.list.keyword'/]
+										</label>
+										<input id='txtkeyword' type="text" class="form-control keyWord" id="s-1" placeholder="账号、昵称">
+									</div>
+									<div class="col-md-3">
+										<label for="txtIsValid" class="label-control">
+											[@lang_res k='param.list.status'/]
+										</label>
+										<select id="txtIsValid" class="form-control " name="isValid">
+											<option value="">
+												[@lang_res k='global.pleaseSelect'/]
+											</option>
+											<option value="0">
+												[@lang_res k='param.status.0'/]
+											</option>
+											<option value="1">
+												[@lang_res k='param.status.1'/]
+											</option>
+										</select>
+									</div>
+									<div class="col-md-2">
+										<button type="button" class="btn btn-primary" id="btnSearch">
+											 [@lang_res k='global.query'/]
+										</button>
+									</div>
+								</div>
+								<div class="clear"></div>
+								<div class="pdt20">
+									<button type="button" class="btn btn-blue-s" id="btnAdd">
+										 [@lang_res k='global.add'/]
+									</button>
+									<a href="javascript:;" class="btn-blue-s" id="sys_admin_abled"> 
+										[@lang_res k='param.status.1'/]
+									</a>
+									<a href="javascript:;" class="btn-blue-s" id="sys_admin_enabled">
+										[@lang_res k='param.status.0'/]
+									</a>
+									<a href="javascript:;" class="btn-blue-s" id="mul_delete">
+										[@lang_res  k='global.delete'/]
+									</a>
+								</div>
+								<div>
+									<table id="adminlist" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+										<thead>
+											<tr>
+												<th class="table-head">
+													[@lang_res k='sysrole.info.select'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='member.info.loginCode'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='member.info.nickName'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='member.info.email'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='member.info.mobileNumber'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='param.list.status'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='global.operate'/]
+												</th>
+
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<ul id='Pagination' class="pagination pull-right">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+		
+<script type="text/javascript">
+$(function() {
+	selectSysAdmin(0);
+	//新增
+	$("#btnAdd").on("click", function() {
+		closeTabByName("addSysAdmin");
+		showform("sys-admin-add","[@lang_res k='member.admin.add'/]","${base}/sys/admin/input.do");
+	});
+	//按下回车键搜索
+	document.onkeydown = function(e) {
+		var ev = document.all ? window.event : e;
+		if (ev.keyCode == 13) {
+			selectSysAdmin(0);
+		}
+	};
+	setAutoSearch("#txtIsValid",selectSysAdmin,0);
+	setAutoSearch("#txtkeyword",selectSysAdmin,0);
+	//关键字查找
+	$("#btnSearch").on("click", function() {
+		selectSysAdmin(0);
+	});
+	//启用
+	$("#sys_admin_abled").on("click", function() {
+		var tip = "[@lang_res k='param.status.1'/]";
+		validOperate("1",tip);
+	});
+	//禁用
+	$("#sys_admin_enabled").on("click", function() {
+		var tip = "[@lang_res k='param.status.0'/]";
+		validOperate("0",tip);
+	});
+	//删除
+	$("#mul_delete").on("click", function() {
+		deleteSysAdmin();
+	});
+	//查找
+	function selectSysAdmin(curPage) {
+		var isValid = $("#txtIsValid").find("option:selected").val();
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/sys/admin/listJson.do?datestr=' + new Date().getTime(),
+			data : {
+				'searchKeyWord' : $("#txtkeyword").val(),
+				'isValid' : isValid,
+				'page' : curPage + 1,
+				'rows' : 10
+			},
+			success : function(json) {
+				var html = "";
+				var isValid = "";
+				var total = json.total;
+				var table = json.rows;
+				var eidtUrl = "";
+				$.each(table, function(i, n) {
+					eidtUrl = "${base}/sys/admin/input.do?id="+n.id;
+					if(n.isValid=="1"){
+						isValid = "[@lang_res k='param.status.1'/]";
+					}else{
+						isValid = "[@lang_res k='param.status.0'/]";
+					}
+					html += "<tr><td> <input rel='"+n.id+"' type='checkbox' class='checkbox'></td>"+
+							"<td><a href='javascript:showform(\"editSysAdmin\",\"[@lang_res  k='global.edit'/]\",\""+eidtUrl+"\")' onclick='closeTabByName(\"editSysAdmin\");'>" + n.loginCode + "</td><td>" + 
+							n.nickName + "</td><td>" +  n.email + "</td><td>" + n.mobileNumber + "</td><td>" + isValid + "</td><td>"+
+							"<a href='javascript:;' class='del_sysAdmin' rel=\""+ n.id + "\" >[@lang_res  k='global.delete'/]</a>"+
+							"&nbsp;&nbsp;<a href='javascript:showform(\"editSysAdmin\",\"[@lang_res k='global.edit'/]\",\""+eidtUrl+"\")' onclick='closeTabByName(\"editSysAdmin\");'>[@lang_res  k='global.edit'/]<a/></tr>";
+				});
+				$("#adminlist tbody").empty().append(html);
+				$("#Pagination").pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 10,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+				//绑定单项删除del_member
+				$("#adminlist .del_sysAdmin").on("click", function() {
+					var rel = $(this).attr("rel");
+					deleteSysAdmin(rel);
+				});
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+			selectSysAdmin(page_id);
+		}
+	}
+	
+	//删除
+	function deleteSysAdmin(rel) {
+		layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			//批量删除
+			var ids="";
+			if(rel==null || rel==undefined){
+				var selected = $("#adminlist").find(":checkbox:checked");
+				$.each(selected, function(i, n) {
+					var rel = $(n).attr("rel");
+					ids += rel + ",";
+				});
+			}else{
+				ids = rel;
+			}
+			$.ajax({
+				type : "POST",
+				datatype : "json",
+				url : "${base}/sys/admin/delete.do",
+				data : {"ids":ids},
+				success : function(json) {
+					if (json != undefined && json.result == true) {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]");
+						selectSysAdmin(0);
+					} else {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]");
+					}
+				}
+			});
+		});
+	}
+	//启用禁用操作
+	function validOperate(isValid,tip){
+		var ids = "";
+		var selected = $("#adminlist").find(":checkbox:checked");
+		$.each(selected, function(i, n) {
+			var rel = $(n).attr("rel");
+			ids += rel + ",";
+		});
+		setTimeout(function(){
+			$.ajax({
+				type : 'post',
+				datatype : 'json',
+				url : "${base}/sys/admin/saveIsValid.do?datestr=" + new Date().getTime(),
+				data : {"ids":ids,"isValid":isValid},
+				success : function(data) {
+					if (data.result) {
+						layer.msg(tip+"[@lang_res k='global.success'/]");
+						selectSysAdmin(0);
+					} else {
+						layer.msg(tip+"[@lang_res k='global.failed'/]");
+					}
+				}
+			});
+		},200);
+	}
+});
+</script>
+	</body>
+</html>

@@ -1,0 +1,223 @@
+package com.fsll.core.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fsll.common.base.service.BaseService;
+import com.fsll.common.util.JsonPaging;
+import com.fsll.core.entity.SysMenu;
+import com.fsll.core.service.SysMenuService;
+/***
+ * 业务接口实现类：语言管理接口类
+ * @author tan
+ * @date 2016-07-25
+ */
+@Service("sysMenuService")
+//@Transactional
+public class SysMenuServiceImpl extends BaseService implements SysMenuService {
+    /***
+     * 查询菜单
+     */
+	@Override
+	//@Transactional(readOnly=true)
+	public JsonPaging findAll(JsonPaging jsonpaging,SysMenu menu) {
+		String hql=" from SysMenu where 1=1";
+		List<Object> params=new ArrayList<Object>();
+		if(null!=menu.getNameSc()&&!"".equals(menu.getNameSc())){
+			hql+=" and ( code like ? or nameSc like ?  or nameTc like ? or nameEn like ? or webUrl like ? )";
+			
+			params.add("%"+menu.getNameSc()+"%");
+			params.add("%"+menu.getNameSc()+"%");
+			params.add("%"+menu.getNameSc()+"%");
+			params.add("%"+menu.getNameSc()+"%");
+			params.add("%"+menu.getNameSc()+"%");			
+		}
+		
+		hql+=" order by orderBy ";
+		jsonpaging=this.baseDao.selectJsonPaging(hql, params.toArray(), jsonpaging, false);
+		if(null==menu.getNameSc() || "".equals(menu.getNameSc())){		
+			List<SysMenu> list = getTreeMenu(jsonpaging.getList());
+			jsonpaging.setList(list);
+		}
+		else {			
+			
+			List<SysMenu> list = jsonpaging.getList();
+			if(!list.isEmpty()){
+				//查找当前搜索结果的根节点
+				String hqlParent = " from SysMenu where parent is NULL ";
+				String hqlParentWhere = "";
+				
+				for (SysMenu sysMenu : list) {
+					hqlParentWhere += " OR FIND_IN_SET(id,fn_queryParentInfo('"+sysMenu.getId()+"'))>0 ";
+				}
+				hqlParentWhere = " AND ( 1=2 "+hqlParentWhere+" ) ";
+				hqlParent = hqlParent + hqlParentWhere; 
+				List<SysMenu> parentMenus = this.baseDao.find(hqlParent, null, false);
+				if(null != parentMenus && !parentMenus.isEmpty()){
+					//根据 根节点查找所有的子节点
+					String hqlQuery = " from SysMenu where 1=2 ";
+					String hqlQueryWhere = "";
+					for (SysMenu sysMenu : parentMenus) {
+						hqlQueryWhere += " OR FIND_IN_SET(id,fn_queryChildrenInfo('"+sysMenu.getId()+"'))>0 ";
+					}
+					hqlQuery = hqlQuery + hqlQueryWhere + " order by orderBy ";
+					List<SysMenu> queryList = this.baseDao.find(hqlQuery, null, false);
+					queryList = getTreeMenu(queryList);
+					jsonpaging.setList(queryList);
+				}				
+			}
+		}
+
+		return jsonpaging;
+	}
+	
+	   /***
+     * 查询所有有效的类型
+     */
+	@Override
+	//@Transactional(readOnly=true)
+	public List<SysMenu> findAllMenu() {
+		String hql=" from SysMenu where isValid=1 order by orderBy asc";
+		List<SysMenu> list = this.baseDao.find(hql, null, false);
+		if(null != list && !list.isEmpty()){
+			return list;
+		}else {
+			return null;
+		}	
+	}
+	
+
+
+	
+	List<SysMenu> treeList;
+	public List<SysMenu> getTreeMenu(List<SysMenu> allList) {
+		treeList = new ArrayList<SysMenu>();
+//		List<SysMenu> list = new ArrayList<SysMenu>();
+//		List<SysMenu> allList = findAllMenu();
+		for (SysMenu sysMenu : allList) {
+//			String id = sysMenu.getId();  
+            if (sysMenu.getParent() == null) {  
+                treeList.add(sysMenu);
+                build(allList, sysMenu);  
+            } 
+		}
+//		if(treeList.isEmpty())
+//			return allList;
+		
+		return treeList;
+	}
+	   private void build(List<SysMenu> allNodes,SysMenu node){  
+	        List<SysMenu> children = getChildren(allNodes,node);  
+	        if (!children.isEmpty()) {   
+	            for (SysMenu child : children) {  
+	            	treeList.add(child);  
+	                build(allNodes,child);  
+	            }  
+	        }   
+	    }
+	
+    private List<SysMenu> getChildren(List<SysMenu> nodes, SysMenu node){  
+        List<SysMenu> children = new ArrayList<SysMenu>();  
+        String id = node.getId();  
+        for (SysMenu child : nodes) {  
+            if (null != child.getParent() && id.equals(child.getParent().getId())) {  
+                children.add(child);  
+            }  
+        }  
+        return children;  
+    }
+	
+	
+
+	
+	 
+	/***
+	 * 根据id查询对象的方法
+	 * @param menu
+	 * @return
+	 */
+	//@Transactional(readOnly=true)
+	public SysMenu findMenuById(SysMenu menu){
+		String hql="from SysMenu where id=? ";
+		List params=new ArrayList();
+		params.add(menu.getId());
+		List<SysMenu> list = this.baseDao.find(hql, params.toArray(), false);
+		if (null!=list&&!list.isEmpty()) {
+			return list.get(0);
+		}
+		return null;
+	}
+	/***
+	 * 删除对象的方法
+	 * @param ids
+	 * @return
+	 */
+	public boolean deleteObject(String ids){
+		if (!"".equals(ids)) {
+			String tmpStr = "";
+			String[] arr = null;
+			if(ids.endsWith(",")){
+				tmpStr = ids.substring(0,ids.length()-1);
+				arr = tmpStr.split(",");
+		    }else{
+		    	arr = new String[]{ids};
+			}
+			for (String id : arr) {
+				if(!"".equals(id)){
+					deleteById(id);
+				}
+			}
+		}
+		return false;
+	}
+	/***
+	 * 删除根据id删除用户对象的方法
+	 * @param id
+	 * @return
+	 */
+	private boolean deleteById(String id){
+		if(null!=id){
+			SysMenu menu=new SysMenu();
+			menu.setId(id);
+			menu= findMenuById(menu);
+			if(null!=menu){
+				//删除该指定站点信息
+				this.baseDao.delete(menu);
+			}
+		}else{
+			return false;
+		}
+		return true;
+		
+	}
+	 
+	@Override
+	public SysMenu saveOrUpdate(SysMenu menu, boolean isAdd) {
+		menu = (SysMenu)this.baseDao.saveOrUpdate(menu,isAdd);
+		return menu;
+	}
+
+     
+    /***
+     * 检查是否存在子节点
+     * @param menu
+     * @return
+     */
+	@Override
+	public boolean checkChildrenExist(SysMenu menu) {
+    	String hql="FROM SysMenu t where t.parent.id=?";
+    	List param=new ArrayList();
+    	param.add(menu.getId());
+    	List<SysMenu> list = this.baseDao.find(hql, param.toArray(), false);
+    	if(null!=list&&!list.isEmpty()){
+    		return true;
+    	}
+    	return false;    	
+    }
+	
+
+    
+}

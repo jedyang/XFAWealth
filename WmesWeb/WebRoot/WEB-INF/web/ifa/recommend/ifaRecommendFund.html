@@ -1,0 +1,405 @@
+[#include "../inc/head_v2.html"/]
+        <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+        <link rel="stylesheet" href="${base}/res/css/Funds.css">
+        <link rel="stylesheet" href="${base}/res/css/animate.css">
+        <link rel="stylesheet" href="${base}/res/css/ifa.css">  
+        <div class="wmes-content">
+            <p class="insight-top-title">IFA Recommend Funds</p>
+
+            <div style="background:white">
+
+                <!-- Recommend Date -->
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title" style="width:160px;text-align:right;">Recommend Date</p>
+                    <ul class="funds_choice">
+                        <li data-name="period" class="funds_all fund_choice_active">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+                        <li data-name="period" data-key="1 Week" data-value="1 Week">1 Week</li>
+                        <li data-name="period" data-key="1 Month" data-value="1 Month">1 Month</li>
+                        <li data-name="period" data-key="3 Month" data-value="3 Month">3 Month</li>
+                        <li data-name="period" data-key="6 Month" data-value="6 Month">6 Month</li>
+                        <li data-name="period" data-key="1 Year" data-value="1 Year">1 Year</li>
+                        <input class="insight-input-date" id="fromDate" readonly type="text" name="title">
+                        To&nbsp;
+                        <input class="insight-input-date" id="toDate" readonly type="text" name="title">
+                    </ul>
+                </div>
+                <!-- Recommend Date -->
+
+                <!-- Relate Geo Allocation -->
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title" style="width:160px;text-align:right;">Relate Geo Allocation :</p>
+                    <ul class="funds_choice funds_logo_b" id="funds_logo_choice">
+                        <li data-letter="" class="funds_all fund_choice_active" data-name="region">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+                        <li data-letter="A">A</li>
+                        <li data-letter="B">B</li>
+                        <li data-letter="C">C</li>
+                        <li data-letter="D">D</li>
+                        <li data-letter="E">E</li>
+                        <li data-letter="F">F</li>
+                        <li data-letter="G">G</li>
+                        <li data-letter="H">H</li>
+                        <li data-letter="I">I</li>
+                        <li data-letter="J">J</li>
+                        <li data-letter="K">K</li>
+                        <li data-letter="L">L</li>
+                        <li data-letter="M">M</li>
+                        <li data-letter="N">N</li>
+                        <li data-letter="O">O</li>
+                        <li data-letter="P">P</li>
+                        <li data-letter="Q">Q</li>
+                        <li data-letter="R">R</li>
+                        <li data-letter="S">S</li>
+                        <li data-letter="T">T</li>
+                        <li data-letter="U">U</li>
+                        <li data-letter="V">V</li>
+                        <li data-letter="W">W</li>
+                        <li data-letter="S">S</li>
+                        <li data-letter="Y">Y</li>
+                        <li data-letter="Z">Z</li>
+                    </ul>
+                    <ul class="funds_logo_choice" id="funds_logo">
+                        [#if regionList?exists && regionList?size gt 0 ]
+                        [#list regionList as x]
+                        <li style="display:none;" title="${x.name!}" data-letter="${x.key!}" data-key="${x.name!}" data-name="region" data-value="${x.itemCode!}" >
+                            ${x.name!}</li>
+                        [/#list]
+                        [/#if]
+                    </ul>
+                </div>
+                <!-- Relate Geo Allocation -->
+
+                <!-- Relate Sector -->
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title" style="width:180px;">Relate Sector :</p>
+                    <ul class="funds_choice">
+                        <li data-name="sector" data-key=""   data-value=""  class="funds_all fund_choice_active">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+                        [#if sectorList?exists && sectorList?size gt 0 ]
+                        [#list sectorList as x]
+                            <li data-name="sector" data-key="${x.name!}" data-value="${x.itemCode!}">${x.name!}</li>
+                        [/#list]
+                        [/#if]
+                    </ul>
+                </div>                
+                <!-- Relate Sector -->
+
+                <!-- Selected condition -->
+                <div class="white_background funds_selected_wrap" ng-controller="Searchctrl"  ng-app="mySearch">                
+                    <div class="funds_selected">
+                        <p class="funds_selected_title">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.selectedCondition'/] </p>
+                        <ul class="selection_criteria">
+                        <p class="funds_title_selection">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.resetFilter'/] </p>
+                        </ul>
+                    </div>
+
+                    <div class="funds_keyserach" style="margin-top:4px;">
+                            <input type="text" id="txtKeyword" placeholder="Please input keyword">
+                            <span class="icon_search" id="searchKeyBtn"></span>
+                    </div>
+                    
+                    <div class="funds_serach_results" style="margin-top:10px;">
+                        <p class="funds_serach_sum">
+                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchTip'/] 
+                        <span class="funds_serach_digital" ng-bind="{{'datatotal'}}"></span> [@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchTip_2'/]</p>
+                        <ul class="funds_search_tab">
+                            <li class="now">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.fundNAV'/] </li>
+                            <li>[@lang_res l=Session["_LANG_CODE_"] k='fund.info.fundPerformance'/] </li>
+                            <li>[@lang_res l=Session["_LANG_CODE_"] k='fund.info.fundRating'/] </li>
+                        </ul>
+                    </div>
+
+                    <table class="funds_search_information">
+                        <tbody>
+                            <tr class="funds_tables_th">
+                                <th class="funds_tables_fnames">
+                                    [@lang_res l=Session["_LANG_CODE_"] k='fund.info.fundName'/] 
+                                </th>
+                                <th class="funds_tables_header funds_sort" data-type="risk_level">
+                                    [@lang_res l=Session["_LANG_CODE_"] k='fund.info.riskrating'/]
+                                    <p class="funds_arrow_wraps">
+                                        <span class="arrow_top"></span>
+                                        <span class="arrow_down"></span>
+                                    </p>        
+                                </th>
+                                <th  class="funds_tables_header funds_sort" data-type="fund_currency">
+                                    [@lang_res l=Session["_LANG_CODE_"] k='fund.info.currency'/]
+                                    <p class="funds_arrow_wraps">
+                                        <span class="arrow_top"></span>
+                                        <span class="arrow_down"></span>
+                                    </p> 
+                                </th>
+                                <th  class="funds_tables_header funds_sort" data-type="isin_code">
+                                    [@lang_res l=Session["_LANG_CODE_"] k='fund.info.ISIN'/] 
+                                    <p class="funds_arrow_wraps">
+                                        <span class="arrow_top"></span>
+                                        <span class="arrow_down"></span>
+                                    </p> 
+                                </th>
+                            </tr>
+                            <tr ng-repeat="items in dataList" ng-init="checkLast($last)" class="animated flipInX">
+                                <td class="tdleft funds_tables_fnames">
+                                    <a href="${base}/front/fund/info/fundsdetail.do?id={{items.fundId}}" ng-bind="{{'items.fundName'}}"></a>
+                                </td>
+                                <td ng-bind="{{'items.fundInfo.riskLevel'}}"></td>
+                                <td ng-bind="{{'items.fundCurrency'}}"></td>
+                                <td ng-bind="{{'items.fundInfo.isinCode'}}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+<!-- 展示列表右侧可滚动区域 -->
+<div class="funds_search_wrap">     
+                    <div class="funds_search_content">  
+                        <table class="funds_search_Part" style="display: table;">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                    <th class="funds_tables_header funds_sort" data-type="last_nav">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.LastNAV_rating'/]
+                                        <p class="funds_arrow_wraps">
+                                            <span class="arrow_top"></span>
+                                            <span class="arrow_down"></span>
+                                        </p>                    
+                                    </th>
+                                    <th class="funds_tables_header funds_sort" data-type="issue_price">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.Growthrate'/](%)
+                                        <p class="funds_arrow_wraps">
+                                            <span class="arrow_top"></span>
+                                            <span class="arrow_down down_active"></span>
+                                        </p>
+                                    </th>
+                                    <th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.price_date'/]</th>
+                                    <th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.YTD'/](%)</th>
+                                    <th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.YTDdate'/]</th>
+                                    <th class="funds_search_like"></th>
+                                </tr>
+                                <tr ng-repeat="items in dataList"  ng-init="checkLast($last)" class="animated flipInX">
+                                    <td data-original="{{items.fundInfo.lastNav}}" data-exchange="{{items.fundCurrencyCode}}" data-name="{{items.fundCurrency}}" class="Currency_conversion">
+                                        <span class="conversion_Num" ng-bind="{{'items.fundInfo.lastNav'}}"></span>
+                                        <span class="conversion_Type" ng-bind="{{'items.fundCurrency'}}"></span>
+                                    </td>
+                                    <td ng-bind="{{'items.fundInfo.issuePrice'}}"></td>
+                                    <td ng-bind="{{'items.fundInfo.issueDate'}}"></td>
+                                    <td></td>
+                                    <td>03/03/2015</td>
+                                    <td>
+                                        <span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}"></span>
+                                        <span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}" title="[@lang_res l=Session["_LANG_CODE_"] k='fund.info.favourites'/]"></span>
+                                        <a href="${base}/front/ifa/info/ifaRecommendFundsdetail.do?id={{items.fundId}}" class="funds_recommend_edit" title="编辑"></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="funds_search_Part">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                    <th class="funds_tables_header funds_sort" data-type="last_nav"">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.lastNAVprice'/]
+                                        <p class="funds_arrow_wraps">
+                                            <span class="arrow_top"></span>
+                                            <span class="arrow_down"></span>
+                                        </p>    
+                                    </th>
+                                    <th class="funds_tables_header">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.3YrRiskReturn'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.SharpeRatio'/](%)</th>
+                                    <th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.RevalationDate'/]</th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon_3'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon_6'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.yr_1'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.yr_3'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.yr_5'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.launch'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.IssueDate'/]</th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.YTD'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.AR'/] 2016(%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.AR'/] 2015(%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.AR'/] 2014(%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.AR'/] 2013(%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.AR'/] 2012(%)
+                                    </th>
+                                    <th class="funds_search_like"></th>
+                                </tr>
+                                <tr ng-repeat="items in dataList"  ng-init="checkLast($last)" class="animated flipInX">
+                                    <td data-original="{{items.fundInfo.lastNav}}" data-exchange="{{items.fundCurrency}}" class="Currency_conversion">
+                                        <span class="conversion_Num" ng-bind="{{'items.fundInfo.lastNav'}}"></span>
+                                        <span class="conversion_Type" ng-bind="{{'items.fundCurrency'}}"></span>
+                                    </td>
+                                    <td>0.72</td>
+                                    <td>0.73</td>
+                                    <td ng-bind="{{'items.fundInfo.lastNavUpdate'}}"></td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnOneMonth < 0 " ng-bind="{{'items.fundReturnOneMonth'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnOneMonth >= 0 " ng-bind="{{'items.fundReturnOneMonth'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnThreeMonth < 0 " ng-bind="{{'items.fundReturnThreeMonth'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnThreeMonth >= 0 " ng-bind="{{'items.fundReturnThreeMonth'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnSixMonth < 0 " ng-bind="{{'items.fundReturnSixMonth'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnSixMonth >= 0 " ng-bind="{{'items.fundReturnSixMonth'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnOneYear < 0 " ng-bind="{{'items.fundReturnOneYear'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnOneYear >= 0 " ng-bind="{{'items.fundReturnOneYear'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnThreeYear < 0 " ng-bind="{{'items.fundReturnThreeYear'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnThreeYear >= 0 " ng-bind="{{'items.fundReturnThreeYear'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnFiveYear < 0 " ng-bind="{{'items.fundReturnFiveYear'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnFiveYear >= 0 " ng-bind="{{'items.fundReturnFiveYear'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnLaunch < 0 " ng-bind="{{'items.fundReturnLaunch'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnLaunch >= 0 " ng-bind="{{'items.fundReturnLaunch'}}"></span>
+                                    </td>
+                                    <td>03/03/2015</td> 
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturnYTD'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturnYTD'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturnYear1'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturnYear1'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturnYear2'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturnYear2'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturnYear3'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturnYear3'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturnYear4'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturnYear4'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturnYear5'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturnYear5'}}"></span>
+                                    </td>
+                                    <td>
+                                        <span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}"></span>
+                                        <span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}" title="[@lang_res l=Session["_LANG_CODE_"] k='fund.info.favourites'/]"></span>
+                                        <span class="funds_cart" title="[@lang_res l=Session["_LANG_CODE_"] k='fund.info.shoppingCart'/]"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="funds_search_Part">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                    <th class="funds_tables_header funds_tables_w120" >
+                                        Lipper CR                   
+                                    </th>
+                                    <th class="funds_tables_header funds_tables_w120">
+                                        Fitch                       
+                                    </th>
+                                    <th class="funds_tables_header funds_tables_w120">
+                                            Citywire                        
+                                    </th>
+                                    <th class="funds_search_like funds_tables_w210"></th>
+                                </tr>
+                                <tr ng-repeat="items in dataList"  ng-init="checkLast($last)" class="animated flipInX">
+                                    <td> 
+                                        <img ng-repeat="imglist in counter(items.lipperCR) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+                                    </td>
+                                    <td> 
+                                        <img ng-repeat="imglist in counter(items.fitch) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+                                    </td>
+                                    <td> 
+                                        <img ng-repeat="imglist in counter(items.citywire) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+                                    </td>
+                                    <td>
+                                        <span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}"></span>
+                                        <span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}" title="[@lang_res l=Session["_LANG_CODE_"] k='fund.info.favourites'/]"></span>
+                                        <span class="funds_cart" title="[@lang_res l=Session["_LANG_CODE_"] k='fund.info.shoppingCart'/]"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>    
+                    </div>
+                </div>
+<!-- 展示列表右侧可滚动区域 -->
+
+
+                </div>
+                <!-- Selected condition -->
+
+
+            </div>
+        </div>
+
+<form id="listForm" name="listForm" >
+<input type="hidden" name="fundHouseIds" value="" id="fundHouseIds"/>
+<input type="hidden" name="fundName" value="" id="fundName"/>
+<input type="hidden" name="fundSizeFrom" value="" id="fundSizeFrom"/>
+<input type="hidden" name="fundSizeTo" value="" id="fundSizeTo"/>
+<input type="hidden" name="domicile" value="" id="domicile"/>
+<input type="hidden" name="currency" value="" id="currency"/>
+<input type="hidden" name="fundType" value="" id="fundType"/>
+<input type="hidden" name="sectorType" value="" id="sectorType"/>
+<input type="hidden" name="geoAllocation" value="" id="geoAllocation"/>
+<input type="hidden" name="riskLevel" value="" id="riskLevel"/>
+<input type="hidden" name="perfLaunchFrom" value="" id="perfLaunchFrom" class="perfClean"/>
+<input type="hidden" name="perfLaunchTo" value="" id="perfLaunchTo" class="perfClean"/>
+<input type="hidden" name="perfYTDFrom" value="" id="perfYTDFrom" class="perfClean"/>
+<input type="hidden" name="perfYTDTo" value="" id="perfYTDTo" class="perfClean"/>
+<input type="hidden" name="perfOneWeekFrom" value="" id="perfOneWeekFrom" class="perfClean"/>
+<input type="hidden" name="perfOneWeekTo" value="" id="perfOneWeekTo" class="perfClean"/>
+<input type="hidden" name="perfOneMonthFrom" value="" id="perfOneMonthFrom" class="perfClean"/>
+<input type="hidden" name="perfOneMonthTo" value="" id="perfOneMonthTo" class="perfClean"/>
+<input type="hidden" name="perfThreeMonthFrom" value="" id="perfThreeMonthFrom" class="perfClean"/>
+<input type="hidden" name="perfThreeMonthTo" value="" id="perfThreeMonthTo" class="perfClean"/>
+<input type="hidden" name="perfSixMonthFrom" value="" id="perfSixMonthFrom" class="perfClean"/>
+<input type="hidden" name="perfSixMonthTo" value="" id="perfSixMonthTo" class="perfClean"/>
+<input type="hidden" name="perfOneYearFrom" value="" id="perfOneYearFrom" class="perfClean"/>
+<input type="hidden" name="perfOneYearTo" value="" id="perfOneYearTo" class="perfClean"/>
+<input type="hidden" name="perfThreeYearFrom" value="" id="perfThreeYearFrom" class="perfClean"/>
+<input type="hidden" name="perfThreeYearTo" value="" id="perfThreeYearTo" class="perfClean"/>
+<input type="hidden" name="perfFiveYearFrom" value="" id="perfFiveYearFrom" class="perfClean"/>
+<input type="hidden" name="perfFiveYearTo" value="" id="perfFiveYearTo" class="perfClean"/>
+<input type="hidden" name="lipperCR_ID" value="" id="lipperCR_ID"/>
+<input type="hidden" name="lipperCR" value="" id="lipperCR"/>
+<input type="hidden" name="fitch_ID" value="" id="fitch_ID"/>
+<input type="hidden" name="fitch" value="" id="fitch"/>
+<input type="hidden" name="citywire_ID" value="" id="citywire_ID"/>
+<input type="hidden" name="citywire" value="" id="citywire"/>
+<input type="hidden" name="minInitialInv" value="" id="minInitialInv"/>
+<input type="hidden" name="mgtFee" value="" id="mgtFee"/>   
+</form>
+
+[#include "../inc/foot_v2.html"/]
+
+<script type="text/javascript">
+    seajs.use('${base}/res/js/jsDatePick.jquery.min.1.3.js');
+    seajs.use('${base}/res/web/ifa/ifaRecommendFund.js');
+</script>

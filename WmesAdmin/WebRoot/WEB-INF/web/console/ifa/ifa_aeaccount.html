@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>IFA [@lang_res k='ifafirm.ifa.aeAccout'/]</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<!-- header -->
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="right-side container-fluid">
+				<div class="r-side-container">
+					<ul class="tab" id="tab-search">
+						<li class="tab-li-crr">
+							<a href="#tab_wrap" onclick="javascript:bindAelist(0);">[@lang_res k='ifafirm.ifa.aeAccout'/]</a>
+						</li>
+					</ul>
+					<div class="tab_wrap" id="tab_wrap">
+						<div class="form-inline">
+							<div>
+								<div class="row pd10">
+									<div class="col-md-4">
+										<label for="s-1">
+											[@lang_res k='member.list.keyword'/]
+										</label>
+										<input id='txtkeyword' type="text" class="form-control" id="s-1" placeholder="">
+									</div>
+									<div class="col-md-2">
+										<button type="button" class="btn btn-primary" id="btnSearch">
+											 [@lang_res k='global.query'/]
+										</button>
+									</div>
+								</div>
+								<div class="clear"></div>
+
+								<div class="pdt20">
+									<button type="button" class="btn btn-blue-s" id="btnAdd">
+										 [@lang_res k='global.add'/]
+									</button>
+								</div>
+
+								<div>
+									<table id="aelist" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+										<thead>
+											<tr>
+												<th class="table-head">
+													IFA[@lang_res k='member.info.loginCode'/]
+												</th>
+												<th class="table-head">
+													IFA[@lang_res k='member.info.nickName'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='member.distributor'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='ifafirm.ifa.aecode'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='param.list.status'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='global.operate'/]
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<ul id='ae_pagination' class="pagination pull-right">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script type="text/javascript">
+$(function() {
+	bindAelist(0);
+	setAutoSearch("#txtkeyword",bindAelist,0);
+	$("#btnSearch").bind("click", function() {
+		bindAelist(0);
+	});
+	 //"增加"按钮事件 
+    $('#btnAdd').click(function (){
+		var url = '${base}/console/ifa/aeAccount/input.do?datestr='+ new Date().getTime();
+    	showform("add_ae","[@lang_res k='global.add'/]",url);
+    });
+    //修改
+    $(document).on("click","#aelist .edit_aeacount",function(){
+    	var id = $(this).attr("rel");
+    	var url = "${base}/console/ifa/aeAccount/input.do?id="+id+"&datestr="+ new Date().getTime();
+    	closeTabByName("edit_ae");
+    	showform("edit_ae","[@lang_res  k='global.edit'/]",url);
+    });
+     //删除
+    $(document).on("click","#aelist .del_aeacount",function(){
+    	var id = $(this).attr("rel");
+    	deleteAe(id);
+    });
+   
+	//分页查询
+	function bindAelist(curPage) {
+	$.ajax({
+		type : 'post',
+		datatype : 'json',
+		url : '${base}/console/ifa/aeAccountJson.do?datestr=' + new Date().getTime(),
+		data : {
+			'keyword' : $("#txtkeyword").val(),
+			'companyIfafirm' : $("#txtCopany").val(),
+			'page' : curPage + 1,
+			'rows' : 10,
+			'sort' : '',
+			'order' : ''
+		},
+		success : function(json) {
+			var total = json.total;
+			var table = json.rows;
+			var html = "";
+			var isValid = "";
+			$.each(table, function(i, n) {
+				  if(n.isValid=="1"){
+					isValid = "[@lang_res k='param.status.1'/]";
+				  }else{
+					isValid = "[@lang_res k='param.status.0'/]";
+				  }
+				 html += "<tr>"
+                      + "<td>" + n.loginCode + "</td>"
+                      + "<td>" + n.nickName + "</td>"
+                      + "<td>" + n.companyName + "</td>"
+                      + "<td>" + n.aeCode + "</td>"
+                      + "<td>" + isValid + "</td>"
+                      + "<td><a rel='"+n.id+"' class='edit_aeacount' href='javascript:;'>[@lang_res  k='global.edit'/]</a>&nbsp;&nbsp;"
+                      + "<a rel='"+n.id+"' class='del_aeacount' href='javascript:;'>[@lang_res  k='global.delete'/]</a></td>"                                        
+                      + "</tr>";
+			
+			});
+			$('#aelist tbody').empty().append(html);
+			$("#ae_pagination").pagination(total, {
+				callback : pageselectCallback,
+				numDetail : '',
+				items_per_page : 10,
+				num_display_entries : 4,
+				current_page : curPage,
+				num_edge_entries : 2
+			});
+		}
+	});
+		function pageselectCallback(page_id, jq) {
+			bindAelist(page_id);
+		}
+	}
+	//删除ae
+	function deleteAe(id) {
+		layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			$.ajax({
+				type : 'POST',
+				datatype : 'json',
+				url : "${base}/console/ifa/aeAccount/delete.do",
+				data : {"id":id},
+				success : function(json) {
+					if (json != undefined && json.result == true) {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]");
+						bindAelist(0);
+					} else {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]");
+					}
+				}
+			});
+		});
+	}
+		
+});
+
+</script>
+</body>
+</html>

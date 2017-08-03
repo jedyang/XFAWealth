@@ -1,0 +1,182 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/discover.css"> 
+<div class="wmes-content">
+	<div class="live-schedule-wrapper">
+		<div class="wmes-wrap-title">My Live Schedule</div>
+		<ul class="noline_tab_tab live-schedule-tab">
+			<li class="now">Live</li>
+			<li>Completed</li>
+		</ul>
+		<div class="live-schedule-contents">
+			<div class="live-schedule-rows" style="display:block;">
+				<div class="live-schedule-topper">
+					<a class="live-schedule-new" href="javascript:;">New</a>
+					<div class="live-keyserach">
+						<input type="text" placeholder="Please enter keyword search">
+						<span class="live-search-ico" id="searchKeyBtn"></span>
+					</div>
+				</div>
+				<table class="live-schedule-table">
+					<tbody>
+						<tr>
+							<th width="55%">Title</th>
+							<th width="15%">Data</th>
+							<th width="15%">Broadcast Time</th>
+							<th width="15%">Action</th>
+						</tr>
+						<tr>
+							<td class="live-table-left">Yuan remains stable despite decline, RRR& interest rates cuts expected</td>
+							<td>2016-12-28</td>
+							<td>18:00-18:30</td>
+							<td>
+								<img class="live-table-ico" src="${base}/res/images/ifa/live_ico.png">
+								<img class="live-table-ico" src="${base}/res/images/ifa/garbage_ico.png">
+							</td>
+						</tr>
+						<tr>
+							<td class="live-table-left">Large-scale reverse repo done in June, prudent monetary policy to unchanged</td>
+							<td>2016-12-28</td>
+							<td>18:00-18:30</td>
+							<td>		
+								<img class="live-table-ico" src="${base}/res/images/ifa/garbage_ico.png">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="live-schedule-rows">
+				<div class="live-schedule-topper">
+					<a class="live-schedule-new" href="javascript:;">New</a>
+					<div class="live-keyserach">
+						<input type="text" placeholder="Please enter keyword search">
+						<span class="live-search-ico" id="searchKeyBtn"></span>
+					</div>
+				</div>
+				<table class="live-schedule-table">
+					<tbody>
+						<tr>
+							<th width="55%">Title</th>
+							<th width="15%">Data</th>
+							<th width="15%">Broadcast Time</th>
+							<th width="15%">Action</th>
+						</tr>
+						<tr>
+							<td class="live-table-left">Large-scale reverse repo done in June, prudent monetary policy to unchanged</td>
+							<td>2016-12-27</td>
+							<td>19:00-20:30</td>
+							<td>		
+								<img class="live-table-ico" src="${base}/res/images/ifa/garbage_ico.png">
+							</td>
+						</tr>
+						<tr>
+							<td class="live-table-left">Yuan remains stable despite decline, RRR& interest rates cuts expected</td>
+							<td>2016-12-28</td>
+							<td>16:00-17:25</td>
+							<td>
+								<img class="live-table-ico" src="${base}/res/images/ifa/live_ico.png">
+								<img class="live-table-ico" src="${base}/res/images/ifa/garbage_ico.png">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="live-schedule-mask"></div>
+<div class="create-schedule-wrap">
+	<div class="create-schedule-contents">
+		<div class="wmes-close" id="create-schedule-close"></div>
+		<p class="create-schedule-title">Live</p>
+		<div class="create-schedule-rows">
+			<p class="create-schedule-rows-title"><span class="create-schedule-rows-title-red">*</span>Title</p>
+			<div class="create-schedule-rows-right">
+				<input class="create-schedule-title-input" type="" name="">
+			</div>
+		</div>
+		<div class="create-schedule-rows">
+			<p class="create-schedule-rows-title"><span class="create-schedule-rows-title-red">*</span>Broadcast Time</p>
+			<div class="create-schedule-rows-right">
+				<div class="create-schedule-date-wrap">
+					<input class="create-schedule-date-input laydate-icon form-control form-control-laydate" id="broadcast" type="" name="">
+				</div>
+				<div class="create-schedule-time-list">
+					<div class="create-schedule-xiala">
+        				<input type="text" class="productTypes" value="Hour" readonly="">
+        				<span class="icon_xiala"></span>
+        				<ul>
+            				<li value="Hour">Hour</li>
+        				</ul>
+    				</div>
+					<div class="create-schedule-xiala">
+        				<input type="text" class="productTypes" value="Hour" readonly="">
+        				<span class="icon_xiala"></span>
+        				<ul>
+            				<li value="Min">Min</li>
+        				</ul>
+    				</div>
+					<p class="create-schedule-select-to">to</p>
+					<div class="create-schedule-xiala">
+        				<input type="text" class="productTypes" value="Hour" readonly="">
+        				<span class="icon_xiala"></span>
+        				<ul>
+            				<li value="Hour">Hour</li>
+        				</ul>
+    				</div>
+					<div class="create-schedule-xiala">
+        				<input type="text" class="productTypes" value="Hour" readonly="">
+        				<span class="icon_xiala"></span>
+        				<ul>
+            				<li value="Min">Min</li>
+        				</ul>
+    				</div>
+				</div>
+			</div>
+		</div>
+		<div class="create-schedule-rows">
+			<p class="create-schedule-rows-title">Figure</p>
+			<div class="create-schedule-rows-right">
+				<img class="create-schedule-update-img" src="${base}/res/images/client/deposit_img_btn.png">
+			</div>
+		</div>
+		<div class="create-schedule-rows">
+			<p class="create-schedule-rows-title">Figure</p>
+			<div class="create-schedule-radio-rows">
+				<input class="create-schedule-radio-input" value="public" type="radio" name="Figure">
+				<span class="create-schedule-radio-word">Public</span>
+			</div>
+			<div class="create-schedule-radio-rows">
+				<input class="create-schedule-radio-input" value="specify" type="radio" name="Figure">
+				<span class="create-schedule-radio-word">Let me specify</span>
+			</div>
+			<div class="create-schedule-specify-wrapper">
+				<span class="create-schedule-triangle"></span>
+				<span class="create-schedule-triangle-mask"></span>
+				<ul>
+					<li><input class="create-schedule-specify-box" type="checkbox" name="">My Client</li>
+					<li><input class="create-schedule-specify-box" type="checkbox" name="">My Prospect</li>
+					<li><input class="create-schedule-specify-box" type="checkbox" name="">My Buddy</li>
+					<li><input class="create-schedule-specify-box" type="checkbox" name="">My Team Member</li>
+				</ul>
+				<p class="create-schedule-specify-advance">Advance Setting</p>
+			</div>
+		</div>
+		<div class="create-schedule-rows">
+			<p class="create-schedule-rows-title"></p>
+			<div class="create-schedule-rows-right">
+				<input class="create-schedule-message-box" type="checkbox" name="">
+				<span class="create-schedule-message-word">Send Remind Message</span>
+			</div>
+		</div>
+		<div class="create-schedule-rows-button">
+			<a class="create-schedule-button-save" href="javascript:;">Save</a>
+			<a class="create-schedule-button-cancel" href="javascript:;">Cancel</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	    seajs.use('${base}/res/web/ifa/myLiveSchedule.js');
+</script>
+
+[#include "../../inc/foot_v2.html"/] 
+	

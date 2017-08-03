@@ -1,0 +1,410 @@
+[#include "../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+    [#if Session["_FRONT_USER_LOGIN_"]?exists == true]
+    <input type="hidden" name="" id="loginCode" value="true">
+[#else]
+   	<input type="hidden" name="" id="loginCode" value="false">
+[/#if]
+        <div class="wmes-top">
+            <a id="wmes-go-back" href="javascript:history.go(-1);">
+            </a>            
+            <a href="javascript:;" class="header-over">[@lang_res k='fund.info.fundsScreener'/]</a>
+        </div>
+        <div class="wmes-content" style="background:transparent;">
+        	<div class="funds-screnner-rows"  style="margin-bottom:5px;">
+                <p class="wmes-wrap-title"><span class="wmes-ruturn"></span>[@lang_res k='fund.info.list.selectedResult'/]</p>
+                <div class="screener-sum-wrap">
+                    <p class="screener-title" style="float:left;">[@lang_res k='fund.info.list.selectedCriteria'/]</p> 
+                    <div class="screener-a-title">
+                        <div class="srenner-a-rows">
+                            <a href="javascript:;" id="j-criteria" style="width:auto;">[@lang_res k='fund.info.screener.myCriteria'/]</a>
+                            <ul class="srenner-criteria" id="srenner-criteria-list">
+                                
+                            </ul>
+                        </div>
+                        <div class="srenner-a-rows"><a href="${base}/front/ifa/info/myfavorites.do">[@lang_res k='fund.info.screener.myWatchlist'/]</a></div>
+                    </div>
+                </div>
+        		<div class="screener-sum-wrap">
+        			    			
+        		</div>
+                <ul class="funds_facts_information funds_screen_msg">
+                    <li class="funds_facts_information_left">
+                    </li>
+                    <li class="funds_facts_information_right">
+                    </li>
+                </ul>
+                <div class="screener-attributes-button">
+                    <a id="editCriteria" class="attributes-button" href="javascript:;">[@lang_res k='fund.info.screener.editCriteria'/]</a>
+                    <a id="saveCriteria" class="attributes-button" href="javascript:;">[@lang_res k='fund.info.screener.saveCriteria'/]</a>
+                    <a id="newCriteria" class="attributes-button" href="javascript:;">[@lang_res k='fund.info.screener.startNewCriteria'/]</a>
+                </div>
+        	</div>
+            <div class="funds-screnner-rows">
+                <div class="funds_selected_wrap"  ng-controller="Searchctrl"  ng-app="mySearch">   
+                    <div class="funds_keyserach_wrap">
+                        <p class="funds_currency_title">[@lang_res k='fund.info.calculatedIn'/] </p>
+                        <div class="funds_currency_xiala">
+                        <input type="hidden" id="hdSelectedCurrency" name="hdSelectedCurrency" value="${defCurrency!}" >
+                            <input type="text" placeholder="[@lang_res k='fund.info.fundCurrency'/]" readonly>
+                            <span class="icon_xiala"></span>
+                            <ul class="conversion_select">
+                                <li data-conversion="Original">[@lang_res k='fund.info.fundCurrency'/]</li>
+                                [#if currencyList?exists && currencyList?size gt 0]
+                                [#list currencyList as cList]
+                                <li data-conversion="${cList.itemCode!}">${cList.name!}</li>
+                                [/#list]
+                                [/#if]
+                            </ul>
+                        </div>
+                        <div class="funds_keyserach">
+                            <input type="text"  id="fundName" placeholder="[@lang_res k='fund.info.keyWord'/]" >
+                            <span class="icon_search" id="searchKeyBtn"></span>
+                        </div>
+                    </div>
+                    <div class="funds_serach_results">
+                        <p class="funds_serach_sum">
+                        [@lang_res k='fund.info.searchTip'/] 
+                        <span class="funds_serach_digital" ng-bind="{{'datatotal'}}"></span> [@lang_res k='fund.info.searchTip_2'/]</p>
+                        <ul class="funds_switch_tab">
+                            <li class="funds_sort" data-type="risk_level">
+                                <p class="funds_switch_tab_title">[@lang_res k='fund.info.riskrating'/]</p>
+                                <p class="funds_arrow_wraps">
+                                    <span class="arrow_top"></span>
+                                    <span class="arrow_down"></span>
+                                </p>        
+                            </li>
+                             <li class="funds_sort" data-type="last_nav">
+                                <p class="funds_switch_tab_title">[@lang_res k='fund.info.lastNAVprice'/]</p>
+                                <p class="funds_arrow_wraps">
+                                    <span class="arrow_top"></span>
+                                    <span class="arrow_down"></span>
+                                </p>        
+                            </li>
+                             <li class="funds_sort" data-type="r.increase">
+                                <p class="funds_switch_tab_title">[@lang_res k='fund.info.screener.performance.3MonthReturn'/](%)</p>
+                                <p class="funds_arrow_wraps">
+                                    <span class="arrow_top"></span>
+                                    <span class="arrow_down"></span>
+                                </p>        
+                            </li>
+                            <li class="funds_sort" data-type="c.views">
+                                <p class="funds_switch_tab_title">[@lang_res k='fund.info.list.popularity'/]</p>
+                                <p class="funds_arrow_wraps">
+                                    <span class="arrow_top"></span>
+                                    <span class="arrow_down"></span>
+                                </p>        
+                            </li>
+                            <!-- 
+                             <li class="funds_sort" data-type="fundReturnYTD">
+                                <p class="funds_switch_tab_title">YTD(%)</p>
+                                <p class="funds_arrow_wraps">
+                                    <span class="arrow_top"></span>
+                                    <span class="arrow_down"></span>
+                                </p>        
+                            </li>
+                             -->
+                            <div class="funds_view_list_ico"></div>
+                        </ul>
+                        <ul class="funds_search_tab funds_viewList_tab">
+                            <li class="now">[@lang_res k='fund.info.fundNAV'/] </li>
+                            <li>[@lang_res k='fund.info.fundPerformance'/]</li>
+                            <li>[@lang_res k='fund.info.fundRating'/] </li>
+                            <div class="funds_view_switch_ico"></div>
+                        </ul>
+                        
+                    </div>
+                    <div class="funds-views-lump">
+                        <ul class="views-lump-ul">
+                            <li ng-repeat="items in dataList"  ng-init="checkLast($last)"  class="ng-cloak">
+                                <div>
+                                    <input class="lump_comparison_check" type="checkbox" name="funds_comparison" value="{{items.fundId}}">
+                                    <p class="funds-lump-title" title="{{items.fundName}}">
+                                <a href="${base}/front/fund/info/fundsdetail.do?id={{items.fundId}}" >{{items.fundName | characters:40:false}}</a></p>  
+                                    
+                                    <span title="{{items.fundInfo.riskLevel}}" class="funds_leveal_{{items.fundInfo.riskLevel}}" title="{{items.fundInfo.riskLevel}}"></span>
+                                </div>
+                                <div class="funds-lump-equity">
+                                    <span class="lump-equity-title"  title="{{items.sectorType}}">{{items.sectorType | characters:25:false}}</span>
+                                </div>
+                                <div data-original="{{items.fundInfo.lastNav}}" data-exchange="{{items.fundCurrencyCode}}" data-name="{{items.fundCurrency}}"  class="lump-last-wrap Currency_conversion">
+                                    <p class="lump-last-title">[@lang_res k='fund.info.LastNAV'/]
+                                    <span class="lump-nav-num">
+                                    <span class="conversion_Num" ng-bind="{{'items.fundInfo.lastNav'}}" ></span>
+                                    <span class="conversion_Type lump-growth-currency-color" ng-bind="{{'items.fundCurrency'}}"></span>
+                                    </span>
+                                    
+                                    </p>
+                                    <p class="lump-growth-title">[@lang_res k='fund.info.screener.performance.3MonthReturn'/]
+                            [#if displayColor == '1']
+                                <span class="lump-growth-num" ng-class="{price_negative: items.fundReturnThreeMonth < 0,price_positive: items.fundReturnThreeMonth > 0,price_zero: items.fundReturnThreeMonth == 0}" >{{items.fundReturnThreeMonth * 100  | decimal:2}}%</span>
+                            [#else]
+                                <span class="lump-growth-num" ng-class="{price_negative: items.fundReturnThreeMonth > 0,price_positive: items.fundReturnThreeMonth < 0,price_zero: items.fundReturnThreeMonth == 0}" >{{items.fundReturnThreeMonth * 100  | decimal:2}}%</span>
+                            [/#if]                                  
+                                       
+                                   </p>                      
+                                </div>
+                                <img class="lump-cart-img" src="${base}/loadImgSrcByPath.do?filePath={{items.fundReturnYTDMiddleImg}}" alt="">
+                                <div>
+                                    <p class="lump-list-date"><img src="${base}/res/images/client/time_ico.png">{{items.fundInfo.lastNavUpdate|date:dateFormat}}</p>
+                                    <span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}" productId="{{items.productId}}"></span>
+                                    <span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}" productId="{{items.productId}}" title="[@lang_res k='fund.info.favourites'/]"></span>
+                                </div>     
+                            </li> 
+                        </ul>
+                    </div>
+                    <div class="funds-views-list">
+                        <table class="funds_search_information">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                    <th class="funds_tables_fnames">
+                                        [@lang_res k='fund.info.fundName'/] 
+                                    </th>
+                                    <th class="funds_tables_header funds_sort" data-type="risk_level" style="width:50px;">
+                                        [@lang_res k='fund.info.riskrating'/]
+                                        <p class="funds_arrow_wraps">
+                                            <span class="arrow_top"></span>
+                                            <span class="arrow_down"></span>
+                                        </p>        
+                                    </th>
+                                    <th  class="funds_tables_header funds_sort" data-type="fund_currency" style="width:50px;">
+                                        [@lang_res k='fund.info.currency'/]
+                                        <p class="funds_arrow_wraps">
+                                            <span class="arrow_top"></span>
+                                            <span class="arrow_down"></span>
+                                        </p> 
+                                    </th>
+                                    <th  class="funds_tables_header funds_sort" data-type="isin_code">
+                                        [@lang_res k='fund.info.ISIN'/] 
+                                        <p class="funds_arrow_wraps">
+                                            <span class="arrow_top"></span>
+                                            <span class="arrow_down"></span>
+                                        </p> 
+                                    </th>
+                                </tr>
+                                <tr ng-repeat="items in dataList" ng-init="checkLast($last)" class="animated flipInX">
+                                    <td class="tdleft funds_tables_fnames">
+                                        <input class="funds_comparison_check" type="checkbox" name="funds_comparison" value="{{items.fundId}}">
+                                        <a href="${base}/front/fund/info/fundsdetail.do?id={{items.fundId}}" ng-bind="{{'items.fundName'}}"></a>
+                                    </td>
+                                    <td ng-bind="{{'items.fundInfo.riskLevel'}}"></td>
+                                    <td ng-bind="{{'items.fundCurrency'}}"></td>
+                                    <td ng-bind="{{'items.fundInfo.isinCode'}}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="funds_search_wrap">     
+                            <div class="funds_search_content">
+                                <table class="funds_search_Part funds_search_partOne" style="display: table;">
+                                    <tbody>
+                                        <tr class="funds_tables_th">
+                                            <th class="funds_tables_header">[@lang_res k='fund.info.screener.performance.3MonthReturn'/]</th>
+                                            <th class="funds_tables_header">[@lang_res k='fund.info.LastNAV_rating'/]</th>
+                                            <th class="funds_tables_header">[@lang_res k='fund.info.price_date'/]</th>
+                                            <th class="funds_tables_header">[@lang_res k='fund.info.dailyReturn'/]</th>
+                                            <th class="funds_tables_header">[@lang_res k='fund.info.IssueDate'/]</th>
+                                            <th class="funds_tables_header">[@lang_res k='fund.info.mgtFee'/]</th>
+                                            <th align="right" >[@lang_res k='global.action'/]</th>
+                                        </tr>
+                                        <tr ng-repeat="items in dataList" ng-init="checkLast($last)" class="animated flipInX">
+                                            <td>
+                                                <img src="${base}/loadImgSrcByPath.do?filePath={{items.fundReturnYTDSmallImg}}">
+                                            </td>                                            
+                                            <td data-original="{{items.fundInfo.lastNav}}" data-exchange="{{items.fundCurrencyCode}}" data-name="{{items.fundCurrency}}" class="Currency_conversion">
+                                                <span class="conversion_Num" ng-bind="{{'items.fundInfo.lastNav'}}"></span>
+                                                <span class="conversion_Type" ng-bind="{{'items.fundCurrency'}}"></span>
+                                            </td>
+                                            
+                                            <td>
+                                               {{items.fundInfo.lastNavUpdate|date:dateFormat}}
+                                            </td>
+                                            <td>
+                                           [#if displayColor == '1']
+						                		<span  ng-class="{price_negative: items.fundInfo.dayReturn < 0,price_positive: items.fundInfo.dayReturn > 0,price_zero: items.fundInfo.dayReturn == 0}" >{{items.fundInfo.dayReturn*100  | decimal:2}}%</span>
+						                	[#else]
+						                		<span ng-class="{price_negative: items.fundInfo.dayReturn > 0,price_positive: items.fundInfo.dayReturn < 0,price_zero: items.fundInfo.dayReturn == 0}" >{{items.fundInfo.dayReturn*100  | decimal:2}}%</span>
+						                	[/#if]  
+                                            </td>
+                                            <td>
+                                               {{items.fundInfo.issueDate|date:dateFormat}}
+                                            </td>
+                                            <td>
+                                               {{items.fundInfo.mgtFee*100 |decimal:2}}%
+                                            </td>
+                                            <td>
+												<span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}" productId="{{items.productId}}"></span>
+												<span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}" productId="{{items.productId}}" title="[@lang_res k='fund.info.favourites'/]"></span>
+												<!-- <span class="funds_cart" title="[@lang_res k='fund.info.shoppingCart'/]"></span> -->
+											</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="funds_search_Part funds_search_partTwo">
+                                    <tbody>
+                                        <tr class="funds_tables_th">
+                                            <th class="funds_tables_date" style="width:90px;"> [@lang_res k='fund.info.mon'/]
+                                                <div class="funds_cumulative_title">[@lang_res k='fund.info.per'/]</div>
+                                            </th>
+                                            <th class="funds_tables_date" style="width:90px;">[@lang_res k='fund.info.mon_3'/]</th>
+                                            <th class="funds_tables_date" style="width:90px;">[@lang_res k='fund.info.mon_6'/]</th>
+                                            <th class="funds_tables_date" style="width:90px;">[@lang_res k='fund.info.YTD'/]</th>
+                                            <th class="funds_tables_date" style="width:90px;">[@lang_res k='fund.info.yr_1'/]</th>
+                                            <th class="funds_tables_date" style="width:90px;">[@lang_res k='fund.info.yr_3'/]</th>
+                                            <th class="funds_tables_date" style="width:90px;">[@lang_res k='fund.info.yr_5'/]</th>
+                                            <th class="funds_tables_date" style="width:90px;">[@lang_res k='fund.info.launch'/]</th>
+                                            <th align="center" style="width:60px;"  class="funds_search_like" >[@lang_res k='global.action'/]</th>
+                                        </tr>
+                                        <tr ng-repeat="items in dataList" ng-init="checkLast($last)" class="animated flipInX">
+                                             <td>
+                                           [#if displayColor == '1']
+						                		<span ng-class="{price_negative: items.fundReturnOneMonth < 0,price_positive: items.fundReturnOneMonth > 0,price_zero: items.fundReturnOneMonth == 0}" >{{items.fundReturnOneMonth*100  | decimal:2}}%</span>
+						                	[#else]
+						                		<span ng-class="{price_negative: items.fundReturnOneMonth > 0,price_positive: items.fundReturnOneMonth < 0,price_zero: items.fundReturnOneMonth == 0}" >{{items.fundReturnOneMonth*100  | decimal:2}}%</span>
+						                	[/#if] 
+                                            </td>
+                                            <td>
+                                           [#if displayColor == '1']
+						                		<span ng-class="{price_negative: items.fundReturnThreeMonth < 0,price_positive: items.fundReturnThreeMonth > 0,price_zero: items.fundReturnThreeMonth == 0}" >{{items.fundReturnThreeMonth*100  | decimal:2}}%</span>
+						                	[#else]
+						                		<span ng-class="{price_negative: items.fundReturnThreeMonth > 0,price_positive: items.fundReturnThreeMonth < 0,price_zero: items.fundReturnThreeMonth == 0}" >{{items.fundReturnThreeMonth*100  | decimal:2}}%</span>
+						                	[/#if]
+                                            </td>
+                                            <td>
+                                           [#if displayColor == '1']
+						                		<span ng-class="{price_negative: items.fundReturnSixMonth < 0,price_positive: items.fundReturnSixMonth > 0,price_zero: items.fundReturnSixMonth == 0}" >{{items.fundReturnSixMonth*100  | decimal:2}}%</span>
+						                	[#else]
+						                		<span ng-class="{price_negative: items.fundReturnSixMonth > 0,price_positive: items.fundReturnSixMonth < 0,price_zero: items.fundReturnSixMonth == 0}" >{{items.fundReturnSixMonth*100  | decimal:2}}%</span>
+						                	[/#if]
+                                            </td>
+                                            <td>
+                                           [#if displayColor == '1']
+						                		<span ng-class="{price_negative: items.fundReturnYTD < 0,price_positive: items.fundReturnYTD > 0,price_zero: items.fundReturnYTD == 0}" >{{items.fundReturnYTD*100  | decimal:2}}%</span>
+						                	[#else]
+						                		<span ng-class="{price_negative: items.fundReturnYTD > 0,price_positive: items.fundReturnYTD < 0,price_zero: items.fundReturnYTD == 0}" >{{items.fundReturnYTD*100  | decimal:2}}%</span>
+						                	[/#if]
+                                            </td>
+                                            <td>
+                                           [#if displayColor == '1']
+						                		<span ng-class="{price_negative: items.fundReturnOneYear < 0,price_positive: items.fundReturnOneYear > 0,price_zero: items.fundReturnOneYear == 0}" >{{items.fundReturnOneYear*100  | decimal:2}}%</span>
+						                	[#else]
+						                		<span ng-class="{price_negative: items.fundReturnOneYear > 0,price_positive: items.fundReturnOneYear < 0,price_zero: items.fundReturnOneYear == 0}" >{{items.fundReturnOneYear*100  | decimal:2}}%</span>
+						                	[/#if]
+                                            </td>
+                                            <td>
+                                           [#if displayColor == '1']
+						                		<span ng-class="{price_negative: items.fundReturnThreeYear < 0,price_positive: items.fundReturnThreeYear > 0,price_zero: items.fundReturnThreeYear == 0}" >{{items.fundReturnThreeYear*100  | decimal:2}}%</span>
+						                	[#else]
+						                		<span ng-class="{price_negative: items.fundReturnThreeYear > 0,price_positive: items.fundReturnThreeYear < 0,price_zero: items.fundReturnThreeYear == 0}" >{{items.fundReturnThreeYear*100  | decimal:2}}%</span>
+						                	[/#if]
+                                            </td>
+                                            <td>
+                                           [#if displayColor == '1']
+						                		<span ng-class="{price_negative: items.fundReturnFiveYear < 0,price_positive: items.fundReturnFiveYear > 0,price_zero: items.fundReturnFiveYear == 0}" >{{items.fundReturnFiveYear*100  | decimal:2}}%</span>
+						                	[#else]
+						                		<span ng-class="{price_negative: items.fundReturnFiveYear > 0,price_positive: items.fundReturnFiveYear < 0,price_zero: items.fundReturnFiveYear == 0}" >{{items.fundReturnFiveYear*100  | decimal:2}}%</span>
+						                	[/#if]
+                                            </td>
+                                            <td>
+                                           [#if displayColor == '1']
+						                		<span ng-class="{price_negative: items.fundReturnLaunch < 0,price_positive: items.fundReturnLaunch > 0,price_zero: items.fundReturnLaunch == 0}" >{{items.fundReturnLaunch*100  | decimal:2}}%</span>
+						                	[#else]
+						                		<span ng-class="{price_negative: items.fundReturnLaunch > 0,price_positive: items.fundReturnLaunch < 0,price_zero: items.fundReturnLaunch == 0}" >{{items.fundReturnLaunch*100  | decimal:2}}%</span>
+						                	[/#if]
+                                            </td>
+											<td nowrap>
+												<span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}"  productId="{{items.productId}}"></span>
+												<span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}"  productId="{{items.productId}}" title="[@lang_res k='fund.info.favourites'/]"></span>
+												<!-- <span class="funds_cart" title="[@lang_res k='fund.info.shoppingCart'/]"></span> -->
+											</td>
+                                        </tr>
+                                    </tbody>
+                                </table>  
+                                <table class="funds_search_Part funds_search_partThree">
+                                    <tbody>
+                                        <tr class="funds_tables_th">
+                                            <th class="funds_tables_header funds_tables_w120" >
+                                                [@lang_res k='fund.info.lipperCR'/]                
+                                            </th>
+                                            <th class="funds_tables_header funds_tables_w120">
+                                                [@lang_res k='fund.info.fitch'/]                       
+                                            </th>
+                                            <th class="funds_tables_header funds_tables_w120">
+                                                [@lang_res k='fund.info.citywire'/]                      
+                                            </th>
+                                            <th align="right">[@lang_res k='global.action'/]</th>
+                                        </tr>
+                                        <tr ng-repeat="items in dataList"  ng-init="checkLast($last)" class="animated flipInX">
+                                            <td> 
+                                                <img ng-repeat="imglist in counter(items.lipperCR) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+                                            </td>
+                                            <td> 
+                                                <img ng-repeat="imglist in counter(items.fitch) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+                                            </td>
+                                            <td> 
+                                                <img ng-repeat="imglist in counter(items.citywire) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+                                            </td>
+                                            <td align="center">
+                                                [#if showCart?? && showCart=="true" ] 
+							                    <span class="addCart funds_cart2" title="[@lang_res k='fund.info.shoppingCart'/]"></span>
+							                    [/#if]
+                                                <span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}" productId="{{items.productId}}"></span>
+                                                <span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}" productId="{{items.productId}}" title="[@lang_res k='fund.info.favourites'/]"></span>
+                                                <!-- <span class="funds_cart" title="[@lang_res k='fund.info.shoppingCart'/]"></span> -->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>   
+                                  
+                            </div>
+                        </div>  
+                    </div>
+
+                    <div class="no_list_tips" >
+						<div class="notipswrap">
+							<div class="noResult">
+								<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+								[@lang_res k='fund.info.noFund.sorry'/]
+							</div>
+							<p class="noResultText">
+							</p>
+						</div>
+					</div>
+                </div>
+                
+				<p id="ifa_more" class="ifa_list_more">[@lang_res k='fund.info.list.clickForMore'/]</p>
+                
+                <form id="listForm" name="listForm" >
+					<input type="hidden" name="keyword" value="" id="keyword"/>
+					<input type="hidden" name="currency" value="" id="currency"/>					
+					<input type="hidden" name="geoAllocation" value="" id="geoAllocation"/>					
+					<input type="hidden" name="fundType" value="" id="fundType"/>					
+					<input type="hidden" name="sectorType" value="" id="sectorType"/>						
+					<input type="hidden" name="distributor" value="" id="distributor"/>
+					<input type="hidden" name="fundHouseIds" value="" id="fundHouseIds"/>
+					<input type="hidden" name="fundSize" value="" id="fundSize"/>
+					<input type="hidden" name="inceptionDate" value="" id="inceptionDate"/>
+					<input type="hidden" name="minInitialInv" value="" id="minInitialInv"/>
+					<input type="hidden" name="mgtFee" value="" id="mgtFee"/>
+					<input type="hidden" name="riskLevel" value="" id="riskLevel"/>
+					<input type="hidden" name="sinceLaunch" value="" id="sinceLaunch"/>
+					<input type="hidden" name="trailingYTD" value="" id="trailingYTD"/>
+					<input type="hidden" name="trailing1Mon" value="" id="trailing1Mon"/>
+					<input type="hidden" name="trailing3Mon" value="" id="trailing3Mon"/>
+					<input type="hidden" name="trailing6Mon" value="" id="trailing6Mon"/>
+					<input type="hidden" name="trailing1Year" value="" id="trailing1Year"/>
+					<input type="hidden" name="trailing3Year" value="" id="trailing3Year"/>
+					<input type="hidden" name="trailing5Year" value="" id="trailing5Year"/>					               
+                </form>
+               
+				
+                <div class="screener-attributes-button">
+                    <a class="attributes-button" id="editCriteria2" href="javascript:;">[@lang_res k='fund.info.screener.editCriteria'/]</a>
+                    <a class="attributes-button" id="saveCriteria2" href="javascript:;">[@lang_res k='fund.info.screener.saveCriteria'/]</a>
+                    <a class="attributes-button" id="comparison" href="$wmes-wrap-title{base}/front/fund/info/fundscomparison.do"><span id="comparison-num">0</span> [@lang_res k='fund.info.list.comparison'/]</a>
+                </div>
+            </div>
+        </div>
+[#include "../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 seajs.use('${base}/res/web/ifa/screenlist.js');
+</script>

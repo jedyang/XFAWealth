@@ -1,0 +1,105 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<style type="text/css">
+input radio {margin-right:20px;}
+</style>
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='portfolio.title'/]</a>
+</div>
+<div class="blue_background personalWrap">
+    <div class="white_background funds_background">   
+		<div class="zhongxin_right">
+            <div class="OpenAccount_big_title">
+                <h2>[@lang_res k='portfolio.info.form.title'/]</h2>
+            </div>
+            <div class="insight-left-content">
+                <form id="addForm">
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>[@lang_res k='portfolio.info.form.strategyName'/]</p>
+                            <input class="insight-input-title" type="text" id="strategyName"  name="strategyName"  value="${(strategyVO.strategyName)?if_exists}" >
+                    </div>      
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>[@lang_res  k='portfolio.info.form.goal'/]</p>
+                            <textarea class="insight-input-textarea" id="investmentGoal" name="investmentGoal" rows="5">${(strategyVO.investmentGoal)?if_exists}</textarea>
+                            <p class="insight-input-leave">Total 500 characters, <span id="goalLen1">0</span> inputed, <span id="goalLen2">500</span> left.</p>
+                    </div>
+                    <div class="insight-row">
+                            <p class="insight-row-title">[@lang_res k='portfolio.info.form.investor'/]</p>
+                            <textarea class="insight-input-textarea"  id="suitability" name="suitability" rows="5">${(strategyVO.suitability)?if_exists}</textarea>
+                            <p class="insight-input-leave">Total 500 characters, <span id="suitLen1">0</span> inputed, <span id="suitLen2">500</span> left.</p>
+                    </div>
+
+                    <div class="insight-row">
+                        <!-- <a href="${base}/front/portfolio/info/add.do" id="btnAdd" class="btn_middle" style="width:150px;">Add product</a> -->
+                            <a href="javascript:;" id="btnAdd" class="btn_middle" style="width:150px;">Add product</a>
+                    </div>
+                    <div class="gary_title">Product List</div>
+                    <div class="insight-row" style="padding:0px 0px 20px 0px;">
+                        <div id="tableList" style="overflow: hidden;text-align: center;">
+                        </div>
+                        <input type="hidden" id="ids" name="ids" value="">
+                    </div>
+                    <div class="gary_title">Additional setting</div>
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>View permit setting:</p>
+                            <input type="radio" name="permit" id="permit0" checked="checked" value="0">Only me
+                            <input type="radio" name="permit" id="permit1" value="1">Public
+                            <input type="radio" name="permit" id="permit2" value="2">Let me specify
+                            <a id="permitASetting" href="javascript:;">Advance setting</a>
+                            <input type="hidden" id="permitSetting" name="permitSetting">
+                    </div>      
+                    <div id="permit_ext" class="insight-row" style="padding-left:110px;display:none;">
+                        <input type="checkbox" id="permit_client" name="permit_client" >My Client
+                        <input type="checkbox" id="permit_prospect" name="permit_prospect" >My Prospect
+                        <input type="checkbox" id="permit_buddy" name="permit_buddy" >My Buddy
+                        <input type="checkbox" id="permit_colleague" name="permit_colleague" >My Colleague
+                    </div>      
+                    
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>Push to setting:</p>
+                            <input type="radio" name="push" id="push0" checked="checked" value="0">None
+                            <input type="radio" name="push" id="push1" value="1">All
+                            <input type="radio" name="push" id="push2" value="2">Let me specify
+                            <a id="pushASetting" href="javascript:;">Advance setting</a>
+                            <input type="hidden" id="pushSetting" name="pushSetting">
+                    </div>      
+                    <div id="push_ext" class="insight-row" style="padding-left:110px;display:none;">
+                        <input type="checkbox" id="push_client" name="push_client" >My Client
+                        <input type="checkbox" id="push_prospect" name="push_prospect" >My Prospect
+                        <input type="checkbox" id="push_buddy" name="push_buddy" >My Buddy
+                        <input type="checkbox" id="push_colleague" name="push_colleague">My Colleague
+                    </div>      
+
+                    <input type="hidden" name="permit_clients" id="permit_clients">
+                    <input type="hidden" name="permit_prospects" id="permit_prospects">
+                    <input type="hidden" name="permit_buddies" id="permit_buddies">
+                    <input type="hidden" name="permit_colleagues" id="permit_colleagues">
+                    <input type="hidden" name="push_clients" id="push_clients">
+                    <input type="hidden" name="push_prospects" id="push_prospects">
+                    <input type="hidden" name="push_buddies" id="push_buddies">
+                    <input type="hidden" name="push_colleagues" id="push_colleagues">
+                    <input type="hidden" name="ifPublish" id="ifPublish" value="false">
+                </form>
+                <div class="btn_middle_div">
+                    <a href="#" id="btnSave" class="btn_middle">[@lang_res k='global.save'/]</a>
+                    <a href="#" id="btnPub" class="btn_middle">[@lang_res k='global.publish'/]</a>
+                    <a href="${base}/front/portfolio/info/myList.do" id="btnClose" class="btn_middle">[@lang_res k='global.cancel'/]</a>
+                    
+                    <a id="popupWinReturn" href="javascript:;" style="display:none;"></a>
+                    <input type="hidden" id="cnt_clients" value="0">
+                    <input type="hidden" id="cnt_prospects" value="0">
+                    <input type="hidden" id="cnt_buddies" value="0">
+                    <input type="hidden" id="cnt_colleagues" value="0">
+	                <a id="refreshSelection" href="javascript:;" style="display:none;"></a>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+seajs.use('${base}/res/web/portfolio/info/form.js');
+</script>

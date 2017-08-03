@@ -1,0 +1,219 @@
+[#include "../inc/head_v2.html"/]
+<script src="${base}/res/css/news/js/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/community.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/news/css/style.css">
+<link href="${base}/res/css/ifa.css" rel="stylesheet" type="text/css" />
+<link href="${base}/res/css/client.css" rel="stylesheet" type="text/css" />
+<link href="${base}/res/css/strategy.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="${base}/res/js/library/ueditor/themes/default/css/umeditor.css">
+
+<!--引入bshare SDK-->
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&style=-1"></script>
+ <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+ 
+<style>
+.member-comment-wrap > .comment-topper-contents{display:none !important;}
+.member-comment-wrap > .member-comment-contents{display:none !important;}
+.recommend-text {
+    width: 100%;
+    margin: 0 auto;
+    height: 100px;
+    resize: none;
+    border: #e5e4e4 1px solid;
+    border-radius: 3px;
+    padding: 2px;
+}
+.investment-plan-wrap .article-title p{font-size:30px;}
+.investment-plan-wrap .article-text p{text-align:left !important;}
+.news-word-wrap{margin:10px 0 0 0;}
+</style>
+	<div class="wmes-content">
+		<div class="wmes-community-wrap">
+			<div class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='topic.detail.title'/]</div>
+			<div class="wmes-topic-content">
+				<div class="wmes-topic-left">
+					<img class="wmes-topic-left-img headPortrait wmes-community-news-headPortrait" membertype="${detail.creatorMemberType!}" memberid="${detail.creatorId!}" src="${base}[@user_head u='${detail.creatorUrl!}' g='${detail.creatorGender!}'/]"/>
+					<div class="wmes-topic-left-name">${detail.creatorName!}</div>
+				</div>
+				<div class="wmes-topic-right">
+					<div class="wmes-community-news-wrap">
+						<div class="wmes-community-news-title">
+						[#if detail.topicType?? && detail.topicType==1][@lang_res k='topic.detail.transmit'/]
+						[#elseif detail.topicType?? && detail.topicType==2][@lang_res k='topic.detail.share'/]
+						[/#if]
+						${detail.title!}
+						</div>
+						<div class="wmes-community-news-type">${detail.section!}<span>${detail.createDate!}</span></div>
+						<div class="wmes-community-news-text" >${detail.content!}</div>
+						[#if detail.topicType?? && detail.topicType==2 ]
+						<div class="quotenews">
+							<div class="news-word-wrap">
+							[#if detail.newsUrl??]
+                    			<a class="ifa-news-img" href="${base}/front/news/info/newsContent.do?id=${detail.sourceId!}">
+                        			<img src="${detail.newsUrl!}">
+                    			</a>
+                    			[/#if]
+                    			<div class="news-wrap">
+                         			<a href="${base}/front/news/info/newsContent.do?id=${detail.sourceId!}"><p class="ifa-news-word">${detail.title!}</p></a>
+                        			<p class="insights-time"></p>
+                        			<p class="abstract">${detail.newsdescription!}</p>
+                    			</div>  
+                    		</div>
+                		</div>
+                		[/#if]
+						[#if detail.topicType?? && detail.topicType==1]
+						<div class="wmes-quotecon">
+							<div class="wmes-quotename">@${detail.sourceMemberName!}</div>
+							<div class="wmes-quotecontent">${detail.sourceContent!}</div>
+						</div>
+						[/#if]
+						<div class="wmes-community-news-message">
+							<div class="wmes-community-news-message-left">
+								<div class="wmes-community-news-message-right-caicon">
+									<div class="wmes-community-news-message-right-cai [#if detail.isUnlike?? && detail.isUnlike=='1']comment-topper-caied[/#if]"></div><span>${detail.unlike!}</span>
+								</div>
+								<div class="wmes-community-news-message-right-nicecon">
+									<div class="wmes-community-news-message-right-nice [#if detail.isLike?? && detail.isLike=='1']comment-topper-niceed[/#if]"></div><span>${detail.like!}</span>
+								</div>
+								[#if detail.supportComment?? && detail.supportComment==1]
+								<div class="wmes-community-news-message-right-relycon" style="cursor:default;">
+									<div class="wmes-community-news-message-right-rely rely-topic"></div><span>${detail.commentCount!}</span>
+								</div>
+								[/#if]
+								<div class="wmes-community-news-message-right-eyecon" style="cursor:default;">
+									<div class="wmes-community-news-message-right-eye"></div><span>${detail.click!}</span>
+								</div>
+							</div>
+							<div class="wmes-community-news-message-right">
+								[#if type?? && type=='t' ]<div class="wmes-community-topic-collect [#if detail.isFavorite?? && detail.isFavorite='1']news-collectionac[/#if]"></div>[/#if]
+								[#if type?? && type=='t' && allowTran?? && allowTran=='1']<div class="wmes-community-topic-zhuanfa"></div>[/#if]
+								[#if type?? && type=='q' ]<div class="wmes-community-topic-rely"></div>[/#if]
+							</div>
+						</div>
+					</div>
+					<ul class="topic-sharecon">
+						<li>[@lang_res k='topic.detail.shareTo'/]:</li>
+						<a href="#" onclick="javascript:bShare.share(event,'facebook','2');return false;"><li class="topic-share-facebook"></li></a>
+						<a href="#" onclick="javascript:bShare.share(event,'twitter','3');return false;"><li class="topic-share-twitter"></li></a>
+						<a href="#" onclick="javascript:bShare.share(event,'linkedin','4');return false;"><li class="topic-share-in"></li></a>
+						<!--<a href="#"><li class="topic-share-goggle"></li></a>
+						--><a href="#" onclick="javascript:bShare.share(event,'sinaminiblog','1');return false;"><li class="topic-share-weibo"></li></a>
+					</ul>
+					<!-- 加载编辑器的容器 -->
+					<div class="editcon" >
+
+					<div class="comment-topper-contents">
+						<div class="member-comment-topper">
+							<p class="member-comment-title">
+								[@lang_res k='comment.title'/]
+							</p>
+							<p class="member-number-words">
+								0/500
+							</p>
+						</div>
+						<textarea class="member-comment-text"></textarea>
+						<div class="member-comment-reply">
+							<img class="comment-expression-ico" src="${base}/res/images/discover/expression_ico.png">
+							<a class="comment-reply-word" targetType="${type!}" targetId='${detail.id!}' href="javascript:;">[@lang_res k='comment.replybtn'/]</a>
+						</div>
+						<div class="comment-expression"></div>
+					</div>
+
+				</div>
+	                
+				</div>
+				[#if type?? && type=='q'  ]
+				<div class="topic-title">[@lang_res k='topic.detail.reply'/]</div>
+				[#if detail.isAnswer!=1]
+				[#if allowAns]
+				<div class="topic-gotoreply">
+					<div class="topic-gotoreply-logo">
+						<a href="#" class="answer-question">[@lang_res k='topic.detail.replyNow'/]</a>
+					</div>
+				</div>
+				[#else]
+				<div class="topic-gotoreply">
+					<div class="no-comment-tips" style="text-align: center;padding-top:40px">
+						 <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                          <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+					</div>
+				</div>
+				[/#if]
+				[/#if]
+				<div class="answer-comment">
+				</div>
+				<ul class="answer-comment-list"></ul>
+				[/#if]
+				<div class="topic-title">[@lang_res k='topic.detail.comment'/]</div>
+				[#include "../strategy/info/memberComment.html"/] 
+				<div class="no-comment-tips" style="text-align: center;display:none">
+				<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                  <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+				</div>
+			</div>
+			
+			<div id="recommendNews"  class="ifa-space-popup show-space"  >
+		<div class="ifa-space-mask"></div>
+		<div class="space-mask-wrap" style="position:absolute"> 
+			<div class="investment-plan-wrap" >
+				<div class="wmes-close character-close-ico"></div>
+				<p class="investment-plan-title">[@lang_res k='topic.detail.transmit'/]</p>
+				<div class="character-setting-rows">
+					<textarea class="recommend-text" id="recommendText" placeholder="[@lang_res k='news.recommend.enterTips'/]"></textarea>
+				</div>
+				<div class="character-setting-rows">
+					<ul class="view_permissions_setting" style="padding-left:0px">
+						<li style="width: 10%;text-align: left;">[@lang_res k='news.publishTo'/]:</li>
+						<li><input type="radio"  name="permit" class="permit" id="permit0" value="all"  checked="checked" />[@lang_res k='news.publishTo.all'/]</li>
+						<li><input type="radio" name="permit" class="permit" id="permit1" value="client" />[@lang_res k='news.publishTo.client'/]</li>
+						<li><input type="radio" name="permit" class="permit" id="permit2" value="friend" />[@lang_res k='news.publishTo.friend'/]</li>
+				   </ul>
+				</div>
+					<div class="character-setting-rows">
+						<!--<p style="text-align: left;">
+							分享新闻：
+						</p>
+						--><div class="article">
+							<div class="article-right">
+								<div class="article-title">
+									<p class="title" style="color:black" >${detail.title!} </p>
+								</div>
+								<div class="article-text">
+									<p>
+										${detail.content!} 
+									</p>
+									<div class="clearfix">
+									</div>
+								</div>
+							</div>
+							<div class="clearfix">
+							</div>
+						</div>
+					</div>
+					<div class="character-button-rows">
+						<a class="character-button-save" href="javascript:;">[@lang_res k='news.recommend.btn'/]</a>
+						<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+				  </div>
+				</div>
+			</div>
+		</div>
+		
+		</div>
+		
+		</div>
+		
+		
+		
+	</div>
+	
+		<input id="hidloginMemberType" type="hidden" value="${loginMemberType!}">
+	<input id="hidloginMemberId" type="hidden" value="${loginMemberId!}">
+<!---->
+[#include "../inc/foot_v2.html"/]
+<script type="text/javascript">
+   // seajs.use('${base}/res/web/ifa/community.js');
+    var _supportComment=[#if detail.supportComment??]${detail.supportComment!}[#else]0[/#if];
+    
+    seajs.use('${base}/res/web/community/topicdetail.js');
+</script>

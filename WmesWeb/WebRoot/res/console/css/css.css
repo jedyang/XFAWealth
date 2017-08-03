@@ -1,0 +1,85 @@
+/* CSS Document */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, img, p, blockquote, th, td { margin: 0; padding: 0; }
+body { font-size: 14px; color: #333; font-family: Verdana, Microsoft YaHei, Simsun; background: #FFFFFF; }
+img { border: 0; vertical-align: middle; }
+ol, ul, li { list-style: none; }
+a { text-decoration: none !important; border: 0; outline: none; }
+a:focus { outline: none; }
+input, button, select, textarea { outline: none; }
+.clear { clear: both; }
+
+.logo { background: url(../images/logo/logo.png) left; width: 200px; height: 50px; display: block; border: 0 !important; }
+.border0 { border-radius: 0; margin-bottom: 0 !important; border: 0 !important; }
+.name-bg { background: url(../images/bg-name.png) no-repeat 220px 0 #FFFFFF;margin-left:-220px; }
+.pd0 { padding: 0 !important }
+.pd10{ padding: 5px !important}
+.pdt20{ padding-top:20px;}
+
+
+.left-side { padding-bottom:50px;width: 200px;position: fixed;top: 50px;left: 0;height: 100%;overflow: auto; background-color:#29292a;}
+.right-side { width: 100%; background: #FFF; height: 100%; float: left; border-top: 4px solid #ff9900; }
+.r-side-container { margin-left: 200px; padding:15px; }
+
+.l-side-menu li{ transition:all .2s ease}
+.l-side-menu li a{ height:50px; line-height:50px; width:200px;display:block; color:#f1f1f1 !important; padding-left:15px}
+.l-side-menu li:hover{ background-color: #333;}
+
+.l-side-sub{background-color: #41444b;}
+.l-side-sub li a{padding-left:20px;}
+.l-side-sub li a:hover{ background-color: #333;}
+.l-side-sub-crr a{background-color: #FF9900 !important;}
+
+.l-sub-icon{ background:url(../images/left-sub-down.png) center no-repeat; width:50px; height:50px; display:inline-block; transform:rotate(-90deg);transition:0.2s all ease}
+
+.ico{transform:rotate(0deg); transition:0.2s all ease}
+
+
+.row label{ font-weight:normal; padding:0 5px}
+
+.btn-def{background-color: #2d80ce; width:100px; display:block; 
+margin-left:150px; border:0 !important; transition:ease .2s background-color;}
+.btn-def:hover{background-color: #66a5df;}
+
+
+.btn-blue-s{background-color: #2d80ce; margin:10px 2px; padding:5px 20px;  text-align:center; color:#FFFFFF!important;; display:inline-block; border:0 !important; transition:ease .2s background-color; border-radius:4px}
+.btn-blue-s:hover{background-color: #66a5df;}
+
+.btn-blue-s2{background-color: #66a5df; margin:10px 2px; padding:5px 20px;  text-align:center; color:#FFFFFF!important;; display:inline-block; border:0 !important; transition:ease .2s background-color; border-radius:4px}
+.btn-blue-s2:hover{background-color: #81bcf2;}
+
+
+.tab{ height:44px; line-height: 44px; display:block; background:url(../images/tab-bg.png) repeat-x bottom; margin-bottom:20px; } 
+.tab li a{ float:left;display:block; padding:0 15px; }
+.tab-li-crr a{ background:url(../images/tab-hover-bg.png) top repeat-x; height:44px; line-height:44px; display:block; padding:0 15px;border-left:1px solid #EEEEEE; border-right:1px solid #EEEEEE; color:#333333 !important}
+.table-head{ border-bottom:2px solid #c4e5fe !important; border-top:0 !important;background-color: #f5fafe; height:42px; line-height:42px;}
+
+.search-table{ margin-bottom:10px; font-weight:normal}
+.search-table td{ height:50px; line-height:50px; padding:0 5px;}
+
+.mt-10{ margin-top:20px; color:#666;}
+
+/*form*/
+.form-table th{ height:40px; line-height: 40px;font-weight:normal}
+.form-table td{ height:40px; line-height: 40px;}
+.form-font-normal{ font-weight:normal;}
+.form-input-w300px{ width:300px;}
+.form-input-w500px{ width:500px;}
+form label{ font-weight:normal;margin-top: 8px;}
+
+.red{color: red;}
+.list-number{text-align:right;}
+
+.langActive{color: #ff8315 !important;}
+
+/* tab页面    add wwluo 160808 */
+.tab-side { width: 100%; background: #FFF; height: 100%; float: left; }
+.tab-side-container { padding:15px; }
+.ui-icon { width: 16px; height: 16px; display: block; background-repeat: no-repeat; overflow: hidden; background-image: url("../images/ui-icons_454545_256x240.png"); }
+.ui-icon-close { opacity: 0.2; float: right; cursor: pointer; margin: 0.4em -10px 0 0.6em; background-position: -80px -128px; }
+.ui-icon-close:hover{ opacity: 1; background-position: -30px -190px; }
+
+/*弹窗*/
+.dis-mask-wrap{display: none;position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; background:rgba(0,0,0,0.5); z-index: 999999;}
+.dis-mask-contents{position: absolute;width: 100%;top:10px;z-index: 999999;} 
+.dis-mask-mainer{border-radius:10px;box-shadow: 2.5px 4.33px 35px 0px #000;position: relative;width:80%;background-color: white;margin: 0 auto;padding: 25px 30px; overflow: hidden; }
+.dis-mask-wrapac{display:block;}

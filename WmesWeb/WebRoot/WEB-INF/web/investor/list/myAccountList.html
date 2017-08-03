@@ -1,0 +1,196 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<style type="text/css">
+	.account-list-title{text-align: left;margin-right: 10px;}
+	.account-list-hkd span{color: black;}
+</style>
+<div class="wmes-top">
+	<a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt="">
+	</a>
+	<a href="javascript:;" class="header-over">My Account</a>
+</div>
+<div class="wmes-content">
+	<div class="account-wrap">
+	<a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>
+	<p class="wmes-wrap-title">[@lang_res k='account.list.inv.title'/]</p>
+		<div class="account-list-choose">
+			<div class="account-checkbox">
+				<input type="checkbox" value="" [#if in_use?exists & in_use='1']checked="true"[/#if] id="in_use">
+				<label for="in_use"></label>
+			</div>
+			<p class="account-checkbox-font">[@lang_res k='account.list.active'/]</p>
+
+			<div class="account-checkbox">
+				<input type="checkbox" value="" [#if inApproval?exists & inApproval='1']checked="true"[/#if] id="InApproval">
+				<label for="InApproval"></label>
+			</div>
+			<p class="account-checkbox-font">[@lang_res k='account.list.processing'/][#if processCount?? && processCount>0]<span >(${processCount!})</span>[/#if]</p>
+
+			<div class="account-checkbox">
+				<input type="checkbox" value="" [#if cancellation?exists & cancellation='1']checked="true"[/#if] id="Cancellation">
+				<label for="Cancellation"></label>
+			</div>
+			<p class="account-checkbox-font">[@lang_res k='account.list.canceled'/]</p>
+			<div class="account-choose-left">
+				<p class="account-xiala-title">
+					[@lang_res k='account.list.cur'/]
+				</p>
+				<div class="proposal_xiala">
+					<input type="text" code="${cur!}" value="${curName!}"  readonly="" id="currency" >
+					<input type="hidden"  value="${cur}"  id="currency" >
+					<span class="icon_xiala"></span>
+					<ul>
+						 [#if currencyType?exists && currencyType?size gt 0]
+                            [#list currencyType as list]
+                                <li value="${list.itemCode!}" >${list.name!}</li>
+                                [/#list]
+                                [/#if]
+					</ul>
+				</div>
+			</div>
+		</div>
+		[#if distributorList?exists && distributorList?size gt 0 ] [#list distributorList as distributor]
+		<div class="account-rows">
+			<p class="builder-title">
+				<img class="account-portrait" src="${base}${distributor.logoUrl!}">
+				${distributor.companyName!}
+				<span class="proposal-more-ico"></span>
+			</p>
+
+			<div class="account-rows-date">
+				<div class="account-rows-left">
+					<p class="account-rows-title">
+						[@lang_res k='account.list.nextRPQDate'/]
+					</p>
+					<p class="account-rows-days">
+						<span>[#if distributor.nextRPQDate?? && distributor.nextRPQDate!='0']${distributor.nextRPQDate!}[#else]--[/#if]</span> [@lang_res k='account.list.day'/]
+					</p>
+				</div>
+				<div class="account-rows-right">
+					<p class="account-rows-title">
+						[@lang_res k='account.list.nextDocumentCheckDate'/]
+					</p>
+					<p class="account-rows-days">
+						<span>[#if distributor.nextDCDate?? && distributor.nextDCDate!='0']${distributor.nextDCDate!}[#else]--[/#if]</span> [@lang_res k='account.list.day'/]
+					</p>
+				</div>
+			</div>
+			[#if accountList?exists && accountList?size gt 0 ] [#list accountList as list] [#if list.distributorId=distributor.id]
+			[#if list.openStatus='3' ]
+			<div class="account-list-contsnts">
+			<div class="account-list-cleft">
+					<div class="account-list-nwrap">
+						<p class="account-list-name" accountId="${list.id}">
+						<a style="color:black" href="${base}/front/investor/myAccountDetail.do?id=${list.id}">${list.accountNo!}</a><!--
+						[#if list.subFlag=='Master Account']
+							<a style="color:black" href="${base}/front/investor/myAccountDetail.do?id=${list.id}">${list.accountNo!}</a>
+							[#else]
+							<a style="color:black" href="#">${list.accountNo!}</a>
+							[/#if]
+						--></p>
+						<ul class="account-list-describe">
+						   [#if list.subFlag??]<li>
+								[#if list.subFlag?? && list.subFlag='0'][@lang_res k='account.list.masterAccount'/] [#elseif list.subFlag?? && list.subFlag='1'][@lang_res k='account.list.subAccount'/][/#if]
+							</li>[/#if]
+							[#if list.accType??]<li>
+								${list.accType!}
+							</li>[/#if]
+							[#if list.cies?? && list.cies!='']<li>
+								${list.cies!}
+							</li>[/#if]
+							[#if list.baseCurrency?? && list.baseCurrency!='']<li>
+								${list.baseCurName!}
+							</li>[/#if]
+						</ul>
+					</div>
+					<div class="account-list-total">
+						<p class="account-list-hkd"><span> [@num_fmt s='${list.totalAssest!}' c='${displayColor!}' f='${numFormat}'/]</span></p>
+            			<p class="account-list-assest">[@lang_res k='ifa.detail.portfolio.totalAssets'/] (${curName!})</p>
+					</div>
+				</div>
+				<div class="account-list-cright">
+					<div class="account-list-total">
+						<p class="account-list-hkd"><span class="account-list-title">[@lang_res k='assets.cash'/] <span>(${curName!})</span></span><span class="account-list-number">[@num_fmt s='${list.cash!}' f='${numFormat}'/]</span></p>
+						<p class="account-list-hkd"><span class="account-list-title">[@lang_res k='assets.marketValue'/] <span>(${curName!})</span></span><span class="account-list-number">[@num_fmt s='${list.productValue!}' f='${numFormat}'/]</span></p>
+					</div>
+				</div>
+			
+			</div>
+			[#else]
+			<div class="account-list-approval">
+			<div class="account-list-cleft">
+					<div class="account-list-nwrap">
+						<p class="account-list-name" accountId="${list.id}">
+						[#if list.openStatus=='2' || list.openStatus=='4' ]
+			             <a  href="${base}/front/investor/accountProgress.do?id=${list.id}"><span style="color: #cccccc;">N/A</span></a>
+			         
+			             [#elseif list.openStatus=='-1' || list.openStatus=='0' || list.openStatus=='1']
+			             <a  href="${base}/front/investor/accountRPQ.do?accountId=${list.id}"><span style="color: #cccccc;">N/A</span></a>
+			             [/#if]
+						</p>
+						<ul class="account-list-describe">
+						   [#if list.subFlag??]<li>
+								[#if list.subFlag?? && list.subFlag='0'][@lang_res k='account.list.masterAccount'/] [#elseif list.subFlag?? && list.subFlag='1'][@lang_res k='account.list.subAccount'/][/#if]
+							</li>[/#if]
+							[#if list.accType??]<li>
+								${list.accType!}
+							</li>[/#if]
+							[#if list.cies?? && list.cies!='']<li>
+								${list.cies!}
+							</li>[/#if]
+							[#if list.baseCurrency?? && list.baseCurrency!='']<li>
+								${list.baseCurName!}
+							</li>[/#if]
+						</ul>
+					</div>
+				</div>
+				[#if list.openStatus=='2' ]
+				<img class="account-list-old" src="${base}/res/images/client/processing_ico.png">
+				[#elseif list.openStatus=='0' ]
+				<img class="account-list-old" src="${base}/res/images/client/draft_ico.png">
+				[#elseif list.openStatus=='4']
+				<img class="account-list-old" src="${base}/res/images/client/refused_ico.png">
+				[#elseif list.openStatus=='-1']
+				<img class="account-list-old" src="${base}/res/images/client/reject_ico.png">
+				[#elseif list.openStatus=='1']
+				<img class="account-list-old" src="${base}/res/images/client/tobefill_ico.png">
+				[/#if]
+				</div>
+			[/#if]
+			
+		[/#if]
+		[/#list] [/#if]
+		</div>
+		[/#list] [/#if]
+		<div class=" no_list_tips wmes-nodata-tips" [#if accountList?exists && accountList?size==0 ]style="display:block"[#else]style="display:none"[/#if]>
+               <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+               <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+          </div>
+		
+
+</div>
+
+</div>
+
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+var _checkList='${checkList!}';
+var _accountType="${accountType!}";
+	seajs.use('${base}/res/web/openAccount/myAccountlist.js');
+	function callbackloginresult(json){
+	 	 seajs.use('jquery', function($){
+		 	console.log(json);
+		 	var count=0;
+		 	$.each(json,function(i,n){
+			 	if(n.status="1"){
+			 	count++;
+		 	    }
+		 	})
+		 	if(count>0){
+		 	 setTimeout(function(){
+		       window.location.url= window.location.url+"?check=1";
+		     },1000);
+		    }
+	    });
+ 	}
+</script>

@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[@lang_res k='fund.distributor.form.title'/]</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/bootstrap/css/bootstrapValidator.css" rel="stylesheet" type="text/css"/>    
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="${base}/res/third/zTree/css/metroStyle/metroStyle.css" type="text/css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	<style type="text/css">
+	   .red {color:red;}
+	</style>
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+        <div class="tab-side-container">
+            <div class="page-header mt-10">
+                <h4><b>[@lang_res k='fund.distributor.form.title'/]</b></h4>
+            </div>
+            
+            <div class="clear"></div>
+            <div class="tab_wrap">
+                <!-- tab 1  -->
+                <form id="frm" method="post" class="form-horizontal" style="display:block;">
+	                <input type="hidden" name="id" id="id" value="${(entityVO.id)?if_exists}"/>
+	                <!--<input type="hidden" name="fundId" id="fundId" value="${(entityVO.fundId)?if_exists}"/>-->
+	                <input type="hidden" name="productId" id="productId" value="${(productId)?if_exists}"/>                  
+                   <!-- 运营公司 -->
+                   <!-- <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="companyId" class="label-control"><span class="red">*</span>[@lang_res k='fund.distributor.form.companyId'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            [#if entityVO?? && entityVO.company?? && entityVO.company.id?? && entityVO.company.id?length > 1]
+                        	<select class="form-control " id="companyId"  name="companyId">
+                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                                [#if companyList?? && companyList?size gt 0]
+                                    [#list companyList as md]
+                                   <option value="${md[0].id!}" [#if entityVO?? &&entityVO.company?? &&entityVO.company.id?? && md[0].id?? && entityVO.company.id == md[0].id]selected[/#if]>${md[1].name!}</option>
+                                    [/#list]
+                                [/#if]
+                            </select>
+                            [#else] 
+                                <input type="text" id="companyName"  name="companyName" value="${entityVO.companyName!}" >
+                                <input type="hidden" id="companyId"  name="companyId" value="${entityVO.companyId!}" >
+                            [/#if]
+                        </div>
+                    </div> --> 
+                    <!-- 代理商 -->
+                   <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="distributorId" class="label-control"><span class="red">*</span>[@lang_res k='fund.distributor.form.distributorId'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                        	<select class="form-control " id="distributorId"  name="distributorId">
+                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                               [#if listVO?exists && listVO?size gt 0]
+                                 [#list listVO as md]
+                                   <option value="${md.id!}" [#if entityVO?exists&&entityVO.distributor?exists&&entityVO.distributor.id == md.id]selected[/#if]>${md.companyName!}</option>
+                                 [/#list]
+                               [/#if]
+                            </select> 
+                        </div>
+                   </div>
+                    <!-- Code -->
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtCode" class="label-control"><span class="red">*</span>[@lang_res k='fund.distributor.form.code'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                             <input type="text" class="form-control" id="txtCode" name="symbolCode" value="${(entityVO.symbolCode)?if_exists}" />
+                         </div>
+                    </div>
+                    <!-- Publish -->
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="typeLable" class="label-control"><span class="red">*</span>[@lang_res k='fund.distributor.form.isPublish'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <span id="typeLable" >
+                             &nbsp;<input type="radio"  value="1" id="radiocode-1"  name="isPublish"  [#if entityVO?exists == false || entityVO.isPublish?exists == false || entityVO.isPublish == '1']checked[/#if]>[@lang_res k='fund.distributor.form.isPublish.1'/]&nbsp;&nbsp;&nbsp;&nbsp;
+                             <input type="radio"  value="0" id="radiocode-2"  name="isPublish" [#if entityVO?exists && entityVO.isPublish?exists && entityVO.isPublish == '0']checked[/#if]>[@lang_res k='fund.distributor.form.isPublish.0'/]</span>
+                            </span>
+                         </div>
+                    </div>
+	                <div class="text-center pd10">
+                     <button type="submit" class="btn btn-primary" id="saveButton">[@lang_res k='fund.distributor.form.btn.save'/]</button><!--
+                     <button type="button" class="btn btn-default" onclick="sClose()">[@lang_res k='fund.distributor.form.btn.cancel'/]</button>
+				     --><span id="contact-form-success" style="display:none;">[@lang_res l=Session["_LANG_CODE_"] k='param.success'/]</span>
+				     <span id="contact-form-error" style="display:none;">[@lang_res l=Session["_LANG_CODE_"] k='param.error'/]</span>
+	                </div>
+                </form>            
+            </div>            
+        </div>
+    </div>
+</div>
+
+
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.form.js" type="text/javascript"></script>
+<script src="${base}/res/third/zTree/js/jquery.ztree.all.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+    $('#frm').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            distributorId: {
+                message: '',
+                validators: {
+                    notEmpty: {
+                        message: '[@lang_res k='fund.distributor.form.distributorId'/] [@lang_res k='global.empty.tip'/]'
+                    }
+                }
+            },
+            symbolCode: {
+                message: '',
+                validators: {
+                    notEmpty: {
+                        message: '[@lang_res k='fund.distributor.form.code'/] [@lang_res k='global.empty.tip'/]'
+                    },
+                    callback: {
+                        message : '[@lang_res k='fund.distributor.form.code'/] [@lang_res k="global.exists.tip"/]',
+                        callback : function(value, validate) {
+                            var url = "${base}/console/fund/distributor/checkSymbolCode.do?code=" + value + "&id=" + $("#id").val() +"&datestr=" + new Date().getTime() ;
+                            var res = true;
+                            $.ajax({
+                                url : url,
+                                method : 'post',
+                                dataType : 'json',
+                                async : false,
+                                success : function(data) {
+                                    res = data;
+                                },
+                                error : function() {
+                                }
+                            });
+                            return res;
+                        }
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv', function(e) {
+        e.preventDefault();
+       	saveData();
+    });       
+                 
+});
+
+
+function saveData(){
+	//alert('ok');
+	//$("#fundId").val(fundId);
+	//$("#id").val(id);
+	
+	$("#saveButton").attr({'disabled':true});
+	
+	$("#frm").ajaxSubmit({
+		url: "${base}/console/fund/distributor/save.do?datestr="+new Date().getTime(),
+		iframe: true,
+		dataType: 'json',
+		success: function(data, status){   
+	        $("#saveButton").attr({'disabled':false});	
+	        //var dataObj=eval("("+data+")");
+        	//alert('data:'+data);
+            //if(data.result){
+            if(data!=null){
+              	//window.location.href="${base}/console/fund/distributor/list.do?&datestr="+new Date().getTime();
+              	parent.document.getElementById("btnSearch").click();
+              	parent.document.getElementById("btnCloseIframe").click();
+            }else{
+                $('#contact-form-error').show().fadeOut(10000);
+            }
+		},
+		error:function(){
+			alert('error:function');
+			$('#contact-form-error').show().fadeOut(10000);
+		}
+	});
+}
+
+
+
+function sClose(){
+	window.location.href="${base}/console/fund/distributor/list.do?fundId="+fundId+"&datestr="+new Date().getTime();
+}
+
+</script>
+</body>
+</html>

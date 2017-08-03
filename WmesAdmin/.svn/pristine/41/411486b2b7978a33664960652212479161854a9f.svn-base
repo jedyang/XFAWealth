@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" >
+    <style type="text/css">
+    	#menuList .fixwidth{max-width:150px;overflow: hidden; text-overflow:ellipsis; white-space: nowrap;}
+    </style>
+</head>
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container">
+            <ul class="tab" id="tab-search">
+                <li id="tab-li-fixed" class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res k='console.community.section.title'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div class="clear"></div>
+                    <div class="pdt20">
+                        <button type="button" class="btn btn-blue-s" id="btnAdd">
+							 [@lang_res k='global.add'/]
+						</button>
+						<input id="btnSearch" type="hidden">
+                    </div>
+                    <div>
+                        <table id="menuList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+                            	<tr>
+	                               <th class="table-head">[@lang_res k='console.community.section.th.nameSc'/]</th>
+	                               <th class="table-head">[@lang_res k='console.community.section.th.nameTc'/]</th>
+	                               <th class="table-head">[@lang_res k='console.community.section.th.nameEn'/]</th>
+	                               <th class="table-head">[@lang_res k='console.community.section.th.description'/]</th>
+	                               <th class="table-head">[@lang_res k='console.community.section.th.orderBy'/]</th>
+	                               <th class="table-head">[@lang_res k='console.community.section.th.status'/]</th>
+	                               <th class="table-head">[@lang_res k='console.community.section.th.createDate'/]</th>
+	                               <th class="table-head">[@lang_res k='global.operation'/]</th>
+	                            </tr>  
+                            </tbody>
+                        </table>
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm"></ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/js/base.js" type="text/javascript"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script type="text/javascript">
+	var pageSize = 10;
+	$(function(){
+        bindList(0);
+		$('#btnAdd').click(function() {
+		    var url = '${base}/console/community/section/add.do';
+			showform('console-community-section','[@lang_res k="param.list.btn.add"/]',url);
+		});
+		$('#btnSearch').click(function() {
+			bindList(0);
+		});
+	});
+  	//分页绑定Table数据
+	function bindList(curPage){
+  		var roleCode = $("#selRoleType").val();
+  		var keyWord = $("#searchKeyWord").val();
+  		var url = '${base}/console/community/section/getSections.do?datestr=' + new Date().getTime();
+  		var data = {
+			page : curPage + 1,
+			rows : pageSize
+  		};
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : url,
+			data : data,
+			success : function(re) {
+				var total = re.total;
+				$("#menuList tbody tr:gt(0)").empty();
+                var list = re.rows;
+                var tr = iterationFrontChildMenus(list);
+                $("#menuList tbody").append(tr);
+			    $("#menuList").treetable(getTreeTableOption());
+			    $("#pagination").pagination(total, {
+	                 callback: pageselectCallback,
+	                 numDetail: '',
+	                 items_per_page: pageSize,
+	                 num_display_entries: 4,
+	                 current_page: curPage,
+	                 num_edge_entries: 2
+                });
+			}
+		});
+	 	//回调
+        function pageselectCallback(page_id, jq) {
+            bindList(page_id);
+            $("#menuList").treetable(getTreeTableOption);
+        }
+	}
+  	function iterationFrontChildMenus(list){
+  		var tr = '';
+  		$.each(list, function (index, array) { 				
+            var id = array['id'] == null ? "" : array['id'];
+            var parentId = array['parentId'] == null ? "" : array['parentId'];
+            var nameSc = array['sectionNameSc'] == null ? "" : array['sectionNameSc'];
+            var nameTc = array['sectionNameTc'] == null ? "" : array['sectionNameTc'];   
+            var nameEn = array['sectionNameEn'] == null ? "" : array['sectionNameEn'];  
+            var memo = array['memo'] == null ? "" : array['memo']; 
+            var memoSub = '';
+            if(memo != '' && memo.length > 15){
+            	memoSub = memo.substring(0, 15) + '...';
+            }else{
+            	memoSub = memo;
+            }
+            var orderBy = array['orderBy'] == null ? "" : array['orderBy']; 
+            var status = array['status'] == null ? "" : array['status'];;
+            var createTime = array['createTimeStr'] == null ? "" : array['createTimeStr'];
+            var statusDisplay = '';
+            var editSectionUrl = "${base}/console/community/section/input.do?id=" + id + "&datestr=" + new Date().getTime();
+            if(1 == status){
+            	statusDisplay = '<span style="color:blue;padding:0;">[@lang_res l=Session["_LANG_CODE_"] k='global.status.valid'/]</span>';
+            }else if(0 == status){
+            	statusDisplay = '<span style="color:red;padding:0;">[@lang_res l=Session["_LANG_CODE_"] k='global.status.invalid'/]</span>';
+            }else if(-1 == status){
+            	statusDisplay = '<span style="color:#bdbdbd;padding:0;">[@lang_res l=Session["_LANG_CODE_"] k='global.status.deleted'/]</span>';
+            }             
+            tr += "<tr id='"+id+"' data-tt-id='"+id+"' data-tt-parent-id='"+parentId+"'>"
+                + "<td>" + nameSc + "</td>"
+                + "<td>" + nameTc + "</td>"
+                + "<td>" + nameEn + "</td>"
+                + "<td title='"+memo+"'>" + memoSub + "</td>"
+                + "<td>" + orderBy + "</td>"
+                + "<td>" + statusDisplay + "</td>"
+                + "<td>" + createTime + "</td>"
+                + "<td nowrap>" 
+				+ "<a href='javascript:void(0)' onclick=\"editSection('"+id+"','[@lang_res k='console.community.section.title'/]&nbsp;[@lang_res  k='global.edit'/]','"+editSectionUrl+"')\">[@lang_res  k='global.edit'/]</a>&nbsp;&nbsp;&nbsp;&nbsp;" 
+                + "<a href='javascript:void(0)' onclick=\"deleteSection('"+id+"')\">[@lang_res  k='global.delete'/]</a>" 
+                + "</td>"
+                + "</tr>"; 
+             if(array.childs != null && array.childs.length > 0){
+            	 tr += iterationFrontChildMenus(array.childs);
+             }
+        });
+  		return tr;
+  	}
+  	function getTreeTableOption(){
+		var option = {
+			expandable : true,
+	        onNodeExpand : function() {},
+	        onNodeCollapse : function() {}
+	    };
+		return option;
+  	}
+	function editSection(id,title,url) {
+		$(window).scrollTop("0")
+		showform(id,title,url);
+	}
+    //删除
+    function deleteSection(id){
+    	layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/community/section/delete.do?datestr="+new Date().getTime(),
+				data : {"id":id},
+				success : function(json) {
+					if (json.flag) {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]", {
+							icon : 1,
+							time : 1000
+						});
+					} else {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]", {
+							icon : 5,
+							time : 1000
+						});
+					}
+					bindList(0);
+				}
+			});
+		});
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,548 @@
+[#include "../../inc/head_v2.html"/]
+<title>[#if usergrouvo?exists && usergrouvo.id?exists] [@lang_res k='usergroup.detail'/] [#else] [@lang_res k='usergroup.add'/] [/#if]</title>
+<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+<link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/wmes/res/css/Funds.css">
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+	<script src="${base}/res/js/html5shiv.min.js"></script>
+ 	<script src="${base}/res/js/respond.min.js"></script>
+<![endif]-->
+<style>
+.wmes-contentbox {
+    background: #ffffff;
+    padding-top: 5px;
+}
+</style>
+
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div >
+				<div class="r-side-container" style="margin-left:80px">
+				<p class="wmes-wrap-title">
+                    <a href="javascript:sClose();">
+                        <span class="wmes-ruturn"></span>
+                    </a>
+					[@lang_res k='console.docTemplate.detail.docTemp'/]
+                </p>
+                
+				<ul class="tab" id="dialog_tab-search">
+					<li [#if tab?exists && tab=='1']class="tab-li-crr"[/#if]>
+						<a href="javascript:;"> [@lang_res k='console.docTemplate.detail.docTempInfo'/] </a>
+					</li>
+					<li [#if tab?exists && tab=='2']class="tab-li-crr"[/#if]>
+						<a href="javascript:;">[@lang_res k='console.docTemplate.list.docList'/] </a>
+					</li>
+				</ul>
+				<div class="tab_wrap dialog_tab_wrap">
+					<form class="form-horizontal" id="frm" method="post" [#if tab?exists && tab=='2']style="display: none"[/#if]>
+						<input type="hidden" id="tempId" name="temp.id" value="${(temp.id)?if_exists}" class="idAfteSave">
+						[#if temp?exists]
+						<input type="hidden" name="temp.distributor.id" value="${(temp.distributor.id)?if_exists}">
+						<input type="hidden" name="temp.createTime" value="${(temp.createTime)?if_exists}">
+						<input type="hidden" name="temp.createBy.id" value="${(temp.createBy.id)?if_exists}">
+						<input type="hidden" name="temp.isValid" value="${(temp.isValid)?if_exists}">
+						[/#if]
+						<input type="hidden" name="tempEn.id" value="${(temp.id)?if_exists}" class="idAfteSave">
+						<input type="hidden" name="tempTc.id" value="${(temp.id)?if_exists}" class="idAfteSave">
+						<input type="hidden" name="tempSc.id" value="${(temp.id)?if_exists}" class="idAfteSave">
+						<div class="form-group">
+							<div class="col-sm-3 text-right">
+							     <span class="red">* </span>
+								<label for="txtType" class="label-control">
+									[@lang_res k='console.docTemplate.detail.titleEn'/] 
+								</label>
+							</div>
+							<div class="col-sm-7">
+								<input id="titleEn" class="form-control" name="tempEn.title" value="${(tempEn.title)?if_exists}">
+							</div>
+						</div>
+						<div class="form-group" id="divIfafirm">
+								<div class="col-sm-3 text-right">
+								    <span class="red">* </span>
+									<label for="txtType" class="label-control">
+										[@lang_res k='console.docTemplate.detail.titleSc'/]
+									</label>
+								</div>
+								<div class="col-sm-7">
+									<input id="titleSc" class="form-control" name="tempSc.title" value="${(tempSc.title)?if_exists}">
+								</div>
+							</div>
+
+							<div class="form-group" id="divDistributor">
+								<div class="col-sm-3 text-right">
+								    <span class="red">* </span>
+									<label for="txtType" class="label-control">
+										[@lang_res k='console.docTemplate.detail.titleTc'/]
+									</label>
+								</div>
+								<div class="col-sm-7">
+									<input id="titleTc" class="form-control" name="tempTc.title" value="${(tempTc.title)?if_exists}">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-3 text-right">
+								    <span class="red">* </span>
+									<label for="txtCreateBy" class="label-control">
+										[@lang_res k='console.docTemplate.detail.code'/]
+									</label>
+								</div>
+								<div class="col-sm-7">
+									<input id="tempCode" class="form-control" name="temp.code" value="${(temp.code)?if_exists}">
+								</div>
+							</div>
+                        <div class="form-group">
+                            <div class="col-sm-3 text-right">
+                                <label for="txtName" class="label-control">
+								[@lang_res k='console.docTemplate.list.customer'/]
+                                </label>
+                            </div>
+                            <div class="col-sm-7">
+                                <select id="selClientType" class="form-control" name="temp.clientType">
+                                    <option value='Individual' [#if temp?exists && temp.clientType=='Individual']selected[/#if]>[@lang_res k='member.individual'/]</option>
+                                    <option value='Corporate' [#if temp?exists && temp.clientType=='Corporate']selected[/#if]>[@lang_res k='console.docTemplate.list.corpinvestor'/]</option>
+                                    <option value='JointAccount' [#if temp?exists && temp.clientType=='JointAccount']selected[/#if]>[@lang_res k='console.docTemplate.list.jointAccount'/]</option>
+                                    <option value='FI' [#if temp?exists && temp.clientType=='FI']selected[/#if]>[@lang_res k='console.docTemplate.list.fi'/]</option>
+                                </select>
+                            </div>
+                        </div>
+
+							<div class="form-group">
+								<div class="col-sm-3 text-right">
+								    <span class="red">* </span>
+									<label for="txtRemark" class="label-control">
+										[@lang_res k='console.docTemplate.list.ifDef'/]
+									</label>
+								</div>
+								<div class="col-sm-7">
+								<span class="radio-s-middle"> &nbsp; 
+										<input type="radio" class="CFalgItem"
+											value="1" id="isDef-0" name="temp.isDefault" 
+											[#if temp?exists && temp.isDefault]checked[/#if]>[@lang_res k='global.true'/]
+										&nbsp;&nbsp;&nbsp;&nbsp; 
+										<input type="radio" value="0" class="CFalgItem" id="isDef-1" name="temp.isDefault" 
+											[#if temp?exists && temp.isDefault==false]checked[/#if]>[@lang_res k='global.false'/]
+								</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-3 text-right">
+									<label for="txtRemark" class="label-control">
+										[@lang_res k='lang.lang'/]
+									</label>
+								</div>
+								<div class="col-sm-7">
+									<select id="selLangcode" class="form-control" name="temp.langCode">
+                         				<option value='sc' [#if temp?exists && temp.langCode=='sc']selected[/#if]>[@lang_res k='lang.sc'/]</option>
+	                                  	<option value='tc' [#if temp?exists && temp.langCode=='tc']selected[/#if]>[@lang_res k='lang.tc'/]</option>
+	                                   	<option value='en' [#if temp?exists && temp.langCode=='en']selected[/#if]>[@lang_res k='lang.en'/]</option>
+                            		</select> 
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-3 text-right">
+									<label for="txtRemark" class="label-control">
+										[@lang_res k='console.docTemplate.list.status'/]
+									</label>
+								</div>
+								<div class="col-sm-7">
+									<select id="selStatus" class="form-control" name="temp.status">
+	                            		 <option value='using' [#if temp?exists && temp.status=='using']selected[/#if]>[@lang_res k='console.docTemplate.list.status.a'/]</option>
+		                                 <option value='unusing' [#if temp?exists && temp.status=='unusing']selected[/#if]>[@lang_res k='console.docTemplate.list.status.b'/]</option>
+		                                 <!-- <option value='draft' [#if temp?exists && temp.status=='draft']selected[/#if]>草稿</option> -->
+		                                 <option value='delete' [#if temp?exists && temp.status=='delete']selected[/#if]>[@lang_res k='console.docTemplate.list.status.c'/]</option>
+	                            	</select>
+                            	</div>
+							</div>
+							<div class="text-center pd10">
+								<button id="btnSave" type="submit" class="btn btn-primary">
+									[@lang_res k='global.save'/]
+								</button>
+								<button onclick="sClose()" type="button" class="btn btn-primary">
+									[@lang_res k='global.back'/]
+								</button>
+							</div>
+						</form>
+						<div class="form-inline divUser" [#if tab?exists && tab=='1']style="display: none;"[/#if]>
+							<div>
+								<!--
+								<div class="row pd10">
+									<div class="col-sm-5">
+										<label for="s-1">
+											[@lang_res k='member.list.keyword'/]
+										</label>
+										<input id='txtkeyword1' type="text" class="form-control" id="s-1">
+									</div>
+									<div class="col-sm-5">
+										<button type="button" class="btn btn-primary" id="btnSearch1">
+											[@lang_res k='global.query'/]
+										</button>
+										<input id="btnCloseIframe" type="hidden" />
+									</div>
+								</div>
+								-->
+								<div class="clear"></div>
+								<div class="pdt20">
+									<a href="javascript:showDocInfoFrame('');" id="btnAdd" class="btn-blue-s">[@lang_res k='global.add'/]</a>
+									<!--<a href="#" id="btnAdd" class="btn-blue-s" onclick="javascript:history.go(-1);">[@lang_res k='global.back'/]</a>-->
+									<a href="javascript:void(0);" class="btn-blue-s" id="btnSearch1">[@lang_res k='global.query'/]</a>
+									<input id="btnCloseIframe" type="hidden" />
+									<div style="margin-top: 8px;height:33px;" class="funds_keyserach ifa_keyserach">
+			                       		<input type="text" class="searchCondition" id="txtkeyword1" placeholder="[@lang_res k='console.docTemplate.list.seachDocumentTip'/]">
+			                       		<span class="icon_search"></span>	
+			                    	</div>
+								</div>
+								<div>
+									<table id="userlist" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+										<thead>
+											<tr>
+												<th class="table-head" width="30%">
+													[@lang_res k='ifa.crm.kyc.DocumentName'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='ifa.crm.kyc.UpdatePeriod'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='console.docTemplate.detail.ifNecessary'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='console.docTemplate.list.status'/]
+												</th>
+												<!-- 
+												<th class="table-head">
+													[@lang_res k='console.docTemplate.detail.effTime'/]
+												</th>
+												 -->
+												<th class="table-head">
+													[@lang_res k='console.docTemplate.list.createTime'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='console.docTemplate.list.option'/]
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+									<ul id='userPagination' class="pagination pull-right now">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+						</div>
+						<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+</div>		
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script src="${base}/res/console/js/jquery.form.js"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>4
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script>
+$(function() {
+		seajs.use('${base}/res/third/layer/layer.js');
+		
+		setAutoSearch('.searchCondition',bindDocList,0);
+		
+		//tab
+	    $("#dialog_tab-search li").click(function(){
+	    	var tempId = $("#tempId").val(); 
+	    	//模板数据存在才允许切换到文档list tab
+	    	if($(this).index()==1 ){
+	    		if(!tempId){
+	    			layer.msg("[@lang_res k='console.docTemplate.detail.docTempNeed'/]", {
+						icon : 3,
+						time : 3000
+					});
+	    			return;
+	    		}else{
+	    			//加载文档列表数据
+	    			bindDocList(0);
+	    		}
+	    	}
+			$(this).addClass("tab-li-crr").siblings().removeClass();
+			$(".dialog_tab_wrap").children().hide().eq($(this).index()).show()
+		 });
+	    
+		$("#frm").bootstrapValidator({
+			feedbackIcons : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			fields : {
+				"temp.code" : {
+					message : "[@lang_res k='console.docTemplate.detail.codeVerf'/]",
+					validators : {
+						notEmpty : {
+							message : "[@lang_res k='console.docTemplate.detail.codeEmpty'/]"
+						},
+						callback : {
+							message : "[@lang_res k='console.docTemplate.detail.codeUsed'/]",
+							callback : function(value, validate) {
+								var url = "${base}/console/docTemplate/codeUnique.do?datestr=" + new Date().getTime() + "&code=" + $("#tempCode").val() + "&tempId=" + $("#tempId").val();
+								var res = true;
+								$.ajax({
+									url : url,
+									method : 'get',
+									dataType : 'json',
+									async : false,
+									success : function(data) {
+										res = data.result;
+									},
+									error : function() {
+									}
+								});
+								//}
+								return res;
+							}
+						}
+					}
+				},
+				"tempSc.title":{
+					validators: {
+	                    notEmpty: {
+	                        message: "[@lang_res k='console.docTemplate.detail.titleScEmpty'/]"
+	                    }
+	                }
+				},
+				"tempTc.title":{
+					validators: {
+	                    notEmpty: {
+	                        message: "[@lang_res k='console.docTemplate.detail.titleTcEmpty'/]"
+	                    }
+	                }
+				},
+				"tempEn.title":{
+					validators: {
+	                    notEmpty: {
+	                        message: "[@lang_res k='console.docTemplate.detail.titleEnEmpty'/]"
+	                    }
+	                }
+				},
+				"temp.isDefault":{
+					validators: {
+	                    notEmpty: {
+	                        message: "[@lang_res k='console.docTemplate.detail.ifDefEmpty'/]"
+	                    }
+	                }
+				}
+				
+			}
+		}).on('success.form.bv', function(e) {
+			e.preventDefault();
+			tempSave();
+		});
+
+		bindDocList(0);
+		
+		//文档清单--搜索按钮点击事件
+		$("#btnSearch1").bind("click", function() {
+			bindDocList(0);
+		})
+	    //触发弹窗关闭
+	    $('#btnCloseIframe').click(function() {
+	        $(".close").click();            
+	    });
+    
+	  	$("#ddlGroupType").bind("change", function() {
+			var type = $("#ddlGroupType").val();
+			if (type == "1") {
+				$("#divIfafirm").css("display", "");
+				$("#divDistributor").css("display", "none");
+			} else if (type == "2") {
+				$("#divDistributor").css("display", "");
+				$("#divIfafirm").css("display", "none");
+			} else {
+				$("#divIfafirm").css("display", "none");
+				$("#divDistributor").css("display", "none");
+			}
+			$("#frm").data('bootstrapValidator').updateStatus("ifafirmId","NOT_VALIDATED");
+			$("#frm").data('bootstrapValidator').updateStatus("distributorId","NOT_VALIDATED");
+		})
+	});
+	
+//新增文档
+	function showDocInfoFrame(id){
+		var src = "${base}/console/docTemplate/form.do?tempId="+$("#tempId").val()+"&id="+id+"&r="+Math.random();
+		BootstrapDialog.show({
+			title : '[@lang_res k='console.docTemplate.docInfo.docInfo'/]',
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="no" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="'+src+'"></iframe></div>').load(),
+			buttons : [{
+				label : '[@lang_res k='global.close'/]',
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			} ]
+		});
+	}
+
+    //$("#btnSave").click(function(){
+        //tempSave();
+    //})
+    
+    //模板保存//
+	function tempSave() {
+        var postData = $("#frm").serialize();
+		$("#frm").ajaxSubmit({
+		//$.ajax({
+		    type: 'post',
+			url : "${base}/console/docTemplate/tempSave.do?datestr=" + new Date().getTime(),
+			data: postData,
+            async: false,
+            dataType: "json",
+			iframe : true,
+			success : function(data, status) {
+				//var dataObj = $.parseJSON(data.replace(/<.*?>/ig, ""));
+				//if (dataObj.result) {
+				var dataObj = data.result;
+				if (dataObj) {
+				    layer.msg("[@lang_res k='global.success.save'/]", {
+						icon : 2,
+						time : 1000
+					});
+					$("#id").val(dataObj.id);
+					$("#dialog_tab-search li:eq(0)").removeClass("tab-li-crr");
+					$("#dialog_tab-search li:eq(0)").css("display","");
+					$("#dialog_tab-search li:eq(1)").addClass("tab-li-crr");
+					$("#dialog_tab-search li:eq(1)").css("display","");
+					$("#dialog_tab-search li:eq(2)").css("display","");
+					$("#frm").css("display","none");
+					$(".divUser").css("display","");
+					$("#btnSave").removeAttr("disabled");
+					$(".idAfteSave").val(data.id);
+				} else {
+					$('#contact-form-error').show().fadeOut(10000);
+				}
+			},
+			error : function() {
+				$('#contact-form-error').show().fadeOut(10000);
+			}
+		});
+		//$("#frm").resetForm(); // 提交后重置表单
+		//return false; // 阻止表单自动提交事件
+	}
+	
+    //按下回车键搜索
+	document.onkeydown = function(e) {
+		var ev = document.all ? window.event : e;
+		if (ev.keyCode == 13) {
+			bindDocList(0);
+		}
+	}
+	
+    //加载文档模板关联列表
+	function bindDocList(curPage) {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/docTemplate/listPageJson.do?datestr=' + new Date().getTime(),
+			data : {
+				'keyword' : $("#txtkeyword1").val(),
+				'id' : $("#tempId").val(),
+				'page' : curPage + 1,
+				'rows' : 10,
+				'sort' : '',
+				'order' : ''
+			},
+			success : function(json) {
+				//console.log(json);
+				//return;
+				var html = "";
+				var total = json.total;
+				var table = json.rows;
+				$.each(table, function(i, n) {
+					var docName = n.docName;
+					var updateCycle = n.updateCycle;
+					var isNecessary = n.isNecessary;
+					if("1"==isNecessary){
+						isNecessary = "[@lang_res k='global.true'/]";
+					}else{
+						isNecessary = "[@lang_res k='global.false'/]";
+					}
+					var isValid = n.isValid;
+					if("1"==isValid){
+						isValid = "[@lang_res k='global.enable'/]";
+					}else{
+						isValid = "[@lang_res k='global.disable'/]";
+					}
+					var effectDate = n.effectDate==null?"":n.effectDate;
+					var createTime = n.createTime==null?"":n.createTime;
+					var id = n.id;
+					
+					html += "<tr><td><a href='javascript:showDocInfoFrame(\""+id+"\")' >" + docName 
+							+ "</td><td>" + updateCycle +"[@lang_res k='open.account.docCheck.period'/]"
+							+ "</td><td>" + isNecessary 
+							+ "</td><td>" + isValid 
+							//+ "</td><td>" + effectDate 
+							+ "</td><td>" + createTime 
+							+ "</td><td><a href='javascript:;' onclick='javascript:deleteDocInfo(\"" + id + "\");'>[@lang_res  k='global.delete'/]<a/>&nbsp;&nbsp;";
+							+ "<a href='#'>[@lang_res k='param.edit'/]<a/>";
+							+ "</td></tr>";
+				});
+				$("#userlist tbody").empty().append(html);
+
+				$("#userPagination").pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 10,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+			bindDocList(page_id);
+		}
+	}
+	
+    //删除文档	
+	function deleteDocInfo(docId){
+		layer.confirm("[@lang_res k='global.confirm.delete'/]", 
+		{title:"[@lang_res k='global.prompt'/]", 
+		icon: 3,
+		btn: ["[@lang_res k='global.confirm'/]","[@lang_res k='global.cancel'/]"]},
+		function (){
+		 	$.ajax({
+			   	type:'post',
+			   	datatype:'json',
+			   	url:"${base}/console/docTemplate/docDel.do?r="+Math.random(),
+			   	data:{"docId":docId},
+	   			success:function(json){
+			   		layer.closeAll();
+				    if(json.result){
+					    layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]", {
+							icon : 2,
+							time : 1000
+						});
+					    bindDocList(0);
+				    }else{
+				    	layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]", {
+							icon : 1,
+							time : 1000
+						});
+				    }
+			   	}
+		   	});
+		});
+	}
+	
+//返回文档模板列表
+function sClose(){
+	location.href="${base}/console/docTemplate/list.do?r="+Math.random();
+}
+</script>
+[#include "../../inc/foot_v2.html"/]
+</html>

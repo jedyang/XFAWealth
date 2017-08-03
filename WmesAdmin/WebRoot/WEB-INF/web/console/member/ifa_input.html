@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>[#if ifavo?exists && ifavo.id?exists] [@lang_res k='member.ifa'/] [@lang_res k='member.detail'/] [#else] [@lang_res k='member.ifa'/] [@lang_res k='member.add'/] [/#if]</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+			#psw_div{position:relative;}
+			#psw_div .red{position:absolute;right:-80px;top:6px;font-size:12px;}
+			.red{color:red}
+		</style>
+	</head>
+	<body>
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="tab-side container-fluid">
+				<div class="tab-side-container">
+					<!--<div class="page-header mt-10">
+						<h4>
+							<b>[#if ifavo?exists && ifavo.id?exists] [@lang_res k='member.ifa'/] [@lang_res k='member.detail'/] [#else] [@lang_res k='member.ifa'/] [@lang_res k='member.add'/] [/#if]</b>
+						</h4>
+					</div>
+					--><div>
+						<form id="frm" class="form-horizontal" method="post">
+							<input type="hidden" id="hidIndividualId" name="id" value="${(ifavo.id)?if_exists}">
+							<input type="hidden"  name="rePassword" value="${(ifavo.password)?if_exists}">
+							
+							<input type="hidden" id="hidCountry" value="${(ifavo.country)?if_exists}">
+							<input type="hidden" id="hidNationality" value="${(ifavo.nationality)?if_exists}">
+							<input type="hidden" id="hidOccupation" value="${(ifavo.occupation)?if_exists}">
+							<input type="hidden" id="hidCertType" value="${(ifavo.certType)?if_exists}">
+							<input type="hidden" id="hidGender" value="${(ifavo.gender)?if_exists}">
+							<!-- <input type="hidden" id="hidCompanyType" value="${(ifavo.companyType)?if_exists}"> -->
+							<input type="hidden" id="hidCompanyIfafirmId" value="${(ifavo.companyIfafirmId)?if_exists}">
+							<input type="hidden" id="hidPrimaryResidence" value="${(ifavo.primaryResidence)?if_exists}">
+							<input type="hidden" id="hidPosition" value="${(ifavo.position)?if_exists}">
+							<input type="hidden" id="hidEducation" value="${(ifavo.education)?if_exists}">
+							<input type="hidden" id="hidEmployment" value="${(ifavo.employment)?if_exists}">
+							<input type="hidden" id="hidPosition" value="${(ifavo.position)?if_exists}">
+							<input type="hidden" id="hidMemberId" value="${(ifavo.memberId)?if_exists}">
+							<input type="hidden" id="hidCompanyId" value="${(ifavo.companyId)?if_exists}">
+							<input type="hidden" id="hidStatus" value="${(ifavo.status)?if_exists}">
+							<p class="form-group-title">[@lang_res k='member.baseInfo'/]</p>
+							<div class="form-group" style="margin-bottom: 5px">
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtLoginCode">
+									<span class="red">* </span>[@lang_res k='member.info.loginCode'/]
+								</label>
+								<div class="col-md-4">
+									<input class="form-control " id="txtLoginCode" name='loginCode' maxlength="50" placeholder="" value="${(ifavo.loginCode)?if_exists}" />
+								</div>
+								
+								[#if ifavo?exists && ifavo.id?exists]
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtRepassword">
+									<span class="red">* </span>[@lang_res k='member.info.password'/]
+								</label>
+								<div class="col-md-2" id="psw_div">
+									<input class="form-control " id="txtRepassword" name='repassword' maxlength="20" placeholder="" value="" />
+									<span class="red">（[@lang_res k='member.info.password.edit.status.tip'/]）</span>
+								</div>
+								[#else]
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtPassword">
+									<span class="red">* </span>[@lang_res k='member.info.password'/]
+								</label>
+								<div class="col-md-4">
+									<input class="form-control " id="txtPassword" name='password' maxlength="20" placeholder="" value="" />
+								</div>
+								[/#if]
+							</div>
+
+							<div class="form-group" style="margin-bottom: 5px">
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtMobileCode">
+								    <span class="red">* </span>
+									[@lang_res k='member.info.mobileCode'/]
+								</label>
+								<div class="col-md-4">
+									<input id='txtMobileCode' type="text" class="form-control " maxlength="5" name="mobileCode" value="${(ifavo.mobileCode)?if_exists}">
+								</div>
+							
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtPhone">
+									<span class="red">* </span>[@lang_res k='member.info.mobileNumber'/]
+								</label>
+								<div class="col-md-4">
+									<input id='txtPhone' type="text" class="form-control " maxlength="11" name="mobileNumber" value="${(ifavo.mobileNumber)?if_exists}">
+								</div>
+							</div>
+							
+							<div class="form-group" style="margin-bottom: 5px">
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtMail">
+									<span class="red">* </span>
+									[@lang_res k='member.info.email'/]
+								</label>
+								<div class="col-md-4">
+									<input id='txtMail' type="text" class="form-control " maxlength="50" name='email' value="${(ifavo.email)?if_exists}">
+								</div>
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ddlStatus">
+									[@lang_res k='member.info.status'/]
+								</label>
+								<div class="col-md-4">
+									<select id="ddlStatus" class="form-control " name="status" value="${(ifavo.status)?if_exists}">
+										<option value="">
+											[@lang_res k='global.pleaseSelect'/]
+										</option>
+										<option value="0" [#if ifavo.status?exists && ifavo.status=='0']selected="selected"[/#if]>
+											[@lang_res k='member.info.status0'/]
+										</option>
+										<option value="1" [#if ifavo.status?exists && ifavo.status=='1']selected="selected"[/#if]>
+											[@lang_res k='member.info.status1'/]
+										</option>
+									</select>
+								</div>
+							</div>
+							
+							<p class="form-group-title">[@lang_res k='member.additionalInfo'/]</p>
+
+							<div class="form-group" style="margin-bottom: 5px">
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtLastName">
+									<span class="red">* </span>[@lang_res k='member.info.lastnameinenglish'/]
+								</label>
+								<div class="col-md-4">
+									<input id="txtLastName" type="text" class="form-control " maxlength="25" name="lastName" value="${(ifavo.lastName)?if_exists}">
+								</div>
+							
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtFirstName">
+									<span class="red">* </span>[@lang_res k='member.info.firstnameinenglish'/]
+								</label>
+								<div class="col-md-4">
+									<input id="txtFirstName" type="text" class="form-control " maxlength="25" name="firstName" value="${(ifavo.firstName)?if_exists}">
+								</div>
+							</div>
+							
+							
+							<div class="form-group" style="margin-bottom: 5px">
+                                
+                                <label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtNickName">
+                                    <span class="red">* </span>[@lang_res k='member.info.nickName'/]
+                                </label>
+                                <div class="col-md-4">
+                                    <input id="txtNickName" type="text" class="form-control " maxlength="25" name="nickName" value="${(ifavo.nickName)?if_exists}">
+                                </div>
+                                								
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtChhName">
+									[@lang_res k='member.info.nameChn'/]
+								</label>
+								<div class="col-md-4">
+									<input id="txtChhName" type="text" class="form-control " maxlength="12" name="nameChn" value="${(ifavo.nameChn)?if_exists}">
+								</div>
+
+							</div>
+
+							<div class="form-group" style="margin-bottom: 5px">
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="optiontype1">
+									[@lang_res k='member.info.gender'/]
+								</label>
+								<div class="col-md-4">
+									<div class="radio" name="gender" value="${(ifavo.gender)?if_exists}">
+											<label>
+												<input type="radio" name="gender" id="optiontype1" value="M" [#if ifavo?exists==false || ifavo.gender?exists== false || ifavo.gender=='M']checked[/#if]>
+												[@lang_res k='member.info.gender.man'/]
+											</label>
+											<label>
+												<input type="radio" name="gender" id="optiontype2" value="F" [#if ifavo?exists==false || ifavo.gender?exists== false || ifavo.gender=='F']checked[/#if]>
+												[@lang_res k='member.info.gender.female'/]
+											</label>
+	
+									</div>
+								</div>
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtBirth">
+									[@lang_res k='member.info.born'/]
+								</label>
+								<div class="col-md-4">
+									<input id='txtBirth' type="text" class="laydate-icon form-control form-control-laydate" style="height: 34px; padding: 6px 12px;" onclick="laydate({istime: false, format: 'YYYY-MM-DD'})" name="born" value="${(ifavo.born?string('yyyy-MM-dd'))?if_exists}">
+								</div>
+							</div>
+							
+
+							<div class="form-group" style="margin-bottom: 5px">
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ddlCertType">
+									[@lang_res k='member.info.certType'/]
+								</label>
+								<div class="col-md-4">
+									<select id="ddlCertType" class="form-control " name="certType" value="${(ifavo.certType)?if_exists}">
+										<option selected="selected">
+											[@lang_res k='global.pleaseSelect'/]
+										</option>
+										
+									</select>
+								</div>
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtCertNo">
+									[@lang_res k='member.info.certNo'/]
+								</label>
+								<div class="col-md-4">
+									<input id='txtCertNo' type="text" class="form-control " maxlength="25" name="certNo" value="${(ifavo.certNo)?if_exists}">
+								</div>
+							</div>
+
+
+							<div class="form-group" style="margin-bottom: 5px">
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ddlNationality">
+									[@lang_res k='member.info.nationality'/]
+								</label>
+								<div class="col-md-4">
+									<select id="ddlNationality" name="nationality" class="form-control " value="${(ifavo.nationality)?if_exists}">
+										<option value="">
+											[@lang_res k='global.pleaseSelect'/]
+										</option>
+									</select>
+								</div>
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ddlCountry">
+									[@lang_res k='member.info.country'/]
+								</label>
+								<div class="col-md-4">
+									<select id="ddlCountry" class="form-control " name="country" value="${(ifavo.country)?if_exists}">
+										<option value="">
+											[@lang_res k='global.pleaseSelect'/]
+										</option>
+									</select>
+								</div>
+							</div>
+                            
+                            <div class="form-group" style="margin-bottom: 5px">
+                                <label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtTelephone">
+                                    [@lang_res k='member.info.telephone'/]
+                                </label>
+                                <div class="col-md-4">
+                                    <input id='txtTelephone' type="text" class="form-control " maxlength="15" name="telephone" value="${(ifavo.telephone)?if_exists}">
+                                </div>
+                                <label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtAddress">
+                                    [@lang_res k='member.info.address'/]
+                                </label>
+                                <div class="col-md-4">
+                                    <input id='txtAddress' type="text" class="form-control " maxlength="250" name="address" value="${(ifavo.address)?if_exists}">
+                                </div>
+                            </div>
+							
+							<div class="form-group" style="margin-bottom: 5px">
+                                <label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ddlprimaryResidence">
+                                    [@lang_res k='member.info.primaryResidence'/]
+                                </label>
+                                <div class="col-md-4">
+                                    <select id="ddlprimaryResidence" class="form-control " name="primaryResidence">
+                                        <option value="">
+                                            [@lang_res k='global.pleaseSelect'/]
+                                        </option>
+                                    </select>
+                                </div>
+							
+								<label class="col-md-2 control-label" style="font-weight: normal; text-align: right;" for="ddlEducation">
+									[@lang_res k='member.info.education'/]
+								</label>
+								<div class="col-md-4">
+									<select id="ddlEducation" class="form-control " name="education" value="${(ifavo.education)?if_exists}">
+										<option value="" selected="selected">
+											[@lang_res k='global.pleaseSelect'/]
+										</option>
+									</select>
+								</div>
+							</div>
+							<!--
+							    <label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ddlcompany_type">
+                                    [@lang_res k='member.info.companyType'/]
+                                </label>
+                                <div class="col-md-4">
+
+                                    <select id="ddlcompany_type" class="form-control " name="companyType">
+                                        <option value="" selected="selected">
+                                            [@lang_res k='global.pleaseSelect'/]
+                                        </option>
+                                        <option value="1">
+                                            Individual
+                                        </option>
+                                        <option value="2">
+                                            Ifafirm
+                                        </option>
+                                    </select>
+                                </div> 
+							 -->
+							<div class="form-group" style="margin-bottom: 5px">
+                                <label class="col-md-2 control-label" style="font-weight: normal; text-align: right;" for="ddlEmployment">
+                                    [@lang_res k='member.info.employment'/]
+                                </label>
+                                <div class="col-md-4">
+                                    <select id="ddlEmployment" class="form-control " name="employment" value="${(ifavo.employment)?if_exists}">
+                                        <option value="" selected="selected">
+                                            [@lang_res k='global.pleaseSelect'/]
+                                        </option>
+                                    </select>
+                                </div>
+								
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ddlOccupation">
+									[@lang_res k='member.info.occupation'/]
+								</label>
+								<div class="col-md-4">
+									<select id="ddlOccupation" class="form-control " name="occupation" value="${(ifavo.occupation)?if_exists}">
+										<option value="">
+											[@lang_res k='global.pleaseSelect'/]
+										</option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="form-group" style="margin-bottom: 5px">
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ddlPosition">
+									[@lang_res k='member.info.position'/]
+								</label>
+								<div class="col-md-4">
+									<select id="ddlPosition" class="form-control " name="position">
+										<option value="">
+											[@lang_res k='global.pleaseSelect'/]
+										</option>
+									</select>
+								</div>
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtappellation">
+									[@lang_res k='member.info.appellation'/]
+								</label>
+								<div class="col-md-4">
+									<input id='txtappellation' type="text" class="form-control " maxlength="10" name="appellation" value="${(ifavo.appellation)?if_exists}">
+								</div>
+							</div>
+
+							<div class="form-group" style="margin-bottom: 5px">
+                                <label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtCeNumber">
+                                    [@lang_res k='member.info.ceNumber'/]
+                                </label>
+                                <div class="col-md-4">
+                                    <input id='txtCeNumber' type="text" class="form-control " maxlength="50" name="ceNumber" value="${(ifavo.ceNumber)?if_exists}">
+                                </div>
+                                
+                                <label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtcfaNumber">
+                                    [@lang_res k='member.info.cfaNumber'/]
+                                </label>
+                                <div class="col-md-4">
+                                    <input id='txtcfaNumber' type="text" class="form-control " maxlength="50" name="cfaNumber" value="${(ifavo.cfaNumber)?if_exists}">
+                                </div>
+                            </div>
+							
+							<div class="form-group" style="margin-bottom: 5px">
+                                
+                                <label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ddlCompany">
+                                    <span class="red">* </span>
+                                    [@lang_res k='ifafirm.list.selectCompany'/]
+                                </label>
+                                <div class="col-md-4">
+                                    <select id="ddlCompany" class="form-control " name="companyId">
+                                        <option value="">
+                                            [@lang_res k='global.pleaseSelect'/]
+                                        </option>
+                                    </select>
+                                </div>
+
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtcfpNumber">
+									[@lang_res k='member.info.cfpNumber'/]
+								</label>
+								<div class="col-md-4">
+									<input id='txtcfpNumber' type="text" class="form-control " maxlength="50" name="cfpNumber" value="${(ifavo.cfpNumber)?if_exists}">
+								</div>
+							</div>
+
+                            <div class="form-group" style="margin-bottom: 5px">
+                                <label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ddlIfafirm">
+                                    <span class="red">* </span>[@lang_res k='member.info.companyIfafirm'/]
+                                </label>
+                                <div class="col-md-4">
+                                    <select id="ddlIfafirm" class="form-control " name="companyIfafirmId">
+                                        <option value="">
+                                            [@lang_res k='global.pleaseSelect'/]
+                                        </option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+							
+							<div class="form-group" style="margin-bottom: 5px">
+
+								<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="txtIntroduction">
+									[@lang_res k='member.info.introduction'/]
+								</label>
+								<div class="col-md-10">
+									<textarea id='txtIntroduction' type="text" class="form-control " rows="4" maxlength="1000" name="introduction" value="${(ifavo.introduction)?if_exists}">${(ifavo.introduction)?if_exists}</textarea>
+								</div>
+							</div>
+							<div class="text-center pd10">
+								<button id="btnSave" type="submit" class="btn btn-primary">
+									[@lang_res k='global.save'/]
+								</button>
+								<button id="btnClose" class="btn btn-primary" onclick="javascript:closeTab();">
+									[@lang_res k='global.close'/]
+								</button>
+							</div>
+						</form>
+
+					</div>
+					<div class="clear">
+					<br>
+					</div>
+				</div>
+			</div>
+		</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js"></script>
+<script src="${base}/res/console/js/jquery.form.js"></script>
+<script src="${base}/res/console/js/bootstrap.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script src="${base}/res/third/laydate/laydate.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script type="text/javascript">
+$(function() {
+	bindCountry();
+	bindOccupation();
+	bindPosition();
+	bindEducation();
+	bindEmployment();
+	bindIfafirm();
+	bindCompany();
+	bindCertType();
+
+	$("#ddlCertType").val($("#hidCertType").val());
+	$("#ddlGender").val($("#hidGender").val());
+
+	$("#ddlIfafirm").val($("#hidCompanyIfafirmId").val());
+	$("#ddlPosition").val($("#hidPosition").val());
+	$("#ddlcompany_type").val($("#hidCompanyType").val());
+	$('#frm').bootstrapValidator({
+		feedbackIcons : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		fields : {
+			loginCode : {
+				message : '',
+				validators : {
+					notEmpty : {
+						message : "[@lang_res k='member.info.loginCode'/] [@lang_res k='global.empty.tip'/]"
+					},
+					regexp: {
+                        regexp: /^[a-zA-Z0-9_]{7,20}/i,
+                        message: '[@lang_res k='member.validation.logincode.tips'/]'
+                    },
+                    threshold: 7,
+					callback : {
+						message : '[@lang_res k="member.info.loginCode.exist.tip"/]',
+						callback : function(value, validate) {
+							var url = "${base}/console/member/checkCodeUnique.do?datestr=" + new Date().getTime() + "&loginCode=" + encodeURI(encodeURI(value)) + "&userId=" + encodeURI(encodeURI($("#hidMemberId").val()));
+							var res = true;
+							$.ajax({
+								url : url,
+								method : 'post',
+								dataType : 'json',
+								async : false,
+								success : function(data) {
+									res = data;
+								},
+								error : function() {
+								}
+							});
+							return res;
+						}
+					}
+				}
+			},
+			[#if ifavo?exists && ifavo.id?exists]
+            repassword : {
+                validators : {//修改状态时，不填写，表示不修改密码；如果填写则需验证
+                    /*notEmpty : {
+                        message : '[@lang_res k='member.info.password'/] [@lang_res k='global.empty.tip'/]'
+                    },
+                    stringLength: {
+                        min: 7,
+                        max: 20,
+                        message: '[@lang_res k='member.validation.password.tips'/]'
+                    },*/
+                    regexp:{
+                        regexp:/(?=.*[a-z])(?=.*\d)(?=.*[\.#@!~%^&*_-])[a-z\.\d#@!~%^&*_-]{7,20}/i,
+                        message: '[@lang_res k='member.validation.password.tips'/]'
+                    }
+                }
+            },
+            [#else]
+			password : {
+				validators : {
+					notEmpty : {
+						message : "[@lang_res k='member.info.password'/] [@lang_res k='global.empty.tip'/]"
+					},
+                    regexp:{
+                        regexp:/(?=.*[a-z])(?=.*\d)(?=.*[#@!~%^&*_-])[a-z\d#@!~%^&*_-]{7,20}/i,
+                        message:"[@lang_res k='member.validation.password.tips'/]"
+                    }
+				}
+			},
+			[/#if]
+			email : {
+				validators : {
+					notEmpty : {
+						message : "[@lang_res k='member.info.email'/] [@lang_res k='global.empty.tip'/]"
+					},
+                    emailAddress: {
+                        message: '[@lang_res k='member.validation.email.error'/]'
+                    }
+				}
+			},
+			mobileCode : {
+                validators : {
+                    notEmpty : {
+                        message : '[@lang_res k='member.info.mobileCode'/] [@lang_res k='global.empty.tip'/]'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 5,
+                        message: '[@lang_res k='member.validation.mobileCode.tips'/]'
+                    },
+                    regexp: {
+                        regexp:/^\d{1,5}$/, //区号
+                        message: '[@lang_res k='member.validation.mobileCode.tips'/]'
+                    }
+                }
+            },
+            mobileNumber : {
+                validators : {
+                    notEmpty : {
+                        message : '[@lang_res k='member.info.mobileNumber'/] [@lang_res k='global.empty.tip'/]'
+                    },
+                    stringLength: {
+                        min: 7,
+                        max: 11,
+                        message: '[@lang_res k='member.validation.mobile.tips'/]'
+                    },
+                    regexp: {
+                        //regexp:/^0\d{2,3}-?\d{7,8}$/, //固话
+                        //regexp:/^1[3|4|5|7|8]\d{9}$/, //国内手机 1+10位数字
+                        regexp: /^[1-9]\d{6,10}$/ , //手机7-11位数字
+                        message: '[@lang_res k='member.validation.mobile.error'/]'
+                    }
+                }
+            },
+			firstName : {
+				validators : {
+					notEmpty : {
+						message :  "[@lang_res k='member.info.firstnameinenglish'/] [@lang_res k='global.empty.tip'/]"
+					}
+				}
+			},
+			lastName : {
+				validators : {
+					notEmpty : {
+						message :  "[@lang_res k='member.info.lastnameinenglish'/] [@lang_res k='global.empty.tip'/]"
+					}
+				}
+			},
+			nickName : {
+                validators : {
+                    notEmpty : {
+                        message :  '[@lang_res k='member.info.nickName'/] [@lang_res k='global.empty.tip'/]'
+                    }
+                }
+            },
+            telephone : {
+                validators : {
+                    regexp: {
+                        regexp:/^0\d{2,3}-?\d{7,8}$/, //固话
+                        message: '[@lang_res k='member.validation.telephone.tips'/]'
+                    }
+                }
+            },
+            companyId:{
+                validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='member.company'/] [@lang_res k='global.empty.tip'/]"
+                    }
+                }
+            },
+            companyIfafirmId:{
+                validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='member.info.companyIfafirm'/] [@lang_res k='global.empty.tip'/]"
+                    }
+                }
+            }
+		}
+	}).on('success.form.bv', function(e) {
+		e.preventDefault();
+		Save();
+	});
+		
+	function Save() {
+		var params = $("#frm").serialize();
+		params = decodeURIComponent(params, true);
+		params = decodeURIComponent(params, true);
+		params = params.replace(/&/g,"','");    
+        params = params.replace(/=/g,"':'");
+		params = params.replace(/\+/g," ");            
+        params = "({'"+params +"'})";    
+        params = eval(params);   
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url :  "${base}/console/member/ifa/save.do?datestr=" + new Date().getTime(),
+			data : params,
+			success : function(data) {
+				if (data.result) {
+					window.parent.layer.msg("[@lang_res k='global.success.save'/]");
+					$(window.parent.document).find("#btnSearch").trigger("click");
+					closeTab();
+				} else {
+					layer.msg("[@lang_res k='global.failed.save'/]");
+				}
+			}
+		});
+	}
+
+	function bindCountry() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/country/langListJson.do?datestr=" + new Date().getTime(),
+			data : {},
+			success : function(json) {
+				if (json != undefined && json.result == true) {
+					var data = JSON.parse(json.countryJson);
+					var html = "";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.id+"'>" + n.name + "</option>";
+					});
+
+					$("#ddlCountry").append(html);
+					$("#ddlNationality").append(html);
+					$("#ddlprimaryResidence").append(html);
+					$('#ddlCountry').val($('#hidCountry').val());
+					$('#ddlNationality').val($('#hidNationality').val());
+					$("#ddlprimaryResidence").val($("#hidPrimaryResidence").val());
+
+				}
+
+			}
+		});
+	}
+	function bindOccupation() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/sys/param/paramList.do?datestr=" + new Date().getTime(),
+			data : {
+				type : "occupation"
+			},
+			success : function(json) {
+				if (json != undefined && json.result.length > 0) {
+					var data = json.result;
+					var html = "";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.code+"'>" + n.name + "</option>";
+					});
+
+					$("#ddlOccupation").append(html);
+					$("#ddlOccupation").val($("#hidOccupation").val());
+				}
+
+			}
+		});
+	}
+    function bindPosition() {
+        $.ajax({
+            type : 'post',
+            datatype : 'json',
+            url : "${base}/console/sys/param/paramList.do?datestr=" + new Date().getTime(),
+            data : {
+                type : "position"
+            },
+            success : function(json) {
+                if (json != undefined && json.result.length > 0) {
+                    var data = json.result;
+                    var html = "";
+                    $.each(data, function(i, n) {
+                        html += "<option value='"+n.code+"'>" + n.name + "</option>";
+                    });
+
+                    $("#ddlPosition").append(html);
+                    $("#ddlPosition").val($("#hidPosition").val());
+                }
+
+            }
+        });
+    }	
+	function bindEducation() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/sys/param/paramList.do?datestr=" + new Date().getTime(),
+			data : {
+				type : "education"
+			},
+			success : function(json) {
+				if (json != undefined && json.result.length > 0) {
+					var data = json.result;
+					var html = "";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.code+"'>" + n.name + "</option>";
+					});
+
+					$("#ddlEducation").append(html);
+					$("#ddlEducation").val($("#hidEducation").val());
+				}
+
+			}
+		});
+	}
+	function bindEmployment() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/sys/param/paramList.do?datestr=" + new Date().getTime(),
+			data : {
+				type : "employment"
+			},
+			success : function(json) {
+				if (json != undefined && json.result.length > 0) {
+					var data = json.result;
+					var html = "";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.code+"'>" + n.name + "</option>";
+					});
+
+					$("#ddlEmployment").append(html);
+					$("#ddlEmployment").val($("#hidEmployment").val());
+				}
+
+			}
+		});
+	}
+
+	function bindIfafirm() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/ifafirm/allList.do?datestr=" + new Date().getTime(),
+			data : {},
+			success : function(json) {
+				if (json != undefined && json.result == true) {
+					var data = json.ifafirmJson;
+					var html = "<option value=''>[@lang_res k='global.pleaseSelect'/]</option>";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.id+"'>" + n.companyName + "</option>";
+					});
+
+					$("#ddlIfafirm").empty().append(html);
+					$("#ddlIfafirm").val($("#hidCompanyIfafirmId").val());
+				}
+
+			}
+		});
+	}
+	
+	//company绑定
+	function bindCompany() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/company/allList.do?datestr=" + new Date().getTime(),
+			data : {},
+			success : function(json) {
+				if (json != undefined && json.result == true) {
+					var data = json.companyJson;
+					var html = "<option value=''>[@lang_res k='global.pleaseSelect'/]</option>";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.id+"'>" + n.companyName + "</option>";
+					});
+					$("#ddlCompany").empty().append(html);
+					$("#ddlCompany").val($("#hidCompanyId").val());
+				}
+			}
+		});
+	}
+	
+	//证件类型绑定
+    function bindCertType() {
+        $.ajax({
+            type : 'post',
+            datatype : 'json',
+            url : "${base}/console/sys/param/paramList.do?datestr=" + new Date().getTime(),
+            data : {
+                type : "cert_type"
+            },
+            success : function(json) {
+                if (json != undefined && json.result.length > 0) {
+                    var data = json.result;
+                    var html = "";
+                    $.each(data, function(i, n) {
+                        html += "<option value='"+n.code+"'>" + n.name + "</option>";
+                    });
+                    $("#ddlCertType").append(html);
+                    $("#ddlCertType").val($("#hidCertType").val());
+                }
+            }
+        });
+    }
+    	
+});
+
+</script>
+	</body>
+</html>

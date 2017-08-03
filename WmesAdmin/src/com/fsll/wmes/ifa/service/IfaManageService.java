@@ -1,0 +1,201 @@
+package com.fsll.wmes.ifa.service;
+
+import java.util.List;
+
+import com.fsll.common.util.JsonPaging;
+import com.fsll.wmes.crm.vo.PortfolioVO;
+import com.fsll.wmes.entity.CrmProposal;
+import com.fsll.wmes.entity.IfaDistributor;
+import com.fsll.wmes.entity.MemberIfa;
+import com.fsll.wmes.entity.MemberIfaIfafirm;
+import com.fsll.wmes.entity.MemberIfafirm;
+import com.fsll.wmes.entity.StrategyInfo;
+import com.fsll.wmes.ifa.vo.AutoCompleteVO;
+import com.fsll.wmes.member.vo.IfaVO;
+
+/***
+ * 业务接口类：ifa信息管理接口
+ * @author wwluo
+ * @date 2016-08-15
+ */
+public interface IfaManageService {
+	
+	/**
+	 * 分页获取所有的ifa
+	 * @author qgfeng
+	 * @date 2016-11-18
+	 */
+    public JsonPaging findIfaByPage(JsonPaging jsonPaging,IfaVO ifaVo,String langCode);
+
+	/***
+     * ifa关联的"团队"并跳转显示
+     * @author wwluo midify qgfeng
+     * @date 2016-08-15
+     */
+	public JsonPaging findTeamByIfaId(JsonPaging jsonPaging, String ifaId);
+	/**
+	 * 查询ifa所属ifafirm下的"组织架构"并跳转显示
+	 * @author wwluo
+	 * @date 2016-08-16 
+	 */
+	public JsonPaging findTeamByIfaFirm(JsonPaging jsonPaging, String ifaFirmId);
+	/**
+	 * ifa关联team
+	 * @author wwluo
+	 * @date 2016-08-16 
+	 */
+	public boolean saveIfafirmTeamIfa(String ifaFirmId, String teamId,String ifaId);
+	/**
+	 * ifa取消关联team
+	 * @author wwluo
+	 * @param ifaId 
+	 * @date 2016-08-16 
+	 */
+	public boolean removeIfafirmTeamIfa(String teamId, String ifaId);
+	
+	//------ end Team --------
+    
+    /**
+	 * 查詢ifa
+	 * @author wwluo
+	 * @date 2016-08-16 
+	 */
+	public MemberIfa findIfaById(String ifaId);
+	
+	
+	
+	/***
+     * 根据code查询基础数据
+     * @author wwluo
+     * @date 2016-08-22
+     */
+	public List findSysparamByCode(String expertiseType);
+	
+    /**
+     * 查询策略的详细信息
+     * @author mqzou
+     * @date 2016-08-19
+     * @param id
+     * @return
+     */
+    public StrategyInfo findStragyById(String id);
+    
+    /**
+     * 查询策略列表
+     * @author qgfeng
+     * @date 2016-11-29
+     */
+    public JsonPaging findStrategyList(JsonPaging jsonPaging,StrategyInfo strategyInfo,String langCode);
+    
+    /**
+     * 查询IFA创建的投资方案列表
+     * @author mqzou
+     * @date 2016-08-25
+     * @param jsonPaging
+     * @param crmProposal
+     * @param langCode
+     * @return
+     */
+    public JsonPaging findProposalList(JsonPaging jsonPaging,CrmProposal crmProposal);
+    
+    /**
+     * 查询IFA创建的投资组合列表
+     * @author qgfeng
+     * @date 2016-11-30
+     */
+    public JsonPaging findPofolioList(JsonPaging jsonPaging, PortfolioVO pofo);
+    
+    /**
+     * 获取ifafirm下的所有ifaId
+     * @author mqzou
+     * @date 2016-08-25
+     * @param ifafirmId
+     * @return
+     */
+    public List getIfaInIfafirm(String ifafirmId);
+    
+    /**
+     * 查询条件自动填充IFA
+     * @author mqzou midify qgfeng
+     * @date 2016-08-19
+     * @param keyWord
+     * @return
+     */
+    public List<AutoCompleteVO> findAutoIfa(String keyWord);
+    
+	/**
+	 * IFA审批 （修改状态）
+	 * @author qgfeng
+	 * @date 2016-12-15
+	 */
+	public boolean saveApprovalStatus(IfaVO ifaVO);
+	
+    /**
+     * 根据ifaID、frimID查找MemberIfaIfafirm
+     * @author qgfeng
+     * @date 2016-12-15
+     */
+    public MemberIfaIfafirm getIfaIfaFirmByIFrimId(String ifaId,String firmId);
+    /**
+     * 保存IFA-IFAFirm关联关系
+     * @author qgfeng
+     * @date 2016-12-16
+     * @param releInfo
+     * @return
+     */
+    public MemberIfaIfafirm saveOrUpdateIfaIfafirm(MemberIfaIfafirm releInfo);
+    
+    /**
+     * 查询ae账户（IfaDistributor）
+     * @author qgfeng
+     * @date 2017-1-18
+     */
+    public JsonPaging findIfaDisList(JsonPaging jsonPaging,String keyword);
+    /**
+     * 根据id查找 IfaDistributor
+     * @author qgfeng
+     */
+    public IfaDistributor getIfaDisById(String id);
+    
+	/**
+	 * 保存ae账户（IfaDistributor）
+	 * @author qgfeng
+	 * @date 2017-1-18
+	 */
+	public IfaDistributor saveIfaDis(IfaDistributor ifaDistributor);
+	/**
+	 * 删除ae账户
+	 * @author qgfeng
+	 * @date 2017-1-18
+	 */
+	public boolean deleteIfaDis(String id);
+    
+	 /**
+     * 根据ifaID 更新MemberIfaIfafirm记录为无效状态
+     * @author michael
+     * @date 2016-12-15
+     */
+	public boolean updateIfaIfaFirmToInvalid(String ifaId);
+	
+	/**
+     * 根据ifa查找MemberIfaIfafirm
+     * @author michael
+     * @date 2017-3-20
+     * @param ifaId
+     * @param checkStatus
+     * @param isValid
+     * @param validDate
+     * @return List
+     */
+	public List<MemberIfaIfafirm> findIfaIfaFirm(String ifaId, String checkStatus, String isValid, Boolean validDate, String langCode);
+
+	/**
+	 * 根据ifafirmId查IFA列表
+	 * @author rqwang
+     * @date 2017-6-05
+	 */
+	public JsonPaging findIfaByifafirmId(JsonPaging jsonPaging,
+			String ifafirmId, IfaVO ifaVo, String langCode); 
+	
+   
+}

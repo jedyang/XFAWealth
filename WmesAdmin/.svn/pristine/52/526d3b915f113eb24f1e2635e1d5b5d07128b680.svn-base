@@ -1,0 +1,142 @@
+package com.fsll.wmes.community.action.console;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fsll.common.util.JsonUtil;
+import com.fsll.core.entity.SysAdmin;
+import com.fsll.wmes.base.WmesBaseAct;
+import com.fsll.wmes.community.service.CommunitySectionService;
+import com.fsll.wmes.entity.CommunitySection;
+import com.fsll.wmes.entity.MemberBase;
+
+@Controller
+@RequestMapping("/console/community/section")
+public class ConsoleCommunitySectionAct extends WmesBaseAct{
+
+	@Autowired
+	private CommunitySectionService communitySectionService;
+	
+	
+	/**
+	 *  社区栏目设置列表页面
+	 * @author wwluo
+	 * @date 2017-06-01
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String list(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		return "console/community/section/list";
+	}
+	
+	/**
+	 *  社区栏目设置列表数据获取
+	 * @author wwluo
+	 * @date 2017-05-26
+	 */
+	@RequestMapping(value = "/getSections", method = RequestMethod.POST)
+	public void getSections(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		jsonPaging = this.getJsonPaging(request);
+		jsonPaging = communitySectionService.getSections(jsonPaging);
+		this.toJsonString(response, jsonPaging);
+	}
+	
+	/**
+	 *  社区栏目新增页面
+	 * @author wwluo
+	 * @date 2017-06-01
+	 */
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String add(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		String langCode = this.getLoginLangFlag(request);
+		List<CommunitySection> sections = communitySectionService.findAllSection();
+		model.put("langCode", langCode);
+		model.put("sections", sections);
+		return "console/community/section/input";
+	}
+	
+	/**
+	 *  社区栏目修改页面
+	 * @author wwluo
+	 * @date 2017-06-01
+	 */
+	@RequestMapping(value = "/input", method = RequestMethod.GET)
+	public String input(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		String langCode = this.getLoginLangFlag(request);
+		List<CommunitySection> sections = communitySectionService.findAllSection();
+		String id = request.getParameter("id");
+		CommunitySection section = communitySectionService.findById(id);
+		model.put("langCode", langCode);
+		model.put("sections", sections);
+		model.put("section", section);
+		return "console/community/section/input";
+	}
+	
+	/**
+	 *  保存社区栏目信息
+	 * @author wwluo
+	 * @date 2017-06-01
+	 */
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public void save(CommunitySection section,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		SysAdmin creator = this.getLoginUser(request);
+		Boolean flag = false;
+		if (StringUtils.isBlank(section.getParentId())) {
+			section.setParentId(null);
+		}
+		if (StringUtils.isNotBlank(section.getId())) {
+		// update
+			CommunitySection targetSection = communitySectionService.findById(section.getId());
+			targetSection.setParentId(section.getParentId());
+			targetSection.setSectionNameSc(section.getSectionNameSc());
+			targetSection.setSectionNameTc(section.getSectionNameTc());
+			targetSection.setSectionNameEn(section.getSectionNameEn());
+			targetSection.setIconUrl(section.getIconUrl());
+			targetSection.setCode(section.getCode());
+			targetSection.setMemo(section.getMemo());
+			targetSection.setOrderBy(section.getOrderBy());
+			targetSection.setStatus(section.getStatus());
+			communitySectionService.saveSection(targetSection);
+		}else{
+		// add
+			section.setId(null);
+			section.setCreator(creator);
+			section.setCreateTime(new Date());
+			communitySectionService.saveSection(section);
+		}
+		flag = true;
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("flag", flag);
+		JsonUtil.toWriter(result, response);
+	}
+	
+	/**
+	 *  删除社区栏目信息（逻辑删除,status=-1）
+	 * @author wwluo
+	 * @date 2017-06-01
+	 */
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public void delete(String id,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		Boolean flag = false;
+		if (StringUtils.isNotBlank(id)) {
+			CommunitySection section = communitySectionService.findById(id);
+			section.setStatus(-1);
+			communitySectionService.saveSection(section);
+			flag = true;
+		}
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("flag", flag);
+		JsonUtil.toWriter(result, response);
+	}
+}

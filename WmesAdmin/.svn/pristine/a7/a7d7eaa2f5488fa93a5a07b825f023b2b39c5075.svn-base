@@ -1,0 +1,770 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置问卷题目</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+	<link href="${base}/res/third/jqueryui/jquery-ui.css" rel="stylesheet">
+    <style>
+           #modules {
+  padding: 20px;
+  background: #eee;
+  margin-bottom: 20px;
+  z-index: 1;
+  border-radius: 10px;
+}
+
+#dropzone {
+  padding: 20px;
+  background: #eee;
+  min-height: 100px;
+  margin-bottom: 20px;
+  z-index: 0;
+  border-radius: 10px;
+}
+
+.active {
+  outline: 1px solid red;
+}
+
+.hover {
+  outline: 2px solid #337ab7;
+  border-radisu: 3px;
+}
+
+.drop-item {
+  cursor: pointer;
+  margin-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+  padding: 5px 10px;
+  border-radisu: 3px;
+  border: 1px solid rgb(204, 204, 204);
+  position: relative;
+}
+
+.drop-item .remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
+        </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+        <div class="tab-side-container">
+        	<div class="page-header mt-10">
+                <h4><b>设置问卷【${title!}】的题目   <small>请在左侧题目列表中拖拉标题到该区域</small></b></h4>
+            </div>
+            <div class="clear"></div>
+            <div class="row">
+    			<div class="col-sm-7">
+            		<div class="tab_wrap" >
+                	<!-- tab一 -->
+                		<form class="form-inline" style="display:block;">
+                    		<div>
+	                    		<div class="row pd10">
+	                        		<div class="col-md-6">
+	                        			<label for="txtTitle">名称</label>
+	                        			<input type="text"  class="form-control" id="txtTitle">
+	                        		</div>
+	                       			<div class="col-md-2">
+	                        			<button type="button" id="btnToDoSearch" class="btn btn-primary">[@lang_res k='global.query'/]</button>
+	                       			</div>
+	                    		</div>
+                    		</div>
+                    		<div class="clear"></div>
+                    		<div>
+                        		<table border="0" id="pagedatalist" cellpadding="0" cellspacing="0" class="table table-hover table-striped" >
+                                <tbody>
+                                    <tr>
+                                        <th class="table-head" style="width:70%;">题目名称</th>
+                                        <th class="table-head">题目类型</th>
+                                        <th class="table-head">操作</th>
+                                    </tr>
+                                </tbody>
+                            	</table>
+				           		<nav  class="pull-right">
+					                <!-- log分页 -->
+					                <ul id='pagination' class="pagination pagination-sm">  
+					                	
+					                </ul>
+					            </nav>
+           						<div class="clear"></div>                      
+                    		</div>
+                		</form>         
+            		</div>  
+            	</div>
+	            <div class="col-sm-5">
+					<div>
+						<div class="row pd10" style="text-align:right; margin-right:10px;">
+							<button type="button" id="btnSaveQuest" class="btn btn-primary">保存题目</button>
+							<a id="btnViewPage1" class="btn btn-primary" href="view_page.do?id=${id!}" target="_blank">
+							<!-- <i class="glyphicon glyphicon-tasks"></i>  -->预览问卷</a>
+		                </div>
+					</div>
+					<div class="clear"></div>
+					<div id="dropzone"></div>
+				</div>
+			</div>
+		</div>       
+	</div>
+</div>
+
+
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js"></script>
+<script src="${base}/res/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		//预览问卷
+		$('#btnViewPage').on('click',viewPage);
+		//保存题目
+		$('#btnSaveQuest').on('click',saveQuest);
+		//跳转表单页面
+		$('#btnAddInfoForm').on('click',addInfoForm);
+		//弹出公司搜索列表
+		$('#btnShowFirmDialog').on('click',ShowFirmListDialog);
+		//跳转表单页面
+		function addInfoForm()
+		{
+			window.location.href = '${base}/console/rpq/quest_form.do?id=' ;
+		}
+		//预览问卷
+		function viewPage()
+		{
+			var pageid = getQueryString('pageid');
+			window.location.href = "${base}/console/rpq/view_page.do?id="+ pageid;
+		}
+		//
+		function ShowFirmDialog()
+		{
+			 window.location.href = '${base}/console/rpq/form.do' ;
+		}
+		//保存题目
+		function saveQuest()
+		{
+			var pageid = getQueryString('pageid');
+			var itemcount = $('.drop-item').length;
+			if(itemcount==0){layer.msg("请选择题目！", {  time: 1500 }); return false;}
+		  	$('.drop-item').each(function(i,n){
+				//console.log($(this).html());
+			});
+		  	//组装题目
+		  	var questlist = '';
+		  	$('.drop-item').each(function(i,n){
+				console.log($(this).attr('id'));
+				var each_questid = $(this).attr('id');
+				//var each_pageid = $(this).parent().find('div').attr('pageid');
+				questlist+=each_questid+',';
+			});
+			//console.log(questlist);
+		  	$.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : "${base}/console/rpq/setPageQuest.do?datestr="
+							+ new Date().getTime(),
+					data : {'pageid':pageid ,'questlist':questlist },
+					 beforeSend: function () {
+                       indexmsg = layer.msg("正在操作中......", { time: 500000 });},
+                   	complete: function () {layer.close(indexmsg);},
+					success : function(json) {
+						//console.log(json);
+						json = JSON.parse(json);
+						var result = json.result;
+						if(result==true||result=='true'){
+							layer.msg("[@lang_res  k='global.success.save'/]", { icon: 1, time: 1500 }, function () { genPageQuest(); });
+						}
+					}
+				});           
+		}
+		//
+		function ShowFirmListDialog()
+		{
+			 BootstrapDialog.show({
+				title : "[@lang_res  k='ifafirm.list.selectIfafirm'/]",
+				cssClass : 'login-dialog',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('dialogFirmShow.do?procedureid='),
+				buttons : [  {
+					label : "[@lang_res  k='global.confirm'/]",
+					cssClass : 'btn-primary',
+					action : function(dialogItself) {
+						 var selected = $('#id_irm_selected');
+						 var selectedid = selected.attr('companyid');
+						 var selectedname = selected.attr('companyname');
+						 //console.log(selectedid);console.log(selectedname);
+						 if(selectedid == undefined || selectedid == '')
+						 {
+						 	layer.alert("[@lang_res  k='ifafirm.message.promptNotSelectedIfafirm'/]", {icon: 0 });
+						 	return;
+						 }
+						 $('#txtSelectedCompanyName').val(selectedname);
+						 $('#txtSelectedCompanyName').attr('companyid',selectedid);
+						 bindList(0);
+						 
+						 dialogItself.close();
+					}
+				},  {
+					label : "[@lang_res  k='global.back'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
+		}
+		//点击编辑
+            $("body").on('click', '.btneditnode', '', function () {
+            	
+                //获取前个节点
+                var pageid = $(this).parent().find('a').attr('pageid');
+                window.location.href = '${base}/console/rpq/detail.do?id='+pageid;
+            });
+            
+			//点击团队成员管理，弹出管理窗口
+            $("body").on('click', '.btnedituser', '', function () {
+                //获取前个节点
+                var teamid = $(this).parent().parent().attr('id');//所属团队
+                var ifafirmid = $(this).parent().find('.btnaddchildnode').attr('ifafirmid'); //所属公司
+
+                 BootstrapDialog.show({
+				title : "[@lang_res  k='ifafirm.list.managementTeamUser'/]",
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('dialogTeamUser.do?teamid='+teamid+'&ifafirmid='+ifafirmid),
+				buttons : [  {
+					label : "[@lang_res  k='global.confirm'/]",
+					cssClass : 'btn-primary',
+					action : function() {
+					     var list = '';
+						 $("#selTeamifaList option").each(function () { //遍历全部option
+				            var name = $(this).text();
+				            var ifaid = $(this).val();
+				            list+= ifaid + ',';
+				        });
+				        if(list!='')
+				        {
+				        	 $.ajax({
+					                type: "post", //统一用post方式 
+					                url: "${base}/console/ifafirm/saveteammemberifainfo.do?datestr="+ new Date().getTime(),
+					                data: {"teamid":teamid,"list":list,"ifafirmid":ifafirmid}, //传送的参数列表
+					                dataType: "json",
+					                crossDomain: true,
+					                error: function (XMLHttpRequest, textStatus, errorThrown) {
+					                    //错误时在这里添加一些提示信息
+					                    layer.alert(errorThrown);
+					                },
+					                beforeSend: function () {
+					                    index = layer.msg('正在保存数据中....', {  time: 50000 });
+					                },
+					                success: function (data, textStatus) {
+										console.log(data);
+										if(data.result == true)
+											layer.msg('保存成功', { icon: 1, time: 2000 }, function () { });
+										else
+											layer.msg('保存败', { icon: 0, time: 2000 }, function () { });
+					                },
+					                complete: function () { layer.close(index); }
+					            });
+				        }
+					}
+				},  {
+					label : "[@lang_res  k='global.back'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+				});
+            });
+            
+           function getguid() {
+			    //    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxx'.replace(/[xy]/g, function (c) {
+			    //        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			    //        return v.toString(16);
+			    //    });
+			    function fourchar() { return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1); }
+			    var guid = (fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar()).toUpperCase();
+			    return guid;
+			}
+			
+            var child=0;
+         	//点击添加子团队，弹出子团队添加窗口 ifafirmid="'+ifafirmId+'" parentteamid="
+            $("body").on('click', '.btnaddchildnode', '', function () {
+            var teamhtml='<div id="id_teaminfo" >'
+                +'<form class="form-horizontal">'
+                +'    <div class="form-group">'
+                +'        <div class="col-md-3 text-right">'
+                +'            <label for="txtLoginCode" class="label-control">'+"[@lang_res  k='ifafirm.team.name'/]"+'</label>'
+                   +'     </div>'
+                      +'  <div class="col-md-7">'
+                         +'   <input id="txtName" type="text" class="form-control " value="">'
+                 +'       </div>'
+                  +'  </div>'
+                  +'  <div class="form-group">'
+                    +'    <div class="col-md-3 text-right">'
+                    +'        <label for="txtNickName" class="label-control">'+"[@lang_res  k='ifafirm.team.code'/]"+'</label>'
+                    +'    </div>'
+                      +'  <div class="col-md-7">'
+                      +'      <input id="txtCode" type="text" class="form-control " value="">'
+                      +'  </div>'
+                   +' </div>    '  
+                    +' <div class="form-group">'
+                       +' <div class="col-md-3 text-right">'
+                        +'    <label for="txtNickName" class="label-control">'+"[@lang_res  k='ifafirm.team.remark'/]"+'</label>'
+                      +'  </div>'
+                      +'  <div class="col-md-7">'
+                         +'   <input id="txtRemark" type="text" class="form-control " value="">'
+                            
+                       +' </div>'
+                   +' </div>'
+                    
+                +'</form>'
+            +'</div>';
+                //获取前个节点
+                //$('#id_teaminfo').show();
+                console.log($(this).parent().html());
+                var ifafirmid = $(this).parent().find('.btnaddchildnode').attr('ifafirmid'); //alert(ifafirmid); //所属公司
+                var parentteamid = $(this).parent().find('.btnaddchildnode').attr('parentteamid'); //父团队节点
+                var classlayer = $(this).parent().find('.btnaddchildnode').attr('classlayer'); 
+                var childclasslayer = '';
+                if(classlayer=='0')childclasslayer='1';
+                if(classlayer=='1')childclasslayer='2';
+                if(classlayer=='2')childclasslayer='3';
+
+				
+                 BootstrapDialog.show({
+				title : "[@lang_res  k='ifafirm.title.addChildTeam'/]",
+				//cssClass:'teaminfo-dialog',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : teamhtml,
+				onshow: function(dialogRef){ 
+                	$('#id_teaminfo').show();
+                	//alert(1);
+            	},
+            	onhide: function(dialogRef){
+                	$('#id_teaminfo').hide();
+                	//alert(2);
+            	},
+				buttons : [  {
+					label : "[@lang_res  k='global.save'/]",
+					cssClass : 'btn-primary',
+					action : function(dialogItself) { 
+						    var name = $('#txtName').val();
+						    console.log($('#txtName'));
+						    var code = $('#txtCode').val();
+			                if (name == '') { layer.msg("[@lang_res  k='ifafirm.message.promptEmptyTeamName'/]"); return; }
+			                var datattparentid = parentteamid;
+			                //var classlayer = '1';
+			                var id = getguid();
+			                var html_row = ''; // '<tr id="8-1" data-tt-id="' + GLOBAL.NewGuid() + '" data-tt-parent-id="' + datattid + '"><td><span class="folder">' + planname + '</span></td><td style="cursor:pointer;" date="2016-2-24" class="class_startdate">2016年2月24日</td><td class="class_enddate">2016年1月24日</td><td><input type="text" class="form-control"  style="height:22px; width:50px;"></td><td><a href="#"> 选择参与人</a></td><td><a  class="btnaddchildnode" href="javascript:void(0);"> 添加子计划</a></td></tr>';
+			                if (childclasslayer == '1')//如果是首层
+                                html_row = '<tr ifafirmid="'+ifafirmid+'" classlayer="' + childclasslayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id="' + datattparentid + '"><td><span class="folder class_planname">' + name + '</span></td><td  class="class_startdate">' + code + '</td><td  class="class_enddate"><input type="text" class="form-control sort" value="" style="height:22px; width:50px;"></td><td><a classlayer="1" teamid="' + id + '" class="btneditnode" href="javascript:void(0);"> '+"[@lang_res  k='global.edit'/]"+'</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btndelnode" href="javascript:void(0);"> '+"[@lang_res  k='global.delete'/]"+'</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" ifafirmid="'+ifafirmid+'" parentteamid="' + id + '" class="btnaddchildnode" href="javascript:void(0);"> '+"[@lang_res  k='ifafirm.title.addChildTeam'/]"+'</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btnedituser" href="javascript:void(0);"> '+"[@lang_res  k='ifafirm.list.managementTeamUser'/]"+'</a></td></tr>';
+                            if (childclasslayer == '2')//如果是首层
+                                html_row = '<tr ifafirmid="'+ifafirmid+'" classlayer="' + childclasslayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id="' + datattparentid + '"><td><span class="folder class_planname">' + name + '</span></td><td  class="class_startdate">' + code + '</td><td  class="class_enddate"><input type="text" class="form-control sort" value="" style="height:22px; width:50px;"></td><td><a classlayer="1" teamid="' + id + '" class="btneditnode" href="javascript:void(0);"> '+"[@lang_res  k='global.edit'/]"+'</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btndelnode" href="javascript:void(0);"> '+"[@lang_res  k='global.delete'/]"+'</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="2" ifafirmid="'+ifafirmid+'" parentteamid="' + id + '" class="btnaddchildnode" href="javascript:void(0);"> '+"[@lang_res  k='ifafirm.title.addChildTeam'/]"+'</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btnedituser" href="javascript:void(0);"> '+"[@lang_res  k='ifafirm.list.managementTeamUser'/]"+'</a></td></tr>';
+                           	if (childclasslayer == '3')//如果是首层
+                                html_row = '<tr ifafirmid="'+ifafirmid+'" classlayer="' + childclasslayer + '" id="' + id + '" data-tt-id="' + id + '" data-tt-parent-id="' + datattparentid + '"><td><span class="folder class_planname">' + name + '</span></td><td  class="class_startdate">' + code + '</td><td  class="class_enddate"><input type="text" class="form-control sort" value="" style="height:22px; width:50px;"></td><td><a classlayer="1" teamid="' + id + '" class="btneditnode" href="javascript:void(0);"> '+"[@lang_res  k='global.edit'/]"+'</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btndelnode" href="javascript:void(0);"> '+"[@lang_res  k='global.delete'/]"+'</a>&nbsp;&nbsp;&nbsp;&nbsp;<a classlayer="1" teamid="' + id + '" class="btnedituser" href="javascript:void(0);"> '+"[@lang_res  k='ifafirm.list.managementTeamUser'/]"+'</a></td></tr>';
+                           
+			                child++;
+			                
+			                
+			
+			                var newRow = jQuery(html_row);
+			                var cquoi = jQuery(newRow[0]);console.log(newRow);console.log(cquoi);
+			                var node = $("#tree").treetable("node", datattparentid);
+			                
+			                jQuery('#tree').treetable("loadBranch", node, cquoi);
+			                
+			                //添加进数据库
+			                $.ajax({
+								type : 'post',
+								datatype : 'json',
+								url : "${base}/console/ifafirm/addIfafirmTeamInfo.do?datestr="
+										+ new Date().getTime(),
+								data : {'id':id,'ifafirmid':ifafirmid,'parentid':parentteamid,'name':name,'code':code,'classlayer':childclasslayer },
+								success : function(json) {
+									console.log(json);
+									json = JSON.parse(json);
+									var result = json.result;
+									if(result==true||result=='true'){
+										layer.msg("[@lang_res  k='global.success.save'/]", { icon: 1, time: 2000 }, function () { });
+									}
+								}
+							});
+							
+			                dialogItself.close();
+					}
+				},  {
+					label : "[@lang_res  k='global.back'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+				});
+				
+				//return false;
+            });
+            
+            //
+            //点击删除，弹出删除团队提示
+            $("body").on('click', '.btndelnode11', '', function () {
+                //获取前个节点
+                var teamid = $(this).attr('teamid'); //alert(teamid);
+                var userelementid = $(this).parent().find('input').attr('id'); // html();
+ 				var tr = $(this).parent().parent();
+ 				var classlayer = tr.attr('classlayer'); 
+ 				var datattparentid = tr.attr('data-tt-parent-id'); 
+                 layer.confirm("[@lang_res  k='ifafirm.message.promptIsDelTeam'/]", { icon: 3  },function () { 
+                 console.log($(this).html());
+                 
+                    if(classlayer=='1')//如果是父层，则删除时同时删除子层
+	                 {
+	                 alert('');
+	                 	//获取所有子层
+	                 	//$('#tree tr[data-tt-parent-id="'+datattparentid+'"]').remove();
+	                 }
+                 	tr.remove(); 
+                 	layer.closeAll();
+                 });
+            });
+            
+            
+            
+            //效果
+            $("body").on("mouseover", ".class_planname", function () {
+                $(this).css({ 'color': '#ffffff', 'background-color': '#2d80ce', 'cursor': 'pointer', 'border-bottom-right-radius': '4px', 'border-bottom-left-radius': '4px', 'border-top-right-radius': '4px', 'border-top-left-radius': '4px' });
+            });
+            $("body").on("mouseleave", ".class_planname", function () {
+                $(this).css({ 'color': '#000000', 'background-color': '' });
+            });
+            $("body").on("mouseover", ".btneditnode", function () {
+                $(this).css({ 'text-decoration': 'underline' });
+            });
+            $("body").on("mouseleave", ".btneditnode", function () {
+                $(this).css({ 'text-decoration': 'none' });
+            });
+		//bindList(0);
+		//$('#btnShowFirmDialog').on('click',showFirmDialog);
+		$('#btnToDoSearch').click(function() {
+			bindList(0);
+		});
+		
+		
+		
+	
+	var types = [BootstrapDialog.TYPE_DEFAULT, 
+                     BootstrapDialog.TYPE_INFO, 
+                     BootstrapDialog.TYPE_PRIMARY, 
+                     BootstrapDialog.TYPE_SUCCESS, 
+                     BootstrapDialog.TYPE_WARNING, 
+                     BootstrapDialog.TYPE_DANGER];	
+
+    
+		
+		//分页绑定Table数据
+		bindList(0);
+		//当前问卷已选择的题目
+		genPageQuest();
+		function genPageQuest()
+		{
+			var pageid = getQueryString('pageid');
+			$.ajax({
+									type : 'post',
+									datatype : 'json',
+									url : "${base}/console/rpq/listPageQuestList.do?datestr="
+											+ new Date().getTime(),
+									data : {'pageid':pageid  },
+									 beforeSend: function () {
+			                        indexmsg = layer.msg("正在操作中......", { time: 500000 });},
+			                    	complete: function () {layer.close(indexmsg);},
+									success : function(json) {
+										console.log(json);
+										var questjson = JSON.parse(json.itemJson);
+										//$.each(questjson,function(i, n) {
+											//console.log(n.);
+										//});
+										var itemhtml = '';
+										$('#dropzone').empty();
+										for(var i=0;i<questjson.length;i++){ 
+											console.log(questjson[i][2].title);
+											console.log(questjson[i][1].id);
+											var title = questjson[i][2].title;
+											var id = questjson[i][1].id;
+											 var $el = $('<div id="'+id+'" pageid="'+pageid+'" class="drop-item"><div style="width:95%;"><span class="label label-default"><strong>'+(i+1)+'</strong></span>.' + title + '</div></div>');
+						    				 $el.append($('<button type="button" class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>').click(function () { $(this).parent().detach(); }));
+						    				$('#dropzone').append($el);
+											//itemhtml += '<div id="'+id+'" pageid="'+pageid+'" class="drop-item"><details><summary>'+title+'</summary></details><button type="button" class="btn btn-default btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button></div>';
+										}
+										
+									}
+								});
+		}
+	function bindList(pageindex) {
+		var pageid = getQueryString('pageid');
+		var title = encodeURI($.trim($('#txtTitle').val()))
+		var status = $('#selStatus').val();
+		//var ifafirmid = $('#txtSelectedCompanyName').val();
+		$.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : "${base}/console/rpq/listquestJson.do?datestr="
+							+ new Date().getTime(),
+					data : {
+						title : title,
+						status:status,
+						page : pageindex + 1,
+						rows : 8
+					},
+					 beforeSend: function () {
+                        indexmsg = layer.msg("正在加载数据中，请稍候....", { time: 50000 });
+                    },
+                    complete: function () {
+						layer.closeAll();
+                    },
+					success : function(json) {
+						var total = json.total;
+						var table = json.rows;
+						var html = '';
+						$("#pagedatalist tbody tr:gt(0)").empty();
+						$.each(table,function(i, n) {
+								var id = n[0].id;
+								var title = n[1].title;
+								var type = n[0].questType;
+								if('radio'==type){
+									 type="[@lang_res  k='global.radio'/]"
+								 }else if('select'==type){
+									 type="[@lang_res  k='global.select'/]"
+								 }else if('checkbox'==type){
+									 type="[@lang_res  k='global.checkbox'/]"
+								 }else if('text'==type){
+									 type="[@lang_res  k='global.text'/]"
+								 }else if('textarea'==type){
+									 type="[@lang_res  k='global.textarea'/]"
+								 }
+									
+								var status = n[0].status;
+								//var createby = n[0].member.nickName;
+								var createdt = n[0].createTime;
+								var langCode = n[0].langCode;
+								var button = '<button onclick="view(\''+id+'\')" type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button>&nbsp;&nbsp;<button onclick="selectQuest(\''+id+'\',\''+pageid+'\')" id="'+id+'" pageid="' + id + '" type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-hand-right text-bold"></span></button>';
+								
+								html += '<tr ><td class="drag" style="cursor:move;"><a style="cursor:move;" href="#" >'
+										+ '<p id="'+id+'" pageid="' + id + '" >'+title+'</p>'
+										+ '</a></td><td>'
+										+ type
+										+ '</td><td>'
+										+ button
+										+ '</td></tr>'
+							});
+						$('#pagedatalist').append(html);
+
+						$("#pagination").pagination(total, {
+							callback : pageselectCallback,
+							numDetail : '',
+							items_per_page : 8,
+							num_display_entries : 4,
+							current_page : pageindex,
+							num_edge_entries : 2
+						});
+						
+						$('.drag').draggable({ 
+						  appendTo: 'body',
+						  helper: 'clone',
+						  start: function() {
+					       //console.log(0);
+					      },
+					      drag: function() {
+					         //console.log(1);
+					      },
+					      stop: function() {
+					      //console.log($(this).parent().html());
+					      //console.log($(this).parent().find('p').attr('id'));
+					        var questid = $(this).parent().find('p').attr('id');
+					        
+							
+					      }
+						});
+						
+						$('#dropzone').droppable({
+						  activeClass: 'active',
+						  hoverClass: 'hover',
+						  accept: ":not(.ui-sortable-helper)", // Reject clones generated by sortable
+						  drop: function (e, ui) { 
+						  	//console.log($(ui.draggable).find('p').attr('id'));
+						  	var questid = $(ui.draggable).find('p').attr('id');
+						  	$('.drop-item').each(function(i,n){
+								//console.log($(this).html());
+							});
+						  	//组装题目
+						  	var questlist = '';
+						  	$('.drop-item').each(function(i,n){
+								console.log($(this).attr('id'));
+								var each_questid = $(this).attr('id');
+								//var each_pageid = $(this).parent().find('div').attr('pageid');
+								questlist+=each_questid+',';
+							});
+							console.log(questlist);
+						  	//检测是否有重复
+						  	var ishaved = false;
+						  	$('.drop-item').each(function(i,n){ //获取目前存在的quest，用id来判断
+								console.log($(this).attr('id'));
+								var each_questid = $(this).attr('id');
+								if(each_questid==questid){ishaved=true;return false;}
+							});
+							console.log(ishaved);
+							if(!ishaved)
+							{
+								var selectedCount = $('.drop-item').length;
+								var $el = $('<div id="'+questid+'" pageid="'+pageid+'" class="drop-item"><div style="width:95%;"><span><strong>'+(selectedCount+1)+'.</strong></span>' + ui.draggable.text() + '</div></div>');
+						    	$el.append($('<button type="button" class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>').click(function () { $(this).parent().detach(); }));
+						    	$(this).append($el);
+							} 
+							else {layer.msg("该题目已被选择！", {  time: 1500 }); return false;}
+						    
+						  }
+						}).sortable({
+						  items: '.drop-item',
+						  sort: function() {
+						    // gets added unintentionally by droppable interacting with sortable
+						    // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
+						    $( this ).removeClass( "active" );
+						  }
+						});
+					}
+				})
+		//回调
+		function pageselectCallback(page_id, jq) {
+			bindList(page_id);
+		}
+	}
+
+	function showform(id) {
+		window.location.href = '${base}/console/workflow/detail.do?id=' + id;
+	}
+	});
+
+	function delnode(id)
+    {
+    layer.confirm("[@lang_res  k='ifafirm.message.promptIsDelTeam'/]", { title:"[@lang_res  k='global.prompt'/]",btn:["[@lang_res  k='global.confirm'/]","[@lang_res  k='global.cancel'/]"], icon: 3   },function () { 
+    		$('#tree tr[data-tt-parent-id="'+id+'"]').remove();
+    		$('#tree tr[id="'+id+'"]').remove();
+    		layer.closeAll();
+    		
+    		 //删除节点的数据库
+	                $.ajax({
+						type : 'post',
+						datatype : 'json',
+						url : "${base}/console/ifafirm/delIfafirmTeamInfo.do?datestr="
+								+ new Date().getTime(),
+						data : {'id':id  },
+						 beforeSend: function () {
+                        indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", { time: 500000 });
+                    },
+                    complete: function () {
+						layer.close(indexmsg);
+                    },
+						success : function(json) {
+							console.log(json);
+							json = JSON.parse(json);
+							var result = json.result;
+							if(result==true||result=='true'){
+								layer.msg("[@lang_res  k='global.success.save'/]", { icon: 1, time: 2000 }, function () { });
+							}
+						}
+					});
+    	});
+    }
+    
+    function editSuperFirm(id)
+    {
+    	window.location.href = '${base}/console/ifafirm/dialogFirmInfo.do?id=' + id;
+    }
+    
+    function editlink(id)
+{
+	window.location.href = '${base}/console/rpq/quest_form.do?id='+id;
+}
+
+//查看题目详情
+function view(id)
+{
+	 BootstrapDialog.show({
+				title : "查看题目详情",
+				cssClass : 'login-dialog',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('quest_view.do?id='+id),
+				buttons : [   {
+					label : "[@lang_res  k='global.back'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
+}
+
+function selectQuest(id,pageid)
+{
+	var questid = id;//$(ui.draggable).find('p').attr('id');
+	var element = '#'+questid;
+	var title = $(element).text();
+  	$('.drop-item').each(function(i,n){
+		//console.log($(this).html());
+	});
+  	//组装题目
+  	var questlist = '';
+  	$('.drop-item').each(function(i,n){
+		console.log($(this).attr('id'));
+		var each_questid = $(this).attr('id');
+		//var each_pageid = $(this).parent().find('div').attr('pageid');
+		questlist+=each_questid+',';
+	});
+	console.log(questlist);
+
+  	//检测是否有重复
+  	var ishaved = false;
+  	$('.drop-item').each(function(i,n){ //获取目前存在的quest，用id来判断
+		console.log($(this).attr('id'));
+		var each_questid = $(this).attr('id');
+		if(each_questid==questid){ishaved=true;return false;}
+	});
+	console.log(ishaved);
+	var selectedCount = $('.drop-item').length;
+	if(!ishaved)
+	{
+		var $el = $('<div id="'+questid+'" pageid="'+pageid+'" class="drop-item"><div style="width:95%;"><span><strong>'+(selectedCount+1)+'.</strong></span>' + title + '</div></div>');
+    	$el.append($('<button type="button" class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>').click(function () { $(this).parent().detach(); }));
+    	$('#dropzone').append($el);
+	} 
+	else {layer.msg("该题目已被选择！", {  time: 1500 }); return false;}
+    
+    
+  
+}
+   
+</script>
+</body>
+</html>
+

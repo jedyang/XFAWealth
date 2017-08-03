@@ -1,0 +1,459 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>合作方管理-IFAFirm-投资顾问公司详情页面</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="${base}/res/css/wmesupload.css"> 
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+		<![endif]-->
+		<script type="text/javascript">
+			var base_root = '${base}';
+		</script>
+		<style type="text/css">
+		    .red{color:red;}
+		</style>
+	</head>
+	<body>
+		<input id="hidIfaFirmId" type="hidden" class="form-control" value="${(ifafirm.id)?if_exists}">
+		<input type="hidden" id="hidEntityType" value="${(ifafirm.entityType)?if_exists}">
+		<input type="hidden" id="hidIsFinancial" value="${(ifafirm.isFinancial)?if_exists}">
+		<input type="hidden" id="hidCountry" value="${(ifafirm.country)?if_exists}">
+		<input type="hidden" id="hidIncorporationPlace" value="${(ifafirm.incorporationPlace)?if_exists}">
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="tab-side container-fluid">
+				<div class="tab-side-container">
+						<ul class="tab" id="tab-search">
+			            	<li class="tab-li-crr">
+			                   <a href="javascript:;">[@lang_res k='console.partner.ifafirm.ifafirmDetail'/]</a>
+			               	</li>
+			                <li class="tab-li" id="ifaList">
+			                   <a href="javascript:;">[@lang_res k='console.partner.ifafirm.ifaList'/]</a>
+			               	</li>
+			                <li class="tab-li" id="CustomerList">
+			                   <a href="javascript:;">[@lang_res k='console.partner.ifafirm.customerList'/]</a>
+			               	</li>
+			               	<li class="tab-li" id="distributorList">
+			                   <a href="javascript:;">[@lang_res k='console.partner.ifafirm.partnerDis'/]</a>
+			               	</li>
+			               	<li class="tab-li" id="userList">
+			                   <a href="javascript:;">[@lang_res k='console.partner.ifafirm.userList'/]</a>
+			               	</li>
+           				</ul>
+					
+					<div class="clear"></div>
+					<div>
+					  <div class="tab_wrap">
+						<!--tab1 公司详情  -->
+						<form id="frm" class="form-horizontal" method="post">
+							<input id="hidIfaFirmId" type="hidden" class="form-control" value="${(ifafirm.id)?if_exists}">
+							<input type="hidden" id="hidEntityType" value="${(ifafirm.entityType)?if_exists}">
+							<input type="hidden" id="hidIsFinancial" value="${(ifafirm.isFinancial)?if_exists}">
+							<input type="hidden" id="hidCountry" value="${(ifafirm.country)?if_exists}">
+							<input type="hidden" id="hidIncorporationPlace" value="${(ifafirm.incorporationPlace)?if_exists}">
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="txtCompanyNameSc" class="label-control">
+										<span class="red">* </span>
+										[@lang_res k='console.ifafirm.detail.form.label.companyName'/][@lang_res k='console.ifafirm.detail.form.SC'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<input id=txtCompanyNameSc type="text" name="companyNameSc" class="form-control"
+										value="${(ifafirm.companyNameSc)?if_exists}">
+								</div>
+								<div class="col-md-2 text-right">
+									<label for="txtCompanyNameTc" class="label-control">
+									    <span class="red">* </span>
+										[@lang_res k='console.ifafirm.detail.form.label.companyName'/][@lang_res k='console.ifafirm.detail.form.TC'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<input id=txtCompanyNameTc name="companyNameTc" type="text" class="form-control"
+										value="${(ifafirm.companyNameTc)?if_exists}">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="txtCompanyNameEn" class="label-control">
+										<span class="red">* </span>
+										[@lang_res k='console.ifafirm.detail.form.label.companyName'/][@lang_res k='console.ifafirm.detail.form.EN'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<input id=txtCompanyNameEn type="text" name="companyNameEn" class="form-control"
+										value="${(ifafirm.companyNameEn)?if_exists}">
+								</div>
+								<div class="col-md-2 text-right">
+									<label for="selEntityType" class="label-control">
+										[@lang_res k='console.ifafirm.detail.form.label.entityType'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<select id="selEntityType" name="entityType" class="form-control">
+										<option value="">
+											[@lang_res k='console.ifafirm.list.select.entityType.default'/]
+										</option>
+										<option value='1'>
+											[@lang_res k='console.ifafirm.detail.form.select.entityType.1'/]
+										</option>
+										<option value='2'>
+											[@lang_res k='console.ifafirm.detail.form.select.entityType.2'/]
+										</option>
+										<option value='3'>
+											[@lang_res k='console.ifafirm.detail.form.select.entityType.3'/]
+										</option>
+										<option value='4'>
+											[@lang_res k='console.ifafirm.detail.form.select.entityType.4'/]
+										</option>
+										<option value='5'>
+											[@lang_res k='console.ifafirm.detail.form.select.entityType.5'/]
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="txtRegisterNo" class="label-control">
+										<span class="red">* </span>
+										[@lang_res k='console.ifafirm.detail.form.label.registerNo'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<input id="txtRegisterNo" type="text" name="registerNo" class="form-control "
+										value="${(ifafirm.registerNo)?if_exists}">
+								</div>
+								<div class="col-md-2 text-right">
+									<label for="selIsFinancial" class="label-control">
+										[@lang_res k='console.ifafirm.detail.form.label.isFinancial'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<select id="selIsFinancial" class="form-control" name="isFinancial">
+										<option>
+											[@lang_res k='global.pleaseSelect'/]
+										</option>
+										<option value='1'>
+											[@lang_res k='global.true'/]
+										</option>
+										<option value='0'>
+											[@lang_res k='global.false'/]
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="txtGiin" class="label-control">
+										[@lang_res k='console.ifafirm.detail.form.label.giin'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<input id=txtGiin type="text" class="form-control" name="giin" 
+										 value="${(ifafirm.giin)?if_exists}">
+								</div>
+								<div class="col-md-2 text-right">
+									<label for="txtNaturePurpose" class="label-control">
+										[@lang_res k='console.ifafirm.detail.form.label.naturePurpose'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<input id="txtNaturePurpose" type="text" class="form-control" name="naturePurpose" 
+										value="${(ifafirm.naturePurpose)?if_exists}">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="dtIncorporationDate" class="label-control">
+										[@lang_res k='console.ifafirm.detail.form.label.incorporationDate'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<input id='dtIncorporationDate' type="text" name="incorporationDate" 
+								        class="laydate-icon form-control form-control-laydate" 
+								        style="height: 34px; padding: 6px 12px;" 
+								        onclick="laydate({istime: false, max: laydate.now(), format: 'YYYY-MM-DD'})" name="born" value="${(ifafirm.incorporationDate?string('yyyy-MM-dd'))?if_exists}">										
+								</div>
+								<div class="col-md-2 text-right">
+									<label for="txtIncorporationPlace" class="label-control">
+										<span class="red">* </span>
+										[@lang_res k='console.ifafirm.detail.form.label.incorporationPlace'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<select id="selIncorporationPlace" class="form-control" name="incorporationPlace">
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="txtRegisteredAddress" class="label-control">
+										<span class="red">* </span>
+										[@lang_res k='console.ifafirm.detail.form.label.registeredAddress'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<input id="txtRegisteredAddress" type="text" name="registeredAddress" 
+										class="form-control"
+										value="${(ifafirm.registeredAddress)?if_exists}">
+								</div>
+								<div class="col-md-2 text-right">
+									<label for="txtMailingAddress" class="label-control">
+										[@lang_res k='console.ifafirm.detail.form.label.mailingAddress'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<input id="txtMailingAddress" type="text" class="form-control" name="mailingAddress" 
+										value="${(ifafirm.mailingAddress)?if_exists}">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="txtCountry" class="label-control">
+										[@lang_res k='console.ifafirm.detail.form.label.country'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+								    <select id="selCountry" class="form-control" name="country">
+									</select>
+								</div>
+								<div class="col-md-2 text-right">
+									<label for="txtWebsite" class="label-control">
+										[@lang_res k='console.ifafirm.detail.form.label.website'/]
+									</label>
+								</div>
+								<div class="col-md-4">
+									<input id="txtWebsite" type="text" class="form-control" name="website" 
+										value="${(ifafirm.website)?if_exists}">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-2 text-right">
+									<label for="imgFile" class="label-control">
+										[@lang_res k='console.ifafirm.detail.form.label.companyLogo'/]
+									</label>
+								</div>
+								<div class="col-md-10">
+									<div class="upload-box upload-album"></div>
+				      				<!-- <div class="photo-list" imgText="${ifafirm.firmLogo!}"><ul></ul></div> -->
+				      				<div>
+				      					<img id="imgFile" style="width:222px;height:80px;" src="${base}[@user_head u='${ifafirm.firmLogo!}' t='f'/]" value="${ifafirm.firmLogo!}"/>
+				      					<input type="hidden" id="firmLogo" name="firmLogo" value="${ifafirm.firmLogo!}" >
+									</div>
+		      					</div>
+							</div>
+							<div class="form-inline divUser">
+								<div class="text-center pd10">
+									<button id="btnSave" type="submit" class="btn btn-primary">
+										[@lang_res k='global.save'/]
+									</button>
+									<button id="btnClose" class="btn btn-primary" onclick="javascript:closeTab();">
+										[@lang_res k='global.close'/]
+									</button>
+								</div>
+							</div>
+						</form>
+						<!-- IFA列表 -->
+						<form class="form-horizontal" style="display:none;">
+		                    <iframe style="width: 100%; height: 600px; scrolling:no; border:0;"
+							 src=""></iframe>
+						</form>
+						<!-- 客户列表 -->
+						<form class="form-horizontal" style="display:none;">
+					    	<iframe style="width: 100%; height: 600px; scrolling:no; border:0;"
+							 src=""></iframe>
+						</form>
+						<!-- 合作代理商 -->
+						<form class="form-horizontal" style="display:none;">
+							<iframe style="width: 100%; height: 600px; scrolling:no; border:0;"
+							 src=""></iframe>
+						</form>
+						<!-- 用户列表 -->
+						<form class="form-horizontal" style="display:none;">
+							<iframe style="width: 100%; height: 600px; scrolling:no; border:0;"
+							 src=""></iframe>
+						</form>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js"></script>
+<script src="${base}/res/console/js/jquery.form.js"></script>
+<script src="${base}/res/console/js/bootstrap.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script src="${base}/res/third/laydate/laydate.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script type="text/javascript" src="${base}/res/js/base.js"></script>
+<script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+<script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+<script type="text/javascript">
+seajs.use('${base}/res/console/web/ifafirm/firmInput.js');
+
+var ifafirmId = $('#hidIfaFirmId').val();
+$(function(){
+	loadCountry();
+	$('#selEntityType').val($('#hidEntityType').val());
+	$('#selIsFinancial').val($('#hidIsFinancial').val());
+	$('#selCountry').val($('#hidCountry').val());
+	$('#selIncorporationPlace').val($('#hidIncorporationPlace').val());
+	
+	function loadCountry(){
+		$.ajax({
+            type: "post",
+            url : "${base}/console/country/langListJson.do?datestr="+ new Date().getTime(),
+            data: {},
+            async: false,
+            dataType: "json",
+            success: function (json, textStatus) {
+               if (json != undefined && json.result == true) {
+					  var data = JSON.parse(json.countryJson);
+					  var html = "";
+					  $.each(data, function(i, n) {
+						 html += "<option value='"+n.id+"'>" + n.name + "</option>";
+					  });
+					  $('#selIncorporationPlace').empty().append(html);
+					  $('#selCountry').empty().append(html);
+              	 }
+            }
+       	});
+	}
+	
+	//表单验证
+	$('#frm').bootstrapValidator({
+		feedbackIcons : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		fields : {
+			companyNameSc : {
+				validators : {
+					notEmpty : {
+						message : "[@lang_res k='console.ifafirm.detail.form.label.companyName'/](简体) [@lang_res k='global.empty.tip'/]"
+					}
+				}
+			},
+			companyNameTc : {
+                validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='console.ifafirm.detail.form.label.companyName'/](繁体) [@lang_res k='global.empty.tip'/]"
+                    }
+                }
+            },
+            companyNameEn : {
+                validators : {
+                    notEmpty : {
+                        message : "[@lang_res k='console.ifafirm.detail.form.label.companyName'/](英文) [@lang_res k='global.empty.tip'/]"
+                    }
+                }
+            },
+			registerNo : {
+				validators : {
+					notEmpty : {
+						message : "[@lang_res k='console.ifafirm.detail.form.label.registerNo'/] [@lang_res k='global.empty.tip'/]"
+					}
+				}
+			},
+			incorporationPlace : {
+				validators : {
+					notEmpty : {
+						message : "[@lang_res k='console.ifafirm.detail.form.label.incorporationPlace'/] [@lang_res k='global.empty.tip'/]"
+					}
+				}
+			},
+			registeredAddress:{
+				validators : {
+					notEmpty : {
+						message : "[@lang_res k='console.ifafirm.detail.form.label.registeredAddress'/] [@lang_res k='global.empty.tip'/]"
+					}
+				}
+			}
+		}
+	}).on('success.form.bv', function(e) {
+		e.preventDefault();
+		savefrom();
+	});
+	
+	//保存
+	function savefrom() {
+		var id = $('#hidIfaFirmId').val();
+		var companyNameSc = $('#txtCompanyNameSc').val();
+		var entityType = $('#selEntityType').find('option:selected').val();
+		var registerNo = $('#txtRegisterNo').val();
+		var isFinancial = $('#selIsFinancial').find('option:selected').val();
+		var giin = $('#txtGiin').val();
+		var naturePurpose = $('#txtNaturePurpose').val();
+		var incorporationDate = $('#dtIncorporationDate').val();
+		var incorporationPlace = $('#selIncorporationPlace').val();
+		var registeredAddress = $('#txtRegisteredAddress').val();
+		var mailingAddress = $('#txtMailingAddress').val();
+		var country = $('#selCountry').val();
+		var website = $('#txtWebsite').val();
+		var companyNameTc = $('#txtCompanyNameTc').val();
+		var companyNameEn = $('#txtCompanyNameEn').val();
+		var firmLogo = $('#imgFile').val();
+		//console.log(firmLogo);//上传控件问题：1）上传完，看不到图，路径要转换； 2）打开编辑，能看到图，但再保存时，读取不到val()，所以原图片路径会被置空
+		if (!firmLogo || firmLogo=="")
+		    firmLogo = $('#firmLogo').val();
+		    
+		var postData = { 'id':id,'companyNameSc': companyNameSc, 'entityType': entityType, 'registerNo': registerNo, 'isFinancial': isFinancial, 'giin': giin, 'incorporationPlace': incorporationPlace, 'registeredAddress': registeredAddress, 'mailingAddress': mailingAddress, 'country': country,
+		                 'naturePurpose':naturePurpose,'incorporationDate':incorporationDate,'website':website,
+		                 'companyNameTc':companyNameTc,'companyNameEn':companyNameEn,'firmLogo':firmLogo
+		                 }; 
+       	$.ajax({
+            type: "post",
+            url : "${base}/console/ifafirm/savefirminfo.do?datestr="+ new Date().getTime(),
+            data: postData,
+            async: false,
+            dataType: "json",
+            success: function (data, textStatus) {
+               var result = data.result;
+               if(result==true){ 
+               		layer.msg("[@lang_res k='global.success.save'/]", { icon: 1, time: 3000 });
+               		$('#btnSave').attr('disabled','disabled');
+               		$(window.parent.document).find("#btnSearch").trigger("click");
+               }else
+               		layer.msg("[@lang_res k='global.failed.save'/]", { icon: 0, time: 2000 });
+               }
+       	});
+	}
+	
+});
+
+
+//点击加载数据
+
+//IFA列表
+$("#ifaList").on("click",function(){
+	$("form").eq($(this).index()).find("iframe").attr("src","${base}/console/ifa/ifaFirmIfa.do?ifafirmId=" + ifafirmId);
+});
+
+//客户列表
+$("#CustomerList").on("click",function(){
+	$("form").eq($(this).index()).find("iframe").attr("src","${base}/console/customer/firmCustomerList.do?ifafirmId=" + ifafirmId);
+});
+
+//代理商
+$("#distributorList").on("click",function(){
+	$("form").eq($(this).index()).find("iframe").attr("src","${base}/console/ifafirm/distributorList.do?ifafirmId=" + ifafirmId);
+});
+
+//用户列表
+$("#userList").on("click",function(){
+	$("form").eq($(this).index()).find("iframe").attr("src","${base}/console/member/admin/firmAdminList.do?ifafirmId=" + ifafirmId);
+});
+
+
+
+</script>
+</body>
+</html>

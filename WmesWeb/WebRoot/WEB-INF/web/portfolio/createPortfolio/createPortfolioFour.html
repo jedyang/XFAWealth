@@ -1,0 +1,227 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <div class="wmes-content">
+    	<div class="proposal-wrap">
+    		<p class="wmes-wrap-title">
+    		[#if edit?? && edit=='1']
+    		[@lang_res k='portfolio.info.form.editPortfolio'/]
+    		[#else]
+    		[@lang_res k='create.portfolio.title'/]
+    		[/#if]
+    		</p>
+    		<div class="proposal-step-wrap">
+    			<ul class="proposal-step">
+    				<li class="proposal-step-title proposal-step-old">[@lang_res k='create.portfolio.step.selectCreateMethod'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title proposal-step-old">[@lang_res k='create.portfolio.step.overView'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title proposal-step-old">[@lang_res k='create.portfolio.step.allocationMethod'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title proposal-step-now">[@lang_res k='create.portfolio.step.release'/]</li>
+    			</ul>
+    		</div>
+
+         <form id="overview-form">     
+         <!-- 当前portfolioArena信息 -->
+          <!-- portfolioId -->
+		  <input id="hidPortfolioId" type="hidden" value="${(portfolioId)?if_exists}" name="portfolioId">
+		  <!-- 选择的策略的id -->
+		  <input id="hidStrategyId" type="hidden" value="${(strategyId)?if_exists}" name="strategyId">
+		  
+		  <input id="permit_clients" type="hidden" value="${existingIds!}">
+		  <input id="permit_prospects" type="hidden" value="${prospectIds!}">
+		  <input id="permit_buddies" type="hidden" value="${buddyIds!}">
+		  <input id="permit_colleagues" type="hidden" value="${colleagueIds!}">
+		  
+		  <input id="push_clients" type="hidden" value="">
+		  <input id="push_prospects" type="hidden" value="">
+		  <input id="push_buddies" type="hidden" value="">
+		  <input id="push_colleagues" type="hidden" value="">
+		  
+		  <input id="refreshSelection" type="hidden" value="">
+		  
+		  <input id="cnt_clients" type="hidden" value="">
+		  <input id="cnt_prospects" type="hidden" value="">
+		  <input id="cnt_buddies" type="hidden" value="">
+		  <input id="cnt_colleagues" type="hidden" value="">
+		
+		 </form>
+		 
+            <div class="stepOne-rows">
+            	<ul class="view_permissions_setting">
+					<li>[@lang_res k='strategy.info.release.permission.view'/]:</li>
+					<li>
+						<input [#if webView?? && webView.scopeFlag == '1']checked="checked"[/#if] type="radio"  name="permit" id="permit0" value="1">[@lang_res k='strategy.info.release.permission.onlyme'/]
+					</li>
+					<li>
+						<input [#if webView?? && webView.scopeFlag == '2']checked="checked"[/#if] type="radio" name="permit" id="permit1" value="2">[@lang_res k='strategy.info.release.permission.public'/]
+					</li>
+					<li>
+						<input [#if webView?? && webView.scopeFlag == '3']checked="checked"[/#if] type="radio" name="permit" id="permit2" value="3">[@lang_res k='strategy.info.release.permission.specify'/]
+					</li>
+				</ul>
+				<div id="permit_ext" class="pushToSettingmenu pushToSettingmenu1" style="[#if webView?? && webView.scopeFlag == '3']display:block[/#if]">
+					<ul>
+						<li data-id="permit_clients" class="[#if webView?? && (webView.clientFlag == '1' || webView.clientFlag == '-1')]setting_active[/#if]">
+							<div class="pushToSettingCheckbox">
+								<input type="checkbox" [#if webView?? && (webView.clientFlag == '1' || webView.clientFlag == '-1')]checked="checked"[/#if] class="setting" id="permit_client" name="permit_client" value="">[@lang_res k='strategy.info.release.specify.myClient'/]
+							</div>
+							[#if existings?? && existings?size gt 0]
+								[#list existings as item]
+								    [#if item.fullName?length gt 9]
+								    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+								    [#else]
+								    	[#assign fullName=item.fullName/]
+								    [/#if]
+									[#if item_index gt 2]
+										<p class="pushToSettingName" style="margin-right:30px">...</p>
+										[#break]
+									[/#if]
+									[#if item_index == 2]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+									[#else]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if existings?size == 1][#else]<span> ,</span>[/#if]</p>
+									[/#if]
+								[/#list]
+							[#else]
+									<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+							[/#if]
+							<a data-user-type="existing" class="j-permitASetting a-permit-clients" href="javascript:;"></a>
+						</li>
+						<li data-id="permit_prospects" class="[#if webView?? && (webView.prospectFlag == '1' || webView.prospectFlag == '-1')]setting_active[/#if]">
+							<div class="pushToSettingCheckbox">
+								<input type="checkbox" [#if webView?? && (webView.prospectFlag == '1' || webView.prospectFlag == '-1')]checked="checked"[/#if] class="setting" id="permit_prospect" name="permit_prospect" value=""/>[@lang_res k='strategy.info.release.specify.myProspect'/]
+							</div>
+							[#if prospects?? && prospects?size gt 0]
+								[#list prospects as item]
+								    [#if item.fullName?length gt 9]
+								    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+								    [#else]
+								    	[#assign fullName=item.fullName/]
+								    [/#if]
+									[#if item_index gt 2]
+										<p class="pushToSettingName" style="margin-right:30px">...</p>
+										[#break]
+									[/#if]
+									[#if item_index == 2]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+									[#else]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if prospects?size == 1][#else]<span> ,</span>[/#if]</p>
+									[/#if]
+								[/#list]
+							[#else]
+									<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+							[/#if]
+							<a data-user-type="prospect" class="j-permitASetting a-permit-prospects" href="javascript:;"></a>
+						</li>
+						<li data-id="permit_buddies" class="[#if webView?? && (webView.buddyFlag == '1' || webView.buddyFlag == '-1')]setting_active[/#if]">
+							<div class="pushToSettingCheckbox">	
+								<input type="checkbox" [#if webView?? && (webView.buddyFlag == '1' || webView.buddyFlag == '-1')]checked="checked"[/#if] class="setting" id="permit_buddy" name="permit_buddy" value=""/>[@lang_res k='strategy.info.release.specify.myBuddy'/]
+							</div>
+							[#if buddies?? && buddies?size gt 0]
+								[#list buddies as item]
+								    [#if item.fullName?length gt 9]
+								    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+								    [#else]
+								    	[#assign fullName=item.fullName/]
+								    [/#if]
+									[#if item_index gt 2]
+										<p class="pushToSettingName" style="margin-right:30px">...</p>
+										[#break]
+									[/#if]
+									[#if item_index == 2]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+									[#else]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if buddies?size == 1][#else]<span> ,</span>[/#if]</p>
+									[/#if]
+								[/#list]
+							[#else]
+									<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+							[/#if]
+							<a data-user-type="buddy" class="j-permitASetting a-permit-buddies" href="javascript:;"></a>
+						</li>
+						<li data-id="permit_colleagues" class="[#if webView?? && (webView.colleagueFlag == '1' || webView.colleagueFlag == '-1')]setting_active[/#if]">
+							<div class="pushToSettingCheckbox">
+								<input type="checkbox" [#if webView?? && (webView.colleagueFlag == '1' || webView.colleagueFlag == '-1')]checked="checked"[/#if] class="setting" id="permit_colleague" name="permit_colleague" value=""/>[@lang_res k='strategy.info.release.specify.myTeamMember'/]
+							</div>
+							[#if colleagues?? && colleagues?size gt 0]
+								[#list colleagues as item]
+								    [#if item.fullName?length gt 9]
+								    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+								    [#else]
+								    	[#assign fullName=item.fullName/]
+								    [/#if]
+									[#if item_index gt 2]
+										<p class="pushToSettingName" style="margin-right:30px">...</p>
+										[#break]
+									[/#if]
+									[#if item_index == 2]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+									[#else]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if colleagues?size == 1][#else]<span> ,</span>[/#if]</p>
+									[/#if]
+								[/#list]
+							[#else]
+									<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+							[/#if]
+							<a data-user-type="colleague" class="j-permitASetting a-permit-colleagues" href="javascript:;"></a>
+						</li>
+					</ul>
+					<input type="hidden" id="permitSetting" name="permitSetting" value="">
+				</div>
+            </div>
+    		<div class="proposal-button-wrap">
+                <a id="btnNextThree" class="proposal-button" href="javascript:void(0)">[@lang_res k='global.previous'/]</a>
+    			<a id="btnSave" class="proposal-button" href="javascript:void(0)">[@lang_res k='global.publish'/]</a>
+    		</div>
+    	</div>
+    </div>
+    
+    <!-- 选人 -->
+    <div class="selectnamelistbox" style="display:none;position: absolute;top:0;left:0;background:rgba(0,0,0,0.3)">
+		<div class="selectnamelistcon" style="background:#fff;width:80%;margin-left: 12%;left:0px">
+			<div class="wmes-close"></div>
+			<div class="wmes-wrap-title tanchutitle">[@lang_res k='ifa.user.selector.title.3'/]</div>
+			<div class="myClient">
+				<div class="selectedtext">
+					<div class="selectedtextleft"><span>0</span>[@lang_res k='ifa.user.selector.resultTips'/].</div>
+					<ul class="selectedtextright">
+						<li>[@lang_res k='ifa.user.selector.select'/]</li>
+						<li>
+							<p><input type="checkbox">
+								<p>
+									<p class="SelectAll">[@lang_res k='ifa.user.selector.selectAll'/]</p>
+						</li>
+						<li><span>[@lang_res k='ifa.user.selector.reverse'/]</span></li>
+					</ul>
+
+				</div>
+				<div class="selectedlist">
+					<ul></ul>
+					</p>
+				</div>
+			</div>
+	  	<input type="hidden" name="openerMemberIdsObj" id="openerMemberIdsObj" value="${memberIdsObj!''}">
+	  	<input type="hidden" name="openerMemberNamesObj" id="openerMemberNamesObj" value="${memberNamesObj!''}">
+	  	<input type="hidden" name="memberIds" id="memberIds" value="">
+	  	<input type="hidden" name="memberNames" id="memberNames" value="">
+	    <div class="creatlistbn" style="margin-top:40px;">
+			<a class="craetbnCancel" id="btn_cancel">[@lang_res k='global.cancel'/]</a>
+			<a class="craetbnSave" id="btn_update" style="margin-right:15px;">[@lang_res k='global.save'/]</a>
+		</div>
+		</div>
+	</div>
+	<input type="hidden" name=openerMemberNamesObj id="openerMemberNamesObj" value="">
+  	<input type="hidden" name="openerMemberIdsObj" id="openerMemberIdsObj" value="">
+	<input type="hidden" name="memberIds" id="memberIds" value="">
+  	<input type="hidden" name="memberNames" id="memberNames" value="">
+  	<input id="permit_clients_name" type="hidden" value="">
+    <input id="permit_prospects_name" type="hidden" value="">
+    <input id="permit_buddies_name" type="hidden" value="">
+    <input id="permit_colleagues_name" type="hidden" value="">
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+//seajs.use('${base}/res/web/ifa/selectNameListTest.js');
+     seajs.use('${base}/res/web/portfolio/createPortfolio/createPortfolioFour.js');
+</script>

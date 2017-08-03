@@ -1,0 +1,634 @@
+[#include "../../inc/head_no_menu.html"/]
+    
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<link rel="stylesheet" href="${base}/res/third/formValidator/css/validationEngine.jquery.css"/>
+
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+[#include "../../inc/regist_head.html"/]  
+<div class="wmes-content" style="margin-left:0px;">
+    <div class="regist-bg">
+        	<div class="register_div">
+            <p class="regist-big-title">[@lang_res k='member.register.title'/]</p>
+                <!--<h2 class="register_title">[@lang_res k='member.register.title'/]</h2>-->
+                <div class="register_liucheng">
+                    <ul>
+                        <li>
+                            <span class="circle_yellow">1</span>
+                            <span class="font_yellow">[@lang_res k='member.register.step1'/]</span>
+                        </li>
+                        <li class="jiantou_width">
+                        	<span class="register_jiantou"></span>
+                        </li>
+                        <li>
+                            <span class="circle_yellow">2</span>
+                            <span class="font_yellow">[@lang_res k='member.register.step2'/]</span>
+                        </li>
+                        <li class="jiantou_width">
+                        	<span class="register_jiantou"></span>
+                        </li>
+                        <li>
+                            <span class="circle_orange">3</span>
+                            <span class="font_orange">[@lang_res k='member.register.step3'/]</span>
+                        </li>
+                        <li class="jiantou_width">
+                        	<span class="register_jiantou"></span>
+                        </li>
+                        <li>
+                            <span class="circle_gray">4</span>
+                            <span>[@lang_res k='member.register.step4'/]</span>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+            <form action="" id="InvestorFrom">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+                  <tbody>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.lastnameinenglish'/]</span>
+                        </td>
+                        <td class="register_table_right">
+                          <input class="register_input validate[required,custom[onlyLetterSp]]" name="lastName" id="investorLastName" type="text" maxlength="20" data-prompt-target="lastError">
+                          <span id="lastError"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.firstnameinenglish'/]</span>
+                        </td>
+                        <td><input class="register_input validate[required,custom[onlyLetterSp]" name="firstName" id="investorFirstName"  type="text" maxlength="20" data-prompt-target="firstError">
+                        <span id="firstError" ></span>
+                        </td>
+                      </tr>
+                   <tr>
+                        <td align="right">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.alias'/]</span>
+                        </td>
+                        <td>
+                          <input class="register_input validate[required]" type="text" name="nickName" maxlength="20">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.nameinchinese'/]</span>
+                        </td>
+                        <td><input class="register_input" name="nameChn" id="name_chn" type="text" maxlength="6">
+                            <span class="Wrong_tips"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.gender'/]</span>
+                        </td>
+                        <td style="padding-top: 8px;">
+                          <input type="radio" value="M" name="gender" checked>[@lang_res k='member.register.male'/]
+                          <input type="radio" value="F" name="gender">[@lang_res k='member.register.female'/]
+                        </td>
+                      </tr> 
+                      <tr hidden>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.dateofbirth'/]</span>
+                        </td>
+                        <td>
+                          <input class="register_input" id='born' readonly="" type="text" name="born">
+                        </td>
+                      </tr>
+                      <tr hidden>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.countryofbirth'/]</span>
+                        </td>
+                        <td>
+                        <div class="register_xiala_long">
+                            <input type="text" id="countryName" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->" class="value_show">
+                            <input type="hidden" name="country" id="country" class="value_hidden">
+                            <ul class="regiter_xiala_ul" id="invest_country">
+                               <!-- 出生地 -->
+                            </ul>
+                            <span class="register_xiala_ico"></span>
+                        </div>
+                         <!-- <div class="register_xiala_long">
+                              <select class="Choice_select" name="country" id="country">
+                                  <option value="">Pleaes select</option>
+                              </select>
+                          </div>  -->
+                        </td>
+                      </tr>              
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.nationality'/]</span>
+                        </td>
+                        <td>
+                        <div class="register_xiala_long">
+                            <input type="text" id="nationName" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->" class="value_show">
+                            <input type="hidden"  name="nationality" id="nationality" class="value_hidden">
+                            <ul class="regiter_xiala_ul" id="invest_nation">
+                              <!-- 国籍 -->
+                            </ul>
+                            <span class="register_xiala_ico"></span>
+                        </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.credentialstype'/]</span>
+                        </td>
+                        <td>
+                        <div class="register_xiala_long">
+                              <input type="text" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->" class="value_show validate[condRequired[idcard]]" data-prompt-target="certTypeError" id="certTypeId">
+                              <input type="hidden"  name="certType" class="value_hidden" id="ivestCertType">
+                              <ul class="regiter_xiala_ul cardType" >
+                                 <!-- 证件类型 -->
+                              </ul>
+                              <span class="register_xiala_ico"></span>
+                        </div> 
+                        <span id="certTypeError"></span>
+                        </td>
+                      </tr>                           
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.idorpassportno'/]</span>
+                        </td>
+                        <td>
+                            <input class="register_input validate[condRequired[certTypeId]]" name="certNo" type="text" id="idCard" maxlength="30"  data-prompt-target="certNoError" >
+                            <span id="certNoError"></span>
+                        </td>
+                      </tr> 
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.levelofeducation'/]</span>
+                        </td>
+                        <td>
+                        <div class="register_xiala_long">
+                              <input type="text" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->"  class="value_show">
+                              <input type="hidden" name="education" class="value_hidden" >
+                              <ul class="regiter_xiala_ul"  id="ivestEdu">
+                                  <!-- 学历 -->
+                              </ul>
+                              <span class="register_xiala_ico"></span>
+                        </div> 
+                        </td>
+                      </tr>                   
+                      <tr hidden>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.employmentdetails'/]</span>
+                        </td>
+                        <td>
+                        <div class="register_xiala_long">
+                              <input type="text" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->" class="value_show">
+                              <input type="hidden" name="employment" class="value_hidden" >
+                              <ul class="regiter_xiala_ul" id="ivestEmploy">
+                                  <!-- 就业情况 -->
+                              </ul>
+                              <span class="register_xiala_ico"></span>
+                        </div> 
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.occupation'/]</span>
+                        </td>
+                        <td>
+                          <div class="register_xiala_long">
+                              <input type="text" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->" class="value_show">
+                              <input type="hidden"  name="occupation" id="Occupation" class="value_hidden">
+                              <ul class="regiter_xiala_ul" id="invest_occupation">
+                                 <!-- 职业 -->
+                              </ul>
+                              <span class="register_xiala_ico"></span>
+                          </div>
+                        </td>
+                      </tr> 
+                      <tr hidden>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.countryofprimaryresidence'/]</span>
+                        </td>
+                        <td>
+                          <div class="register_xiala_long">
+                              <input type="text" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->" class="value_show">
+                              <input type="hidden"  name="primaryResidence" id="primary_residence" class="value_hidden">
+                              <ul class="regiter_xiala_ul" id="invest_residence">
+                              <!-- 主要居住国 -->
+                              </ul>
+                              <span class="register_xiala_ico"></span>
+                          </div> 
+                        </td>
+                      </tr>       
+                  </tbody>
+              </table>
+            </form>
+
+            <form action="" id="CorporateFrom">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+                  <tbody>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.companyname'/]</span>
+                        </td>
+                        <td class="register_table_right">
+                          <input class="register_input" type="text" name="companyName" id="company_name" maxlength="60">
+                          <span class="Wrong_tips"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right" style="height:72px;">
+                          <span class="font_gray_left">[@lang_res k='member.register.typeofentity'/]</span>
+                        </td>
+                        <td>
+                        <ul class="register_table_Entity" id="entity_type">
+                              <li><input class="" name="entityType" value="Private Ltd Co" type="radio">[@lang_res k='member.register.toeprivateltdco'/]</li>
+                              <li><input class="" name="entityType" value="Private Co" type="radio">[@lang_res k='member.register.toeprivateco'/]</li>
+                              <li><input class="" name="entityType" value="Trust Account" type="radio">[@lang_res k='member.register.toetrustaccount'/]</li>
+                              <li><input class="" name="entityType" value="Listed Co" type="radio">[@lang_res k='member.register.toelistedco'/]</li>
+                              <li class="RadioOther">
+                              <input class="RadioOtherVal" name="entityType" value="" type="radio" >[@lang_res k='member.register.toeother'/]
+                              <input type="text" class="InputOther">
+                              </li> 
+                              <span class="Wrong_tips"></span>                             
+                        </ul>
+
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.businessregistrationnumber'/]</span>
+                        </td>
+                        <td>
+                          <input class="register_input" type="text" name="registerNo" id="register_no" maxlength="25">
+                          <span class="Wrong_tips"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.financialinstitution'/]</span>
+                        </td>
+                        <td style="padding-top: 8px;">
+                          <input type="radio" value="1" name="isFinancial">[@lang_res k='member.register.fiyes'/]
+                          <input type="radio" value="2" name="isFinancial">[@lang_res k='member.register.fino'/]
+                        </td>
+                      </tr> 
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left" style="margin-top:0px;">[@lang_res k='member.register.giin'/]</span>
+                        </td>
+                        <td>
+                            <input class="register_input" type="text" name="giin">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.natureandpurposeofbusiness'/]</span>
+                        </td>
+                        <td>
+                            <input class="register_input" type="text" name="naturePurpose">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.dateofincorporation'/]</span>
+                        </td>
+                        <td>
+                            <input class="register_input" type="text" readonly name="incorporationDate" id="incorporation_date">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.placeorcountryofincorporation'/]</span>
+                        </td>
+                        <td>
+                           <div class="register_xiala_long">
+                              <select class="Choice_select" name="incorporationPlace" id="incorporation_place">
+                                  <option value=""><-- [@lang_res k='member.register.pleaseselect'/] --></option>
+                              </select>
+                          </div> 
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left" style="margin-top:0px;">[@lang_res k='member.register.registeredofficeaddressintheplaceorcountryofincorporation'/]</span>
+                        </td>
+                        <td>
+                            <input class="register_input" type="text" name="registeredAddress">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.businessormailingaddres'/]</span>
+                        </td>
+                        <td>
+                            <input class="register_input" type="text" name="mailingAddress">
+                        </td>
+                      </tr>                      
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.country'/]</span>
+                        </td>
+                        <td>
+                           <div class="register_xiala_long">
+                              <select class="Choice_select Country_change" name="country" id="comCoun">
+                                  <option value=""><-- [@lang_res k='member.register.pleaseselect'/] --></option>
+                              </select>
+                          </div> 
+                        </td>
+                      </tr>                     
+                      <tr>
+                      <td align="right">
+                        <span class="font_gray_left">[@lang_res k='member.register.mobilenumber'/]</span>
+                      </td>
+                      <td>
+                         <span>+</span>
+                         <input class="register_input phone_code" type="text" style="width:108px;">
+                         <input class="register_input_217" type="text" name="mobile">
+                      </td>
+                    </tr>  
+                    <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.companywebsite'/]</span>
+                        </td>
+                        <td>
+                            <input class="register_input" type="text" name="website">
+                        </td>
+                      </tr>                                                              
+                  </tbody>
+              </table>
+            </form>
+
+            <form action="" id="IfaUserFrom">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+                  <tbody>
+                      <tr>
+                        <td align="right" class="register_table_left">
+                         <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.lastnameinenglish'/]</span>
+                        </td>
+                        <td class="register_table_right">
+                          <input class="register_input validate[required,custom[onlyLetterSp]]" type="text" name="lastName" id="IFAlastName"  maxlength="20">
+                          <span class="Wrong_tips"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                         <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.firstnameinenglish'/]</span>
+                        </td>
+                        <td><input class="register_input validate[required,custom[onlyLetterSp]]" type="text" name="firstName" id="IFAfirstName"  maxlength="20">
+                        <span class="Wrong_tips"></span>
+                        </td>
+                      </tr>
+                      <!--该字段数据库已删除
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.alias'/]</span>
+                        </td>
+                        <td>
+                          <input class="register_input" type="text" name="nickName">
+                        </td>
+                      </tr>-->
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.nameinchinese'/]</span>
+                        </td>
+                        <td><input class="register_input" type="text" name="nameChn" maxlength="6"></td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.gender'/]</span>
+                        </td>
+                        <td style="padding-top: 8px;">
+                          <input type="radio" value="M" name="gender" checked>[@lang_res k='member.register.male'/]
+                          <input type="radio" value="F" name="gender">[@lang_res k='member.register.female'/]
+                        </td>
+                      </tr> 
+                      <tr hidden>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.dateofbirth'/]</span>
+                        </td>
+                        <td>
+                          <input class="register_input" type="text" name="born" id="uesr_brith" readonly>
+                        </td>
+                      </tr>                        
+                      <tr hidden>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.countryofbirth'/]</span>
+                        </td>
+                        <td>
+	                        <div class="register_xiala_long">
+	                            <input type="text" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->"  id="ifa_country" class="value_show">
+	                            <input type="hidden" class="value_hidden" name="country" >
+	                            <ul class="regiter_xiala_ul countryList" id="IFAcountry">
+	                               <!-- 出生地 -->
+	                            </ul>
+	                            <span class="register_xiala_ico"></span>
+	                        </div> 
+                        	<!-- 
+                          <div class="register_xiala_long">
+                              <select class="Choice_select" name="country" id="IFAcountry">
+                                  <option value="">Pleaes select</option>
+                              </select>
+                          </div>
+                           -->
+                        </td>
+                      </tr> 
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.nationality'/]</span>
+                        </td>
+                        <td>
+                        	<div class="register_xiala_long">
+	                            <input type="text" id="ifaNationName" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->"  id="ifa_nationality" class="value_show">
+	                            <input type="hidden" class="value_hidden" name="nationality" >
+	                            <ul class="regiter_xiala_ul countryList" id="IFAnationality">
+	                               <!-- 国家-->
+	                            </ul>
+	                            <span class="register_xiala_ico"></span>
+	                        </div> 
+	                        
+                        </td>
+                      </tr>               
+                      <tr>
+                        <td align="right">
+                        <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.credentialstype'/]</span>
+                        </td>
+                        <td>
+                          <div class="register_xiala_long">
+                          	<input type="text" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->"  class="value_show  validate[condRequired[ifaIdCard]]"  data-prompt-target="ifaCertTypeError">
+                          	<input type="hidden" class="value_hidden"  name="certType" id="ifa_certType" >
+	                            <ul class="regiter_xiala_ul cardType">
+	                               <!-- 证件类型-->
+	                            </ul>
+	                            <span class="register_xiala_ico"></span>
+                          </div>
+                          <span id="ifaCertTypeError"></span> 
+                        </td>
+                      </tr> 
+                      <tr>
+                        <td align="right">
+                            <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.idorpassportno'/]</span>
+                        </td>
+                        <td>
+                            <input class="register_input validate[condRequired[ifa_certType]]" type="text" id="ifaIdCard" name="certNo" data-prompt-target="ifaCertNoError" maxlength="30">
+                            <span id="ifaCertNoError"></span>
+                        </td>
+                      </tr>                    
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.levelofeducation'/]</span>
+                        </td>
+                        <td>
+                          <div class="register_xiala_long">
+                          		<input type="text" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->" id="ifa_edu" class="value_show">
+                          		<input type="hidden" class="value_hidden"  name="education" >
+	                            <ul class="regiter_xiala_ul levEdu">
+	                               <!-- 学历-->
+	                            </ul>
+	                            <span class="register_xiala_ico"></span>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                            <span class="font_red">*</span>
+                          <span class="font_gray_left">[@lang_res k='member.register.company'/]</span>
+                        </td>
+                        <td>
+                        	<div class="register_xiala_long">
+	                            <input type="text" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->" id="ifa_company" class="value_show   validate[required]" data-prompt-target="companyError">
+	                            <input type="hidden" class="value_hidden"  name="company" > 
+	                            <ul class="regiter_xiala_ul ifa_com">
+	                               <!-- 公司-->
+	                            </ul>
+	                            <span class="register_xiala_ico"></span>
+	                        </div>
+	                        <span class="companyError" id="companyError" style="float:left;"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.position'/]</span>
+                        </td>
+                        <td>
+                        <div class="register_xiala_long">
+	                            <input type="text" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->" id="ifa_position" class="value_show">
+	                            <input type="hidden" class="value_hidden"  name="occupation" > 
+	                            <ul class="regiter_xiala_ul" id="IFAPosition">
+	                               <!-- 职业-->
+	                            </ul>
+	                            <span class="register_xiala_ico"></span>
+	                        </div>
+                        <!--
+                          <div class="register_xiala_long">
+                              <select class="Choice_select" name="Position" id="IFAPosition">
+                                  <option value="">Pleaes select</option>
+                              </select>
+                          </div> 
+                          -->
+                        </td>
+                      </tr>
+                      <tr hidden>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.cenumber'/]</span>
+                        </td>
+                        <td>
+                            <input class="register_input" type="text" name="CE">
+                        </td>
+                      </tr>
+                      <tr hidden>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.cfanumber'/]</span>
+                        </td>
+                        <td>
+                            <input class="register_input" type="text" name="cfa_no">
+                        </td>
+                      </tr>                     
+                      <tr hidden>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.cfpnumber'/]</span>
+                        </td>
+                        <td>
+                            <input class="register_input" type="text" name="cfp">
+                        </td>
+                      </tr>
+                      <tr hidden>
+                        <td align="right">
+                          <span class="font_gray_left">[@lang_res k='member.register.countryofprimaryresidence'/]</span>
+                        </td>
+                        <td>
+                        	<div class="register_xiala_long">
+	                            <input type="text" placeholder="<-- [@lang_res k='member.register.pleaseselect'/] -->" id="ifa_residence" class="value_show">
+	                            <input type="hidden" class="value_hidden"    name="primaryResidence">
+	                            <ul class="regiter_xiala_ul countryList" id="IFAprimary_residence">
+	                               <!-- 长居国-->
+	                            </ul>
+	                            <span class="register_xiala_ico"></span>
+	                        </div> 
+                        </td>
+                      </tr>
+                      <!-- 该字段在数据库表已删除                   
+                      <tr>
+                        <td align="right">
+                          <span class="font_gray_left">Mobile Number</span>
+                        </td>
+                        <td>
+                         <span>+</span>
+                         <input class="register_input phone_code" type="text" style="width:108px;">
+                         <input class="register_input_217" type="text" name="mobile">
+                        </td>
+                      </tr>
+                       -->  
+                       <tr hidden>
+                        <td align="right">
+                          <span class="font_gray_left" style="margin-top:0px;">[@lang_res k='member.register.personalintroduction'/]</span>
+                        </td>
+                        <td style="padding-bottom: 20px;">
+                            <textarea class="PersonalContent" name="introduction" rows="8" cols="60"></textarea>
+                        </td>
+                      </tr>                                           
+                  </tbody>
+              </table>
+            </form> 
+            	<div class="btn_next_div2">
+                	<a class="btn_previous" href="JavaScript:;">[@lang_res k='member.register.previous'/]</a>
+                	<a id="btn_next" class="btn_next" href="javascript:;">[@lang_res k='member.register.next'/]</a>
+                </div>
+            
+            	<div class="clear"></div>
+           </div> 
+
+    </div>
+</div>
+    [#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+    var registerType = "${registerType!}";
+    var memberType = "${memberType!}";
+    var subMemberType = "${subMemberType!}";
+    seajs.use('${base}/res/web/member/regist/baseinformation.js');
+    seajs.use('${base}/res/js/jsDatePick.jquery.min.1.3.js');
+</script>
+<script type="text/javascript">
+
+window.onload = function(){
+    new JsDatePick({
+      useMode:2,
+      target:"born",
+      dateFormat:"%Y-%m-%d"
+    });
+    new JsDatePick({
+      useMode:2,
+      target:"incorporation_date",
+      dateFormat:"%Y-%m-%d"
+    });
+    new JsDatePick({
+      useMode:2,
+      target:"uesr_brith",
+      dateFormat:"%Y-%m-%d"
+    });
+  };
+</script>

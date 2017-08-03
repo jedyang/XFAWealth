@@ -1,0 +1,477 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<link href="${base}/res/third/laydate/need/laydate.css" rel="stylesheet">
+<link href="${base}/res/third/laydate/skins/yalan/laydate.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/other.css">
+<link rel="stylesheet" href="${base}/res/css/jquery.range.css">
+<style>
+.aipstate_button{float: left;  width: 42px; height: 20px; background: url('${base}/res/images/ifa/op_choose_01.png') no-repeat; cursor: pointer; margin-right: 10px;margin-top: 10px; }
+.aipstate_button_active{background: url('${base}/res/images/ifa/op_choose_02.png') no-repeat;}
+.client-table_new .t3r4 input {width: 60px;}
+</style>
+<div class="wmes-content" ng-app="orderPlan" ng-controller="orderPlanCtrl">
+	<div class="proposal-wrap">
+		<p class="wmes-wrap-title" style="padding-bottom: 20px;">[@lang_res k='order.plan.create.portfolio.title'/]</p>
+		<ul class="createflow createflow_new">
+			<li class="prev"><span>1</span>[@lang_res k='order.plan.step.one.title'/]</li>
+			<div class=createflow_new_prev></div>
+			<li class="now"><span>2</span>[@lang_res k='order.plan.step.two.title'/]</li>
+			<div class="createflow_new_now"></div>
+			<li class="next"><span>3</span>[@lang_res k='order.plan.step.three.title'/]</li>
+		</ul>
+		<div style="clear:both" class="rebalance-table-rows">
+			<div class="order-plan-client order-plan-rows" style="">
+				<div class="client-Detailbox" style="margin: 40px 0 50px 50px">
+					<div class="client-Detailbox-left">
+						<ul>
+							<li>
+								<img src="${base}${(detail.clientIconUrl)!}" />
+								<b>${(detail.nickName)!}</b>
+							</li>
+							<li>
+								<img style="margin-right: 8px;" src="${base}/res/images/client/phone_ico.png">
+								<span>${(detail.mobileNumber)!'-'}</span>
+							</li>
+							<li>
+								<img style="margin-right: 8px;" src="${base}/res/images/client/email_ico.png">
+								<span>${(detail.email)!'-'}</span>
+							</li>
+						</ul>
+					</div>
+					<div class="client-Detailbox-rightnew">
+						<!-- 货币 -->
+						<div class="order-plan-cur-fillin" style="margin-bottom: 10px;margin-right: 10px;">
+							<p class="order-plan-cur-title">[@lang_res k='order.plan.rebalance.CUR'/]</p>
+							<div class="client_xiala proposal_xiala" style="width: 100px;">
+								<input id="hidDefCurrency" value="${(detail.currencyCode)!}" type="hidden">
+								<input id="portfolio-currency" style="width: 60px;" class="portfolio-currency" type="text" value="${(detail.currencyCode)!}" readonly>
+								<span class="icon_xiala portfolio-currency" style="margin-top: 7px;"></span>
+								<ul id="currency-choice" style="width:98px"></ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- accounts -->
+			<div class="order-plan-rows">
+				<p class="client-bg-title">[@lang_res k='order.plan.acount.summary'/] <span class="client-more-ico"></span></p>
+				<table class="client-table order-table">
+					<tbody>
+						<tr class="client-table-th">
+							<th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.distributor'/]</th>
+                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.accoutNo'/]</th>
+                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.inv.account.type'/]</th>
+                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.account.table.basic.cur'/]</th>
+                            <th width="15%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.asset'/]</th>
+                            <th width="15%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.cash'/]</th>
+                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.account.table.market.value'/]</th>
+                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.table.th.rpq.riskLevel'/]</th>
+                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.authorizedToIFA'/]</th>
+						</tr>
+						[#if detail?? && detail.investorAccountVOs?? && detail.investorAccountVOs?size gt 0]
+	                        [#list detail.investorAccountVOs as items]
+	                        <tr id="${items.accountId!}" class="ifa-check-hold-account">
+	                            <td class="portfolio-tdcenter account-td-distributor" data-distributor-id="${items.distributorId!}">
+	                            	<img style="width:100px" class="rebalance-distributor-img" src="${base}${items.distributorIconUrl!}">
+	                            </td>
+	                            <td class="portfolio-tdcenter transaction-account-no">${items.accountNo!}</td>
+	                            <td class="portfolio-tdcenter">${items.subFlagDisplay!}</td>
+	                            <td class="portfolio-tdcenter">${items.baseCurrency!}</td>
+	                            <td class="portfolio-tdcenter">
+	                            [#if items.totalCash??]
+	                            <div class="please-login-data">
+                            		<span class="conversion-flag total-value">[@num_fmt s='${items.totalCash!"0.00"}'/]</span>
+                            		<span class="to-currency" style="margin-left:5px">${items.currency!}</span>
+                            	</div>
+	                            [#else]-[/#if]
+	                            </td>
+	                            <td class="portfolio-tdcenter">
+	                            [#if items.cashAvailable??]
+	                            <div class="please-login-data">
+                            		<span class="conversion-flag cash-value">[@num_fmt s='${items.cashAvailable!"0.00"}'/]</span>
+                            		<span class="to-currency" style="margin-left:5px">${items.currency!}</span>
+                            	</div>
+	                            [#else]-[/#if]
+	                            </td>
+	                            <td class="portfolio-tdcenter">
+	                            	[#if items.marketValue??]
+	                            	<span class="conversion-flag">[@num_fmt s='${items.marketValue!}'/]</span>
+                            		<span class="to-currency" style="margin-left:5px">${items.currency!}</span>
+	                           		[/#if]
+	                            </td>
+	                            <td class="portfolio-tdcenter">${items.rpqRiskLevel!'N/A'}</td>
+	                            <td class="portfolio-tdcenter" style="color:#ff6908;">
+	                            [#if items.authorized?? && items.authorized == '1']
+	                            	[@lang_res k='order.plan.table.authorized.1'/]
+	                            [#else]
+	                            	[@lang_res k='order.plan.table.authorized.0'/]
+	                            [/#if]
+	                            </td>
+	                        </tr>
+	                        [/#list]
+	                        [#else]
+	                        <tr class="tr-wmes-nodata-tips">
+	                        	<td colspan="9">
+	                        		<div class="wmes-nodata-tips" style="display:block">
+	             						<img class="wmes-nodata-img" style="width:73px;height:64px" src="${base}/res/images/no_data_ico.png">
+	             						<span class="wmes-nodate-word" style="color:red;font-size: 17px">[@lang_res k='order.plan.rebalance.account.nodata.tips'/]</span>
+	          						</div>
+	                        	</td>
+	                        </tr>
+	                        [/#if]
+					</tbody>
+				</table>
+			</div>
+			<div class="order-plan-client order-plan-rows" style="">
+				<p class="builder-title">[@lang_res k='order.plan.portfolio.summary'/]
+					<span id="client-Detail-ico" class="client-more-ico"></span>
+				</p>
+				<div class="plan-detail-more-wral">
+					<div class="plan-detail-more-wralbox">
+						<div class="plan-detail-more-wral-title">
+							<div class="plan-detail-more-wral-titleleft">
+								<p><i style="color:red;margin-right:5px">*</i>[@lang_res k='order.plan.rebalance.portfolioName'/]</p>
+								<input id="txtPortfolioName" maxlength="200" readonly="readonly" style="float: left;height: 27px;border: 0px;color:#2182d8;border-radius: 4px;margin-top: 6px;width: 120px;" value="${(detail.portfolioName)!}" />
+								<span></span>
+							</div>
+							<!-- 
+							<div class="plan-detail-more-wral-titleright">
+								<div style="clear: both;">
+									<p class="portfolio-edit-rows-title">
+										[@lang_res k='order.plan.rebalance.AIP.status'/]
+									</p>
+									<a id="aipState" class="aipstate_button" href="javascript:;"></a>
+								</div>
+							</div>
+							 -->
+						</div>
+						<div class="plan-detail-more-wral-content">
+							<ul>
+								<li>
+									<div>
+										<p><i style="color:red;margin-right:5px">*</i>[@lang_res k='order.plan.investment.amount'/]</p>
+										<input type="text" id="investorAmount" class="order_plan_input conversion-flag"/>
+										<span class="to-currency">${detail.currencyName!''}</span>
+									</div>
+									<div>
+										<p>[@lang_res k='order.plan.rebalance.table.cash'/]</p>
+										<p><span class="cash_available conversion-flag">[@num_fmt s='${detail.cashAvailable!"0.00"}'/]</span> <span class="to-currency">${detail.currencyName!''}</span></p>
+									</div>
+								</li>
+								<li>
+									<div>
+										<p>[@lang_res k='order.plan.commission.table.transaction.amount'/]</p>
+										<p><span class="total_transaction_amount conversion-flag"></span> <span class="to-currency">${detail.currencyName!''}</span></p>
+									</div>
+									<div>
+										<p>[@lang_res k='order.plan.commission.total.transaction.fee'/]</p>
+										<p><span class="total_transaction_fee conversion-flag"></span> <span class="to-currency">${detail.currencyName!''}</span></p>
+									</div>
+								</li>
+								<li>
+									<div>
+										<p><span id="risk-level-average">N/A</span> ( [@lang_res k='order.plan.rebalance.riskLevel.weightedAverage'/] )</p>
+										<p>[@lang_res k='order.plan.portfolio.risk.level'/]</p>
+									</div>
+									<div>
+										<p><span id="risk-level-max">N/A</span> ( [@lang_res k='order.plan.rebalance.riskLevel.max'/] )</p>
+										<p style="height:42px;"></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="rebalance-table-rows order-plan-rows" style="clear: both;">
+				<p class="client-bg-title">[@lang_res k='order.plan.rebalance.product.list'/] <span class="client-more-ico"></span></p>
+				<div class="wmes-nodata-tips no_list_tips" style="display:none;">
+					<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+					<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+				</div>
+				<div class="portfolio-edit-button" style="clear: both">
+					<a id="btnAddFund" class="portfolio-button" href="javascript:;">[@lang_res k='order.plan.rebalance.quickAdd'/]</a>
+					<a id="btnReset" class="portfolio-button" href="javascript:;">[@lang_res k='order.plan.rebalance.reset'/]</a>
+				</div>
+				<table class="client-table order-table order-table-subscription-purchase client-table_new">
+					<tbody class="order-table-subscription-purchase-tbody">
+						<tr class="client-table-th">
+							<th style="width:20%;" class="client-tables-header">[@lang_res k='order.plan.rebalance.product.Information'/]</th>
+							<th style="width:15%;" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.lastNav'/]</th>
+							<th style="width:20%;" class="client-tables-header">
+								[@lang_res k='order.plan.table.th.sub.amount'/]
+								<br> ( [@lang_res k='order.plan.table.th.min.sub.amount'/] )
+							</th>
+							<th style="width:16%;" class="client-tables-header">
+								[@lang_res k='order.plan.commission.table.transaction.amount'/]
+							</th>
+							<th style="width:20%;" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.weight'/]</th>
+						</tr>
+						[#if detail?? && detail.planProductVOs?? && detail.planProductVOs?size gt 0]
+                        [#list detail.planProductVOs as item]
+                        [#if item.tranType?? && item.tranType == 'B']
+						<tr class="freemarke-product-fund-info product-fund-info" id="${(item.fundInfoId)!}" data-fund-name="${item.fundName!''}">
+							<td class="portfolio-tdcenter order-tables-name">
+								<a target="_blank" href="${base!}/front/fund/info/fundsdetail.do?id=${(item.fundInfoId)!}">
+	                           		<img style="float: left;margin-right: 5px;width: 15px;height: 13px;display:
+	                           		[#if item.riskLevel?? && item.rpqRiskLevel?? && item.riskLevel > item.rpqRiskLevel]
+	                           		block;
+	                           		[#else]
+	                           		none;
+	                           		[/#if]
+	                           		" class="product-update-ico-rpq-level" src="${base}/res/images/client/product_war_ico.png">
+	                               	${item.fundName!''}
+                               	</a>
+								<div class="portfolio_tables_nameWord">
+									<p class="portfolio_tables_risk">[#if item.riskLevel??]<span class="product-risk-level">${item.riskLevel!''}</span> [@lang_res k='order.plan.rebalance.table.risk'/][/#if] <b style="margin-left:50px">${item.fundType!''}</b></p>
+									<p class="portfolio_tables_risk">[@lang_res k='order.plan.account.table.basic.cur'/]<b style="margin-left:15px">${item.fundCurrencyName!}</b></p>
+								</div>
+							</td>
+							<td class="t2r">
+								<p class="t2r1"><span class="conversion-flag">[@num_fmt s='${item.lastNav!}'/]</span> <span class="to-currency">${detail.currencyName!''}</span></p>
+								<p class="t2r2">[@lang_res k='order.plan.table.th.transaction.rate'/]</p>
+								<p class="t2r3">[@lang_res k='order.plan.table.th.transaction.fee'/]</p>
+								<p class="t2r3">[@lang_res k='order.plan.table.th.min.transaction.fee'/]</p>
+							</td>
+							<td class="t3r">
+								<p class="t3r1">
+									<input class="order_plan_input product_sub_amount" style="text-align: -webkit-right;" type="text" value="[@num_fmt s='${item.amount!"0"}'/]" />
+									( <span class="to-currency">${detail.currencyName!''}</span> )
+								</p>
+								<p class="t3r2" style="color:#ccc;">
+									<span class="min_subscribe_amount conversion-flag">[@num_fmt s='${item.minSubscribeAmount!"0"}'/]</span> ( <label class="to-currency">${detail.currencyName!''}</label> )
+								</p>
+								<p class="t3r3"><input class="order_plan_input product_transaction_rate" style="text-align: -webkit-right;[#if detail.memberType?? && detail.memberType==1]border:0px;[/#if]" [#if detail.memberType?? && detail.memberType==1]readonly="readonly"[/#if] type="text" value="${item.tranRate!'0.00'}" />
+									<span style="margin-left:5px">%</span>
+								</p>
+								<p class="t3r4"><input readonly="readonly" class="order_plan_input product_transaction_fee conversion-flag" style="border: 0px;text-align: -webkit-right;" type="text" value="[@num_fmt s='${item.tranFee!"0"}'/]" />
+									<span class="to-currency" style="margin-left:5px">${detail.currencyName!''}</span>
+								</p>
+								<p class="t3r2" style="color:#ccc;">
+									<span class="min_amount_fee conversion-flag">[@num_fmt s='${item.tranFeeMini!"0.00"}'/]</span> ( <label class="to-currency">${detail.currencyName!''}</label> )
+								</p>
+							</td> 
+							<td class="portfolio-tdcenter portfolio-slider" colspan="2">
+								<div style="overflow:hidden;">
+									<img class="product-action-del" style="width:22px;height:22px;float:right;margin-top:6px;" src="${base!}/res/images/ifa/garbage_ico.png" />
+									<span style="float: right;margin-top: 10px;margin-right: 70px;">%</span>
+									<input style="width:12%;border-radius: 5px;text-align: -webkit-right;" class="strategy_chart_tinput" value="${item.weightAdjust!'0.00'}" name="" readonly="readonly">
+									<div class="funds-slider-wrap" style="float:right;width:30%;">
+										<input class="funds-single-slider" value="${item.weightAdjust!},${item.weightAdjust!}" style="display: none;">
+									</div>
+									<p style="float:left;line-height:37px;margin-right:10%;"><span class="product_transaction_amount conversion-flag">0.00</span><span class="to-currency">${detail.currencyName!''}</span></p>
+								</div>
+								<div class="product-account-div" style="height:39px;padding-top:10px;">
+									<div class="client_xiala proposal_xiala" style="width: 138px;float:right;">
+										<input class="content_xiala account_content_xiala" style="width:103px;" type="text" data-risk-level="${item.riskLevel!}" data-rpq-level="${item.rpqRiskLevel!}" data-total-flag="${item.totalFlag!}" data-total-flag-display="${item.totalFlagDisplay!}" data-authorized=${item.authorized!} data-account-id="${item.accountId!}" value="${item.accountNo!}" readonly="">
+										<span class="icon_xiala" style="margin-top: 7px;"></span>
+										<ul class="ul_xiala account_ul_xiala" style="width:135px">
+										[#if detail.investorAccountVOs?? && detail.investorAccountVOs?size gt 0]
+										[#list detail.investorAccountVOs as items]
+											<li data-rpq-level="${items.rpqRiskLevel!}" data-authorized=${items.authorized!} data-account-id="${items.accountId!}" data-total-flag="${items.totalFlag!}" data-total-flag-display="${items.totalFlagDisplay!}">${items.accountNo!''}</li>
+										[/#list]
+										[/#if]
+										</ul>
+									</div>
+									<p class="order-plan-cur-title" style="float:right;">[@lang_res k='order.plan.rebalance.table.accoutNo'/]</p>
+								</div>
+								<!-- <div style="height:39px;padding-top:10px;">
+									<div class="client_xiala proposal_xiala" style="width: 138px;float:right;">
+										<input class="content_xiala dividend_content_xiala" style="width:103px;" class="" type="text" value="${item.dividendDisplay!}" readonly="">
+										<span class="icon_xiala" style="margin-top: 7px;"></span>
+										<ul class="ul_xiala dividend_ul_xiala" style="width:135px">
+											<li data-dividend="R">[@lang_res k='order.plan.product.diviend.display.r'/]</li>
+											<li data-dividend="D">[@lang_res k='order.plan.product.diviend.display.d'/]</li>
+										</ul>
+									</div>
+									<p class="order-plan-cur-title" style="float:right;">[@lang_res k='order.plan.rebalance.table.dividendOption'/]</p>
+								</div> -->
+							</td>
+						</tr>
+						[/#if]
+                        [/#list]
+                        [/#if]
+                        <tr class="product-fund-info ng-cloak" ng-if="item.tradable=='Y' && item.status=='1'" ng-repeat="item in planProducts" id="{{item.fundInfoId}}" data-fund-name="{{item.fundName}}">
+							<td class="portfolio-tdcenter order-tables-name">
+								<a target="_blank" href="${base!}/front/fund/info/fundsdetail.do?id={{item.fundInfoId}}">
+	                           		<img style="width: 15px;height: 13px;display:none;float: left;margin-right: 5px;" class="product-update-ico-rpq-level" src="${base}/res/images/client/product_war_ico.png">
+	                               	{{item.fundName}}
+                               	</a>
+								<div class="portfolio_tables_nameWord">
+									<p class="portfolio_tables_risk"><span class="product-risk-level">{{item.riskLevel}}</span> [@lang_res k='order.plan.rebalance.table.risk'/] <b style="margin-left:50px">{{item.fundType}}</b></p>
+									<p class="portfolio_tables_risk">[@lang_res k='order.plan.account.table.basic.cur'/]<b style="margin-left:15px">{{item.fundCurrencyName}}</b></p>
+								</div>
+							</td>
+							<td class="t2r">
+								<p class="t2r1"><span class="conversion-flag">{{item.lastNav|formatCurrency:''}}</span> <span class="to-currency">{{item.currencyName}}</span></p>
+								<p class="t2r2">[@lang_res k='order.plan.table.th.transaction.rate'/]</p>
+								<p class="t2r3">[@lang_res k='order.plan.table.th.transaction.fee'/]</p>
+								<p class="t2r3">[@lang_res k='order.plan.table.th.min.transaction.fee'/]</p>
+							</td>
+							<td class="t3r">
+								<p class="t3r1">
+									<input class="order_plan_input product_sub_amount conversion-flag" style="text-align: -webkit-right;" type="text" value="{{item.amount|formatCurrency:''}}" />
+									( <span class="to-currency">{{item.currencyName}}</span> )
+								</p>
+								<p class="t3r2" style="color:#ccc;">
+									<span class="min_subscribe_amount conversion-flag">{{item.minSubscribeAmount|formatCurrency:''}}</span> ( <label class="to-currency">{{item.currencyName}}</label> )
+								</p>
+								<p class="t3r3">
+									<input ng-if="memberType==1" readonly="readonly" class="order_plan_input product_transaction_rate" style="text-align: -webkit-right;border:0px;" type="text" value="{{item.tranRate|formatCurrency:''}}" />
+									<input ng-if="memberType==2" class="order_plan_input product_transaction_rate" style="text-align: -webkit-right;" type="text" value="{{item.tranRate|formatCurrency:''}}" />
+									<span style="margin-left:5px">%</span>
+								</p>
+								<p class="t3r4"><input readonly="readonly" class="order_plan_input product_transaction_fee conversion-flag" style="border: 0px;text-align: -webkit-right;" type="text" value="{{item.tranFee|formatCurrency:''}}" />
+									<span style="margin-left:5px" class="to-currency">{{item.currencyName}}</span>
+								</p>
+								<p class="t3r2" style="color:#ccc;">
+									<span class="min_amount_fee conversion-flag">{{item.tranFeeMini|formatCurrency:''}}</span> ( <label class="to-currency">{{item.currencyName}}</label> )
+								</p>
+							</td> 
+							<td class="portfolio-tdcenter portfolio-slider" colspan="2">
+								<div style="overflow:hidden;">
+									<img class="product-action-del" style="width:22px;height:22px;float:right;margin-top:6px;" src="${base!}/res/images/ifa/garbage_ico.png" />
+									<span style="float: right;margin-top: 10px;margin-right: 70px;">%</span>
+									<input style="width:12%;border-radius: 5px;text-align: -webkit-right;" class="strategy_chart_tinput" value="{{item.weightAdjust||0}}" name="" readonly="readonly">
+									<div class="funds-slider-wrap" style="float:right;width:30%;">
+										<input class="funds-single-slider" value="{{item.weightAdjust||0}},{{item.weightAdjust||0}}" style="display: none;">
+									</div>
+									<p style="float:left;line-height:37px;margin-right:10%;"><span class="product_transaction_amount conversion-flag">0.00</span><span class="to-currency">{{item.currencyName}}</span></p>
+								</div>
+								<div class="product-account-div" style="height:39px;padding-top:10px;">
+									<div class="client_xiala proposal_xiala" style="width: 138px;float:right;">
+										<input class="content_xiala account_content_xiala" style="width:103px;" type="text" data-risk-level="{{item.riskLevel}}" data-rpq-level="{{item.rpqRiskLevel}}" data-total-flag="{{item.totalFlag}}" data-total-flag-display="{{item.totalFlagDisplay}}" data-authorized={{item.authorized}} data-account-id="{{item.accountId}}" value="{{item.accountNo}}" readonly="">
+										<span class="icon_xiala" style="margin-top: 7px;"></span>
+										<ul class="ul_xiala account_ul_xiala" style="width:135px">
+										[#if detail.investorAccountVOs?? && detail.investorAccountVOs?size gt 0]
+										[#list detail.investorAccountVOs as items]
+											<li data-rpq-level="${items.rpqRiskLevel!}" data-authorized=${items.authorized!} data-account-id="${items.accountId!}" data-total-flag="${items.totalFlag!}" data-total-flag-display="${items.totalFlagDisplay!}">${items.accountNo!''}</li>
+										[/#list]
+										[/#if]
+										</ul>
+									</div>
+									<p class="order-plan-cur-title" style="float:right;">[@lang_res k='order.plan.rebalance.table.accoutNo'/]</p>
+								</div>
+								<!-- <div style="height:39px;padding-top:10px;">
+									<div class="client_xiala proposal_xiala" style="width: 138px;float:right;">
+										<input class="content_xiala dividend_content_xiala" style="width:103px;" class="" type="text" value="{{item.dividendDisplay}}" readonly="">
+										<span class="icon_xiala" style="margin-top: 7px;"></span>
+										<ul class="ul_xiala dividend_ul_xiala" style="width:135px">
+											<li data-dividend="R">[@lang_res k='order.plan.product.diviend.display.r'/]</li>
+											<li data-dividend="D">[@lang_res k='order.plan.product.diviend.display.d'/]</li>
+										</ul>
+									</div>
+									<p class="order-plan-cur-title" style="float:right;">[@lang_res k='order.plan.rebalance.table.dividendOption'/]</p>
+								</div> -->
+							</td>
+						</tr>
+						<tr class="tr-wmes-nodata-tips" style="display:none;">
+							<td colspan="5">
+								<div class="wmes-nodata-tips" style="display:block;">
+									<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+									<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="product-tips-wrap" style="margin-top:20px">
+					<img class="product-tips-ico" src="${base}/res/images/client/product_war_ico.png">
+					<p class="product-tips-word">[@lang_res k='order.plan.rebalance.table.caveat'/].</p>
+				</div>
+			</div>
+			<div class="rebalance-button-wrap">
+				<a class="rebalance-summit-button" id="btnAnalysis" href="javascript:void(0)">[@lang_res k='order.plan.analysis'/]</a>
+				<a class="rebalance-summit-button" id="btnOrder" href="javascript:void(0)">[@lang_res k='order.plan.order'/]</a>
+			</div>
+		</div>
+	</div>
+	<!-- supervisor 选择  -->
+	<div class="fund-space-mask-wrap" style="display:none;z-index: 55;position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.43);">
+		<div class="fund_float_menu_addbox" style="display:none;background: #fff;position: fixed;top: 150px;left: 20%;width: 60%;border-radius: 10px;box-shadow: 2.5px 4.33px 35px 0px #000;">
+			<div class="wmes-close select-supervisor-cancel"></div>
+			<div class="wmes-wrap-title" style="margin: 15px;">[@lang_res k='order.plan.commission.dialog.select.supervisor.title'/]</div>
+			<div style="width:60%;min-height:75px;margin-left: 27%;">
+				<p style="margin-bottom:8px;margin-top:15px;">[@lang_res k='order.plan.commission.dialog.select.supervisor.subtitle'/]</p>
+				<div class="register_xiala_long">
+					<input type="text" class="value_show" value="" readonly="readonly">
+					<ul class="regiter_xiala_ul regiter_xiala_ul_supervisor"></ul>
+					<span class="register_xiala_ico"></span>
+				</div>
+			</div>
+			<div style="margin:30px 0 30px 25%;">
+				<a class="rebalance-summit-button select-supervisor-confirm" href="javascript:void(0)">[@lang_res k='global.confirm'/]</a>
+				<a class="rebalance-cancel-button select-supervisor-cancel" href="javascript:void(0)">[@lang_res k='global.cancel'/]</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="client-portfolio-new-mask">
+	<div class="analysis-chart-content" style="width:58%;height:800px;background:#fff;left:21%;position:absolute;border-radius: 10px;box-shadow: 2.5px 4.33px 35px 0px #000;">
+		<div class="order-plan-rows" style="position:static;padding:20px 30px;">
+           <div class="wmes-close"></div>
+		   <div class="wmes-wrap-title">[@lang_res k='order.plan.rebalance.analysisChart'/]</div>
+           <div id="analysis-chart">
+                <ul class="builder-tab" style="margin-bottom: 10px">
+                    <li class="tab-active">[@lang_res k='order.plan.rebalance.performanceChart'/]<span></span></li>
+                    <li>[@lang_res k='order.plan.rebalance.allocationMap'/]</li>
+                   </ul>
+                <div class="builder-main-contents">
+                    <div class="builder-chart" style="display:block">
+                        <ul class="builder-chart-tab" style="margin-bottom: 40px">
+                            <li class="tab-active chart-tab" id="builder-chart-aggregate">[@lang_res k='order.plan.rebalance.aggregate'/]</li>
+                            <li class="chart-tab" id="builder-chart-separateness">[@lang_res k='order.plan.rebalance.individual'/]</li>
+                        </ul>
+                        <div class="builder-chart-wrap">
+                            <ul class="builder-chart-date">
+                                <li data-month="1M">[@lang_res k='order.plan.rebalance.1M'/]</li>
+                                <li data-month="3M">[@lang_res k='order.plan.rebalance.3M'/]</li>
+                                <li data-month="6M">[@lang_res k='order.plan.rebalance.6M'/]</li>
+                                <li class="now" data-month="1Y">[@lang_res k='order.plan.rebalance.1Y'/]</li>
+                                <li data-month="3Y">[@lang_res k='order.plan.rebalance.3Y'/]</li>
+                                <li data-month="5Y">[@lang_res k='order.plan.rebalance.5Y'/]</li>
+                                <li data-month="YTD">[@lang_res k='order.plan.rebalance.YTD'/]</li>
+                            </ul>
+                            <div class="builder-chart-one" id="builder-chart-one"></div>
+                        </div> 
+                        <div class="allocation-chart-title-0-emtpy" style="display:none;margin-top: -350px;margin-left: -90px">
+                         	<div class="wmes-nodata-tips" style="display:block">
+         						<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+         						<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+      						</div>
+                        </div>
+                    </div>
+                    <div class="allocation-map">
+                        <div class="allocation-chart">
+                            <div class="allocation-left-chart">
+                                <p class="allocation-chart-title allocation-chart-title-1" style="display:none;margin-top: 50px;margin-left: -100px;">[@lang_res k='order.plan.rebalance.geoAllocation'/]</p>
+                                <div id="allocation-chart-propose" style="margin:0 auto;margin-bottom: 50px;"></div>
+                            </div>
+                            <div class="allocation-right-chart">
+                                <p class="allocation-chart-title allocation-chart-title-2" style="display:none;margin-top: 50px;margin-left: -150px;">[@lang_res k='order.plan.rebalance.sectorType'/]</p>
+                               	<div id="allocation-chart-change"></div>
+                            </div>
+                        </div>
+                        <div class="allocation-chart-title-1-emtpy" style="display:none;margin-top: -350px;margin-left: -90px">
+                          	<div class="wmes-nodata-tips" style="display:block">
+          						<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+          						<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+       						</div>
+                       </div>
+                    </div>
+                </div>
+             </div>
+          </div>
+	</div>
+</div>
+<!-- quick add -->
+<input id="ids" type="hidden" value="${products!}">
+<input id="popupWinReturn" type="hidden">
+<input id="hidMemberType" value="${(detail.memberType)!}" type="hidden">
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var props = [@load_prop k=''/];
+     seajs.use('${base}/res/web/trade/step/orderPlanSelectProduct.js');
+</script>

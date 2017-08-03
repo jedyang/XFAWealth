@@ -1,0 +1,112 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<form id="paramsForm" name="paramsForm" action="" method="post" onkeydown="if(event.keyCode==13){return false;}">
+
+        <div class="wmes-content">
+    		<div class="ifa_choose_condition">
+    			<div class="wmes-wrap-title" style="height:16px;">
+					<p style="float:left;">[@lang_res k='console.insightinfo.list.tab.title'/]</p>
+				</div>
+				
+				<div class="funds_choice_wrap">
+					<p class="funds_choice_title">[@lang_res k='search.period'/] </p>
+					<ul class="funds_choice">
+						<li class="fund_choice_active  funds_all fund_choice_active2 fund_choice_active2" data-name="period" data-key="" data-value="">[@lang_res k='global.all'/]</li>
+						<li data-name="period" data-key="[@lang_res k='fund.info.week'/]" data-value="1W">[@lang_res k='fund.info.week'/]</li>
+						<li data-name="period" data-key="[@lang_res k='fund.info.mon'/]" data-value="1M">[@lang_res k='fund.info.mon'/]</li>
+						<li data-name="period" data-key="[@lang_res k='fund.info.mon_3'/]" data-value="3M">[@lang_res k='fund.info.mon_3'/]</li>
+						<li data-name="period" data-key="[@lang_res k='fund.info.mon_6'/]" data-value="6M">[@lang_res k='fund.info.mon_6'/]</li>
+						<li data-name="period" data-key="[@lang_res k='fund.info.yr_1'/]" data-value="1y">[@lang_res k='fund.info.yr_1'/]</li>
+						<li data-name="period" data-key="[@lang_res k='fund.info.yr_3'/]" data-value="3y">[@lang_res k='fund.info.yr_3'/]</li>
+					</ul>
+				</div>   
+				<div class="funds_choice_wrap">
+					<p class="funds_choice_title">[@lang_res k='list.search.geoAllo'/]</p>
+					<ul class="funds_choice funds_logo_b" id="funds_logo_choice">
+						<li data-letter="" class="funds_all fund_choice_active fund_choice_active2" data-name="FundHouse">[@lang_res k='global.all'/]</li>
+						<li data-letter="A-E">A-E</li>
+						<li data-letter="F-J">F-J</li>
+						<li data-letter="K-O">K-O</li>
+						<li data-letter="P-T">P-T</li>
+						<li data-letter="U-Z">U-Z</li>
+					</ul>
+					<ul class="funds_logo_choice funds_logo_choice_amend" id="funds_logo">
+						[#if regionList?exists && regionList?size gt 0]
+					  [#list regionList as list]
+						<li style="display:none;" title="${list.name!}" data-letter="${list.key!}" data-key="${list.name!}" data-name="regions" data-value="${list.itemCode!}" >${list.name!}</li>
+						[/#list]
+					   [/#if]
+					</ul>
+				</div>
+				<div class="funds_choice_wrap funds_choice_wrap_hidden">
+					<p class="funds_choice_title">[@lang_res k='list.search.sector'/]</p>
+					<ul class="funds_choice funds_choice_amend">
+						<li class="fund_choice_active  funds_all funds_all_Sector fund_choice_active2" data-name="Sector" data-key="" data-value="">[@lang_res k='global.all'/]</li>
+						   [#if sectorList?exists && sectorList?size gt 0]
+							[#list sectorList as list]
+							<li data-name="sector${list_index}" data-key="${list.name!}" data-value="${list.itemCode!}">${list.name!}</li>
+							[/#list]
+							[/#if]
+					</ul>
+					<div class="funds_choice_wrap_hiddenclick">
+						<img src="${base}/res/images/application/hideen.png">
+					</div>
+				</div>
+    		</div>
+    		<div class="recommend-list-wrap">       			
+    			<div class="funds_list_selected">
+	                <p class="funds_selected_title">[@lang_res k='global.selectedCondition'/]</p>
+					<ul class="selection_criteria">
+						<p class="funds_title_selection">[@lang_res k='fund.info.resetFilter'/] </p>
+					</ul>
+				</div>
+				<div class="recommend-list-contents">
+					<div class="funds_keyserach_wrap">
+						<p class="funds_serach_sum" style="float:left;">
+							[@lang_res k='search.list.total1'/] 	
+	                        <span class="funds_serach_digital" id="datatotal">0</span>[@lang_res k='search.list.total2'/] </p>
+                        <div class="funds_keyserach">
+                            <input type="text"  name="keyword" placeholder="[@lang_res k='pipeline.search.keyword'/]" >
+                            <span class="icon_search" id="searchKeyBtn"></span>
+                        </div>
+                    </div>
+                    <ul class="recommend-switch-tab">
+	                    <li class="funds_sort recommend-sort-active">
+	                        <p class="funds_switch_tab_title">[@lang_res k='console.insightcount.form.views'/]</p>
+	                        <p class="funds_arrow_wraps">
+	                            <span class="arrow_top"></span>
+	                            <span class="arrow_down down_active"></span>
+	                        </p>        
+	                    </li>
+	                     <li class="funds_sort">
+	                        <p class="funds_switch_tab_title">[@lang_res k='list.search.issuedDate'/]</p>
+	                        <p class="funds_arrow_wraps">
+	                            <span class="arrow_top"></span>
+	                            <span class="arrow_down"></span>
+	                        </p>        
+	                    </li>
+	                </ul>
+	                <ul class="recommend-news-list" id="insightsList">
+	                	
+	                </ul>
+	                <div class="clickmore" id="clickmore"><a href="javascript:;">[@lang_res  k='ifalist.list.clickmore'/]</a></div>
+	            </div>
+        	</div>
+        </div>
+    <input type="hidden" name="ifaId" value="${ifaId?if_exists}">
+	<input type="hidden" value="" name="keyWord" id="keyWord"/>
+	<input type="hidden" value="" name="period" id="period"/>
+	<input type="hidden" value="" name="geoAllocation" id="geoAllocation"/>
+	<input type="hidden" value="" name="sector" id="sector"/>
+	<input type="hidden" value="" name="order" id="order"/>
+	<input type="hidden" value="" name="sort" id="sort"/>
+
+</form>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var tips = {};
+	 tips.nomoredata = "[@lang_res k='ifalist.list.nomoredata'/]";
+	 tips.clickmore = "[@lang_res k='ifalist.list.clickmore'/]";
+	 tips.createTime = "[@lang_res k='global.createTime'/]";
+     seajs.use('${base}/res/console/web/ifa/insights.js');
+</script>

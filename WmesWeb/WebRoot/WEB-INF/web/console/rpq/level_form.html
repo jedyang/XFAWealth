@@ -1,0 +1,141 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>等级风险评估数据管理</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+			<ul class="tab" id="dialog_tab-search">
+                <li class="tab-li-crr">
+                    <a href="javascript:;">基础信息</a>
+                </li>
+                 <li class="tab-li">
+                    <a href="javascript:;">简体描述</a>
+                </li>
+                 <li class="tab-li">
+                    <a href="javascript:;">繁体描述</a>
+                </li>
+                <li class="tab-li">
+                    <a href="javascript:;">英文描述</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap dialog_tab_wrap">
+                <!-- tab一 -->
+                <form class="form-horizontal" style="display:block;">
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtItemTitle" class="label-control">分值区间</label>
+                        </div>
+                        <div class="col-md-7">
+                           <input id="txtBeginScore" type="text" class="form-control " style="width:150px;display:inline-block;" value="${(level.beginScore)?if_exists}">
+                            - <input id="txtEndScore" type="text" class="form-control "  style="width:150px;display:inline-block;"  value="${(level.endScore)?if_exists}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="selType" class="label-control">评估数值</label>
+                        </div>
+                        <div class="col-md-7">
+                            <select id="selRiskLevel" class="form-control">
+                            			<option value='1'>1</option>
+                            			<option value='2'>2</option>
+	                                   <option value='3'>3</option>
+	                                   <option value='4'>4</option>
+	                                   <option value='5'>5</option>
+	                            </select> 
+                        </div>
+                    </div>   
+                </form>  
+                <form class="form-horizontal" style="display:none;">
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtScoreValue" class="label-control">评估结果</label>
+                        </div>
+                        <div class="col-md-7">
+                             <textarea id="txtResultSc" class="form-control " rows="3">${(sc.result)?if_exists}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtOrderBy" class="label-control">评估说明</label>
+                        </div>
+                        <div class="col-md-7">
+                            <textarea id="txtRemarkSc" class="form-control " rows="5">${(sc.remark)?if_exists}</textarea>
+                        </div>
+                    </div>   
+                </form> 
+                <form class="form-horizontal" style="display:none;">
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtScoreValue" class="label-control">评估结果</label>
+                        </div>
+                        <div class="col-md-7">
+                             <textarea id="txtResultTc" class="form-control " rows="3">${(tc.result)?if_exists}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtOrderBy" class="label-control">评估说明</label>
+                        </div>
+                        <div class="col-md-7">
+                            <textarea id="txtRemarkTc" class="form-control " rows="5">${(tc.remark)?if_exists}</textarea>
+                        </div>
+                    </div>   
+                </form> 
+                <form class="form-horizontal" style="display:none;">       
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtScoreValue" class="label-control">评估结果</label>
+                        </div>
+                        <div class="col-md-7">
+                             <textarea id="txtResultEn" class="form-control " rows="3">${(en.result)?if_exists}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 text-right">
+                            <label for="txtOrderBy" class="label-control">评估说明</label>
+                        </div>
+                        <div class="col-md-7">
+                            <textarea id="txtRemarkEn" class="form-control " rows="5">${(en.remark)?if_exists}</textarea>
+                        </div>
+                    </div>   
+                </form>  
+                 
+				      
+            </div>  
+
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		//弹出选项窗体
+		//tab
+	    $("#dialog_tab-search li").click(function(){
+			 $(this).addClass("tab-li-crr").siblings().removeClass();
+			 $(".dialog_tab_wrap").children().hide().eq($(this).index()).show()
+		 });
+		
+	});
+
+	
+</script>
+</body>
+</html>

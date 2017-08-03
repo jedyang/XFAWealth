@@ -1,0 +1,88 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/community.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/other.css">
+<style>
+	.gray-box{margin-top:11px;}
+</style>
+<div class="wmes-content">
+	<div class="strategies-view-header">
+        <p class="wmes-wrap-title">[@lang_res k='recommend.news.title'/]</p>
+		<a href="${base}/front/community/space/ifaSpace.do?id=${ifa.memberId!}">
+		<img class="strategies-view-portrait" src="${base}${ifa.iconUrl!}">
+		</a>
+		<div class="ifa-personal-ageas">
+			<p class="ifa-personal-name">${ifa.memberName}  ([#if ifa.gender?? && ifa.gender=="F"][@lang_res k='member.gender.ms'/][#else][@lang_res k='member.gender.mr'/][/#if])</p>
+			<p class="ifa-personal-aico">[@lang_res k='ifa.popular'/] ${ifa.popularityTotal?default(0)}</p>
+		</div>
+		<div class="ifa-personal-contact">
+			<p><img src="${base}/res/images/ifa/my_ifa_phone.png">${ifa.phoneNumber!}</p>
+			<p><img src="${base}/res/images/ifa/my_ifa_email.png">${ifa.email!}</p>
+		</div>
+		<div class="ifa-personal-contact">
+			<p class="ifa-personal-aico" style="margin-bottom:0;margin-top:-6px;"><img  style="width: 30px;" src="${base}${ifa.ifafirmIconUrl!}">${ifa.ifafirmName!}</p>
+			<p>[@lang_res k='ifa.experience'/] ${ifa.investLife!} [@lang_res k='ifa.detail.profile.year'/]</p>
+		</div>
+		</div>
+	<div class="strategies_list_wrap" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+		<input type="hidden" id="dateFormat" value="${dateFormat!}">
+		<div class="ifa_keyserach_wrap">
+			<div class="funds_keyserach ifa_keyserach">
+				<input type="text" id="fundName" placeholder="[@lang_res k='news.info.title'/]">
+				<span class="icon_search" id="searchKeyBtn"></span>
+			</div>
+		</div>
+		<div class="strategies_list">
+			<ul class="recommend-news-list ifa_list">
+	                	<li ng-repeat="items in dataList" class="dataListTr ng-cloak">
+	                		
+	                		<!--<span ng-if="!items.thumbnail">&nbsp;</span>-->
+	                		<div class="recommend-news-main">
+	                			<div class="recommend-news-contents">
+	                				<p class="insights-content space-word-show"><span class="gray-box"></span> 
+	                				<a class="wmes-community-news-title" href="${base}/front/news/info/newsContent.do?id={{items.newsId}}" >{{items.title}}</a></p>
+		                		     <div class="news-word-wrap">
+				                    		<a class="ifa-news-img" href="javascript:;">
+				                        		<img src="{{items.newsUrl}}">
+				                    		</a>
+				                    		<div class="news-wrap">
+				                         		<p class="ifa-news-word">{{items.description}}</p>
+				                        		<div class="recommend-news-contents-bottom">
+					                					<div class="recommend-news-bottom-right">
+															<div class="wmes-community-news-message-right-caicon" >
+																<div class="wmes-community-news-message-right-cai"  topicId="{{items.topicId}}" ng-if="items.isUnlike!=1" ></div>
+																<div class="wmes-community-news-message-right-cai comment-topper-caied"  topicId="{{items.topicId}}" ng-if="items.isUnlike==1" ></div>
+																<span>{{items.unlikeCount}}</span>
+															</div>
+															<div class="wmes-community-news-message-right-nicecon"  >
+																<div class="wmes-community-news-message-right-nice" topicId="{{items.topicId}}" ng-if="items.isLike!=1"  ></div>
+																<div class="wmes-community-news-message-right-nice comment-topper-niceed" topicId="{{items.topicId}}" ng-if="items.isLike==1"  ></div>
+																<span>{{items.likeCount}}</span>
+															</div>
+															<div class="wmes-community-news-message-right-relycon">
+																<div class="wmes-community-news-message-right-rely"></div><span>{{items.commentCount}}</span>
+															</div>
+					                					</div>
+					                				</div>
+				                    		</div>  
+				                    		<p class="recommended-reason">[@lang_res k='community.space.reason'/]：{{items.content}}</p>
+		                		   </div>
+	                			</div>
+	                		</div>
+	                	</li>
+	                </ul>
+           <div class="clickmore" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+          </div>
+	        <div class=" no_list_tips">
+               <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+               <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+          </div>
+</div>
+</div>
+[#include "../inc/foot_v2.html"/]
+<script type="text/javascript">
+var id='${ifa.memberId!}';
+seajs.use('${base}/res/web/community/newslistrecommend.js');
+	
+</script>

@@ -1,0 +1,311 @@
+[#include "../../inc/head_v2.html"/]
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[@lang_res  k='console.product.distributor.specfee.title'/]</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+         <script src="${base}/res/js/html5shiv.min.js"></script>
+          <script src="${base}/res/js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .wmes-logo {
+            height: 60px;
+            padding: 5px;
+            margin: 0 auto;
+            top: 0px;
+            background: #464342;
+            text-align: center;
+            position: fixed;
+            width: 80px;
+            z-index: 1000000;
+        }
+        .wmes-contentbox {
+            background: #ffffff;
+            padding-top: 5px;
+        }
+
+    </style>
+    
+</head>
+
+<div class="wmes-content">
+    <div class="ifa_choose_condition" style="height::800px;">
+    <input id="btnCloseIframe" type="hidden" />
+    <div class="container-fluid pd0" id="wmes_wraper">
+        <div class="r-side-container" style="margin-left:0px;">
+            <ul class="tab" id="tab-search">
+                <li id="tab-li-fixed" class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res  k='console.product.distributor.specfee.title'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+                        <div class="row pd10">
+                            <div class="col-md-4">
+                                <label for="txtKeyword">[@lang_res  k='global.search.name'/]</label>
+                                <input type="text"  class="form-control" id="txtKeyword" 
+                                placeholder="[@lang_res  k='global.search.keyword'/]">
+                            </div>
+                            <!-- 
+                            <div class="col-md-4">
+                                <label for="selDistributor">[@lang_res  k='console.fund.info.list.table.oper.viewDistributorList'/]</label>
+                                <select class="form-control " id="distributorId"  name="distributorId">
+                                    <option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                                   [#if distributorList?exists && distributorList?size gt 0]
+                                     [#list distributorList as md]
+                                       <option value="${md.id}">${md.companyName}</option>
+                                     [/#list]
+                                   [/#if]
+                                </select>
+                            </div>
+                             -->                    
+                            <div class="col-md-4">
+                                <button type="button" id="btnSearch" class="btn btn-primary">
+                                    [@lang_res  k='console.fund.info.list.btn.search'/]</button>
+                               </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20">
+                        <a id="btnAddInfoForm" href="javascript:void(0);" class="btn-blue-s">
+                            [@lang_res k='global.add'/]
+                        </a>
+                    </div>
+                    <div>
+                        <table id="productList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+                               <tr>
+                                   <th class="table-head">[@lang_res  k='console.product.distributor.fee.productName'/]</th>
+                                   <th class="table-head">[@lang_res  k='console.product.distributor.fee.distributorName'/]</th>
+                                   <th class="table-head">[@lang_res  k='console.product.distributor.fee.productType'/]</th>
+                                   <th class="table-head">[@lang_res  k='console.product.distributor.specfee.targetType'/]</th>
+                                   <th class="table-head">[@lang_res  k='console.product.distributor.specfee.targetSelect'/]</th>
+                                   <th class="table-head">[@lang_res  k='console.product.distributor.fee.feeTypeName'/]</th>
+                                   <th class="table-head">[@lang_res  k='console.product.distributor.fee.feeDefValue'/]</th>
+                                   <th class="table-head">[@lang_res  k='console.product.distributor.fee.feeMin'/]</th>
+                                   <th class="table-head">[@lang_res  k='console.product.distributor.fee.feeMax'/]</th>
+                                   <th class="table-head">[@lang_res  k='global.createTime'/]</th>
+                                   <th class="table-head">[@lang_res  k='global.status'/]</th>
+                                   <th width="15%" class="table-head">[@lang_res  k='param.action'/]</th>
+                                </tr>                                
+                            </tbody>
+                        </table>
+                   
+                           <nav  class="pull-right">
+                            <!-- log分页 -->
+                            <ul id='pagination' class="pagination pagination-sm">  
+                                
+                            </ul>
+                        </nav>
+                           <div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+        </div>
+    </div>
+</div>    
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+
+<script type="text/javascript">
+var grid_selector = "#productList";
+var pageSize = 10;
+</script>
+<script type="text/javascript">
+seajs.use("layer",function(){
+    //跳转表单页面
+    $('#btnAddInfoForm').on('click',function(){
+        //暂时只对基金产品进行添加
+        infoFormDialog('','fund');    
+    });
+    //触发弹窗关闭
+    $('#btnCloseIframe').click(function() {
+        $(".close").click();            
+    });
+    //绑定查询按钮事件
+    $("#btnSearch").click(function () {                
+        bindList(0);
+    });
+    bindList(0);
+});
+
+
+
+  
+//分页绑定Table数据
+function bindList(curPage){
+    $.ajax({
+        type : 'post',
+        datatype : 'json',
+        url : '${base}/console/product/distributor/fee/spec/listJson.do?datestr='+new Date().getTime(),
+        data : {
+            'keyword': $("#txtKeyword").val(),
+            'page':curPage+1,
+            'rows':pageSize,
+            'sort':'',
+            'order':''
+        },
+        success : function(json) {
+            var total = json.total;
+            var table = json.rows;
+                            
+            $("#productList tbody tr:gt(0)").empty();
+            var tr = "";
+            var list = json.rows;
+            $.each(list, function (index, array) { //遍历json数据列                    
+                var id = array['id'] == null ? "" : array['id'];    
+                var productId = array['productId'] == null ? "" : array['productId'];
+                var productName = array['productName'] == null ? "" : array['productName'];
+                var productType = array['productType'] == null ? "" : array['productType'];
+                if ("fund"==productType.toLowerCase())
+                    productType = "[@lang_res  k='console.product.type.fund'/]";
+                else if ("stock"==productType.toLowerCase())
+                    productType = "[@lang_res  k='console.product.type.stock'/]";
+                else if ("bond"==productType.toLowerCase())
+                    productType = "[@lang_res  k='console.product.type.bond'/]";
+                    
+                var distributorId = array['distributorId'] == null ? "" : array['distributorId'];
+                var distributorName = array['distributorName'] == null ? "" : array['distributorName'];
+                var relateId = array['relateId'] == null ? "" : array['relateId'];
+                var moduleType = array['moduleType'] == null ? "" : array['moduleType'];
+                if ("ifafirm"==moduleType.toLowerCase())
+                    moduleType = "[@lang_res  k='console.product.distributor.specfee.targetType.ifafirm'/]";
+                else if ("ifa"==moduleType.toLowerCase())
+                    moduleType = "[@lang_res  k='console.product.distributor.specfee.targetType.ifa'/]";
+                else if ("investor"==moduleType.toLowerCase())
+                    moduleType = "[@lang_res  k='console.product.distributor.specfee.targetType.investor'/]";
+                    
+                var relateName = array['relateName'] == null ? "" : array['relateName'];
+                var feeType = array['feeType'] == null ? "" : array['feeType'];
+                var feeTypeName = array['feeTypeName'] == null ? "" : array['feeTypeName'];
+                var feeDefValue = array['feeDefValue'] == null ? "" : array['feeDefValue'];
+                var feeMin = array['feeMin'] == null ? "" : array['feeMin'];
+                var feeMax = array['feeMax'] == null ? "" : array['feeMax'];
+                var createTime = array['createTime'] == null ? "" : array['createTime'];
+                var isValid = array['isValid'] == null ? "" : array['isValid'];
+                if('1'==isValid){
+                    isValid = "[@lang_res k='global.status.valid'/]";
+                }else{
+                    isValid = "[@lang_res k='global.status.invalid'/]";
+                }
+                
+                tr += "<tr><td>" + productName + "</td>"
+                    + "<td>" + distributorName + "</td>"    
+                    + "<td>" + productType + "</td>"        
+                    + "<td>" + moduleType + "</td>"
+                    + "<td>" + relateName + "</td>"
+                    + "<td>" + feeTypeName + "</td>"
+                    + "<td>" + feeDefValue + "</td>"
+                    + "<td>" + feeMin + "</td>"
+                    + "<td>" + feeMax + "</td>"
+                    + "<td>" + createTime + "</td>"
+                    + "<td>" + isValid + "</td>"                    
+                    + "<td><a href='#' onclick='infoFormDialog(\""+id+"\",\""+productType+"\")'>[@lang_res  k='param.edit'/]</a>&nbsp;&nbsp;"
+                    + "<a classlayer='1' id='" + id + "' class='btndelinfo' href='javascript:void(0);'>" 
+                       //+ "<i  class='glyphicon glyphicon-remove  text-bold'></i> "
+                       + "[@lang_res  k='global.delete'/]</a>"
+                    + "</td></tr>";
+             });
+             $("#productList tbody").append(tr);
+            
+             $("#pagination").pagination(total, {
+                       callback: pageselectCallback,
+                       numDetail: '',
+                       items_per_page: pageSize,
+                       num_display_entries: 4,
+                       current_page: curPage,
+                       num_edge_entries: 2
+                   });
+        }
+    })
+     //回调
+     function pageselectCallback(page_id, jq) {
+         bindList(page_id);
+     }
+}
+
+//弹出编辑页面
+function infoFormDialog(id,type){
+    var src = "${base}/console/product/distributor/fee/spec/detail.do?id="+id+"&type="+type;
+    /*
+    var fundUrl = "${base}/console/product/distributor/fee/spec/detail.do?id="+id+"&type="+type;
+    if("fund"==type){
+        src = fundUrl;
+    }*/
+    BootstrapDialog.show({
+        title : "[@lang_res  k='console.product.distributor.specfee.title'/]",
+        cssClass : 'login-dialog',
+        type : BootstrapDialog.TYPE_PRIMARY,
+        size : BootstrapDialog.SIZE_WIDE,
+        draggable : true,
+        message : $('<div><iframe scrolling="no" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="'+src+'"></iframe></div>').load(),
+        buttons : [{
+                label : "[@lang_res k='global.close'/]",
+                action : function(dialogItself) {
+                    dialogItself.close();
+                }
+        }]
+    });
+}
+
+//点击删除
+$("body").on('click', '.btndelinfo', '', function () {
+    //获取当前节点
+    //var id = $(this).parent().find('a').attr('id');
+    var id = $(this).attr('id');
+    delfun(id);
+});
+
+function delfun(id){ 
+    layer.confirm("[@lang_res  k='global.confirm.delete'/]"
+        , { title:"[@lang_res  k='global.prompt'/]"
+        , btn:["[@lang_res  k='global.confirm'/]","[@lang_res  k='global.cancel'/]"]
+        , icon: 3   },function () {    
+        layer.closeAll();
+        //删除节点的数据库
+        $.ajax({
+            type : 'post',
+            datatype : 'json',
+            url : "${base}/console/product/distributor/fee/spec/del.do?datestr=" + new Date().getTime(),
+            data : {'id':id  },
+            /*beforeSend: function () {
+                indexmsg = layer.msg("你确认要删除该信息吗？", { time: 500000 });
+            },
+            complete: function () {
+                layer.close(indexmsg);
+            },*/
+            error:function(){layer.msg("[@lang_res k='global.failed'/]", { icon: 0, time: 2000 }, function () {  });},
+            success : function(json) {
+                //console.log(json);
+                json = JSON.parse(json);
+                var result = json.result;
+                if(result==true||result=='true'){
+                    layer.msg("[@lang_res k='global.success'/]", { icon: 1, time: 2000 }, function () { bindList(0); });
+                } else
+                {
+                    layer.msg("[@lang_res k='global.failed'/]", { icon: 0, time: 2000 }, function () {  });
+                }
+            }
+        });
+    });
+}
+</script>
+</body>

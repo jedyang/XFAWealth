@@ -1,0 +1,285 @@
+[#include "../../inc/head.html"/]
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/animate.css">
+<div class="blue_background">
+        <div class="kaihu_div">
+			<div class="wmes_navigation_bar">
+                [@lang_res k='fund.info.Funds'/] > <a href="${base}/front/fund/info/list.do">[@lang_res k='fund.info.fundsScreener'/] </a> > [@lang_res k='fund.info.myfund'/] 
+            </div>
+    		<div class="white_background funds_selected_wrap" ng-app="myFav" ng-controller="Favctrl" >   
+                <div class="funds_title_wrap">
+	                <p class="funds_title">[@lang_res k='fund.info.myfund'/]</p>
+                </div>
+				<div class="funds_serach_results">
+					<ul class="funds_search_tab">
+						<li class="now">[@lang_res k='fund.info.fundNAV'/]</li>
+						<li>[@lang_res k='fund.info.fundPerformance'/]</li>
+						<li>[@lang_res k='fund.info.fundRating'/]</li>
+						<li>[@lang_res k='fund.info.NewsAndAnnouncement'/]</li>
+					</ul>
+				</div>	
+				<table class="funds_search_information">
+					<tbody>
+						<tr class="funds_tables_th">
+							<th class="funds_tables_fnames">
+								[@lang_res l=Session["_LANG_CODE_"] k='fund.info.fundName'/] 
+							</th>
+							<th class="funds_tables_header funds_sort" data-type="risk_level">
+								[@lang_res l=Session["_LANG_CODE_"] k='fund.info.riskrating'/]
+								<p class="funds_arrow_wraps">
+									<span class="arrow_top"></span>
+									<span class="arrow_down"></span>
+								</p> 		
+							</th>
+							<th  class="funds_tables_header funds_sort" data-type="fund_currency">
+								[@lang_res l=Session["_LANG_CODE_"] k='fund.info.currency'/]
+								<p class="funds_arrow_wraps">
+									<span class="arrow_top"></span>
+									<span class="arrow_down"></span>
+								</p> 
+							</th>
+							<th  class="funds_tables_header">
+								[@lang_res l=Session["_LANG_CODE_"] k='fund.info.ACC_INC'/] 
+							</th>
+							<th  class="funds_tables_header funds_sort" data-type="isin_code">
+								[@lang_res l=Session["_LANG_CODE_"] k='fund.info.ISIN'/] 
+								<p class="funds_arrow_wraps">
+									<span class="arrow_top"></span>
+									<span class="arrow_down"></span>
+								</p> 
+							</th>
+						</tr>
+						<tr ng-repeat="items in dataList" ng-init="checkLast($last)" class="animated flipInX">
+							<td class="tdleft">
+								<a href="${base}/front/fund/info/fundsdetail.do?id={{items.fundId}}" ng-bind="{{'items.fundName'}}"></a>
+							</td>
+							<td ng-bind="{{'items.fundInfo.riskLevel'}}"></td>
+							<td ng-bind="{{'items.fundCurrency'}}"></td>
+							<td ng-bind="{{'items.fundInfo.fundHouse'}}"></td>
+							<td ng-bind="{{'items.fundInfo.isinCode'}}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="funds_search_wrap">		
+					<div class="funds_search_content">	
+						<table class="funds_search_Part" style="display: table;">
+							<tbody>
+								<tr class="funds_tables_th">
+									<th class="funds_tables_header funds_sort" data-type="last_nav">
+										[@lang_res l=Session["_LANG_CODE_"] k='fund.info.LastNAV_rating'/]
+										<p class="funds_arrow_wraps">
+											<span class="arrow_top"></span>
+											<span class="arrow_down"></span>
+										</p>					
+									</th>
+									<th class="funds_tables_header funds_sort" data-type="issue_price">
+										[@lang_res l=Session["_LANG_CODE_"] k='fund.info.Growthrate'/](%)
+										<p class="funds_arrow_wraps">
+											<span class="arrow_top"></span>
+											<span class="arrow_down down_active"></span>
+										</p>
+									</th>
+									<th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.price_date'/]</th>
+									<th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.YTD'/](%)</th>
+									<th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.YTDdate'/]</th>
+									<th class="funds_search_like"></th>
+								</tr>
+								<tr ng-repeat="items in dataList"  ng-init="checkLast($last)" class="animated flipInX">
+									<td data-original="{{items.fundInfo.lastNav}}" data-exchange="{{items.fundCurrency}}" class="Currency_conversion">
+										<span class="conversion_Num" ng-bind="{{'items.fundInfo.lastNav'}}"></span>
+										<span class="conversion_Type" ng-bind="{{'items.fundCurrency'}}"></span>
+									</td>
+									<td ng-bind="{{'items.fundInfo.issuePrice'}}"></td>
+									<td ng-bind="{{'items.fundInfo.issueDate'}}"></td>
+									<td></td>
+									<td>03/03/2015</td>
+									<td>
+										<span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}"></span>
+										<span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}"></span>
+										<span class="funds_cart"></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="funds_search_Part">
+							<tbody>
+								<tr class="funds_tables_th">
+									<th class="funds_tables_header funds_sort" data-type="last_nav"">
+										[@lang_res l=Session["_LANG_CODE_"] k='fund.info.lastNAVprice'/]
+										<p class="funds_arrow_wraps">
+											<span class="arrow_top"></span>
+											<span class="arrow_down"></span>
+										</p> 	
+									</th>
+									<th class="funds_tables_header">
+										[@lang_res l=Session["_LANG_CODE_"] k='fund.info.3YrRiskReturn'/]
+									</th>
+									<th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.SharpeRatio'/]</th>
+									<th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.RevalationDate'/]</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon'/]
+									</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon_3'/]
+									</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon_6'/]
+									</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.yr_1'/]
+									</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.yr_3'/]
+									</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.yr_5'/]
+									</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.launch'/]
+									</th>
+									<th class="funds_tables_header">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.IssueDate'/]</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.YTD'/]
+									</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.AR'/] 2016
+									</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.AR'/] 2015
+									</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.AR'/] 2014
+									</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.AR'/] 2013
+									</th>
+									<th class="funds_tables_header">
+											[@lang_res l=Session["_LANG_CODE_"] k='fund.info.AR'/] 2012
+									</th>
+									<th class="funds_search_like"></th>
+								</tr>
+								<tr ng-repeat="items in dataList"  ng-init="checkLast($last)" class="animated flipInX">
+									<td data-original="{{items.fundInfo.lastNav}}" data-exchange="{{items.fundCurrency}}" class="Currency_conversion">
+										<span class="conversion_Num" ng-bind="{{'items.fundInfo.lastNav'}}"></span>
+										<span class="conversion_Type" ng-bind="{{'items.fundCurrency'}}"></span>
+									</td>
+									<td>0.72</td>
+									<td>0.73</td>
+									<td ng-bind="{{'items.fundInfo.lastNavUpdate'}}"></td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnOneMonth < 0 " ng-bind="{{'items.fundReturnOneMonth'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnOneMonth >= 0 " ng-bind="{{'items.fundReturnOneMonth'}}"></span>
+									</td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnThreeMonth < 0 " ng-bind="{{'items.fundReturnThreeMonth'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnThreeMonth >= 0 " ng-bind="{{'items.fundReturnThreeMonth'}}"></span>
+									</td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnSixMonth < 0 " ng-bind="{{'items.fundReturnSixMonth'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnSixMonth >= 0 " ng-bind="{{'items.fundReturnSixMonth'}}"></span>
+									</td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnOneYear < 0 " ng-bind="{{'items.fundReturnOneYear'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnOneYear >= 0 " ng-bind="{{'items.fundReturnOneYear'}}"></span>
+									</td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnThreeYear < 0 " ng-bind="{{'items.fundReturnThreeYear'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnThreeYear >= 0 " ng-bind="{{'items.fundReturnThreeYear'}}"></span>
+									</td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnFiveYear < 0 " ng-bind="{{'items.fundReturnFiveYear'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnFiveYear >= 0 " ng-bind="{{'items.fundReturnFiveYear'}}"></span>
+									</td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnLaunch < 0 " ng-bind="{{'items.fundReturnLaunch'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnLaunch >= 0 " ng-bind="{{'items.fundReturnLaunch'}}"></span>
+									</td>
+									<td>03/03/2015</td>	
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturnYTD'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturnYTD'}}"></span>
+									</td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturn2016'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturn2016'}}"></span>
+									</td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturn2015'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturn2015'}}"></span>
+									</td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturn2014'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturn2014'}}"></span>
+									</td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturn2013'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturn2013'}}"></span>
+									</td>
+									<td>
+										<span class="funds_search_negative" ng-if="items.fundReturnYTD < 0 " ng-bind="{{'items.fundReturn2012'}}"></span>
+										<span class="funds_search_positive" ng-if="items.fundReturnYTD >= 0 " ng-bind="{{'items.fundReturn2012'}}"></span>
+									</td>
+									<td>
+										<span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}"></span>
+										<span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}"></span>
+										<span class="funds_cart"></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="funds_search_Part">
+							<tbody>
+								<tr class="funds_tables_th">
+									<th class="funds_tables_header funds_tables_w120" >
+										Lipper CR					
+									</th>
+									<th class="funds_tables_header funds_tables_w120">
+										Fitch						
+									</th>
+									<th class="funds_tables_header funds_tables_w120">
+											Citywire						
+									</th>
+									<th class="funds_search_like funds_tables_w210"></th>
+								</tr>
+								<tr ng-repeat="items in dataList"  ng-init="checkLast($last)" class="animated flipInX">
+									<td> 
+										<img ng-repeat="imglist in counter(items.lipperCR) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+									</td>
+									<td> 
+										<img ng-repeat="imglist in counter(items.fitch) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+									</td>
+									<td> 
+										<img ng-repeat="imglist in counter(items.citywire) track by $index" src="${base}/res/images/unNecessary.png" alt="">
+									</td>
+									<td>
+										<span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}"></span>
+										<span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}"></span>
+										<span class="funds_cart"></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="funds_search_Part" >
+							<tbody>
+								<tr class="funds_tables_th">
+									<th class="funds_tables_header">[@lang_res k='fund.info.detail.AnnoNum'/]</th>
+									<th class="funds_tables_header">[@lang_res k='fund.info.detail.AnnoTitle'/]</th>
+									<th class="funds_tables_header">[@lang_res k='fund.info.detail.AnnoTime'/]</th>
+								</tr>
+								<tr ng-repeat="items in dataList" ng-init="checkLast($last)" class="animated flipInX">
+									<td>1</td>
+									<td>Fidelity Funds - China Focus Fund A Scheduled change notice</td>
+									<td>1-Mar-2016</td>
+								</tr>	
+							</tbody>
+						</table>	
+					</div>
+				</div>	
+				
+            </div>
+        </div>
+</div>
+[#include "../../inc/foot.html"/] 
+<script type="text/javascript">
+    seajs.use('${base}/res/web/fund/info/fundcollection.js');
+</script>

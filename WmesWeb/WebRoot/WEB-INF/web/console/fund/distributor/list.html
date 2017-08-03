@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fund info</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<input id="btnCloseIframe" type="hidden" />
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+		<div class="tab-side-container">
+            <div class="clear"></div>
+            <div class="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+	                    <div class="row pd10">
+	                        <div class="col-md-6">
+	                        	<label for="txtCompanyName">[@lang_res  k='fund.distributor.list.table.title.companyName'/]</label>
+	                        	<input type="text"  class="form-control" id="txtCompanyName">
+	                        </div>
+	                        <div class="col-md-4">
+	                        	<button type="button" id="btnSearch" class="btn btn-primary">
+	                    			<i class="glyphicon glyphicon-search"></i> [@lang_res  k='fund.distributor.list.btn.search'/]</button>
+	               			</div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20"></div>
+                    <div>
+                        <table id="distributorList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+	                           <tr>
+	                               <th class="table-head">[@lang_res  k='fund.distributor.list.table.title.companyName'/]</th>
+	                               <th class="table-head">[@lang_res  k='fund.distributor.list.table.title.beginDate'/]</th>
+	                               <th class="table-head">[@lang_res  k='fund.distributor.list.table.title.endDate'/]</th>
+	                               <th class="table-head">[@lang_res  k='fund.distributor.list.table.title.createTime'/]</th>
+	                               <th class="table-head">[@lang_res  k='fund.distributor.list.table.title.lastUpdate'/]</th>
+	                               <th class="table-head">[@lang_res  k='fund.distributor.list.table.title.isValid'/]</th>
+	                               <th class="table-head">[@lang_res  k='param.action'/]</th>
+	                            </tr>                                
+                            </tbody>
+                        </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>
+                <div class="text-center pd20">
+                        <a href="#" id="btnAdd" onclick="showItemDialog('')" class="btn-blue-s">[@lang_res  k='fund.distributor.list.btn.add'/]</a>
+                        <a href="#" onclick="closeTab();" class="btn-blue-s2">[@lang_res k='global.close'/]</a>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var grid_selector = "#distributorList";
+var pageSize = 10;
+var fundId = getUrlParam('fundId');
+</script>
+<script type="text/javascript">
+$(function(){
+
+     //绑定查询按钮事件
+     $("#btnSearch").click(function () {                
+        bindList(0);
+     });
+     //绑定返回按钮事件
+     $("#btnBack").click(function () {                
+     	backToList();
+     });
+            
+ 
+     bindList(0);
+});
+
+
+
+  
+  	//分页绑定Table数据
+	function bindList(curPage){
+	$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/fund/distributor/listJson.do?datestr='+new Date().getTime(),
+			data : {
+				'fundId': fundId,'companyName': $("#txtCompanyName").val(),'status':'','page':curPage+1,'rows':pageSize,'sort':'','order':''
+			},
+			success : function(json) {
+				var total = json.total;
+				var table = json.rows;
+								
+				$("#distributorList tbody tr:gt(0)").empty();
+			  var tr = "";
+              var list = json.rows;
+              $.each(list, function (index, array) { //遍历json数据列					
+
+                  var companyName = array['companyName'] == null ? "" : array['companyName'];
+                  var beginDate = array['beginDate'] == null ? "" : array['beginDate'];
+                  var endDate = array['endDate'] == null ? "" : array['endDate'];
+                  var createTime = array['createTime'] == null ? "" : array['createTime'];
+                  var lastUpdate = array['lastUpdate'] == null ? "" : array['lastUpdate'];
+                  var isValid = array['isValid'] == null ? "" : array['isValid'];
+                  var isValidStatus = '';
+                  if(1 == isValid){
+                  	isValidStatus = '<span style="color:blue">[@lang_res l=Session["_LANG_CODE_"] k='param.status.1'/]</span>';
+                  }else{
+                  	isValidStatus = '<span style="color:red">[@lang_res l=Session["_LANG_CODE_"] k='param.status.0'/]</span>';
+                  }
+                  
+                 
+                  
+                  tr += "<tr><td>" + companyName + "</td>"
+                      + "<td>" + beginDate + "</td>"
+                      + "<td>" + endDate + "</td>"
+                      + "<td>" + createTime + "</td>"
+                      + "<td>" + lastUpdate + "</td>"
+                      + "<td>" + isValidStatus + "</td>"
+                      + "<td>&nbsp;<a onclick='showItemDialog(\""+array['id']+"\")' href='#'>[@lang_res k='param.edit'/]</a>"
+                      +" &nbsp;<a href='javascript:void(0)' onclick=deleteRecordSec('${base}/console/sys/param/delete.do?ids="+array['id']+"')>[@lang_res k='param.del'/]</a> </td>"
+                      + "</tr>";
+              });
+              $("#distributorList tbody").append(tr);
+				
+				 $("#pagination").pagination(total, {
+                        callback: pageselectCallback,
+                        numDetail: '',
+                        items_per_page: pageSize,
+                        num_display_entries: 4,
+                        current_page: curPage,
+                        num_edge_entries: 2
+                    });
+			}
+		})
+		 //回调
+            function pageselectCallback(page_id, jq) {
+                bindList(page_id);
+            }
+	}
+
+    //add wwluo 160811
+	function showItemDialog(id) {
+		BootstrapDialog.show({
+			title : "[@lang_res k='fund.distributor.form.title'/]",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe name="Info1" onload="this.height=Info1.document.body.scrollHeight" scrolling="no" frameborder="0" width="100%" src="${base}/console/fund/distributor/detail.do?fundId= '+ fundId +'&id=' + id + '"></iframe></div>').load(),
+			buttons : [{
+					label : "[@lang_res  k='global.close'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+			}]
+		});
+	}
+	//end
+	
+	
+	
+	//delete wwluo 160811
+	/*function showform(id) {
+		if(null == id || '' == id){		
+			window.location.href = '${base}/console/fund/distributor/detail.do?fundId='+fundId;
+		}else{	
+			window.location.href = '${base}/console/fund/distributor/detail.do?id='+id;
+		}
+	}*/
+	
+		function backToList()
+	{		
+		window.location.href = '${base}/console/fund/info/list.do';
+	}
+</script>
+</body>
+</html>

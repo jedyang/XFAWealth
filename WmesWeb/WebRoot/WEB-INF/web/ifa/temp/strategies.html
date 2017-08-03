@@ -1,0 +1,364 @@
+[#include "../../inc/head_v2.html"/]
+	<style>
+        .ifa_pagint_now span{ color:black;}
+        .page_left {
+        background:rgba(0, 0, 0, 0) url("${base}/res/images/ifa/left_ico.png") no-repeat scroll 0 0;
+		 width: 62px;
+		 height: 62px;
+		 position:absolute;
+		 cursor:pointer;
+		 font-size:30px;
+		 text-align:center;
+		 filter:alpha(opacity=50); 
+		-moz-opacity:0.5; 
+		opacity:0.5;
+		background-color: #ccc;
+      	color: white;
+		line-height: 62px;
+
+		  border-radius: 10%;
+
+
+		 margin:auto;
+		 left:0px;
+ 
+		 top:250px;
+		 bottom:0;
+		}
+		.page_left:hover{background-color: #4ba6de;}
+		.page_right {
+		background:rgba(0, 0, 0, 0) url("${base}/res/images/ifa/right_ico.png") no-repeat scroll 0 0;
+		 width: 62px;
+		 height: 62px;
+		 position:absolute;
+		  font-size:30px;
+		 text-align:center;
+		 filter:alpha(opacity=50); 
+		-moz-opacity:0.5; 
+		opacity:0.5;
+		background-color: #ccc;
+      	color: white;
+		line-height: 62px;
+		cursor:pointer;
+	  	border-radius: 10%;
+		 margin:auto;
+		 right:1px;
+ 
+		 top:250px;
+		 bottom:0;
+		}
+		.page_right:hover{background-color: #4ba6de;}
+	</style>
+        
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+        <div class="wmes-top">
+            <a href="javascript:;" class="header-over">Strategies</a>
+        </div>
+        <div class="wmes-content">
+        		<div class="ifa_choose_condition">
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">Issued Date</p>
+						<ul class="funds_choice">
+							<li class="fund_choice_active funds_all" data-name="Issue Date" data-key="" data-value="Issue Date_00">Today</li>
+							<li data-name="Issue Date" data-key="1 Week" data-value="Issue Date_01">1 Week</li>
+							<li data-name="Issue Date" data-key="1 Month" data-value="Issue Date_01">1 Month</li>
+							<li data-name="Issue Date" data-key="2 Month" data-value="Issue Date_01">2 Month</li>
+							<li data-name="Issue Date" data-key="3 Month" data-value="Issue Date_01">3 Month</li>
+							<li data-name="Issue Date" data-key="6 Month" data-value="Issue Date_01">6 Month</li>
+							<li data-name="Issue Date" data-key="1 Year" data-value="Issue Date_01">1 Year</li>
+						</ul>
+					</div>
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">Source</p>
+						<ul class="funds_choice">
+							<li class="fund_choice_active  funds_all"  data-name="Source" data-key="" data-value="Source_00">All</li>
+							<li data-name="Source" data-key="IFA" data-value="Source_01">IFA</li>
+							<li data-name="Source" data-key="Distributor" data-value="Source_02">Distributor</li>
+							<li data-name="Source" data-key="System" data-value="Source_03">System</li>
+							<li data-name="Source" data-key="Me" data-value="Source_04">Me</li>
+						</ul>
+					</div>
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">Risk Level</p>
+						<ul class="funds_choice">
+							<li class="fund_choice_active  funds_all" data-name="Risk Level" data-key="" data-value="Risk Level_00">All</li>
+							<li data-name="Risk Level" data-key="Low" data-value="Risk Level_01">Low</li>
+							<li data-name="Risk Level" data-key="Medium" data-value="Risk Level_02">Medium</li>
+							<li data-name="Risk Level" data-key="High" data-value="Risk Level_03">High</li>
+						</ul>
+					</div>
+					<!--  <div class="ifa_more_wrap">
+						<p id="yfunds_hidde_title">More selectors <span class="funds_xia_ico"></span></p>
+					</div>-->
+        		</div>
+        		<div class="strategies_list_wrap">       			
+	    			<div class="funds_list_selected">
+		                <p class="funds_selected_title">Selected condition </p>
+						<ul class="selection_criteria">
+							<p class="funds_title_selection">Reset filter </p>
+						</ul>
+					</div>
+					<div class="ifa_keyserach_wrap">
+						<p class="ifa_serach_sum">
+							A total of 					
+							<span class="funds_serach_digital ng-binding" ng-bind="datatotal">11</span> strategies to meet your requirements</p>
+						<div class="funds_keyserach ifa_keyserach">
+							<input type="text" id="fundName" placeholder="Please enter keyword search">
+							<span class="icon_search" id="searchKeyBtn"></span>
+						</div>
+					</div>
+					<div class="strategies_list" >
+						<div class="page_left"></div>
+						<ul class="strategies_list_ul">
+							<li>
+								<div class="strategies_list_ico">
+									<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+									<p class="strategies_eve_num">98,350</p>
+									<img class="strategies_fav_img" src="${base}/res/images/fund/strategies_fav.png">
+								</div>
+								<div class="strategies_word_wrap">
+									<a href="${base}/front/ifa/info/strategiesdetail.do"><p class="strategies_list_name">A Large Cap Value</p></a>
+									<p class="strategies_list_fund">20 Funds</p>
+									<p class="strategies_list_goal">Investment Goal</p>
+									<p class="strategies_list_word">
+										The World Bank on Wednesday issued landmark bonds denominated in special drawing rights (SDR) in China's interbank market.</p>
+								</div>
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa1.png">
+									<p class="strategies_list_ifaname">CAROLYN SUN</p>
+									<p class="strategies_time_word">2016-01-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+								</li>
+								
+								<li>
+								<div class="strategies_list_ico">
+									<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+									<p class="strategies_eve_num">61,350</p>
+									<img class="strategies_fav_img" src="${base}/res/images/fund/strategies_fav.png">
+								</div>
+								<div class="strategies_word_wrap">
+									<a href="${base}/front/ifa/info/strategiesdetail.do"><p class="strategies_list_name">Household Consumption</p></a>
+									<p class="strategies_list_fund">12 Funds</p>
+									<p class="strategies_list_goal">Investment Goal</p>
+									<p class="strategies_list_word">
+										The Shenzhen-Hong Kong Stock Connect program is expected to start in mid or late November, an official with the Chinese securities watchdog said.</p>
+								</div>
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa2.png">
+									<p class="strategies_list_ifaname">CARL YANG</p>
+									<p class="strategies_time_word">2016-02-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+								</li>
+								
+								
+								<li>
+								<div class="strategies_list_ico">
+									<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+									<p class="strategies_eve_num">51,350</p>
+									<img class="strategies_fav_img" src="${base}/res/images/fund/strategies_fav.png">
+								</div>
+								<div class="strategies_word_wrap">
+									<a href="${base}/front/ifa/info/strategiesdetail.do"><p class="strategies_list_name"> Asset Allocation Strategy </p></a>
+									<p class="strategies_list_fund">9 Funds</p>
+									<p class="strategies_list_goal">Investment Goal</p>
+									<p class="strategies_list_word">
+										Asset Management Association of China releases a circular on Aug. 29 that there will be a self-examination and correction activity among private funds industry from today on till the end of September. </p>
+								</div>
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa3.png">
+									<p class="strategies_list_ifaname">CAROLYN SUN</p>
+									<p class="strategies_time_word">2016-03-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+								</li>
+								
+								<li>
+								<div class="strategies_list_ico">
+									<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+									<p class="strategies_eve_num">21,352</p>
+									<img class="strategies_fav_img" src="${base}/res/images/fund/strategies_fav.png">
+								</div>
+								<div class="strategies_word_wrap">
+									<a href="${base}/front/ifa/info/strategiesdetail.do"><p class="strategies_list_name">Mining Low Equity Funds Strategy</p></a>
+									<p class="strategies_list_fund">20 Funds</p>
+									<p class="strategies_list_goal">Investment Goal</p>
+									<p class="strategies_list_word">
+										Nexus Capital bought 4.1 million shares of H shares of China Vanke Co., Ltd. again on Aug. 22 and its shareholding proportion in China Vanke H share increases to 10.17 percent.</p>
+								</div>
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa4.png">
+									<p class="strategies_list_ifaname">Denny MO</p>
+									<p class="strategies_time_word">2016-03-12 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+								</li>
+								
+								<li>
+								<div class="strategies_list_ico">
+									<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+									<p class="strategies_eve_num">31,350</p>
+									<img class="strategies_fav_img" src="${base}/res/images/fund/strategies_fav.png">
+								</div>
+								<div class="strategies_word_wrap">
+									<a href="${base}/front/ifa/info/strategiesdetail.do"><p class="strategies_list_name">Long-term Energy Strategy</p></a>
+									<p class="strategies_list_fund">20 Funds</p>
+									<p class="strategies_list_goal">Investment Goal</p>
+									<p class="strategies_list_word">
+										Macau's gaming revenue for August amounted to MOP18.836 billion, up 1.1% yearly, registering first rise since May 2014, as revealed by Gaming Inspection and Coordination Bureau (DICJ). </p>
+								</div>
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa3.png">
+									<p class="strategies_list_ifaname">CAROLYN SUN</p>
+									<p class="strategies_time_word">2016-03-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+								</li>
+								
+								<li>
+								<div class="strategies_list_ico">
+									<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+									<p class="strategies_eve_num">21,350</p>
+									<img class="strategies_fav_img" src="${base}/res/images/fund/strategies_fav.png">
+								</div>
+								<div class="strategies_word_wrap">
+									<a href="${base}/front/ifa/info/strategiesdetail.do"><p class="strategies_list_name">Bond Strategy</p></a>
+									<p class="strategies_list_fund">20 Funds</p>
+									<p class="strategies_list_goal">Investment Goal</p>
+									<p class="strategies_list_word">
+										The spokesman commented further that looking ahead, global trade flows are likely to remain subdued amid a slow-growing global economy, thereby continuing to restrain Hong Kong's export performance in the near term. </p>
+								</div>
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa1.png">
+									<p class="strategies_list_ifaname">CAROLYN SUN</p>
+									<p class="strategies_time_word">2016-04-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+								</li>
+								
+								<li>
+								<div class="strategies_list_ico">
+									<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+									<p class="strategies_eve_num">21,350</p>
+									<img class="strategies_fav_img" src="${base}/res/images/fund/strategies_fav.png">
+								</div>
+								<div class="strategies_word_wrap">
+									<a href="${base}/front/ifa/info/strategiesdetail.do"><p class="strategies_list_name">Mining Fidelity Funds Strategy</p></a>
+									<p class="strategies_list_fund">20 Funds</p>
+									<p class="strategies_list_goal">Investment Goal</p>
+									<p class="strategies_list_word">
+										A Government spokesman noted that merchandise exports stayed weak and continued to fall in January 2016 from a year earlier. 
+									</p>
+								</div>
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa2.png">
+									<p class="strategies_list_ifaname">CAROLYN SUN</p>
+									<p class="strategies_time_word">2016-07-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+								</li>
+								
+								<li>
+								<div class="strategies_list_ico">
+									<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+									<p class="strategies_eve_num">21,350</p>
+									<img class="strategies_fav_img" src="${base}/res/images/fund/strategies_fav.png">
+								</div>
+								<div class="strategies_word_wrap">
+									<a href="${base}/front/ifa/info/strategiesdetail.do"><p class="strategies_list_name">Technology Investment Strategy</p></a>
+									<p class="strategies_list_fund">20 Funds</p>
+									<p class="strategies_list_goal">Investment Goal</p>
+									<p class="strategies_list_word">
+										Apart from destinations in Asia, decreases were also registered in the values of total exports to some major destinations in other regions, in particular the USA (-1.1%) and Germany (-1.0%). </p>
+								</div>
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa4.png">
+									<p class="strategies_list_ifaname">CAROLYN SUN</p>
+									<p class="strategies_time_word">2016-05-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+								</li>
+								
+								
+								<li>
+								<div class="strategies_list_ico">
+									<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+									<p class="strategies_eve_num">21,350</p>
+									<img class="strategies_fav_img" src="${base}/res/images/fund/strategies_fav.png">
+								</div>
+								<div class="strategies_word_wrap">
+									<a href="${base}/front/ifa/info/strategiesdetail.do"><p class="strategies_list_name">High Return Investment Strategy</p></a>
+									<p class="strategies_list_fund">20 Funds</p>
+									<p class="strategies_list_goal">Investment Goal</p>
+									<p class="strategies_list_word">
+										Spot USD/CNY closed at 6.6783, up 17 bps on Wednesday. The central parity also plunged down nearly 100 bps to over one-month low. As at 16:43, USD/CNY rose 26 bps in night session. </p>
+								</div>
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa3.png">
+									<p class="strategies_list_ifaname">CAROLYN SUN</p>
+									<p class="strategies_time_word">2016-08-13 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+								</li>
+								
+								
+								<li>
+								<div class="strategies_list_ico">
+									<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+									<p class="strategies_eve_num">21,350</p>
+									<img class="strategies_fav_img" src="${base}/res/images/fund/strategies_fav.png">
+								</div>
+								<div class="strategies_word_wrap">
+									<a href="${base}/front/ifa/info/strategiesdetail.do"><p class="strategies_list_name">A large cap value</p></a>
+									<p class="strategies_list_fund">20 Funds</p>
+									<p class="strategies_list_goal">Investment Goal</p>
+									<p class="strategies_list_word">
+										Based on report of Ningxia provincial news website on Aug. 15, its government recently approved to implement Development Implementation Scheme of Steel Industry Reducing Overcapacity and Getting Rid of Poverty (2016 to 2020).</p>
+								</div>
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa2.png">
+									<p class="strategies_list_ifaname">CAROLYN SUN</p>
+									<p class="strategies_time_word">2016-09-01 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+								</li>
+								
+								
+								
+								<li>
+								<div class="strategies_list_ico">
+									<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+									<p class="strategies_eve_num">21,350</p>
+									<img class="strategies_fav_img" src="${base}/res/images/fund/strategies_fav.png">
+								</div>
+								<div class="strategies_word_wrap">
+									<a href="${base}/front/ifa/info/strategiesdetail.do"><p class="strategies_list_name">Long-term Conservative Strategy</p></a>
+									<p class="strategies_list_fund">20 Funds</p>
+									<p class="strategies_list_goal">Investment Goal</p>
+									<p class="strategies_list_word">
+										Wanda Heavy-Duty Machinery Equipment Manufacturing recorded a net profit of 16.34 million yuan in 2015. </p>
+								</div>
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa1.png">
+									<p class="strategies_list_ifaname">CAROLYN SUN</p>
+									<p class="strategies_time_word">2016-09-02 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+							</li>
+						</ul>
+						<div class="page_right"></div>
+					</div>
+	 				<ul class="ifa_list_paging">
+	 					<li class="ifa_pagint_num">1</li>
+	 					<li class="ifa_pagint_num">2</li>
+	 					<li class="ifa_pagint_num ifa_pagint_now">3</li>
+	 					<li class="ifa_pagint_some">...</li>
+	 					<li class="ifa_pagint_num">10</li>
+	 				</ul>
+        		</div>
+        </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/strategies.js');
+</script>

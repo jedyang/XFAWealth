@@ -1,0 +1,21 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<div class="wmes-content">
+	<p class="wmes-wrap-title">View RPQ Paper</p>
+	<div id="showRpqResult">
+            [#include "showRpqResult.html"/] 
+    </div>
+    <div class="rpq-button-wrap">
+        <a href="javascript:;" class="rpq-ja-button" id="rpq_print">打印问卷</a>
+        <a href="javascript:;" class="rpq-ja-button" id="rpq_downpdf">下载PDF</a>
+    </div>
+    <form id="rpq_form_complete">
+       	<input type="hidden" name="pageId" value="${rpqExam.rpqPageid!}"/>
+       	<input type="hidden" name="totalScore" value="${rpqExam.totalScore!}"/>
+    </form>
+</div>
+[#include "../inc/foot_v2.html"/] 
+<script type="text/javascript">
+	var base_root = '${base}';
+	seajs.use('${base}/res/web/rpq/fillRpqPaper.js');
+</script>

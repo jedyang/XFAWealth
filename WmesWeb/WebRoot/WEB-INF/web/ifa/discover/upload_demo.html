@@ -1,0 +1,114 @@
+[#include "../../inc/head_v2.html"/]
+
+		<link rel="stylesheet" href="${base}/res/js/library/ueditor_ue/themes/default/css/ueditor.css"> 
+		
+        <link rel="stylesheet" href="${base}/res/css/ifa.css">  
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+        <link rel="stylesheet" href="${base}/res/css/wmesupload.css">  
+        <style>
+       
+        </style>
+        <script type="text/javascript" src="${base}/res/js/jquery.min.js"></script>
+
+        <div class="wmes-top">
+         <a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+        <a href="javascript:;" class="header-over" >K.D.Lin's Space</a>
+    </div>
+    <div class="wmes-content">
+   
+           <div class="insight-row">
+                    	<p class="insight-row-title" style="color:Blue; font-size:20px;text-align:center;">WmesUpload V1.1 改进说明</p>
+                    	aaaaaaaaaaaaaaaaaaa
+                    	[#if list?exists && list?size gt 0 ]
+						[#list list as x] 
+								<li>
+	         						<p class="comment-list-name">${x.fundId!}:</p>
+	         						<p class="comment-list-word">${x.fundId!} </p>
+	         					</li>
+						[/#list]
+						[/#if]
+						aaaaaaaaaaaaaaaaaaaaaaaaa
+                    	<p class="insight-row-title" style="color:Black; font-size:15px;font-weight: 900;"><span>*</span>1、<em>添加多种尺寸的缩略图，目前配置为（112x100、200x150、400x300、600x400）</em></p>
+                    	<p class="insight-row-title" style="color:Black; font-size:15px;font-weight: 900;"><span>*</span>2、<em>同一个页面中可以在不同容器元素中实例化控件，互不影响，灰常灰常超级方便面（<span style="color:Gray;">~!@#$%^&*这就比较帅了~!@#$%^&*</span>>）。</em></p>
+                    	<p class="insight-row-title" style="color:Black; font-size:15px;font-weight: 900;"><span>*</span>3、<em>可傻瓜式进行单文件或多文件上传配置。</em></p>
+                    	<p class="insight-row-title" style="color:Black; font-size:15px;font-weight: 900;"><span>*</span>4、<em>可限制最多可以上传的文件数量。</em></p>
+                    </div>
+                    <div class="insight-row" style="display:none;">
+                        <p class="insight-row-title"><span>*</span>Content:</p>
+                        <!-- 加载编辑器的容器 -->
+                        <div class="uedWrap" style="width:auto;padding-right:30px;padding-bottom:0px;">
+                           <script id="container"  type="text/plain" style="width:90%;height:400px;"></script> 
+                        </div>
+                        <input type="hidden" value="" name="content" id="insightContent" />
+                        <div style="display:none;" id="preContent"></div>
+                    </div>
+            <div class="insight-row" style="clear: both; margin-bottom:20px;">
+              <p class="insight-row-title"><span>*</span>1、Orm interface test.....</p>
+              <input type="button" value="test interface" id="btninterface"><br/><br/>
+              <textarea  class="insight-textarea" id="txtTitle" name="abstract"></textarea>
+
+          </div>
+          <div class="insight-row" style="clear: both; margin-bottom:20px;">
+              <p class="insight-row-title"><span>*</span>1、在Distributor的信息填写中，需要上传一个logo文件，这是典型的单文件上传，则在上传的时候弹出的选择图片窗口中不管是按Shift或Ctrl都只能选择一个文件。</p>
+              <p class="insight-row-title"><span>*</span>2、当多次用上传控件选择图片后，最终只会在更新下面的图片显示框且有且只有一张图片。</p>
+               <p class="insight-row-title"><span>*</span>3、使用控件时只需配置【<span style="color:Red;">multiple: false</span>】即可。</p>
+              <div class="upload-box upload-album"></div>
+		      <div class="photo-list"><ul></ul></div>
+
+          </div>
+			<div style="clear: both;margin-top:50px;">&nbsp;</div>
+          <div class="insight-row" style="clear: both;">
+              <p class="insight-row-title"><span>*</span>1、在个人圈子信息发布中中，会员可能需要上传多张图片供人观赏，这是典型的多文件上传，则在上传的时候弹出的选择图片窗口中可以按Shift或Ctrl来进行多文件选择。</p>
+              <p class="insight-row-title"><span>*</span>2、选择完毕并上传成功后，会自己在下面的框中把图片信息列出来。</p>
+               <p class="insight-row-title"><span>*</span>3、使用控件时只需配置【<span style="color:Red;">multiple: true</span>】即可。</p>
+              <div class="upload-box upload-mulalbum"></div>
+		      <div class="photo-list"><ul></ul></div>
+
+          </div>
+          <div style="clear: both;margin-top:50px;">&nbsp;</div>
+          <div class="insight-row" style="clear: both;">
+              <p class="insight-row-title"><span>*</span>1、在ivestor的培训信息填写中，会员可能需要上传不多于5张培训图片供审核，这是典型的限制文件上传，则在上传的时候弹出的选择图片窗口中可以按Shift或Ctrl来进行多文件选择，超过图片数量时会自动提醒，前只上传前5张图片，多余的无视。</p>
+              <p class="insight-row-title"><span>*</span>2、选择完毕并上传成功后，会自己在下面的框中把图片信息列出来。</p>
+               <p class="insight-row-title"><span>*</span>3、使用控件时只需配置【<span style="color:Red;">count:5</span>】即可。</p>
+              <div class="upload-box upload-limitalbum"></div>
+		      <div class="photo-list"><ul></ul></div>
+
+          </div>
+          <div style="clear: both;margin-top:50px;">&nbsp;</div>
+          <div class="insight-row" style="clear: both;">
+              <p class="insight-row-title"><span>*</span>1、在ivestor的培训信息填写中，会员可能需要上传不多于5张培训图片供审核，这是典型的限制文件上传，则在上传的时候弹出的选择图片窗口中可以按Shift或Ctrl来进行多文件选择，超过图片数量时会自动提醒，前只上传前5张图片，多余的无视。</p>
+              <div class="upload-box upload-limitalbum"></div>
+		      <div class="photo-list"><ul></ul></div>
+
+          </div>
+          
+           <div style="clear: both;margin-top:50px;">&nbsp;</div>
+          <div class="insight-row" style="clear: both;">
+              <p class="insight-row-title"><span>*</span>1、在ivestor的培训信息填写中，会员可能需要上传不多于5张培训图片供审核，这是典型的限制文件上传，则在上传的时候弹出的选择图片窗口中可以按Shift或Ctrl来进行多文件选择，超过图片数量时会自动提醒，前只上传前5张图片，多余的无视。</p>
+              <div class="upload-box upload-docalbum"></div>
+		      <div class="photo-list"><ul></ul></div>
+
+          </div>
+          
+           <div class="insight-row" style="clear: both;display:none;">
+              <p class="insight-row-title"><span>*</span>Video:</p>
+              <div class="upload-box upload-video"></div>
+ 				<input name="hidFocusViedo" type="hidden" id="hidFocusVideo" class="focus-video" />
+		      <div class="video-list">
+		        <ul>
+		          
+		        </ul>
+          </div>  
+        </div>
+        </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var insightid='${insightId!}';
+/**
+ * 语言设置，用于umeditor
+ */
+var lang="zh-cn";
+	
+    seajs.use('${base}/res/web/ifa/upload-demo.js');
+ 
+</script>        

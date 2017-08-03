@@ -1,0 +1,100 @@
+<div class="wmes-myfavourites-groupcon">
+	<div class="wmes-myfavourites-group">
+		<!--<div class="wmes-wrap-title">设置收藏分组</div>
+		<ul>
+			<li>
+				<input type="radio" name="fenzu"/><input type="text" value="网购" readonly/><span></span><b></b>
+			</li>
+			<li>
+				<input type="radio" name="fenzu"/><input type="text" value="网购" readonly/><span></span><b></b>
+			</li>
+			<li>
+				<input type="radio" name="fenzu"/><input type="text" value="网购" readonly/><span></span><b></b>
+			</li>
+			<li>
+				<input type="radio" name="fenzu"/><input type="text" value="网购" readonly/><span></span><b></b>
+			</li>
+			<li>
+				<input type="radio" name="fenzu"/><input type="text" value="网购" readonly/><span></span><b></b>
+			</li>
+		</ul>
+		<div class="wmes-myfavourites-operate">
+			<b>+</b>
+			<a href="#">Save</a>
+			<a href="#">Cancel</a>
+		</div>
+		
+		<div class="wmes-close"></div>
+--></div>
+</div>
+<!--<div class="footbox">
+	<div class="footboxlay"></div>
+	<div class="space-mask-wrap" style="top:0px;">
+		<div class="footcontent">
+			<p>免责声明</p>
+			<iframe src="../../../t/mzsm/sc.html" style="width:100%;height:500px;"></iframe>
+			<ul>
+				<li>接受</li>
+				<li>拒绝</li>
+			</ul>
+		</div>
+	</div>
+</div>-->
+    <div class="wmes-copyright">
+    	<ul>
+    		<li>[@lang_res k='global.dissclaimer'/]</li>
+    		<li>[@lang_res k='global.privacy'/]</li>
+    		<li>[@lang_res k='global.risk.disclosure'/]</li>
+    	</ul>
+    	<p>${Session["_FRONT_COMPANY_COPYRIGHT_"]!"Copyright  2016 - 2019 Xinhua Finance Agency (AP) Limited. All rights reserved."}</p>
+        <!-- Copyright  2015 - 
+		    <script type="text/javascript" language="javascript">
+		        var today = new Date();
+		        var theYear = today.getYear();
+		        if(theYear >= 100 && theYear < 2000) theYear=theYear-100+2000
+		        document.write(theYear);
+		    </script>
+			[@lang_res k='global.copyright'/] -->
+	</div>
+</div>
+<div class="temporary_login">
+	<div class="login_white">
+        <div class="login_content">
+            <h2>[@lang_res  k='login.loginTitle'/]</h2>
+            <form class="form-horizontal" id="loginForm" name="loginForm" method="post" action="/wmes/front/login.do">
+                <input type="hidden" id="name" name="name" value="">
+				<input type="hidden" id="pwd" name="pwd" value="">
+				<input type="hidden" name="CSRFToken" value="63096a1b-2da4-453e-9ce9-b76050a59251">
+	            <input class="login_content_input" type="text" id="loginid" value="" placeholder="登录账号 "><br>
+	            <input class="login_content_input enter_click" type="password" id="password" placeholder="登录密码"><br>	                   
+	            <div class="yzmcon" style="display:none;">
+	                <img class="yanzhengma" onclick="this.src=this.src+'?'" src="/wmes/authImg.svl" alt="">
+	            </div>
+	            <div class="login_user"></div>
+	            <div class="login_lock"></div>
+	            <a class="login_btn" id="btn_login" href="javascript:;">[@lang_res  k='login.login'/] </a>
+	            <br>
+	            <div class="login_checkbox">
+	                <input type="checkbox" checked="checked" value="1" name="rememberMe" id="RememberMe">
+	                <label for="RememberMe"></label>
+	            </div>
+	   			<span class="login_checkbox_font_word">[@lang_res  k='login.remember'/] </span>
+   			</form>
+        </div>
+        <div class="login_content_bottom">
+            <a href="${base}/front/member/personal/resetpswstart.do"><span class="login_ico"></span>[@lang_res  k='login.forgotPsw'/]</a>
+            <a href="${base}/front/regist/regist.do"><span class="login_ico"></span>[@lang_res  k='login.register'/]</a>
+        </div>
+    </div>
+</div>
+</div>
+<div class="overall-chat-wrap" style="display:none;">
+	<a class="overall-chat-msg" href="javascript:;"><img src="${base}/res/images/chat_msg_ico.png"> <span class="overall-chat-number msg-number" style="display:none"></span></a>
+	<a class="overall-chat-speack" href="javascript:;"><img  src="${base}/res/images/ifa/top_chat.png"> <span class="overall-chat-number chat-number" style="display:none"></span></a>
+</div>
+</body>
+</html>
+<!--<link rel="stylesheet" href="${base}/res/css/discover.css">-->
+<script type="text/javascript">
+  seajs.use('${base}/res/js/foot.js');
+</script>

@@ -1,0 +1,358 @@
+/**
+ * 
+ */
+package com.fsll.wmes.crm.service.impl;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.fsll.common.CommonConstants;
+import com.fsll.common.base.service.BaseService;
+import com.fsll.common.util.BeanUtils;
+import com.fsll.common.util.DateUtil;
+import com.fsll.common.util.JsonPaging;
+import com.fsll.common.util.StrUtils;
+import com.fsll.core.entity.AccessoryFile;
+import com.fsll.core.service.AccessoryFileService;
+import com.fsll.wmes.common.CommonConstantsWeb;
+import com.fsll.wmes.crm.service.CrmProposalService;
+import com.fsll.wmes.crm.vo.CrmProposalVO;
+import com.fsll.wmes.entity.CrmProposal;
+import com.fsll.wmes.entity.MemberAdmin;
+import com.fsll.wmes.entity.PortfolioInfo;
+import com.fsll.wmes.entity.PortfolioInfoAip;
+import com.fsll.wmes.entity.PortfolioInfoProduct;
+
+
+/**
+ * 投资方案信息查询服务接口实现
+ * @author tan
+ * @date 2016-8-16
+ */
+@Service("crmProposalService")
+//@Transactional
+public class CrmProposalServiceImpl extends BaseService implements CrmProposalService {
+
+	@Autowired
+	private AccessoryFileService accessoryFileService;
+	
+	@Override
+	public CrmProposal findProposalById(String id) {
+		// TODO Auto-generated method stub
+		CrmProposal obj = (CrmProposal) this.baseDao.get(CrmProposal.class, id);
+		return obj;
+	}
+	
+	/**
+	 * 获取Ifa管理的投资方案
+	 * @author zxtan
+	 * @date 2016-09-06
+	 */
+	@Override
+	public JsonPaging findProposalListForIfa(JsonPaging jsonPaging,String ifaMemberId, String customerMemberId) {
+		// TODO Auto-generated method stub
+		List<Object> params = new ArrayList<Object>();
+		StringBuilder hql = new StringBuilder("from CrmProposal l ");
+		hql.append(" where l.ifaMember.member.id=? and l.member.id=? ");
+		params.add(ifaMemberId);
+		params.add(customerMemberId);
+				
+		jsonPaging = this.baseDao.selectJsonPaging(hql.toString(), params.toArray(), jsonPaging , false);
+		
+		return jsonPaging;
+	} 
+	
+	/**
+	 * 获取ifa的投资方案
+	 * @author wwluo
+	 * @param memberId 当前账号Id
+	 * @param investmentAmount 投资金额类型类型    S:Small M:Medium L:Large
+	 * @param period 期间
+	 * @param clientName 客户姓名
+	 * @param status 状态
+	 * @param objective 目的
+	 * @param keyWord 关键字
+	 * @date 2016-09-14
+	 */
+	@Override
+	public JsonPaging getProposal(JsonPaging jsonPaging, String memberId,
+			String investmentAmount, String period, String clientName,
+			String status, String objective, String keyWord) {
+		List<Object> params = new ArrayList<Object>();
+		StringBuffer hql = new StringBuffer(" from CrmProposal c where c.isValid=1");
+		//过滤   投资金额类型类型
+		if (StringUtils.isNotBlank(investmentAmount)) {
+			if("S".equals(investmentAmount)){
+				hql.append(" and c.initialInvestAmount<1E8");//小于1亿
+			}else if("M".equals(investmentAmount)){
+				hql.append(" and c.initialInvestAmount between 1E8 and 1E9");//大于1亿，小于10亿
+			}else if("L".equals(investmentAmount)){
+				hql.append(" and c.initialInvestAmount>1E9");//大于10亿
+			}
+		}
+		//过滤   期间
+		if (StringUtils.isNotBlank(period)) {
+			Calendar calendarc = Calendar.getInstance();
+			switch (Integer.parseInt(period)) {
+				case 1:
+					calendarc.add(Calendar.MONTH, -1);
+					break;
+				case 3:
+					calendarc.add(Calendar.MONTH, -3);
+					break;
+				case 6:
+					calendarc.add(Calendar.MONTH, -6);
+					break;
+				case 12:
+					calendarc.add(Calendar.YEAR, -1);
+					break;
+				case 36:
+					calendarc.add(Calendar.YEAR, -3);
+					break;
+				default:
+					calendarc.setTime(new Date());
+					break;
+			}
+			hql.append(" and c.createTime between ? and CURDATE()");
+			params.add(calendarc.getTime());
+		}
+		//过滤   客户姓名
+		if (StringUtils.isNotBlank(clientName)) {
+			hql.append(" and c.member.nickName like ?");
+			params.add("%"+clientName+"%");
+		}
+		//过滤   状态
+		if (StringUtils.isNotBlank(status)) {
+			hql.append(" and c.status=?");
+			params.add(status);
+		}
+		//过滤   关键字
+		if (StringUtils.isNotBlank(keyWord)) {
+			hql.append(" and (");
+			hql.append(" c.proposalName like ? or");
+			hql.append(" c.objective like ? or");
+			hql.append(" c.member.nickName like ? or");
+			hql.append(" c.status like ?");
+			hql.append(" )");
+			params.add("%"+keyWord+"%");
+			params.add("%"+keyWord+"%");
+			params.add("%"+keyWord+"%");
+			params.add("%"+keyWord+"%");
+		}
+		//过滤   ifa
+		if(StringUtils.isNotBlank(memberId)){
+			hql.append(" and c.creator.id=?");
+			params.add(memberId);
+			jsonPaging = this.baseDao.selectJsonPaging(hql.toString(), params.toArray(), jsonPaging, false);
+		}
+		return jsonPaging;
+	}
+
+	/**
+	 * 删除投资方案（逻辑删除）
+	 * @author wwluo
+	 * @date 2016-09-18
+	 */
+	@Override
+	public boolean delProposal(String proposalId) {
+		boolean flag = false;
+		if (StringUtils.isNotBlank(proposalId)) {
+			CrmProposal crmProposal = 
+				(CrmProposal) this.baseDao.get(CrmProposal.class, proposalId);
+			if(null != crmProposal){
+				crmProposal.setIsValid("0");
+				this.baseDao.update(crmProposal);
+				flag = true;
+			}
+		}
+		return flag;
+	}
+
+	@Override
+	public CrmProposal addCrmProposal(CrmProposal crmProposal) {
+		CrmProposal proposal=(CrmProposal)this.baseDao.saveOrUpdate(crmProposal, true);
+		return proposal;
+	}
+
+	@Override
+	public CrmProposal updateCrmProposal(CrmProposal crmProposal) {
+		CrmProposal proposal=(CrmProposal)this.baseDao.saveOrUpdate(crmProposal, false);
+		return proposal;
+	}
+
+	/**
+	 * 根据方案查找组合
+	 * @author wwluo
+	 * @date 2016-09-29
+	 * @param crmProposal
+	 * @return
+	 */
+	@Override
+	public PortfolioInfo findPortfolioInfoByProposal(CrmProposal proposal) {
+		PortfolioInfo portfolioInfo = null;
+		StringBuffer hql = new StringBuffer(" from PortfolioInfo where isValid=1 and proposal=?");
+		List params = new ArrayList();
+		params.add(proposal);
+		List<PortfolioInfo> list = this.baseDao.find(hql.toString(), params.toArray(), false);
+		if(null != list && !list.isEmpty()){
+			portfolioInfo = list.get(0);
+		}
+		return portfolioInfo;
+	}
+
+	/**
+	 * 创建方案时保存组合定投信息
+	 * @author wwluo
+	 * @date 2016-09-29
+	 * @param crmProposal
+	 * @return
+	 */
+	@Override
+	public PortfolioInfoAip saveAndUpdatePortfolioInfoAip(
+			PortfolioInfoAip portfolioInfoAip) {
+		return (PortfolioInfoAip) this.baseDao.saveOrUpdate(portfolioInfoAip);
+	}
+
+	/**
+	 * 创建方案时保存组合产品信息
+	 * @author wwluo
+	 * @date 2016-09-29
+	 * @param crmProposal
+	 * @return
+	 */
+	@Override
+	public PortfolioInfoProduct saveAndUpdatePortfolioInfoProduct(
+			PortfolioInfoProduct portfolioInfoProduct) {
+		return (PortfolioInfoProduct) this.baseDao.saveOrUpdate(portfolioInfoProduct);
+	}
+
+	/**
+	 * 获取投资人的所有proposal
+	 * @author mqzou
+	 * @date 2016-10-21
+	 * @param memberId
+	 * @return
+	 */
+	@Override
+	public List findMyProposal(String memberId) {
+		String hql="  from CrmProposal r where r.member.id=? and r.isValid='1' and r.status!='-1' order by r.lastUpdate";
+		List params=new ArrayList();
+		params.add(memberId);
+		List list=this.baseDao.find(hql, params.toArray(), false);
+		return list;
+	}
+
+	/**
+	 * 获取列表
+	 * @author wwluo
+	 * @date 2017/6/6
+	 * @param jsonPaging
+	 * @param proposalVO
+	 * @param langCode 
+	 * @return jsonPaging
+	 */
+	@Override
+	public JsonPaging findAllProposal(JsonPaging jsonPaging,
+			CrmProposalVO proposalVO, String langCode) {
+		StringBuffer hql = new StringBuffer(""
+				+ " SELECT"
+				+ " c,l.companyName"
+				+ " FROM"
+				+ " CrmProposal c"
+				+ " LEFT JOIN"
+				+ " MemberIfaIfafirm a"
+				+ " ON"
+				+ " c.ifaMember.id=a.ifa.id"
+				+ " LEFT JOIN"
+				+ " MemberIfafirm" + getLangFirstCharUpper(langCode) + " l"
+				+ " ON"
+				+ " l.id=a.ifafirm.id"
+				+ " LEFT JOIN"
+				+ " MemberIndividual b"
+				+ " ON"
+				+ " b.member.id=c.member.id"
+				+ " LEFT JOIN"
+				+ " MemberBase d"
+				+ " ON"
+				+ " d.id=c.member.id"
+				+ " WHERE"
+				+ " c.status<>0" // 默认排除草稿
+				+ " AND"
+				+ " c.isValid=1"
+				+ "");
+		List<Object> params = new ArrayList<Object>();
+		if (StringUtils.isNotBlank(proposalVO.getFilterIfaFirmId())) {
+			hql.append(" AND a.ifafirm.id=?");
+			params.add(proposalVO.getFilterIfaFirmId());
+		}
+		if (StringUtils.isNotBlank(proposalVO.getFilterStatus())) {
+			hql.append(" AND c.status=?");
+			params.add(proposalVO.getFilterStatus());
+		}
+		if (StringUtils.isNotBlank(proposalVO.getFilterProposalName())) {
+			hql.append(" AND c.proposalName LIKE ?");
+			params.add("%" + proposalVO.getFilterProposalName() + "%");
+		}
+		if (StringUtils.isNotBlank(proposalVO.getFilterClientName())) {
+			hql.append(" AND("
+					+ "	b.firstName LIKE ? OR"
+					+ "	b.lastName LIKE ? OR"
+					+ "	TRIM(b.firstName)||' '||TRIM(b.lastName) LIKE ? OR"
+					+ "	b.nameChn LIKE ? OR"
+					+ "	d.nickName LIKE ? OR"
+					+ "	d.loginCode LIKE ?"
+					+ ")");
+			params.add("%" + proposalVO.getFilterClientName() + "%");
+			params.add("%" + proposalVO.getFilterClientName() + "%");
+			params.add("%" + proposalVO.getFilterClientName() + "%");
+			params.add("%" + proposalVO.getFilterClientName() + "%");
+			params.add("%" + proposalVO.getFilterClientName() + "%");
+			params.add("%" + proposalVO.getFilterClientName() + "%");
+		}
+		if (StringUtils.isNotBlank(proposalVO.getFilterStartTime()) && StringUtils.isNotBlank(proposalVO.getFilterEndTime())) {
+			hql.append(" AND c.createTime BETWEEN ? AND ?");
+			params.add(DateUtil.StringToDate(proposalVO.getFilterStartTime(), CommonConstants.FORMAT_DATE_TIME));
+			params.add(DateUtil.StringToDate(proposalVO.getFilterEndTime(), CommonConstants.FORMAT_DATE_TIME));
+		}
+		hql.append(" ORDER BY c.createTime DESC");
+		jsonPaging = this.baseDao.selectJsonPaging(hql.toString(), params.toArray(), jsonPaging , false);
+		if(jsonPaging.getList() != null && !jsonPaging.getList().isEmpty()){
+			List<Object[]> objects = jsonPaging.getList();
+			List<CrmProposalVO> vos = new ArrayList<CrmProposalVO>();
+			for (Object[] objs : objects) {
+				CrmProposalVO vo = new CrmProposalVO();
+				CrmProposal proposal = (CrmProposal) objs[0];
+				String companyName = (String) objs[1];
+				BeanUtils.copyProperties(proposal, vo);
+				vo.setIfaFirmName(companyName);
+				if (StringUtils.isNotBlank(proposal.getBaseCurrId())) {
+					vo.setCurrencyName(this.getParamConfigName(langCode, proposal.getBaseCurrId(), CommonConstantsWeb.SYS_PARM_TYPE_CURRENCY_TYPE));
+				}
+				if(proposal.getMember() != null){
+					vo.setClientName(getCommonMemberName(proposal.getMember().getId(), langCode, "2"));
+				}
+				if(proposal.getCreateTime() != null){
+					vo.setCreateTimeStr(DateUtil.dateToDateString(proposal.getCreateTime(), CommonConstants.FORMAT_DATE_TIME));
+				}
+				if(proposal.getInitialInvestAmount() != null){
+					vo.setInitialInvestAmountStr(StrUtils.getNumberString(proposal.getInitialInvestAmount()));
+				}
+				List<AccessoryFile> accessoryFiles = accessoryFileService.getAccessoryFile(proposal.getId(), CommonConstantsWeb.CREATE_PROPOSAL_CRM_PROPOSAL, "create_proposal_PDF_" + langCode, langCode);
+				if(accessoryFiles != null && !accessoryFiles.isEmpty()){
+					vo.setProposalPdfPath(accessoryFiles.get(0).getFilePath());
+				}
+				vos.add(vo);
+			}
+			jsonPaging.getList().clear();
+			jsonPaging.getList().addAll(vos);
+		}
+		return jsonPaging;
+	}
+	
+}

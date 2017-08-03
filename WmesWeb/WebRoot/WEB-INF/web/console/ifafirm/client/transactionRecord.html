@@ -1,0 +1,200 @@
+[#include "../../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+    <div class="wmes-top">
+        <a href="javascript:;" class="header-over">Transaction Record</a>
+    </div>
+    <div class="wmes-content">
+        <div class="ifa_choose_condition">
+            <p class="wmes-wrap-title">Transaction Record</p>
+            <div class="funds_choice_wrap">
+                <p class="funds_choice_title">[@lang_res k='order.plan.list.period'/]</p>
+                <ul class="funds_choice">
+                <li class="fund_choice_active funds_all" data-name="Period Date" data-key="" data-value="Issue Date_00">[@lang_res k='ifaspace.info.all'/]</li>
+                <li data-name="Period Date" data-key="1 Week" data-type="D" data-value="-7">[@lang_res k='order.plan.list.period.week.1'/]</li>
+                <li data-name="Period Date" data-key="1 Month" data-type="M" data-value="-1">[@lang_res k='order.plan.list.period.month.1'/]</li>
+                <li data-name="Period Date" data-key="2 Month" data-type="M" data-value="-2">[@lang_res k='order.plan.list.period.month.2'/]</li>
+                <li data-name="Period Date" data-key="3 Month" data-type="M"  data-value="-3">[@lang_res k='order.plan.list.period.month.3'/]</li>
+                <li data-name="Period Date" data-key="6 Month" data-type="M" data-value="-6">[@lang_res k='order.plan.list.period.month.6'/]</li>
+                <li data-name="Period Date" data-key="1 Year" data-type="Y" data-value="-1">[@lang_res k='order.plan.list.period.year.1'/]</li>
+                <li class="recommend-date-li recommend-date-choice" data-name="Period Date" data-key="" data-value="Period Date_07">
+                    <p class="recommend-other">[@lang_res k='order.plan.list.period.other'/]</p>
+                    <div class="recommend-other-wrap">
+                        <div class="recom-input-wrap">
+                            <input id="fromDate" readonly class="laydate-icon" type="" name="">
+                        </div>
+                        <span class="recommend-to-word">[@lang_res k='order.plan.list.period.to'/]</span>
+                        <div class="recom-input-wrap">
+                            <input id="toDate" readonly class="laydate-icon" type="" name="">
+                        </div>
+                        <a data-name="Period Date" class="recommend-date-ok" href="javascript:;">[@lang_res k='sys.role.saveButton'/]</a>
+                    </div>  
+                </li>
+            </ul>
+            </div>
+            <div class="funds_choice_wrap">
+                <p class="funds_choice_title">Status</p>
+                <ul class="funds_choice">
+                    <li class="fund_choice_active  funds_all"  data-name="Status" data-key="" data-value="Status_00">All</li>
+                    <li data-name="Status" data-key="Processing" data-value="Status_01">Processing</li>
+                    <li data-name="Status" data-key="Success" data-value="Status_02">Success</li>
+                    <li data-name="Status" data-key="Fail" data-value="Status_03">Fail</li>
+                    <li data-name="Status" data-key="Cancel" data-value="Status_04">Cancel</li>
+                </ul>
+            </div>
+            <div class="funds_choice_wrap">
+                <div class="record-choice-left">
+                    <p class="funds_choice_title">Portfolio</p>
+                    <select class="record-select">
+                        <option>All</option>
+                    </select>
+                </div>
+                <div class="record-choice-left">
+                    <p class="funds_choice_title">Account</p>
+                    <select class="record-select">
+                        <option>All</option>
+                    </select>
+                </div>
+                
+            </div>
+        </div>
+        <div class="strategies_list_wrap">                  
+            <div class="funds_list_selected record_selected_wrap">
+                <p class="funds_selected_title">Selected condition </p>
+                <ul class="selection_criteria">
+                    <p class="funds_title_selection">Reset filter </p>
+                </ul>
+            </div>
+            <div class="ifa_keyserach_wrap">
+                <p class="ifa_serach_sum">
+                    Total of                  
+                    <span class="funds_serach_digital">6</span> records found.</p>
+                <div class="funds_keyserach ifa_keyserach">
+                    <input type="text" id="fundName" placeholder="Please enter keyword search">
+                    <span class="icon_search" id="searchKeyBtn"></span>
+                </div>
+            </div>
+            <div class="record-table-wrap">
+                <div class="record-table-rows">
+                    <table class="record_List">
+                        <tbody>
+                            <tr class="funds_tables_th record_List_th">
+                                <th width="10%" class="funds_search_tdcenter">Date</th>
+                                <th width="23%" class="funds_search_tdcenter">Product Name</th>
+                                <th width="10%" class="funds_search_tdcenter">Transaction Unit</th>
+                                <th width="10%" class="funds_search_tdcenter">Transaction Amount</th>
+                                <th width="10%" class="funds_search_tdcenter">Transaction Fee</th>
+                                <th width="10%" class="funds_search_tdcenter">Transaction Type</th>
+                                <th width="10%" class="funds_search_tdcenter">Account No</th>
+                                <th width="10%" class="funds_search_tdcenter">Status</th>
+                                <th width="7%" class="funds_search_tdcenter">Action</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="record-List-title">
+                        <span>Portfolio A Large Cap Value</span>
+                        <img class="record-list-img" src="${base}/res/images/fund/record_xiala01.png">
+                    </p>
+                    <table class="funds_search_information record_List record_List_iof">
+                        <tbody>
+                            <tr>
+                                <td width="10%" class="funds_search_tdcenter tdleft">2016-10-23 17:52:11</td>
+                                <td width="23%"  class="funds_search_tdcenter tdleft">Guotai Junan Greater China Growth Fund (HKD)</td>
+                                <td width="10%" class="funds_search_tdcenter">1000</td>
+                                <td width="10%" class="funds_search_tdcenter">124,530.57 HKD</td>
+                                <td width="10%" class="funds_search_tdcenter">N/A</td>
+                                <td width="10%" class="funds_search_tdcenter">Subscription</td>
+                                <td width="10%" class="funds_search_tdcenter">000452166</td>
+                                <td width="10%" class="funds_search_tdcenter">Success</td>
+                                <td width="7%" class="funds_search_tdcenter"><img src="${base}/res/images/fund/record_ico01.png"></td>
+                            </tr>
+                            <tr>
+                                <td class="funds_search_tdcenter tdleft">2016-10-25 09:42:39</td>
+                                <td class="funds_search_tdcenter tdleft">Henderson Horizon Fund Asian Dividend Income Fund (USD) A2</td>
+                                <td class="funds_search_tdcenter">1750</td>
+                                <td class="funds_search_tdcenter">82,987.22 HKD</td>
+                                <td class="funds_search_tdcenter">N/A</td>
+                                <td class="funds_search_tdcenter">Redemption</td>
+                                <td class="funds_search_tdcenter">000987799</td>
+                                <td class="funds_search_tdcenter">Cancel</td>
+                                <td class="funds_search_tdcenter"></td>
+                            </tr>
+                            <tr>
+                                <td class="funds_search_tdcenter tdleft">2016-10-22 18:15:43</td>
+                                <td class="funds_search_tdcenter tdleft">JPM Global Financials (USD)</td>
+                                <td class="funds_search_tdcenter">1020</td>
+                                <td class="funds_search_tdcenter">4,687.23 HKD</td>
+                                <td class="funds_search_tdcenter">158.00  USD</td>
+                                <td class="funds_search_tdcenter">Redemption</td>
+                                <td class="funds_search_tdcenter">000986987</td>
+                                <td class="funds_search_tdcenter">Success</td>
+                                <td class="funds_search_tdcenter"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="record-table-rows">
+                    <table class="record_List">
+                        <tbody>
+                            <tr class="funds_tables_th record_List_th">
+                                <th width="10%" class="funds_search_tdcenter">Date</th>
+                                <th width="23%" class="funds_search_tdcenter">Product Name</th>
+                                <th width="10%" class="funds_search_tdcenter">Transaction Unit</th>
+                                <th width="10%" class="funds_search_tdcenter">Transaction Amount</th>
+                                <th width="10%" class="funds_search_tdcenter">Transaction Fee</th>
+                                <th width="10%" class="funds_search_tdcenter">Transaction Type</th>
+                                <th width="10%" class="funds_search_tdcenter">Account No</th>
+                                <th width="10%" class="funds_search_tdcenter">Status</th>
+                                <th width="7%" class="funds_search_tdcenter">Action</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="record-List-title">
+                        <span>Portfolio A Large Cap Value</span>
+                        <img class="record-list-img" src="${base}/res/images/fund/record_xiala01.png">
+                    </p>
+                    <table class="funds_search_information record_List record_List_iof">
+                        <tbody>
+                            <tr>
+                                <td width="10%" class="funds_search_tdcenter tdleft">2016-06-23 16:23:21</td>
+                                <td width="23%" class="funds_search_tdcenter tdleft">AB FCP I - US Thematic Research Portfolio (USD) A</td>
+                                <td width="10%" class="funds_search_tdcenter">1230</td>
+                                <td width="10%" class="funds_search_tdcenter">124,530.57 HKD</td>
+                                <td width="10%" class="funds_search_tdcenter">N/A</td>
+                                <td width="10%" class="funds_search_tdcenter">Redemption</td>
+                                <td width="10%" class="funds_search_tdcenter">000987799</td>
+                                <td width="10%" class="funds_search_tdcenter">Cancel</td>
+                                <td width="7%" class="funds_search_tdcenter"></td>
+                            </tr>
+                            <tr>
+                                <td class="funds_search_tdcenter tdleft">2016-06-23 16:23:21</td>
+                                <td class="funds_search_tdcenter tdleft">CIFMHK Funds - CIFM (HK) RMB China A Focus Fund (RMB) A</td>
+                                <td class="funds_search_tdcenter">1000</td>
+                                <td class="funds_search_tdcenter">124,530.57 HKD</td>
+                                <td class="funds_search_tdcenter">N/A</td>
+                                <td class="funds_search_tdcenter">Subscription</td>
+                                <td class="funds_search_tdcenter">000452166</td>
+                                <td class="funds_search_tdcenter">Success</td>
+                                <td class="funds_search_tdcenter"><img src="${base}/res/images/fund/record_ico01.png"></td>
+                            </tr>
+                            <tr>
+                                <td class="funds_search_tdcenter tdleft">2016-06-23 16:23:21</td>
+                                <td class="funds_search_tdcenter tdleft">Fidelity Funds - Global Technology A-EUR</td>
+                                <td class="funds_search_tdcenter">1200</td>
+                                <td class="funds_search_tdcenter">124,530.57 HKD</td>
+                                <td class="funds_search_tdcenter">124.00  USD</td>
+                                <td class="funds_search_tdcenter">Redemption</td>
+                                <td class="funds_search_tdcenter">000986234</td>
+                                <td class="funds_search_tdcenter">Success</td>
+                                <td class="funds_search_tdcenter"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/strategy/transactionRecord.js');
+
+</script>

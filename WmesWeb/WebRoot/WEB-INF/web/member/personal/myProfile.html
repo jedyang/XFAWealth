@@ -1,0 +1,797 @@
+[#include "../../inc/head_v2.html"/]
+ <link rel="stylesheet" href="${base}/res/css/openaccount.css">
+ <link rel="stylesheet" href="${base}/res/css/strategy.css">
+  <link rel="stylesheet" href="${base}/res/css/client.css">
+ <link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+ <link rel="stylesheet" href="${base}/res/css/jquery.range.css">
+<style>
+		.label li a {
+			display: block;
+			width: 100px;
+			height: 20px;
+			border: 1px solid red;
+		}
+		
+		.label li span {
+			display: inline-block;
+			width: 80px;
+			height: 20px;
+			border: 1px solid blue;
+		}
+		
+		.label li {
+			display: inline-block;
+			padding: 5px 10px 5px 10px;
+			width: auto;
+			height: 20px;
+			color: #ff9b19;
+			border: 1px solid #ff9b19;
+			text-align:center;
+			line-height: 20px;
+			overflow: hidden;
+		}
+		.disabled{text-align: -webkit-match-parent;}
+	</style>
+<div class="personalWrap wmes-content">
+
+        <div class="kaihu_div">
+            <div class="white_background funds_background">
+				        [#assign member=personalInfo.baseInfo]
+				        [#if member.memberType?? && member.memberType==1]
+				            [#assign details=personalInfo.individualPerson]
+				        [#elseif member.memberType?? && member.memberType==2]
+				            [#assign details=personalInfo.ifaPerson]
+				        [/#if]
+			<div class="zhongxin_right">
+				<div class="zhongxin_right_content zhongxin_right_content_amend">
+					<div class="setting_title">[@lang_res k='member.personalInfo'/]</div>
+					<div class="setting_personal_information">
+						<div class="zhongxin_ziliao">
+							<a href="${base}/front/member/personal/changeIcon.do"><img class="member_touxiang member_touxiang_amend" src="${base}[@user_head u=member.iconUrl g=member.gender/]" alt=""></a>
+							<!-- <a style="padding-left:20px;" href="${base}/front/member/personal/changeIcon.do">Change</a>-->
+						</div>
+
+						<div class="zhongxin_ziliao zhongxin_ziliao_amend">
+
+							<div class="setting_name">
+								[#if details??]${details.firstName!}[/#if] [#if details??]${details.lastName!}[/#if] 
+								<span>${member.loginCode!""}</span>
+							</div>
+							<div class="ip_timecon">
+								<div class="setting_login_time">
+									<span>[@lang_res k='member.info.lastLogin'/]</span> [@date_fmt s=member.loginTime t='dt' f=datetime_format/]
+								</div>
+								<div class="setting_login_ip">
+									<span>IP</span> ${member.lastLoginIp!""}
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<ul class="gary_title gary_title_amend">
+						<li class="backgroundac">
+							<div class="basic-settingpic"><span>[@lang_res k='member.personal.preference'/]</span></div>
+						</li>
+						<li>
+							<div class="security-settingpic"><span>[@lang_res k='member.personal.security'/]${member.memberType!}</span></div>
+						</li>
+						<!--
+						[#if member.memberType?? && member.memberType==2]
+						<li>
+							<div class="IFA-settingpic"><span>[@lang_res k='member.personal.ifaSpaceSetting'/]</span></div>
+						</li>
+						<li>
+							<div class="IFA-Investment-settingpic"><span>[@lang_res k='member.personal.investmentSetting'/]</span></div>
+						</li>
+						[/#if] 
+						-->
+						<li >
+							<div class="information1pic"><span>[@lang_res k='member.personal.profile'/]</span></div>
+						</li>
+					</ul>
+					<div class="setting-content setting-contentac">
+					<form id="preferenceSetting" method="post">
+						<div class="basicSetting">
+							<div class="basicSettingleft">
+								<p style="margin:6px 0 26px 0;">[@lang_res k='member.info.language'/]</p>
+                                <p style="height:18px">[@lang_res k='member.info.defDisplayColor'/]</p>
+                                <p>[@lang_res k='member.info.defCurrency'/]</p>
+                                <p>[@lang_res k='member.info.dateformat'/]</p>
+							</div>
+							<div class="basicSettingright">
+							<ul class="basicSettinglanguage">
+									<div class="register_xiala_long" style="margin-left:0">
+	                            	   [#if member.langCode?? && member.langCode=='en']
+                                        <input type="text" readonly class="value_show" value="[@lang_res k='lang.list.lang.en'/]">
+                                       [#elseif member.langCode?? && member.langCode=='tc']
+                                        <input type="text" readonly class="value_show" value="[@lang_res k='lang.list.lang.tc'/]">
+                                       [#else]
+                                        <input type="text" readonly class="value_show" value="[@lang_res k='lang.list.lang.sc'/]">
+                                       [/#if]
+	                            		<input  name="langCode" id="langCode" type="hidden" class="value_hidden" value="${member.langCode!}">
+	                            		<ul class="regiter_xiala_ul">
+	                               			<li value="en">[@lang_res k='lang.list.lang.en'/]</li>
+	                               			<li value="sc">[@lang_res k='lang.list.lang.sc'/]</li>
+	                               			<li value="tc">[@lang_res k='lang.list.lang.tc'/]</li>
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        		</div> 
+								</ul>
+								<!--<ul class="basicSettinglanguage">
+									<select name="langCode" id="langCode" >
+									<option value="en" [#if member.langCode=="en"]selected="selected"[/#if]>English</option>
+									<option value="sc" [#if member.langCode=="sc"]selected="selected"[/#if]>Simple Chinese</option>
+									<option value="tc" [#if member.langCode=="tc"]selected="selected"[/#if]>Traditional Chinese</option>
+									</select>
+								</ul>
+								--><ul class="basicSettingcolor">
+									<li>
+										<input type="radio" name="defDisplayColor" value="2"  [#if member.defDisplayColor?? && member.defDisplayColor=="2"]checked="checked"[/#if]/>
+										<div class="basicSettingcolorcon">
+											<div class="basicSettingcolor-rise">[@lang_res k='assets.profit.rise'/]</div>
+											<div class="basicSettingcolor-fall">[@lang_res k='assets.profit.fall'/]</div>
+										</div>
+									</li>
+									<li>
+										<input type="radio" name="defDisplayColor" value="1" [#if member.defDisplayColor?? && member.defDisplayColor=="1"]checked="checked"[/#if]/>
+										<div class="basicSettingcolorcon">
+											<div class="basicSettingcolor-fall">[@lang_res k='assets.profit.fall'/]</div>
+											<div class="basicSettingcolor-rise">[@lang_res k='assets.profit.rise'/]</div>
+										</div>
+									</li>
+								</ul>
+								<div class="register_xiala_long" style="margin-left:0;margin-bottom:30px" value="${member.defCurrency!}">
+	                            	<input type="text" placeholder="USD" class="value_show" value="${member.defCurrency!}" >
+	                            	<input type="hidden" id="defCurrency" name="defCurrency" class="value_hidden" value="${member.defCurrency!}" >
+	                            	<ul class="regiter_xiala_ul">
+	                            	[#if currencyType?exists && currencyType?size gt 0]
+								    [#list currencyType as x]
+									<li value="${x.itemCode!}" >${x.name!} <!-- ${x.itemCode!} --></li>
+									[/#list]
+									[/#if]
+	                            	</ul>
+	                            	<span class="register_xiala_ico"></span>
+	                        	</div>
+	                        	<div class="register_xiala_long "  style="margin-left:0;margin-bottom:30px">
+	                            	<input type="text" id="dateFormat" placeholder="yyyy/mm/dd" class="value_show" value="${member.dateFormat!}">
+	                            	<input name="dateFormat" type="hidden"  class="value_hidden"  value="${member.dateFormat!}">
+	                            	<ul class="regiter_xiala_ul dateFormatSelect">
+	                               		<li value="yyyy-MM-dd">yyyy-MM-dd</li>
+	                               		<li value="dd-MM-yyyy">dd-MM-yyyy</li>
+	                               		<li value="MM-dd-yyyy">MM-dd-yyyy</li>
+	                               		<li value="yyyy/MM/dd">yyyy/MM/dd</li>
+	                               		<li value="dd/MM/yyyy">dd/MM/yyyy</li>
+	                               		<li value="MM/dd/yyyy">MM/dd/yyyy</li>
+	                            	</ul>
+	                            	<span class="register_xiala_ico"></span>
+	                        	</div>
+	                        	<span style="margin-left:20px;color: #999999;font-size:14px;">[@lang_res k='member.personal.example'/]:<span class="dateFormat" style="margin-left:20px;">2016/12/01</span></span>
+	                        	</div>
+							<div class="setting-control">
+								<div class="setting-summit" id="savePreference">[@lang_res k='global.save'/]</div>
+								<div class="setting-cancel">[@lang_res k='global.cancel'/]</div>
+							</div>
+						</div>
+						</form>
+					</div>
+
+					<div class="setting-content">
+						<div class="setting-basicInfo">
+							<div class="setting-contentcon">
+								<div class="setting-basicInfoleft">
+									<p><span class="font_red" style="margin-right: 5px">*</span>[@lang_res k='member.changePassword.oldPwd'/]</p>
+									<p style="height:38px;padding-top:13px;"><span class="font_red" style="margin-right: 5px">*</span>[@lang_res k='member.changePassword.newPwd'/]</p>
+									<p style="margin-bottom: 80px;">[@lang_res k='member.resetPassword.strength'/]</p>
+									<p><span class="font_red" style="margin-right: 5px">*</span>[@lang_res k='member.changePassword.cfmPwd'/]</p>
+								</div>
+								<div class="setting-basicInforight">
+									<div style="clear: both;height: 55px;">
+										<input class="basicSettingselect" style="float:left" id="oldpsw" type="password"/>
+										<span id="oldPwdText" class="font_red" style="margin: 20px;"></span>
+									</div>
+									<div style="clear: both;height: 35px;">
+										<input class="basicSettingselect" style="float:left" id="password" type="password" style="margin-top:14px;" />
+										<span id="passwordText" class="font_red" style="margin: 20px;"></span>
+									</div>
+									<div style="clear: both;height: 35px;">
+				                        <div style="margin-bottom: 20px;">
+				                          <div class="register_strength">
+				                            <ul>
+				                                  <li></li>
+				                                  <li></li>
+				                                  <li></li>
+				                                  <li></li>
+				                                  <li></li>
+				                                  <li></li>
+				                                  <li></li>
+				                              </ul>
+				                          </div>
+				                          <span class="register_strength_font">[@lang_res k='member.resetPassword.strength'/]</span>
+				                        </div>
+				                      </div>
+									<div style="clear: both;height: 35px;">
+										<p class="passwordprompter">[@lang_res k='member.personal.pwd.tips'/]</p>
+										<input class="basicSettingselect" style="float:left" id="confirm_password" type="password" />
+										<span id="confirmText" class="font_red" style="margin: 20px;"></span>
+									</div>
+								</div>
+							</div>
+							<div class="setting-control">
+								<div class="setting-summit disabled" id="saveButton">[@lang_res k='global.submit'/]</div>
+								<div class="setting-cancel">[@lang_res k='global.cancel'/]</div>
+							</div>
+
+						</div>
+
+					</div>
+					<!-- 
+                 [#if member.memberType?? && member.memberType==2]
+                    <div class="setting-content">
+						<div class="setting-basicInfo">
+							<div class="setting-contentcon">
+								<form id="ifaForm" method="post">
+								<div class="IFA_settingwrap" style="height:30px;">
+									<div class="IFA_settinglefttitle">
+										投资经验
+									</div>
+
+									<div class="training-contentarea">
+										<input type="number" style="margin-top:10px;width:33px" value="0" min="0"/> 年
+									</div>
+
+								</div>
+								<div class="IFA_settingwrap">
+									<div class="IFA_settinglefttitle">
+										[@lang_res k='member.personal.personalIntroduction'/]
+									</div>
+
+									<div class="training-contentarea">
+										<textarea class="member-comment-text" id="introduction" name="introduction">[#if details?? && details.introduction??]${details.introduction}[/#if]</textarea>
+										<div class="member-comment-topper">
+											<p class="member-number-words member-number-words-application">Total 500 characters, 0 inputed, 150 left.
+										</div>
+									</div>
+
+								</div>
+								<div class="IFA_settingwrap">
+									<div class="IFA_settinglefttitle">
+										[@lang_res k='member.personal.performanceSection'/]
+									</div>
+									<ul>
+										<li><input type="checkbox" id="spaceShowAum" name="spaceShowAum" [#if details?? && details.spaceShowAum?? && details.spaceShowAum=="1"]checked="checked"[/#if]/>show AuM</li>
+										<li>
+										<div style="float:left;margin-top:20px">
+												<input type="checkbox" id="showPortfolio" name="showPortfolio" [#if details?? && details.spaceShowPortfolio?? && details.spaceShowPortfolio!='']checked="checked"[/#if]/>show to Portfolio
+											</div>
+											[#if portfolioList?exists && portfolioList?size gt 0]
+											[#list portfolioList as list]
+											[#if details.spaceShowPortfolio?? && list.id==details.spaceShowPortfolio]
+											[#assign portfolioName=list.portfolioName]
+											[/#if]
+											[/#list]
+											[/#if]
+											<div class="register_xiala_long" style="margin-left:0;margin-bottom:30px;float:left;margin-top:17px;margin-left:20px;">
+	                            				<input type="text" placeholder="--Please Select--" class="value_show" value="${portfolioName!''}">
+	                            				<input name="spaceShowPortfolio" type="hidden" class="value_hidden"  value="${details.spaceShowPortfolio!}">
+	                            				<ul class="regiter_xiala_ul">
+	                               					<li>--Please Select--</li>
+	                               					[#if portfolioList?exists && portfolioList?size gt 0]
+												[#list portfolioList as list]
+												<li value="${list.id!}">${list.portfolioName!}</li>
+												[/#list]
+												[/#if]
+	                            				</ul>
+	                            				<span class="register_xiala_ico"></span>
+	                        				</div>
+										</li>
+									</ul>
+
+								</div>
+									</form>
+									<div class="setting-control">
+								<div class="setting-summit" id="saveIfa">[@lang_res k='global.submit'/]</div>
+								<div class="setting-cancel">[@lang_res k='global.cancel'/]</div>
+                               
+							</div>
+							</div>
+							
+						</div>
+                             
+					</div>
+
+					<div class="setting-content ">
+					<form id="investForm" method="post">
+						<div class="setting-subtitle" style="margin-bottom: 20px">
+							<p>
+								[@lang_res k='member.personal.investmentSetting'/]
+							</p>
+						</div>
+						<p>
+							[@lang_res k='member.personal.portfolioReviewremind'/]
+						</p>
+						<ul class="Portfolio_Review_remind">
+							<li>
+								[@lang_res k='member.personal.performanceLessThan'/]
+							</li>
+							<li>
+								<span class="range_result">[#if details?? && details.portfolioCriticalValue??]${details.portfolioCriticalValue}[#else]0[/#if]</span>%
+							</li>
+							<li>
+								<input type="hidden" class="single-slider" value="[#if details?? && details.portfolioCriticalValue??]${details.portfolioCriticalValue}[#else]0[/#if]" id="portfolioCriticalValue" name="portfolioCriticalValue" />
+							</li>
+						</ul>
+
+						<ul class="Portfolio_Review_remind">
+							<li>
+								Performance more than
+							</li>
+							<li>
+								<span class="return_result">[#if details?? && details.portfolioReturnValue??]${details.portfolioReturnValue}[#else]0[/#if]</span>%
+							</li>
+							<li>
+								<input type="hidden" class="single-slider" value="[#if details?? && details.portfolioReturnValue??]${details.portfolioReturnValue}[#else]0[/#if]" id="portfolioReturnValue" name="portfolioReturnValue" />
+							</li>
+						</ul>
+						<div class="setting-control">
+							<div class="setting-summit" id="saveInvest">
+								[@lang_res k='global.submit'/]
+							</div>
+							<div class="setting-cancel">
+								[@lang_res k='global.cancel'/]
+							</div>
+						</div>
+						</form>
+					</div>
+					[/#if]
+					 -->
+					<div class="setting-content ">
+						<div class="setting-subtitle">
+							<p>[@lang_res k='member.baseInfo'/]</p>
+							<div class="setting-bn">[@lang_res k='global.edit'/]</div>
+							<div class="setting-cancel" id="settinghidden">[@lang_res k='global.cancel'/]</div>
+							<div class="setting-summit" id="settinghide">[@lang_res k='global.save'/]</div>
+						</div>
+						<form id="RegisterForm"  method="post">
+						<div class="setting-basicInfo">
+							<div class="setting-basicInfoleft">
+								<!-- <p>[@lang_res k='member.register.lastnameinenglish'/]</p>
+								<p>[@lang_res k='member.register.firstnameinenglish'/]</p> -->
+								<p>[@lang_res k='member.register.alias'/]</p>
+								<!-- <p>[@lang_res k='member.register.nameinchinese'/]</p> -->
+								<p>[@lang_res k='member.register.mobilenumber'/]</p>
+								<p>[@lang_res k='member.register.email'/]</p>
+								<!-- <p>[@lang_res k='member.register.gender'/]</p> -->
+								<p>[@lang_res k='member.register.dateofbirth'/]</p>
+								<p>[@lang_res k='member.register.nationality'/]</p>
+								<p>[@lang_res k='member.register.credentialstype'/]</p>
+								<p>[@lang_res k='member.register.idorpassportno'/]</p>
+								<p>[@lang_res k='member.register.employmentdetails'/]</p>
+								<p>[@lang_res k='member.register.occupation'/]</p>
+								<p>[@lang_res k='member.register.levelofeducation'/]</p>
+								<p>[@lang_res k='member.info.webchatCode'/]</p>
+								<p>[@lang_res k='member.info.facebookCode'/]</p>
+								<p>[@lang_res k='member.info.weiboCode'/]</p>
+								<p>[@lang_res k='member.info.twitterCode'/]</p>
+								<p>[@lang_res k='member.info.linkedinCode'/]</p>
+							</div>
+							<div class="setting-basicInforight" id="setting-basicInforight">
+								<!-- <p><input type="text" name="lastName"  value="[#if details??]${details.lastName!}[/#if]" readonly="readonly"/>
+								<span  field="last_name" class="setting_eye"></span></p>
+							
+								<p><input type="text" name="firstName" value="[#if details??]${details.firstName!}[/#if]" readonly="readonly"/>
+								<span  field="first_name" class="setting_eye"></span></p> -->
+								
+								<p><input type="text" name="nickName" value="[#if details??]${member.nickName!}[/#if]" readonly="readonly"/>
+								<span  field="nick_name" class="setting_eye"></span></p>
+								
+								<!-- <p><input type="text" name="nameChn" value="[#if details??]${details.nameChn!}[/#if]" readonly="readonly"/>
+								<span  field="name_chn" class="setting_eye"></span></p> -->
+								
+								<p><input type="text" name="mobileCode" value="${member.mobileCode!''}" style="width:30px;" readonly="readonly"/>
+								<input type="text" name="mobileNumber" value="${member.mobileNumber!''}" style="width:170px;" readonly="readonly"/>
+								<span  field="mobile_number" class="setting_eye"></span></p>
+								
+								<p><input type="text"  name="email" value="${member.email!""}" readonly="readonly"/>
+								<span  field="email" class="setting_eye"></span></p>
+								
+								<!-- <div class="sexcon"><span style="padding-left:6px">[#if details?? && details.gender?? && details.gender == 'M'][@lang_res k='member.info.gender.M'/][#else][@lang_res k='member.info.gender.F'/][/#if]</span>
+								<div class="sex"><input type="radio" name="gender" value="M"  style="width:13px;height:13px" [#if details?? && details.gender?? && details.gender == 'M']checked="checked"[/#if] value="[@lang_res k='member.info.gender.M'/]">[@lang_res k='member.info.gender.M'/]
+								<input type="radio" name="gender" value="F" style="width:13px;height:13px;margin-left:10px;" value="[@lang_res k='member.info.gender.F'/]" [#if details?? && details.gender?? && details.gender == 'F']checked="checked"[/#if]>[@lang_res k='member.info.gender.F'/]</div></div> -->
+								
+								
+								<!--<p><input type="text"  name="gender" value="[#if details?? && details.gender?? && details.gender == 'M'][@lang_res k='member.info.gender.M'/][#else][@lang_res k='member.info.gender.F'/][/#if]" readonly="readonly"/></p>
+								--><!--<p><input type="text" name="born" id="bornDate" style="pointer-events:none" value="[#if details?? && details.born??]${details.born?string('yyyy/MM/dd')}[/#if]" readonly="readonly" class="recommend-date bornDate"/></p>
+								--><p style="overflow: visible;"><input type="text" name="born" id="bornDate" style="pointer-events:none" value="[#if details?? && details.born??]${details.born?string('yyyy/MM/dd')}[/#if]" readonly="readonly" class="recommend-date bornDate"/></p>
+								<div class="register_xiala_long">
+	                            		<input type="text" placeholder="English" class="value_show" value="${personalInfo.nationName!''}" readonly="readonly">
+	                            		<input name="nationId" type="hidden" class="value_hidden" value="${personalInfo.nationId!''}">
+	                            		<ul class="regiter_xiala_ul">
+	                            		 [#list countryList as x]
+										 <li value="x.id" >${x.name!""}</li>
+										[/#list]
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        	</div> 
+								<div class="register_xiala_long">
+	                            		<input type="text" placeholder="ID Card"  class="value_show" readonly="readonly" value="${personalInfo.certType!''}">
+	                            		<input name="certTypeId" type="hidden" class="value_hidden" value="${personalInfo.certTypeId!''}">
+	                            		<ul class="regiter_xiala_ul">
+	                               			 [#list certList as x]
+										 <li value="x.id" >${x.name!""}</li>
+										   [/#list]
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        	</div> 
+								<p><input type="text" name="certNo" value="[#if details??]${details.certNo!''}[/#if]" readonly="readonly"/></p>
+								<div class="register_xiala_long">
+	                            		<input type="text" placeholder="Full-time employed" class="value_show" value="${personalInfo.employment!''}" readonly="readonly">
+	                            		<input name="employmentId" type="hidden" class="value_hidden" value="${personalInfo.employmentId!''}">
+	                            		<ul class="regiter_xiala_ul">
+	                               			[#list employmentList as x]
+										 <li value="x.id" >${x.name!""}</li>
+										   [/#list]
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        	</div>
+	                        	<div class="register_xiala_long">
+	                            		<input type="text" placeholder="Business Services" class="value_show" readonly="readonly" value="${personalInfo.occupation!''}">
+	                            		<input name="occupationId" type="hidden" class="value_hidden" value="${personalInfo.occupationId!''}">
+	                            		<ul class="regiter_xiala_ul">
+	                               			[#list occupationList as x]
+										 <li value="x.id" >${x.name!""}</li>
+										   [/#list]
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        	</div>
+	                        	<div class="register_xiala_long">
+	                            		<input type="text" placeholder="Post-Graduate or above" class="value_show" readonly="readonly" value="${personalInfo.education!''}">
+	                            		<input name="educationId" type="hidden" class="value_hidden" value="${personalInfo.educationId!''}">
+	                            		<ul class="regiter_xiala_ul">
+	                               			[#list educationList as x]
+										 <li value="x.id" >${x.name!""}</li>
+										   [/#list]
+	                            		</ul>
+	                            		<span class="register_xiala_ico"></span>
+	                        	</div>
+	                        	
+	                        	
+								<!--<p>
+									<span class="selectedvalue">${personalInfo.nationName!''}</span>
+									<select name="nationId" value=${personalInfo.nationId!}>
+										<option value="">select</option>
+										 [#list countryList as x]
+										<option [#if personalInfo.nationId?? && personalInfo.nationId=x.id]selected="selected"[/#if] value="${x.id}">${x.name!""}</option>
+										[/#list]
+									</select>
+								</p>
+								--><!--<p>
+									<span class="selectedvalue">${personalInfo.certType!''}</span>
+									<select name="certTypeId" value=${personalInfo.certTypeId!}>
+										<option value="">select</option>
+										[#list certList as x]
+										<option [#if personalInfo.certTypeId?? && personalInfo.certTypeId=x.itemCode]selected="selected"[/#if] value="${x.itemCode!''}">${x.name!""}</option>
+										[/#list]
+									</select>
+								</p>
+								<p><input type="text" name="certNo" value="[#if details??]${details.certNo!''}[/#if]" readonly="readonly"/></p>
+								<p>
+									<span class="selectedvalue">${personalInfo.employment!''}</span>
+									<select name="employmentId" value=${personalInfo.employmentId!}>
+										<option value="">select</option>
+										 [#list employmentList as x]
+										<option [#if personalInfo.employmentId?? && personalInfo.employmentId=x.itemCode]selected="selected"[/#if] value="${x.itemCode!''}"> ${x.name!""}</option>
+										[/#list]
+									</select>
+								</p>-->
+								<!--<p>
+									<span class="selectedvalue">${personalInfo.occupation!''}</span>
+									<select name="occupationId" value=${personalInfo.occupationId!}>
+										<option value="">select</option>
+										[#list occupationList as x]
+										<option [#if personalInfo.occupationId?? && personalInfo.occupationId=x.itemCode]selected="selected"[/#if] value="${x.itemCode!''}">${x.name!""}</option>
+										[/#list]
+									</select>
+								</p>
+								<p>
+									<span class="selectedvalue">${personalInfo.education!''}</span>
+									<select name="educationId" value=${personalInfo.educationId!}>
+										<option value="">select</option>
+										[#list educationList as x]
+										<option [#if personalInfo.educationId?? && personalInfo.educationId=x.itemCode]selected="selected"[/#if] value="${x.itemCode!''}"> ${x.name!""}</option>
+										[/#list]
+									</select>
+								</p>-->
+								<p><input type="text" name="webchatCode" value="${personalInfo.webchatCode!}" readonly="readonly"/>
+								<span  field="webchat_code" class="setting_eye"></span></p>
+								
+								<p><input type="text" name="facebookCode" value="${personalInfo.facebookCode!}" readonly="readonly"/>
+								<span  field="facebook_code" class="setting_eye"></span></p>
+							
+								<p><input type="text" name="weiboCode" value="${personalInfo.weiboCode!}" readonly="readonly"/>
+								<span  field="weibo_code" class="setting_eye"></span></p>
+								
+								<p><input type="text" name="twitterCode" value="${personalInfo.twitterCode!}" readonly="readonly"/>
+								<span  field="twitter_code" class="setting_eye"></span></p>
+								
+								<p><input type="text" name="linkedInCode" value="${personalInfo.linkedInCode!}" readonly="readonly"/>
+								<span  field="linkedIn_code" class="setting_eye"></span></p>
+								
+							</div>
+							<!--<div class="setting-control" >
+								<div class="setting-summit" id="settinghide" style="margin-top:40px">[@lang_res k='global.save'/]</div>
+								<div class="setting-cancel" id="settinghidden" style="margin-top:40px">[@lang_res k='global.cancel'/]</div>
+							</div>
+						--></div>
+						</form>
+						<div class="setting-subtitle">
+							<p>[@lang_res k='member.otherInfo'/]</p>
+						</div>
+						<div class="setting-otherInfo">
+							<div class="setting-otherInfoleft">
+								<p>[@lang_res k='member.info.languageSpoken'/]</p>
+								<p>[@lang_res k='member.info.liveRegion'/]</p>
+								<p>[@lang_res k='member.info.hobbyType'/]</p>
+								<p>[@lang_res k='member.info.investField'/]</p>
+								<p>[@lang_res k='member.info.investStyle'/]</p>
+							</div>
+							<div class="setting-otherInforight">
+								<div class="setting-other-hobby">
+								  [#if languageSpoken?exists && languageSpoken?size gt 0]
+								   [#list languageSpoken as x]
+									<div class="setting-other-bn">${x.name}</div>
+									[/#list]
+									[/#if]
+									<div class="setting-other-add" settingName="languageSpoken">+</div>
+									</div>
+								<div class="setting-other-hobby">
+								[#if liveRegion?exists && liveRegion?size gt 0]
+								  [#list liveRegion as x]
+									<div class="setting-other-bn">${x.name}</div>
+									[/#list]
+									[/#if]
+									<div class="setting-other-add" settingName="liveRegion">+</div>
+									</div>
+									
+								<div class="setting-other-hobby">
+								[#if hobbyList?exists && hobbyList?size gt 0]
+								  [#list hobbyList as x]
+									<div class="setting-other-bn">${x.name}</div>
+									[/#list]
+									[/#if]
+									<div class="setting-other-add"  settingName="hobby">+</div>
+									<!--<div class="setting-other-bn setting-other-bnactive">Reading</div>
+									<div class="setting-other-bn">Climbing</div>
+									<div class="setting-other-bn">Swimming</div>
+									<div class="setting-other-bn">Travel</div>
+									<div class="setting-other-pen"><img src="${base}/res/images/discover/pen_ico.png"></div>
+								--></div>
+								<div class="setting-other-hobby">
+								[#if investField?exists && investField?size gt 0]
+								  [#list investField as x]
+									<div class="setting-other-bn">${x.name}</div>
+									[/#list]
+									[/#if]
+									<div class="setting-other-add"  settingName="investField">+</div>
+									<!--<div class="setting-other-bn setting-other-bnactive">Gold</div>
+									<div class="setting-other-bn">Energy</div>
+									<div class="setting-other-bn">Healthcare</div>
+									<div class="setting-other-bn">Commodity Futures</div>
+									<div class="setting-other-pen"><img src="${base}/res/images/discover/pen_ico.png"></div>
+								--></div>
+								<div class="setting-other-hobby">
+								[#if investStyle?exists && investStyle?size gt 0]
+								[#list investStyle as x]
+									<div class="setting-other-bn">${x.name}</div>
+									[/#list]
+									[/#if]
+									<div class="setting-other-add" settingName="investStyle">+</div>
+									<!--<div class="setting-other-add">+</div>
+								--></div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>    
+           </div> 
+        </div>
+</div>    
+
+<!-- 弹出层 -->
+		<div id="investmentStyleSetting"  class="investment-wrap" style="display:none">
+			<div class="investment-plan-wrap" settingName="investmentStyle">
+				<p class="investment-plan-title">[@lang_res k='member.info.investStyle'/] [@lang_res k='global.setting'/]</p>
+				<img class="character-close-ico" src="${base}/res/images/discover/chat_01.png">
+				<div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title" style="width:200px">[@lang_res k='member.info.investStyle'/]:</p>
+						<ul id="hobby-selected-option" class="character-setting-list">
+						[#if investStyle?exists  && investStyle?size gt 0]
+						[#list investStyle as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							<!--<li data-value="Reading">Reading <span class="character-list-close"></span></li>
+						--></ul>
+						<!--<input type="text" value="" class="character-setting-add">
+					--></div>
+					<div class="character-setting-choose">
+						<p class="character-choose-title">Please Select:</p>
+						<ul id="hobbytypes-choose-list" class="character-choose-list">
+						[#if allInvestStyle?exists  && allInvestStyle?size gt 0]
+						[#list allInvestStyle as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							</ul>
+					</div>
+				</div>
+				<div class="character-button-rows">
+					<a class="character-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+					<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+				</div>
+			</div>
+		</div>
+		
+		<div id="liveRegionSetting"  class="investment-wrap" style="display:none">
+			<div class="investment-plan-wrap" settingName="liveRegion">
+				<p class="investment-plan-title">[@lang_res k='member.info.liveRegion'/] [@lang_res k='global.setting'/]</p>
+				<img class="character-close-ico" src="${base}/res/images/discover/chat_01.png">
+				<div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title" style="width:200px">[@lang_res k='member.info.liveRegion'/]${liveRegion?size}</p>
+						<ul id="hobby-selected-option" class="character-setting-list">
+						[#if liveRegion?exists  && liveRegion?size gt 0]
+						[#list liveRegion as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							</ul>
+						<!--<input type="text" value="" class="character-setting-add">
+					--></div>
+					<div class="character-setting-choose">
+						<p class="character-choose-title">Please Select:</p>
+						<ul id="hobbytypes-choose-list" class="character-choose-list">
+						[#if allLiveRegion?exists  && allLiveRegion?size gt 0]
+						[#list allLiveRegion as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							</ul>
+					</div>
+				</div>
+				<div class="character-button-rows">
+					<a class="character-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+					<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+					
+				</div>
+				</div>
+				</div>
+				
+			<div id="languageSpokenSetting"  class="investment-wrap" style="display:none">
+			<div class="investment-plan-wrap" settingName="languageSpoken">
+				<p class="investment-plan-title">[@lang_res k='member.info.languageSpoken'/] [@lang_res k='global.setting'/]</p>
+				<img class="character-close-ico" src="${base}/res/images/discover/chat_01.png">
+				<div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title" style="width:200px">[@lang_res k='member.info.languageSpoken'/]:</p>
+						<ul id="character-selected-option" class="character-setting-list">
+							[#if languageSpoken?exists  && languageSpoken?size gt 0]
+						[#list languageSpoken as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							</ul>
+						<!--<input type="text" value="" class="character-setting-add">
+					--></div>			
+					<div class="character-setting-choose">
+						<p class="character-choose-title">Please Select:</p>
+						<ul id="character-choose-list" class="character-choose-list">
+						[#if languageList?exists  && languageList?size gt 0]
+						[#list languageList as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							<!--<li data-value="lively">lively <span class="character-list-close"></span></li>
+							<li data-value="Silent">Silent <span class="character-list-close"></span></li>
+							<li data-value="Melancholy">Melancholy <span class="character-list-close"></span></li>
+						--></ul>
+					</div>
+				</div>
+				<div class="character-button-rows">
+					<a class="character-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+					<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+					
+				</div>
+				</div>
+				</div>
+				
+				<div id="hobbySetting"  class="investment-wrap" style="display:none">
+			 <div class="investment-plan-wrap" settingName="hobby">
+				<p class="investment-plan-title">[@lang_res k='member.info.hobbyType'/] [@lang_res k='global.setting'/]</p>
+				<img class="character-close-ico" src="${base}/res/images/discover/chat_01.png">
+                <div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title" style="width:200px">[@lang_res k='member.info.hobbyType'/]:</p>
+						<ul id="hobby-selected-option" class="character-setting-list">
+						[#if hobbyList?exists  && hobbyList?size gt 0]
+						[#list hobbyList as list]
+						<li [#if list.itemCode??]data-code="${list.itemCode!}"[/#if] data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							<!--<li data-value="Reading">Reading <span class="character-list-close"></span></li>
+						--></ul>
+						<input type="text" value="" class="character-setting-add">
+					</div>
+					<div class="character-setting-choose">
+						<p class="character-choose-title">Please Select:</p>
+						<ul id="hobbytypes-choose-list" class="character-choose-list">
+						[#if allHobbyList?exists  && allHobbyList?size gt 0]
+						[#list allHobbyList as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							</ul>
+					</div>
+				</div>
+				<div class="character-button-rows">
+					<a class="character-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+					<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+					
+				</div>
+				</div>
+				</div>
+				
+				
+				<div id="investmentFieldSetting"  class="investment-wrap" style="display:none">
+			  <div class="investment-plan-wrap" settingName="investmentField">
+				<p class="investment-plan-title">[@lang_res k='member.info.investField'/] [@lang_res k='global.setting'/]</p>
+				<img class="character-close-ico" src="${base}/res/images/discover/chat_01.png">
+               <div class="character-setting-rows">
+					<div class="character-setting-contents">
+						<p class="character-setting-title" style="width:200px">[@lang_res k='member.info.investField'/]:</p>
+						<ul id="hobby-selected-option" class="character-setting-list">
+						[#if investField?exists  && investField?size gt 0]
+						[#list investField as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							<!--<li data-value="Reading">Reading <span class="character-list-close"></span></li>
+						--></ul>
+						<!--<input type="text" value="" class="character-setting-add">
+					--></div>
+					<div class="character-setting-choose">
+						<p class="character-choose-title">Please Select:</p>
+						<ul id="hobbytypes-choose-list" class="character-choose-list">
+						[#if allInvestField?exists  && allInvestField?size gt 0]
+						[#list allInvestField as list]
+						<li data-code="${list.itemCode!}" data-value="${list.name!}">${list.name!} <span class="character-list-close"></span></li>
+						[/#list]
+						[/#if]
+							</ul>
+					</div>
+				</div>
+				<div class="character-button-rows">
+					<a class="character-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+					<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+					
+				</div>
+				</div>
+				</div>
+				
+				
+<!-- 弹出层 结束 -->
+
+[#include "../../inc/foot_v2.html"/] 
+
+<script type="text/javascript">
+	var propJson = [@load_prop k='member.personal'/];
+    var _root_ = '${base}';
+    var _privacySetting=${privacySetting!};
+    seajs.use('${base}/res/web/member/regist/strength.js');
+    seajs.use('${base}/res/web/member/personal/myProfile.js');
+</script>
+
+

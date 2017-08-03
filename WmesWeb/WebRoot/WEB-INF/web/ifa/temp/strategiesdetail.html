@@ -1,0 +1,213 @@
+[#include "../../inc/head_v2.html"/]
+
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+        <div class="wmes-top">
+             <a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+            <a href="javascript:;" class="header-over">Strategy Detail</a>
+        </div>
+        <div class="wmes-content">
+        		<div class="strategies_list_wrap">
+        			<p class="strategies_detail_title">Household Consumption</p>
+        			<div class="strategies_detail_fav"><img src="${base}/res/images/fund/strategies_fav.png"></div>
+        			<div class="strategies_detail_inf">
+        				<div class="strategies_inf_left">
+        					<img class="strategies_inf_img" src="${base}/res/images/ifa2.png">
+							<p class="strategies_list_ifaname">CAROLYN SUN</p>
+        				</div>
+        				<div class="strategies_inf_right">
+        					<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+							<p class="strategies_eve_num">21,350</p>
+							<p class="strategies_time_word">2016-03-03 15:09</p>
+							<p class="strategies_date_Issued">Issued Date</p>
+        				</div>
+        			</div>
+        			<div class="strategies_inf_word">
+        				<div class="strategies_inf_goal">
+        					<p class="strategies_inf_title">Investment Goal</p>
+        					<p class="strategies_top_word">Over the past few months, we have taken
+								individual stock decisions that have further
+								reduced the portfolio’s exposure in
+								financials companies (active in insurance
+								sales and stock market operations). We
+								have also slightly increased exposure to
+								companies with a higher share of sales
+								outside of Europe, in markets such as Asia
+								and Latin America, where we see economic
+								recovery potential.
+							</p>
+        				</div>
+        				<div class="strategies_inf_reason">
+        					<p class="strategies_inf_title">Recommended reason</p>
+        					<p class="strategies_top_word">We expect equity markets to remain
+							unsettled over the coming weeks, although
+							news from individual companies will help
+							clarify which are the relative winners and
+							losers, particularly as the first half results
+							season will start in three weeks’ time. More
+							broadly, the referendum outcome will likely
+							result in reduced risk appetite and also in
+							lower forecasts for economic growth in
+							Europe and the UK.
+							</p>
+        				</div>
+        			</div>
+        			<div class="strategies_inf_subitability">
+        				<p class="strategies_inf_title">Investor Suitability</p>
+        				<p class="strategies_top_word">The key areas we are reviewing for Brexit
+						risk are primarily centred on holdings with
+						exposure to the UK consumer. In particular,
+						we are reviewing holdings which might be
+						affected by a short-term fall in consumer
+						confidence. 
+						</p>
+        			</div>
+        		</div>
+        		<!-- Allocation Overview -->
+				<div class="strategies_list_wrap">       			
+   	    			<div class="strategies_detail_list">
+   	    				<p class="strategies_detail_product">Allocation Overview</p>
+   	    				<span class="strategies_more"></span>
+   	    			</div>
+   	    			<div>
+   	    				<div class="risk-analysis-left">
+   	    					<div class="risk-analysis-rows">
+   	    						<p class="risk-analysis-title">Item</p>
+   	    						<p class="risk-analysis-lword">Great China</p>
+   	    						<p class="risk-analysis-lword">Japan</p>
+   	    						<p class="risk-analysis-lword">Europe（Euro-Zone）</p>
+   	    						<p class="risk-analysis-lword">US</p>
+   	    						<p class="risk-analysis-lword">Russia</p>
+   	    						<p class="risk-analysis-title">Total</p>
+   	    					</div>
+   	    					<div class="risk-analysis-rows">
+   	    						<p class="risk-analysis-title">Weigh</p>
+   	    						<p class="risk-analysis-lword">15%</p>
+   	    						<p class="risk-analysis-lword">35%</p>
+   	    						<p class="risk-analysis-lword">20%</p>
+   	    						<p class="risk-analysis-lword">20%</p>
+   	    						<p class="risk-analysis-lword">10%</p>
+   	    						<p class="risk-analysis-title">100%</p>
+   	    					</div>
+   	    				</div>
+   	    				<div class="risk-analysis-right">
+  	    					<img src="${base}/res/images/strategy/Allocation01.png">
+   	    				</div>
+   	    			</div>
+    	    	</div>
+    	    	<!-- Sector Allocation -->
+    	    	<div class="strategies_list_wrap">       			
+   	    			<div class="strategies_detail_list">
+   	    				<p class="strategies_detail_product">Sector Allocation</p>
+   	    				<span class="strategies_more"></span>
+   	    			</div>
+   	    			<div>
+   	    				<div class="risk-analysis-left">
+   	    					<div class="risk-analysis-rows">
+   	    						<p class="risk-analysis-title">Item</p>
+   	    						<p class="risk-analysis-lword">Healthcare</p>
+   	    						<p class="risk-analysis-lword">Consumer Defensive</p>
+   	    						<p class="risk-analysis-lword">Basic Materials</p>
+   	    						<p class="risk-analysis-lword">Energy</p>
+   	    						<p class="risk-analysis-lword">Technology</p>
+   	    						<p class="risk-analysis-title">Total</p>
+   	    					</div>
+   	    					<div class="risk-analysis-rows">
+   	    						<p class="risk-analysis-title">Weigh</p>
+   	    						<p class="risk-analysis-lword">25%</p>
+   	    						<p class="risk-analysis-lword">15%</p>
+   	    						<p class="risk-analysis-lword">15%</p>
+   	    						<p class="risk-analysis-lword">10%</p>
+   	    						<p class="risk-analysis-lword">35%</p>
+   	    						<p class="risk-analysis-title">100%</p>
+   	    					</div>
+   	    				</div>
+   	    				<div class="risk-analysis-right">
+  	    					<img src="${base}/res/images/strategy/sector001.png">
+   	    				</div>
+   	    			</div>
+    	    	</div>
+    	    	
+        		<div class="strategies_list_wrap" id="strategies_list" ng-controller="Strategies"  ng-app="myStrategies">       			
+    	    			<div class="strategies_detail_list">
+    	    				<p class="strategies_detail_product">Product list <span class="strategies_detail_sum">20</span></p>
+    	    				<span class="strategies_more"></span>
+    	    			</div>
+                        <table class="funds_search_information strategies_List">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                    <th class="funds_tables_fnames">
+                                        Product name
+                                    </th>
+                                    <th class="funds_tables_header">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.riskrating'/]    
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        CUR
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        ACC./INC.
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.ISIN'/]
+                                    </th>
+                                    <th  class="funds_tables_header">
+                                        [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon_3'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            [@lang_res l=Session["_LANG_CODE_"] k='fund.info.per'/] [@lang_res l=Session["_LANG_CODE_"] k='fund.info.mon_6'/](%)
+                                    </th>
+                                    <th class="funds_tables_header">
+                                            Weight
+                                    </th>
+                                    <!--<th class="funds_tables_header">Actions</th>-->
+                                </tr>
+                                <tr ng-repeat="items in dataList">
+                                    <td class="tdleft funds_tables_fnames">
+                                        <a href="${base}/front/fund/info/fundsdetail.do?id={{items.fundId}}" ng-bind="{{'items.fundName'}}"></a>
+                                    </td>
+                                    <td class="funds_search_tdcenter" ng-bind="{{'items.fundInfo.riskLevel'}}"></td>
+                                    <td class="funds_search_tdcenter" ng-bind="{{'items.fundCurrency'}}"></td>
+                                    <td class="funds_search_tdcenter">ACC</td>
+                                    <td class="funds_search_tdcenter" ng-bind="{{'items.fundInfo.isinCode'}}"></td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="funds_search_negative" ng-if="items.fundReturnOneMonth < 0 " ng-bind="{{'items.fundReturnOneMonth'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnOneMonth >= 0 " ng-bind="{{'items.fundReturnOneMonth'}}"></span>
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="funds_search_negative" ng-if="items.fundReturnThreeMonth < 0 " ng-bind="{{'items.fundReturnThreeMonth'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnThreeMonth >= 0 " ng-bind="{{'items.fundReturnThreeMonth'}}"></span>
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="funds_search_negative" ng-if="items.fundReturnSixMonth < 0 " ng-bind="{{'items.fundReturnSixMonth'}}"></span>
+                                        <span class="funds_search_positive" ng-if="items.fundReturnSixMonth >= 0 " ng-bind="{{'items.fundReturnSixMonth'}}"></span>
+                                    </td>
+                                    <td class="funds_search_tdcenter">
+                                        15%
+                                    </td>
+                                    <!-- 
+                                    <td>
+                                        <span class="funds_heart funds_heart_active funds_heart{{items.fundId}}"  ng-if="items.followStatus == 1 " followFlag="Delete" fundId="{{items.fundId}}"></span>
+                                        <span class="funds_heart funds_heart{{items.fundId}}"  ng-if="items.followStatus != 1 " followFlag="Follow" fundId="{{items.fundId}}" title="[@lang_res l=Session["_LANG_CODE_"] k='fund.info.favourites'/]"></span>
+                                        <span class="funds_cart" title="[@lang_res l=Session["_LANG_CODE_"] k='fund.info.shoppingCart'/]"></span>
+                                    </td>
+                                     -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    <ul class="ifa_list_paging">
+                        <li class="ifa_pagint_num">1</li>
+                        <li class="ifa_pagint_num">2</li>
+                        <li class="ifa_pagint_num ifa_pagint_now">3</li>
+                        <li class="ifa_pagint_some">...</li>
+                        <li class="ifa_pagint_num">10</li>
+                    </ul>
+        		</div>
+
+        </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/strategiesdetail.js');
+</script>

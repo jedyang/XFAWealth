@@ -1,0 +1,82 @@
+package com.fsll.wmes.group.action;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fsll.common.util.JsonUtil;
+import com.fsll.wmes.base.WmesBaseAct;
+import com.fsll.wmes.group.service.MemberGroupService;
+
+@Controller
+@RequestMapping("console/memberGroup/detail")
+public class ConsoleMemberGroupDetailAct extends WmesBaseAct{
+
+	@Autowired
+	private MemberGroupService memberGroupService;
+	
+	/**
+	 *  客户组成员列表页面
+	 * @author wwluo
+	 * @date 2017-06-01
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String list(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		return "console/group/detail/list";
+	}
+	
+	/**
+	 *  客户分组数据获取
+	 * @author wwluo
+	 * @date 2017-06-01
+	 */
+	@RequestMapping(value = "/listJson")
+	public void listJson(String groupId, String keyWord, HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		String langCode = getLoginLangFlag(request);
+		jsonPaging = getJsonPaging(request);
+		jsonPaging = memberGroupService.getGroupDetails(jsonPaging, groupId, keyWord, langCode);
+		toJsonString(response, jsonPaging);
+	}
+	
+	/**
+	 *  客户组成员添加页面
+	 * @author wwluo
+	 * @date 2017-06-01
+	 */
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String input(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		return "console/group/detail/add_list";
+	}
+	
+	/**
+	 *  客户组添加成员
+	 * @author wwluo
+	 * @date 2017-06-01
+	 */
+	@RequestMapping(value = "/addMember")
+	public void addMember(String ids, String groupId, HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		Map<String, Object> result = memberGroupService.addMember(ids, groupId);
+		JsonUtil.toWriter(result, response);
+	}
+	
+	/**
+	 *  客户分组删除成员
+	 * @author wwluo
+	 * @date 2017-06-01
+	 */
+	@RequestMapping(value = "/delete")
+	public void delete(String id, HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		Boolean flag = memberGroupService.delete(id);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("flag", flag);
+		JsonUtil.toWriter(result, response);
+	}
+}

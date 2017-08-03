@@ -1,0 +1,213 @@
+package com.fsll.wmes.distributor.action.console;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fsll.common.util.JsonUtil;
+import com.fsll.common.util.PropertyUtils;
+import com.fsll.common.util.ResponseUtils;
+import com.fsll.core.base.CoreBaseAct;
+import com.fsll.wmes.entity.DistributorOrg;
+import com.fsll.wmes.entity.MemberDistributor;
+import com.fsll.wmes.web.service.DistributorService;
+
+/**
+ * 代理商管理
+ */
+@Controller
+public class DistributorAct extends CoreBaseAct {
+
+	@Autowired
+	 private DistributorService distributorService;
+	 
+	/**
+	 * 显示代理商列表页面
+	 * @author qgfeng
+	 * @date 2016-11-10
+	 */
+	@RequestMapping(value = "/console/distributor/list")
+	public String list(HttpServletRequest request,HttpServletResponse response,ModelMap model) {
+		this.isMobileDevice(request,model);
+		return "console/distributor/list";
+	}
+	
+	/**
+	 * 代理商分页列表
+	 * @author qgfeng
+	 * @date 2016-11-10
+	 */
+	@RequestMapping(value = "/console/distributor/listDistributorListJson", method = RequestMethod.POST)
+	public void listDistributorListJson(HttpServletRequest request,HttpServletResponse response,ModelMap model) {
+		String companyName=request.getParameter("companyname");
+		String entityType=request.getParameter("entitytype");
+		String incorporationPlace=request.getParameter("incorporationplace");
+		String registerNo=request.getParameter("registerno");
+		MemberDistributor info=new MemberDistributor();
+		if(null!=companyName&&!"".equals(companyName)){
+			try {
+				companyName=URLDecoder.decode(companyName, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		info.setCompanyName(companyName);
+		if(null!=registerNo&&!"".equals(registerNo)){
+			try {
+				registerNo=URLDecoder.decode(registerNo, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		info.setRegisterNo(registerNo);
+		info.setEntityType(entityType);
+		info.setIncorporationPlace(incorporationPlace);
+		
+		jsonPaging=this.getJsonPaging(request);
+		jsonPaging=distributorService.findAll(jsonPaging, info,getLoginLangFlag(request));
+		this.toJsonString(response, jsonPaging);
+	}
+	
+	/**
+	 * 代理商数据查询的方法（下拉填充数据）
+	 * @author qgfeng
+	 * @date 2016-12-5
+	 */
+	@RequestMapping(value = "/console/distributor/allList", method = RequestMethod.POST)
+	public void listJsonIfafirm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		List<MemberDistributor> list = distributorService.findAllDistributor();
+		Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("result", true);
+		obj.put("ifafirmJson", list);
+		JsonUtil.toWriter(obj, response);
+	}
+	
+	/**
+	 * 显示代理商表单(新增、编辑)
+	 * @author qgfeng
+	 * @date 2016-11-10
+	 */
+	@RequestMapping(value = "/console/distributor/form")
+	public String form(HttpServletRequest request,HttpServletResponse response,ModelMap model) {
+		this.isMobileDevice(request,model);
+		String id=request.getParameter("id");
+		if(StringUtils.isNoneBlank(id))
+		{
+			MemberDistributor distributor = distributorService.getMemberDistributor(id);
+			model.put("distributor", distributor);
+		}else{
+			model.put("distributor", new MemberDistributor());
+		}
+		return "console/distributor/form";
+	}
+	
+	/**
+	 * 保存代理商表单的方法
+	 * @author qgfeng
+	 * @date 2016-11-10
+	 */
+	@RequestMapping(value = "/console/distributor/saveDistributorInfo", method = RequestMethod.POST)
+	public void saveDistributorInfo(MemberDistributor info,HttpServletRequest request,HttpServletResponse response,ModelMap model) {
+		if(StringUtils.isBlank(info.getId())){
+			info.setId(null);
+		}
+		//String moduleType=request.getParameter("moduleType");
+//		String imgData=request.getParameter("imgData");
+//		//存储上传图像
+//		String filePath = "";
+//		if(null!=imgData && !"".equals(imgData)){
+//			String[] arr=imgData.split("\\$");
+//			if(null!=arr && arr.length>0){
+//				////JPG|IMG_2064.JPG|25477412-c31e-4798-8ad3-3309d5a95b30.JPG|/u/corner/201611/25477412-c31e-4798-8ad3-3309d5a95b30.JPG
+//				for (String img : arr) {
+//					String[] each=img.split("\\|");
+//					filePath = each[3];
+//				}
+//			}
+//		}
+//		info.setLogoFile(filePath);
+		info=distributorService.saveOrUpdate(info);
+		Map<String, Object> obj = new HashMap<String, Object>();
+		if (null != info) {
+			obj.put("result", true);
+			obj.put("msg", PropertyUtils.getPropertyValue(this.getLoginLangFlag(request),"global.success",null));
+		} else {
+			obj.put("result", false);
+			obj.put("msg", PropertyUtils.getPropertyValue(this.getLoginLangFlag(request),"global.failed",null));
+		}
+		ResponseUtils.renderHtml(response,JsonUtil.toJson(obj));
+	}
+	
+	
+	
+	/**
+	 * 删除代理商
+	 * @author qgfeng
+	 * @date 2016-11-10
+	 */
+	@RequestMapping(value = "/console/distributor/delDistributor", method = RequestMethod.POST)
+	public void delDistributor(HttpServletRequest request,HttpServletResponse response,ModelMap model) {
+		String id=request.getParameter("id");
+		Map<String, Object> obj = new HashMap<String, Object>();
+		try {
+			distributorService.delDistributor(id);
+			obj.put("result",true);
+			obj.put("msg",PropertyUtils.getPropertyValue(this.getLoginLangFlag(request),"global.success",null));
+		} catch (Exception e) {
+			obj.put("result", false);
+			obj.put("msg", PropertyUtils.getPropertyValue(this.getLoginLangFlag(request),"global.failed",null));
+		}finally{
+			ResponseUtils.renderHtml(response,JsonUtil.toJson(obj));
+		}
+	}
+	
+	/**
+	 * 显示代理商部门树形列表页面
+	 * @author 林文伟
+	 * @date 2016-07-11
+	 */
+	@RequestMapping(value = "/console/distributor/org")
+	public String orgList(HttpServletRequest request,HttpServletResponse response,ModelMap model) {
+		this.isMobileDevice(request,model);
+		String distributorId=request.getParameter("id");
+		MemberDistributor memberDistributor = distributorService.findDistributorById(distributorId);
+		if(null!=memberDistributor)
+		{
+			model.put("name", memberDistributor.getCompanyName());
+			model.put("id", memberDistributor.getId());
+		}
+		return "console/distributor/org";
+	}
+	
+	/**
+	 * 获取代理商的组织架构数据，自己组装数据
+	 * @author 林文伟
+	 * @date 2016-07-12 
+	 */
+	@RequestMapping(value = "/console/distributor/listDistributorOrgJson", method = RequestMethod.POST)
+	public void listDistributorOrgJson(HttpServletRequest request,HttpServletResponse response,ModelMap model) {
+		String distributorId=request.getParameter("distributorid");
+
+		
+		List<DistributorOrg> distributorOrgList = distributorService.findDistributorOrgAll(distributorId);
+		String countryJson = JsonUtil.toJson(distributorOrgList);
+		Map<String, Object> obj = new HashMap<String, Object>();
+		obj.put("result",true);
+		obj.put("distributorOrgJson",countryJson);
+		JsonUtil.toWriter(obj, response);
+	}
+	
+	
+}

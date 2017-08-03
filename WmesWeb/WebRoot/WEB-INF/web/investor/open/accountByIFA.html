@@ -1,0 +1,97 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='open.account.title'/]</a>
+</div>
+<div class="wmes-content">
+    <div class="kaihu_div white_background">
+    <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='open.account.title'/]</p>
+            <div class="white_background" >
+                <div class="OpenAccount_liucheng_div">
+                    <div class="OpenAccount_liucheng">
+                        <ul>
+                            <li class="liucheng_first liucheng_orange"><div class="font_height">[@lang_res k='open.account.Start'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_05.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai"><div class="font_height">[@lang_res k='open.account.BasicInfo'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai"><div>[@lang_res k='open.account.DocumentCheck'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"></div>
+                            </li>
+                            <li class="liucheng_kuai"><div class="font_height">[@lang_res k='open.account.Declaration'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"></div>
+                            </li>
+                            <li class="liucheng_last"><div class="font_height">[@lang_res k='open.account.Submit'/]</div></li>
+                        </ul>
+                    </div>    
+                </div>
+  
+                <div class="OpenAccount_liucheng_content">
+                	<div class="OpenAccount_start_wrap">
+	                	<p class="OpenAccount_startifa_title">[@lang_res k='open.account.Start.MyClient'/]</p>
+	                	[#if individual?? && individual.base?? && individual.base.iconUrl??]
+                        <img class="OpenAccount_startifa_tou" style="width:56px;height:56px;" src="${base}[@user_head u=individual.base.iconUrl /]"/>
+                        [#else]
+                        <img class="OpenAccount_startifa_tou" style="width:56px;height:56px;" src="${base}/res/images/common/portrait.png"/>
+                        [/#if]
+	                	<span class="OpenAccount_startifa_name">[#if individual?? && individual.individual??]${individual.individual.firstName!} ${individual.individual.lastName!}[/#if]</span>
+	                	<p class="OpenAccount_startifa_row">[@lang_res k='open.account.Start.phone'/]</p>
+	                	<span class="OpenAccount_startifa_name">[#if individual?? && individual.base??]${individual.base.mobileCode!}-${individual.base.mobileNumber!}[/#if]</span>
+	                	<p class="OpenAccount_startifa_row">[@lang_res k='open.account.Start.email'/]</p>
+	                	<span class="OpenAccount_startifa_name">[#if individual?? && individual.base??]${individual.base.email!}[/#if]</span>
+                	</div>
+                    
+                    <div class="OpenAccount_xfa_select">
+                      <div class="OpenAccount_xfa_Dstributor" style="display:block;">
+                          <p>[@lang_res k='open.account.Start.SelectDistributor'/]：</p>
+                          [#if distributors?? && distributors?size gt 0]
+                          [#list distributors as rec]
+                          <span class="OpenAccount_xfa_Dstributor_item" data-id="${rec.id!''}" >
+                          <!-- <img src="${base}/res/images/logo/logo.png" alt=""> -->
+                          [#if rec?? && rec.logofile??]
+                            <img style="width:222px;height:80px;" title="${rec.companyName!""}" src="${base}${rec.logofile!}"/>
+                          [#else]  
+                            <img style="width:222px;height:80px;" title="${rec.companyName!""}" src="${base}/res/images/common/default_distributor.png"/>
+                          [/#if]
+                          <!-- ${rec.companyName!""} -->
+                          </span>
+                          [/#list]
+                          [#else]
+                        	<div class="errMsg">[@lang_res k='front.rpq.noDistribute.sorry'/] </div>
+                          [/#if]
+                      </div>
+                      
+                    </div>
+                    
+                </div>
+                <div class="wenti_btn">
+                [#if distributors?? && distributors?size gt 0]<!-- 没有代理商数据，不允许提交 -->
+                    <a id="btn_next" class="wenti_btn_bule" href="javascript:;">[@lang_res k='open.account.Next'/]</a>
+                [/#if]
+                    <a id="btn_cancel" class="wenti_btn_LightBlue" href="${base}/index.do">[@lang_res k='open.account.Cancel'/]</a>                   
+                </div>
+                <!-- <p class="OpenAccount_startifa_tips">If you want to help your client to fill in the information, please choose " next"。</p> -->
+                <form>
+                <input type="hidden" name="investment" id="investment" />
+                <input type="hidden" name="ifaId" id="ifaId" />
+                <input type="hidden" name="indId" id="indId" value="${indId!}"/>
+                <input type="hidden" name="distributorId" id="distributorId" />
+                <input type="hidden" name="accountId" id="accountId" value="${accountId!}"/>
+                </form>
+            </div>
+        </div>
+    </div>
+[#include "../../inc/foot_v2.html"/] 
+
+<script type="text/javascript">
+    seajs.use('${base}/res/web/openAccount/openAccountByIFA.js');
+</script>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>[@lang_res k='sysrole.list.title'/]</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div class="right-side container-fluid">
+				<div class="r-side-container">
+					<ul class="tab" id="tab-search">
+						<li class="tab-li-crr">
+							<a href="javascript:;" >[@lang_res k='member.role'/]</a>
+						</li>
+					</ul>
+					<div class="tab_wrap" id="tab_wrap">
+						<div class="form-inline">
+							<div>
+								<div class="row pd10">
+									<div class="col-md-4">
+										<label for="s-1">
+											[@lang_res k='member.list.keyword'/]
+										</label>
+										<input id='txtkeyword' type="text"
+											class="form-control typeahead" id="s-1" >
+									</div>
+									<div class="col-md-2">
+										<button type="button" class="btn btn-primary" id="btnSearch">
+											 [@lang_res k='global.query'/]
+										</button>
+									</div>
+								</div>
+								
+								<div class="clear"></div>
+								<div class="pdt20">
+									<button type="button" class="btn btn-blue-s" id="btnAdd">
+										 [@lang_res k='global.add'/]
+									</button>
+								</div>
+								<div>
+									<table id="datalist" border="0" cellpadding="0" cellspacing="0"
+										class="table table-hover table-striped">
+										<thead>
+											<tr>
+												<th class="table-head">
+													[@lang_res k='sysrole.info.name'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='sysrole.info.code'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='sysrole.info.createBy'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='sysrole.info.createTime'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='global.operate'/]
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+									<ul id='Pagination' class="pagination pull-right now">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/typeahead/bootstrap-typeahead.js"></script>
+<script type="text/javascript">
+$(function() {
+	bindRoleList(0);
+	setAutoSearch("#txtkeyword",bindRoleList,0);
+	//query click
+	$("#btnSearch").bind("click", function() {
+		bindRoleList(0);
+	});
+	//add click
+    $('#btnAdd').click(function (){
+		var url = "${base}/console/memberRole/input.do?datestr="+ new Date().getTime();
+    	showform("add_role","[@lang_res k='member.add'/]",url);
+    });
+    //edit click
+     $(document).on("click","#datalist .edit_role",function(){
+    	var id = $(this).attr("rel");
+    	var url = "${base}/console/memberRole/input.do?roleId="+ id;
+    	closeTabByName("edit_role");
+    	showform("edit_role","[@lang_res  k='global.edit'/]",url);
+    });
+    //delete click
+    $(document).on("click","#datalist .del_role",function(){
+    	var rel = $(this).attr("rel");
+		deleteRole(rel);
+    });
+	//role menu click
+    $(document).on("click","#datalist .role_menu",function(){
+    	var id = $(this).attr("rel");
+    	var url = "${base}/console/memberRole/roleMenu.do?roleId="+ id;
+    	closeTabByName("role_menu");
+    	showform("role_menu","权限",url);
+    });   
+	//分页获取数据
+	function bindRoleList(curPage) {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/memberRole/listJson.do?datestr=' + new Date().getTime(),
+			data : {
+				'keyword' : $("#txtkeyword").val(),
+				'page' : curPage + 1,
+				'rows' : 10
+			},
+			success : function(json) {
+				$('#datalist tbody').empty();
+				var html = "";
+				var total = json.total;
+				var table = json.rows;
+				$.each(table, function(i, n) {
+					var eidtUrl ='${base}/console/memberRole/input.do?roleId='+ n.id;
+					var roleMenuUrl = '${base}/console/memberRole/roleMenu.do?roleId='+ n.id;
+					var roleUserUrl = '${base}/console/memberRole/roleUser.do?roleId='+ n.id;
+					html += "<tr>"+
+						    "	<td><a href='javascript:;' class='edit_role' rel='"+n.id+"'>"+n.name+"</a></td>"+
+						    "	<td>"+n.code+"</td>"+
+							"	<td>"+n.createNickName+"</td>"+
+							"	<td>"+n.createTime+"</td>"+
+							"	<td><a class='edit_role' rel='"+n.id+"' href='javascript:;'>[@lang_res  k='global.edit'/]</a>&nbsp;&nbsp; "+
+							"	<a class='del_role' rel='"+n.id+"' href='javascript:;'>[@lang_res  k='global.delete'/]</a>&nbsp;&nbsp;"+
+							"	<a class='role_menu' rel='"+n.id+"' href='javascript:'>[@lang_res k='sysrole.info.authority'/]</a>"+
+							"	</td>"+
+							"</tr>";
+				});
+				$("#datalist tbody").empty().append(html);
+				$("#Pagination").pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 10,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+			bindRoleList(page_id);
+		}
+	}
+	
+	//删除方法
+	function deleteRole(rel) {
+		layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			//批量删除
+			var ids="";
+			if(rel==null || rel==undefined){
+				var selected = $("#datalist").find(":checkbox:checked");
+				$.each(selected, function(i, n) {
+					var rel = $(n).attr("rel");
+					ids += rel + ",";
+				});
+			}else{
+				ids = rel;
+			}
+			$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/memberRole/delete.do?datestr=" + new Date().getTime(),
+				data : {"ids":ids},
+				success : function(json) {
+					if (json != undefined && json.result == true) {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]");
+						bindRoleList(0);
+					} else {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]");
+					}
+				}
+			});
+		});
+	}
+		
+});
+</script>
+	</body>
+</html>

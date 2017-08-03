@@ -1,0 +1,161 @@
+		<div class="wrap" style="height:auto;padding:1% 4%;">
+			<div style="height:50px"></div>
+			<div class="header" style="text-align: center;font-size:36px;font-weight: bold;margin:300px 0 0 0;">${proposal.proposalName!}<br></br></div>
+			<div class="subhead" style="text-align: center;font-size: 24px;height:40px;margin: 50px 0 600px 0;">
+				<img src="${basePath!}${iconUrl!}" style="height:40px;width:40px;border-radius: 50%;margin:0 22px;vertical-align:middle;"/>
+				<span>${clientName!}</span><br></br>
+				<p>
+				${ifaName!}<br></br>
+				<#if proposal??>${proposal.lastUpdate?string('yyy-MM-dd')}</#if>
+				</p>
+			</div>
+			<div class="title" style="color:rgb(227,107,10);margin-top:40px;height:30px;border-bottom:1px solid #e8e8e8;font-weight: bold;">
+				投資約束條件
+			</div>
+			<#if  proposal?? && proposal.liquidityNeed??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				流動性需求
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.liquidityNeed!}
+			</p>
+			</#if>
+			<#if  proposal?? && proposal.timeFrame??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				時間要求
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.timeFrame!}
+			</p>
+			</#if>
+			<#if  proposal?? && proposal.taxConcerns??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				稅務問題
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.taxConcerns!}
+			</p>
+			</#if>
+			<#if  proposal?? && proposal.lrf??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				法律法規因素
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.lrf!}
+			</p>
+			</#if>
+			<#if  proposal?? && proposal.unp??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				獨特需求和偏好
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.unp!}
+			</p>
+			</#if>
+			<div class="title" style="color:rgb(227,107,10);margin-top:40px;height:30px;border-bottom:1px solid #e8e8e8;font-weight: bold;">
+				組合詳情
+			</div>
+			<#if  proposal?? && proposal.initialInvestAmount??>
+			<p class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				初始投資金額
+			</p>
+			<p class="textcontent" style="margin-left:22px;margin-right:10%;margin-bottom:20px;">
+				${proposal.initialInvestAmount!}<span style="margin-left:10px">${currencyName!}</span>
+			</p>
+			</#if>
+			<#if (portfolio.aipFlag)?? && portfolio.aipFlag=='1'>
+			<div class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				定投設置
+			</div>
+			<div class="plansetting">
+				<div class="plansettingleft">
+					<p>
+					<span style="text-align: left;color: #b6b6b6; width: 120px;">定投週期：</span>
+					<#if aip?? && (aip.aipExecCycle)?? && aip.aipExecCycle=='w'>
+						<span class="plansettingleft1" style="display: inline-block;height: 20px;line-height: 20px;padding: 0 8px;color: #000;">每週</span>
+					<#elseif (aip.aipExecCycle)?? && aip.aipExecCycle=='b'>
+						<span class="plansettingleft1" style="display: inline-block;height: 20px;line-height: 20px;padding: 0 8px;color: #000;">每兩週</span>
+					<#elseif (aip.aipExecCycle)?? && aip.aipExecCycle=='m'>
+						<span class="plansettingleft1" style="display: inline-block;height: 20px;line-height: 20px;padding: 0 8px;color: #000;">每月</span>
+					</#if>
+					</p>
+					<p><span style="text-align: left;color: #b6b6b6; width: 120px;">每次定投金額：</span><span>${(aip.aipAmount)!}</span><span style="margin-left:10px">${currencyName!}</span></p>
+					<p><span style="text-align: left;width: 130px;color: #b6b6b6;">扣款日：</span><span>${(aip.aipTimeDistance)!'-'}</span></p>
+					<p><span style="text-align: left;width: 160px;color: #b6b6b6;">第一次定投時間：</span><span><#if aip?? && aip.aipInitTime??>${aip.aipInitTime?string('yyy-MM-dd')}</#if></span></p>
+					<p>
+					<#if (aip.aipEndDate)??>
+					<span style="text-align: left;color: #b6b6b6; width: 120px;" class="plansettingrightac">結束時間:</span>
+					<span style="color: black;">${aip.aipEndDate?string('yyy-MM-dd')}</span>
+					<#elseif (aip.aipEndCount)?? && (aip.aipEndCount) gt 0>
+					<span style="text-align: left;" class="plansettingrightac">結束次數:</span>
+					<span style="color: black;">${aip.aipEndCount!} 次</span>
+					<#elseif (aip.aipEndTotalAmount)?? && aip.aipEndTotalAmount gt 0>
+					<span style="text-align: left;" class="plansettingrightac">結束總金額:</span>
+					<span style="color: black;">${aip.aipEndTotalAmount}</span> <span style="margin-left:10px">${currencyName!}</span>
+					</#if>
+					</p>
+				</div>
+			</div>
+			</#if>
+			<#if portfolio.riskLevel??>
+			<div class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				風險等級
+			</div>
+			<p class="textcontent">
+				${(portfolio.riskLevel)!'-'}
+			</p>
+			</#if>
+			<#if products?? && products?size gt 0>
+			<div class="littletitle" style="color:#1b73cd;font-weight: bold;">
+				持倉基金
+			</div>
+			<table class="tble" style="width:100%;border-collapse: collapse;border-spacing: 0;display: table;margin-top:25px;padding-left:4%;">
+				<tr class="tble_th" style="background:#f6fafe;border-bottom:2px solid #c7e7fe;height:66px;">
+					<th style="width:30%;text-align: center;">基金</th>
+					<th style="width:18%;text-align: center;">權重</th>
+					<th style="width:32%;text-align: center;">候選</th>
+				</tr >
+					<#list products as p>
+					<tr style="height:90px;">
+						<td class="funds" style="padding-left:4%;text-align: center;">${p.fundName!}</td>
+						<td class="weight" style="text-align: center;">${p.allocationRate!} %</td>
+						<td style="text-align: center;">
+							<#if p.productDetails?? && p.productDetails?size gt 0>
+								<#list p.productDetails as sp>
+									<#if sp_index == p.productDetails?size-1>
+									${sp.spareFundName!}
+									<#else>
+									${sp.spareFundName!}<br/>
+									</#if>
+								</#list>
+							<#else>
+								<span style="margin: 0 45%;">-</span>
+							</#if>
+						</td>
+					</tr>
+					</#list>
+			</table>
+			</#if>
+			<#if geoAllocationUrl?? && sectorTypeUrl??>
+				<div class="title" style="color:rgb(227,107,10);margin-top:40px;height:30px;border-bottom:1px solid #e8e8e8;font-weight: bold;">
+				建議分配比例
+			</div>
+			<div>
+				<img src="${basePath!}${geoAllocationUrl!}" style="width:45%;height:80%;float:left"/>
+				<img src="${basePath!}${sectorTypeUrl!}" style="width:45%;height:80%;float:right"/>
+			</div>
+			</#if>
+			<div class="title" style="clear:both;color:rgb(227,107,10);margin-top:40px;height:30px;border-bottom:1px solid #e8e8e8;font-weight: bold;">
+				投資組合圖
+			</div>
+			<#if proposal?? && aggregateUrl??>
+			<p>下圖顯示了你的組合從${proposal.lastUpdate?string("yyy-MM-dd")}開始，投資了${(proposal.initialInvestAmount)!}${currencyName!}的收益表現。</p>
+			<div><img src="${basePath!}${aggregateUrl!}" style="width:100%;height:auto"></img></div>
+			</#if>
+			<#if proposal?? && separatenesUrl??>
+			<p>下圖顯示了從 ${proposal.lastUpdate?string("yyy-MM-dd")}開始，每隻基金的收益表現。</p>
+			<div>
+			<img src="${basePath!}${separatenesUrl!}" style="width:100%;height:auto"></img>
+			</div>
+			</#if>
+		</div>

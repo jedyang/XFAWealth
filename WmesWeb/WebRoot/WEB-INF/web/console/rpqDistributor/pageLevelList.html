@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问卷分数区间等级管理</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet"  >
+    <style>
+           .login-dialog .modal-dialog {width: 800px;}
+            .firminfo-dialog .modal-dialog{width: 900px;}
+            .teaminfo-dialog .modal-dialog{width: 700px;}
+            .btneditnode{text-decoration:underline;}
+        </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+        <div class="tab-side-container">
+        <div class="page-header mt-10">
+                <h4><b>问卷【${(page.rpqPageTitle)?if_exists}】等级管理</b></h4>
+            </div>
+            <div class="clear"></div>
+            <div class="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div class="clear"></div>
+                    <div>
+                        <table border="0" id="pagedatalist" cellpadding="0" cellspacing="0" class="table table-hover table-striped" >
+                                <tbody>
+                                    <tr>
+                                        <th class="table-head">分值区间</th>
+                                        <th class="table-head">评估数值</th>
+                                       	<th class="table-head">评估结果</th>
+                                        <th class="table-head" style="width:50%;">评估说明</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+		                	<!-- log分页-->
+			           		<nav  class="pull-right">
+				                <ul id='pagination' class="pagination pagination-sm">  
+				                	
+				                </ul>
+				            </nav>
+				             
+           				<div class="clear"></div>                      
+                    </div>
+                </form>         
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		$('#btnToDoSearch').click(function() {
+			bindList(0);
+		});
+	
+		var types = [BootstrapDialog.TYPE_DEFAULT, 
+                     BootstrapDialog.TYPE_INFO, 
+                     BootstrapDialog.TYPE_PRIMARY, 
+                     BootstrapDialog.TYPE_SUCCESS, 
+                     BootstrapDialog.TYPE_WARNING, 
+                     BootstrapDialog.TYPE_DANGER];	
+		
+		//分页绑定Table数据
+		bindList(0);
+		function bindList(pageNum) {
+			var pageid = getQueryString('pageid');
+			$.ajax({
+				type : 'post',
+				datatype : 'json',
+				url : "${base}/console/rpqDistributor/pageLevelJson.do?datestr="+ new Date().getTime(),
+				data : {
+						pageid : pageid
+					},
+			 	beforeSend: function () {
+                       indexmsg = layer.msg("正在加载数据中，请稍候....", {icon:3, time: 50000 });
+                   },
+				complete: function () {
+						layer.close(indexmsg);
+                   },
+				success : function(json) {
+					var total = json.total;
+					var table = JSON.parse(json.levelJson);
+					var html = '';
+					$("#pagedatalist tbody tr:gt(0)").empty();
+					$.each(table,function(i, n) {
+							var id = n.id;
+							var beginScore = n.beginScore;
+							var endScore = n.endScore;
+							var begin_end = beginScore + ' - ' + endScore;
+							var remark = n.remark;
+							var result = n.result;
+							var status = n.status;
+							var riskLevel = n.riskLevel;
+							html += '<tr id="tr_'+id+'" begeinscore="'+beginScore+'" endscore="'+endScore+'" titlesc="" remarksc="'+remark+'">'
+									+ '<td>'+begin_end+'</td>'
+									+ '<td>'+riskLevel+'</td>'
+									+ '<td>'+result+'</td>'
+									+ '<td>'+remark+'</td>'
+									+ '</tr>'
+					});
+					$('#pagedatalist').append(html);
+					/***
+					$("#pagination").pagination(total, {
+						callback : pageselectCallback,
+						numDetail : '',
+						items_per_page : 8,
+						num_display_entries : 4,
+						current_page : pageNum,
+						num_edge_entries : 2
+					});
+					*/
+				}
+			})
+			
+			//回调
+			function pageselectCallback(pageNum, jq) {
+				bindList(pageNum);
+			}
+		}
+	});
+</script>
+</body>
+</html>
+

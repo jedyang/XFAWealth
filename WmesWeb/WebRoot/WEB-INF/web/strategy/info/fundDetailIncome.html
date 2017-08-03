@@ -1,0 +1,143 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <div class="wmes-top">
+    	<a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+        <a href="javascript:;" class="header-over">Fund Detail</a>
+    </div>
+    <div class="wmes-content">
+        <div class="account-wrap">
+            <!--<p class="wmes-wrap-title" style="padding: 10px 0px 20px 0px;">Fund Detail</p>
+            --><div class="conservative-top">
+                <div class="conservative-title-wrap">
+                    <p class="conservative-title">${fundInfo.fundName!}</p>
+                    <div class="account-choose-left">
+                        <p class="account-xiala-title">[@lang_res k='account.list.cur'/]</p>
+                        <div class="proposal_xiala">
+                            <input type="text" id="currencyName"  value="${currency!}" placeholder="USD" readonly="">
+                            <span class="icon_xiala"></span>
+                            <ul>
+                               [#if currencyType?exists && currencyType?size gt 0]
+                               [#list currencyType as list]
+                                <li>${list.itemCode!}</li>
+                                [/#list]
+                                [/#if]
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="account-rows">
+                <div class="builder-title">
+                	<p class="builder-title-risk">[@lang_res k='portfolio.product.risk'/] <span>${fundInfo.riskLevel!}</span></p>
+                	<p class="builder-title-word">[@lang_res k='portfolio.product.storkfund'/]</p>
+                	<p class="builder-title-word">[@lang_res k='portfolio.product.latestNAVPrice'/]</p>
+                	<p class="builder-title-cur">[@num_fmt s='${fundInfo.latestNAVPriceStr!}' f='#,##0.00'/] ${fundInfo.currency!}</p>
+                	 <span class="proposal-more-ico" style="margin-left:15px;"></span>
+                	<p class="builder-title-last">[@lang_res k='portfolio.product.lastUpdate'/] ${fundInfo.lastUpdate!}</p>
+                </div> 
+                <div class="funds-detail-list">
+            	<div class="funds-detail-contents">
+            		<div class="funds-detail-rows">
+            			<p class="funds-detail-title funds-detail-blue">[@num_fmt s='${fundInfo.totalAum!}' f='#,##0.00'/] ${fundInfo.currency!}</p>
+            			<p class="funds-detail-word">[@lang_res k='client.list.totalAum'/]</p>
+            		</div>
+            		<div class="funds-detail-rows">
+            			<p class="funds-detail-title " >[@num_color s='${fundInfo.totalPl!}' c='${displayColor!}' f='#,##0.00'/] ${fundInfo.currency!}</p>
+            			<p class="funds-detail-word">[@lang_res k='portfolio.hold.detail.cumulativepl'/]</p>
+            		</div>
+            	</div>
+            	<div class="funds-detail-contents">
+            		<div class="funds-detail-rows">
+            			<p class="funds-detail-title">[@num_fmt s='${fundInfo.holdingUnit!}' f='#,##0.00'/]</p>
+            			<p class="funds-detail-word">[@lang_res k='portfolio.product.unitHold'/]</p>
+            		</div>
+            		<div class="funds-detail-rows">
+            			<p class="funds-detail-title " >[@num_color s='${fundInfo.cumperfRate!}' c='${displayColor!}' f='#,##0.00%'/]</p>
+            			<p class="funds-detail-word">[@lang_res k='portfolio.product.cumulativeplRate'/]</p>
+            		</div>
+            	</div>
+            	<div class="funds-detail-contents">
+            		<div class="funds-detail-rows">
+            			<p class="funds-detail-title">[@num_fmt s='${fundInfo.availableUnit!}' f='#,##0.00'/]</p>
+            			<p class="funds-detail-word">[@lang_res k='portfolio.hold.detail.productList.availableUnit'/]</p>
+            		</div>
+            		<div class="funds-detail-rows">
+            			<p class="funds-detail-title">[@num_fmt s='${fundInfo.averageCost!}' f='#,##0.00'/]  ${fundInfo.currency!}</p>
+            			<p class="funds-detail-word">[@lang_res k='portfolio.product.average'/]</p>
+            		</div>
+            	</div>
+            </div>
+            </div>
+            
+        </div>
+        <div class="account-wrap">
+            <div class="account-rows">
+             <p class="builder-title">[@lang_res k='portfolio.hold.detail.plStatistics'/]<span class="proposal-more-ico"></span></p>
+                <div class="conservative-time-choose">
+                	<div class="funds-time-wrap">
+                		<p class="conservative-time-title">[@lang_res k='portfolio.hold.detail.timeperiod'/]</p>
+	                     <ul class="conservative-time-list">
+                             <li period="1W" >[@lang_res k='search.period.1w'/]</li>
+	                        <li period="2W" >[@lang_res k='search.period.2w'/]</li>
+	                        <li period="1M" >[@lang_res k='search.period.1m'/]</li>
+	                        <li period="3M" >[@lang_res k='search.period.3m'/]</li>
+	                        <li period="6M" class="list-active">[@lang_res k='search.period.6m'/]</li>
+	                        <li period="1Y" >[@lang_res k='search.period.1y'/]</li>
+	                        <li period="3Y" >[@lang_res k='search.period.3y'/]</li>
+	                        <li period="5Y" >[@lang_res k='search.period.5y'/]</li>
+	                        <li period="YTD" >[@lang_res k='search.period.ytd'/]</li>
+                            <li data-type="Other" period="" class="otherPeriod" >Other</li>
+                        </ul>
+                        <div class="conservative-date-wrap">
+                            <div class="account-choose-input-wrap">
+                                 <input id='account-date-to' type="text" class="laydate-icon form-control form-control-laydate " style="height: 22px;"name="txtAipEndDate" value="">
+                            </div>
+                            <p class="account-choose-name">to</p>
+                            <div class="account-choose-input-wrap">
+                                 <input id='account-date-from' type="text" class="laydate-icon form-control form-control-laydate " style="height: 22px;"name="txtAipEndDate" value="">
+                            </div>
+                            <img class="account-data-search" src="${base}/res/images/icon_search.png">
+                        </div>
+                	</div>
+                    <ul class="funds-type-choose">
+                    	<li class="funds-active">[@lang_res k='portfolio.hold.detail.cumulativepl'/]</li>
+                    	<li>[@lang_res k='portfolio.hold.detail.dailypl'/]</li>
+                    </ul>
+                    <div class="funds-chart-wrap">
+                        <div class="funds-main-chart" id="funds-main-chart">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+             <div  class="wmes-nodata-tips">
+                    <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                    <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+              </div>
+          </div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script src="${base}/res/third/laydate/laydate.js" type="text/javascript"></script>
+<script type="text/javascript">
+var id='${fundInfo.id!}';
+var base_root="${base}";
+var display_color="${displayColor!}";
+     seajs.use('${base}/res/web/strategy/fundDetailIncome.js');
+     seajs.use('jquery',function($){
+	 	 setTimeout(function(){
+			laydate({
+				  istime: false,
+				  elem: '#account-date-to',
+				  format: 'YYYY-MM-DD'
+				});
+				laydate({
+				  istime: false,
+				  elem: '#account-date-from',
+				  format: 'YYYY-MM-DD'
+				});
+			
+		},200);
+	 });
+</script>x

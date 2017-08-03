@@ -1,0 +1,198 @@
+/*
+ * Copyright (c) 2016-2019 by fsll
+ * All rights reserved.
+ */
+package com.fsll.common.base.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fsll.common.CommonConstants;
+import com.fsll.common.mongodb.MongoDao;
+import com.fsll.common.persistence.BaseDao;
+import com.fsll.common.persistence.SpringJdbcQueryManager;
+import com.fsll.core.CoreConstants;
+import com.fsll.core.entity.AccessoryFile;
+import com.fsll.core.entity.SysAdmin;
+import com.fsll.core.entity.SysCountry;
+import com.fsll.core.vo.AccessoryFileVO;
+
+/**
+ * 业务实现基类：通用模块
+ * 
+ * @author 黄模建 E-mail:mjhuang@fsll.cn
+ * @version 1.0.0 Created On: 2016-2-19
+ */
+public class BaseService {
+
+	@Autowired
+	public BaseDao baseDao;
+
+	@Autowired
+	public SpringJdbcQueryManager springJdbcQueryManager;
+
+	@Resource
+	public MongoDao mongoDao;
+	
+	/**
+	 * 获得远程主机ip地址
+	 * 
+	 * @param request
+	 * @return
+	 */
+	protected String getRemoteHost(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
+	}
+
+	/**
+	 * 获得当前的登陆用户语言
+	 * 
+	 * @param request
+	 * @return
+	 */
+	protected String getLoginLangFlag(HttpServletRequest request) {
+		Object obj = request.getSession().getAttribute(CoreConstants.LANG_CODE);
+		if (obj != null) {
+			return (String) obj;
+		}
+		return null;
+	}
+
+	/**
+	 * 获得当前的登陆用户
+	 * 
+	 * @param request
+	 * @return
+	 */
+	protected SysAdmin getLoginUser(HttpServletRequest request) {
+		Object memberBase = request.getSession().getAttribute(CoreConstants.USER_LOGIN);
+		SysAdmin sysAdmin = null;
+		if (memberBase != null) {
+			sysAdmin = (SysAdmin) sysAdmin;
+		}
+		return sysAdmin;
+	}
+
+	/**
+	 * 处理字符串类型的id,添加单引号
+	 * 
+	 * @param request
+	 * @return
+	 */
+	protected String getNewStrId(String ids) {
+		String newIds = "";
+		if (!"".equals(ids)) {
+			String tmpStr = ids;
+			if (tmpStr.endsWith(","))
+				tmpStr = tmpStr.substring(0, tmpStr.length() - 1);
+			String[] arr = tmpStr.split(",");
+			for (String id : arr) {
+				if ("".equals(newIds)) {
+					newIds = "'" + id + "'";
+				} else {
+					newIds += ",'" + id + "'";
+				}
+			}
+		}
+		return newIds;
+	}
+
+	/**
+	 * 将语言标识的第一个字母变成大写
+	 * 
+	 * @param langCode
+	 * @return
+	 */
+	protected String getLangFirstCharUpper(String langCode) {
+		String firstChar = langCode.substring(0, 1).toUpperCase();
+		String lastStr = langCode.substring(1, langCode.length());
+		return firstChar + lastStr;
+	}
+
+	/**
+	 * 获取语言字符串(首字母大写，用于hql)
+	 * 
+	 * @param prefix 前缀
+	 * @param langCode 语言
+	 * @return
+	 */
+	protected String getLangString(String prefix, String langCode) {
+		String result = prefix;
+		if (null != langCode && !"".equals(langCode)) {// 按语言参数
+			result += getLangFirstCharUpper(langCode);
+		} else {// 默认语言
+			result += getLangFirstCharUpper(CommonConstants.DEF_LANG_CODE);
+		}
+		return result;
+	}
+
+	/**
+	 * 查询附件
+	 * 
+	 * @param relateId
+	 *            accessory_file表relate_id
+	 * @param moduleId
+	 *            模块Id
+	 * */
+	public List<AccessoryFile> findFileAttr(String relateId, String moduleId) {
+		String hql = "from AccessoryFile t where t.relateId=? and t.moduleType=?";
+		List args = new ArrayList();
+		args.add(relateId);
+		args.add(moduleId);
+		List<AccessoryFile> fileList = this.baseDao.find(hql, args.toArray(),false);
+		return fileList;
+	}
+
+	/**
+	 * 查询附件
+	 * 
+	 * @param relateId accessory_file表relate_id
+	 * @param moduleId 模块Id
+	 * */
+	public List<AccessoryFileVO> findFileAttrVO(String relateId, String moduleId) {
+		String hql = "from AccessoryFile t where t.relateId=? and t.moduleType=?";
+		List args = new ArrayList();
+		args.add(relateId);
+		args.add(moduleId);
+		List<AccessoryFile> fileList = this.baseDao.find(hql, args.toArray(), false);
+		List<AccessoryFileVO> rList = new ArrayList<AccessoryFileVO>();
+		if (fileList != null && !fileList.isEmpty()) {
+			for (AccessoryFile vo : fileList) {
+				AccessoryFileVO tmpVO = new AccessoryFileVO();
+				BeanUtils.copyProperties(vo, tmpVO);
+				rList.add(tmpVO);
+			}
+		}
+		return rList;
+	}
+
+	/**
+	 * 清空附件
+	 * 
+	 * @param relateId
+	 * @param module
+	 * */
+	public void clearFileAttr(String relateId, String module) {
+		String hql = "delete from AccessoryFile t where t.relateId=? and t.moduleType=?";
+		List args = new ArrayList();
+		args.add(relateId);
+		args.add(module);
+		this.baseDao.updateHql(hql, args.toArray());
+	}
+}

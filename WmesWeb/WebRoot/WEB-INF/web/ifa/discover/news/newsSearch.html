@@ -1,0 +1,147 @@
+
+[#include "../../../inc/head_v2.html"/]
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Express News Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script src="${base}/res/css/news/js/jquery.min.js"></script>
+<!-- Custom Theme files -->
+
+<link href="${base}/res/css/news/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="${base}/res/css/news/css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+<link href="${base}/res/css/Funds.css" rel="stylesheet" type="text/css" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script type="text/javascript" src="${base}/res/css/news/js/bootstrap.js"></script>
+
+<!--
+
+//-->
+<style>
+	.ifa_list_paging a{color:#000;}
+</style>
+
+<script src="${base}/res/css/news/js/responsiveslides.min.js"></script>
+	<script>
+		$(function () {
+		  $("#slider").responsiveSlides({
+			auto: true,
+			nav: true,
+			speed: 500,
+			namespace: "callbacks",
+			pager: true,
+		  });
+		});
+	</script>
+	<script type="text/javascript" src="${base}/res/css/news/js/move-top.js"></script>
+<script type="text/javascript" src="${base}/res/css/news/js/easing.js"></script>
+<!--/script-->
+<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},900);
+				});
+			});
+</script>
+	<div class="wmes-content"   ng-controller="newsTableCtrl"  ng-app="newsTable">
+		<!-- header-section-starts-here -->
+	<div class="header">
+		<div class="header-bottom">
+			<div class="logo">
+				<a href="javascript:;"><p class="wmes-big-title">[@lang_res k='news.title'/]</p></a>
+			</div>
+			<div class="navigation">
+				<nav class="navbar navbar-default" role="navigation">
+		   <div class="wrap">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				
+			</div>
+			<!--/.navbar-header-->
+		
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="newsIndex.do">[@lang_res k='news.category.home'/]</a></li>
+						<li><a href="newsList.do?code=headlines">[@lang_res k='news.category.headlines'/]</a></li>
+					[#macro bpTree children]
+				        [#if children?? && children?size gt 0]
+				        [#list children as child]
+				        [#if child.children?? && child.children?size gt 0]
+				        <li class="dropdown">
+						<a href="javascirpt:;" class="dropdown-toggle" data-toggle="dropdown">${child.name!}<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+						   [@bpTree children=child.children /]</ul>
+					   </li>
+				        [#else]
+				           <li><a href="newsList.do?id=${child.id!}">${child.name}</a></li>  
+				           [#if child.parentId?? && child.parentId!='']  <li class="divider"></li>[/#if]
+				        [/#if]
+				       [/#list]
+				    [/#if]
+				    [/#macro]
+				    [@bpTree children=categoryList /]
+					
+				<div class="clearfix"></div>
+				</ul>
+				<div class="funds_keyserach ifa_keyserach" style="margin-top:8px;">
+             		<input type="text" id="searchKeyWord" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+             		<span class="icon_search" id="searchKeyBtn"></span>
+         		</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<!--/.navbar-collapse-->
+	 <!--/.navbar-->
+			</div>
+		</nav>
+		</div>
+	</div>
+	<div class="main-body"  >
+		<div class="wrap" >
+		<!--<ol class="breadcrumb">
+		      [#if parentList?exists && parentList?size gt 0]
+		      [#list parentList as list]
+			  <li><a href="index.html">[@lang_res k='news.category.${list}'/]</a></li>
+			  [/#list]
+			  [/#if]
+			  <li class="active">[#if name?? && name!=''][@lang_res k='news.category.${name}'/][/#if]</li>
+			</ol>-->
+			<div class="col-md-8 content-left">
+			<div class="articles sports newsList">
+					<header>
+						<h3 class="title-head">[@lang_res k='news.search.result'/]</h3>
+						<span style="box-sizing: border-box;display: block;vertical-align: top;word-wrap: break-word;background: aliceblue;font-size: 18px;">"
+						<font class="keyWord" style="color:red;"></font>":
+						</span>
+					</header>
+					<div class="data-list">
+					</div>
+					
+			</div>
+			<ul id="pagination" class="ifa_list_paging">
+	 				</ul>
+			</div>
+			[#include "right.html"/] 
+	</div>
+		<!-- footer-section-ends-here -->
+	</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		$().UItoTop({ easingType: 'easeOutQuart' });
+		});
+		</script>
+<a href="#to-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+<!---->
+[#include "../../../inc/foot_v2.html"/]
+
+<script type="text/javascript" >
+   seajs.use("${base}/res/web/ifa/newsSearch.js");
+</script> 
+

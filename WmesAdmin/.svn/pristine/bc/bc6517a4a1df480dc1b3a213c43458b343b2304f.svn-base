@@ -1,0 +1,130 @@
+package com.fsll.wmes.entity;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
+@Table(name = "news_info")
+public class NewsInfo implements java.io.Serializable {
+    @Id
+    @Column(name="id")
+    @GeneratedValue(generator = "paymentableGenerator")        
+    @GenericGenerator(name = "paymentableGenerator", strategy = "uuid.hex")
+    private String id;
+    
+    @Column(name = "region_type")
+	private String regionType;
+    
+    @Column(name = "section_type")
+	private String sectionType;
+    
+    @Column(name = "xfa_news_id")
+	private String xfaNewsId;
+	
+    @Column(name = "title")
+	private String title;
+	
+	@Column(name = "url")
+	private String url;
+	
+	@Column(name = "order_by")
+	private Integer orderBy;
+	
+	@Column(name = "creator_id")
+	private String creator;
+	
+	@Column(name = "create_time")
+	private Date createTime;
+	
+	@Column(name = "icon_url")
+	private String iconUrl;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getRegionType() {
+		return regionType;
+	}
+
+	public void setRegionType(String regionType) {
+		this.regionType = regionType;
+	}
+
+	public String getSectionType() {
+		return sectionType;
+	}
+
+	public void setSectionType(String sectionType) {
+		this.sectionType = sectionType;
+	}
+
+	public String getXfaNewsId() {
+		return xfaNewsId;
+	}
+
+	public void setXfaNewsId(String xfaNewsId) {
+		this.xfaNewsId = xfaNewsId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public Integer getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(Integer orderBy) {
+		this.orderBy = orderBy;
+	}
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getIconUrl() {
+		return iconUrl;
+	}
+
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
+	}
+	
+	
+}

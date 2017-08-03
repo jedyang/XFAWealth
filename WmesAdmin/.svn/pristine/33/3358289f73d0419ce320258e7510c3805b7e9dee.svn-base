@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sys menu</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" >
+    <style type="text/css">
+    	#menuList .fixwidth{max-width:150px;overflow: hidden; text-overflow:ellipsis; white-space:nowrap;}
+    </style>
+</head>
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container">
+            <ul class="tab" id="tab-search">
+                <li id="tab-li-fixed" class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res  k='console.sysmenu.list.tab.title'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+	                    <div class="row pd10">
+	                        <div class="col-md-4">
+	                        	<label for="searchKeyWord">[@lang_res  k='console.sysmenu.list.search.keyword'/]</label>
+	                        	<input type="text"  class="form-control searchCondition" id="searchKeyWord">
+	                        </div>
+	                        
+	                        <div class="col-md-4">
+	                        	<button type="button" id="btnSearch" class="btn btn-primary">
+	                    			 [@lang_res  k='console.sysmenu.list.btn.search'/]</button>
+	               			</div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20">
+                        <button type="button" class="btn btn-blue-s" id="btnAdd">
+							 [@lang_res k='global.add'/]
+						</button>
+                        <!-- <a id="btnExpandAll" href="javascript:void(0);" class="btn-blue-s"><i class="glyphicon glyphicon-plus-sign"></i> [@lang_res k='ifafirm.list.expand'/]</a>
+                        <a id="btnCollapseAll" href="javascript:void(0);" class="btn-blue-s"><i class="glyphicon glyphicon-minus-sign"></i> [@lang_res k='ifafirm.list.collapse'/]</a> -->
+                    </div>
+                    <div>
+                        <table id="menuList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+                            	<tr>
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.nameEn'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.nameSc'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.nameTc'/]</th>
+	                               <!-- <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.code'/]</th> -->
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.webUrl'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.orderBy'/]</th>
+	                               <th class="table-head">[@lang_res  k='paramType.status'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.sysmenu.list.table.title.action'/]</th>
+	                            </tr>   
+                            </tbody>
+                        </table>
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+ 
+</div>
+
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/js/base.js" type="text/javascript"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script type="text/javascript">
+	var pageSize = 100;
+	$(function(){
+            //绑定查询按钮事件
+            $("#btnSearch").click(function () {                
+            	bindList(0);
+            	//$("#menuList").treetable({ expandable: true });
+            });
+            bindList(0);
+		    //绑定新增按钮事件   add wwluo 160809
+			$('#btnAdd').click(function() {
+			    var url = '${base}/console/sys/menu/add.do';
+				showform('console-sys-menu','[@lang_res k="param.list.btn.add"/]',url);
+			});
+	});
+  
+  	//分页绑定Table数据
+	function bindList(curPage){
+	$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/sys/menu/listJson.do?datestr='+new Date().getTime(),
+			data : {
+				'keyword': $("#searchKeyWord").val(),'page':curPage+1,'rows':pageSize,'sort':'','order':''
+			},
+			beforeSend: function () {
+               loading = layer.msg('加载数据中...',{time: 50000 });
+            },
+            complete: function () { layer.close(loading);},
+			success : function(json) {
+				var total = json.total;
+				var table = json.rows;
+								
+				$("#menuList tbody tr:gt(0)").empty();
+			    var tr = "";
+                var list = json.rows;
+                $.each(list, function (index, array) { //遍历json数据列					
+                  var id = array['id'] == null ? "" : array['id'];
+                  if(id == ""){
+                	  return true;
+                  }
+                  var parentId = array['parent'] == null ? "" : array['parent'].id;
+				  var parent = array['parent'] == null ? "" : array['parent'].nameSc;
+                  var code = array['code'] == null ? "" : array['code'];
+                  var nameSc = array['nameSc'] == null ? "" : array['nameSc'];
+                  var nameTc = array['nameTc'] == null ? "" : array['nameTc'];   
+                  var nameEn = array['nameEn'] == null ? "" : array['nameEn'];  
+                  var webUrl = array['webUrl'] == null ? "" : array['webUrl'];  
+                  var orderBy = array['orderBy'] == null ? "" : array['orderBy']; 
+                  
+                  //modify rqwang 20170517 start
+                  var isValid = array['isValid'] == null ? "" : array['isValid'];;
+                  if(1 == isValid){
+                  	isValidStatus = '<span style="color:blue;padding:0;">[@lang_res l=Session["_LANG_CODE_"] k='paramType.status.1'/]</span>';
+                  }else{
+                  	isValidStatus = '<span style="color:red;padding:0;">[@lang_res l=Session["_LANG_CODE_"] k='paramType.status.0'/]</span>';
+                  }              
+                  //end
+                  
+                  if('${Session["_LANG_CODE_"]!}' == 'en') var title = nameEn;
+				  else if('${Session["_LANG_CODE_"]!}' == 'tc') var title = nameTc;
+				  else var title = nameSc;                	           
+                  var viewMenuInfoUrl = '${base}/console/sys/menu/input.do?id='+id;
+                  var addSubMenuInfoUrl = '${base}/console/sys/menu/add.do?parentId='+id;
+                  //data-tt-branch='true'
+                  tr += "<tr id='"+id+"' data-tt-id='"+id+"' data-tt-parent-id='"+parentId+"' ><td>" + nameEn + "</td>"
+                      + "<td>" + nameSc + "</td>"
+                      + "<td>" + nameTc + "</td>"
+                      /* + "<td>" + code + "</td>" */
+                      + "<td class='fixwidth' title='"+webUrl+"'>" + webUrl + "</td>"
+                      + "<td>" + orderBy + "</td>"
+                      + "<td>" + isValidStatus + "</td>"
+                      + "<td nowrap>" 
+                      //modify wwluo 160809
+					  + "<a href='javascript:void(0)' onclick=\"viewMenuInfo('view-"+id+"','"+title+"&nbsp;[@lang_res  k='global.edit'/]','"+viewMenuInfoUrl+"')\">[@lang_res  k='global.edit'/]</a>&nbsp;&nbsp;&nbsp;&nbsp;" 
+                      /*+ "<a href='javascript:void(0)' onclick=\"deleteMenuInfo('"+id+"')\">[@lang_res  k='global.delete'/]</a>&nbsp;&nbsp;&nbsp;&nbsp;"*/ 
+                      + "<a href='javascript:void(0)' onclick=\"addSubMenuInfo('addSub-"+id+"','"+title+"&nbsp;[@lang_res  k='console.sysmenu.list.table.action.addSubMenu'/]','"+addSubMenuInfoUrl+"')\">[@lang_res  k='console.sysmenu.list.table.action.addSubMenu'/]</a>" 
+                      + "</td>"
+                      + "</tr>";
+              });
+              $("#menuList tbody").append(tr);
+              $("#menuList").fadeIn(1000);
+			  $("#menuList").treetable({ expandable: true }); //启用才会出现树形收缩
+			  if($("#searchKeyWord").val() != ''){
+              	$("#menuList").treetable('expandAll'); //加载时直接结构全部显示出来
+			  }
+			 $("#pagination").pagination(total, {
+                    callback: pageselectCallback,
+                    numDetail: '',
+                    items_per_page: pageSize,
+                    num_display_entries: 4,
+                    current_page: curPage,
+                    num_edge_entries: 2
+                });
+			}
+		});
+		
+		//重新加载js和css，初始化treetable的tr
+		loadResource();
+		
+	 	//回调
+        function pageselectCallback(page_id, jq) {
+            bindList(page_id);
+             //$("#menuList").fadeIn(1000);
+          $("#menuList").treetable({ expandable: true }); //启用才会出现树形收缩
+        }
+	}
+	
+	
+	//展开所有
+	function ExpandAll()
+	{
+		$('#menuList').treetable('expandAll'); return false;
+	}
+	//收缩所有
+	function CollapseAll()
+	{
+		$('#menuList').treetable('collapseAll'); return false;
+	}
+	
+	function viewMenuInfo(id,title,url) {
+		//modify wwluo 160819
+		showform(id,title,url);
+	}
+	
+	function addSubMenuInfo(id,title,url) {
+		//modify wwluo 160819
+		showform(id,title,url);
+	}
+	
+	function loadResource(){
+	    loadjscssfile("${base}/res/third/treetable/css/jquery.treetable.css","css");
+	    loadjscssfile("${base}/res/third/treetable/css/jquery.treetable.theme.default.css","css");
+	    loadjscssfile("${base}/res/console/js/jquery-1.11.2.min.js","js");
+	    loadjscssfile("${base}/res/third/jqueryui/jquery-ui.js","js");
+	    loadjscssfile("${base}/res/console/js/js.js","js");
+	    loadjscssfile("${base}/res/console/js/jquery.pagination.js","js");
+	    loadjscssfile("${base}/res/third/treetable/jquery.treetable.js","js");
+    }
+    
+    //删除
+    function deleteMenuInfo(id){
+    	layer.confirm("[@lang_res k='global.confirm.delete'/]", {
+			title : "[@lang_res k='global.prompt'/]",
+			icon : 3,
+			btn : [ "[@lang_res k='global.confirm'/]", "[@lang_res k='global.cancel'/]" ]
+		}, function() {
+			$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/sys/menu/delete.do?datestr="+new Date().getTime(),
+				data : {"id":id},
+				success : function(json) {
+					if (json != undefined && json.result == true) {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]", {
+							title : "[@lang_res k='global.prompt'/]",
+							icon : 1,
+							time : 1000
+						});
+						bindList(0);
+					} else {
+						layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]", {
+							title : "[@lang_res k='global.prompt'/]",
+							icon : 5,
+							time : 1000
+						});
+					}
+				}
+			});
+		});
+    }
+	
+</script>
+</body>
+</html>

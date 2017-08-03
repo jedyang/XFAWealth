@@ -1,0 +1,198 @@
+<link rel="stylesheet" href="${base}/res/third/bootstrap/css/bootstrap.css">  
+<link rel="stylesheet" href="${base}/res/third/slider/bootstrap-slider.css">  
+<style>
+#tb_list tr td{ padding: 2px; }
+/* Example 1 custom styles */
+		#Slider_0 .slider-selection {
+   			background: #BABABA;
+  		}
+  		#Slider_1 .slider-selection {
+   			background: #BABABA;
+  		}
+  		#Slider_2 .slider-selection {
+   			background: #BABABA;
+  		}
+  		#Slider_3 .slider-selection {
+   			background: #BABABA;
+  		}
+  		#Slider_4 .slider-selection {
+   			background: #BABABA;
+  		}
+  		#Slider_5 .slider-selection {
+   			background: #BABABA;
+  		}
+  		#Slider_6 .slider-selection {
+   			background: #BABABA;
+  		}
+  		#Slider_7 .slider-selection {
+   			background: #BABABA;
+  		}
+  		#Slider_8 .slider-selection {
+   			background: #BABABA;
+  		}
+</style>
+ <table id="tb_list" style="width:100%;border:0px solid Red;">
+ <tr>
+    <td style="width:30%;"></td>
+ 	<td class="class1" style="width:57%;"><input class="ex8" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/></td>
+ 	<td style="width:20%;"><input type="text" /></td>
+ 	<td style="width:10%;">Lock</td>
+ </tr>
+ </table>
+ <div class="text-center" style="padding-top:10px;">
+ <button islock="0" id="btnsubmit" type="button" class="btn btn-primary "><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 确定</button>
+ <button islock="0" id="btnreturn" type="button" class="btn btn-danger "><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 返回</button>
+ </div>
+<div id="slider-range-min"></div>
+<script src="${base}/res/third/slider/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="${base}/res/third/slider/bootstrap-slider.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        //打开窗口时获取基金
+        var html = '';
+        listFund(getWeightJson());
+        function listFund(fundInfo) {
+            //var fundJson = { "funds": [{ "fid": "1", "name": "道琼期第一基金Fund1", "value": "10" }, { "fid": "2", "name": "道琼期第一基金Fund2", "value": "10" }, { "fid": "3", "name": "道琼期第一基金Fund3", "value": "10" }, { "fid": "4", "name": "道琼期第一基金Fund4", "value": "10" }, { "fid": "5", "name": "道琼期第一基金Fund5", "value": "10" }, { "fid": "6", "name": "道琼期第一基金Fund6", "value": "10" }, { "fid": "7", "name": "道琼期第一基金Fund7", "value": "40"}], "success": true, "type": "1", "total": "7" };
+            var fundJson = fundInfo;
+            var funds = fundJson.funds;
+            $.each(funds, function (i, n) {
+                var fundname = n.name;
+                var id = n.fid;
+                var value = parseInt(n.value);
+                var tr = '<tr><td>' + fundname + '</td>';
+                tr += '<td class="class1" style="width:57%;"><input style="width:100%;"  number="' + i + '" id="id_slider_' + i + '" class="slide" data-slider-id="Slider_' + i + '" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="' + value + '"/></td>';
+                tr += '<td style="width:10%;text-align:center;"><input readonly="readonly" style="width:70%;" class="slide-input" fid="' + id + '" id="input_' + i + '" type="text" value="' + value + '" />%</td>';
+                tr += '<td style="width:10%;"><button islock="0" number="' + i + '"  id="button_lock_' + i + '" type="button" class="btn btn-primary btn-sm btn-lock"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> 锁定</button></td>';
+                tr += '</tr>';
+                html += tr;
+            });
+
+            $('#tb_list').empty().append(html);
+            //绑定slide
+            for (var i = 0; i < funds.length; i++) {
+                var id = '#id_slider_' + i;
+                $(id).slider({ tooltip: 'hide' });
+            }
+        }
+
+        //点击拖拉球时，最终把数据存储到文本框中
+        $("body").on('slide', '.slide', '', function (slideEvt) {
+            var number = $(this).attr('number');
+            var input_id = '#input_' + number;
+            var curValue = parseInt(slideEvt.value); //parseFloat(slideEvt.value).toFixed(2);
+            $(input_id).val(curValue); //当前拖动设置的值
+
+            //设置每个slide要减去的值
+            var slider_input_count = 0;
+            //获取其它拖拉的总数值
+            $('.slide-input').each(function (i, n) {
+                if (number != i) {
+                    var inputvalue = $(this).val();
+                    //console.log(inputvalue);
+                    slider_input_count += parseInt(inputvalue);
+                }
+            });
+            var leaveValue = 100 - curValue - slider_input_count;
+            var slider_input = $('.slide-input');
+            var leaveSlideCount = slider_input.length - 1;//要添加或减少值的其它slider
+
+            var eachReduceValue = parseInt(leaveValue / leaveSlideCount);
+            //影响其它
+            var newValueCount = 0;
+            var other = null;
+            for (var i = 0; i < slider_input.length; i++) {
+                var id = '#id_slider_' + i;
+                if (number != i) {
+                    var eachSlide = $(id).slider({ tooltip: 'hide' });
+                    other = eachSlide;
+                    var eachOldValue = eachSlide.slider('getValue'); //其它拖拉的原始值
+                    var eachNewValue = eachOldValue + parseInt(eachReduceValue);
+                    //console.log(eachOldValue);
+                    //判断是否已锁定，锁定的话不能再设置值
+                    if (eachSlide.slider('isEnabled') == true) {
+                        eachSlide.slider('setValue', eachNewValue);
+                        var each_input_id = '#input_' + i;
+                        $(each_input_id).val(eachNewValue);
+                        newValueCount += parseInt(eachNewValue);
+                    }
+                }
+            }
+
+            //微调
+            newValueCount = newValueCount+curValue;
+            var diff =  newValueCount-100;
+            
+
+             //$('#id_slider_1').slider('getValue');console.log(othervalue + diff);
+             //$('#id_slider_1')..slider('setValue', parseInt(othervalue) + parseInt(diff));
+        });
+
+        //点击锁定或解锁时
+        $("body").on('click', '.btn-lock', '', function (slideEvt) {
+            var number = $(this).attr('number');
+            var islock = $(this).attr('islock');
+            var id = '#id_slider_' + number;
+            if (islock == '0') {
+                var eachSlide = $(id).slider({ tooltip: 'hide' });
+                eachSlide.slider("disable");
+                $(this).attr('islock', '1');
+                $(this).html('<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 解锁</button>');
+            }
+            else if (islock == '1') {
+                var eachSlide = $(id).slider({ tooltip: 'hide',  });
+                eachSlide.slider("enable");
+                $(this).attr('islock', '0');
+                $(this).html('<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> 锁定</button>');
+            }
+
+            var input_id = '#input_' + number;
+            var curValue = parseInt(slideEvt.value / 1);//.toFixed(2); //parseFloat(slideEvt.value).toFixed(2);
+
+        });
+
+        $('#funds_keyword_input').click(function () {
+            layer.open({
+                title: '设置基金范围',
+                type: 1,
+                skin: 'layui-layer-rim', //加上邊框
+                area: ['770px', '380px'], //寬高
+                content: $('#div_setrange'),
+                success: function (layero, index) {
+                    //获取基础列表数据
+                    listFund();
+                }
+            });
+        });
+		//get weight
+		function getWeightJson(){
+		    var weightJson = [];
+			$('.slider_input').each(function (i, n) {
+				weightJson.push
+				({
+					fid:i,
+					name:$('.slider_input').eq(i).attr('fundName'),
+					value:$('.slider_input').eq(i).val()
+				});
+            });
+            return { "funds":weightJson, "success": true, "type": "1", "total": $('.slider_input').lenght};
+		}
+		
+        //确定按钮
+        $('#btnsubmit').click(function () {
+            $('.slider_input').each(function (i, n) {
+            	var inputValue = $('#id_slider_'+i).val();
+                $('.slider_input').eq(i).val(inputValue + '%');
+            });
+            $('#btnSetrange').trigger('click');
+			window.layer.close(window.layer.index);
+        });
+        
+        //返回，关闭弹窗
+        $('#btnreturn').click(function () {
+           window.layer.close(window.layer.index);
+        });
+
+
+       
+    });
+</script>

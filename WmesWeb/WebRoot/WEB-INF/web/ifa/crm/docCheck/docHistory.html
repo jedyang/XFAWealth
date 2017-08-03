@@ -1,0 +1,53 @@
+[#include "../../../inc/head_pop.html"/]
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+<link rel="stylesheet" href="${base}/res/css/client.css"> 
+<style type="text/css">
+	.document-update-rows .swiper-button-prev{background: url('${base}/res/images/ifa/left_ico.png') no-repeat;background-size: 100% 100%;left: 0px;width: 45px;opacity: 0.8;}
+	.document-update-rows .swiper-button-next{background: url('${base}/res/images/ifa/right_ico.png') no-repeat;background-size: 100% 100%;right: 0px;width: 45px;opacity: 0.8;}
+</style>
+<div class="wmes-content" style="margin-left:0px">
+		<!-- investment 浮动的框 -->
+		<div class="investment-plan-wrap">
+			<p class="investment-plan-title">[@lang_res k='ifa.crm.kyc.HistoryTitle'/] </p>
+			<p class="document-update-title">${doc.docName!}</p>
+			[#if historyList?exists && historyList?size gt 0]
+			[#list historyList as historyObj]
+			<div class="document-update-rows">
+				<p class="document-rows-title">Summit Date：${historyObj.summitDate!}</p>
+				<div class="document-list-swiper">
+					<div class="document-swiper-wrapper swiper-container">
+						<div class="document-swiper-contents swiper-wrapper">
+							[#if historyObj.docAtt?exists && historyObj.docAtt?size gt 0]
+							[#list historyObj.docAtt as attObj]
+							<div class="document-swiper-rows swiper-slide">
+								<!-- <img data-src="${base}${attObj.filePath!}" class="document-swiper-img" src="${base}${attObj.filePath!}"> -->
+								<img data-src="${base}/loadImgSrcByPath.do?filePath=${attObj.filePath!}" class="document-swiper-img" src="${base}/loadImgSrcByPath.do?filePath=${attObj.filePath!}">
+							</div>
+							[/#list]
+							[/#if]
+						</div>
+					</div>
+				</div>	
+			</div>
+			[/#list]
+			[/#if]
+			<div class="gallery-bigger-images">
+				<a href="javascript:;" class="gallery-bigger-close" id="pipelin-investors-close"></a>
+				<div class="swiper-container gallery-top">
+			        <div class="swiper-wrapper" id="galler-big-img">
+			        </div>
+			        <div class="swiper-button-next swiper-button-white"></div>
+			        <div class="swiper-button-prev swiper-button-white"></div>
+			    </div>
+			    <div class="swiper-container gallery-thumbs">
+			        <div class="swiper-wrapper" id="galler-small-img">
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<!-- investment 浮动的框 -->
+</div>
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/crm/documentUpdateHistory.js');
+</script>

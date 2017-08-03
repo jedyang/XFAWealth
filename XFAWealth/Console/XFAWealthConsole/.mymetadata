@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="XFAWealthConsole"
+  id="myeclipse.1498805383731"
+  context-root="/console"
+  j2ee-spec="6.0"
+  archive="XFAWealthConsole.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

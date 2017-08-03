@@ -1,0 +1,254 @@
+package com.fsll.wmes.community.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import com.fsll.common.CommonConstants;
+import com.fsll.common.base.service.BaseService;
+import com.fsll.common.util.BeanUtils;
+import com.fsll.common.util.DateUtil;
+import com.fsll.common.util.JsonPaging;
+import com.fsll.common.util.StrUtils;
+import com.fsll.wmes.community.service.NewsCommentService;
+import com.fsll.wmes.community.vo.NewsCommentVO;
+import com.fsll.wmes.entity.NewsComment;
+import com.fsll.wmes.entity.NewsInfo;
+
+@Service("newsCommentService")
+public class NewsCommentServiceImpl extends BaseService implements NewsCommentService {
+
+	/**
+	 *  新闻评论数据获取
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param jsonPaging
+	 * @param newsCommentVO 过滤条件
+	 * @param langCode 多语言标识
+	 * @return JsonPaging
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public JsonPaging getNewsComments(JsonPaging jsonPaging,
+			NewsCommentVO newsCommentVO, String langCode) {
+		StringBuffer hql = new StringBuffer(""
+				+ " SELECT"
+				+ " n"
+				+ " FROM"
+				+ " NewsComment n"
+				+ " LEFT JOIN"
+				+ " NewsInfo i"
+				+ " ON"
+				+ " n.newsInfo.id=i.id"
+				+ " LEFT JOIN"
+				+ " MemberBase b"
+				+ " ON"
+				+ " b.id=n.member.id"
+				+ " LEFT JOIN"
+				+ " MemberIndividual mi"
+				+ " ON"
+				+ " mi.member.id=n.member.id"
+				+ " LEFT JOIN"
+				+ " MemberIfa ma"
+				+ " ON"
+				+ " ma.member.id=n.member.id"
+				+ " WHERE 1=1"
+				+ "");
+		List<Object> params = new ArrayList<Object>();
+		if (StringUtils.isNotBlank(newsCommentVO.getFilterTitle())) {
+			hql.append(" AND i.title LIKE ?");
+			params.add("%" + newsCommentVO.getFilterTitle() + "%");
+		}
+		if (StringUtils.isNotBlank(newsCommentVO.getFilterComment())) {
+			hql.append(" AND n.comment LIKE ?");
+			params.add("%" + newsCommentVO.getFilterComment() + "%");
+		}
+		if (StringUtils.isNotBlank(newsCommentVO.getFilterMemberName())) {
+			hql.append(" AND"
+					+ "("
+					+ " b.nickName LIKE ? OR"
+					+ " mi.nameChn LIKE ? OR"
+					+ " mi.lastName LIKE ? OR"
+					+ " mi.firstName LIKE ? OR"
+					+ " ma.nameChn LIKE ? OR"
+					+ " ma.lastName LIKE ? OR"
+					+ " ma.firstName LIKE ?"
+					+ ")"
+					+ "");
+			params.add("%" + newsCommentVO.getFilterMemberName() + "%");
+			params.add("%" + newsCommentVO.getFilterMemberName() + "%");
+			params.add("%" + newsCommentVO.getFilterMemberName() + "%");
+			params.add("%" + newsCommentVO.getFilterMemberName() + "%");
+			params.add("%" + newsCommentVO.getFilterMemberName() + "%");
+			params.add("%" + newsCommentVO.getFilterMemberName() + "%");
+			params.add("%" + newsCommentVO.getFilterMemberName() + "%");
+		}
+		if (StringUtils.isNotBlank(newsCommentVO.getFilterStartTime()) && StringUtils.isNotBlank(newsCommentVO.getFilterEndTime())) {
+			hql.append(" AND n.opTime BETWEEN ? AND ?");
+			params.add(DateUtil.StringToDate(newsCommentVO.getFilterStartTime(), CommonConstants.FORMAT_DATE_TIME));
+			params.add(DateUtil.StringToDate(newsCommentVO.getFilterEndTime(), CommonConstants.FORMAT_DATE_TIME));
+		}
+		if (StringUtils.isNotBlank(newsCommentVO.getFilterStatus())) {
+			hql.append(" AND n.status=?");
+			params.add(newsCommentVO.getFilterStatus());
+		}
+		jsonPaging = this.baseDao.selectJsonPaging(hql.toString(), params.toArray(), jsonPaging, false);
+		if(jsonPaging.getList() != null && !jsonPaging.getList().isEmpty()){
+			List<NewsComment> newsComments = jsonPaging.getList();
+			List<NewsCommentVO> vos = new ArrayList<NewsCommentVO>();
+			for (NewsComment newsComment : newsComments) {
+				NewsCommentVO vo = new NewsCommentVO();
+				BeanUtils.copyProperties(newsComment, vo);
+				if(newsComment.getNewsInfo() != null){
+					vo.setNewsInfoId(newsComment.getNewsInfo().getId());
+					vo.setNewsTitle(newsComment.getNewsInfo().getTitle());
+				}
+				if(newsComment.getMember() != null){
+					vo.setMemberName(getCommonMemberName(newsComment.getMember().getId(), langCode, "2"));
+				}
+				if(newsComment.getOpTime() != null){
+					vo.setOpTimeStr(DateUtil.dateToDateString(newsComment.getOpTime(), CommonConstants.FORMAT_DATE_TIME));
+				}
+				vos.add(vo);
+			}
+			jsonPaging.getList().clear();
+			jsonPaging.getList().addAll(vos);
+		}
+		return jsonPaging;
+	}
+
+	/**
+	 *  删除新闻评论数据（逻辑删除 news_comment.status=-1）
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param ids 删除id,可批量删除
+	 * @return true:成功，false：失败
+	 */
+	@Override
+	public Boolean deleteNewsComments(String ids) {
+		Boolean flag = false;
+		if (StringUtils.isNotBlank(ids)) {
+			String[] temp = null;
+			if(ids.indexOf(",") > -1){
+				ids = StrUtils.reHeavy(ids);
+				temp = ids.split(",");
+			}else{
+				temp = new String[]{ids};
+			}
+			for (String id : temp) {
+				NewsComment comment = (NewsComment) this.baseDao.get(NewsComment.class, id);
+				if(comment != null){
+					deleteNewsCommentChilds(comment.getId());
+					comment.setStatus("-1");
+					this.baseDao.update(comment);
+				}
+			}
+			flag = true;
+		}
+		return flag;
+	}
+	
+	/**
+	 *  获取评论的回复数据
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param newsCommentId 评论实体
+	 * @return 
+	 */
+	private List<NewsComment> getNewsCommentForReply(String newsCommentId){
+		List<NewsComment> comments = null;
+		if (StringUtils.isNotBlank(newsCommentId)) {
+			StringBuffer hql = new StringBuffer(""
+					+ " FROM"
+					+ " NewsComment c"
+					+ " WHERE"
+					+ " c.replyComment.id=?"
+					+ " ORDER BY"
+					+ " c.opTime"
+					+ " DESC"
+					+ "");
+			List<Object> params = new ArrayList<Object>();
+			params.add(newsCommentId);
+			comments = this.baseDao.find(hql.toString(), params.toArray(), false);
+		}
+		return comments;
+	}
+	
+	/**
+	 *  迭代删除子评论
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param id 评论实体
+	 * @return 
+	 */
+	private void deleteNewsCommentChilds(String id){
+		List<NewsComment> comments = getNewsCommentForReply(id);
+		if(comments != null && !comments.isEmpty()){
+			for (NewsComment newsComment : comments) {
+				deleteNewsCommentChilds(newsComment.getId());
+				newsComment.setStatus("-1");
+				this.baseDao.update(newsComment);
+			}
+		}
+	}
+
+	/**
+	 *  根据ID获取新闻评论实体
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param id
+	 * @return NewsComment
+	 */
+	@Override
+	public NewsComment findById(String id) {
+		NewsComment comment = null;
+		if (StringUtils.isNotBlank(id)) {
+			comment = (NewsComment) this.baseDao.get(NewsComment.class, id);
+		}
+		return comment;
+	}
+
+	/**
+	 *  根据ID获取新闻评论,返回VO实体
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param id
+	 * @param langCode 多语言标识
+	 * @return NewsCommentVO
+	 */
+	@Override
+	public NewsCommentVO findNewsCommentVOById(String id, String langCode) {
+		NewsCommentVO vo = null;
+		NewsComment comment = findById(id);
+		if(comment != null){
+			vo = new NewsCommentVO();
+			BeanUtils.copyProperties(comment, vo);
+			NewsInfo newsInfo = comment.getNewsInfo();
+			if(newsInfo != null){
+				vo.setNewsInfoId(newsInfo.getId());;
+				vo.setNewsTitle(newsInfo.getTitle());
+			}
+			if(comment.getMember() != null){
+				vo.setMemberName(getCommonMemberName(comment.getMember().getId(), langCode, "2"));
+			}
+			if(comment.getOpTime() != null){
+				vo.setOpTimeStr(DateUtil.dateToDateString(comment.getOpTime(), CommonConstants.FORMAT_DATE_TIME));
+			}
+		}
+		return vo;
+	}
+
+	/**
+	 *  保存新闻评论信息
+	 * @author wwluo
+	 * @date 2017-06-02
+	 * @param id
+	 * @param comment
+	 */
+	@Override
+	public NewsComment save(NewsComment comment) {
+		return (NewsComment) this.baseDao.saveOrUpdate(comment);
+	}
+}

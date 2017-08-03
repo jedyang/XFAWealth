@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>待审批</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	</head>
+	<body>
+		<div class="kaihu_div">
+			<div class="white_background">
+				<div class="OpenAccount_ifa_big_title">
+					<h2>
+						Account Application Approval
+					</h2>
+					<p class="Approval_stauts">
+						<span>Stauts</span>: Wait for distributor approval
+					</p>
+				</div>
+				<div class="OpenAccount_ifa_content">
+					<p class="OpenAccount_ifa_title">
+						IFA
+					</p>
+					<!-- <p>Ageas Investment Management（Asia）Limited</p> -->
+					<div class="opeanAccount_advisor">
+						<img src="${base}/res/images/head_m.png" alt="">
+						<ul class="OpenAccount_ifa_list">
+							<li>
+								<p class="advisor_name">
+									David Chen
+								</p>
+								<p class="advisor_biaoti">
+									<span class="advisor_title">region:</span>Hongkong
+								</p>
+							</li>
+							<li class="OpenAccount_ifa_limited">
+								<span>Ageas Investment Management（Asia）Limited 
+							</li>
+							<li>
+								<p>
+									+ 00852 9875 4542
+								</p>
+								<p>
+									AmyLee01@gmail.com
+								</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="OpenAccount_BasicInfo_content">
+
+					<!--
+					<div class="OpenAccount_tab">
+						<ul >
+							<li actionName=applicantsformation>
+								<a class="now" href="javascript:;">Applicants Form</a>
+							</li>
+							<li actionName="docCheckInformation">
+								<a href="javascript:;">Document Check</a>
+							</li>
+						</ul>
+					</div>
+					<div class="OpenAccount_Approval_content" style="display: block;">
+						<div style="display: block; padding-top: 10px">
+							<iframe border="0" frameborder="0" width="100%" src="${base}/console/investor/account/applicantsformation.do?accountId=${accountId!}" id="listFrame" name="listFrame" style="display: block" scrolling="no" onLoad="iFrameHeight()"></iframe>
+						</div>
+
+					</div>
+					-->
+					<div id="wmes_wraper">
+						<ul class="tab" id="tab-search">
+							<li class="tab-li-crr">
+								<a class="now" href="javascript:;">Applicants Form</a>
+							</li>
+							<li>
+								<a href="javascript:;">Document Check</a>
+							</li>
+						</ul>
+
+
+						<div class="tab_wrap">
+							<div class="form-horizontal" style="padding-left: 20px;">
+								<div class="form-group" style="margin-bottom: 5px; padding-left: 20px">
+									<button id="btnShowpdf" class="btn btn-primary">
+										View PDF
+									</button>
+								</div>
+								<div class="form-group " style="margin-bottom: 5px" id="imgList">
+									<div class="col-md-2 imgform" id="layer-photos-demo">
+										<img src="${base}/u/1.jpg" index="0" class="img-responsive img" alt="Responsive image">
+									</div>
+									<div class="col-md-2 imgform">
+										<img src="${base}/u/2.jpg" index="1" class="img-responsive img" alt="Responsive image">
+									</div>
+									<div class="col-md-2 imgform">
+										<img src="${base}/u/3.jpg" index="2" class="img-responsive img" alt="Responsive image">
+									</div>
+									<div class="col-md-2 imgform">
+										<img src="${base}/u/4.jpg" index="3" class="img-responsive img" alt="Responsive image">
+									</div>
+									<div class="col-md-2 imgform">
+										<img src="${base}/u/5.jpg" index="4" class="img-responsive img" alt="Responsive image">
+									</div>
+									[#if imgList?exists && imgList?size gt 0] [#list imgList as imglist]
+									<div class="col-md-2 imgform">
+										<img src="${imglist.src?if_exists}" index="4" class="img-responsive img" alt="${imglist.alt?if_exists}">
+									</div>
+									[/#list] [/#if]
+								</div>
+							</div>
+
+							<div class="form-horizontal" style="display: none">
+								<div class="form-group " style="margin-bottom: 5px" id="imgList">
+									<div class="col-md-2 imgform" id="layer-photos-demo">
+										<img src="${base}/u/1.jpg" index="0" class="img-responsive img" alt="Responsive image">
+									</div>
+									<div class="col-md-2 imgform">
+										<img src="${base}/u/2.jpg" index="1" class="img-responsive img" alt="Responsive image">
+									</div>
+									<div class="col-md-2 imgform">
+										<img src="${base}/u/3.jpg" index="2" class="img-responsive img" alt="Responsive image">
+									</div>
+									<div class="col-md-2 imgform">
+										<img src="${base}/u/4.jpg" index="3" class="img-responsive img" alt="Responsive image">
+									</div>
+									<div class="col-md-2 imgform">
+										<img src="${base}/u/5.jpg" index="4" class="img-responsive img" alt="Responsive image">
+									</div>
+									[#if docList?exists && docList?size gt 0] [#list docList as doclist]
+									<div class="col-md-2 imgform">
+										<img src="${doclist.src?if_exists}" index="4" class="img-responsive img" alt="${doclist.alt?if_exists}">
+									</div>
+									[/#list] [/#if]
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="Approval_comments" style="display: block;">
+						<p>
+							Approval Comments
+						</p>
+						<textarea id="msg" name="msg" rows="8" cols="60"></textarea>
+						<div class="Approval_wenti">
+							<a id="btn_reject" class="wenti_btn_bule" href="javascript:;">Reject</a>
+							<!-- <a class="wenti_btn_bule" href="javascript:;">Summit</a>  -->
+							<a id="btn_approve" class="wenti_btn_bule" href="javascript:;">Approve</a>
+						</div>
+						<input type="hidden" id="accountId" name="accountId" value="${accountId!}">
+						<input type="hidden" id="checkStatus" name="" checkStatus"" value="">
+					</div>
+					<div class="Approval_comments" style="display: block; margin-bottom: 60px;">
+						<p>
+							Process History
+						</p>
+						<table id="individuallist" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th>
+										Date
+									</th>
+									<th>
+										Person
+									</th>
+									<th>
+										Actions
+									</th>
+									<th>
+										Remark
+									</th>
+									<th>
+										Flow Step
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								[#if approveHis?exists && approveHis?size gt 0] [#list approveHis as his]
+								<tr>
+									<td>
+										${his.approveData?if_exists}
+									</td>
+									<td>
+										${his.approver?if_exists}
+									</td>
+									<td>
+										[#if his.action?exists && his.action=='1']同意[#else]退回[/#if]
+
+									</td>
+									<td>
+										${his.comment?if_exists}
+									</td>
+									<td>
+										${his.flowStep?if_exists}
+									</td>
+								</tr>
+								[/#list] [/#if]
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id="account" value="${accountId!}" />
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="${base}/res/third/layer/layer_v2.js"></script>
+		<script type="text/javascript" src="${base}/res/third/layer/extend/layer.ext.js"></script>
+		<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+		<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+		<script src="${base}/res/console/js/jquery.form.js"></script>
+		<script src="${base}/res/console/js/jquery.pagination.js"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+		<script type="text/javascript">
+	var acccount = '${accountId!}';
+    var imgList=${imgJson?if_exists};
+    var docList=${docJson?if_exists};
+   
+   
+   
+	function iFrameHeight() {
+		var ifm = document.getElementById("listFrame");
+		ifm.height = 0;
+		var subWeb = ifm.contentDocument;
+		if (ifm != null && subWeb != null) {
+			ifm.height = subWeb.body.scrollHeight;
+		}
+
+		subWeb.getElementsByTagName('input').disabled = true;
+	}
+
+	$(function() {
+		$(".OpenAccount_tab li").on("click", function() {
+			$(".OpenAccount_tab li").find("a").removeClass("now");
+			$(this).find("a").addClass("now");
+
+			var actionName = $(this).attr("actionName")
+			var actionHref = "${base}/console/investor/account/" + actionName + ".do?accountId=" + acccount;
+			document.getElementById("listFrame").src = actionHref;
+
+			document.getElementsByTagName('input').disabled = true;
+		});
+		$("#btn_approve").click(function() {
+			var comment = $("#msg").val();
+			var status = 1;
+			$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/investor/account/approval.do?",
+				data : {
+					accountId : acccount,
+					comment : comment,
+					status : status
+				},
+				success : function(json) {
+					if (json.result) {
+
+						var status = json.status;
+						var actionStatus = json.actionStatus;
+						if (status == "0") {//待选择下一个审批人
+							var roleId = json.roleId;
+							var instanceId = json.instanseId;
+							BootstrapDialog.show({
+								title : "选择审批人",
+								cssClass : 'login-dialog',
+								type : BootstrapDialog.TYPE_PRIMARY,
+								size : BootstrapDialog.SIZE_SMALL,
+								draggable : true,
+								message : $('<div></div>').load('selectApprover.do?roleId=' + roleId),
+								buttons : [ {
+									label : "[@lang_res  k='global.confirm'/]",
+									cssClass : 'btn-primary',
+									action : function(dialogItself) {
+										var id = $("#ddlUser").val();
+
+										$.ajax({
+											type : "post",
+											datatype : "json",
+											url : "${base}/console/investor/account/submitApprover.do",
+											data : {
+												userId : id,
+												instanceId : instanceId,
+												accountId : acccount,
+												status : actionStatus
+											},
+											success : function(data) {
+												if (data.result) {
+													alert("成功");
+												} else {
+													alert(data.msg);
+												}
+											}
+										});
+
+										dialogItself.close();
+									}
+								}, {
+									label : "[@lang_res  k='global.back'/]",
+									action : function(dialogItself) {
+										dialogItself.close();
+									}
+								} ]
+							});
+						} else if (status == "1") {
+							alert(json.msg);
+						} else if (status == "2") {
+							var accountId = json.accountId;
+							BootstrapDialog.show({
+								title : "输入帐号",
+								cssClass : 'login-dialog',
+								type : BootstrapDialog.TYPE_PRIMARY,
+								size : BootstrapDialog.SIZE_SMALL,
+								draggable : true,
+								message : $('<div></div>').load('inputAccountNo.do'),
+								buttons : [ {
+									label : "[@lang_res  k='global.confirm'/]",
+									cssClass : 'btn-primary',
+									action : function(dialogItself) {
+										var accountNo = $("#txtAccountNo").val();
+										if (accountNo == undefined || accountNo == "") {
+											layer.msg("请输入帐号");
+											return;
+										}
+										$.ajax({
+											type : "post",
+											datatype : "json",
+											url : "${base}/console/investor/account/completeAccountNo.do",
+											data : {
+												accountNo : accountNo,
+												accountId : accountId
+											},
+											success : function(data) {
+												if (data.result) {
+													alert("成功");
+												} else {
+													alert(data.msg);
+												}
+											}
+										});
+
+										dialogItself.close();
+									}
+								}, {
+									label : "[@lang_res  k='global.back'/]",
+									action : function(dialogItself) {
+										dialogItself.close();
+									}
+								} ]
+							});
+
+						}
+
+					} else {
+						layer.msg("审批成功");
+					}
+				}
+			})
+		});
+		$("#btn_reject").click(function() {
+			var comment = $("#msg").val();
+			var status = 0;
+			$.ajax({
+				type : "post",
+				datatype : "json",
+				url : "${base}/console/investor/account/approval.do?",
+				data : {
+					accountId : acccount,
+					comment : comment,
+					status : status
+				},
+				success : function(json) {
+					if (json.result) {
+
+						var status = json.status;
+						var actionStatus = json.actionStatus;
+						if (status == "0") {//待选择下一个审批人
+							var roleId = json.roleId;
+							var instanceId = json.instanseId;
+							BootstrapDialog.show({
+								title : "选择审批人",
+								cssClass : 'login-dialog',
+								type : BootstrapDialog.TYPE_PRIMARY,
+								size : BootstrapDialog.SIZE_SMALL,
+								draggable : true,
+								message : $('<div></div>').load('selectApprover.do?roleId=' + roleId),
+								buttons : [ {
+									label : "[@lang_res  k='global.confirm'/]",
+									cssClass : 'btn-primary',
+									action : function(dialogItself) {
+										var id = $("#ddlUser").val();
+
+										$.ajax({
+											type : "post",
+											datatype : "json",
+											url : "${base}/console/investor/account/submitApprover.do",
+											data : {
+												userId : id,
+												instanceId : instanceId,
+												accountId : acccount,
+												status : actionStatus
+											},
+											success : function(data) {
+												if (data.result) {
+													alert("成功");
+												} else {
+													alert(data.msg);
+												}
+											}
+										});
+
+										dialogItself.close();
+									}
+								}, {
+									label : "[@lang_res  k='global.back'/]",
+									action : function(dialogItself) {
+										dialogItself.close();
+									}
+								} ]
+							});
+						} else if (status == "1") {
+							alert(json.msg);
+						}
+					}
+				}
+			})
+		});
+
+		$("#btnShowpdf").click(function() {
+			//弹出即全屏
+			var index = parent.layer.open({
+				skin : 'layui-layer-lan',
+				title : '查看pdf',
+				type : 2,
+				content : '${base}/console/investor/account/dialogshowpdf.do',
+				area : [ '320px', '195px' ],
+				maxmin : true
+			});
+			parent.layer.full(index);
+		});
+
+		var json = {
+			"title" : "", //相册标题
+			"id" : 123, //相册id
+			"start" : 1, //初始显示的图片序号，默认0
+			"data" : [ //相册包含的图片，数组格式
+			{
+				"alt" : "图片名",
+				"pid" : 666, //图片id
+				"src" : "${base}/u/1.jpg", //原图地址
+				"thumb" : "${base}/u/1.jpg" //缩略图地址
+			}, {
+				"alt" : "图片名1",
+				"pid" : 666, //图片id
+				"src" : "${base}/u/2.jpg", //原图地址
+				"thumb" : "${base}/u/2.jpg" //缩略图地址
+			}, {
+				"alt" : "图片名2",
+				"pid" : 666, //图片id
+				"src" : "${base}/u/3.jpg", //原图地址
+				"thumb" : "${base}/u/3.jpg" //缩略图地址
+			}, {
+				"alt" : "图片名3",
+				"pid" : 666, //图片id
+				"src" : "${base}/u/4.jpg", //原图地址
+				"thumb" : "${base}/u/4.jpg" //缩略图地址
+			}, {
+				"alt" : "图片名4",
+				"pid" : 666, //图片id
+				"src" : "${base}/u/5.jpg", //原图地址
+				"thumb" : "${base}/u/5.jpg" //缩略图地址
+			} ]
+		}
+		
+		var imgJson={};
+		imgJson.title="";
+		imgJson.id="";
+		imgJson.start="";
+		imgJson.data=${imgJson?if_exists};
+		
+		$(".img").click(function() {
+			var index = $(this).attr("index");
+			json.start = index;
+			layer.ready(function() {
+				layer.photos({
+					photos : json
+				});
+			})
+		});
+	})
+</script>
+	</body>
+</html>

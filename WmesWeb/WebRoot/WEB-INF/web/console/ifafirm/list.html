@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[@lang_res k='console.ifafirm.list.title'/]</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet"  >
+    <style>
+           .login-dialog .modal-dialog {width: 1000px;}
+            .firminfo-dialog .modal-dialog{width: 900px;}
+            .teaminfo-dialog .modal-dialog{width: 700px;}
+            .btneditnode{text-decoration:underline;}
+        </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<!-- header -->
+
+
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container">
+				 <ul class="tab" id="tab-search">
+                <li class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res k='console.ifafirm.list.tab'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+             <!-- ifafirm列表一 -->
+            <div class="form-inline" style="display: block;">
+							<div>
+								<div class="row pd10">
+									<div class="col-md-4">
+										<label for="s-1">
+											[@lang_res k='console.ifafirm.list.label.companyName'/]
+										</label>
+										<input id='txtCompanyName' type="text" class="form-control searchCondition"/>
+									</div>
+									<div class="col-md-4">
+										<label for="s-1">
+											[@lang_res k='console.ifafirm.list.label.registerNo'/]
+										</label>
+										<input id='txtRegisterNo' type="text" class="form-control searchCondition"/>
+									</div>
+									<div class="col-md-4">
+										<label for="s-1">
+											[@lang_res k='console.ifafirm.list.label.entityType'/]
+										</label>
+										<select id="selEntityType" class="form-control searchCondition" name="selEntityType">
+											<option value="" selected="selected">
+												[@lang_res k='console.ifafirm.list.select.entityType.default'/]
+											</option>
+											<option value="1">
+												[@lang_res k='console.ifafirm.list.select.entityType.1'/]
+											</option>
+											<option value="2">
+												[@lang_res k='console.ifafirm.list.select.entityType.2'/]
+											</option>
+											<option value="3">
+												[@lang_res k='console.ifafirm.list.select.entityType.3'/]
+											</option>
+											<option value="4">
+												[@lang_res k='console.ifafirm.list.select.entityType.4'/]
+											</option>
+											<option value="5">
+												[@lang_res k='console.ifafirm.list.select.entityType.5'/]
+											</option>
+										</select>
+									</div>
+									<div class="pdt20" style="padding-left:15px;">
+										<button type="button" class="btn btn-blue-s" id="btnAdd">
+											 [@lang_res k='global.add'/]
+										</button>
+										<button type="button" class="btn btn-blue-s" id="btnSearch">
+											<i class="glyphicon glyphicon-search"></i> [@lang_res k='global.query'/]
+										</button>
+									</div>
+								</div>
+								<div>
+									<table id="ifafirmList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+										<thead>
+											<tr>
+												<th class="table-head">
+													[@lang_res k='console.ifafirm.list.table.th.companyName'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='console.ifafirm.list.table.th.entityType'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='console.ifafirm.list.table.th.country'/]
+												</th>
+												<th class="table-head">
+													[@lang_res k='console.ifafirm.list.table.th.incorporationDate'/]
+												</th>
+												<th id="ifafirmOperate" class="table-head">
+													[@lang_res k='global.operate'/]
+												</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+									<ul id='ifafirmPagination' class="pagination pull-right now"></ul>
+								</div>
+							</div>
+						</div>
+            </div>            
+        </div>
+    </div>
+
+ 	<!-- navMenu -->
+	
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		bindIfafirmList(0);
+		setAutoSearch('.searchCondition',bindIfafirmList,0);
+	});
+	
+    //绑定firm列表数据  wwluo 160823
+	function bindIfafirmList(curPage) {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/ifafirm/ifaFirmJson.do?datestr=' + new Date().getTime(),
+			data : {
+				'companyName' : $('#txtCompanyName').val(),
+				'registerNo' : $('#txtRegisterNo').val(),
+				'entityType' : $('#selEntityType').val(),
+				'page' : curPage + 1,
+				'rows' : 10,
+				'sort' : '',
+				'order' : ''
+			},
+			success : function(json) {
+				var html = '';
+				var total = json.total;
+				var table = json.rows;
+				$.each(table, function(i, n) {
+				//console.log(n);
+				var companyName = n.companyName == null? '' : n.companyName;
+				var entityType = '';
+				switch (n.entityType) {
+                    case ('1'):
+                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.1'/]";
+                        break;
+                    case ('2'):
+                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.2'/]";
+                        break;
+                    case ('3'):
+                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.3'/]";
+                        break;
+                    case ('4'):
+                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.4'/]";
+                        break;
+                    case ('5'):
+                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.5'/]";
+                        break;
+                    default:
+                     entityType = '';
+                }
+				var registerNo = n.registerNo == null? '' : n.registerNo;
+			    var isFinancial = n.isFinancial == null? '' : n.isFinancial;
+			    if('0'==isFinancial)
+			    	isFinancial="[@lang_res k='global.false'/]";
+			    else if('1'==isFinancial)
+			    	isFinancial="[@lang_res k='global.true'/]";
+			    else
+			    	isFinancial='';
+				var country = n.country == null? '' : n.country;
+				var incorporationDate = n.incorporationDate == null? '' : n.incorporationDate;
+				
+				var url = '${base}/console/ifafirm/ifaFirmDetail.do?ifafirmId=' + n.id;
+				var orgUrl = '${base}/console/ifafirm/orgList.do?ifafirmId=' + n.id;
+				var distributorUrl = '${base}/console/ifafirm/distributorList.do?ifafirmId=' + n.id;
+				var childFirmUrl = '${base}/console/ifafirm/ifafirmIfafirm.do?ifafirmId=' + n.id;
+				
+					html +='<tr><td class="col-md-3">'
+					     +'<a href="javascript:showform(\''+n.id+'\',\''+companyName+'\',\''+url+'\')">'
+						 +companyName
+						 +'</a>'
+						 +'</td><td class="col-md-2">'
+						 +entityType
+						 +'</td><td class="col-md-1">'
+						 +country
+						 +'</td><td class="col-md-2">'
+						 +incorporationDate
+						 +'</td><td class="col-md-4">'
+						 
+						 +'<a href="javascript:showform(\'org-'+n.id+'\',\''+companyName+"&nbsp;[@lang_res k='ifafirm.list.org'/]"+'\',\''+orgUrl+'\')">'
+						 +'<i  class="glyphicon glyphicon-align-center  text-bold"></i>&nbsp;'
+						 +'[@lang_res k="ifafirm.list.org"/]'
+						 +'</a>&nbsp;'
+						 
+						 +'<a href="javascript:showform(\'distributor-'+n.id+'\',\''+companyName+"&nbsp;[@lang_res k='ifafirm.list.distributor'/]"+'\',\''+distributorUrl+'\')">'
+						 +'<i  class="glyphicon glyphicon-align-center  text-bold"></i>&nbsp;'
+						 +'[@lang_res k="ifafirm.list.distributor"/]'
+						 +'</a>&nbsp;'
+
+						 +'<a href="javascript:showform(\'childFirm-'+n.id+'\',\''+companyName+"&nbsp;[@lang_res k='console.ifafirm.list.table.operate.childFirm'/]"+'\',\''+childFirmUrl+'\')">'
+						 +'<i  class="glyphicon glyphicon-align-center  text-bold"></i>&nbsp;'
+						 +'[@lang_res k="console.ifafirm.list.table.operate.childFirm"/] '
+						 +'</a>&nbsp;'
+
+				         +'<a href="javascript:delIfafirm(\''+n.id+'\')">'
+						 +'<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;'
+				         +'[@lang_res k="global.delete"/]'
+						 +'</a></td></tr>';	
+				});
+				$('#ifafirmList tbody').empty().append(html);
+				$('#ifafirmPagination').pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 10,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+			bindIfafirmList(page_id);
+		}
+	}
+    
+    //“增加”按钮事件  wwluo 160823
+    $('#btnAdd').click(function (){
+		var url = '${base}/console/ifafirm/ifaFirmDetail.do?datestr='+ new Date().getTime();
+    	showform('console-ifafirm-ifaFirmDetail','[@lang_res k="global.add"/]',url);
+    });
+    
+    //删除事件 wwluo 160823
+    function delIfafirm(ifafirmId){
+	    BootstrapDialog.show({
+	            title: '[@lang_res k="global.prompt"/]',
+	            message: '[@lang_res k="console.ifafirm.list.dialog.message"/]',
+	            buttons: [{
+	                label: '[@lang_res k="global.confirm"/]',
+	                action: function(dialogItself) {
+	                   $.ajax({
+							type:'post',
+							url:'${base}/console/ifafirm/delifafirm.do?datestr='
+										+ new Date().getTime(),
+							data:{ifafirmId:ifafirmId},
+							success:function(flag){
+								if (flag.flag){
+								 	layer.msg("[@lang_res k='global.success'/]", { icon: 1, time: 2000 });
+								    dialogItself.close();
+								    bindIfafirmList(0);
+								}else{
+								 	layer.msg("[@lang_res k='global.failed'/]", { icon: 0, time: 2000 });
+								 	dialogItself.close();
+								}
+							}
+					  });
+	                }
+	            }, {
+	                label: '[@lang_res k="global.cancel"/]',
+	                action: function(dialogItself) {
+	                    dialogItself.close();
+	                }
+	            }]
+	        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+package com.fsll.wmes.member.vo;
+
+import java.util.Date;
+import java.util.List;
+
+import com.fsll.core.entity.AccessoryFile;
+
+public class DocListVO {
+	private String id;
+	private String templateId;
+	private String docName;
+	private String desc;
+	private String isNecessary;
+	private Integer updateCycle;
+	private Date effectDate;//submitDate
+	private Date createTime;//expireDate
+	private String isValid;
+	private String accessoryFileId;
+	private String accessoryFileName;
+	private Date accessoryFileCreateTime;
+	private List<AccessoryFile> fileList;
+	private String checkStatus;
+	
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getTemplateId() {
+		return templateId;
+	}
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
+	}
+	public String getDocName() {
+		return docName;
+	}
+	public void setDocName(String docName) {
+		this.docName = docName;
+	}
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	public String getIsNecessary() {
+		return isNecessary;
+	}
+	public void setIsNecessary(String isNecessary) {
+		this.isNecessary = isNecessary;
+	}
+	public Integer getUpdateCycle() {
+		return updateCycle;
+	}
+	public void setUpdateCycle(Integer updateCycle) {
+		this.updateCycle = updateCycle;
+	}
+	public Date getEffectDate() {
+		return effectDate;
+	}
+	public void setEffectDate(Date effectDate) {
+		this.effectDate = effectDate;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	public String getIsValid() {
+		return isValid;
+	}
+	public void setIsValid(String isValid) {
+		this.isValid = isValid;
+	}
+	public String getAccessoryFileName() {
+		return accessoryFileName;
+	}
+	public void setAccessoryFileName(String accessoryFile) {
+		this.accessoryFileName = accessoryFile;
+	}
+	public Date getAccessoryFileCreateTime() {
+		return accessoryFileCreateTime;
+	}
+	public void setAccessoryFileCreateTime(Date accessoryFileCreateTime) {
+		this.accessoryFileCreateTime = accessoryFileCreateTime;
+	}
+	public String getAccessoryFileId() {
+		return accessoryFileId;
+	}
+	public void setAccessoryFileId(String accessoryFileId) {
+		this.accessoryFileId = accessoryFileId;
+	}
+	public List<AccessoryFile> getFileList() {
+		return fileList;
+	}
+	public void setFileList(List<AccessoryFile> fileList) {
+		this.fileList = fileList;
+	}
+	public String getCheckStatus() {
+		return checkStatus;
+	}
+	public void setCheckStatus(String checkStatus) {
+		this.checkStatus = checkStatus;
+	}
+	
+	
+	
+}

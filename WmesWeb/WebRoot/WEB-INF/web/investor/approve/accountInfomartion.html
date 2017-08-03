@@ -1,0 +1,149 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<div class="wmes-content">
+    <div class="kaihu_div white_background">
+    <p class="wmes-wrap-title">[@lang_res k='open.account.title'/]</p>
+            <div class="white_background" >   
+                <div class="OpenAccount_ifa_big_title">
+                  <h2>[@lang_res k='open.account.approval.title'/]</h2>
+         		  <p class="Approval_stauts"><span>[@lang_res k='open.account.approval.status'/]</span>:  
+         		    [#if account?? && account.finishStatus?? && account.finishStatus=='1' && account.flowStatus?? ]
+         		    <!-- 流程状态:-1还未执行,0流程进行中,1流程审核通过结束返回,2流程审核不通过结束返回,3等待IFAFIRM处理,4等待distributor处理 -->
+         		        [#if account.flowStatus=='1']
+         		            [@lang_res k='open.account.approval.status.approve'/]
+         		        [#elseif account.flowStatus=='2']
+         		            [@lang_res k='open.account.approval.status.reject'/]
+         		        [#elseif account.flowStatus=='3']
+         		            [@lang_res k='open.account.approval.status.IFAFIRM'/]
+         		        [#elseif account.flowStatus=='4']
+         		            [@lang_res k='open.account.approval.status.DIS'/]
+         		        [#elseif account.flowStatus=='0']
+		         		    [#if Session["role"]?exists && Session["role"]=='IFA']
+			                   [@lang_res k='open.account.approval.status.IFA'/]
+			                [#elseif Session["role"]?exists && Session["role"]=='IFA_FIRM']  
+			                   [@lang_res k='open.account.approval.status.IFAFIRM'/]
+			                [#elseif Session["role"]?exists && Session["role"]=='distributor']  
+			                   [@lang_res k='open.account.approval.status.DIS'/]
+			                [#else]
+			                   [@lang_res k='open.account.approval.status.investor'/]
+			                [/#if]
+		                [#elseif account.flowStatus=='-1']
+		                    [@lang_res k='open.account.approval.status.investor'/]
+		                [#else]
+                            [@lang_res k='open.account.approval.status.processing'/]
+		                [/#if]
+                    [#else]
+                        [#if account?? && account.finishStatus?? && account.finishStatus=='1' ]
+                            [@lang_res k='open.account.approval.status.error'/]
+                        [#else]
+                            [@lang_res k='open.account.approval.status.investor'/]
+                        [/#if]
+                    [/#if]
+         		  </p> 
+                </div>
+
+                [#if investor?? && investor.member??]
+                    [#assign individual = investor.member]
+                [/#if]
+                [#if account?? && account.ifa??]
+                    [#assign ifa = account.ifa]
+                [/#if]
+                [#if Session["role"]?exists && (Session["role"]=='IFA_FIRM' || Session["role"]=='distributor')]
+            	<div class="OpenAccount_ifa_content">
+            		<p class="OpenAccount_ifa_title">
+                        [@lang_res k='open.account.approver.ifa'/]
+            		</p>
+            		<!-- <p>Ageas Investment Management（Asia）Limited</p> -->
+            		<div class="opeanAccount_advisor">
+            			[#if ifa?? && ifa.member??]
+                        <img class="OpenAccount_startifa_tou" style="width:56px;height:56px;" src="${base}[@user_head u=ifa.member.iconUrl /]"/>
+                        [#else]
+                        <img class="OpenAccount_startifa_tou" style="width:56px;height:56px;" src="${base}/res/images/common/portrait.png"/>
+                        [/#if]
+            			<ul class="OpenAccount_ifa_list">
+            				<li>
+            					<p class="advisor_name">[#if ifa?? ]${ifa.firstName!} ${ifa.lastName!}[/#if]</p>
+            					<p class="advisor_biaoti"><span class="advisor_title">[@lang_res k='member.info.liveRegion'/]:</span>[#if ifa?? && ifa.country??]${ifa.country.nameSc!}[/#if] </p>
+            				</li>
+	            			<li class="OpenAccount_ifa_limited">
+	            			<span>Ageas Investment Management（Asia）Limited </li>
+	            			<li>
+	            				<p>[#if ifa?? && ifa.member??]${ifa.member.mobileCode!}-${ifa.member.mobileNumber!}[/#if]</p>
+	            				<p>[#if ifa?? && ifa.member??]${ifa.member.email!}[/#if]</p>
+	            			</li>
+            			</ul>
+            		</div>
+            	</div>  
+            	[/#if]          	
+                <div class="OpenAccount_liucheng_content" style="margin-left:0px;">
+                    <div class="OpenAccount_start_wrap">
+                        <p class="OpenAccount_ifa_title">[@lang_res k='open.account.approval.client'/]</p>
+                        [#if individual?? && individual.iconUrl??]
+                        <img class="OpenAccount_startifa_tou" style="width:56px;height:56px;" src="${base}[@user_head u=individual.iconUrl /]"/>
+                        [#else]
+                        <img class="OpenAccount_startifa_tou" style="width:56px;height:56px;" src="${base}/res/images/common/portrait.png"/>
+                        [/#if]
+                        <span class="OpenAccount_startifa_name">[#if investor?? ]${investor.firstName!} ${investor.lastName!}[/#if]</span>
+                        <p class="OpenAccount_startifa_row">[@lang_res k='open.account.Start.phone'/]</p>
+                        <span class="OpenAccount_startifa_name">[#if individual?? ]${individual.mobileCode!}-${individual.mobileNumber!}[/#if]</span>
+                        <p class="OpenAccount_startifa_row">[@lang_res k='open.account.Start.email'/]</p>
+                        <span class="OpenAccount_startifa_name">[#if individual?? ]${individual.email!}[/#if]</span>
+                    </div>   
+                </div>              
+                <div class="OpenAccount_BasicInfo_content" style="margin-top:30px;">  
+                <p class="OpenAccount_ifa_title" style="color:blue;">[@lang_res k='open.account.approval.detail'/]</p>
+               		<div class="OpenAccount_tab">
+                          <ul>
+                              <li actionName="basicInformation"><a class="now" href="javascript:;">[@lang_res k='open.account.BasicInfo'/]</a></li>
+                              <li actionName="rpqInformation"><a href="javascript:;">[@lang_res k='open.account.RPQ'/]</a></li>
+                              <li actionName="docCheckInformation"><a href="javascript:;">[@lang_res k='open.account.DocumentCheck'/]</a></li>
+                              <li actionName="declareInformation"><a href="javascript:;">[@lang_res k='open.account.Declaration'/]</a></li>
+                              <li actionName="approvalListInfo"><a href="javascript:;">[@lang_res k='open.account.ApproveList'/]</a></li>
+                          </ul>
+                    </div>
+                    <div class="OpenAccount_Approval_content" style="display:block;">
+                    	<div style="display:block;padding-top:10px">
+                    		<iframe border="0" frameborder="0" width="100%" src="${base}/front/investor/basicInformation.do?accountId=${accountId!}" id="listFrame" name="listFrame" style="display:block;height:400px;" scrolling="auto" onLoad="iFrameHeight()"></iframe>
+                    	</div>
+                    	<p class="OpenAccount_ifa_title"></p>
+                    	<div class="Approval_comments" style="display:block;">
+	                    	<p>[@lang_res k='open.account.approval.comment'/] </p>
+	                    	<textarea id="msg"  name="msg" rows="8" cols="60"></textarea>
+	                    	<div class="Approval_wenti">
+	                    	<!-- 
+	                    	    [#if account?? && account.finishStatus?? && account.finishStatus=='1' && account.flowStatus?? && (account.flowStatus=='0' || account.flowStatus=='3' || account.flowStatus=='4') ]
+			                    <a id="btn_reject" class="wenti_btn_bule" href="javascript:;">[@lang_res k='global.reject'/]</a>
+			                    <a id="btn_approve" class="wenti_btn_bule" href="javascript:;">[@lang_res k='global.approve'/]</a>
+                                [/#if] -->
+			                    <a id="btn_return" class="wenti_btn_bule" href="javascript:;">[@lang_res k='global.return'/]</a>
+			                </div>
+			                <input type="hidden" id="accountId" name="accountId" value="${accountId!}">
+			                <input type="hidden" id="checkStatus" name=""checkStatus"" value="">
+                    	</div>
+                	</div>
+            	</div>
+        </div>
+	</div>
+</div>
+<input type="hidden" id="account" value="${accountId!}"/>	
+[#include "../../inc/foot_v2.html"/] 
+
+<script type="text/javascript">
+	var acccount = '${accountId!}';
+    seajs.use('${base}/res/web/openAccount/accountInformation.js');
+    
+	function iFrameHeight() {
+		var ifm= document.getElementById("listFrame");
+		ifm.height = 0;
+		var subWeb = ifm.contentDocument;
+        if(ifm != null && subWeb != null) {
+           ifm.height = subWeb.body.scrollHeight;
+		}
+		
+		subWeb.getElementsByTagName('input').disabled=true;
+    }
+    
+    seajs.use('jquery', function($){
+	   $("input[type='radio']").attr("disabled",true);
+	});
+</script>

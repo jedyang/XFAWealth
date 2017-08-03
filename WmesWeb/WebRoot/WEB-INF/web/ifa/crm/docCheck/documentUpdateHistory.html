@@ -1,0 +1,191 @@
+[#include "../../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+<link rel="stylesheet" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" href="${base}/res/css/client.css"> 
+<link rel="stylesheet" href="${base}/res/css/webuploader.css"> 
+<style type="text/css">
+	.document-gallery-contents .swiper-button-prev{background-size: 100% 100%;left: 0px;width: 45px;opacity: 0.8;top: 45%;left: 10%;}
+	.document-gallery-contents .swiper-button-next{background-size: 100% 100%;right: 0px;width: 45px;opacity: 0.8;top: 45%;right: 10%;}
+	.beforeImglogicDel{display:none;}
+	.rejectArea{width: 470px; border: 1px solid #ccc; height: 100px;font-size:14px;}
+	.filelist-images-title:hover{cursor:pointer;}
+	.document-deposit-contents{border-radius:4px;box-shadow: 2.5px 4.33px 35px 0px #000;}
+	.webuploader-element-invisible{width:1px;}
+</style>
+<div class="wmes-content">
+	<div class="document-history-wrap">
+	   <p class="wmes-wrap-title">
+            <a href="javascript:;" class="his_go_pre">
+                <span class="wmes-ruturn"></span>
+            </a>
+        [@lang_res k='ifa.crm.kyc.imageUpload'/]</p>
+		<!-- <p class="document-history-big-title">[@lang_res k='ifa.crm.kyc.imageUpload'/]</p> -->
+		<p class="document-history-title">${investorDocInfo.docName!}</p>
+		<div class="document-update-record">
+			<p class="document-record-word">[@lang_res k='ifa.crm.kyc.UpdatePeriod'/] <span>${investorDocInfo.updateCycle} M</span></p>
+			<p class="document-record-word">[@lang_res k='ifa.crm.kyc.LastestUploadDate'/] <span>${investorDocInfo.lastUpdate?string('yyyy-MM-dd HH:mm:ss')}</span></p>
+		</div>
+		<div class="document-button-wrap">
+			
+		 	[#if investorDocInfo.checkStatus=='0' &&  Session["role"]?exists &&(Session["role"]=='IFA_FIRM' ||Session["role"]=='distributor')]
+	           <a id="approved-show" class="filelist-button-orange checkBtn" href="javascript:;">[@lang_res k='ifa.crm.kyc.ApprovedBtn'/]</a>
+	           <a id="reject-show" class="filelist-button-ash checkBtn" href="javascript:;">[@lang_res k='ifa.crm.kyc.RejectBtn'/]</a>
+	       	[/#if]    
+	       	[#if investorDocInfo.checkStatus=='1' && Session["role"]?exists &&(Session["role"]=='IFA' ||Session["role"]=='investor')]  
+	      		<a id="document-j-update" class="filelist-button-orange" href="javascript:;">[@lang_res k='ifa.crm.kyc.UpdateBtn'/]</a>
+	       	[/#if] 
+	       	[#if investorDocInfo.checkStatus=='2' && Session["role"]?exists &&(Session["role"]=='IFA' ||Session["role"]=='investor')]  
+	      		<a id="document-j-update" class="filelist-button-orange" href="javascript:;">[@lang_res k='ifa.crm.kyc.UpdateBtn'/]</a>
+	       	[/#if]
+	       	[#if investorDocInfo.checkStatus=='' && Session["role"]?exists &&(Session["role"]=='IFA' ||Session["role"]=='investor')]
+	       		<a id="document-j-update" class="filelist-button-orange" href="javascript:;">[@lang_res k='ifa.crm.kyc.UpdateBtn'/]</a>
+	       	[/#if]
+	       	<a id="document-j-history" href="javascript:;">[@lang_res k='ifa.crm.kyc.HistoryBtn'/]</a> 
+		</div>
+		<ul class="document-images-list">
+		[#if docImages?exists && docImages?size gt 0]    
+			[#list docImages as imgs]
+			<li>
+				<div class="document-images-img-per">
+					<img class="document-images-img" data-src="${base}/loadImgSrcByPath.do?filePath=${imgs.filePath!}" src="${base}/loadImgSrcByPath.do?filePath=${imgs.filePath!}">
+					[#if investorDocInfo.checkStatus!='1']
+					<p class="filelist-images-title" >
+					[#if investorDocInfo.checkStatus=='0'][@lang_res k='ifa.crm.kyc.StatusInApproval'/]
+					[#elseif investorDocInfo.checkStatus=='2'][@lang_res k='ifa.crm.kyc.StatusRejected'/] 
+					[#elseif investorDocInfo.checkStatus=='3'][@lang_res k='ifa.crm.kyc.StatusRevoke'/]
+					[/#if]
+					</p>
+				[/#if]
+				</div>
+				<p class="document-images-name">${imgs.fileName!}</p>
+			</li>
+			[/#list]
+		[/#if]
+		</ul>
+		[#if Session["role"]?exists &&(Session["role"]=='IFA_FIRM' ||Session["role"]=='distributor')]
+		<div class="filelist-table-wrapper">
+	        <p class="client-bg-title">[@lang_res k='ifa.crm.kyc.ProcessHistory'/] </p>
+	        <table class="portfolio-table">
+	            <tbody>
+	                <tr class="portfolio-table-th">
+	                    <th width="15%" class="portfolio_tables_header">#</th>
+	                    <th width="15%" class="portfolio_tables_header">[@lang_res k='ifa.crm.kyc.Date'/] </th>
+	                    <th width="10%" class="portfolio_tables_header">[@lang_res k='ifa.crm.kyc.Person'/]</th>
+	                    <th width="15%" class="portfolio_tables_header">[@lang_res k='ifa.crm.kyc.Actions'/]</th>
+	                    <th width="30%" class="portfolio_tables_header">[@lang_res k='ifa.crm.kyc.Remark'/]</th>
+	                    <th width="15%" class="portfolio_tables_header">[@lang_res k='ifa.crm.kyc.Role'/]</th>
+	                </tr>
+	                 [#if checkList?exists && checkList?size gt 0]
+                     [#list checkList as checkObj]
+                     <tr>
+                      	<td class="portfolio-tdcenter">${checkObj_index+1}</td>
+                      	<td class="portfolio-tdcenter">${checkObj.checkTime!}</td>
+                      	<td class="portfolio-tdcenter">${checkObj.loginCode!}</td>
+                      	<td class="portfolio-tdcenter">
+                      	[#if '2'==checkObj.checkStatus][@lang_res k='ifa.crm.kyc.StatusRejected'/][/#if]
+                      	[#if '1'==checkObj.checkStatus][@lang_res k='ifa.crm.kyc.StatusApproved'/][/#if]
+                      	[#if '0'==checkObj.checkStatus][@lang_res k='ifa.crm.kyc.checkStatus.Submit'/][/#if]
+                      	</td>
+                      	<td class="portfolio-tdcenter">${checkObj.checkResult!}</td>
+                      	<td class="portfolio-tdcenter">${(checkObj.checkRole=='D')?string('Distributor','Investor')}</td>
+                     </tr>
+                     [/#list]
+                     [/#if]
+	            </tbody>
+	        </table>
+	    </div>
+	    [/#if]
+	</div>
+</div>
+
+[#include "../../../inc/foot_v2.html"/] 
+<!-- 遮罩层 -->
+<div class="document-mask"></div>
+<!-- 图片查看 -->
+<div class="document-gallery-images">
+	<a href="javascript:;" class="document-gallery-close" id="document-gallery-close"></a>
+	<div class="document-gallery-contents">
+	    <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+	    <div class="document-gall-name-wrap"><span class="document-gall-name"></span> <span class="document-gall-serial">1</span>/<span class="document-gall-total">1</span></div>
+    </div>
+</div>
+<!-- 上存图片 -->
+<div class="document-deposit-images">
+	<div class="document-deposit-contents">
+		<div class="wmes-close" id="document-deposit-close"></div>
+		<p class="wmes-wrap-title">[@lang_res k='ifa.crm.kyc.imageUpload'/]</p>
+		<ul class="document-deposit-list fileList">
+			<li class="document-deposit-rows j-deposit-btn ">
+				<a href="javascript:;" class="picker" id="pickerUpload">
+					<img class="document-deposit-btn" src="${base}/res/images/client/deposit_img_btn.png">
+					<p class="document-deposit-word">[@lang_res k='ifa.crm.kyc.choseImage'/]</p>
+				</a>
+			</li>
+			[#if investorDocInfo.checkStatus=='2' && docImages?exists && docImages?size gt 0]
+			[#list docImages as beforImg ]
+			<li class="document-deposit-rows maybeUpload">
+				<div class="document-deposit-img-wrap">
+					<img class="document-deposit-img" src="${base}/loadImgSrcByPath.do?filePath=${beforImg.filePath!}">
+					<div class="ducument-deposit-del">
+						<img src="${base}/res/images/client/deposit_del.png" imgId="${beforImg.id!}">
+					</div>
+				</div>
+				<p class="document-deposit-name" >${beforImg.fileName!}</p>
+			</li>
+			[/#list]
+			[/#if]
+		</ul>
+		<div class="document-deposit-button">
+			<a class="document-deposit-determine" href="javascript:;" id="docSubmit">[@lang_res k='global.save'/]</a>
+			<a class="document-deposit-cancel" href="javascript:;">[@lang_res k='global.cancel'/]</a>
+		</div>
+	</div>
+</div>
+<!-- 上存图片历史 -->
+<div class="document-history-images">
+	<div class="document-history-contents">
+		<div class="wmes-close" id="document-history-close"></div>
+		<p class="history-images-title">Document Update History</p>
+		<p class="history-images-word">${investorDocInfo.docName!}</p>
+		<ul class="history-images-list">
+		[#if historys?exists && historys?size gt 0]
+		[#list historys as his ]
+			<li class="history-images-rows">
+				[#if his.docAtt?exists && his.docAtt?size gt 0]
+				<div class="history-images-img-wrap" data-src="[#list his.docAtt as att][#if att_index!=0],[/#if]${base}/loadImgSrcByPath.do?filePath=${att.filePath!}[/#list]">
+					[#list his.docAtt as imgOne]
+					[#if imgOne_index==0]
+					<img src="${base}/loadImgSrcByPath.do?filePath=${imgOne.filePath!}">
+					[/#if]
+					[/#list]
+					<p class="document-images-num">${his.docAtt?size}</p>
+				</div>
+				[/#if]
+				<p class="history-images-date">${his.summitDate!}</p>
+			</li>
+		[/#list]
+		[#else]
+		<li>
+			<div  style="line-height:200px;text-align:center;">
+				<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">[@lang_res k='ifa.crm.kyc.nodata'/]
+			</div>
+		</li>	
+		[/#if]	
+		</ul>
+	</div>
+</div>
+<form id="imgUpdateForm" name="imgUpdateForm" method="post" action="">
+	<input type="hidden" name="docId" value="${investorDocInfo.id!}" id="docCheck_docId"/>
+	<input type="hidden" name="deleteIds"  id="deleteFileArray"/>
+	<input type="hidden" name="addFileStr" id="addFileArray"/>
+	<input type="hidden" name="moduleId" value="5"/>
+</form>	
+<form id="checkForm" name="checkForm" method="post" action="">
+	<input type="hidden" name="docId" value="${investorDocInfo.id!}" id="docCheck_docId"/>
+	<input type="hidden" name="checkResult"  id="check_result"/>
+	<input type="hidden" name="checkStatus" id="check_status"/>
+</form>
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/crm/documentUpdateHistory.js');
+</script>

@@ -1,0 +1,86 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='open.account.title'/]</a>
+</div>
+<div class="wmes-content">
+    <div class="kaihu_div white_background">
+    <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='open.account.title'/]</p>
+            <div class="white_background" >   
+                <!-- <div class="OpenAccount_big_title">
+                  <h2>[@lang_res k='open.account.title'/]</h2>
+                </div> -->
+                
+                <div class="OpenAccount_liucheng_div">
+                    <div class="OpenAccount_liucheng">
+                        <ul>
+                        	[#if ifaApproveCheck?? && ifaApproveCheck]
+                        	<li class="liucheng_first liucheng_light"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                        	[#else]
+                        	<!-- 
+                            <li class="liucheng_first liucheng_light"><div class="font_height">[@lang_res k='open.account.Start'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_light"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                             -->
+                            <li class="liucheng_first liucheng_light"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                        	[/#if]
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_03.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_orange"><div class="font_height">[@lang_res k='open.account.BasicInfo'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_05.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai"><div>[@lang_res k='open.account.DocumentCheck'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"></div>
+                            </li>
+                            <li class="liucheng_kuai"><div class="font_height">[@lang_res k='open.account.Declaration'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"></div>
+                            </li>
+                            <li class="liucheng_last"><div class="font_height">[@lang_res k='open.account.Submit'/]</div></li>
+                        </ul>
+                    </div>    
+                </div>
+      
+                [#include "openBase.html"/]
+                          
+                <div class="clear"></div>
+                <div class="wenti_btn">
+                    <a class="wenti_btn_bule" href="${base}/front/investor/accountRPQ.do?accountId=${iAccount.id!}">[@lang_res k='open.account.Previous'/]</a>
+                   	<a id="btn_next" class="wenti_btn_bule next_btn" href="javascript:;">[@lang_res k='open.account.Next'/]</a>
+                   	<a id="btn_draft" class="wenti_btn_bule" href="javascript:;">[@lang_res k='open.account.Draft'/]</a>
+                    <a id="btn_cancle" class="wenti_btn_LightBlue" href="javascript:;">[@lang_res k='open.account.Cancel'/]</a>
+                </div>
+            </div>
+        </div>
+</div>
+
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+	var ifIfaCheck = "${ifaApproveCheck?string ("true","false")}";
+
+	[#if validity?exists && validity == "false" ]
+	  alert( "抱歉，当前开户关联的accountId有误，请检查开户流程是否正确？" );
+	  window.location.href = "${base}/front/investor/accountstart.do?accountId=${accountId!''}"+"&r="+Math.random();
+	[/#if]
+
+    seajs.use('${base}/res/web/openAccount/openAccountBasic.js');
+    seajs.use('${base}/res/js/jsDatePick.jquery.min.1.3.js');
+    window.onload = function(){
+        new JsDatePick({
+          useMode:2,
+          target:"iContact_born",
+          dateFormat:"%Y-%m-%d"
+        });
+        new JsDatePick({
+            useMode:2,
+            target:"iContactJoint_born",
+            dateFormat:"%Y-%m-%d"
+          });
+	};
+</script>

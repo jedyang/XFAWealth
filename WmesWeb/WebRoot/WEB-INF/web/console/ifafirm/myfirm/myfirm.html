@@ -1,0 +1,1694 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title></title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css"
+			rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet"
+			type="text/css">
+		<link href="${base}/res/third/dialog/css/bootstrap-dialog.css"
+			rel="stylesheet">
+		<link href="${base}/res/third/treetable/css/screen.css"
+			rel="stylesheet" media="screen">
+		<link href="${base}/res/third/treetable/css/jquery.treetable.css"
+			rel="stylesheet">
+		<link
+			href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css"
+			rel="stylesheet">
+		<link
+			href="${base}/res/third/treeMenu/css/jquery.contextmenu.css"
+			rel="stylesheet">
+		<link
+			href="${base}/res/third/fileinput/css/fileinput.css"
+			rel="stylesheet">
+	</head>
+	<body>
+		<div id="wmes_wraper">
+			<div class="right-side container-fluid">
+				<div class="r-side-container">
+					<ul class="tab" id="tab-search">
+						<li class="tab-li-crr">
+							<a href="javascript:void(0)">组织架构管理</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)">公司信息</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)">管理员设置</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)">IFA 审批</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)">代理商列表</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)">设置</a>
+						</li>
+					</ul>
+					<div class="clear"></div>
+					<div class="tab_wrap" id="tab_wrap">
+					
+					<!-- tab1  organization management  -->
+					    <div class="form-inline" style="display:block;">
+							<!-- organization tree -->
+							<div id="orgMenu" class="col-md-4"></div>
+							<!-- member list -->
+							<div id="memberTable" class="col-md-8" style="margin: 60px auto;">
+								<table id="teamMemberList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+									<thead>
+										<tr>
+											<th class="table-head">
+												姓名
+											</th>
+											<th class="table-head">
+												联系号码
+											</th>
+											<th class="table-head">
+												电子邮箱
+											</th>
+											<th class="table-head">
+												证件编号
+											</th>
+											<th id="ifafirmOperate" class="table-head">
+												[@lang_res k='global.operate'/]
+											</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+								<ul id='teamMemberPagination' class="pagination pull-right now"></ul>
+							</div>
+						</div>
+					<!-- tab2 company info  -->
+					<div style="display:none;">
+						<div>
+							<form class="form-horizontal">
+							    <input id="hidIfaFirmId" type="hidden" class="form-control"
+											value="${(ifafirm.id)?if_exists}">
+								<input type="hidden" id="hidEntityType" value="${(ifafirm.entityType)?if_exists}">
+								<input type="hidden" id="hidIsFinancial" value="${(ifafirm.isFinancial)?if_exists}">
+								<input type="hidden" id="hidCountry" value="${(ifafirm.country)?if_exists}">
+								<input type="hidden" id="hidIncorporationPlace" value="${(ifafirm.incorporationPlace)?if_exists}">
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="txtCompanyName" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.companyName'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+									[#if ifafirm?exists && ifafirm.companyNameSc?exists]
+										<input id=txtCompanyName type="text" class="form-control "
+											value="${(ifafirm.companyNameSc)?if_exists}">
+								    [#else]
+								    	<input id=txtCompanyName type="text" class="form-control "
+											value="${(ifafirm.companyName)?if_exists}">
+								    [/#if]
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="txtCompanyNameTc" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.companyName'/](繁体)
+										</label>
+									</div>
+									<div class="col-md-7">
+										<input id=txtCompanyNameTc type="text" class="form-control "
+											value="${(ifafirm.companyNameTc)?if_exists}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="txtCompanyNameEn" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.companyName'/](英文)
+										</label>
+									</div>
+									<div class="col-md-7">
+										<input id=txtCompanyNameEn type="text" class="form-control "
+											value="${(ifafirm.companyNameEn)?if_exists}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="selEntityType" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.entityType'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+										<select id="selEntityType" class="form-control">
+											<option value='1'>
+												[@lang_res k='console.ifafirm.detail.form.select.entityType.1'/]
+											</option>
+											<option value='2'>
+												[@lang_res k='console.ifafirm.detail.form.select.entityType.2'/]
+											</option>
+											<option value='3'>
+												[@lang_res k='console.ifafirm.detail.form.select.entityType.3'/]
+											</option>
+											<option value='4'>
+												[@lang_res k='console.ifafirm.detail.form.select.entityType.4'/]
+											</option>
+											<option value='5'>
+												[@lang_res k='console.ifafirm.detail.form.select.entityType.5'/]
+											</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="txtRegisterNo" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.registerNo'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+										<input id="txtRegisterNo" type="text" class="form-control "
+											value="${(ifafirm.registerNo)?if_exists}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="selIsFinancial" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.isFinancial'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+										<select id="selIsFinancial" class="form-control">
+											<option value='1'>
+												[@lang_res k='global.true'/]
+											</option>
+											<option value='0'>
+												[@lang_res k='global.false'/]
+											</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="txtGiin" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.giin'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+										<input id=txtGiin type="text" class="form-control "
+											value="${(ifafirm.giin)?if_exists}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="txtNaturePurpose" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.naturePurpose'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+										<input id="txtNaturePurpose" type="text" class="form-control "
+											value="${(ifafirm.naturePurpose)?if_exists}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="dtIncorporationDate" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.incorporationDate'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+										<input id='dtIncorporationDate' type="text" 
+									        class="laydate-icon form-control form-control-laydate" 
+									        style="height: 34px; padding: 6px 12px;" 
+									        onclick="laydate({istime: false, format: 'YYYY-MM-DD'})" name="born" value="${(ifafirm.incorporationDate)?if_exists}">										
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="txtIncorporationPlace" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.incorporationPlace'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+										<select id="selIncorporationPlace" class="form-control">
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="txtRegisteredAddress" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.registeredAddress'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+										<input id="txtRegisteredAddress" type="text"
+											class="form-control "
+											value="${(ifafirm.registeredAddress)?if_exists}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="txtMailingAddress" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.mailingAddress'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+										<input id="txtMailingAddress" type="text" class="form-control "
+											value="${(ifafirm.mailingAddress)?if_exists}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="txtCountry" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.country'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+									    <select id="selCountry" class="form-control">
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 text-right">
+										<label for="txtWebsite" class="label-control">
+											[@lang_res k='console.ifafirm.detail.form.label.website'/]
+										</label>
+									</div>
+									<div class="col-md-7">
+										<input id="txtWebsite" type="text" class="form-control "
+											value="${(ifafirm.website)?if_exists}">
+									</div>
+								</div>
+							</form>
+							<div class="text-center pd10">
+								<button id="btnSave" onclick="savefrom()" type="button"
+									class="btn btn-primary">
+									[@lang_res k='global.save'/]
+								</button>
+							</div>
+						</div>
+					</div>
+					
+					<!-- tab3  admin account  -->
+					<div id="tab3" class="form-inline" style="display:none;">
+						<div class="pdt20" style="padding-top: 5px;">
+	                    	<a id="btnAddAdminAccount" href="javascript:selectIfaDialog();" class="btn-blue-s">[@lang_res k='global.add'/]</a>
+	                    </div>
+						<div class="clear"></div>
+						<div class="pdt20"></div>
+							<div id="adminAccountTable" >
+								<table id="adminAccountTable" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+									<thead>
+										<tr>
+											<th class="table-head">
+												姓名
+											</th>
+											<th class="table-head">
+												联系号码
+											</th>
+											<th class="table-head">
+												电子邮箱
+											</th>
+											<th class="table-head">
+												证件编号
+											</th>
+											<th id="ifafirmOperate" class="table-head">
+												[@lang_res k='global.operate'/]
+											</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+								<ul id='adminAccountPagination' class="pagination pull-right now"></ul>
+							</div>
+					 </div>
+					
+					<!-- tab4 IFA approval  -->
+					<div class="form-inline" style="display:none;">
+						<div>
+							<div class="row pd10">
+								<div class="col-md-4">
+									<label for="s-1">
+										[@lang_res k='console.ifa.approval.label.loginCode'/]
+									</label>
+									<input id='txtLoginCode' type="text" class="form-control searchCondition"/>
+								</div>
+								<div class="col-md-4">
+									<label for="txtIsApproval" class="label-control">
+										[@lang_res k='console.ifa.approval.label.isApproval'/]
+									</label>
+									<select id="selIsApproval" class="form-control searchCondition" name="selIsApproval">
+										<option value="0" selected="selected">
+											[@lang_res k='console.ifa.approval.select.isApproval.0'/]
+										</option>
+										<option value="2">
+											[@lang_res k='console.ifa.approval.select.isApproval.2'/]
+										</option>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<button type="button" class="btn btn-primary" id="btnSearch">
+										<i class="glyphicon glyphicon-search"></i> [@lang_res k='global.query'/]
+									</button>
+								</div>
+							</div>
+							<div class="clear"></div>
+							<div class="pdt20"></div>
+							<div>
+								<table id="approvalList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+									<thead>
+										<tr>
+											<th class="table-head">
+												[@lang_res k='member.info.loginCode'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.ifa.approval.table.th.name'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.ifa.approval.table.th.country'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.ifa.approval.table.th.investLife'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.ifa.approval.table.th.expertiseType'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.ifa.approval.table.th.companyName'/]
+											</th>
+											<th class="table-head">
+												[@lang_res k='console.ifa.approval.table.th.status'/]
+											</th>
+											<th id="approvalOperate" class="table-head">
+												[@lang_res k='global.operate'/]
+											</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+								<ul id='approvalPagination' class="pagination pull-right now"></ul>
+							</div>
+						</div>
+					</div>
+					
+					<!--tab5 distributor list -->   
+	                <form class="form-inline" style="display:none;">
+		                <input type="hidden"  class="form-control" id="txtSelectedCompanyName2" companyid="" disabled style="width:500px;">
+	                    <div class="clear"></div>
+	                    <div class="pdt20" style="padding-top: 5px;">
+	                    	<a id="btnShowDisList" href="javascript:showDisListDialog();" class="btn-blue-s">[@lang_res k='global.add'/]</a>
+	                    </div>
+	                    <div>
+	                        <table border="0" id="disdata" cellpadding="0" cellspacing="0" class="table table-hover " >
+	                                <tbody>
+	                                    <tr>
+	                                      <th class="table-head">[@lang_res k='ifafirm.list.distributorName'/]</th>
+	                                      <th class="table-head">[@lang_res k='ifafirm.list.entityType'/]</th>
+	                                      <th class="table-head">[@lang_res k='ifafirm.list.registerNo'/]</th>
+	                                      <th class="table-head">[@lang_res k='ifafirm.list.incorporationDate'/]</th>
+	                                      <th class="table-head">[@lang_res k='ifafirm.list.incorporationPlace'/]</th>
+	                                      <th class="table-head">[@lang_res k='ifafirm.list.operation'/]</th>
+	                                    </tr>
+	                                </tbody>
+	                               
+	                            </table>
+	                   
+			           		<nav  class="pull-right">
+				                <!-- log分页 -->
+				                <ul id='dispagination' class="pagination pagination-sm">  
+				                	
+				                </ul>
+				            </nav>
+	           				<div class="clear"></div>                      
+	                    </div>	
+					</form> 
+					<!-- tab6 Setting -->
+					<div style="display:none;">
+						<!--  type select -->
+						<div id="type_select" class="form-inline" style="margin: 100px auto;">
+							<div class="col-md-2 text-right">
+								<label for="txtApproveMode" class="label-control">
+									Approve Mode
+								</label>
+							</div>
+							<div class="col-md-3 text-left">
+								<input id="selApproveMode" type="radio" name="selIsApproval" value="0" checked>
+								<label for="txtApproveMode">
+									My direct supervisor
+								</label>
+							</div>
+							<div class="col-md-3 text-left">
+								<input id="selApproveMode" type="radio" name="selIsApproval" value="1">
+								<label for="txtApproveMode">
+									One of My supervisor
+								</label>
+							</div>
+							<div class="col-md-3 text-left">
+								<input id="selApproveMode" type="radio" name="selIsApproval" value="2">
+								<label for="txtApproveMode">
+									All of My supervisorr
+								</label>
+							</div>
+						</div>
+						<!--  logo change -->
+						<div class="form-inline" style="margin-top: 100px">
+							<div class="col-md-2 text-right">
+			                    <label for="txtApproveMode" class="label-control">
+									Company Logo
+								</label>
+							</div>
+							<div class="col-md-3 text-right">
+								<img id="firmLogo" width="180" height="150" alt="logo" src="">
+								<div id="changeDiv" style="display:none;">
+									<input id="changeLogo" type="file" class="projectfile" multiple="multiple"/>
+								</div>
+								<a id="change" href="javascript:changeLogo()"><b>Change...</b></a>
+							</div>
+						</div>
+						<div class="form-inline" style="margin-top: 100px">
+							<div class="text-center col-md-10">
+								<button id="btnSave" onclick="updateLogo()" type="button"
+									class="btn btn-primary">
+									[@lang_res k='global.save'/]
+								</button>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js"
+			type="text/javascript"></script>
+		<script src="${base}/res/console/js/jquery.pagination.js"></script>
+		<script src="${base}/res/console/js/bootstrap.js"
+			type="text/javascript"></script>
+		<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+		<script src="${base}/res/third/jqueryui/jquery-ui.js"
+			type="text/javascript"></script>
+		<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+		<script src="${base}/res/third/layer/layer_v2.js"></script>
+		<script src="${base}/res/third/treetable/jquery.treetable.js"></script>
+		<script src="${base}/res/third/treeMenu/jquery.treemenu.js"></script>
+		<script src="${base}/res/third/treeMenu/jquery.contextmenu.js"></script>
+		<script src="${base}/res/third/fileinput/js/fileinput.js"></script>
+		<script type="text/javascript">
+	$(function() {
+		//organization management
+		bindOrg();
+		bindAllIfa(0);
+		//firm info
+		loadCountry();
+		$('#selEntityType').val($('#hidEntityType').val());
+		$('#selIsFinancial').val($('#hidIsFinancial').val());
+		$('#selCountry').val($('#hidCountry').val());
+		$('#selIncorporationPlace').val($('#hidIncorporationPlace').val());
+		//admin account
+		bindAllIfa(0,1);
+		//$('#adminAcountTable').append($('#memberTable').html());
+		//ifa approval
+		bindApprovalList(0);
+		setAutoSearch('.searchCondition',bindApprovalList,0);
+		//distributor list
+		//Setting
+		loadLogo();
+	});
+
+/*---------------------------------------------Setting--------------------------------------------*/
+	
+	//加载logo
+	function loadLogo(){
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/myfirm/loadLogo.do?datestr="
+					+ new Date().getTime(),
+			success : function(result) {
+				if(typeof(result.accessoryFile)!='undefined'){
+					var logoPath = result.accessoryFile.filePath;
+					$('#firmLogo').attr('src','${base}'+logoPath);
+				}
+			}
+		});
+	}
+	
+	//预览 logo
+	function changeLogo(){
+		$('#changeLogo').trigger('click');
+		$('#changeLogo').change(function (){
+			var objUrl = getObjectURL(this.files[0]) ;
+			if (objUrl) {
+				$('#firmLogo').attr('src', objUrl) ;
+				//$('#changeDiv').show();
+				//$('#change').hide();
+				$('#changeLogo').fileinput({
+			        uploadUrl: '${base}/console/myfirm/attachUpdate.do?dateStr='+new Date().getTime(),
+			        allowedFileExtensions : ['jpg', 'png','gif','jpeg'],
+			        overwriteInitial: false,
+					showPreview: false,
+					showUpload: true,
+			        maxFileSize: 1000,
+			        maxFilesNum: 1,
+			        allowedFileTypes: ['image'],
+			        slugCallback: function(filename) {
+			            return filename.replace('(', '_').replace(']', '_');
+			        }
+				});
+			}
+		});
+	}
+	
+	//update logo
+	function updateLogo(){
+		$('.fileinput-upload-button').trigger('click');
+	}
+	
+	//建立一個可存取到該file的url
+	function getObjectURL(file) {
+		var url = null ; 
+		if (window.createObjectURL!=undefined) { 
+			url = window.createObjectURL(file) ;
+		} else if (window.URL!=undefined) { 
+			url = window.URL.createObjectURL(file) ;
+		} else if (window.webkitURL!=undefined) { 
+			url = window.webkitURL.createObjectURL(file) ;
+		}
+		return url ;
+	}
+/*-------------------------------------------distributor list----------------------------------------*/
+	// bind distributor list
+	function bindMyDisList(pageid) {
+		var ifafirmid =  $('#txtSelectedCompanyName2').attr('companyid');
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/ifafirm/findIfafirmDistributorListJson.do?datestr="
+					+ new Date().getTime(),
+			data : {
+				ifafirmid : ifafirmid,
+				page : pageid + 1,
+				rows : 8
+			},
+			beforeSend : function() {
+				indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptGetDistributorListLoading'/]",{time : 500000});
+			},
+			success : function(json) {
+				layer.close(indexmsg);
+				var total = json.total;
+				var ifajson = json.rows;
+				$("#disdata tbody tr:gt(0)").empty();
+				if (total == '0') {
+					//layer.msg("[@lang_res  k='ifafirm.message.promptEmptyDistributor'/]",{time : 5000}, function() {});
+					var top = $('#btnShowDisList').offset().top;
+					var msgtop = top + 100;
+					$('.layui-layer-msg').css({'top' : msgtop});
+					return false;
+				}
+				var html = '';
+				$("#disdata tbody tr:gt(0)").empty();
+				for ( var i = 0; i < ifajson.length; i++) {
+					var IfafirmDistributorid = ifajson[i][1].id; //供用于删关联
+					var companyName = ifajson[i][0].companyName;
+					var registerNo = ifajson[i][0].registerNo;
+					var incorporationDate = ifajson[i][0].incorporationDate;
+					var incorporationPlace = ifajson[i][0].incorporationPlace;
+					var isFinancial = ifajson[i][0].isFinancial;
+					if (isFinancial == '1')
+						isFinancial = '是';
+					else
+						isFinancial = '否';
+					var entityType = ifajson[i][0].entityType;
+					if (entityType == '1')
+						entityType = '私营有限责任公司';
+					if (entityType == '2')
+						entityType = '私营无限责任公司';
+					if (entityType == '3')
+						entityType = '信托公司';
+					if (entityType == '4')
+						entityType = '上市公司';
+					if (entityType == '5')
+						entityType = '其它类型公司';
+					html += '<tr><td><a href="#" onclick="selectfirm(\''
+							+ companyName
+							+ '\',\''
+							+ IfafirmDistributorid
+							+ '\')">'
+							+ companyName
+							+ '</a></td><td>'
+							+ entityType
+							+ '</td><td>'
+							+ registerNo
+							+ '</td><td>'
+							+ incorporationDate
+							+ '</td><td>'
+							+ incorporationPlace
+							+ '</td><td>'
+							+ '<a    href="javascript:dellink(\''
+							+ IfafirmDistributorid
+							+ '\');"> '
+							+ "[@lang_res  k='ifafirm.list.dellink'/]"
+							+ '</a> ' + '</td></tr>';
+				}
+				$('#disdata').append(html);
+				$("#dispagination").pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 8,
+					num_display_entries : 4,
+					current_page : pageid,
+					num_edge_entries : 2
+				});
+			}
+				});
+		function pageselectCallback(page_id, jq) {
+			bindMyDisList(page_id);
+		}
+	}
+	
+	//删除代理商关联
+	function dellink(ifafirmDistributorid){
+		layer.confirm("[@lang_res  k='ifafirm.message.promptIsDelLink'/]",{ title:"[@lang_res  k='global.prompt'/]",btn:["[@lang_res  k='global.confirm'/]","[@lang_res  k='global.cancel'/]"], icon: 3  },function () {
+			 $.ajax({
+						type : 'post',
+						datatype : 'json',
+						url : "${base}/console/ifafirm/delIfafirmDistributorid.do?datestr="+ new Date().getTime(),
+						data : {'id':ifafirmDistributorid  },
+						 beforeSend: function () {
+                        indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", {  time: 500000 });
+                    },
+                    complete: function () {
+						layer.close(indexmsg);
+                    },
+						success : function(json) {
+							json = JSON.parse(json);
+							var result = json.result;
+							if(result==true||result=='true'){
+								layer.msg("[@lang_res  k='global.success.save'/]", { icon: 1, time: 2000 }, function () { bindMyDisList(0);});
+							}
+						}
+					});
+		});
+	}
+    //选择代理商弹窗
+	function showDisListDialog(){
+		 var ifafirmid = $('#ifaFirmId').val();
+   		 BootstrapDialog.show({
+			title : '选择代理商',
+			cssClass : 'login-dialog',
+			type:BootstrapDialog.TYPE_PRIMARY,
+			size:BootstrapDialog.SIZE_WIDE,
+           	draggable: true,
+			message : $('<div></div>').load('${base}/console/myfirm/selectDistributordialog.do?dateStr='+new Date().getTime()),
+			onshow:function(){},
+			buttons : [  {
+				label : "[@lang_res  k='global.confirm'/]",
+				cssClass : 'btn-primary',
+				action : function(dialogItself) {
+					 var selected = $('#distributor_selected');
+					 var selectedid = selected.attr('selectId');
+					 var selectedname = selected.val();
+					 if(typeof(selectedid) == undefined || selectedid == ''){
+					 	layer.alert("[@lang_res  k='ifafirm.list.selectDistributor'/]", {icon: 0 });
+					 	return;
+					 }
+					 layer.confirm("[@lang_res  k='ifafirm.message.promptIsSaveSelectedDistributor'/]", {  icon: 3  },function () {
+					 	 $.ajax({
+								type : 'post',
+								datatype : 'json',
+								url : "${base}/console/ifafirm/addIfafirmDistributorid.do?datestr="
+										+ new Date().getTime(),
+								data : {'distributorid':selectedid,'ifafirmid': ifafirmid },
+								beforeSend: function () {
+		                        indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", { time: 500000 });
+		                    },
+		                    complete: function () {
+								layer.close(indexmsg);
+		                    },
+								success : function(json) {
+									json = JSON.parse(json);
+									var result = json.result;
+									if(result==true||result=='true'){
+										layer.msg("[@lang_res  k='global.success.save'/]", { icon: 1, time: 1000 }, function () { bindMyDisList(0);});
+									}
+								}
+							});
+					 	 dialogItself.close();
+					 	 layer.closeAll();
+					 });
+				}
+			},  {
+				label : "[@lang_res  k='global.back'/]",
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			} ]
+		});
+   	}
+    	
+    /*-------------------------------------------admin account----------------------------------------*/
+ 	//选择ifa弹窗
+ 	function selectIfaDialog(){
+ 		BootstrapDialog.show({
+			title : "选择 IFA",
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div id="selectIfaDialog"></div>').load('${base}/console/myfirm/selectIfadialog.do?dateStr=' + new Date().getTime()),
+			buttons : [ {
+				label : "[@lang_res  k='global.save'/]",
+				id :'selectIfa-dialog-btnSave',
+				cssClass : 'btn-primary',
+				action : function(dialogItself) {
+					var ifaId = $('#ifa_selected').attr('selectId');
+					adminSetting(ifaId,1);
+					dialogItself.close();
+				}
+			}, {
+				label : "[@lang_res  k='global.back'/]",
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			} ]
+		});
+	}
+ 	
+ 	//ifa 管理员设置（设置&取消）
+ 	function adminSetting(ifaId,isAdmin){
+ 		$.ajax({
+ 			type:'post',
+ 			url:'${base}/console/myfirm/setIfaAdmin.do?dateStr=' + new Date().getTime(),
+ 			data:{
+ 				ifaId:ifaId,
+ 				isAdmin:isAdmin
+ 			},
+ 			success:function(result){
+ 				if (result.flag){
+					layer.msg("[@lang_res k='global.success.save'/]", { icon: 1, time: 2000 });
+					bindAllIfa(0,1);
+				}else
+				    layer.msg("[@lang_res k='global.failed.save'/]", { icon: 0, time: 2000 });
+ 			}
+ 		});
+ 	}
+ 	
+	/*-------------------------------------------ifa approval-----------------------------------------*/
+
+	//绑定待审批列表
+	function bindApprovalList(curPage) {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/ifa/approval/listJson.do?datestr='
+					+ new Date().getTime(),
+			data : {
+				'loginCode' : $("#txtLoginCode").val(),
+				'ifafirmStatus' : $("#selIsApproval").val(),
+				'page' : curPage + 1,
+				'rows' : 10,
+				'sort' : '',
+				'order' : ''
+			},
+			success : function(json) {
+				var html = '';
+				var total = json.total;
+				var table = json.rows;
+				$.each(table,function(i, n) {
+					//console.log(n);
+					var loginCode = n.loginCode == null ? ''
+							: n.loginCode;
+					var nameChn = n.nameChn == null ? ''
+							: n.nameChn;
+					var country = n.country == null ? ''
+							: n.country;
+					var investLife = n.investLifeBegin == null ? ''
+							: calculatorDate(n.investLifeBegin);
+					var expertiseType = n.expertiseType == null ? ''
+							: n.expertiseType;
+					var introduction = n.introduction == null ? ''
+							: n.introduction;
+					var companyIfafirm = n.companyIfafirm == null ? ''
+							: n.companyIfafirm;
+					var ifafirmStatus = '';
+					if (n.ifafirmStatus != null) {
+						if ('0' == n.ifafirmStatus)
+							ifafirmStatus = '[@lang_res k="console.ifa.approval.select.isApproval.0"/]';
+						else if ('1' == n.ifafirmStatus)
+							ifafirmStatus = '[@lang_res k="console.ifa.approval.select.isApproval.1"/]';
+						else if ('2' == n.ifafirmStatus)
+							ifafirmStatus = '[@lang_res k="console.ifa.approval.select.isApproval.2"/]';
+					}
+					var url = "${base}/console/ifa/detail.do?id="
+							+ n.id;
+					html += '<tr><td>'
+							+ '<a href="#" onclick="showform(\'ifa-approval-'
+							+ n.id + '\', \'' + nameChn
+							+ '\', \'' + url + '\')">'
+							+ loginCode + '</a>'
+							+ '</td><td>' + nameChn
+							+ '</td><td>' + country
+							+ '</td><td>' + investLife
+							+ '</td><td>'
+							+ expertiseType
+							+ '</td><td>'
+							+ companyIfafirm
+							+ '</td><td>'
+							+ ifafirmStatus
+							+ '</td><td>';
+					if (2 == $('#selIsApproval').val()) {
+						html += '<a id="approvalPass" href="javascript:saveStatus(\''
+								+ n.id
+								+ '\',1)"><i class="glyphicon glyphicon-ok"></i> '
+								+ "[@lang_res k='console.ifa.approval.select.isApproval.1'/]"
+								+ '</a>&nbsp;';
+					} else {
+						html += '<a id="approvalPass" href="javascript:saveStatus(\''
+								+ n.id
+								+ '\',1)"><i class="glyphicon glyphicon-ok"></i> '
+								+ "[@lang_res k='console.ifa.approval.select.isApproval.1'/]"
+								+ '</a>&nbsp;';
+						html += '<a id="approvalRefuse" href="javascript:saveStatus(\''
+								+ n.id
+								+ '\',2)"><i class="glyphicon glyphicon-remove"></i> '
+								+ "[@lang_res k='console.ifa.approval.select.isApproval.2'/]"
+								+ '</a>';
+					}
+					html += '</td></tr>';
+				});
+				$('#approvalList tbody').empty().append(html);
+				$('#approvalPagination').pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 10,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+			bindApprovalList(page_id);
+		}
+	}
+
+	//计算年限
+	function calculatorDate(investLife) {
+		if (investLife.indexOf(' ') > -1) {
+			var date = investLife.split(' ');
+			if (investLife.indexOf('-') > -1) {
+				var date = investLife.split('-');
+			} else
+				return '';
+		} else if (investLife.indexOf('-') > -1) {
+			var date = investLife.split('-');
+		} else
+			return '';
+		var date = investLife.split('-');
+		var year = new Date().getFullYear();
+		var month = new Date().getMonth() + 1;
+		var day = new Date().getDate();
+		var creeDate = day + month * 30;
+		var beginDate = parseInt(date[2]) + parseInt(date[1]) * 30;
+		var invest = '';
+		if (creeDate > beginDate)
+			invest = year - parseInt(date[0]);
+		else
+			invest = year - parseInt(date[0]) - 1;
+		return invest;
+	}
+
+	//审批操作
+	function saveStatus(ifaId, ifafirmStatus) {
+		var message = '';
+		if ('1' == ifafirmStatus) {
+			message = "[@lang_res k='console.ifa.approval.dialog.massage.1'/]";
+		} else if ('2' == ifafirmStatus) {
+			message = "[@lang_res k='console.ifa.approval.dialog.massage.2'/]";
+		}
+		BootstrapDialog.show({
+			title : "[@lang_res k='console.ifa.approval.dialog.title'/]",
+			message : message,
+			buttons : [{
+						label : "[@lang_res k='global.confirm'/]",
+						action : function(dialogItself) {
+							$.ajax({
+								type : 'post',
+								url : '${base}/console/ifa/approval/approvalStatus.do?datestr='
+										+ new Date().getTime(),
+								data : {
+									ifaId : ifaId,
+									ifafirmStatus : ifafirmStatus
+								},
+								success : function(flag) {
+									if (flag) {
+										layer.msg("[@lang_res k='global.success'/]",{icon : 1,time : 2000});
+										dialogItself.close();
+										bindApprovalList(0);
+									} else {
+										layer.msg("[@lang_res k='global.failed'/]",{icon : 0,time : 2000});
+										dialogItself.close();
+									}
+								}
+							});
+						}
+					}, {
+						label : "[@lang_res k='global.close'/]",
+						action : function(dialogItself) {
+							dialogItself.close();
+						}
+					} ]
+		});
+	}
+
+	/*-------------------------------------------firm info----------------------------------------*/
+	//加载国家
+	function loadCountry() {
+		$.ajax({
+			type : "post",
+			url : "${base}/console/ifafirm/listCountryJson.do?datestr="
+					+ new Date().getTime(),
+			data : {},
+			async : false,
+			dataType : "json",
+			success : function(data, textStatus) {
+				var result = data.result;
+				if (result == true) {
+					var country = data.countryJson;
+					var option = '';
+					$.each(JSON.parse(country), function(i, n) {
+						var name = n.nameSc;
+						var id = n.id;
+						option += '<option value="'+id+'">' + name
+								+ '</option>';
+					});
+					$('#selIncorporationPlace').empty().append(option);
+					$('#selCountry').empty().append(option);
+				}
+			}
+		});
+	}
+	//保存firm信息
+	function savefrom() {
+		var id = $('#hidIfaFirmId').val();
+		var CompanyName = $('#txtCompanyName').val();
+		var Entitytype = $('#selEntityType').val();
+		var RegisterNo = $('#txtRegisterNo').val();
+		var IsFinancial = $('#selIsFinancial').val();
+		var Giin = $('#txtGiin').val();
+		var NaturePurpose = $('#txtNaturePurpose').val();//
+		var IncorporationDate = $('#dtIncorporationDate').val();//
+		var IncorporationPlace = $('#selIncorporationPlace').val();
+		var RegisteredAddress = $('#txtRegisteredAddress').val();
+		var MailingAddress = $('#txtMailingAddress').val();
+		var Country = $('#selCountry').val();
+		var Website = $('#txtWebsite').val();//
+		var CompanyNameTc = $('#txtCompanyNameTc').val();//
+		var CompanyNameEn = $('#txtCompanyNameEn').val();//
+
+		var postData = {
+			'id' : id,
+			'CompanyName' : CompanyName,
+			'Entitytype' : Entitytype,
+			'RegisterNo' : RegisterNo,
+			'IsFinancial' : IsFinancial,
+			'Giin' : Giin,
+			'IncorporationPlace' : IncorporationPlace,
+			'RegisteredAddress' : RegisteredAddress,
+			'MailingAddress' : MailingAddress,
+			'Country' : Country,
+			'NaturePurpose' : NaturePurpose,
+			'IncorporationDate' : IncorporationDate,
+			'Website' : Website,
+			'CompanyNameTc' : CompanyNameTc,
+			'CompanyNameEn' : CompanyNameEn
+		};
+		$.ajax({
+			type : "post",
+			url : "${base}/console/ifafirm/savefirminfo.do?datestr="
+					+ new Date().getTime(),
+			data : postData,
+			async : false,
+			dataType : "json",
+			success : function(data, textStatus) {
+				var result = data.result;
+				if (result == true) {
+					layer.msg("[@lang_res k='global.success'/]", {
+						icon : 1,
+						time : 2000
+					});
+					$('#btnSave').attr('disabled', 'disabled');
+				} else
+					layer.msg("[@lang_res k='global.failed'/]", {
+						icon : 0,
+						time : 2000
+					});
+			}
+		});
+	}
+	/*-------------------------------------------organization management-------------------------------------*/
+	//获取组织架构
+	function bindOrg() {
+		$.ajax({
+			type : 'post',
+			url : '${base}/console/myfirm/getOrg.do?dateStr='
+					+ new Date().getTime(),
+			data : {},
+			success : function(result) {
+				var ifaFirmId = result.ifaFirmId == null ? '': result.ifaFirmId;
+				var companyName = 'IFA FIRM';
+				if (null != result.ifafirm) {
+					companyName = result.ifafirm.companyName;
+				}
+	
+				//load distributor list
+				$('#txtSelectedCompanyName2').attr('companyid',ifaFirmId);
+				$('#txtSelectedCompanyName2').val(companyName);
+				bindMyDisList(0);
+				
+				//页面添加firmId
+				$('#teamMemberList').append('<input type="hidden" companyName=\''+companyName+'\' id="ifaFirmId" value=\''+ifaFirmId+'\'/>');
+				if (result.flag) {
+					var html = '<ul class="tree"><li><span onclick="javaScript:bindAllIfa(0);">&nbsp;&nbsp;<b>'
+							+ companyName + '</b></span><ul>';
+					var json = eval('(' + result.firmOrgJson + ')');
+					//拼接组织架构树 HTML
+					html = assemblyOrgMenu(html, json);
+					html += '</li></ul></ul>';
+					$('#orgMenu').empty().append(html);
+					$('.tree').treemenu({
+						delay : 300
+					}).openActive();
+	
+					var teamId = '';
+					var code = '';
+					var name = '';
+					var remark = '';
+					$('.tree').find('li').mousedown(function(e) {
+						if (3 == e.which) {
+							teamId = $(this).attr('id');
+							name = $(this).attr('name');
+							code = $(this).attr('code');
+							remark = $(this).attr('remark');
+							e.stopPropagation();
+						}
+					});
+					$('.tree > li').contextPopup({
+						title : '组织架构管理',
+						items : [ {
+							label : '新增',
+							icon : '',
+							action : function() {
+								addOrg(teamId, ifaFirmId);
+							}
+						}, {
+							label : '删除',
+							icon : '',
+							action : function() {
+								deleteOrg(teamId);
+							}
+						}, {
+							label : '修改',
+							icon : '',
+							action : function() {
+								modifyOrg(teamId, name, code, remark);
+							}
+						} ]
+					});
+				}
+			}
+		});
+	}
+
+	//拼接组织架构树 HTML
+	function assemblyOrgMenu(html, json) {
+		$.each(json,function(i, n) {
+			var name = n.name == null ? '' : n.name;
+			if (null != n.childNode && 0 != n.childNode.length) {
+				html += '<li id=\''+n.id+'\' name=\''+name+'\' code=\''+n.code+'\' remark=\''+n.reamrk+'\'><span onclick="javascript:bindTeamMember(\'0\',\''
+						+ n.id
+						+ '\')">&nbsp;&nbsp;&nbsp;&nbsp;'
+						+ name
+						+ '</span>';
+				html += '<ul>';
+				html = assemblyOrgMenu(html, n.childNode);
+				html += '</ul>';
+			} else {
+				html += '<li id=\''+n.id+'\' name=\''+name+'\' code=\''+n.code+'\' remark=\''+n.reamrk+'\'>'
+						+ '<a href="javascript:bindTeamMember(\'0\',\''
+						+ n.id + '\')">&nbsp;&nbsp;&nbsp;&nbsp;' + name + '</a>';
+			}
+			html += '</li>';
+		});
+		return html;
+	}
+
+	//绑定表格数据（基于团队）
+	function bindTeamMember(curPage, teamId) {
+		//li点击高亮样式控制
+		var curLi = $('#' + teamId);
+		if (typeof (curLi) != 'undefined' && curLi.is('li')) {
+			//remove allCss
+			$('.tree').find('a').css('background-color','');
+			$('.tree').find('a').css('color','');
+			$('.tree').find('span').css('background-color','');
+			$('.tree').find('span').css('color','');
+			//是否有子节点child
+			if(curLi.find('ul').is('ul')){
+				curLi.find('span:first').css('background-color','#34BC9D');
+				curLi.find('span:first').css('color','#fff');
+			}else{
+				curLi.find('a:first').css('background-color','#34BC9D');
+				curLi.find('a:first').css('color','#fff');
+			}
+		}
+		$.ajax({
+			type : 'post',
+			url : '${base}/console/myfirm/getTeamMember.do?dateStr='
+					+ new Date().getTime(),
+			data : {
+				teamId : teamId,
+				page : curPage + 1,
+				rows : 10,
+				sort : '',
+				order : ''
+			},
+			success : function(result) {
+				assemblyTableHtnl(result, teamId);
+				var total = result.total;
+				$('#teamMemberPagination').pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 10,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+			bindTeamMember(page_id, teamId);
+		}
+	}
+	//弹窗 HTML
+	var teamHtml = '<div id="id_teaminfo" >'
+			+ '<form class="form-horizontal">'
+			+ '    <div class="form-group">'
+			+ '        <div class="col-md-3 text-right">'
+			+ '            <label for="txtName" class="label-control">'
+			+ "[@lang_res  k='ifafirm.team.name'/]"
+			+ '</label>'
+			+ '        </div>'
+			+ '        <div class="col-md-7">'
+			+ '            <input id="txtName" type="text" class="form-control " value="">'
+			+ '        </div>'
+			+ '    </div>'
+			+ '    <div class="form-group">'
+			+ '        <div class="col-md-3 text-right">'
+			+ '            <label for="txtCode" class="label-control">'
+			+ "[@lang_res  k='ifafirm.team.code'/]"
+			+ '</label>'
+			+ '        </div>'
+			+ '        <div class="col-md-7">'
+			+ '            <input id="txtCode" type="text" class="form-control " value="">'
+			+ '        </div>'
+			+ '    </div>    '
+			+ '    <div class="form-group">'
+			+ '        <div class="col-md-3 text-right">'
+			+ '           <label for="txtRemark" class="label-control">'
+			+ "[@lang_res  k='ifafirm.team.remark'/]"
+			+ '</label>'
+			+ '        </div>'
+			+ '        <div class="col-md-7">'
+			+ '           <input id="txtRemark" type="text" class="form-control " value="">'
+			+ '      </div>' + '    </div>' + '</form>' + '</div>';
+	//添加团队	            
+	function addOrg(teamId, ifaFirmId) {
+		BootstrapDialog.show({
+			title : "[@lang_res  k='ifafirm.title.addChildTeam'/]",
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : teamHtml,
+			buttons : [
+					{
+						label : "[@lang_res  k='global.save'/]",
+						cssClass : 'btn-primary',
+						action : function(dialogItself) {
+							var name = $('#txtName').val();
+							var code = $('#txtCode').val();
+							var remark = $('#txtRemark').val();
+							if (name == '') {
+								layer.msg("[@lang_res  k='ifafirm.message.promptEmptyTeamName'/]");
+								return;
+							}
+							$.ajax({
+								type : 'post',
+								datatype : 'json',
+								url : "${base}/console/myfirm/addOrg.do?datestr="
+										+ new Date().getTime(),
+								data : {
+									'ifaFirmId' : ifaFirmId,
+									'parentid' : teamId,
+									'name' : name,
+									'code' : code,
+									'remark' : remark
+								},
+								success : function(result) {
+									if (result.flag) {
+										layer.msg("[@lang_res  k='global.success.save'/]",{icon : 1,time : 2000},function() {});
+										bindOrg();
+									}
+								}
+							});
+							dialogItself.close();
+						}
+					}, {
+						label : "[@lang_res  k='global.back'/]",
+						action : function(dialogItself) {
+							dialogItself.close();
+						}
+					} ]
+		});
+	}
+	//删除团队
+	function deleteOrg(teamId) {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/myfirm/deleteOrg.do?datestr="
+					+ new Date().getTime(),
+			data : {
+				'teamId' : teamId
+			},
+			success : function(result) {
+				if (result.flag) {
+					layer.msg("[@lang_res  k='global.success.save'/]", {
+						icon : 1,
+						time : 2000
+					}, function() {
+					});
+					bindOrg();
+				}
+			}
+		});
+	}
+	//修改团队信息
+	function modifyOrg(teamId, name, code, remark) {
+		var teamHtmlObj = $(teamHtml);
+		teamHtmlObj.find('#txtName').attr('value', name);
+		teamHtmlObj.find('#txtCode').attr('value', code);
+		teamHtmlObj.find('#txtRemark').attr('value', remark);
+		BootstrapDialog.show({
+			title : "修改团队信息",
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : teamHtmlObj,
+			buttons : [
+					{
+						label : "[@lang_res  k='global.save'/]",
+						cssClass : 'btn-primary',
+						action : function(dialogItself) {
+							var name = $('#txtName').val();
+							var code = $('#txtCode').val();
+							var remark = $('#txtRemark').val();
+							if (name == '') {
+								layer.msg("[@lang_res  k='ifafirm.message.promptEmptyTeamName'/]");
+								return;
+							}
+							$.ajax({
+								type : 'post',
+								datatype : 'json',
+								url : "${base}/console/myfirm/addOrg.do?datestr="
+										+ new Date().getTime(),
+								data : {
+									'teamId' : teamId,
+									'name' : name,
+									'code' : code,
+									'remark' : remark
+								},
+								success : function(result) {
+									if (result.flag) {
+										layer.msg("[@lang_res  k='global.success.save'/]",{icon : 1,time : 2000},function() {});
+										bindOrg();
+									}
+								}
+							});
+							dialogItself.close();
+						}
+					}, {
+						label : "[@lang_res  k='global.back'/]",
+						action : function(dialogItself) {
+							dialogItself.close();
+						}
+					} ]
+		});
+	}
+	//绑定表格数据（全部）
+	function bindAllIfa(curPage,admin) {
+		var isAdminAccount = '';
+		if('1' == admin)
+			isAdminAccount = admin;
+		$.ajax({
+			type : 'post',
+			url : '${base}/console/myfirm/ifalist.do?dateStr='
+					+ new Date().getTime(),
+			data : {
+				isAdminAccount : isAdminAccount,//获取管理员
+				page : curPage + 1,
+				sort : '',
+				order : ''
+			},
+			success : function(result) {
+				var total = result.total;
+				assemblyTableHtnl(result,undefined,admin);
+				if('1' == admin){
+					$('#adminAccountPagination').pagination(total, {
+						callback : pageselectCallback,
+						numDetail : '',
+						items_per_page : 10,
+						num_display_entries : 4,
+						current_page : curPage,
+						num_edge_entries : 2
+					});
+				}else{
+					$('#teamMemberPagination').pagination(total, {
+						callback : pageselectCallback,
+						numDetail : '',
+						items_per_page : 10,
+						num_display_entries : 4,
+						current_page : curPage,
+						num_edge_entries : 2
+					});
+				}
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+				if('1' == admin)
+					bindAllIfa(page_id,1);
+				else
+					bindAllIfa(page_id,0);
+		}
+	}
+
+	//组装 table HTML
+	function assemblyTableHtnl(result,teamId,admin) {
+		var html = '';
+		var json = result.rows;
+		if (null != json) {
+			$.each(json,function(i, n) {
+				var isAdmin = n.isAdmin == null ? ''
+						: n.isAdmin;
+				var isSupervisor = n.isSupervisor == null ? ''
+						: n.isSupervisor;
+				var certNo = n.certNo == null ? '' : n.certNo;
+				var email = n.email == null ? '' : n.email;
+				var mobileNumber = n.telephone == null ? ''
+						: n.telephone;
+				var firstName = n.firstName == null ? ''
+						: n.firstName;
+				var lastName = n.lastName == null ? ''
+						: n.lastName;
+				var nameChn = n.nameChn == null ? ''
+						: n.nameChn;
+				var name = '';
+				if ('en' == '${Session["_LANG_CODE_"]!}') {
+					name = firstName + lastName;
+				} else {
+					name = nameChn;
+				}
+				html += '<tr><td class="col-md-2">';
+				//Leader 标识
+				if ('1' == isSupervisor) {
+					html += '<span title="Leader" class="glyphicon glyphicon-king" aria-hidden="true">&nbsp;<b>'
+							+ name + '</b></span>';
+				} else {
+					html += name;
+				}
+				html += '</td><td class="col-md-2">'
+						+ mobileNumber
+						+ '</td><td class="col-md-2">'
+						+ email
+						+ '</td><td class="col-md-4">'
+						+ certNo
+						+ '</td><td id="operate" class="col-md-2">';
+						//修改
+						//+ '<a href="javascript:void(0)"><span title="Edit" class="glyphicon glyphicon-edit" aria-hidden="true">&nbsp;[@lang_res  k="global.edit"/]</span></a>&nbsp;&nbsp;&nbsp;'
+					
+					if('1' == admin){
+						html +=  '<a href="javascript:adminSetting(\''
+									+ n.id
+									+ '\',\'0\')"><span title="Remove admin" class="glyphicon glyphicon-minus" aria-hidden="true">&nbsp;</span></a>';
+					}else{
+					    //remove ifa & join org
+						if(typeof(teamId)=='undefined'){
+						   html +=  '<a href="javascript:deleteIfa(\''
+									+ n.id
+									+ '\')"><span title="Delete ifa" class="glyphicon glyphicon-remove" aria-hidden="true">&nbsp;</span></a>'
+								    + '<a href="javascript:addTeam(\''
+									+ n.id
+									+ '\')"><span title="Join org" class="glyphicon glyphicon-plus" aria-hidden="true">&nbsp;</span></a>';
+						}
+						//set Leader
+						if ('1' != isSupervisor && typeof (teamId) != 'undefined') {
+							html += '<a href="javascript:setLeader(\''
+									+ n.id
+									+ '\',\''
+									+ teamId
+									+ '\',\'1\')"><span id="setLeader" title="Set Leader" class="glyphicon glyphicon-king" aria-hidden="true">&nbsp;</span></a>'
+									+ '<a href="javascript:removeTeam(\''
+									+ n.id
+									+ '\',\''
+									+ teamId
+									+ '\')"><span title="Remove org" class="glyphicon glyphicon-minus" aria-hidden="true">&nbsp;</span></a>';
+						//set Member
+						}else if('1' == isSupervisor && typeof (teamId) != 'undefined') {
+							html += '<a href="javascript:setLeader(\''
+									+ n.id
+									+ '\',\''
+									+ teamId
+									+ '\',\'0\')"><span id="removeLeader" title="Remove Leader" class="glyphicon glyphicon-pawn" aria-hidden="true">&nbsp;</span></a>'
+									+ '<a href="javascript:removeTeam(\''
+									+ n.id
+									+ '\',\''
+									+ teamId
+									+ '\')"><span title="Remove org" class="glyphicon glyphicon-minus" aria-hidden="true">&nbsp;</span></a>';
+						}
+					}
+				html += '</td></tr>';
+			});
+		}
+		//是否 admin account
+		if('1' == admin)
+			$('#adminAccountTable tbody').empty().append(html);
+		else
+			$('#teamMemberList tbody').empty().append(html);
+	}
+	
+	//ifafirm删除ifa(取消关联)
+	function deleteIfa(ifaId) {
+		BootstrapDialog.show({
+			title : '[@lang_res k="global.prompt"/]',
+			message : '是否删除该ifa？',
+			buttons : [
+					{
+						label : '[@lang_res k="global.confirm"/]',
+						action : function(dialogItself) {
+							$.ajax({
+								type : 'post',
+								url : '${base}/console/myfirm/deleteIfa.do?datestr='
+										+ new Date().getTime(),
+								data : {
+									ifaId : ifaId
+								},
+								success : function(flag) {
+									if (flag.flag) {
+										layer.msg("[@lang_res k='global.success'/]",{icon : 1,time : 2000});
+										dialogItself.close();
+										bindAllIfa(0);
+									} else {
+										layer.msg("[@lang_res k='global.failed'/]",{icon : 0,time : 2000});
+										dialogItself.close();
+									}
+								}
+							});
+						}
+					}, {
+						label : '[@lang_res k="global.cancel"/]',
+						action : function(dialogItself) {
+							dialogItself.close();
+						}
+					} ]
+		});
+	}
+	//选择团队弹窗
+	function addTeam(ifaId) {
+		var html = '';
+		$.ajax({
+			type : 'post',
+			async : false,
+			url : '${base}/console/myfirm/getOrg.do?dateStr='
+					+ new Date().getTime(),
+			success : function(result) {
+				var ifafirmId = result.ifaFirmId == null ? ''
+						: result.ifaFirmId;
+				var companyName = 'IFA FIRM';
+				if (null != result.ifafirm) {
+					companyName = result.ifafirm.companyName;
+				}
+				if (result.flag) {
+					html = '<ul class="tree"><li id="ifafirm-Li"><span>&nbsp;&nbsp;<b>'
+							+ companyName + '</b></span><ul>';
+					var json = eval('(' + result.firmOrgJson + ')');
+					//拼接组织架构树 HTML
+					html = assemblyOrgMenu(html, json);
+					html += '</li></ul></ul>';
+				}
+			}
+		});
+		BootstrapDialog.show({
+					title : "选择团队",
+					type : BootstrapDialog.TYPE_PRIMARY,
+					size : BootstrapDialog.SIZE_WIDE,
+					draggable : true,
+					message : function() {
+						var $message = $(html).treemenu({
+							delay : 300
+						}).openActive();
+						$message.find('span').removeAttr("onclick");
+						$message.find('a').attr('href', 'javascript:void(0)');
+						$message.find('li').bind('click',function(e) {
+							var curLiId = e.currentTarget.id;
+							e.stopPropagation();
+							var curName = typeof ($('#'+ curLiId).attr('name')) == 'undefined' ? '': $('#' + curLiId).attr('name');
+							var buttonHTML = '<button id="team_selected" name="'+curName+'" teamId="'+curLiId+'" class="btn btn-default" type="button">'+ curName+ '&nbsp;<span class="badge">X</span></button>';
+							$('#team_selected').remove();
+							if ('ifafirm-Li' != curLiId){
+								$('.bootstrap-dialog-footer-buttons').prepend(buttonHTML);
+								$('#team_selected').click(function(){
+									$('#team_selected').remove();
+								});
+							}
+						});
+						$message.css('width', '100%');
+						$message.css('margin', '10px');
+						return $message;
+					},
+					buttons : [ {
+						label : "[@lang_res  k='global.save'/]",
+						cssClass : 'btn-primary',
+						action : function(dialogItself) {
+							var teamId = $('#team_selected').attr('teamId');
+							if ('' == teamId) {
+								layer.msg("请选择团队", {
+									icon : 1,
+									time : 2000
+								});
+							} else {
+								var ifafirmId = $('#ifaFirmId').val();
+								//加入组织（保存）
+								saveTeam(ifafirmId, teamId, ifaId);
+							}
+							dialogItself.close();
+						}
+					}, {
+						label : "[@lang_res  k='global.back'/]",
+						action : function(dialogItself) {
+							dialogItself.close();
+						}
+					} ]
+	});
+	}
+
+	//加入组织（保存） wwluo 160819
+	function saveTeam(ifafirmId, teamId, ifaId) {
+		$.ajax({
+			type : 'post',
+			url : '${base}/console/ifa/addTeam.do?datestr='
+					+ new Date().getTime(),
+			data : {
+				ifafirmId : ifafirmId,
+				teamId : teamId,
+				ifaId : ifaId
+			},
+			success : function(flag) {
+				if (flag) {
+					layer.msg("[@lang_res k='global.success.save'/]", {
+						icon : 1,
+						time : 2000
+					});
+					bindTeamMember(0, teamId);
+				} else {
+					layer.msg("[@lang_res k='global.failed.save'/]", {
+						icon : 0,
+						time : 2000
+					});
+				}
+			}
+		});
+	}
+	
+	//remove team
+	function removeTeam(ifaId,teamId){
+		BootstrapDialog.show({
+            title: '[@lang_res k="global.prompt"/]',
+            message: '[@lang_res k="console.ifa.team.list.add.dialog.msg"/]',
+            buttons: [{
+                label: '[@lang_res k="global.confirm"/]',
+                action: function(dialogItself) {
+                   $.ajax({
+						type:'post',
+						url:'${base}/console/ifa/removeTeam.do?datestr='
+									+ new Date().getTime(),
+						data:{
+							teamId : teamId,
+							ifaId : ifaId
+							},
+						success:function(flag){
+							if (flag){
+							 	layer.msg("[@lang_res k='global.success'/]", { icon: 1, time: 2000 });
+							    bindTeamMember(0, teamId);
+							    dialogItself.close();
+							}else{
+							 	layer.msg("[@lang_res k='global.failed'/]", { icon: 0, time: 2000 });
+							 	dialogItself.close();
+							}
+						}
+				  });
+                }
+            }, {
+                label: '[@lang_res k="global.cancel"/]',
+                action: function(dialogItself) {
+                    dialogItself.close();
+                }
+            }]
+        });
+	}
+	
+	//团队负责人设置
+	function setLeader(ifaId, teamId, isSupervisor) {
+		$.ajax({
+			type : 'post',
+			url : '${base}/console/myfirm/setLeader.do?datestr='
+					+ new Date().getTime(),
+			data : {
+				ifaId : ifaId,
+				teamId : teamId,
+				isSupervisor : isSupervisor
+			},
+			success : function(flag) {
+				if (flag.flag) {
+					layer.msg("[@lang_res k='global.success'/]", {
+						icon : 1,
+						time : 2000
+					});
+					bindTeamMember(0, teamId);
+				} else {
+					layer.msg("[@lang_res k='global.failed'/]", {
+						icon : 0,
+						time : 2000
+					});
+				}
+			}
+		});
+	}
+</script>
+	</body>
+</html>

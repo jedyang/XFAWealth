@@ -1,0 +1,308 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+
+<style>
+.ifa_insight_tb tr {
+	margin: 5px;
+}
+
+.ifa_insight_tb tr:nth-child (2n) {
+	background-color: white;
+}
+
+.select_choice {
+	font-size: 12px;
+	color: #ffb657;
+	border: 2px solid #ffffff;
+	margin-left: 130px;
+	overflow: hidden;
+	padding: 5px;
+}
+
+.select_choice li {
+	position: relative;
+	cursor: pointer;
+	display: inline-block;
+	width: 130px;
+	height: 30px;
+	line-height: 24px;
+	text-align: center;
+	padding: 0px 0px;
+	border: 1px solid #dddddd;
+	margin-right: -1px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.select_choice .select_choice_active {
+	border: 2px solid #ffb657;
+}
+</style>
+<form id="paramsForm" name="paramsForm" action="" method="post">
+	<div class="wmes-content">
+		<!-- <div class="white_background" > -->
+		<div class="ifa_choose_condition">
+			<div class="OpenAccount_big_title">
+				<h2>
+					[@lang_res k='recommend.news.mylist.title'/]
+				</h2>
+			</div>
+			<div class="funds_choice_wrap">
+				<p class="funds_choice_title" style="width: 160px; text-align: right;">
+					[@lang_res k='recommend.date'/] :
+				</p>
+				<ul class="funds_choice">
+					<li class="fund_choice_active funds_all" data-name="period" data-key="" data-value="">
+						[@lang_res k='fund.info.searchAll'/]
+					</li>
+					<li data-name="period" data-key="[@lang_res k='search.period.1w'/]" data-value="1W">
+						[@lang_res k='search.period.1w'/]
+					</li>
+					<li data-name="period" data-key="[@lang_res k='search.period.1m'/]" data-value="1M">
+						[@lang_res k='search.period.1m'/]
+					</li>
+					<li data-name="period" data-key="[@lang_res k='search.period.2m'/]" data-value="2M">
+						[@lang_res k='search.period.2m'/]
+					</li>
+					<li data-name="period" data-key="[@lang_res k='search.period.3m'/]" data-value="3M">
+						[@lang_res k='search.period.3m'/]
+					</li>
+					<li data-name="period" data-key="[@lang_res k='search.period.6m'/]" data-value="6M">
+						[@lang_res k='search.period.6m'/]
+					</li>
+					<li data-name="period" data-key="[@lang_res k='search.period.1y'/]" data-value="1Y">
+						[@lang_res k='search.period.1y'/]
+					</li>
+					<li class="recommend-date-li recommend-date-choice" data-name="period" data-key="Optional" data-value="Recommend Date_07">
+						<div class="recom-input-wrap">
+							<input id="recommend-date-to" readonly class="recommend-date" type="" name="">
+						</div>
+						<p class="recommend-date-name">
+							to
+						</p>
+						<div class="recom-input-wrap"">
+							<input id="recommend-date-from" readonly class="recommend-date" type="" name="">
+						</div>
+						<a data-name="period" class="recommend-date-button" href="javascript:">OK</a>
+					</li>
+				</ul>
+			</div>
+			<div class="funds_choice_wrap">
+				<p class="funds_choice_title" style="width: 160px; text-align: right;">
+					[@lang_res k='fund.info.detail.GeoAllocation'/]：
+				</p>
+				<ul class="funds_choice funds_logo_b" style="margin-left: 168px;" id="letter_choice">
+					<li data-letter="" class="funds_all fund_choice_active" data-name="funds_all">
+						[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]
+					</li>
+					<li data-letter="A">A</li>
+					<li data-letter="B">B</li>
+					<li data-letter="C">C</li>
+					<li data-letter="D">D</li>
+					<li data-letter="E">E</li>
+					<li data-letter="F">F</li>
+					<li data-letter="G">G</li>
+					<li data-letter="H">H</li>
+					<li data-letter="I">I</li>
+					<li data-letter="J">J</li>
+					<li data-letter="K">K</li>
+					<li data-letter="L">L</li>
+					<li data-letter="M">M</li>
+					<li data-letter="N">N</li>
+					<li data-letter="O">O</li>
+					<li data-letter="P">P</li>
+					<li data-letter="Q">Q</li>
+					<li data-letter="R">R</li>
+					<li data-letter="S">S</li>
+					<li data-letter="T">T</li>
+					<li data-letter="U">U</li>
+					<li data-letter="V">V</li>
+					<li data-letter="W">W</li>
+					<li data-letter="S">S</li>
+					<li data-letter="Y">Y</li>
+					<li data-letter="Z">Z</li>
+				</ul>
+				<ul class="select_choice" id="letter_search_choice">
+					[#if regionList?exists && regionList?size gt 0 ] [#list regionList as x]
+					<li style="display: none;" title="${x.name!}" data-letter="${x.key!}" data-key="${x.name!}" data-name="region" data-value="${x.itemCode!}">
+						${x.name!}
+					</li>
+					[/#list] [/#if]
+				</ul>
+			</div>
+			<div class="funds_choice_wrap">
+				<p class="funds_choice_title" style="width: 160px; text-align: right;">
+					[@lang_res k='fund.info.detail.Sector'/]:
+				</p>
+				<ul class="funds_choice" style="margin-left: 168px;">
+					<li data-name="sector" data-key="" data-value="" class="funds_all fund_choice_active">
+						[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]
+					</li>
+					[#if sectionList?exists && sectionList?size gt 0 ] [#list sectionList as x]
+					<li data-name="sector" data-key="${x.name!}" data-value="${x.itemCode!}">
+						${x.name!}
+					</li>
+					[/#list] [/#if]
+				</ul>
+			</div>
+		</div>
+		<div class="recommend-list-wrap" ng-controller="Searchctrl" ng-app="mySearch">
+			<div class="funds_list_selected">
+				<p class="funds_selected_title">
+					Selected condition
+				</p>
+				<ul class="selection_criteria">
+					<p class="funds_title_selection">
+						Reset filter
+					</p>
+				</ul>
+			</div>
+			<div class="recommend-list-contents funds_selected_wrap" >
+				<div class="funds_keyserach_wrap">
+					<p class="funds_serach_sum" style="float: left;">
+						[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchTip'/]
+						<span class="funds_serach_digital" ng-bind="{{'datatotal'}}"></span> records found
+					</p>
+					<div class="funds_keyserach">
+						<input type="text" id="fundName" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+						<span class="icon_search" id="searchKeyBtn"></span>
+					</div>
+				</div>
+				<!--<ul class="recommend-switch-tab">
+					<li class="funds_sort recommend-sort-active">
+						<p class="funds_switch_tab_title">
+							Views
+						</p>
+						<p class="funds_arrow_wraps">
+							<span class="arrow_top"></span>
+							<span class="arrow_down down_active"></span>
+						</p>
+					</li>
+					<li class="funds_sort">
+						<p class="funds_switch_tab_title">
+							Issued Date
+						</p>
+						<p class="funds_arrow_wraps">
+							<span class="arrow_top"></span>
+							<span class="arrow_down"></span>
+						</p>
+					</li>
+				</ul>
+				--><ul class="recommend-news-list">
+					<li ng-repeat="items in dataList" ng-init="checkLast($last)" class="animated flipInX">
+						<img class="recommend-news-img" src="{{items.iconUrl}}">
+						<div class="recommend-news-main">
+							<div class="recommend-news-contents">
+								<p class="recommend-news-title" ng-bind="{{'items.title'}}"></p>
+								<p class="recommend-news-word"></p>
+								<div class="recommend-news-contents-bottom">
+									<p class="recommend-news-bottom-left" ng-bind="{{'items.createTime'}}"></p>
+									<div class="recommend-news-bottom-right">
+										<div class="recommend-news-bottom-ico">
+											<img class="recommend-news-bottom-img" src="${base}/res/images/discover/eve_ico.png">
+											<p class="recommend-news-bottom-num" ng-bind="{{'items.views'}}"></p>
+										</div>
+										<div class="recommend-news-bottom-ico" itemId="{{items.newsId}}">
+											<a href="javascript:void(0);"> <img class="recommend-news-msg-ico" src="${base}/res/images/fund/msg_ico.png"> </a>
+											<p class="recommend-news-eve-num" ng-bind="{{'items.visitCount'}}"></p>
+
+										</div>
+
+										<div class="recommend-news-bottom-like">
+											<img class="recommend-news-like-ico" src="${base}/res/images/fund/fund_like_ico.png">
+											<p class="recommend-news-like-num" ng-bind="{{'items.ups'}}"></p>
+										</div>
+										<div class="recommend-news-bottom-like">
+											<img class="recommend-news-like-ico" src="${base}/res/images/fund/fund_step_ico.png">
+											<p class="recommend-news-like-num" ng-bind="{{'items.downs'}}"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="recommend-news-list-right">
+								<div class="recommend-news-date-contents">
+									<p class="recommend-news-list-date">
+										[@lang_res  k='recommend.date'/]
+									</p>
+									<p class="recommend-news-date-time" ng-bind="{{'items.recommendTime'}}">
+									</p>
+								</div>
+								<div class="recommend-news-action-contents" itemId="{{items.id}}">
+									<p class="recommend-news-list-action">
+										[@lang_res  k='list.search.action'/]
+									</p>
+									<a href="${base}/front/ifa/space/newsRecommendSetting.do?id={{items.id}}&newsId={{items.newsId}}"> <img class="recommend-ico" src="${base}/res/images/fund/change_ico.png">
+									</a>
+									<img class="recommend-ico recommend_del" src="${base}/res/images/fund/delete_ico.png">
+									<!-- 已经下载的加上类名recommend-ico-down-active -->
+									<span class="recommend-ico-down " ng-if="items.overhead!='1'" overhead="1"></span>
+									<span class="recommend-ico-down recommend-ico-down-active" ng-if="items.overhead=='1'" overhead="0"></span>
+								</div>
+							</div>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+			
+		<!-- 弹出层 -->
+		<div class="ifa-space-popup" >
+			<div class="ifa-space-mask"></div>
+			<div class="space-mask-wrap">
+				<div class="space-mask">
+					<a href="javascript:;" class="space-mask-close"></a>
+					<p class="space-mask-title">
+						Recent Visitors
+					</p>
+					<div class="space-mask-ifo">
+						<ul class="mask-ifo-left" style="width: 100%">
+							<li>
+								<div class="ifa_list_ifo" style="float: left; padding: 10px 5px" ng-repeat="friend in friendList">
+									<img alt="" src="${base}{{friend.iconUrl}}" class="ifa_touxiang_friend">
+									<div class="ifa_list_information_friend">
+										<p class="ifa_list_name">
+											{{friend.loginCode}}
+										</p>
+										<p class="ifa_list_form">
+											{{friend.visitTime|date:'yyyy-MM-dd HH:mm:ss' }}
+										</p>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- </div> -->
+		</div>
+
+	</div>
+	<input type="hidden" value="" name="period" id="period" />
+	<input type="hidden" value="" name="regions" id="regions" />
+	<input type="hidden" value="" name="sectors" id="sectors" />
+	<input type="hidden" value="" name="viewSort" id="viewSort" />
+	<input type="hidden" value="" name="issuedDateSort" id="issuedDateSort" />
+	<input type="hidden" value="" name="keyWord" id="keyWord" />
+	<input type="hidden" value="1" name="status" id="status" />
+</form>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('${base}/res/js/jsDatePick.jquery.min.1.3.js');
+	seajs.use('${base}/res/web/ifa/ifaRecommendNews.js');
+	window.onload = function() {
+		new JsDatePick({
+			useMode : 2,
+			target : "fromDate",
+			dateFormat : "%Y-%m-%d"
+		});
+		new JsDatePick({
+			useMode : 2,
+			target : "toDate",
+			dateFormat : "%Y-%m-%d"
+		});
+	};
+</script>

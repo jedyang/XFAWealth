@@ -1,0 +1,157 @@
+package com.fsll.core.service.impl;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fsll.common.base.service.BaseService;
+import com.fsll.common.util.JsonPaging;
+import com.fsll.core.entity.AccessoryFile;
+import com.fsll.core.entity.SysAdmin;
+import com.fsll.core.service.AccessoryFileService;
+import com.fsll.core.service.SysAdminService;
+import com.fsll.core.vo.AccessoryFileVO;
+import com.fsll.wmes.entity.MemberBase;
+import com.fsll.wmes.member.service.MemberBaseService;
+
+/**
+ * 附件接口实现类
+ * @author mqzou
+ * @date 2016-08-04
+ *
+ */
+@Service("accessoryFileService")
+//@Transactional
+public class AccessoryFileServiceImpl extends BaseService implements AccessoryFileService {
+
+	@Autowired
+	private SysAdminService sysAdminService;
+	@Autowired
+	private MemberBaseService memberBaseService;
+	
+	@Override
+	public JsonPaging findAllAccessoryFile(JsonPaging jsonPaging, AccessoryFile accessoryFile) {
+		String hql=" from AccessoryFile r where 1=1 ";
+		if(null!=accessoryFile  ){
+			if(null!=accessoryFile.getFileName() && !"".equals(accessoryFile.getFileName())){
+				hql+=" and r.fileName like '%"+accessoryFile.getFileName()+"%'";
+			}
+			if(null!=accessoryFile.getModuleType() && !"".equals(accessoryFile.getModuleType())){
+				hql+=" and r.moduleType like '%"+accessoryFile.getModuleType()+"%'";
+			}
+		}
+		List params=new ArrayList();
+		jsonPaging=this.baseDao.selectJsonPaging(hql, params.toArray(), jsonPaging, false);
+		List list=new ArrayList();
+		Iterator it=(Iterator)jsonPaging.getList().iterator();
+		while (it.hasNext()) {
+			AccessoryFile file = (AccessoryFile) it.next();
+			AccessoryFileVO vo=new AccessoryFileVO();
+			vo.setId(file.getId());
+			//modify by rqwang 20170627
+			//vo.setCreateBy(null!=file.getCreateBy()?file.getCreateBy()/*.getNickName()*/:"");
+			String id = file.getCreateBy();
+			if(null != id && StringUtils.isNotBlank(id)){
+				MemberBase memberBase = memberBaseService.findById(id);
+				SysAdmin sysAdmin = sysAdminService.findById(id);
+				if(null == sysAdmin){
+					vo.setCreater(memberBase.getNickName());
+				}else{
+					vo.setCreater(sysAdmin.getNickName());
+				}
+			}
+			//end
+			vo.setCreateTime(file.getCreateTime().toLocaleString());
+			vo.setFileName(file.getFileName());
+			vo.setFilePath(file.getFilePath());
+			vo.setFileType(file.getFileType());
+			vo.setLangCode(file.getLangCode());
+			vo.setModuleType(file.getModuleType());
+			vo.setRelateId(file.getRelateId());
+			vo.setRemark(file.getRemark());
+			list.add(vo);
+		}
+		jsonPaging.setList(list);
+		return jsonPaging;
+	}
+
+	@Override
+	public AccessoryFile findAccessoryFileById(String id) {
+		AccessoryFile vo=(AccessoryFile)this.baseDao.get(AccessoryFile.class, id);
+		return vo;
+	}
+
+	/**
+	 * 获取附件详细信息
+	 * @author Yan
+	 * @param Id
+	 * @return
+	 */
+	@Override
+	public AccessoryFile findByRelateId(String relateId) {
+		String hql = " FROM AccessoryFile f WHERE f.relateId=? ";
+		List<Object> params = new ArrayList<Object>();
+		if(StringUtils.isNotBlank(relateId)){
+			params.add(relateId);
+		}
+		List<Object> list = this.baseDao.find(hql, params.toArray(), false);
+		if(!list.isEmpty()){
+			AccessoryFile info = (AccessoryFile)list.get(0);
+			return info;
+		}
+		return null;
+	}
+	
+	/**
+	 * 保存/更新
+	 * @author Yan
+	 * @param accessoryFile
+	 * @return
+	 */
+	@Override
+	public AccessoryFile saveOrUpdate(AccessoryFile accessoryFile) {
+		AccessoryFile info = (AccessoryFile)this.baseDao.saveOrUpdate(accessoryFile);
+		return info;
+	}
+
+	/**
+	 * 获取附件地址
+	 * @author wwluo
+	 * @date 2016-12-07
+	 * @param 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AccessoryFile> getAccessoryFile(String relateId,String moduleType,String fileName,String langCode) {
+		List<AccessoryFile> accessoryFiles = null;
+		if(StringUtils.isNotBlank(relateId) && StringUtils.isNotBlank(moduleType)){
+			StringBuffer hql = new StringBuffer("" +
+					" FROM" +
+					" AccessoryFile" +
+					" WHERE" +
+					" moduleType=?" +
+					" AND relateId=?" +
+					"");
+			List<Object> params = new ArrayList<Object>();
+			params.add(moduleType);
+			params.add(relateId);
+			if (StringUtils.isNotBlank(fileName)) {
+				hql.append(" AND fileName=?");
+				params.add(fileName);
+			}
+			if (StringUtils.isNotBlank(langCode)) {
+				hql.append(" and langCode=?");
+				params.add(langCode);
+			}
+			hql.append(" ORDER BY createTime DESC");
+			accessoryFiles = this.baseDao.find(hql.toString(), params.toArray(), false);
+		}
+		return accessoryFiles;
+	}
+}

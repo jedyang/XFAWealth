@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>[#if individualvo?exists && individualvo.id?exists] [@lang_res k='member.individual'/] [@lang_res k='member.detail'/] [#else] [@lang_res k='member.individual'/] [@lang_res k='member.add'/] [/#if]</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	    <![endif]-->
+
+
+	</head>
+	<body>
+
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<div style="padding-left: 20px; padding-right: 20px;">
+				<div class="page-header mt-10">
+					<h4>
+						<b>[#if individualvo?exists && individualvo.id?exists] [@lang_res k='member.individual'/] [@lang_res k='member.detail'/] [#else] [@lang_res k='member.individual'/] [@lang_res k='member.add'/] [/#if]</b>
+					</h4>
+				</div>
+				<div>
+					<form id="frm" class="form-horizontal" method="post">
+						<input type="hidden" id="hidCountry" value="${(individualvo.country)?if_exists}">
+						<input type="hidden" id="hidNationality" value="${(individualvo.nationality)?if_exists}">
+						<input type="hidden" id="hidOccupation" value="${(individualvo.occupation)?if_exists}">
+						<input type="hidden" id="hidIndividualId" name="id" value="${(individualvo.id)?if_exists}">
+						<input type="hidden" id="hidCertType" value="${(individualvo.certType)?if_exists}">
+						<input type="hidden" id="hidGender" value="${(individualvo.gender)?if_exists}">
+						<input type="hidden" id="hidEducation" value="${(individualvo.education)?if_exists}">
+						<input type="hidden" id="hidEmployment" value="${(individualvo.employment)?if_exists}">
+						<input type="hidden" id="hidMemberId" value="${(individualvo.memberId)?if_exists}">
+						<div class="form-group" style="margin-bottom: 5px">
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.loginCode'/]
+							</label>
+							<div class="col-md-4">
+								<input id='txtLoginCode' type="text" class="form-control " maxlength="50" name='loginCode' value="${(individualvo.loginCode)?if_exists}">
+							</div>
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.email'/]
+							</label>
+							<div class="col-md-4">
+								<input id='txtEmail' type="text" class="form-control " maxlength="50" name="email" value="${(individualvo.email)?if_exists}">
+							</div>
+						</div>
+
+
+						<div class="form-group" style="margin-bottom: 5px">
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.mobileNumber'/]
+							</label>
+							<div class="col-md-4">
+								<input id='txtPhone' type="text" class="form-control " maxlength="20" name="mobileNumber" value="${(individualvo.mobileNumber)?if_exists}">
+							</div>
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.firstName'/]
+							</label>
+							<div class="col-md-4">
+								<input id="txtFirstName" type="text" class="form-control " maxlength="25" name="firstName" value="${(individualvo.firstName)?if_exists}">
+							</div>
+						</div>
+
+
+						<div class="form-group" style="margin-bottom: 5px">
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.lastName'/]
+							</label>
+							<div class="col-md-4">
+								<input id="txtLastName" type="text" class="form-control " maxlength="25" name="lastName" value="${(individualvo.lastName)?if_exists}">
+							</div>
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.nameChn'/]
+							</label>
+							<div class="col-md-4">
+								<input id="txtChhName" type="text" class="form-control " maxlength="12" name="nameChn" value="${(individualvo.nameChn)?if_exists}">
+							</div>
+						</div>
+
+
+
+						<div class="form-group" style="margin-bottom: 5px">
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.nickName'/]
+							</label>
+							<div class="col-md-4">
+								<input id="txtNickName" type="text" class="form-control " maxlength="50" name="nickName" value="${(individualvo.nickName)?if_exists}">
+							</div>
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.country'/]
+							</label>
+							<div class="col-md-4">
+								<select id="ddlCountry" class="form-control " name="country" value="${(individualvo.country)?if_exists}">
+									<option value="">
+										[@lang_res k='global.pleaseSelect'/]
+									</option>
+								</select>
+							</div>
+						</div>
+
+
+
+						<div class="form-group" style="margin-bottom: 5px">
+
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.gender'/]
+							</label>
+							<div class="col-md-4">
+								<div class="radio" name="gender" value="${(individualvo.gender)?if_exists}">
+									<label>
+										<input type="radio" name="gender" id="optiontype1" value="M" [#if individualvo?exists==false || individualvo.gender?exists== false || individualvo.gender=='M']checked[/#if]>
+										[@lang_res k='member.info.gender.man'/]
+									</label>
+									<label>
+										<input type="radio" name="gender" id="optiontype2" value="F" [#if individualvo?exists==false || individualvo.gender?exists== false || individualvo.gender=='F']checked[/#if]>
+										[@lang_res k='member.info.gender.female'/]
+									</label>
+
+								</div>
+							</div>
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.born'/]
+							</label>
+							<div class="col-md-4">
+								<input id='txtBirth' type="text" class="laydate-icon form-control form-control-laydate" style="height: 34px; padding: 6px 12px;" onclick="laydate({istime: false, format: 'YYYY-MM-DD'})" name="born" value="${(individualvo.born)?if_exists}">
+							</div>
+						</div>
+
+
+
+						<div class="form-group" style="margin-bottom: 5px">
+
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.certType'/]
+							</label>
+							<div class="col-md-4">
+								<select id="ddlCertType" class="form-control " name="certType" value="${(individualvo.certType)?if_exists}">
+									<option selected="selected">
+										[@lang_res k='global.pleaseSelect'/]
+									</option>
+									<option value="1">
+										[@lang_res k='member.info.certType.idcard'/]
+									</option>
+									<option value="2">
+										[@lang_res k='member.info.certType.passport'/]
+									</option>
+								</select>
+							</div>
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.certNo'/]
+							</label>
+							<div class="col-md-4">
+								<input id='txtCertNo' type="text" class="form-control " maxlength="50" name="certNo" value="${(individualvo.certNo)?if_exists}">
+							</div>
+						</div>
+
+
+
+
+
+						<div class="form-group" style="margin-bottom: 5px">
+
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.nationality'/]
+							</label>
+							<div class="col-md-4">
+								<select id="ddlNationality" name="nationality" class="form-control " value="${(individualvo.nationality)?if_exists}">
+									<option value="">
+										[@lang_res k='global.pleaseSelect'/]
+									</option>
+								</select>
+							</div>
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.education'/]
+							</label>
+							<div class="col-md-4">
+								<select id="ddlEducation" class="form-control " name="education" value="${(individualvo.education)?if_exists}">
+									<option value="" selected="selected">
+										[@lang_res k='global.pleaseSelect'/]
+									</option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="form-group" style="margin-bottom: 5px">
+
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.employment'/]
+							</label>
+							<div class="col-md-4">
+								<select id="ddlEmployment" class="form-control " name="employment" value="${(individualvo.employment)?if_exists}">
+									<option value="" selected="selected">
+										[@lang_res k='global.pleaseSelect'/]
+									</option>
+								</select>
+							</div>
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.occupation'/]
+							</label>
+							<div class="col-md-4">
+								<select id="ddlOccupation" class="form-control " name="occupation" value="${(individualvo.occupation)?if_exists}">
+									<option value="">
+										[@lang_res k='global.pleaseSelect'/]
+									</option>
+								</select>
+							</div>
+						</div>
+
+
+
+						<div class="form-group" style="margin-bottom: 5px">
+
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.telephone'/]
+							</label>
+							<div class="col-md-4">
+								<input id='txtTelephone' type="text" class="form-control " maxlength="15" name="telephone" value="${(individualvo.telephone)?if_exists}">
+							</div>
+
+						</div>
+						<div class="form-group" style="margin-bottom: 5px">
+
+							<label class="col-md-2 control-label " style="font-weight: normal; text-align: right;" for="ds_password">
+								[@lang_res k='member.info.address'/]
+							</label>
+							<div class="col-md-10">
+								<input id='txtAddress' type="text" class="form-control " maxlength="250" name="address" value="${(individualvo.address)?if_exists}">
+							</div>
+
+
+						</div>
+
+
+						<div class="text-center pd10">
+							<button id="btnBack" class="btn btn-primary" onclick="javascript:closeTab();">
+								[@lang_res k='global.close'/]
+							</button>
+						</div>
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+
+
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js"></script>
+		<script src="${base}/res/console/js/jquery.form.js"></script>
+		<script src="${base}/res/console/js/bootstrap.js"></script>
+		<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+		<script src="${base}/res/third/laydate/laydate.js" type="text/javascript"></script>
+		<script src="${base}/res/third/layer/layer_v2.js"></script>
+		<script type="text/javascript">
+	$(function() {
+
+		//加载皮肤
+		laydate.skin('yalan');
+		bindCountry();
+		bindOccupation();
+		bindEducation();
+		bindEmployment();
+
+		$("#ddlCertType").val($("#hidCertType").val());
+		$("#ddlGender").val($("#hidGender").val());
+		$("#frm").bootstrapValidator({
+			feedbackIcons : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			fields : {
+				loginCode : {
+					message : '',
+					validators : {
+						notEmpty : {
+							message : '登录帐号不能为空'
+						},
+						callback : {
+							message : '帐号已被使用',
+							callback : function(value, validate) {
+								var url = "${base}/console/member/checkCodeUnique.do?datestr=" + new Date().getTime() + "&loginCode=" + encodeURI(encodeURI(value)) + "&userId=" + encodeURI(encodeURI($("#hidMemberId").val()));
+								var res = true;
+								/*if ($("#txtLoginCode").val() != value
+										&& "" != value) {*/
+								$.ajax({
+									url : url,
+									method : 'post',
+									dataType : 'json',
+									async : false,
+									success : function(data) {
+										res = data;
+									},
+									error : function() {
+									}
+								});
+								//}
+								return res;
+							}
+						}
+					}
+				}
+			}
+		}).on('success.form.bv', function(e) {
+			e.preventDefault();
+
+			Save();
+		});
+	});
+	function Save() {
+
+		var params = $("#frm").serialize();
+		params = decodeURIComponent(params, true);
+
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/member/individual/save.do?datestr=" + new Date().getTime(),
+			data : {
+				postData : params
+			},
+			success : function(data) {
+				if (data.result) {
+					layer.msg("[@lang_res k='global.success.save'/]", {
+						icon : 1,
+						time : 1000
+					});
+					window.location.href = "${base}/console/member/list.do"
+				} else {
+					$('#contact-form-error').show().fadeOut(10000);
+				}
+			}
+		});
+		/*$("#frm").ajaxSubmit({
+			url : "${base}/console/member/individual/save.do?datestr=" + new Date().getTime(),
+			iframe : true,
+			success : function(data, status) {
+				var dataObj = $.parseJSON(data.replace(/<.*?>/ig, ""));
+				if (dataObj.result) {
+					window.location.href = "${base}/console/member/list.do"
+				} else {
+					$('#contact-form-error').show().fadeOut(10000);
+				}
+			},
+			error : function() {
+				alder("失败");
+				$('#contact-form-error').show().fadeOut(10000);
+			}
+		});*/
+	}
+
+	function bindCountry() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/country/langListJson.do?datestr=" + new Date().getTime(),
+			data : {},
+			success : function(json) {
+				if (json != undefined && json.result == true) {
+					var data = JSON.parse(json.countryJson);
+					var html = "";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.id+"'>" + n.name + "</option>"
+					});
+
+					$("#ddlCountry").append(html);
+					$("#ddlNationality").append(html);
+					$('#ddlCountry').val($('#hidCountry').val());
+					$('#ddlNationality').val($('#hidNationality').val());
+				}
+
+			}
+		})
+	}
+	function bindOccupation() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/sys/param/paramList.do?datestr=" + new Date().getTime(),
+			//url : "${base}/console/occupationList.do?datestr="+ new Date().getTime(),
+			data : {
+				type : "occupation"
+			},
+			success : function(json) {
+				if (json != undefined && json.result.length > 0) {
+					var data = json.result;
+					var html = "";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.code+"'>" + n.name + "</option>"
+					});
+
+					$("#ddlOccupation").append(html);
+					$("#ddlOccupation").val($("#hidOccupation").val());
+				}
+
+			}
+		})
+	}
+	function bindEducation() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			//url : "${base}/console/educationList.do?datestr="+ new Date().getTime(),
+			url : "${base}/console/sys/param/paramList.do?datestr=" + new Date().getTime(),
+			data : {
+				type : "education"
+			},
+			success : function(json) {
+				if (json != undefined && json.result.length > 0) {
+					var data = json.result;
+					var html = "";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.code+"'>" + n.name + "</option>"
+					});
+
+					$("#ddlEducation").append(html);
+					$("#ddlEducation").val($("#hidEducation").val());
+				}
+
+			}
+		})
+	}
+	function bindEmployment() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			//url : "${base}/console/employmentList.do?datestr="+ new Date().getTime(),
+			url : "${base}/console/sys/param/paramList.do?datestr=" + new Date().getTime(),
+			data : {
+				type : "employment"
+			},
+			success : function(json) {
+				if (json != undefined && json.result.length > 0) {
+					var data = json.result;
+					var html = "";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.code+"'>" + n.name + "</option>"
+					});
+
+					$("#ddlEmployment").append(html);
+					$("#ddlEmployment").val($("#hidEmployment").val());
+				}
+
+			}
+		})
+	}
+</script>
+	</body>
+</html>

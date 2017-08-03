@@ -1,0 +1,63 @@
+[#include "../../inc/head_v2.html"/]
+
+		<link rel="stylesheet" href="${base}/res/js/library/ueditor_ue/themes/default/css/ueditor.css"> 
+		
+        <link rel="stylesheet" href="${base}/res/css/ifa.css">  
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+        <link rel="stylesheet" href="${base}/res/css/wmesupload.css">  
+        <style>
+       
+        </style>
+        <script type="text/javascript" src="${base}/res/js/jquery.min.js"></script>
+
+        <div class="wmes-top">
+         <a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+        <a href="javascript:;" class="header-over" >K.D.Lin's Space</a>
+    </div>
+    <div class="wmes-content">
+           <div class="insight-row">
+                    	<p class="insight-row-title"><span>*</span>topic:</p>
+                    	<textarea  class="insight-textarea" id="txtTitle" name="abstract"></textarea>
+                    </div>
+                    <div class="insight-row" style="display:none;">
+                        <p class="insight-row-title"><span>*</span>Content:</p>
+                        <!-- 加载编辑器的容器 -->
+                        <div class="uedWrap" style="width:auto;padding-right:30px;padding-bottom:0px;">
+                           <script id="container"  type="text/plain" style="width:90%;height:400px;"></script> 
+                        </div>
+                        <input type="hidden" value="" name="content" id="insightContent" />
+                        <div style="display:none;" id="preContent"></div>
+                    </div>
+                    <div class="insight-row" style="clear: both;">
+              <p class="insight-row-title"><span>*</span>Image:</p>
+              <div class="upload-box upload-album"></div>
+		      <div class="photo-list"><ul></ul></div>
+
+          </div>
+           <div class="insight-row" style="clear: both;">
+              <p class="insight-row-title"><span>*</span>Video:</p>
+              <div class="upload-box upload-video"></div>
+ 				<input name="hidFocusViedo" type="hidden" id="hidFocusVideo" class="focus-video" />
+		      <div class="video-list">
+		        <ul>
+		          
+		        </ul>
+          </div>
+                    <div style="text-align:center;clear: both;"><input type="button" id="btn-save" value="发表主题" /></div>    
+        </div>
+        </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var insightid='${insightId!}';
+/**
+ * 语言设置，用于umeditor
+ */
+var lang="zh-cn";
+	
+    seajs.use('${base}/res/web/ifa/cornerInfoForm.js');
+    seajs.use('${base}/res/third/autoImg/jQuery.autoIMG.min.js');
+    seajs.use('${base}/res/js/jsDatePick.jquery.min.1.3.js');
+	window.onload = function(){
+  	    
+	}; 
+</script>        

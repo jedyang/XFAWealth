@@ -1,0 +1,1544 @@
+[#include "../../inc/head_v2.html"/]
+		<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css"> 
+        <link rel="stylesheet" href="${base}/res/css/client.css">
+        <style type="text/css">
+        .page_left {background: url('${base}/res/images/ifa/left_ico.png') no-repeat;;position: absolute;top: 45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;left: -10px;opacity: 0.7;right: auto;cursor: pointer;}
+		.page_right {background: url('${base}/res/images/ifa/right_ico.png') no-repeat;position: absolute;top:45%;width: 65px;height: 67px;margin-top: -22px;z-index: 10;right: -10px;opacity: 0.7;left: auto;cursor: pointer;}
+			/*swiper 重写*/
+		.swiper-button-next, .swiper-button-prev {position: absolute;top: 80px;width: 50px;height: 50px;opacity: 0.7;margin-top: -22px;z-index: 10;cursor: pointer;background-position: center;background-repeat: no-repeat;display: none;
+					}
+		.swiper-button-disabled{display: none!important;}
+		.swiper-button-prev{background: url('${base}/res/images/ifa/left_ico.png') no-repeat;background-size: 100% 100%;left: 0px;}
+		.swiper-button-next{background: url('${base}/res/images/ifa/right_ico.png') no-repeat;background-size: 100% 100%;right: 0px;}
+		.pipelin-list-swiper{height: 367px;z-index: 0;}
+		.pipelin-list{margin-top: -180px;}
+		.pipelin-list:first-of-type{margin-top: 0px;}
+        </style>
+        <div class="wmes-top">
+            <a href="javascript:;" class="header-over">My Pipeline</a>
+        </div>
+        <div class="wmes-content">
+            <div class="noline_tab_wrap">
+                <ul class="noline_tab_tab">
+					<li class="now">Prospect<span></span></li>
+					<li>Existing<span></span></li>
+				</ul>
+            </div>
+    		<div class="my-pipeline-wrap">
+				<div class="pipelin-top-ico">
+					<a class="pipelin-button" id="pipelin-bless" href="javascript:;">Greet</a>
+					<a class="pipelin-button" id="pipelin-schedule" href="javascript:;">Schedule</a>
+					<a class="pipelin-button" href="${base}/front/strategy/info/createProposalSetOne.do">Create Proposal</a>
+					<div class="pipelin-bell">
+						<img id="pipelin-bell-ico" src="${base}/res/images/ifa/Small_bell.png">
+						<div class="pipelin-bell-wrap">
+							<p class="pipelin-bell-name">Remind</p>
+							<ul class="pipelin-bell-tab"> 
+								<li>Today</li>
+								<li class="bell-tab-active">One Week</li>
+								<li>Two Week</li>
+								<li>One Month</li>
+							</ul>
+							<ul class="pipelin-bell-contents">
+								<li>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_cake_ico.png"></div><p class="pipelin-bell-word">Birthday</p><p class="pipelin-bell-num">1</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_email_ico.png"></div><p class="pipelin-bell-word">Message</p><p class="pipelin-bell-num">2</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_appo_ico.png"></div><p class="pipelin-bell-word">Appointment</p><p class="pipelin-bell-num">3</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_review_ico.png"></div><p class="pipelin-bell-word">Porfolio Review</p><p class="pipelin-bell-num">3</p></div>
+									<div class="pipelin-bell-mesWrap" data-type="kyc"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_kyc_ico.png"></div><p class="pipelin-bell-word">KYC Review</p><p class="pipelin-bell-num">1</p></div>
+								</li>
+								<li style="display:block;">
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_cake_ico.png"></div><p class="pipelin-bell-word">Birthday</p><p class="pipelin-bell-num">1</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_email_ico.png"></div><p class="pipelin-bell-word">Message</p><p class="pipelin-bell-num">2</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_appo_ico.png"></div><p class="pipelin-bell-word">Appointment</p><p class="pipelin-bell-num">1</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_review_ico.png"></div><p class="pipelin-bell-word">Porfolio Review</p><p class="pipelin-bell-num">1</p></div>
+									<div class="pipelin-bell-mesWrap" data-type="kyc"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_kyc_ico.png"></div><p class="pipelin-bell-word">KYC Review</p><p class="pipelin-bell-num">2</p></div>
+								</li>
+								<li>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_cake_ico.png"></div><p class="pipelin-bell-word">Birthday</p><p class="pipelin-bell-num">2</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_email_ico.png"></div><p class="pipelin-bell-word">Message</p><p class="pipelin-bell-num">1</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_appo_ico.png"></div><p class="pipelin-bell-word">Appointment</p><p class="pipelin-bell-num">3</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_review_ico.png"></div><p class="pipelin-bell-word">Porfolio Review</p><p class="pipelin-bell-num">2</p></div>
+									<div class="pipelin-bell-mesWrap" data-type="kyc"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_kyc_ico.png"></div><p class="pipelin-bell-word">KYC Review</p><p class="pipelin-bell-num">3</p></div>
+								</li>
+								<li>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_cake_ico.png"></div><p class="pipelin-bell-word">Birthday</p><p class="pipelin-bell-num">1</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_email_ico.png"></div><p class="pipelin-bell-word">Message</p><p class="pipelin-bell-num">2</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_appo_ico.png"></div><p class="pipelin-bell-word">Appointment</p><p class="pipelin-bell-num">2</p></div>
+									<div class="pipelin-bell-mesWrap"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_review_ico.png"></div><p class="pipelin-bell-word">Porfolio Review</p><p class="pipelin-bell-num">3</p></div>
+									<div class="pipelin-bell-mesWrap" data-type="kyc"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_kyc_ico.png"></div><p class="pipelin-bell-word">KYC Review</p><p class="pipelin-bell-num">2</p></div>
+								</li>
+							</ul>
+							<div class="pipelin-bell-line"></div>
+						</div>
+					</div>					
+				</div>
+				<div class="pipelin-top-search">
+					<div class="pipelin_xiala">
+                        <input type="text"  placeholder="Please select" readonly>
+                        <span class="icon_xiala"></span>
+                        <ul id="pipelin-choice">
+                        	<li>Please select</li>
+                            <li>Asian clients</li>
+                            <li>European clients</li>
+                        </ul>
+                    </div>
+					<div class="plipelin-imporatant-ico">
+						<div class="plipelin-checkbox-ico"></div>
+						<p class="plipelin-checkbox-title">Important</p>
+					</div>
+               		
+               		<div class="wmes_keyserach">
+                        <input type="text" placeholder="Please enter keyword search">
+                        <span class="wmes_icon_search"></span>
+                    </div>	
+				</div>
+    			<div class="pipeline-prospect pipeline-div pipeline-div-active">
+    				<div class="pipelin-list-wrap">
+    					<div class="pipelin-list-rows">
+    						<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<!--<p class="pipelin-date-day">01</p> -->
+	    							<p class="pipelin-date-title">New<!--  <span class="pipelin-date-num">(2)</span> --></p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+	    							<ul class="swiper-wrapper">
+	    								<li class="pipelin-list-contents  swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name"><a href="${base}/front/strategy/info/clientDetail.do">Xc Zhao</a></p>
+			    								<div class="pipelin-contents-topl">
+			    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/exclamatory_ico.png">
+			    									<p class="pipelin-date-level">2</p>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Zhao@qq.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">020-1353312457</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+			    						</li>
+			    						<li class="pipelin-list-contents  swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Lam Ye</p>
+			    								<div class="pipelin-contents-topl">
+			    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Ye@163.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">186-154356884454</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">Two Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>	
+	    							</ul>
+	    							<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>	    					
+	    						</li>
+	    					</ul>	
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title">Contact</p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+									<ul class="swiper-wrapper">
+			    							<li class="pipelin-list-contents swiper-slide"">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Jeff Black</p>
+			    								<div class="pipelin-contents-topl">
+			    									<p class="pipelin-date-level">4</p>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Jeff@foxmail.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-13456683454</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">Today</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Henry Lee <img class="Small_cake_ico" src="${base}/res/images/ifa/Small_cake_ico.png"></p>
+			    								<div class="pipelin-contents-topl">
+			    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/exclamatory_ico.png">
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Henry@17173.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">032-1891332013</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Karen Chen</p>
+			    								<div class="pipelin-contents-topl">
+			    									<a href="${base}/front/strategy/info/clientDetailKyc.do"><img class="pipelin-date-exclamatory pipelin-kyc-img" src="${base}/res/images/ifa/kyc_ico.png"></a>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Lee@hotmail.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">045-1354687563</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">Two Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Jacky White</p>
+			    								<div class="pipelin-contents-topl">
+			    									<a href="${base}/front/strategy/info/clientDetailKyc.do"><img class="pipelin-date-exclamatory pipelin-kyc-img" src="${base}/res/images/ifa/kyc_ico.png"></a>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">White@qq.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">023-1354487556</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">Three Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+									</ul>
+									<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+	    						</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title">Proposal</p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+	    							<ul class="swiper-wrapper">
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Shirley Lu</p>
+			    								<div class="pipelin-contents-topl">
+			    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+			    									<p class="pipelin-date-level">4</p>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Shirley@qq.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">026-1359987454</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Hugo Liu<img class="Small_cake_ico" src="${base}/res/images/ifa/Small_cake_ico.png"></p>
+			    								<div class="pipelin-contents-topl">
+			    									<a href="${base}/front/strategy/info/clientDetailKyc.do"><img class="pipelin-date-exclamatory pipelin-kyc-img" src="${base}/res/images/ifa/kyc_ico.png"></a>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Hugo@hotmail.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">039-1387787954</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    					</ul>
+		    						<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title">Negotiating</p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+	    							<ul class="swiper-wrapper">
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Philip Huang</p>
+			    								<div class="pipelin-contents-topl">
+			    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Philip@hotmail.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">047-1358879875</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">Today</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Finoa Lo</p>
+			    								<div class="pipelin-contents-topl">
+			    									<p class="pipelin-date-level">1</p>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Finoa@163.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">024-1356645645</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Jacky White</p>
+			    								<div class="pipelin-contents-topl">
+			    									<p class="pipelin-date-level">2</p>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Jacky@163.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">092-1355646554</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">Three Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    					</ul>
+			    					<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title">Closed</p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+		    						<ul class="swiper-wrapper">	
+			    						<li class="pipelin-list-contents pipelin-list-read  swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Ken Chen<img class="Small_cake_ico" src="${base}/res/images/ifa/Small_cake_ico.png"></p>
+			    								<div class="pipelin-contents-topl">
+			    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Jacky@hotmail.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-1357564562</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    						<li class="pipelin-list-contents pipelin-list-read  swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Barry Su</p>
+			    								<div class="pipelin-contents-topl">
+			    									<a href="${base}/front/strategy/info/clientDetailKyc.do"><img class="pipelin-date-exclamatory pipelin-kyc-img" src="${base}/res/images/ifa/kyc_ico.png"></a>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Su@fsll.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">088-13266785138</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Edson He</p>
+			    								<div class="pipelin-contents-topl">
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">edson@chen.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">089-1387754987</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    							<div class="pipelin-contents-loss">
+			    								<div class="pipelin-loss-mask"></div>
+			    								<div class="pipelin-loss-word">LOSS</div>
+			    							</div>
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Ken Wu</p>
+			    								<div class="pipelin-contents-topl">
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Wu@hotmail.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">085-1354665987</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    							<div class="pipelin-contents-loss">
+			    								<div class="pipelin-loss-mask"></div>
+			    								<div class="pipelin-loss-word">LOSS</div>
+			    							</div>
+			    						</li>
+			    					</ul>
+			    					<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+    					</div>  					
+    				</div>
+    			</div>
+    			<div class="pipeline-existing pipeline-div">
+    				<div class="pipelin-list-wrap">
+    					<div class="pipelin-list-rows">
+    						<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title">Customer Care</p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+		    						<ul class="swiper-wrapper">
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">lay Chen</p>
+			    								<div class="pipelin-contents-topl">
+			    									<a href="${base}/front/strategy/info/clientDetailKyc.do"><img class="pipelin-date-exclamatory pipelin-kyc-img" src="${base}/res/images/ifa/kyc_ico.png"></a>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">lay@163.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-1365489254</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">Today</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Finoa Liu</p>
+			    								<div class="pipelin-contents-topl">
+			    									<a href="${base}/front/strategy/info/clientDetailKyc.do"><img class="pipelin-date-exclamatory pipelin-kyc-img" src="${base}/res/images/ifa/kyc_ico.png"></a>
+			    									<p class="pipelin-date-level">1</p>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Finoa@fsll.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-135469875</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">Two Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Mark Bo</p>
+			    								<div class="pipelin-contents-topl">
+			    									<p class="pipelin-date-level">2</p>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Mark@qq.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-1365487452</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>RemaBlessrk</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+		    						</ul>
+    								<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+    						<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title">Open Account</p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+	    							<ul class="swiper-wrapper">
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Chen Xi</p>
+			    								<div class="pipelin-contents-topl">
+			    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/exclamatory_ico.png">
+			    									<p class="pipelin-date-level">2</p>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Chenxi@qq.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">088-1354465789</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">Today</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Wenle Yu</p>
+			    								<div class="pipelin-contents-topl">
+			    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Wenle@fsll.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">026-1345645687</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    					</ul>
+			    					<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title">Proposal</p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+		    						<ul class="swiper-wrapper">
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Candy Clerk</p>
+			    								<div class="pipelin-contents-topl">
+			    									<p class="pipelin-date-level">4</p>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Candy@hotmail.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">026-1357789545</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    						<li class="pipelin-list-contents pipelin-contents-more swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Eric Chow<img class="Small_cake_ico" src="${base}/res/images/ifa/Small_cake_ico.png"></p>
+			    								<div class="pipelin-contents-topl">
+			    									<a href="${base}/front/strategy/info/clientDetailKyc.do"><img class="pipelin-date-exclamatory pipelin-kyc-img" src="${base}/res/images/ifa/kyc_ico.png"></a>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Henry@hotmail.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">024-136554987</p>
+			    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    							<div class="pipelin-list-eject">
+			    								<p class="pipelin-eject-name">Edison Portfolio</p>
+			    								<p class="pipelin-eject-price">130,0000 <span class="pipelin-eject-cur">USD</span></p>
+			    								<p class="pipelin-eject-percentage">3.25%</p>
+			    							</div>
+			    						</li>
+	        						</ul>
+	        						<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title">Portfolio</p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+		    						<ul class="swiper-wrapper">
+			    						<li class="pipelin-list-contents pipelin-contents-more swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Phillip Lo</p>
+			    								<div class="pipelin-contents-topl">
+			    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+			    									<p class="pipelin-date-level">4</p>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Phillip@qq.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-1356548798</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+			    							<div class="pipelin-list-eject">
+			    								<p class="pipelin-eject-name">Edison Portfolio</p>
+			    								<p class="pipelin-eject-price">130,0000 <span class="pipelin-eject-cur">USD</span></p>
+			    								<p class="pipelin-eject-percentage">3.25%</p>
+			    							</div>
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Hui Chen<img class="Small_cake_ico" src="${base}/res/images/ifa/Small_cake_ico.png"></p>
+			    								<div class="pipelin-contents-topl">
+			    									<a href="${base}/front/strategy/info/clientDetailKyc.do"><img class="pipelin-date-exclamatory pipelin-kyc-img" src="${base}/res/images/ifa/kyc_ico.png"></a>
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Hui@hotmail.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-1375564824</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">Two Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+        							</ul>
+    								<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+	    					<ul class="pipelin-list">
+	    						<li class="pipelin-list-date">
+	    							<p class="pipelin-date-title">Not Yet invest</p>
+	    							<div class="pipelin-date-bottom">
+	    								<img class="pipelin-date-add" src="${base}/res/images/ifa/list_date_add.png">
+	    							</div>
+	    						</li>
+	    						<li class="pipelin-list-swiper swiper-container">
+		    						<ul class="swiper-wrapper">
+			    						<li class="pipelin-list-contents pipelin-list-read swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Helen Chow<img class="Small_cake_ico" src="${base}/res/images/ifa/Small_cake_ico.png"></p>
+			    								<div class="pipelin-contents-topl">
+			    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Helen@163.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-13546219875</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    						<li class="pipelin-list-contents pipelin-list-read swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Jeff Liu</p>
+			    								<div class="pipelin-contents-topl">
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Jeftt@hotmail.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-1389548753</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    						<li class="pipelin-list-contents swiper-slide">
+			    							<div class="pipelin-contents-top">
+			    								<p class="pipelin-contents-name">Kai Ye</p>
+			    								<div class="pipelin-contents-topl">
+			    								</div>
+			    							</div>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Kai@kyc.com</p>
+			    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-1356651487</p>
+			    							<div class="pipelin-list-bottom">
+			    								<p class="pipelin-bottom-name">One Week</p>
+			    								<div class="pipelin-bottom-more">
+			    									<span></span>
+			    									<span></span>
+			    									<span></span>
+			    									<ul class="pipelin-list-more">
+			    										<li>Important?</li>
+			    										<li>Set Appointment</li>
+			    										<li>Remark</li>
+			    										<li>Greet</li>
+			    										<li>Delete</li>
+			    									</ul>
+			    								</div>
+			    							</div>
+			    						</li>
+			    					</ul>
+	    							<div class="swiper-button-next"></div>
+        							<div class="swiper-button-prev"></div>
+		    					</li>
+	    					</ul>
+    					</div>  					
+    				</div>
+    			</div>
+    			<div class="pipelin-search-mask"></div>
+				<div class="pipelin-list-search">
+    						<div class="pipelin-search-wrap">
+    							<a href="javascript:;" class="space-mask-close" id="pipelin-search-close"></a>
+    							<div class="pipelin-search-keys">
+    								<div class="wmes_keyserach">
+			                            <input type="text" placeholder="Please enter keyword search">
+			                            <span class="wmes_icon_search"></span>
+			                        </div>
+    							</div>
+    							<div class="wmes_choice_wrap">
+									<p class="wmes_choice_title pipelin_choice_title">select</p>
+									<ul class="wmes_choice">
+										<li  class="wmes_choice_active">All</li>
+										<li data-letter="A">A</li>
+										<li data-letter="B">B</li>
+										<li data-letter="C">C</li>
+										<li data-letter="D">D</li>
+										<li data-letter="E">E</li>
+										<li data-letter="F">F</li>
+										<li data-letter="G">G</li>
+										<li data-letter="H">H</li>
+										<li data-letter="I">I</li>
+										<li data-letter="J">J</li>
+										<li data-letter="K">K</li>
+										<li data-letter="L">L</li>
+										<li data-letter="M">M</li>
+										<li data-letter="N">N</li>
+										<li data-letter="O">O</li>
+										<li data-letter="P">P</li>
+										<li data-letter="Q">Q</li>
+										<li data-letter="R">R</li>
+										<li data-letter="S">S</li>
+										<li data-letter="T">T</li>
+										<li data-letter="U">U</li>
+										<li data-letter="V">V</li>
+										<li data-letter="W">W</li>
+										<li data-letter="S">S</li>
+										<li data-letter="Y">Y</li>
+										<li data-letter="Z">Z</li>
+									</ul>
+								</div>
+								<ul class="pipelin_choice-contents">
+									<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Xc Zhao</p>
+		    								<div class="pipelin-contents-topl">
+		    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/exclamatory_ico.png">
+		    									<p class="pipelin-date-level">2</p>
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Zhao@qq.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">020-1353312457</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">One Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Lam Ye</p>
+		    								<div class="pipelin-contents-topl">
+		    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Ye@163.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">186-154356884454</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">Two Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Shirley Lu</p>
+		    								<div class="pipelin-contents-topl">
+		    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+		    									<p class="pipelin-date-level">4</p>
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Shirley@hotmail.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-1354454562</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">One Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    								</div>
+		    							</div>
+		    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Jeff Black</p>
+		    								<div class="pipelin-contents-topl">
+		    									<p class="pipelin-date-level">4</p>
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Jeff@foxmail.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">086-13456683454</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">Today</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Henry Lee <img src="${base}/res/images/ifa/Small_cake_ico.png"></p>
+		    								<div class="pipelin-contents-topl">
+		    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/exclamatory_ico.png">
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Henry@17173.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">032-1891332013</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">One Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Karen Chen</p>
+		    								<div class="pipelin-contents-topl">
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Lee@hotmail.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">045-1354687563</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">Two Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Jacky White</p>
+		    								<div class="pipelin-contents-topl">
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">White@qq.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">023-1354487556</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">Three Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Shirley Lu</p>
+		    								<div class="pipelin-contents-topl">
+		    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+		    									<p class="pipelin-date-level">4</p>
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Shirley@qq.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">026-1359987454</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">One Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Hugo Liu<img src="${base}/res/images/ifa/Small_cake_ico.png"></p>
+		    								<div class="pipelin-contents-topl">
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Hugo@hotmail.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">039-1387787954</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">One Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Philip Huang</p>
+		    								<div class="pipelin-contents-topl">
+		    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Philip@hotmail.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">047-1358879875</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">Today</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Finoa Lo</p>
+		    								<div class="pipelin-contents-topl">
+		    									<p class="pipelin-date-level">1</p>
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Finoa@163.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">024-1356645645</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">One Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Jacky White</p>
+		    								<div class="pipelin-contents-topl">
+		    									<p class="pipelin-date-level">2</p>
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Jacky@163.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">092-1355646554</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">Three Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Chen Xi</p>
+		    								<div class="pipelin-contents-topl">
+		    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/exclamatory_ico.png">
+		    									<p class="pipelin-date-level">2</p>
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Chenxi@qq.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">088-1354465789</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">Today</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Wenle Yu</p>
+		    								<div class="pipelin-contents-topl">
+		    									<img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/list_date_ico.png">
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Wenle@fsll.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">026-1345645687</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">One Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Candy Clerk</p>
+		    								<div class="pipelin-contents-topl">
+		    									<p class="pipelin-date-level">4</p>
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Candy@hotmail.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">026-1357789545</p>
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">One Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    						</li>
+		    						<li class="pipelin-list-contents">
+		    							<div class="pipelin-contents-top">
+		    								<p class="pipelin-contents-name">Eric Chow<img src="${base}/res/images/ifa/Small_cake_ico.png"></p>
+		    								<div class="pipelin-contents-topl">
+		    									<a href="${base}/front/strategy/info/clientDetailKyc.do"><img class="pipelin-date-exclamatory" src="${base}/res/images/ifa/kyc_ico.png"></a>
+		    								</div>
+		    							</div>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_email_ico.png">Henry@hotmail.com</p>
+		    							<p class="pipelin-contents-word"><img src="${base}/res/images/ifa/small_phone_ico.png">024-136554987</p>
+		    							<img class="pipelin-list-heart" src="${base}/res/images/ifa/white_heart_ico.png">
+		    							<div class="pipelin-list-bottom">
+		    								<p class="pipelin-bottom-name">One Week</p>
+		    								<div class="pipelin-bottom-more">
+		    									<span></span>
+		    									<span></span>
+		    									<span></span>
+		    									<ul class="pipelin-list-more">
+		    										<li>Important?</li>
+		    										<li>Set Appointment</li>
+		    										<li>Remark</li>
+		    										<li>Greet</li>
+		    										<li>Delete</li>
+		    									</ul>
+		    								</div>
+		    							</div>
+		    						</li>
+								</ul>
+    						</div>
+				</div>
+            </div>
+        </div>
+        <!-- 弹出层 -->
+		<div class="ifa-space-popup" id="ifa-pipeline-search">
+		    <div class="ifa-space-mask"></div>
+		    <div class="space-mask-wrap">
+		        <div class="space-mask">
+		            <a href="javascript:;" class="space-mask-close" id="pipeline-search-close"></a>
+		            <img style="width:100%;" src="${base}/res/images/allimg/client/message_01.png">
+		        </div>
+		    </div>
+		</div>
+		<!-- 弹出层 -->
+		<div class="ifa-space-popup" id="ifa-pipeline-date">
+		    <div class="ifa-space-mask"></div>
+		    <div class="space-mask-wrap">
+		        <div class="space-mask">
+		            <a href="javascript:;" class="space-mask-close" id="pipelin-date-close"></a>
+		            <img style="width:100%;" src="${base}/res/images/allimg/fullcander.png">
+		        </div>
+		    </div>
+		</div>
+		<!-- 弹出层 -->
+		<div class="ifa-space-popup" id="ifa-pipeline-investors">
+		    <div class="ifa-space-mask"></div>
+		    <div class="space-mask-wrap">
+		        <div class="space-mask">
+		            <a href="javascript:;" class="space-mask-close" id="pipelin-investors-close"></a>
+		            <p class="home-investors-total">A total of <span class="home-investors-sum">17</span> investors to meet your requirements</p>
+		           <ul class="home-investor-list">
+		               
+		           </ul> 
+		        </div>
+		    </div>
+		</div>
+      <div class="investment-wrap investment-hide">
+			<!-- investment 浮动的框 -->
+			<div class="investment-plan-wrap">
+				<p class="investment-plan-title">Member Information</p>
+				<img class="investment-close-ico" src="${base}/res/images/discover/chat_01.png">
+				<div class="information-plan-rows">
+					<div class="information-plan-left">
+						<img class="information-plan-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+						<p class="information-topper-name">Lam</p>
+					</div>
+					<div class="information-plan-right">
+						<div class="information-date-rows">
+							<p class="information-date-title">Registration Date</p>
+							<p class="information-date-time">2016-10-25 14:33:45</p>
+						</div>
+						<div class="information-date-rows">
+							<p class="information-date-title">Last Login Date</p>
+							<p class="information-date-time">2016-10-24 16:19:22</p>
+						</div>
+					</div>
+				</div>
+				<div class="information-plan-rows">
+					<p class="information-plan-title">Contact Information <span class="information-more-ico"></span></p>
+					<ul class="information-contact-list">
+						<li class="information-contact-li">
+							<img class="information-contact-ico" src="${base}/res/images/ifa/small_phone_ico.png">
+							<p class="information-contact-word">+0085 **** 3440</p>
+						</li>
+						<li class="information-contact-li">
+							<img class="information-contact-ico" src="${base}/res/images/ifa/small_email_ico.png">
+							<p class="information-contact-word">Rlee@gmail.com</p>
+						</li>
+					</ul>
+					<ul class="information-contact-list">
+						<li class="information-contact-li">
+							<img class="information-contact-ico" src="${base}/res/images/client/wetchat_ico.png">
+							<p class="information-contact-word">******df</p>
+						</li>
+						<li class="information-contact-li">
+							<img class="information-contact-ico" src="${base}/res/images/client/weibo_ico.png">
+							<p class="information-contact-word">****y</p>
+						</li>
+						<li class="information-contact-li">
+							<img class="information-contact-ico" src="${base}/res/images/client/facebook_ico.png">
+							<p class="information-contact-word">N/A</p>
+						</li>
+					</ul>
+				</div>
+				<div class="information-plan-rows">
+					<p class="information-plan-title">Investment related <span class="information-more-ico"></span></p>
+					<div class="information-paragraph-rows">
+						<p class="information-paragraph-title">Investment Style</p>
+						<ul class="information-paragraph-list">
+							<li class="information-describe-yellow">Steady</li>
+							<li class="information-describe-yellow">Value</li>
+						</ul>			
+					</div>
+					<div class="information-paragraph-rows">
+						<p class="information-paragraph-title">Favorite Investment Field</p>
+						<ul class="information-paragraph-list">
+							<li class="information-describe-blue">Gold</li>
+							<li class="information-describe-blue">Energy</li>
+							<li class="information-describe-blue">Healthcare</li>
+							<li class="information-describe-blue">Commodity Futures</li>
+						</ul>
+					</div>
+				</div>
+				<div class="information-plan-rows">
+					<p class="information-plan-title">Basic Information <span class="information-more-ico"></span></p>
+					<div class="information-basic-top">
+						<div class="information-basic-rows">
+							<p class="information-paragraph-title">Investment Style</p>
+							<p class="information-basic-word">China, HongKong</p>
+						</div>
+						<div class="information-basic-rows">
+							<p class="information-paragraph-title">Nationality</p>
+							<p class="information-basic-word">China</p>
+						</div>
+					</div>
+					<div class="information-basic-top">
+						<div class="information-basic-rows">
+							<p class="information-paragraph-title">Level of Education</p>
+							<p class="information-basic-word">University or above</p>
+						</div>
+						<div class="information-basic-rows">
+							<p class="information-paragraph-title">Occupation</p>
+							<p class="information-basic-word">***</p>
+						</div>
+					</div>
+					<div class="information-basic-wrap">
+						<p class="information-paragraph-title">Personal introduction</p>
+						<p class="information-basic-word">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.</p>
+					</div>
+				</div>
+				<div class="information-plan-rows">
+					<p class="information-plan-title">Additional Information <span class="information-more-ico"></span></p>
+					<div class="information-paragraph-rows">
+						<p class="information-paragraph-title">Hobby</p>
+						<ul class="information-paragraph-list">
+							<li class="information-describe-red">Swimming</li>
+							<li class="information-describe-red">Tennis</li>
+							<li class="information-describe-red">Classical music</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- investment 浮动的框 -->
+		</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/myPipeline.js');
+</script>

@@ -1,0 +1,283 @@
+[#include "../../inc/head_v2.html"/]
+
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/ion.rangeSlider.css">
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/normalize.min.css">
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/ion.rangeSlider.skinNice.css">
+
+<!-- 
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='portfolio.title'/]</a>
+</div> -->
+<form id="paramsForm" name="paramsForm" action="" method="post" onkeydown="if(event.keyCode==13){return false;}">
+
+<div class="wmes-content" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+    <div class="ifa_choose_condition">
+        <div class="wmes-wrap-title" style="margin-bottom:0">
+			<p style="float:left;">[@lang_res k='portfolio.title'/]</p>
+			<a class="wmes-wrap-title-favourite" href="${base}/front/ifa/info/myfavorites.do?jp=0" style="float:right">[@lang_res k='assets.myFavourites'/]</a>
+		</div>
+        <div class="client-more-screen-wrap">
+        	<div class="funds_choice_wrap">
+		<p class="funds_choice_title">[@lang_res k='list.search.geoAllo'/]</p>
+					<ul class="funds_choice funds_logo_b" id="funds_logo_choice">
+						<li data-letter="" class="funds_all fund_choice_active fund_choice_active2" data-name="regions">[@lang_res k='fund.info.searchAll'/]</li>
+						<li data-letter="A,B,C,D,E">A-E</li>
+						<li data-letter="F,I,J">F-J</li>
+						<li data-letter="K,L,M,N,O">K-O</li>
+						<li data-letter="P,Q,R,S,T">P-T</li>
+						<li data-letter="U,V,W,X,Y,Z">U-Z</li>
+						</ul>
+					<ul class="funds_logo_choice funds_logo_choice_amend" id="funds_logo">
+				 	[#if regionList?exists && regionList?size gt 0]
+				  [#list regionList as list]
+					<li style="display:none;" title="${list.name!}" data-letter="${list.key!}" data-key="[@lang_res k='list.search.geoAllo'/] : ${list.name!}" data-name="regions" data-value="${list.itemCode!}" >${list.name!}</li>
+					[/#list]
+				   [/#if]
+					</ul>
+             </div>
+        <div class="funds_choice_wrap funds_choice_wrap_hidden">
+            <p class="funds_choice_title">[@lang_res k='list.search.sector'/] </p>
+           <ul class="funds_choice funds_choice_sector">
+			<li class="fund_choice_active funds_all funds_all_Sector fund_choice_active2"  data-name="sector" data-key="" data-value="fund_sector_00">[@lang_res k='fund.info.searchAll'/]</li>
+			[#if sectorList?exists && sectorList?size gt 0]
+			[#list sectorList as list]
+			<li data-name="sector${list_index}" data-key="[@lang_res k='list.search.sector'/] : ${list.name}" data-value="${list.itemCode!}">${list.name}</li>
+			[/#list]
+			[/#if]
+			</ul>
+			<div class="funds_choice_wrap_hiddenclick">
+				<img src="${base}/res/images/application/hideen.png">
+			</div>
+        </div>
+        <div class="funds_choice_wrap">
+            <p class="funds_choice_title">[@lang_res k='list.search.riskLevel'/] </p>
+            <ul class="funds_choice" >
+                <li data-name="riskLevel" data-key="" data-value=""  class="funds_all fund_choice_active fund_choice_active2">[@lang_res k='fund.info.searchAll'/]</li>
+                <li data-name="riskLevel" data-key="[@lang_res k='list.search.riskLevel'/] : 1" data-value="1">1</li>
+                <li data-name="riskLevel" data-key="[@lang_res k='list.search.riskLevel'/] : 2" data-value="2">2</li>
+				<li data-name="riskLevel" data-key="[@lang_res k='list.search.riskLevel'/] : 3" data-value="3">3</li>
+				<li data-name="riskLevel" data-key="[@lang_res k='list.search.riskLevel'/] : 4" data-value="4">4</li>
+				<li data-name="riskLevel" data-key="[@lang_res k='list.search.riskLevel'/] : 5" data-value="5">5</li>
+				<li data-name="riskLevel" data-key="[@lang_res k='list.search.riskLevel'/] : 6" data-value="6">6</li>
+				<li data-name="riskLevel" data-key="[@lang_res k='list.search.riskLevel'/] : 7" data-value="7">7</li>
+                
+            </ul>
+        </div>
+   		<div class="funds_choice_wrap funds_choice_wrap1">
+			<p class="funds_choice_title" style="height:49px;line-height:49px">[@lang_res k='portfolio.detail.performance'/]</p>
+			<p data-name="Per" id="per_all" data-key="" class="funds_all fund_choice_active per_active">[@lang_res k='fund.info.searchAll'/]</p>
+			<ul class="funds_xiala_choice" id="funds_per_choice">
+				<li>[@lang_res  k='fund.info.mon'/]</li>
+				<li>[@lang_res  k='fund.info.mon_3'/]</li>
+				<li>[@lang_res  k='fund.info.mon_6'/]</li>
+				<li>[@lang_res  k='fund.info.detail.YTD'/]</li>
+				<li>[@lang_res  k='fund.info.yr_1'/]</li>
+				<li>[@lang_res  k='fund.info.yr_3'/]</li>
+				<li>[@lang_res  k='fund.info.yr_5'/]</li>
+			</ul>
+			<ul class="funds_xiala_content" id="funds_per_content">
+				<li class="fund_xiala_active">
+					<ul class="funds_choice">
+						<li data-name="1M" data-key="" class="funds_all fund_choice_active per_child">[@lang_res  k='fund.info.searchAll'/]</li>
+						<li data-name="1M" data-key="[@lang_res  k='fund.info.mon'/] : <0%" data_from="-20" data_to="0" data-value="pref">
+							<0%</li>
+								<li data-name="1M" data-key="[@lang_res  k='fund.info.mon'/] : 0% - 20%" data_from="0" data_to="20" data-value="pref">0% - 20%</li>
+								<li data-name="1M" data-key="[@lang_res  k='fund.info.mon'/] : 20% - 40%" data_from="20" data_to="40" data-value="pref">20% - 40%</li>
+								<li data-name="1M" data-key="[@lang_res  k='fund.info.mon'/] : 40% - 60%" data_from="40" data_to="60" data-value="pref">40% - 60%</li>
+								<li data-name="1M" data-key="[@lang_res  k='fund.info.mon'/] : 60% - 80%" data_from="60" data_to="80" data-value="pref">40% - 80%</li>
+								<li data-name="1M" data-key="[@lang_res  k='fund.info.mon'/] : 80% - 100%" data_from="80" data_to="100" data-value="pref">40% - 100%</li>
+								<li data-name="1M" data-key="[@lang_res  k='fund.info.mon'/] : >100%" data_from="100" data_to="120" data-value="pref">>100%</li>
+					</ul>
+					</li>
+					<li class="fund_xiala_active">
+						<ul class="funds_choice">
+							<li data-name="3M" data-key="" class="funds_all fund_choice_active per_child">[@lang_res  k='fund.info.searchAll'/]</li>
+							<li data-name="3M" data-key="[@lang_res  k='fund.info.mon_3'/] : <0%" data_from="-20" data_to="0" data-value="pref">
+								<0%</li>
+									<li data-name="3M" data-key="[@lang_res  k='fund.info.mon_3'/] : 0% - 20%" data_from="0" data_to="20" data-value="pref">0% - 20%</li>
+									<li data-name="3M" data-key="[@lang_res  k='fund.info.mon_3'/] : 20% - 40%" data_from="20" data_to="40" data-value="pref">20% - 40%</li>
+									<li data-name="3M" data-key="[@lang_res  k='fund.info.mon_3'/] : 40% - 60%" data_from="40" data_to="60" data-value="pref">40% - 60%</li>
+									<li data-name="3M" data-key="[@lang_res  k='fund.info.mon_3'/] : 60% - 80%" data_from="60" data_to="80" data-value="pref">40% - 80%</li>
+									<li data-name="3M" data-key="[@lang_res  k='fund.info.mon_3'/] : 80% - 100%" data_from="80" data_to="100" data-value="pref">40% - 100%</li>
+									<li data-name="3M" data-key="[@lang_res  k='fund.info.mon_3'/] : >100%" data_from="100" data_to="120" data-value="pref">>100%</li>
+						</ul>
+						</li>
+						<li class="fund_xiala_active">
+							<ul class="funds_choice">
+								<li data-name="6M" data-key="" class="funds_all fund_choice_active per_child">[@lang_res  k='fund.info.searchAll'/]</li>
+								<li data-name="6M" data-key="[@lang_res  k='fund.info.mon_6'/] : <0%" data_from="-20" data_to="0" data-value="pref">
+									<0%</li>
+										<li data-name="6M" data-key="[@lang_res  k='fund.info.mon_6'/] : 0% - 20%" data_from="0" data_to="20" data-value="pref">0% - 20%</li>
+										<li data-name="6M" data-key="[@lang_res  k='fund.info.mon_6'/] : 20% - 40%" data_from="20" data_to="40" data-value="pref">20% - 40%</li>
+										<li data-name="6M" data-key="[@lang_res  k='fund.info.mon_6'/] : 40% - 60%" data_from="40" data_to="60" data-value="pref">40% - 60%</li>
+										<li data-name="6M" data-key="[@lang_res  k='fund.info.mon_6'/] : 60% - 80%" data_from="60" data_to="80" data-value="pref">40% - 80%</li>
+										<li data-name="6M" data-key="[@lang_res  k='fund.info.mon_6'/] : 80% - 100%" data_from="80" data_to="100" data-value="pref">40% - 100%</li>
+										<li data-name="6M" data-key="[@lang_res  k='fund.info.mon_6'/] : >100%" data_from="100" data_to="120" data-value="pref">>100%</li>
+							</ul>
+							</li>
+							<li class="fund_xiala_active">
+								<ul class="funds_choice">
+									<li data-name="YTD" data-key="" class="funds_all fund_choice_active per_child">[@lang_res  k='fund.info.searchAll'/]</li>
+									<li data-name="YTD" data-key="[@lang_res  k='fund.info.YTD'/] : <0%" data_from="-20" data_to="0" data-value="pref">
+										<0%</li>
+											<li data-name="YTD" data-key="[@lang_res  k='fund.info.YTD'/] : 0% - 20%" data_from="0" data_to="20" data-value="pref">0% - 20%</li>
+											<li data-name="YTD" data-key="[@lang_res  k='fund.info.YTD'/] : 20% - 40%" data_from="20" data_to="40" data-value="pref">20% - 40%</li>
+											<li data-name="YTD" data-key="[@lang_res  k='fund.info.YTD'/] : 40% - 60%" data_from="40" data_to="60" data-value="pref">40% - 60%</li>
+											<li data-name="YTD" data-key="[@lang_res  k='fund.info.YTD'/] : 60% - 80%" data_from="60" data_to="80" data-value="pref">40% - 80%</li>
+											<li data-name="YTD" data-key="[@lang_res  k='fund.info.YTD'/] : 80% - 100%" data_from="80" data_to="100" data-value="pref">40% - 100%</li>
+											<li data-name="YTD" data-key="[@lang_res  k='fund.info.YTD'/] : >100%" data_from="100" data_to="120" data-value="pref">>100%</li>
+								</ul>
+								</li>
+								<li class="fund_xiala_active">
+									<ul class="funds_choice">
+										<li data-name="1Y" data-key="" class="funds_all fund_choice_active per_child">[@lang_res  k='fund.info.searchAll'/]</li>
+										<li data-name="1Y" data-key="[@lang_res  k='fund.info.yr_1'/] : <0%" data_from="-20" data_to="0" data-value="pref">
+											<0%</li>
+												<li data-name="1Y" data-key="[@lang_res  k='fund.info.yr_1'/] : 0% - 20%" data_from="0" data_to="20" data-value="pref">0% - 20%</li>
+												<li data-name="1Y" data-key="[@lang_res  k='fund.info.yr_1'/] : 20% - 40%" data_from="20" data_to="40" data-value="pref">20% - 40%</li>
+												<li data-name="1Y" data-key="[@lang_res  k='fund.info.yr_1'/] : 40% - 60%" data_from="40" data_to="60" data-value="pref">40% - 60%</li>
+												<li data-name="1Y" data-key="[@lang_res  k='fund.info.yr_1'/] : 60% - 80%" data_from="60" data_to="80" data-value="pref">40% - 80%</li>
+												<li data-name="1Y" data-key="[@lang_res  k='fund.info.yr_1'/] : 80% - 100%" data_from="80" data_to="100" data-value="pref">40% - 100%</li>
+												<li data-name="1Y" data-key="[@lang_res  k='fund.info.yr_1'/] : >100%" data_from="100" data_to="120" data-value="pref">>100%</li>
+									</ul>
+									</li>
+									<li class="fund_xiala_active">
+										<ul class="funds_choice">
+											<li data-name="3Y" data-key="" class="funds_all fund_choice_active per_child">[@lang_res  k='fund.info.searchAll'/]</li>
+											<li data-name="3Y" data-key="[@lang_res  k='fund.info.yr_3'/] : <0%" data_from="-20" data_to="0" data-value="pref">
+												<0%</li>
+													<li data-name="3Y" data-key="[@lang_res  k='fund.info.yr_3'/] : 0% - 20%" data_from="0" data_to="20" data-value="pref">0% - 20%</li>
+													<li data-name="3Y" data-key="[@lang_res  k='fund.info.yr_3'/] : 20% - 40%" data_from="20" data_to="40" data-value="pref">20% - 40%</li>
+													<li data-name="3Y" data-key="[@lang_res  k='fund.info.yr_3'/] : 40% - 60%" data_from="40" data_to="60" data-value="pref">40% - 60%</li>
+													<li data-name="3Y" data-key="[@lang_res  k='fund.info.yr_3'/] : 60% - 80%" data_from="60" data_to="80" data-value="pref">40% - 80%</li>
+													<li data-name="3Y" data-key="[@lang_res  k='fund.info.yr_3'/] : 80% - 100%" data_from="80" data_to="100" data-value="pref">40% - 100%</li>
+													<li data-name="3Y" data-key="[@lang_res  k='fund.info.yr_3'/] : >100%" data_from="100" data_to="120" data-value="pref">>100%</li>
+										</ul>
+										</li>
+										<li class="fund_xiala_active">
+											<ul class="funds_choice">
+												<li data-name="5Y" data-key="" class="funds_all fund_choice_active per_child">[@lang_res  k='fund.info.searchAll'/]</li>
+												<li data-name="5Y" data-key="[@lang_res  k='fund.info.yr_5'/] ： <0%" data_from="-20" data_to="0" data-value="pref">
+													<0%</li>
+														<li data-name="5Y" data-key="[@lang_res  k='fund.info.yr_5'/] : 0% - 20%" data_from="0" data_to="20" data-value="pref">0% - 20%</li>
+														<li data-name="5Y" data-key="[@lang_res  k='fund.info.yr_5'/] : 20% - 40%" data_from="20" data_to="40" data-value="pref">20% - 40%</li>
+														<li data-name="5Y" data-key="[@lang_res  k='fund.info.yr_5'/] : 40% - 60%" data_from="40" data_to="60" data-value="pref">40% - 60%</li>
+														<li data-name="5Y" data-key="[@lang_res  k='fund.info.yr_5'/] : 60% - 80%" data_from="60" data_to="80" data-value="pref">40% - 80%</li>
+														<li data-name="5Y" data-key="[@lang_res  k='fund.info.yr_5'/] : 80% - 100%" data_from="80" data_to="100" data-value="pref">40% - 100%</li>
+														<li data-name="5Y" data-key="[@lang_res  k='fund.info.yr_5'/] : >100%" data_from="100" data_to="120" data-value="pref">>100%</li>
+											</ul>
+											</li>
+			</ul>
+		</div>
+        </div>
+        	<div class="wmes-menu-hide">
+        		<div class="wmes-menu-hidecon"><b>[@lang_res k='global.screen'/]</b><span></span></div>
+        	</div>
+			</div>
+    <div class="strategies_list_wrap" style="padding-top:0;">
+     <div class="funds_list_selected">
+         <p class="funds_selected_title">[@lang_res k='global.selectedCondition'/] </p>
+         <ul class="selection_criteria">
+             <p class="funds_title_selection">[@lang_res k='fund.info.resetFilter'/] </p>
+         </ul>
+     </div>
+     <div class="ifa_keyserach_wrap">
+         <p class="ifa_serach_sum">
+            [@lang_res k='search.list.total1'/]                
+             <span class="funds_serach_digital  ng-cloak">{{datatotal}}</span> [@lang_res k='search.list.total2'/] </p>
+         <div class="funds_keyserach ifa_keyserach">
+             <input type="text" id="searchKeyWord" placeholder="[@lang_res k='portfolio.info.form.portfolioName'/]">
+             <span class="icon_search" id="searchKeyBtn"></span>
+         </div>
+     </div>
+     <input type="hidden" id="defColor" value="${defDisplayColor!}">
+     <input type="hidden" id="dateFormat" value="${dateFormat!}">
+     <ul class="funds_ifalist_sorting">
+			<li class="funds_active">
+				<p>[@lang_res k='ifa.detail.insight.publishDate'/]</p>
+				<p>
+					<span class="funds_arrow_top" sort="l.lastUpdate" order="asc"></span>
+					<span class="funds_arrow_down funds_down_active" sort="l.lastUpdate" order="desc"></span>
+				</p>
+			</li>
+			<li>
+				<p>[@lang_res k='fund.info.riskrating'/]</p>
+				<p>
+					<span class="funds_arrow_top funds_arrow_top_matching" sort="l.riskLevel" order="asc" ></span>
+					<span class="funds_arrow_down funds_arrow_down_matching" sort="l.riskLevel" order="desc"  ></span>
+				</p>
+			</li>
+			<li>
+				<p>[@lang_res k='fund.info.screener.performance'/]</p>
+				<p>
+					<span class="funds_arrow_top funds_arrow_top_year" sort="l.totalReturn" order="asc"></span>
+					<span class="funds_arrow_down funds_arrow_down_year" sort="l.totalReturn" order="desc"></span>
+				</p>
+		</ul>
+            <div class="portfolio_list"><ul class="portfolio_list_ul">
+					<li class="dataListTr ng-cloak" ng-repeat="items in dataList">
+					<a href="${base}/front/portfolio/arena/detail.do?id={{items.id}}">
+						<div class="portfolio_list_contents portfolio_list_contents_amend">
+							<p class="portfolio_name portfolio_name_amend" title="{{items.portfolioName}}">{{items.portfolioName}}</p>
+							<div class="portfolio_fav_img_amend"  optype="0" relateid="{{items.id}}"  src="${base}/res/images/icon-herat-1.png" ng-if="items.isFollow=='0' || items.isFollow==null"></div>
+							<div class="portfolio_fav_img_amend portfolio_fav_img_amend1active"  optype="1" relateid="{{items.id}}"   src="${base}/res/images/icon-herat-11.png" ng-if="items.isFollow=='1'"></div>
+							<div class="strategies_word_wrap">
+								<p class="strategies_list_goal" style="width:70%; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" data-ellipsis="true" data-ellipsis-max-line="3" title="{{items.sector}} | {{items.geoAllocation}}" >
+									{{items.sector}} <span ng-if="items.sector!='' && items.geoAllocation!=''">|</span> {{items.geoAllocation}}
+								</p>
+								<span class="lump-equity-grade funds_leveal_{{items.riskLevel}}" style="margin-right:30px" title="Risk Level {{items.riskLevel}}">{{items.riskLevel}}</span>
+								</div>
+							<p style="margin:10px 0;font-weight:bold;min-height:16px;"><span style="color:#5dc94f;margin-right:8px;" ng-bind-html="items.monReturn3 | currencyColor:'%':defColor"></span>[@lang_res k='fund.info.screener.performance.3MonthReturn'/]</p>
+							<div class="portfolio_total portfolio_total_amend">
+
+								<div class="portfolio_index_wrap_amend">
+										<img src="${base}/loadImgSrcByPath.do?filePath={{items.chartUrl}}" ng-if="items.chartUrl!=null && tems.chartUrl!='' " style="height:100%;width:100%" />
+										<img src="${base}/res/images/application/portfolio_nodata.png" ng-if="items.chartUrl==null || tems.chartUrl=='' " style="height:100%;width:100%" />
+									</div>
+								<div class="portfolio_return portfolio_return_amend"> 
+								<p class="portfolio_percent_amend" ng-bind-html="items.totalReturn | currencyColor:'%':defColor"></p>
+									<p class="portfolio_return_word">
+										[@lang_res k='list.search.return'/]
+									</p>
+								</div>
+							</div>
+						</div>
+						</a>
+						<div class="strategies_list_inf">
+							<a href="${base}/front/community/space/ifaSpace.do?id={{items.ifaMember.id}}">
+							<img class="strategies_inf_img" src="{{items.creator.iconUrl | userhead:items.ifa.gender:baseroot}}">
+							<p class="strategies_list_ifaname strategies_list_ifaname_amend">
+								{{items.creatorName}} 
+							</p></a>
+							<p class="strategies_time_word strategies_time_word_amend">
+								{{items.createTime|datetime:dateTimeFormat}}
+							</p>
+							<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+						</div>
+						
+					</li>
+				</ul>
+				<div class="clickmore" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+				<div class="wmes-nodata-tips no_list_tips">
+                      <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                      <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  </div>
+				</div>
+			
+		</div>
+
+</div>
+	<input type="hidden" value="" name="regions" id="regions" />
+	<input type="hidden" value="" name="sectors" id="sectors" />
+	<input type="hidden" value="" name="riskLevel" id="riskLevel" />
+	<input type="hidden" value="" name="keyWord" id="keyWord" />
+	<input type="hidden" value="1" name="status" id="status" />
+	<input type="hidden" value="" name="pref" id="pref" />
+</form>
+[#include "../../inc/foot_v2.html"/] 
+
+<script type="text/javascript">
+seajs.use('${base}/res/web/portfolio/arena/list.js');
+</script>

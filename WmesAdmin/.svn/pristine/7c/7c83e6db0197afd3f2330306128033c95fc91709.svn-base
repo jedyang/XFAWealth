@@ -1,0 +1,18 @@
+package com.fsll.wmes.web.vo;
+
+import javax.persistence.Column;
+
+import com.fsll.wmes.entity.MemberDistributor;
+
+public class MemberDistributorExtend extends MemberDistributor {
+	
+	private String incorporationPlaceName;
+	
+	public String getIncorporationPlaceName() {
+		return incorporationPlaceName;
+	}
+
+	public void setincorporationPlaceName(String incorporationPlaceName) {
+		this.incorporationPlaceName = incorporationPlaceName;
+	}
+}

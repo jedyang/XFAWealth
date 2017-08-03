@@ -1,0 +1,188 @@
+[#include "../../inc/bak/head.html"/]
+<link rel="stylesheet" href="${base}/res/third/zTree/css/metroStyle/metroStyle.css" type="text/css">
+<script src="${base}/res/third/zTree/js/jquery.ztree.all.min.js" type="text/javascript"></script>
+[#include "../../inc/navForm.html"/]
+<div class="container-fluid">
+    <div class="main-body">
+            <h3 class="page-header page-header-top-fix">[@lang_res l=Session["_LANG_CODE_"] k='lang.title'/]</h3>
+               <form class="form-horizontal label-w-clear" id="frm" method="post">
+                    <input type="hidden" name="id" id="id" value="${(site.id)?if_exists}"/>
+                    <input type="hidden" name="hidesiteName" id="hidesiteName" value="${(site.siteName)?if_exists}">
+                    <input type="hidden" name="hidedomain" id="hidedomain" value="${(site.domain)?if_exists}">
+                    <!-- 域名 -->
+                    <div class="form-group">
+                        <label for="inputName3" class="control-label col-sm-3"><span class="red">*</span>[@lang_res l=Session["_LANG_CODE_"] k='lang.domain'/]：</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="domain"  name="domain" value="${(site.domain)?if_exists}" placeholder="[@lang_res l=Session["_LANG_CODE_"] k='lang.domain.tip'/]">
+                        </div>
+                    </div>
+                    <!-- 网站名称 -->
+                    <div class="form-group ">
+                        <label for="inputName3" class="control-label col-sm-3"><span class="red">*</span>[@lang_res l=Session["_LANG_CODE_"] k='lang.siteName'/]：</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="siteName"  name="siteName" value="${(site.siteName)?if_exists}"  placeholder="[@lang_res l=Session["_LANG_CODE_"] k='lang.siteName.tip'/]">
+                        </div>
+                    </div>
+                    <!-- 网站简称 -->
+                    <div class="form-group ">
+                        <label for="inputName3" class="control-label col-sm-3"><span class="red">*</span>[@lang_res l=Session["_LANG_CODE_"] k='lang.shortName'/]：</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="shortName"  name="shortName" value="${(site.shortName)?if_exists}"  placeholder="[@lang_res l=Session["_LANG_CODE_"] k='lang.shortName.tip'/]">
+                        </div>
+                    </div>
+                    <!-- 路径 -->
+                    <div class="form-group ">
+                        <label for="inputName3" class="control-label col-sm-3"><span class="red">*</span>[@lang_res l=Session["_LANG_CODE_"] k='lang.path'/]：</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="sitePath"  name="sitePath" value="${(site.sitePath)?if_exists}" placeholder="[@lang_res l=Session["_LANG_CODE_"] k='lang.path.tip'/]">
+                        </div>
+                    </div>
+                    <!-- 是否是主站-->
+                    <div class="form-group ">
+                        <label for="typeLable" class="col-sm-3 control-label "><span class="red">*</span>[@lang_res l=Session["_LANG_CODE_"] k='lang.isMain'/]：</label>
+                        <div class="col-sm-6">
+                            <span id="typeLable" >
+                             &nbsp;<input type="radio"  value="1" id="radiocode-1"  name="isMaster"  [#if site.isMaster?exists == false || site.isMaster == '1']checked[/#if]>[@lang_res l=Session["_LANG_CODE_"] k='lang.isMaster.1'/]&nbsp;&nbsp;&nbsp;&nbsp;
+                             <input type="radio"  value="0" id="radiocode-2"  name="isMaster" [#if site.isMaster?exists && site.isMaster == '0']checked[/#if]>[@lang_res l=Session["_LANG_CODE_"] k='lang.isMaster.0'/]</span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- 语言 -->
+                    <div class="form-group ">
+                        <label for="inputCon" class="col-sm-3 control-label "><span class="red">*</span>[@lang_res l=Session["_LANG_CODE_"] k='lang.lang'/]：</label>
+                        <div class="col-sm-6">
+                            <select class="form-control " id="langFlag"  name="langFlag">
+                               <option value="sc" [#if site.langFlag?exists==false||site.langFlag == 'sc']selected[/#if]>[@lang_res l=Session["_LANG_CODE_"] k='lang.sc'/]</option>
+                               <option value="tc" [#if site.langFlag?exists&&site.langFlag == 'tc']selected[/#if]>[@lang_res l=Session["_LANG_CODE_"] k='lang.tc'/]</option>
+                               <option value="en" [#if site.langFlag?exists&&site.langFlag == 'en']selected[/#if]>[@lang_res l=Session["_LANG_CODE_"] k='lang.en'/]</option>
+                            </select>
+                        </div>
+                    </div>
+                 <hr>
+                 <div class="row text-center" role="group">
+                     <button type="submit" class="btn btn-primary" id="saveButton">[@lang_res l=Session["_LANG_CODE_"] k='lang.saveButton'/]</button>
+                     <button type="button" class="btn btn-default" onclick="sClose()">[@lang_res l=Session["_LANG_CODE_"] k='lang.cancel'/]</button>
+				     <span id="contact-form-success" style="display:none;">[@lang_res l=Session["_LANG_CODE_"] k='lang.success'/]</span>
+				     <span id="contact-form-error" style="display:none;">[@lang_res l=Session["_LANG_CODE_"] k='lang.error'/]</span>
+                 </div>
+                </form>
+                [#include "../../inc/bak/foot.html"/]
+        <div class="clearfix"></div><br>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#frm').bootstrapValidator({
+        //message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+        	domain: {
+                message: '[@lang_res l=Session["_LANG_CODE_"] k='lang.domain.notEmpty'/]',
+                validators: {
+                    notEmpty: {
+                        message: '[@lang_res l=Session["_LANG_CODE_"] k='lang.domain.notEmpty'/]'
+                    },
+                    callback : {
+	        			message: '[@lang_res l=Session["_LANG_CODE_"] k='lang.domain.exist'/]',
+	        			callback:function(value,validate){
+	        			    var url="${base}/console/sys/site/checkdomainExist.do?datestr="+new Date().getTime()+"&domain="+encodeURI(encodeURI($("#domain").val()));
+		        		    var res=true;
+	        			    if($("#hidedomain").val()!=value&&""!=value){
+	        			    	$.ajax({
+									url:url,
+									method:'post',
+									dataType:'json',
+									async: false,
+									success:function(data){
+										res=data.valid;
+									},error:function(){
+									}
+								});
+							} 
+	        		       return res;
+	        			},
+            		},
+                }
+            },
+            siteName: {
+                message: '[@lang_res l=Session["_LANG_CODE_"] k='lang.siteName.notEmpty'/]',
+                validators: {
+                    notEmpty: {
+                        message: '[@lang_res l=Session["_LANG_CODE_"] k='lang.siteName.notEmpty'/]'
+                    },
+                    callback : {
+	        			message: '[@lang_res l=Session["_LANG_CODE_"] k='lang.siteName.exist'/]',
+	        			callback:function(value,validate){
+	        			    var url="${base}/console/sys/site/checksiteNameExist.do?datestr="+new Date().getTime()+"&siteName="+encodeURI(encodeURI($("#siteName").val()));
+		        		    var res=true;
+	        			    if($("#hidesiteName").val()!=value&&""!=value){
+	        			    	$.ajax({
+									url:url,
+									method:'post',
+									dataType:'json',
+									async: false,
+									success:function(data){
+										res=data.valid;
+									},error:function(){
+									}
+								});
+							} 
+	        		       return res;
+	        			},
+            		},
+                }
+            },
+            shortName: {
+                message: '[@lang_res l=Session["_LANG_CODE_"] k='lang.shortName.notEmpty'/]',
+                validators: {
+                    notEmpty: {
+                        message: '[@lang_res l=Session["_LANG_CODE_"] k='lang.shortName.notEmpty'/]'
+                    },
+                }
+            },
+            sitePath: {
+                message: '[@lang_res l=Session["_LANG_CODE_"] k='lang.sitePath.notEmpty'/]',
+                validators: {
+                    notEmpty: {
+                        message: '[@lang_res l=Session["_LANG_CODE_"] k='lang.sitePath.notEmpty'/]'
+                    },
+                }
+            } 
+        }
+    }).on('success.form.bv', function(e) {
+        e.preventDefault();
+       	saveData();
+    });
+});
+
+function saveData(){
+	$("#saveButton").attr({'disabled':true});
+	$("#frm").ajaxSubmit(
+			{
+				url: "${base}/console/sys/site/save.do?datestr="+new Date().getTime(),
+				iframe: true,
+				success: function(data, status)
+				{   
+			        $("#saveButton").attr({'disabled':false});
+			        var dataObj=eval("("+data+")");
+	                if(dataObj.result){
+		              window.location.href="${base}/console/sys/site/list.do?r="+new Date().getTime();
+	                }else{
+	                  $('#contact-form-error').show().fadeOut(10000);
+	                }
+				},
+				error:function()
+				{
+					$('#contact-form-error').show().fadeOut(10000);
+				}
+			});
+}
+
+function sClose(){
+	 window.location.href="${base}/console/sys/site/list.do?r="+new Date().getTime();
+}
+</script>

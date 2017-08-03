@@ -1,0 +1,187 @@
+[#include "../inc/head_no_menu.html"/]
+<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/res/third/bootstrap/css/bootstrapValidator.css"/>
+<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+        <div class="tab-side-container">
+            <ul class="tab" id="tab-search">
+                <li class="tab-li-crr">
+                    <a href="#tab_wrap" class="addTeam">[@lang_res k='ifafirm.list.addTeam'/]</a>
+                </li>
+                <li>
+                    <a href="#tab_wrap" class="members">[@lang_res k='ifafirm.list.managementTeamUser'/]</a>
+                </li>
+            </ul>
+                            
+			<div id="id_teaminfo" >
+				<form class="form-horizontal required-validate" id="addTeamFrm">
+					<div class="form-group">
+					    <div class="col-md-3 text-right">
+					        <span class="red">* </span><label for="txtLoginCode" class="label-control">[@lang_res  k="ifafirm.team.name" /]</label>
+					    </div>
+					   <div class="col-md-7">
+					       <input id="txtName" name="txtName" type="text" class="form-control " value="">
+					   </div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-3 text-right">
+						    <span class="red">* </span><label for="txtNickName" class="label-control">[@lang_res  k="ifafirm.team.code" /]</label>
+						</div>
+						<div class="col-md-7">
+						    <input id="txtCode" name="txtCode" type="text" class="form-control " value="">
+						</div>
+					</div>      
+					<div class="form-group">
+						<div class="col-md-3 text-right">
+						    <span class="red">* </span><label for="txtOrder" class="label-control">[@lang_res  k="ifafirm.team.order" /]</label>
+						</div>
+						<div class="col-md-7">
+						    <input id="txtOrder" name="txtOrder" type="number" class="form-control " value="">
+						</div>
+					</div>      
+					<div class="form-group">
+						<div class="col-md-3 text-right">
+						    <label for="txtReamrk" class="label-control">[@lang_res  k="ifafirm.team.remark" /]</label>
+						</div>
+						<div class="col-md-7">
+						    <input id="txtReamrk" name="txtReamrk" type="text" class="form-control " value="">
+						</div>
+					</div>
+					<div class="col-md-2" style="text-align:center;width:100%;margin-top:30px;margin-bottom:50px;">
+                        <button type="button" class="btn-blue-s2" id="btnSave">
+                            [@lang_res k='global.save'/]
+                        </button>
+                    </div>
+				</form>
+			</div>
+			<div id="id_members" style="display:none;">
+			
+			</div>
+		</div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js" type="text/javascript"></script> 
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    seajs.use('${base}/res/third/layer/layer.js');
+	$(function() {
+        var teamid = "${teamId}";//所属团队
+        var parentTeamId = "${parentId}";//父ID
+        var ifafirmid = "${ifafirmId}"; //所属公司
+        var classLayer = "${classLayer}";
+        
+	    $("body").on('click', '#btnSave', '', function () {
+        //$("#btnSave").onclick(function(){
+            save();
+        })
+        
+		function save() {
+            
+		    //开启验证
+            var bootstrapValidator = $("#addTeamFrm").data('bootstrapValidator');
+            bootstrapValidator.validate();
+            if(!bootstrapValidator.isValid()){  
+                return ;  
+            }  
+		    var name = $('#txtName').val();
+		    var code = $('#txtCode').val();
+		    var reamrk = $('#txtReamrk').val();
+		    var orderBy = $('#txtOrder').val();
+            //添加进数据库
+            $.ajax({
+				type : 'post',
+				datatype : 'json',
+				url : "${base}/console/ifafirm/info/addTeamInfo.do?datestr="+ new Date().getTime(),
+				data : {'ifafirm.id':ifafirmid,'parent.id':parentTeamId,'name':name,'orderBy':orderBy,'reamrk':reamrk,'code':code,'classLayer':classLayer},
+				success : function(json) {
+					if(json.result){
+						layer.msg("[@lang_res k='global.success.save'/]");
+					}else{
+						layer.msg("[@lang_res k='global.failed.save'/]");
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+                      //alert(XMLHttpRequest.status);
+                      //alert(XMLHttpRequest.readyState);
+                      layer.msg(textStatus);
+                }
+			});
+			
+            //dialogItself.close();
+		}
+
+				
+        //form验证规则
+        function formValidator(){
+            $("#addTeamFrm").bootstrapValidator({
+             /*feedbackIcons: { 
+                valid: 'glyphicon glyphicon-ok', 
+                invalid: 'glyphicon glyphicon-remove', 
+                validating: 'glyphicon glyphicon-refresh'
+             }, */
+             fields: { 
+                 txtName:{ //input的name
+                     validators: { 
+                         notEmpty: {
+                             message: "[@lang_res  k='ifafirm.message.promptEmptyTeamName'/]"
+                         }
+                     }
+                 },
+                 txtCode:{
+                     validators: { 
+                         notEmpty: {
+                             message: "[@lang_res  k='ifafirm.team.code'/]&nbsp;[@lang_res k='global.empty.tip'/]"
+                         }, 
+                         remote: {//ajax验证。服务器端返回的 result:{"valid",true or false} 向服务发送当前code值，获得一个json数据。例表示正确：{"valid",true} 
+                             url: "${base}/console/ifafirm/info/checkTeamIfExist.do", 
+                             type:"POST", 
+                             dataType: "json",
+                             data: function(validator) {
+                                 var x_={ 
+                                     code: validator.getFieldElements('txtCode').val() 
+                                 }; 
+                                 //console.log(x_);
+                                 return x_; 
+                             }, 
+                             message: '编码已存在，请重新输入'
+                         }
+                     }
+                 }, 
+                 txtOrder : {
+                     validators : {
+                         notEmpty : {
+                             message : "[@lang_res  k='ifafirm.team.order'/]&nbsp;[@lang_res k='global.empty.tip'/]"
+                         }
+                     }
+                 }
+             }
+            });
+        }//formValidator
+        
+        $("body").on('click', '.addTeam', '', function () {
+            //获取前个节点
+            $("#id_teaminfo").show();
+            $("#id_members").hide();
+            
+        });
+        
+        $("body").on('click', '.members', '', function () {
+            //获取前个节点
+            $("#id_members").load('dialogTeamUser.do?teamid='+teamid+'&ifafirmid='+ifafirmid);
+            
+            $("#id_teaminfo").hide();
+            $("#id_members").show();
+            
+        });
+        
+        formValidator();
+    });
+</script>

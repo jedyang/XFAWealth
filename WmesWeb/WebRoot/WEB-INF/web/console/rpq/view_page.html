@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置问卷题目</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+	<link href="${base}/res/third/jqueryui/jquery-ui.css" rel="stylesheet">
+    <style>
+		#modules {
+		  padding: 20px;
+		  background: #eee;
+		  margin-bottom: 20px;
+		  z-index: 1;
+		  border-radius: 10px;
+		}
+
+		#dropzone {
+		  padding: 20px;
+		  background: #eee;
+		  min-height: 100px;
+		  margin-bottom: 20px;
+		  z-index: 0;
+		  border-radius: 10px;
+		}
+
+		.active {
+		  outline: 1px solid red;
+		}
+		
+		.hover {
+		  outline: 2px solid #337ab7;
+		  border-radisu: 3px;
+		}
+
+		.drop-item {
+		  cursor: pointer;
+		  margin-bottom: 10px;
+		  background-color: rgb(255, 255, 255);
+		  padding: 5px 10px;
+		  border-radisu: 3px;
+		  border: 1px solid rgb(204, 204, 204);
+		  position: relative;
+		}
+		
+		.drop-item .remove {
+		  position: absolute;
+		  top: 4px;
+		  right: 4px;
+		}
+	</style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<div style="margin-bottom:20px;margin-top:20px;">
+<h2><p id="p_title" class="text-center"></p></h2>
+</div>
+<div id="div_questlist">
+
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js"></script>
+<script src="${base}/res/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var pageid = getQueryString('id');
+	 	$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/rpq/viewPageData.do?datestr="+ new Date().getTime(),
+			data : {'id':pageid  },
+		 	beforeSend: function () {
+				indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", {icon:3, time: 500000 });
+			},
+            complete: function () {
+				layer.close(indexmsg);
+           	},
+			success : function(json) {
+				//console.log(json);
+				var data = JSON.parse(json.view);
+				//json = JSON.parse(json);
+				//json = JSON.parse(json);
+				//var result = json.view.questList;
+				//var pagename = JSON.parse(json.view.pageName);
+				//console.log(result);
+				var pagename = data.pageName;
+				$('#p_title').text(pagename);
+				
+				//console.log(data.questList);
+				var questList = data.questList;
+				var questhtml = '';
+				$.each(questList,function(i,n){ 
+					//console.log(n);
+					//console.log(n.itemList);
+					var questtitle = n.titleName;
+					questhtml+='<div class="alert alert-info" role="alert"><strong>'+ (i+1) +'、'+ questtitle+'</strong></div>';
+					console.log(questtitle);
+					var itemList = n.itemList;
+					var itemhtml = '';
+					$.each(itemList,function(o,p)
+					{
+						var itemname = p.title;console.log(itemname);
+						itemhtml+= '<p>选项'+(o+1)+'. '+itemname+'</p>&nbsp;&nbsp;&nbsp;';
+						//itemhtml
+					});
+					questhtml+=itemhtml;
+					//var itemList = n[2].itemList;
+					//console.log(itemList);
+				});
+				$('#div_questlist').append(questhtml);
+			}
+		});
+	});
+</script>
+</body>
+</html>
+

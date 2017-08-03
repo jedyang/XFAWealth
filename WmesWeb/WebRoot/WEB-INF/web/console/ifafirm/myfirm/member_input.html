@@ -1,0 +1,250 @@
+<link rel="stylesheet" type="text/css" href="${base}/res/css/wmes_console.css">
+<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#psw_div{position:relative;}
+	#psw_div .valid-tip{font-size:12px;color:#a94442;line-height:32px;}
+</style>
+<div class="wmes-content">
+	<div class="ifa_choose_condition">
+		<div class="AccountInfo">
+			<form class="form-horizontal" id="frm" method="post">
+					<input type="hidden" id="memberId" value="${(memberBase.id)?if_exists}" />
+					<input type="hidden" id="txtRepassword" value=""/>
+					<input type="hidden" id="txtPassword" value=""/>
+					<div class="form-group">
+						<div class="col-sm-3 text-right">
+							<label for="txtLoginCode" class="label-control">
+								<span class="red">* </span>
+								[@lang_res k='member.info.loginCode'/]
+							</label>
+						</div>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="txtLoginCode" name="loginCode" value="${(memberBase.loginCode)?if_exists}">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-3 text-right">
+							<label for="txtNickName" class="label-control">
+								<span class="red">* </span>
+								[@lang_res k='member.info.nickName'/]
+							</label>
+						</div>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="txtNickName" name="nickName" value="${(memberBase.nickName)?if_exists}">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-3 text-right">
+							[#if memberBase?exists==false || memberBase.id?exists==false]<span class="red">* </span>[/#if]
+							<label for="txtRepassword" class="label-control">
+								[@lang_res k='member.info.password'/]
+							</label>
+						</div>
+						<div class="col-sm-6">
+							<input type="password" class="form-control" id="pre_psw" name="pre_password" value="">
+						</div>
+						[#if memberBase?exists && memberBase.id?exists]
+						<div class="col-sm-3" id="psw_div">
+							<span class="valid-tip">（[@lang_res k='member.info.password.edit.status.tip'/]）</span>
+						</div>
+						[/#if]
+					</div>
+					<div class="form-group">
+						<div class="col-sm-3 text-right">
+							<label for="txtPassword" class="label-control">
+								[#if memberBase?exists==false || memberBase.id?exists==false]<span class="red">* </span>[/#if]
+								[@lang_res k='console.member.input.confirmPassword'/]
+							</label>
+						</div>
+						<div class="col-sm-6">
+							<input type="password" class="form-control" id="txtPassword" name="again_password" value="">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-3 text-right">
+							<label for="txtEmail" class="label-control">
+								<span class="red">* </span>
+								[@lang_res k='member.info.email'/]
+							</label>
+						</div>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="txtEmail" name="email" value="${(memberBase.email)?if_exists}">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-3 text-right">
+							<label for="txtMobileNumber" class="label-control">
+								<span class="red">* </span>
+								[@lang_res k='member.info.mobileNumber'/]
+							</label>
+						</div>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="txtPhone" name="mobileNumber" value="${(memberBase.mobileNumber)?if_exists}">
+						</div>
+					</div>
+					<ul class="ifa_btn" style="text-align:center;">
+						<a class="ifa_save" id="saveFirmMember">[@lang_res k='global.save'/]</a>
+						<a class="ifa_save" style="margin-left:0px;" id="cancel">[@lang_res k='global.cancel'/]</a>
+					</ul>
+				</form>
+		</div>
+
+	</div>
+
+</div>
+
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+<script>
+	$(function() {
+		 $("#saveFirmMember").on("click",function(){
+		   	$("#frm").submit();
+		 });
+		 $("#cancel").on("click",function(){
+            $(window.parent.document).find(".bootstrap-dialog-close-button").trigger('click');
+         });
+		//表单验证
+		$("#frm").bootstrapValidator({
+			feedbackIcons : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			fields : {
+				loginCode : {
+					validators : {
+						notEmpty : {
+							message : "[@lang_res k='member.info.loginCode'/] [@lang_res k='global.empty.tip'/]"
+						},
+						regexp: {
+	                        regexp: /^[a-zA-Z0-9_]{7,20}/i,
+	                        message: '[@lang_res k='member.validation.logincode.tips'/]'
+	                    },
+						callback : {
+							message : '[@lang_res k="member.info.loginCode.exist.tip"/]',
+							callback : function(value, validate) {
+								var url = "${base}/console/member/checkCodeUnique.do?datestr=" + new Date().getTime();
+								var res = true;
+								$.ajax({
+									url : url,
+									method : 'post',
+									dataType : 'json',
+									data:{"loginCode":value,"userId":$("#memberId").val()},
+									async : false,
+									success : function(data) {
+										res = data;
+									},
+									error : function() {
+									}
+								});
+								return res;
+							}
+						}
+					}
+				},
+				pre_password : {
+	                validators : {
+	                	[#if memberBase?exists==false || memberBase.id?exists==false]
+	                    notEmpty : {
+	                        message : "[@lang_res k='member.info.password'/] [@lang_res k='global.empty.tip'/]"
+	                    },
+	                    [/#if]
+	                    regexp:{
+	                        regexp:/(?=.*[a-z])(?=.*\d)(?=.*[#@!~%^&*_-])[a-z\d#@!~%^&*_-]{7,20}/i,
+	                        message:"[@lang_res k='member.register.password.tips'/]"
+	                    },
+	                    identical: {
+	                        field: 'again_password',
+	                        message: "[@lang_res k='console.member.input.passwordNotTheSame'/]"
+	                    }
+	                }
+            	},
+            	again_password: {
+    				message:  "[@lang_res k='console.member.input.passwordNotTheSame'/]",
+                    validators: {
+    					identical: {
+    		                field: 'pre_password',
+    		                message:  "[@lang_res k='console.member.input.passwordNotTheSame'/]"
+    		            },
+    		            regexp:{
+	                        regexp:/(?=.*[a-z])(?=.*\d)(?=.*[#@!~%^&*_-])[a-z\d#@!~%^&*_-]{7,20}/i,
+	                        message:"[@lang_res k='member.register.password.tips'/]"
+	                    },
+                    }
+                },	
+				email : {
+					validators : {
+						notEmpty : {
+							message : "[@lang_res k='member.info.email'/] [@lang_res k='global.empty.tip'/]"
+						},
+						emailAddress: {
+	                        message: '[@lang_res k='member.validation.email.error'/]'
+	                    }
+					}
+				},
+				mobileNumber : {
+					validators : {
+						notEmpty : {
+							message : "[@lang_res k='member.info.mobileNumber'/] [@lang_res k='global.empty.tip'/]"
+						},
+						stringLength: {
+	                        min: 7,
+	                        max: 11,
+	                        message: '[@lang_res k='member.validation.mobile.tips'/]'
+	                    },
+	                    regexp: {
+	                        //regexp:/^0\d{2,3}-?\d{7,8}$/, //固话
+	                        //regexp:/^1[3|4|5|7|8]\d{9}$/, //国内手机 1+10位数字
+	                        regexp: /^[1-9]\d{6,10}$/ , //手机7-11位数字
+	                        message: '[@lang_res k='member.validation.mobile.error'/]'
+	                    }
+					}
+					
+				},
+				nickName : {
+					validators : {
+						notEmpty : {
+							message : "[@lang_res k='member.info.nickName'/] [@lang_res k='global.empty.tip'/]"
+						}
+					}
+				}
+			}
+		}).on('success.form.bv', function(e) {
+			e.preventDefault();
+			Save();
+			return false;
+		});
+		//新增保存
+		function Save() {
+			var rePsw = $("#pre_psw").val();
+		    if(!!rePsw){
+		       	$("#txtPassword").val(rePsw)
+		       	$("#txtRepassword").val(rePsw)
+		    }
+			var memberId = $("#memberId").val();
+			var loginCode= $("#txtLoginCode").val();
+			var nickName= $("#txtNickName").val();
+			var password= $("#txtPassword").val();
+			var repassword=$("#txtRepassword").val();
+			var email= $("#txtEmail").val();
+			var mobileNumber= $("#txtPhone").val();
+			$.ajax({
+				type : 'POST',
+				datatype : 'json',
+				url : "${base}/console/myfirm/member/save.do?datestr=" + new Date().getTime(),
+				data :{"memberId":memberId,"loginCode":loginCode,"nickName":nickName,"password":password,"repassword":repassword,"email":email,"mobileNumber":mobileNumber},
+				success : function(data) {
+					if (data.result) {
+						window.parent.layer.msg("[@lang_res k='global.success.save'/]");
+						//关闭刷新父页面
+						$(window.parent.document).find("#btnSearch").trigger('click');
+						$(window.parent.document).find(".bootstrap-dialog-close-button").trigger('click');
+					} else {
+						window.parent.layer.msg("[@lang_res k='global.failed.save'/]"+"\n"+data.msg);
+					}
+				}
+			});
+		}
+	});	
+</script>

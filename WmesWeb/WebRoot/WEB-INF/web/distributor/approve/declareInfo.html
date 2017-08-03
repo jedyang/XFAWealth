@@ -1,0 +1,73 @@
+
+	<link rel="stylesheet" href="${base}/res/css/wmes_en.css"> 
+	<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<form id="declarForm" name="declarForm" method="post" action="">                
+                <div class="OpenAccount_liucheng_content">					
+					<div class="Declaration_content">
+                    	<h4>Individual & Joint Account</h4>
+                        <br>
+                        <span class="Declaration_content_file" id="CustomerSrc" >Declaration by Customer </span>
+                        <br>
+                        <div>
+                        	<div class="login_checkbox">
+                                <input type="checkbox" value="1" name="declarationFlag" id="declarationFlag"  class="validate[required] onlyRead" data-prompt-target="CustomerSrcError"/>
+                                <label for="declarationFlag" flag="declarationFlag"></label>
+                            </div>
+                        	<span class="login_checkbox_font">Agree</span>
+	                        <span id="CustomerSrcError"></span>
+                        </div>
+                        <br><br>
+                        <span class="Declaration_content_file" id="personalSrc">Personal Information Collection Statement</span>
+                        <br>
+                        <div>
+                        	<div class="login_checkbox">
+                                <input type="checkbox" value="1" name="" id="informationFlag" class="validate[required] onlyRead" data-prompt-target="informationError"/>
+                                <label for="informationFlag" flag="informationFlag"></label>
+                            </div>
+                        	<span class="login_checkbox_font">Confirm</span>
+                        	<span id="informationError"></span>
+                        </div>
+                        <Br>
+                        <div>
+                        	<div class="login_checkbox">
+                                <input type="checkbox" value="1" name="aimFlag" id="aimFlag" class="validate[required]" data-prompt-target="aimFlagError"/>
+                                <label for="aimFlag" flag="aimFlag"></label>
+                            </div>
+                        	<span class="login_checkbox_font duoxuan_font">Ageas Investment Management (Asia) Limited may use the data collected from the Customer for direct marketing purpose only with the Customer’s consent.  If the Customer does not wish to receive AIM promotional offers or information, please put a tick in the box on the left.</span>
+                        </div>
+                        <div style="clear:both;">
+                        	<span id="aimFlagError"></span>
+                        </div>
+                        <div class="document_line"></div>
+                        
+                        <h4>Advisor</h4>
+                        <br>
+                        <span class="Declaration_content_file" id="byadvisorSrc">Declaration By Advisor </span>
+                        <br>
+                        <div>
+                        	<div class="login_checkbox">
+                                <input type="checkbox" value="1" name="advisorFlag" id="advisorFlag" class="validate[required] onlyRead" data-prompt-target="advisorError"/>
+                                <label for="advisorFlag" flag="advisorFlag"></label>
+                            </div>
+                        	<span class="login_checkbox_font">Agree</span>
+                        	<span id="advisorError"></span>
+                        </div>
+                        
+                        <div class="document_line"></div>                                                
+                        
+                        <h4>Qualified Person</h4>
+                        <br>
+                        <span class="Declaration_content_file" id="qualifiedSrc" href="javascirpt:;">Declaration by a Qualified Person</span>
+                        <br>
+                        <div>
+                        	<div class="login_checkbox">
+                                <input type="checkbox" value="1" name="qualifiedFlag" id="qualifiedFlag" class="validate[required] onlyRead" data-prompt-target="qualifiedError"/>
+                                <label for="qualifiedFlag" flag="qualifiedFlag"></label>
+                            </div>
+                        	<span class="login_checkbox_font">Agree</span>
+                        	<span id="qualifiedError"></span>
+                        </div>
+                        <div class="document_line"></div>
+                    </div>
+                </div>
+</form>

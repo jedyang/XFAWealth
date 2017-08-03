@@ -1,0 +1,240 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <div class="wmes-content" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+   		<div class="ifa_choose_condition">
+   			<div class="wmes-wrap-title" style="overflow: visible;margin-bottom:0">[@lang_res k='client.list.title'/]
+            	<div class="client-list-title-bell ">
+            		<span class="client-bell-img"></span>
+            		<div class="pipelin-bell-wrap">
+						<p class="pipelin-bell-name">[@lang_res k='pipeline.remind'/]</p>
+						<ul class="pipelin-bell-tab"> 
+							<li key="today">[@lang_res k='pipeline.remind.today'/]</li>
+							<li key="1W" class="bell-tab-active">[@lang_res k='pipeline.remind.oneweek'/]</li>
+							<li key="2W">[@lang_res k='pipeline.remind.twoweek'/]</li>
+							<li key="1M">[@lang_res k='pipeline.remind.onemonth'/]</li>
+						</ul>
+						<ul class="pipelin-bell-contents">
+							<li style="display:block;">
+								<div class="pipelin-bell-mesWrap" data-type="birth"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_cake_ico.png"></div><p class="pipelin-bell-word">[@lang_res k='client.list.birth'/]</p><p class="pipelin-bell-num birthNum"></p></div>
+								<div class="pipelin-bell-mesWrap" data-type="schedule"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_appo_ico.png"></div><p class="pipelin-bell-word">[@lang_res k='client.list.appointment'/]</p><p class="pipelin-bell-num appiontNum" ></p></div>
+								<div class="pipelin-bell-mesWrap" data-type="portfolio"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_review_ico.png"></div><p class="pipelin-bell-word">[@lang_res k='pipeline.remind.porfolio'/]</p><p class="pipelin-bell-num portfolioNum"></p></div>
+								<div class="pipelin-bell-mesWrap"  data-type="kyc"><div class="pipelin-bell-img"><img src="${base}/res/images/ifa/bell_kyc_ico.png"></div><p class="pipelin-bell-word">[@lang_res k='pipeline.remind.kyc'/]</p><p class="pipelin-bell-num kycNum"></p></div>
+							</li>
+							</ul>
+						<div class="pipelin-bell-line"></div>
+					</div>
+            	</div>
+            	<div class="client-list-ico-wrap">
+            		
+            		<span onclick="location.href='${base}/front/crm/proposal/clientsProposal.do'" class="client-list-ico-volume"  title="[@lang_res k='client.list.clientsProposals'/]"> </span>
+            		<span onclick="location.href='${base}/front/crm/proposal/clientsPortfolio.do'" class="client-list-ico-funds" title="[@lang_res k='client.list.clientsPortfolios'/]"></span>
+            		<span onclick="location.href='${base}/front/ifa/space/clientManagement.do'" class="client-list-ico-card" title="[@lang_res k='client.list.clientsAccounts'/]"></span>
+            	</div>
+            </div>
+            <div class="client-more-screen-wrap">
+	            <div class="funds_choice_wrap">
+					<p class="funds_choice_title">[@lang_res k='client.name'/]</p>
+					<ul class="funds_choice client_name_choice">
+						<li class="fund_choice_active funds_all fund_choice_active2"  data-key="All">[@lang_res k='global.all'/]</li>
+						<li data-key="A,B,C,D,E,F,G">A~G</li>
+						<li data-key="H,I,J,K,L,M,N">H~N</li>
+						<li data-key="O,P,Q,R,S,T">O~T</li>
+						<li data-key="U,V,W,X,Y,Z">U~Z</li>
+					</ul>
+					<ul class="funds_choice" id="client-name-wrap">
+					[#if crmList?exists && crmList?size gt 0]
+					[#list crmList as list]
+						<li data-name="ClientName" data-letter="${list.key!}" data-value="${list.value!}">${list.name!}</li>
+						[/#list]
+						[/#if]
+					</ul>
+				</div>
+				<div class="funds_choice_wrap">
+					<p class="funds_choice_title statisticTitle">[@lang_res k='client.totalReturn'/]</p>
+					<ul class="funds_choice">
+						<li class="fund_choice_active funds_all fund_choice_active2" data-name="Total Return" data-key="" data-value="TotalReturn Level_00">[@lang_res k='global.all'/]</li>
+						<li data-name="Total Return" data-key="<0" data-value="TotalReturn Level_01"><0</li>
+						<li data-name="Total Return" data-key="0 ~ 10%" data-value="TotalReturn Level_02">0-10%</li>
+						<li data-name="Total Return" data-key="10% ~ 20%" data-value="TotalReturn Level_03">10%-20%</li>
+						<li data-name="Total Return" data-key="20% ~ 30%" data-value="TotalReturn Level_04">20%-30%</li>
+						<li data-name="Total Return" data-key="30% ~ 40%" data-value="TotalReturn Level_04">30%-40%</li>
+						<li data-name="Total Return" data-key=">50%" data-value="TotalReturn Level_04">>50%</li>
+					</ul>
+				</div>
+				<div class="funds_choice_wrap">
+					<p class="funds_choice_title">[@lang_res k='client.aum'/]</p>
+					<ul class="funds_choice">
+						<li class="fund_choice_active funds_all fund_choice_active2" data-name="AuM" data-key="" data-value="AuM Level_00">[@lang_res k='global.all'/]</li>
+						<li data-name="AuM" data-key="<0.1M" data-value="AuM Level_01"><0.1M</li>
+						<li data-name="AuM" data-key="0.1M ~ 1M" data-value="AuM Level_02">0.1M ~ 1M</li>
+						<li data-name="AuM" data-key="1M ~ 9M" data-value="AuM Level_03">1M ~ 9M</li>
+						<li data-name="AuM" data-key=">10M" data-value="AuM Level_04">>10M</li>
+					</ul>
+				</div>
+				<div class="funds_choice_wrap">
+					<p class="funds_choice_title">[@lang_res k='client.group'/]</p>
+					<ul class="funds_choice">
+						<li class="fund_choice_active funds_all fund_choice_active2" data-name="Client Type" data-key="" data-value="ClientType Level_00">[@lang_res k='global.all'/]</li>
+						[#if groupList?exists && groupList?size gt 0]
+						[#list groupList as list]
+						<li data-name="group" data-key="${list.id!}" data-value="${list.id!}">${list.groupName!}</li>
+						[/#list]
+						[/#if]
+						<!--<li data-name="Client Type" data-key="H~N" data-value="ClientType Level_02">Silver</li>
+						<li data-name="Client Type" data-key="O~T" data-value="ClientType Level_03">Gold</li>
+						<li data-name="Client Type" data-key="U~Z" data-value="ClientType Level_04">>10m</li>
+					--></ul>
+				</div>
+			</div>
+            <div class="wmes-menu-hide"><div class="wmes-menu-hidecon"><b>[@lang_res k='global.screen'/]</b><span></span></div></div>
+   		</div>
+        <div class="ifa_choose_condition" style="border-bottom:0;padding-top:0">
+            <!--<div class="client-list-number-wrap">
+            	<p class="client-list-number-title">[@lang_res k='client.list.clientNumber'/] :</p>
+            	<span class="client-list-number-sum">${baseNumber.totalNum!}</span>
+            	<p class="client-list-number-brackets">( [@lang_res k='client.list.profit'/] : <span>${baseNumber.profitNum!}</span> , [@lang_res k='client.list.loss'/] : <span>${baseNumber.lossNum!}</span> )</p>
+            	<p class="client-list-number-aum">[@lang_res k='client.list.totalAum'/] : <span>[@num_fmt s='${baseNumber.aum!}' f='#,##0.00' /]</span> ${currencyName!}</p>
+            	<div class="client-list-more-choice">
+            		[@lang_res k='client.list.showScreen'/]
+            		<span class="client-more-screen-ico"></span>
+            	</div>
+            </div>-->
+			<div class="client-list-xiala">
+				<div style="float:left;padding-top:5px">
+					<p class="client-list-number-title">[@lang_res k='client.list.clientNumber'/] :</p>
+            		<span class="client-list-number-sum">${baseNumber.totalNum!}</span>
+            		<p class="client-list-number-brackets">( [@lang_res k='client.list.profit'/] : <span>${baseNumber.profitNum!}</span> , [@lang_res k='client.list.loss'/] : <span>${baseNumber.lossNum!}</span> )</p>
+            		<p class="client-list-number-aum">[@lang_res k='client.list.totalAum'/] : <span>[@num_fmt s='${baseNumber.aum!}' f='#,##0.00' /]</span> ${currencyName!}</p>
+				</div>
+				<div class="client-cur-xiala-wrap">
+					<p class="client-cur-title">[@lang_res k='fund.info.currency'/]</p>
+					<select class="client-cur-choose">
+					[#if currencyType?exists && currencyType?size gt 0]
+					[#list currencyType as list]
+						<option value="${list.itemCode!}" [#if currency?? && currency='${list.itemCode!}']selected="selected"[/#if]>${list.name!}</option>
+						[/#list]
+						[/#if]
+					</select>
+				</div>
+				<div class="client-statistic-xiala-wrap">
+					<p class="client-statistic-title">[@lang_res k='client.statistic'/]</p>
+					<select class="client-statistic-choose">
+						<option value="total">[@lang_res k='client.totalReturn'/]</option>
+						<option value="1M">[@lang_res k='fund.info.screener.performance.1MonthReturn'/]</option>
+						<option value="3M">[@lang_res k='fund.info.screener.performance.3MonthReturn'/]</option>
+						<option value="6M">[@lang_res k='fund.info.screener.performance.6MonthReturn'/]</option>
+						<option value="1Y">[@lang_res k='fund.info.screener.performance.1YearReturn'/]</option>
+						<option value="3Y">[@lang_res k='fund.info.screener.performance.3YearReturn'/]</option>
+						<option value="5Y">[@lang_res k='fund.info.screener.performance.5YearReturn'/]</option>
+					</select>
+				</div>
+			</div>
+			<div class="client-list-wrap">
+				<ul class="recommend-switch-tab client-list-tab">
+					<li class="funds_sort recommend-sort-active">
+						<p class="funds_switch_tab_title">[@lang_res k='client.sort.return'/]</p>
+						<p class="funds_arrow_wraps">
+							<span class="arrow_top" sort="total_return_rate" order="asc" ></span>
+							<span class="arrow_down down_active" sort="total_return_rate" order="desc" ></span>
+						</p>
+					</li>
+					<li class="funds_sort">
+						<p class="funds_switch_tab_title">[@lang_res k='client.sort.aum'/]</p>
+						<p class="funds_arrow_wraps">
+							<span class="arrow_top" sort="totalAuM" order="asc"></span>
+							<span class="arrow_down" sort="totalAuM" order="desc"></span>
+						</p>
+					</li>
+					<li class="funds_sort">
+						<p class="funds_switch_tab_title">[@lang_res k='client.sort.inv.days'/]</p>
+						<p class="funds_arrow_wraps">
+							<span class="arrow_top" sort="create_time" order="desc"></span>
+							<span class="arrow_down " sort="create_time" order="asc"></span>
+						</p>
+					</li>
+				</ul>
+				<input type="hidden" id="defColor" value="${defColor!}">
+				<input type="hidden" id="currency" value="${currency!}">
+				<input type="hidden" id="currencyName" value="${currencyName!}">
+				 <div class="client_list" style="display:none"> <ul class="client-list-contents" >
+					<li class="client-list-rows dataListTr ng-cloak"  ng-repeat="items in dataList" ng-init="checkLast($last)">
+						<a href="${base}/front/crm/pipeline/clientDetail.do?customerId={{items.id}}&customerMemberId={{items.memberId}}" target="_self">
+						<p class="client-list-rows-title" cusId="{{items.id}}" cusMemberId="{{items.memberId}}">{{items.nickName}}</p>
+						<img class="client-list-rows-ico" style=" float: left;margin-left:5px;" ng-if="items.isBirthDay=='1'" src="${base}/res/images/ifa/Small_cake_ico.png">
+						<img class="client-list-rows-ico schedule-icon" ng-if="items.hasSchedule=='1'" cusId="{{items.id}}" cusMemberId="{{items.memberId}}" src="${base}/res/images/ifa/list_date_ico.png">
+						<div class="client-list-rows-describe">
+							<span ng-if="items.faca=='1'">FATCA</span>
+							<span ng-if="items.cies=='1'">CIES</span>
+						</div>
+						<div class="client-list-main-chart">
+							<img class="client-list-index" ng-if="items.riskLevel!=''" src="${base}/res/images/strategy/risk_level_0{{items.riskLevel}}.png">
+							<img class="client-list-index" ng-if="items.riskLevel==''" src="${base}/res/images/strategy/risk_level_00.png">
+							<div class="client-list-chart"  data-value="{{items.productProJson}}"></div>
+						</div>
+						<p class="client-list-total">{{statistic}}</p>
+						<p class="client-list-number client-positive" cusId="{{items.id}}" cusMemberId="{{items.memberId}}" ng-if="(items.totalReturnRate<0 && defColor=='2') || (items.totalReturnRate>0 && defColor!='2')">{{items.totalReturnRateStr}}%</p>
+						<p class="client-list-number client-negative" cusId="{{items.id}}" cusMemberId="{{items.memberId}}" ng-if="(items.totalReturnRate<0 && defColor=='1') || (items.totalReturnRate>0 && defColor!='1')">{{items.totalReturnRateStr}}%</p>
+						<p class="client-list-number " ng-if="items.totalReturnRate==0" cusId="{{items.id}}" cusMemberId="{{items.memberId}}">-</p>
+						<p class="client-list-per" ng-if="statisticValue=='total'">( 
+						<span class="client-positive" ng-if="(items.totalReturn<0 && defColor=='2') || (items.totalReturn>0 && defColor!='2')">{{items.totalReturnStr}}</span>
+						<span class="client-negative" ng-if="(items.totalReturn<0 && defColor=='1') || (items.totalReturn>0 && defColor!='1')">{{items.totalReturnStr}}</span>
+						<span class="" ng-if="items.totalReturn==0">-</span>  {{currencyName}} )</p>
+						<div class="client-list-bottom">
+							<div class="client-list-aum">
+								<p class="client-aum-title">[@lang_res k='client.sort.aum'/] ( {{currencyName}} )</p>
+								<p class="client-aum-num client-positive" cusId="{{items.id}}" cusMemberId="{{items.memberId}}" ng-if="(items.aum<0 && defColor=='2') || (items.aum>0 && defColor!='2')">{{items.aumStr}}</p>
+								<p class="client-aum-num client-negative" cusId="{{items.id}}" cusMemberId="{{items.memberId}}" ng-if="(items.aum<0 && defColor=='1') || (items.aum>0 && defColor!='1')">{{items.aumStr}}</p>
+								<p class="client-aum-num" ng-if="items.aum==0" cusId="{{items.id}}" cusMemberId="{{items.memberId}}">{{items.aumStr}}</p>
+							</div>
+							<div class="client-list-inv">
+								<p class="client-inv-title">[@lang_res k='client.sort.inv.days'/]</p>
+								<p class="client-inv-word">{{items.days}}</p>
+							</div>
+						</div>
+						</a>
+						<img class="clients_chat layim-pop-chat" layim-pop-id="{{items.memberId}}" src="${base}/res/images/ifa/top_chat.png"/>
+					</li>
+					
+				</ul>
+		            <div class="wmes-nodata-tips no_list_tips">
+                             <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                             <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                       </div>
+				
+				 <div class="clickmore" style="display:none"><a href="javascript:;">[@lang_res k='list.loadMore'/]</a></div>
+				
+			</div>
+			</div>
+			 
+        </div>
+       
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+
+ var _checkList='${checkList!}';
+var _accountType="${accountType!}";
+     seajs.use('${base}/res/web/ifa/crm/clientsList.js');
+     
+
+//验证登录后回调事件
+function callbackloginresult(json){
+	 	 seajs.use('jquery', function($){
+		 //	console.log(json);
+		 	var count=0;
+		 	$.each(json,function(i,n){
+			 	if(n.status="1"){
+			 	count++;
+		 	    }
+		 	})
+		 	if(count>0){
+		 	 setTimeout(function(){
+		       window.location.url= window.location.url;
+		     },1000);
+		    }
+	    });
+ 	}
+     
+</script>

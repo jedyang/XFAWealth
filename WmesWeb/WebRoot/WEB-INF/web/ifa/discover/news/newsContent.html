@@ -1,0 +1,319 @@
+[#include "../../../inc/head_v2.html"/]
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Express News Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script src="${base}/res/css/news/js/jquery.min.js"></script>
+<!-- Custom Theme files -->
+
+<link href="${base}/res/css/news/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="${base}/res/css/news/css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script type="text/javascript" src="${base}/res/css/news/js/bootstrap.js"></script>
+
+<!--引入bshare SDK-->
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&style=-1"></script>
+ <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+ <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<style>
+	.navbar-nav{max-width:calc(100% - 250px);}
+	.navbar-collapse{padding:0;}
+	.new-content{width:58% !important;}
+</style>
+<script src="${base}/res/css/news/js/responsiveslides.min.js"></script>
+	<script>
+		$(function () {
+		  $("#slider").responsiveSlides({
+			auto: true,
+			nav: true,
+			speed: 500,
+			namespace: "callbacks",
+			pager: true,
+		  });
+		});
+	</script>
+	<script type="text/javascript" src="${base}/res/css/news/js/move-top.js"></script>
+<script type="text/javascript" src="${base}/res/css/news/js/easing.js"></script>
+<!--/script-->
+<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},900);
+				});
+			});
+</script>
+<style>
+#sinaEmotion{height:auto !important;}
+#sinaEmotion .face{width:32px !important;height:32px !important;}
+.faces li{padding-bottom:0 !important;}
+
+.show-space{
+		    position: fixed;
+		    top: 8%;
+		    z-index: 100;
+		   left: 20%;
+            width: 60%;
+	 	}
+.recommend-text{
+    width: 100%;
+    margin: 0 auto;
+    height: 100px;
+    resize: none;
+    border: #e5e4e4 1px solid;
+    border-radius: 3px;
+    padding: 2px;
+}	
+</style>
+	<div class="wmes-content">
+		<!-- header-section-starts-here -->
+	<div class="header">
+		<div class="header-bottom">
+			<div class="logo">
+				<a href="javascript:;"><p class="wmes-big-title">[@lang_res k='news.title'/]</p></a>
+			</div>
+			<div class="navigation">
+				<nav class="navbar navbar-default" role="navigation">
+		   <div class="wrap">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				
+			</div>
+			<!--/.navbar-header-->
+		
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+						<li class="active"><a href="newsIndex.do">[@lang_res k='news.category.home'/]</a></li>
+						<li><a href="newsList.do?code=headlines">[@lang_res k='news.category.headlines'/]</a></li>
+					
+					[#macro bpTree children]
+				        [#if children?? && children?size gt 0]
+				        [#list children as child]
+				        [#if child.children?? && child.children?size gt 0]
+				        <li class="dropdown">
+						<a href="javascirpt:;" class="dropdown-toggle" data-toggle="dropdown">${child.name!}<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+						  <li><a href="newsList.do?id=${child.id!}">[@lang_res k='global.all'/]</a></li> 
+						   <li class="clearfix"></li>
+						   [@bpTree children=child.children /]
+							</ul>
+					   </li>
+				        [#else]
+				           <li><a href="newsList.do?id=${child.id!}">${child.name}</a></li>  
+				           [#if child.parentId?? && child.parentId!='']  <li class="divider"></li>[/#if]
+				        [/#if]
+				       [/#list]
+				    [/#if]
+				    [/#macro]
+				    [@bpTree children=categoryList /]
+					<div class="clearfix"></div>
+				</ul>
+				<div class="funds_keyserach ifa_keyserach" style="margin-top:8px;">
+             		<input type="text" id="searchKeyWord" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+             		<span class="icon_search" id="searchKeyBtn"></span>
+         		</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<!--/.navbar-collapse-->
+	 <!--/.navbar-->
+			</div>
+		</nav>
+		</div>
+	</div>
+
+	<div class="main-body">
+		<div class="wrap">
+			<!--<ol class="breadcrumb">
+			  <li><a href="newIndex.do">[@lang_res k='news.category.home'/]</a></li>
+			  <li class="active">[#if categoryInfo??]${categoryInfo.name!}[/#if]</li>
+			</ol>-->
+			<div class="single-page">
+				<div class="col-md-2 share_grid" style="width: 13%;">
+					<ul>
+						<li>
+							<a href="#" onclick="javascript:bShare.share(event,'facebook','2');return false;"> <i class="facebook"></i>
+								<div class="views">
+									<span>Facebook</span>
+								</div>
+								<div class="clearfix"></div> </a>
+						</li>
+						<li>
+							<a href="#" onclick="javascript:bShare.share(event,'twitter','3');return false;"> <i class="twitter"></i>
+								<div class="views">
+									<span>Twitter</span>
+								</div>
+								<div class="clearfix"></div> </a>
+						</li>
+						<li>
+							<a href="#" onclick="javascript:bShare.share(event,'linkedin','4');return false;"> <i class="linkedin"></i>
+								<div class="views">
+									<span>LinkedIn</span>
+								</div>
+								<div class="clearfix"></div> </a>
+						</li>
+						<!--<li>
+						<a href="#">
+							<i class="google"></i>
+							<div class="views">
+								<span>Google</span>	
+							</div>			
+							<div class="clearfix"></div>				
+						</a>
+					</li>
+					-->
+						<li>
+							<a href="#" onclick="javascript:bShare.share(event,'sinaminiblog','1');return false;"> <i class="weibo"></i>
+								<div class="views">
+									<span>Weibo</span>
+								</div>
+								<div class="clearfix"></div> </a>
+						</li>
+						<li>
+							<a href="javascript:;"> <img class="14pxclick" src="${base}/res/css/news/images/xfa_ztdx_05.png"> <img class="16pxclick" src="${base}/res/css/news/images/xfa_ztdx_07.png"> <img class="18pxclick" src="${base}/res/css/news/images/xfa_ztdx_03.png">
+								<div class="clearfix"></div> </a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-6 content-left single-post new-content">
+					<div class="blog-posts">
+						<h3 class="post">
+							${info.title!}
+						</h3>
+						<h3 class="post-time">
+							${info.lastUpdate}
+						</h3>
+						<div class="last-article" style="font-size: 16px;">
+							${info.body!}
+							<div class="clearfix"></div>
+							<!--related-posts-->
+							<div class="step-on-wrap">
+								<span title="[@lang_res k='community.space.favourite'/]" class="news-collection [#if info.isFavorite?? && info.isFavorite=='1']news-collectionac[/#if]"></span>
+								[#if memberType?? && memberType==2]<span title="[@lang_res k='community.community.recommend'/]" class="post-recommend"></span>[/#if]
+								<span class="step-down-ico [#if info.upOrDown?? && info.upOrDown=='unlike' ]step-down-ico-active[/#if]"></span>
+								<span class="step-on-ico [#if info.upOrDown?? && info.upOrDown=='like' ]step-on-ico-active[/#if]"></span>
+							</div>
+
+							<div class="row related-posts">
+								<h4>
+									[@lang_res k='news.mylike'/]
+								</h4>
+								[#if recommendList?exists && recommendList?size gt 0] [#list recommendList as list]
+								<div class="col-xs-6 col-md-3 related-grids">
+									[#if list.url?? && list.url!='']
+									<a href="newsContent.do?id=${list.id}" class="thumbnail"> <img src="${list.url!}" alt="" /> </a> [/#if]
+									<h5>
+										<a href="newsContent.do?id=${list.id}">${list.title!}</a>
+									</h5>
+								</div>
+								[/#list] [/#if]
+
+							</div>
+							[#include "../../../strategy/info/memberComment.html"/]
+							<!--//related-posts-->
+							<div class="clearfix"></div>
+						</div>
+					</div>
+
+				</div>
+				[#include "right.html"/]
+			</div>
+			<!-- footer-section-ends-here -->
+		</div>
+		
+		<div id="recommendNews"  class="ifa-space-popup show-space" >
+		<div class="ifa-space-mask"></div>
+		<div class="space-mask-wrap"> 
+			<div class="investment-plan-wrap" >
+				<div class="wmes-close character-close-ico"></div>
+				<p class="investment-plan-title">[@lang_res k='news.recommend'/]</p>
+				<div class="character-setting-rows">
+					<textarea class="recommend-text" id="recommendText" placeholder="[@lang_res k='news.recommend.enterTips'/]"></textarea>
+				</div>
+				<div class="character-setting-rows" style="overflow:hidden;">
+					<span style="float:left;margin-right:20px;">[@lang_res k='topic.publish.section'/]</span>
+					<div class="register_xiala_long">
+						<input type="text" placeholder="[@lang_res k='topic.publish.section.tips'/]" readOnly  class="value_show ">
+						<input type="hidden" class="value_hidden sectionId">
+						<ul class="regiter_xiala_ul ">
+						[#if sectionList?exists && sectionList?size gt 0]
+						[#list sectionList as list]
+	  						<li id="${list.id!}">${list.name!}</li>
+	  						[/#list]
+	  						[/#if]
+						</ul>
+						<span class="register_xiala_ico"></span>
+					</div> 
+				</div>
+				<div class="character-setting-rows">
+					<ul class="view_permissions_setting" style="padding-left:0px">
+						<li style="width: 10%;text-align: left;">[@lang_res k='news.publishTo'/]:</li>
+						<li><input type="radio"  name="permit" class="permit" id="permit0" value="all"  checked="checked" />[@lang_res k='news.publishTo.all'/]</li>
+						<li><input type="radio" name="permit" class="permit" id="permit1" value="client" />[@lang_res k='news.publishTo.client'/]</li>
+						<li><input type="radio" name="permit" class="permit" id="permit2" value="friend" />[@lang_res k='news.publishTo.friend'/]</li>
+				   </ul>
+				</div>
+					<div class="character-setting-rows">
+						<!--<p style="text-align: left;">
+							分享新闻：
+						</p>
+						--><div class="article">
+						[#if info.url?? && info.url!='']
+							<div class="article-left" >
+								<a href="javascript:void();"> <img src="${info.url!}">
+								</a>
+							</div>
+							[/#if]
+							<div class="article-right">
+								<div class="article-title">
+									<p class="title" id="newsTitle" style="color:black" >${info.title!} </p>
+								</div>
+								<div class="article-text">
+									<p>
+										${info.description!} 
+									</p>
+									<div class="clearfix">
+									</div>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+					<div class="character-button-rows">
+						<a class="character-button-save" href="javascript:;">[@lang_res k='news.recommend.btn'/]</a>
+						<a class="character-button-close" href="javascript:;">[@lang_res k='global.close'/]</a>
+				  </div>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id="sectionType" value="${info.sectionType!}">
+		</div>
+		
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+		$().UItoTop({
+			easingType : 'easeOutQuart'
+		});
+	});
+		</script>
+		<a href="#to-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span> </a>
+
+		
+	
+
+	<!---->
+[#include "../../../inc/foot_v2.html"/] 
+
+<link href="${base}/res/css/ifa.css" rel="stylesheet" type="text/css" />
+<link href="${base}/res/css/client.css" rel="stylesheet" type="text/css" />
+<link href="${base}/res/css/strategy.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+seajs.use('${base}/res/web/ifa/newsContent.js')
+</script>

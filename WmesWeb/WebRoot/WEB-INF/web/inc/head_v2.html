@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>${Session["_FRONT_COMPANY_SYSNAME_"]!"XFA Wealth"}</title>
+    <link href="${base}[@lang_img k="_FRONT_COMPANY_LOGO_TAB_" r="/res/images/login/default/xfalogo_s.png" /]" type="image/x-icon" rel="shortcut icon">
+    <link rel="stylesheet" href="${base}${Session["_FRONT_COMPANY_CSS_"]!"/res/css/wmes_en.css"}"> 
+    <link rel="stylesheet" href="${base}/res/css/animate.css"> 
+    
+    
+    <script>
+        var base_root = '${base}';
+        var lang = '${Session["_LANG_CODE_"]!'sc'}';
+        var sub_user_type = '${Session["_FRONT_USER_TYPE_"]!}';
+       
+        var date_format='${Session["_FRONT_USER_DATE_FMT_"]!}';
+        var role='${Session["role"]!}';
+        var sessionMemberId ='${Session["_FRONT_USER_LOGIN_MEMBER_"]!}';
+        var langMutilCustom = [@load_prop k='front.rpq.noRpq'/]
+        
+    </script>
+    <script type="text/javascript" src="${base}/res/js/base.js"></script>
+    <script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+    <script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+     <link rel="stylesheet" href="${base}/res/js/library/layui/css/layui.css">
+    <script src="${base}/res/js/util.js"></script>
+    <!--[if lte IE 8]>
+    <script src="${base}/res/js/html5shiv.min.js" type="text/javascript"></script>
+    <script src="${base}/res/js/respond.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <script type="text/javascript">
+    	var langMutilGlobal = [@load_prop k='global' /]; 
+        seajs.use('${base}/res/js/wmesGeneral.js');
+        
+        if(sub_user_type!=22 && sub_user_type!=31){
+           seajs.use('${base}/res/web/community/chat.js');
+        }
+         
+        var langMutilForJs = [@load_prop k=''/];
+        //console.log(langMutilForJs["fund.info.price_date"])
+    </script>
+    <style type="text/css">
+         *{ [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']
+                font-family:  arial!important;
+            [#elseif Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']
+                font-family:Microsoft YaHei!important;
+            [#else]
+                 font-family:Microsoft YaHei!important;
+            [/#if]}
+            
+		.letter_wrap { word-break:break-all; width:80px;}/*IE5+ 只对英文起作用，以字母作为换行依据*/
+		.word_wrap_eng { word-wrap:break-word; width:80px;}/*--只对英文起作用，以单词作为换行依据*/
+		.word_wrap_chi {white-space:pre-wrap; width:80px;}/*只对中文起作用，强制换行*/
+		.word_nowrap {white-space:nowrap; width:80px;}/*强制不换行，都起作用*/
+		.word_nowrap_suspension {white-space:nowrap; overflow:hidden; text-overflow:ellipsis;-o-text-overflow:ellipsis; width:80px;}/*不换行，超出部分隐藏且以省略号形式出现*/            
+    </style>
+    [#if _FRONT_USER_DATE_FMT_??]
+	    [#setting date_format=_FRONT_USER_DATE_FMT_]
+	    [#assign date_format=_FRONT_USER_DATE_FMT_]
+	    [#setting time_format="HH:mm:ss"]
+	    [#assign time_format="HH:mm:ss"]
+	    [#setting datetime_format=_FRONT_USER_DATE_FMT_+" HH:mm:ss"]
+	    [#assign datetime_format=_FRONT_USER_DATE_FMT_+" HH:mm:ss"]
+    [#else]
+        [#setting date_format="yyyy-MM-dd"]
+        [#assign date_format="yyyy-MM-dd"]
+        [#setting time_format="HH:mm:ss"]
+        [#assign time_format="HH:mm:ss"]
+        [#setting datetime_format="yyyy-MM-dd HH:mm:ss"]
+        [#assign datetime_format="yyyy-MM-dd HH:mm:ss"]
+    [/#if]
+</head>
+<body>
+<div class="wmes-wraper">
+        <div class="left-s-menu">
+            <div class="wmes-logo">
+                [#if Session["role"]?exists && Session["role"]=='IFA']
+                <a href="${base}/front/ifa/info/ifahome.do"> 
+                [#elseif Session["role"]?exists && Session["role"]=='investor']
+                <a href="${base}/front/investor/home.do"> 
+                [#elseif Session["role"]?exists && Session["role"]=='IFA_FIRM']  
+                <a href="${base}/console/ifafirm/info/home.do"> 
+                [#elseif Session["role"]?exists && Session["role"]=='distributor']  
+                <a href="${base}/console/distributor/info/home.do"> 
+                [#elseif Session["role"]?exists && Session["role"]=='sys']  
+                <a href="${base}/console/sys/mutilLang/langPage.do"> 
+                [#else]
+                <a href="${base}/front/investor/home.do"> 
+                [/#if]
+                <img src="${base}/res/images/xfalogo_s.png" alt=""></a>
+                <p class="wmes-logo-word">${Session["_FRONT_COMPANY_SYSNAME_"]!"XFA Wealth"}</p>    
+            </div>
+            <div class="ls-menu-wrap" id="ls-menu-wrap">
+                <!--  菜单栏 -->
+                <ul class="ls-menu" id="ls-menu-more">
+                    <li class="is-menu-li">
+                        <div class="ls-menu-more">
+                            <p class="ls-menu-narrow"></p>
+                        </div>
+                    </li>
+                    [#if Session["role"]?? && Session["role"]=='sys']
+                        <li class="j-ls-menu">
+                            <a href="${base}/console/sys/mutilLang/langPage.do">
+                                <span class="ls-menu-setting" title=""></span>
+                                <p class="ls-menu-title">
+                                    [@lang_res  k='global.lang.setting'/]
+                                </p>
+                            </a>
+                        </li>                    
+                    [#elseif Session["_FRONT_USER_MENU_"]?? && Session["_FRONT_USER_MENU_"]?size>0]
+                        [#list Session["_FRONT_USER_MENU_"] as rec]
+                            [#if Session["_LANG_CODE_"]?exists]
+                                [#if Session["_LANG_CODE_"]=='en']
+                                    [#assign rec_name = rec.nameEn!""]
+                                [#elseif Session["_LANG_CODE_"]=='tc']
+                                    [#assign rec_name = rec.nameTc!""]
+                                [#else]
+                                    [#assign rec_name = rec.nameSc!""]
+                                [/#if]
+                            [#else]
+                                [#assign rec_name = '']
+                            [/#if]
+                            <li class="j-ls-menu">
+                                <a href="[#if rec.webUrl?? && rec.webUrl?length > 0 && rec.webUrl!='#']${base}${rec.webUrl!}[#else]javascript:;[/#if]">
+                                    <span class="${rec.icon!"ls-menu-crm"}" title="${rec_name!}"></span>
+                                    <p class="ls-menu-title word_wrap_eng">${rec_name!}</p>
+                                </a>
+                                [#if Session["role"]?exists && (Session["role"]=='investor' || Session["role"]=='IFA')]
+			                        [#if rec.childs?? && rec.childs?size>0]
+			                        <div class="small-menu-wrap">
+			                          <ul class="ls-small-menu">
+			                          [#assign childs = rec.childs]
+			                          [#list childs as menu]
+			                              <li>
+	                                        <a href="[#if menu.webUrl?? && menu.webUrl?length > 0 && menu.webUrl!='#']${base}${menu.webUrl!}[#else]javascript:;[/#if]">
+	                                            <span class="${menu.icon!"ls-menu-pipeline"}"></span>
+	                                        <p class="ls-menu-word">
+	                                      [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='sc']${menu.nameSc!""}[/#if]
+	                                      [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']${menu.nameTc!""}[/#if]
+	                                      [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']${menu.nameEn!""}[/#if]
+	                                        </p>
+	                                        </a>
+	                                      </li>
+			                          [/#list]
+			                          </ul>
+			                        </div>
+			                        [/#if] 
+			                    [#else]
+			                        [#if rec.childs?? && rec.childs?size>0]
+                                        <div class="multistage-menu-wrap">
+                                          <ul class="multistage-ls-menu">
+                                          [#assign childs = rec.childs]
+                                          [#list childs as menu]
+                                              <li>
+                                                <a href="[#if menu.webUrl?? && menu.webUrl?index_of("demo")!=-1]${base}/demo.do?p=${menu.webUrl!"javascript:;"}[#elseif menu.webUrl?? && menu.webUrl?length > 0]${base}${menu.webUrl!}[#else]javascript:;[/#if]">
+                                                <p class="multistage-ls-word">
+                                              [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='sc']${menu.nameSc!""}[/#if]
+                                              [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']${menu.nameTc!""}[/#if]
+                                              [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']${menu.nameEn!""}[/#if]
+                                                </p>
+                                                </a>
+                                                [#if menu.childs?? && menu.childs?size>0]
+                                                <div class="multistage-small-menu">
+                                                    <ul class="multistage-ls-menu">
+                                                    [#assign childs2 = menu.childs]
+                                                    [#list childs2 as menu2]
+                                                        <li>
+                                                            <a href="[#if menu2.webUrl?? && menu2.webUrl?index_of("demo")!=-1]${base}/demo.do?p=${menu2.webUrl!"javascript:;"}[#elseif menu2.webUrl?? && menu2.webUrl?length > 0]${base}${menu2.webUrl!}[#else]javascript:;"}[/#if]">
+                                                                <p class="multistage-small-word">
+                                                              [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='sc']${menu2.nameSc!""}[/#if]
+                                                              [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']${menu2.nameTc!""}[/#if]
+                                                              [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']${menu2.nameEn!""}[/#if]
+                                                                </p>
+                                                            </a>
+                                                        </li>
+                                                    [/#list]
+                                                    </ul>
+                                                </div>
+                                                [/#if] 
+                                              </li>
+                                          [/#list]
+                                          </ul>
+                                        </div>
+                                    [/#if] 
+                                [/#if]
+		                    </li>
+                        [/#list]
+                    [/#if] 
+                </ul>
+
+                <!--  头像栏 -->
+                <div class="ls-port-wrap">
+                    <div class="ls-menu-port" style="padding-bottom:0px;">
+                        <!-- <a href="${base}/front/member/personal/info.do">
+                        [#if Session["role"]?exists && Session["role"]=='IFA']
+                        <img class="ls-port-img" src="${base}/res/images/ifa/linshi_ifa_04.png" alt="">
+                        <p class="ls-port-menu-name">Jennifer (IFA)</p>
+                        [#else]
+                        <img class="ls-port-img" src="${base}/res/images/ifa/newbuddy_ifa_01.png" alt="">
+                        <p class="ls-port-menu-name">Jennifer (Investor)</p>
+                        [/#if]
+                        </a>
+                        <p class="ls-port-menu-logout"><a href="${base}/front/logout.do">Logout</a></p>
+                         -->
+                      [#if Session["role"]?exists]
+                        [#if Session["role"]=='IFA_FIRM' || Session["role"]=='distributor']
+                        <a href="${base}/front/member/personal/myProfile.do">
+                        [#else]
+                        <a href="${base}/front/member/personal/info.do">
+                        [/#if]
+                        <img class="ls-port-img" src="${base}[@user_head u='${(_FRONT_USER_SSO_.iconUrl)!}' g='${(_FRONT_USER_SSO_.gender)!}'/]" alt="">
+                        </a>
+                        <p class="ls-port-menu-name" style="margin:0px;font-size:x-small;">${Session["_FRONT_USER_NAME_"]!""}</p>
+                        <p class="ls-port-menu-logout"><a href="${base}/front/logout.do">[@lang_res  k='global.logout'/]</a></p>
+                      [#else]
+                        <img class="ls-port-img" src="${base}/res/images/common/portrait.png" alt="">
+                        <p class="ls-port-menu-logout"><a href="${base}/front/viewLogin.do">[@lang_res  k='global.login'/]</a></p>
+                      [/#if]                        
+                    </div>
+                </div>             
+            </div>   
+                      
+        </div>
+<div class="wmes-contentbox">
+<style>
+.wmes_yuyan{ position:fixed;top:20px;right:180px;opacity:1;}
+.yuanyan_wrap{padding-right:10px;text-align:right;z-index:9999999;}
+.yuyanshow,.showActive{background: white;float: right; color:#000000; opacity:0.7;}
+.yuyanshow > a,.showActive > a{color: #666666;}
+.yuyanshow #yuanyan_wrap .wmes_yuyan_ico{width:30px;background:url(${base}/res/images/top_ico_09_01.png) no-repeat;}
+</style>        
+<script type="text/javascript">
+    seajs.use('jquery', function($){
+        $("#yuanyan_wrap").on("click",function(){
+            if($(this).parent().hasClass("yuyanshow")){
+                $(this).parents(".wmes_yuyan").find(".wmes_yuyankuang").hide();
+                $(this).parent().removeClass("yuyanshow");
+                $("#yuanyan_wrap").css("color","#ffffff");
+            }else{
+                $(this).parents(".wmes_yuyan").find(".wmes_yuyankuang").show();
+                $(this).parent().addClass("yuyanshow");
+                $("#yuanyan_wrap").css("color","red");
+            }
+            
+        })
+        $(".langChange").on("click",function(){
+            $.get(base_root+"/front/site/changLang.do?langFlag="+$(this).attr("langCode"), function(data, status, Request){
+                if(data != null){
+                    window.location.href=window.location.href;
+                }
+            });
+        })
+    });
+</script> 
+<!-- header -->        

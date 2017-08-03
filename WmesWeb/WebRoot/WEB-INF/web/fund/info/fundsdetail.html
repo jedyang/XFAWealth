@@ -1,0 +1,497 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<style>
+.num_color{color: #828282;}
+.funds_price_instructions li{list-style:none;float:left;width:33%}    
+.funds_price_instructions li span{margin-left:10px;color:#d0d0d0;} 
+</style>
+<!-- 
+<div class="wmes-top">
+	<a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+    <a href="javascript:;" class="header-over">[@lang_res k='fund.info.detail'/]</a>
+</div> -->
+<div class="wmes-content">
+        <div class="kaihu_div">
+            <div class="white_background funds_background">
+            	<!-- <div class="wmes_navigation_bar">
+            		[@lang_res k='fund.info.Funds'/] > <a href="${base}/front/fund/info/list.do">[@lang_res k='fund.info.fundsScreener'/]</a> > [@lang_res k='fund.info.detail'/]
+            	</div> -->
+            	<p class="wmes-wrap-title">
+          		<a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='fund.info.detail'/]</p>
+				<div class="funds_details_wrap">
+					<p class="funds_details_title">${fundInfoVO.fundName!""}
+					[#if source!='dis']
+					[#if Session["_FRONT_USER_LOGIN_"]?exists == true]
+						<span class="funds_cart"></span>
+						[#if fundInfoVO.followStatus?exists && fundInfoVO.followStatus=='1']
+						<span class="funds_heart funds_heart_active" followFlag="Delete" fundId="${fundInfoVO.fundInfo.id!}" productId="${fundInfoVO.fundInfo.product.id!}"></span>
+						[#else]
+						<span class="funds_heart" followFlag="Follow" fundId="${fundInfoVO.fundInfo.id!}" productId="${fundInfoVO.fundInfo.product.id!}"></span>
+						[/#if]
+					[#else]
+						<span class="funds_cart noLogin"></span>
+						<span class="funds_heart noLogin"></span>
+					[/#if]	
+					[/#if]	
+					</p>
+					<div class="funds_details_icon_wrap">
+					
+					</div>
+					<span class="funds_leveal_${fundInfoVO.fundInfo.riskLevel!}" title="${fundInfoVO.fundInfo.riskLevel!}" style="float:left;"></span>
+				</div>
+				<div class="funds_details_information">
+					<!-- <ul class="funds_information_risk">
+						<li>
+							<p class="funds_information_title">Risk rating</p>
+							<p class="funds_information_word">${fundInfoVO.fundInfo.riskLevel!""}</p>
+						</li>
+						<li>
+							<p class="funds_information_title">Last NAV</p>
+							<p class="funds_information_usd">${fundInfoVO.fundInfo.lastNav!""} ${fundInfoVO.fundCurrency!""}</p>
+							<p class="funds_information_percentage">+0.38%</p>
+						</li>
+						<li>
+							<p class="funds_information_date"></p>
+						</li>
+					</ul> -->
+					<div class="funds_information_lastNav">
+						<p class="funds_detail_price">[@lang_res  k='fund.info.LastNAV_rating'/]</p>
+						<div style="line-height: 30px;" class="funds_information_usd">[@num_fmt s='${fundInfoVO.fundInfo.lastNav!""}'/] <span class="lump-growth-currency-color">${fundInfoVO.fundCurrency!""}</span></div>
+						<p class="funds_lastNav_percentage [#if fundInfoVO.fundInfo.dayReturn?? && fundInfoVO.fundInfo.dayReturn==0]num_color[/#if]" style="color:black;">(
+							[@num_color s='${fundInfoVO.fundInfo.dayReturn!""}' c='${displayColor!}'/])
+						</p>
+						
+						<br>
+						<p style="margin-top:10px;" class="funds_information_date">[#if fundInfoVO.fundInfo?? && fundInfoVO.fundInfo.lastNavUpdate??]${fundInfoVO.fundInfo.lastNavUpdate?date}[/#if]</p>
+					</div>
+					<ul class="funds_information_contents">
+						<li>
+							<div>
+								<p class="funds_information_title [#if fundInfoVO.fundReturnOneMonth?? && fundInfoVO.fundReturnOneMonth==0]num_color[/#if]">[@lang_res  k='fund.info.cumPerMon_1'/]</p>
+								<p>[@num_color s='${fundInfoVO.fundReturnOneMonth!""}' c='${displayColor!}'/]</p>
+							</div>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.fundHouse'/]</p>
+								<p class="funds_information_word">${fundInfoVO.fundHouse!""}</p>
+							</div>
+							<div>
+								<p class="funds_information_title">
+								[@lang_res k='fund.info.fundSize'/]
+								</p>
+								<p class="funds_information_word">[@num_fmt s='${fundInfoVO.fundSize!""}'/] ${fundInfoVO.issueCurrency!""}</p>
+							</div>
+						</li>
+						<li>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.cumPerMon_3'/]</p>
+								<p>[@num_color s='${fundInfoVO.fundReturnThreeMonth!""}' c='${displayColor!}'/]</p>
+							</div>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.detail.Sector'/]</p>
+								<p class="funds_information_word">${fundInfoVO.sectorType!""}</p>
+							</div>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.detail.Manager'/]</p>
+								<p class="funds_information_word">${fundInfoVO.fundManager!""}</p>
+							</div>
+						</li>
+						<li>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.cumPerYr_1'/]</p>
+								<p>[@num_color s='${fundInfoVO.fundReturnOneYear!""}' c='${displayColor!}'/]</p>
+							</div>
+							<div>
+								<p class="funds_information_title">[@lang_res  k='fund.info.detail.Type'/]</p>
+								<p class="funds_information_word">${fundInfoVO.fundType!""}</p>
+							</div>
+							<div>
+								<p class="funds_information_title">
+								[@lang_res  k='fund.info.detail.GeoAllocation'/]
+								</p>
+								<p class="funds_information_word">${fundInfoVO.geoAllocation!""}</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+  				<div class="funds_details_inct">					
+	            	<div class="funds_details_left">
+		        		<div class="funds_details_tab_wrap">
+			                <ul class="funds_details_tab">
+								<li class="now" id="funds_price">[@lang_res  k='fund.info.detail.FundPrice'/]<span></span></li>
+								<li class="" id="funds_facts">[@lang_res  k='fund.info.detail.Facts'/]<span></span></li>
+								<li class="">[@lang_res  k='fund.info.detail.FeesNDoc'/]<span></span></li>
+								<li class="">[@lang_res  k='fund.info.detail.Dividend'/]<span></span></li>
+								<li class="">[@lang_res  k='fund.info.detail.Announcements'/]<span></span></li>
+								<li class="" style="display:none;">Hot talk<span></span></li>
+							</ul>
+		                </div>
+		                <div class="funds_details_part">
+		                	<div class="funds_details_contents_wrap" style="display:block;">
+		                		<div class="funds_details_price_wrap">
+		                			<p class="funds_details_price_time">[@lang_res k='fund.info.detail.period'/]</p>
+			                		<div class="funds_details_price">
+										<div data-value="1M">[@lang_res  k='fund.info.detail.one_month'/]</div>
+										<div data-value="3M" class="funds_price_active">[@lang_res  k='fund.info.detail.three_month'/]</div>
+										<div data-value="6M">[@lang_res  k='fund.info.detail.six_month'/]</div>
+										<div data-value="YTD">[@lang_res  k='fund.info.detail.YTD'/]</div>
+										<div data-value="1Y">[@lang_res  k='fund.info.detail.one_yr'/]</div>
+										<div data-value="3Y">[@lang_res  k='fund.info.detail.three_Years'/]</div>
+										<div data-value="5Y">[@lang_res  k='fund.info.detail.five_Years'/]</div>
+									</div>
+		                		</div>
+								
+								<div id="funds_details_price_chart"></div>				
+								<div class="funds_cumper">
+								<div class="funds_title_price">
+					                <p class="funds_title_bold">[@lang_res  k='fund.info.detail.CumPer'/]</p>
+				                </div>
+									<table class="funds_price_table">
+											<tbody>
+												<tr class="funds_table_th">
+													<th class="funds_price_peiod">[@lang_res  k='fund.info.detail.Period'/]</th>
+		                                            <th class="funds_price_Increase">[@lang_res  k='fund.info.detail.Increase'/]</th>
+												</tr>
+			                            [#list fundCumReturnList as rec]
+		                                        <tr>
+		                                            <td class="funds_price_peiod">${rec.item!""}</td>
+		                                            <td class="funds_price_Increase" style="text-align: left;padding-left:0px;">[@num_color s='${rec.percent!""}' c='${displayColor!}'/]</td>
+		                                        </tr>
+			                            [/#list]
+											</tbody>
+									</table>
+								</div>
+				                <div class="funds_cumper">
+				                <div class="funds_title_price">
+					                <p class="funds_title_bold">[@lang_res  k='fund.info.detail.YearPer'/]</p>
+				                </div>
+									<table class="funds_price_table">
+											<tbody>
+												<tr class="funds_table_th">
+													<th class="funds_price_peiod">[@lang_res  k='fund.info.detail.year'/]</th>
+													<th class="funds_price_Increase">[@lang_res  k='fund.info.detail.Increase'/]</th>
+												</tr>
+		                                [#list fundYearReturnList as rec]
+		                                        <tr>
+		                                            <td class="funds_price_peiod">${rec.item!""}</td>
+                                                    <td class="fuFnds_price_Increase">[@num_color s='${rec.percent!""}' c='${displayColor!}'/]</td>
+		                                        </tr>
+		                                [/#list]
+											</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="funds_details_contents_facts">
+								<ul class="funds_facts_information funds_facts_information_list">
+									<li class="funds_facts_information_left">
+										<div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res  k='fund.info.fundName'/]</p>
+												<p class="funds_information_word">${fundInfoVO.fundName!"N/A"}</p>
+											</div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res k='fund.info.fundHouse'/]</p>
+												<p class="funds_information_word">${fundInfoVO.fundHouse!"N/A"}</p>
+											</div>
+										</div>
+										<div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res  k='fund.info.detail.Manager'/]</p>
+												<p class="funds_information_word">${fundInfoVO.fundManager!"N/A"}</p>
+											</div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res k='fund.info.detail.ManageCom'/]</p>
+												<p class="funds_information_word">${fundInfoVO.fundManCo!"N/A"}</p>
+											</div>
+										</div>
+										<div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res  k='fund.info.detail.Sector'/]</p>
+												<p class="funds_information_word">${fundInfoVO.sectorType!"N/A"}</p>
+											</div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res k='fund.info.detail.Type'/]</p>
+                                            	<p class="funds_information_word">${fundInfoVO.fundType!"N/A"}</p>
+											</div>
+										</div>
+										<div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res  k='fund.info.currency'/]</p>
+												<p class="funds_information_word">${fundInfoVO.issueCurrency!"N/A"}</p>
+											</div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res k='fund.info.detail.GeoAllocation'/]</p>
+												<p class="funds_information_word">${fundInfoVO.geoAllocation!"N/A"}</p>
+											</div>
+										</div>
+										<div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res  k='console.fund.info.list.table.title.issuePrice'/]</p>
+												<p class="funds_information_word">[#if fundInfoVO.fundInfo.issuePrice??][@num_fmt s='${fundInfoVO.fundInfo.issuePrice!""}'/] ${fundInfoVO.issueCurrency!""}[#else]N/A[/#if]</p>
+											</div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res k='fund.info.riskrating'/]</p>
+												<p class="funds_information_word">${fundInfoVO.fundInfo.riskLevel!"N/A"}</p>
+											</div>
+										</div>
+										<div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res k='fund.info.mgtFee'/]</p>
+												<p class="funds_information_word">[#if fundInfoVO.fundInfo.mgtFee??]${fundInfoVO.fundInfo.mgtFee!}%[#else]N/A[/#if]</p>
+											</div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res k='fund.info.IssueDate'/]</p>
+												<p class="funds_information_word">[#if fundInfoVO.fundInfo.issueDate??]${fundInfoVO.fundInfo.issueDate?string("yyyy-MM-dd")}[#else]N/A[/#if]</p>
+											</div>
+										</div>
+										<div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res k='fund.info.detail.MinSubscribeAmount'/]</p>
+												<p class="funds_information_word">[#if fundInfoVO.fundInfo.minInitialAmount??][@num_fmt s='${fundInfoVO.fundInfo.minInitialAmount!""}'/] ${fundInfoVO.issueCurrency!""}[#else]N/A[/#if]</p>
+											</div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res k='fund.info.fundSize'/]</p>
+												<p class="funds_information_word">[#if fundInfoVO.fundSize??][@num_fmt s='${fundInfoVO.fundSize!""}'/] ${fundInfoVO.issueCurrency!""}[#else]N/A[/#if]</p>
+											</div>
+										</div>
+										<div>
+											<div class="funds_facts_information_rows">
+												<p class="funds_information_title">[@lang_res k='fund.info.detail.MinHoldingAmount'/]</p>
+												<p class="funds_information_word">[#if fundInfoVO.fundInfo.minHoldingAmount??][@num_fmt s='${fundInfoVO.fundInfo.minHoldingAmount!""}'/] ${fundInfoVO.issueCurrency!""}[#else]N/A[/#if]</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<p class="funds_facts_mainword">
+									[@lang_res k='fund.info.detail.InvTarget'/] : ${fundInfoVO.invTarget!""}
+								</p>
+								<div class="funds_facts_charts">
+									<div id="funds_facts_industrial_chart"></div>
+									<div id="funds_facts_regional_chart"></div>
+								</div>
+							</div>
+							<div class="funds_details_contents_fees">
+								<div class="funds_title_fees">
+					                <p class="funds_title">[@lang_res k='fund.info.detail.Fees'/]</p>
+				                </div>
+				                <table class="funds_fees_table">
+									<tbody>
+										<tr class="funds_table_th">
+											<th class="funds_price_fees">[@lang_res k='fund.info.detail.Fees'/]</th>
+											<th class="funds_price_instructions">[@lang_res k='fund.info.detail.Instructions'/]</th>
+										</tr>
+		                            [#list fundFeesList as rec]
+		                                <tr>
+		                                    <td class="funds_price_fees">${rec.item!""}</td>
+		                                    <td class="funds_price_instructions">[#if fundFeesList?first == rec][@num_fmt s='${rec.descrp!""}'/] ${fundInfoVO.fundCurrency!""} [#else]${rec.descrp!""}[/#if]</td>
+		                                </tr>
+		                            [/#list]
+										<tr>
+											<td>
+												<div style="margin-left: 10px;" class="funds_title_fees funds_title_doc">
+									                <p class="funds_title">[@lang_res k='fund.info.detail.Documents'/]</p>
+								                </div>
+							                </td>
+						                </tr>
+		                            [#list fundDocsList as rec]
+		                                <tr>
+		                                    <td class="funds_price_fees">${rec.item!""}</td>
+		                                    <td class="funds_price_instructions">
+		                                    [#if rec.docDetailList??]
+		                                       [#list rec.docDetailList as each]
+		                                      
+		                                       	[#if each.langCode=="EN"||each.langCode=="英文"]
+													<a download="${rec.fileName!'N/A'}" href="${each.linkUrl!'#'}" style="color:red;"><li>${each.langCode!}<span>${each.lastUpdate?string("yyyy-MM-dd")!}</span></li></a>
+													[#elseif each.langCode=="繁體"||each.langCode=="TC"||each.langCode=="繁体"]
+													<a download="${rec.fileName!'N/A'}" href="${each.linkUrl!'#'}" style="color:green;"><li>${each.langCode!}<span>${each.lastUpdate?string("yyyy-MM-dd")!}</span></li></a>
+													[#elseif each.langCode=="SC"||each.langCode=="简体"||each.langCode=="簡體"]
+													<a download="${rec.fileName!'N/A'}" href="${each.linkUrl!'#'}" style="color:blue;"><li>${each.langCode!}<span>${each.lastUpdate?string("yyyy-MM-dd")!}</span></li></a>
+													[/#if]
+		                                    	
+		                                    	[/#list]
+		                                    
+		                                    	[/#if]
+		                                    </td>
+		                                </tr>
+		                            [/#list]				                
+									</tbody>
+								</table>
+							</div>
+							<div class="funds_details_contents_dividend">
+									<table class="funds_dividend_table">
+										<tbody>
+											<tr class="funds_table_th">
+												<th>[@lang_res k='fund.info.detail.ExDividendDate'/]</th>
+												<th>[@lang_res k='fund.info.detail.DividenPerUnit'/]</th>
+												<th>[@lang_res k='fund.info.detail.AnnualDividendYield'/]</th>
+											</tr>
+		                            [#list fundBonusList as rec]
+		                                <tr>
+		                                    <td>[#if rec.updateTime??]${rec.updateTime?string("yyyy-MM-dd")}[/#if]</th>
+		                                    <td>[#if rec.price??][@num_fmt s='${rec.price!""}'/] ${fundInfoVO.fundCurrency!""}[/#if]</td>
+		                                    <td>[#if rec.percent??]${rec.percent?string('##.00')}%[/#if]</td>
+		                                </tr>
+		                            [/#list]									
+										</tbody>
+									</table>
+							</div>
+							<div class="funds_details_contents_announcemts">
+									<table class="funds_announcemts_table">
+										<tbody>
+											<tr class="funds_table_th">
+												<th class="funds_no_announcemts">[@lang_res k='fund.info.detail.AnnoNum'/]</th>
+												<th  class="funds_title_announcemts">[@lang_res k='fund.info.detail.AnnoTitle'/]</th>
+												<th class="funds_time_announcemts">[@lang_res k='fund.info.detail.AnnoTime'/]</th>
+											</tr>
+										[#list fundAnnoList as rec]
+											<tr>
+												<td class="funds_no_announcemts">${rec_index+1}</td>
+												<td  class="funds_title_announcemts"><a aid="${rec.id!""}" href="javascript:void(0)">${rec.item!""}</a></td>
+												<td class="funds_time_announcemts">[#if rec.updateTime??]${rec.updateTime?string("yyyy-MM-dd")}[/#if]</td>
+											</tr>		
+										[/#list]   	
+										</tbody>
+									</table>
+							</div>	
+							<div class="funds_details_contents_talk">
+								<div class="funds_talk_wrap">
+									<textarea class="funds_talk_content" name="msg" rows="12" cols="60"></textarea>
+									<div class="funds_checkbox">
+				                        <input type="checkbox" value="1" name="" id="funds_talk_public">
+				                        <label for="funds_talk_public"></label>
+				                    </div>
+				                    <span class="funds_talk_public">Public all users</span>
+				                    <button id="funds_talk_add" type="button">submit</button>
+				                    <p class="funds_title_talk">Comments</p>
+				                    <div class="funds_talk_comments">
+				                    	<ul>
+					                    	<li>
+					                    		<div class="funds_talk_touxiang">
+					                    			<img src="${base}/res/images/ifa1.png" alt="">
+					                    		</div>
+					                    		<div  class="funds_talk_key">
+					                    			<div class="funds_talk_comments_div">
+					                    			<p class="funds_talk_name">Peter</p>
+					                    			<p class="funds_talk_data">2016-01-23 20:29</p>
+						                    		</div>
+						                    		<div class="funds_talk_comments_div">
+						                    			<p class="funds_talk_discuss">Excuse me,what are the investment opportunities of the fund in 2016?</p>
+						                    		</div>
+						                    		<p class="funds_talk_comments_repost"><img src="${base}/res/images/icon_repost.png" alt="">replay</p>
+					                    		</div>
+					                    	</li>
+					                    	<li class="funds_talk_revert">
+					                    		<div class="funds_talk_touxiang">
+					                    			<img src="${base}/res/images/ifa2.png" alt="">
+					                    		</div>
+					                    		<div  class="funds_talk_key">
+					                    			<div class="funds_talk_comments_div">
+					                    			<p class="funds_talk_name">Peter</p>
+					                    			<p class="funds_talk_data">2016-01-23 20:29</p>
+						                    		</div>
+						                    		<div class="funds_talk_comments_div">
+						                    			<p class="funds_talk_discuss">Excuse me,what are the investment opportunities of the fund in 2016?</p>
+						                    		</div>
+						                    		<p class="funds_talk_comments_repost"><img src="${base}/res/images/icon_repost.png" alt="">replay</p>
+					                    		</div>
+					                    	</li>
+					                    	<li class="funds_talk_revert">
+					                    		<div class="funds_talk_touxiang">
+					                    			<img src="${base}/res/images/ifa3.png" alt="">
+					                    		</div>
+					                    		<div  class="funds_talk_key">
+					                    			<div class="funds_talk_comments_div">
+					                    			<p class="funds_talk_name">Peter</p>
+					                    			<p class="funds_talk_data">2016-01-23 20:29</p>
+						                    		</div>
+						                    		<div class="funds_talk_comments_div">
+						                    			<p class="funds_talk_discuss">Excuse me,what are the investment opportunities of the fund in 2016?</p>
+						                    		</div>
+						                    		<p class="funds_talk_comments_repost"><img src="${base}/res/images/icon_repost.png" alt="">replay</p>
+					                    		</div>
+					                    	</li>
+					                    	<li>
+					                    		<div class="funds_talk_touxiang">
+					                    			<img src="${base}/res/images/ifa4.png" alt="">
+					                    		</div>
+					                    		<div  class="funds_talk_key">
+					                    			<div class="funds_talk_comments_div">
+					                    			<p class="funds_talk_name">Peter</p>
+					                    			<p class="funds_talk_data">2016-01-23 20:29</p>
+						                    		</div>
+						                    		<div class="funds_talk_comments_div">
+						                    			<p class="funds_talk_discuss">Excuse me,what are the investment opportunities of the fund in 2016?</p>
+						                    		</div>
+						                    		<p class="funds_talk_comments_repost"><img src="${base}/res/images/icon_repost.png" alt="">replay</p>
+					                    		</div>
+					                    	</li>
+				                    	</ul>
+				                    </div>
+								</div>
+							</div>
+		                </div>
+	            	</div>
+	            	<div class="funds_details_right">
+	            	<input type="hidden" name="hdDisplayColor" id="hdDisplayColor" value="${displayColor!}">
+	            		<div class="funds_right_table">
+			                <div class="funds_title_price">
+				                <p class="funds_title_bold">[@lang_res k='fund.info.detail.browserHistory'/]</p>
+			                </div>
+			                <div  class="funds_price_table browsing_fund">
+			                	<ul class="funds_table_ul">
+			                		<li class="funds_tul_name" style="width: 30%">[@lang_res k='fund.info.LastNAV'/]</li>
+			                		<li class="funds_tul_num" style="width: 33%">[@lang_res k='fund.info.cumPerMon_1'/]</li>
+			                		<li class="funds_tul_num" style="width: 33%">[@lang_res k='fund.info.cumPerMon_3'/]</li>
+			                	</ul>
+			                	<!-- content -->
+			                </div>
+			                <div class="funds_title_price">
+				                <p class="funds_title_bold">[@lang_res k='fund.info.detail.oneMonthBestPerformance'/]</p>
+			                </div>
+			                <div  class="funds_price_table">
+			                	<ul class="funds_table_ul">
+			                		<li class="funds_tul_name" style="width: 30%">[@lang_res k='fund.info.Funds'/]</li>
+			                		<li class="funds_tul_num" style="width: 33%">[@lang_res k='fund.info.cumPerMon_1'/]</li>
+			                		<li class="funds_tul_num" style="width: 33%">[@lang_res k='fund.info.cumPerMon_3'/]</li>
+			                	</ul>
+			                	<!-- content -->
+			                	<div class="best_fund">
+			                	</div>
+			                </div>
+						</div>
+	            	</div>
+                </div>
+					
+					
+            </div>
+
+        </div>
+</div>
+<!--基金公告弹出层-->
+<!--基金公告弹出层-->
+<div class="fund-space-mask-wrap">
+	<div class="fund_float_menu_menu_addbox">
+		<div class="wmes-close"></div>
+		<p style="margin-bottom: 15px;font-size:25px;text-align:center;" class="selectSector-title notice-dialog-title"></p>
+		<div style="text-align:center;">
+			<p class="selectSector-title-sub">[@lang_res k='fund.info.detail.AnnoTime'/]: <span class="notice-dialog-release-date-time"></span></p>
+			<!-- <p class="selectSector-title-sub">发布机构 : <span class="notice-dialog-release-by"></span></p> -->
+		</div>
+		<div class="notice-content dialog-notice-content"></div>
+		<div class="character-button-rows"></div>
+		<div class="character-button-rows" style="text-align:center;">
+			<div class="character-button-close">[@lang_res k='global.close'/]</div>
+		</div>
+	</div>
+</div>
+
+[#if Session["_FRONT_USER_LOGIN_"]?exists == true]
+    <input type="hidden" name="" id="loginCode" value="true">
+[#else]
+   	<input type="hidden" name="" id="loginCode" value="false">
+[/#if]
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+    var _root_ = '${base}';
+    var _fundId_ = '${id}';
+    seajs.use('${base}/res/web/fund/info/fundsdetail.js');
+</script>

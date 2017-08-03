@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[@lang_res  k='console.inverstor.account.list.tab.title'/]</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+<div class="container-fluid pd0" id="wmes_wraper">
+	<div class="right-side container-fluid">
+		<div class="r-side-container">
+			<ul class="tab" id="tab-search">
+				<li id="tab-li-fixed" class="tab-li-crr">
+					<a href="#tab_wrap">[@lang_res k='console.inverstor.account.list.tab.title'/]</a>
+				</li>
+			</ul>
+			<div class="clear"></div>
+			<div class="tab_wrap" id="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+	                    <div class="row pd10">
+	                        <div class="col-md-4">
+	                        	<label for="txtKeyword">[@lang_res  k='console.inverstor.account.list.search.keyword'/]</label>
+	                        	<input type="text" value="${(memberBase.nickName)?if_exists}"  class="form-control" id="txtKeyword" placeholder="[@lang_res  k='console.inverstor.account.list.table.title.nickName'/]、[@lang_res  k='console.inverstor.account.list.table.title.accountNo'/]">
+	                        </div>
+	                        <div class="col-md-4">
+	                        	<label for="txtIfa">[@lang_res  k='member.ifa'/]</label>
+	                        	<input type="text"  class="form-control" id="txtIfa">
+	                        </div>
+	                        <div class="col-md-4">
+	                        	<button type="button" id="btnSearch" class="btn btn-primary">
+	                    			[@lang_res  k='global.query'/]</button>
+	               			</div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20">
+                    	<button type="button" class="btn btn-blue-s" id="btnAdd">
+							[@lang_res k='global.add'/]
+						</button>
+                    </div>
+                    <div>
+                        <table id="tableList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+	                           <tr>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.nickName'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.accountNo'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.fromType'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.subFlag'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.list.table.title.baseCurrency'/]</th>
+	                               <th class="table-head">[@lang_res  k='member.ifa'/]</th>
+	                               <th class="table-head">[@lang_res  k='member.distributor'/]</th>
+	                               
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.form.flowStatus'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.form.lastUpdate'/]</th>
+	                               <th class="table-head">[@lang_res  k='console.inverstor.account.form.isValid'/]</th>
+	                            </tr>                                
+                            </tbody>
+                        </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+$(function(){
+	var pageSize = 10;
+    //绑定查询按钮事件
+    $("#btnSearch").click(function () {                
+      	bindList(0);
+    });
+    //"增加"按钮事件 
+    $('#btnAdd').click(function (){
+		var url = '${base}/console/investor/account/input.do?datestr='+ new Date().getTime();
+    	showform("account-input","[@lang_res k='member.add'/]",url);
+    });
+    bindList(0);
+    //分页绑定Table数据
+	function bindList(curPage){
+		var keyword = $("#txtKeyword").val();
+		var ifaName = $("#txtIfa").val();
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/investor/account/listJson.do?datestr='+new Date().getTime(),
+			data : {
+				'keyword':keyword,'ifaName':ifaName,'page':curPage+1,'rows':pageSize
+			},
+			success : function(json) {
+				var total = json.total;
+				var table = json.rows;
+								
+				$("#tableList tbody tr:gt(0)").empty();
+				var tr = "";
+	            var list = json.rows;
+	            $.each(list, function (index, array) { //遍历json数据列					
+                  var id = array['id'] == null ? "" : array['id'];
+                  var nickName = array['nickName'] == null ? "" : array['nickName'];   
+                  var accountNo = array['accountNo'] == null ? "" : array['accountNo'];    
+                  var fromType = array['fromType'] == null ? "" : array['fromType'];                  
+                  if(fromType == "ifa"){
+                  	fromType = "[@lang_res  k='console.inverstor.account.options.fromType.ifa'/]";
+                  }else if(fromType == "self"){
+                  	fromType = "[@lang_res  k='console.inverstor.account.options.fromType.self'/]";
+                  }
+                  var baseCurrency = array['baseCurrency'] == null ? "" : array['baseCurrency'];
+                  var flowStatus = array['flowStatus'] == null ? "" : array['flowStatus'];    
+                  if(flowStatus=="-1"){
+                  	 flowStatus = "[@lang_res  k='console.inverstor.account.notYetExecuted'/]";
+                  }else if(flowStatus=="0"){
+                  	 flowStatus = "[@lang_res  k='console.inverstor.account.processProgress'/]";
+                  }else if(flowStatus=="1"){
+                  	 flowStatus = "[@lang_res  k='console.inverstor.account.processReviewReturning'/]";
+                  }else if(flowStatus=="2"){
+                  	 flowStatus = "[@lang_res  k='console.inverstor.account.processDoesNotReturn'/]";
+                  }else if(flowStatus=="3"){
+                  	 flowStatus = "[@lang_res  k='console.inverstor.account.waitingForIFAFIRM'/]";
+                  }else if(flowStatus=="4"){
+                  	 flowStatus = "[@lang_res  k='console.inverstor.account.waitingForDistributor'/]";
+                  }
+                  var isValid = array['isValid'];
+                  if(isValid == "1"){
+                  	 isValid="[@lang_res  k='console.inverstor.account.options.isEffective'/]";
+                  }else{
+                  	  isValid="[@lang_res  k='console.inverstor.account.options.isInvalid'/]";
+                  }
+                  var subFlag = "";
+                  if(array['subFlag']=="0"){
+                  	 subFlag = "[@lang_res  k='console.inverstor.account.mainAccount'/]";
+                  }else if(array['subFlag']=="1"){
+                  	 subFlag = "[@lang_res  k='console.inverstor.account.subAccount'/]";
+                  }
+                  
+                  var creator = array['createByName'] == null ? "" : array['createByName'];
+                  var createTime = array['createTime'] == null ? "" : array['createTime'];
+                  
+                  var infoUrl = '${base}/console/investor/account/input.do?datestr='+ new Date().getTime() + "&id=" + id;
+                  
+                  tr += "<tr>"
+                      + "<td>" + nickName + "</td>"
+                      + "<td><a href='javascript:;' onclick='showform(\"inverstoraccount-"+id+"\",\""+accountNo+"\",\""+infoUrl+"\")'>" + accountNo + "</a></td>"
+                      + "<td>" + fromType + "</td>"
+                      + "<td>" + subFlag + "</td>"
+                      + "<td>" + baseCurrency + "</td>"
+                      + "<td>" + array['ifaName'] + "</td>"
+                      + "<td>" + array['distributorName'] + "</td>"
+                      + "<td>" + flowStatus + "</td>"          
+                      + "<td>" + array['lastUpdate'] + "</td>"   
+                      + "<td>" + isValid + "</td>"                                        
+                      + "</tr>";
+                      
+              });
+              $("#tableList tbody").append(tr);
+			  $("#pagination").pagination(total, {
+                       callback: pageselectCallback,
+                       numDetail: '',
+                       items_per_page: pageSize,
+                       num_display_entries: 4,
+                       current_page: curPage,
+                       num_edge_entries: 2
+              });
+			}
+		});
+		 //回调
+            function pageselectCallback(page_id, jq) {
+                bindList(page_id);
+            }
+	}
+});
+
+
+
+  
+
+	
+	
+
+</script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+    <div class="wmes-content">
+        <div class="account-wrap"  ng-controller="Searchctrl" ng-app="mySearch">
+            <p class="wmes-wrap-title">[@lang_res k='account.list.ifa.title'/]</p>
+            <div class="conservative-choice-wrap">
+			<p class="conservative-choice-title">
+				[@lang_res k='member.distributor'/]
+			</p>
+			<ul class="conservative-choice">
+				<li class=" conservative_all conservative-choice-active" data-name="distributor" data-value="">[@lang_res k='global.all'/]</li>
+				[#if distributor?exists && distributor?size gt 0 ] [#list distributor as list]
+				<li data-name="distributor" data-key="${list.distributorName!}" data-value="${list.id!}">${list.distributorName!}</li>
+				[/#list] [/#if]
+			</ul>
+			</div>
+		<div class="conservative-choice-wrap">
+			<p class="conservative-choice-title">
+				[@lang_res k='sys.account.status'/]
+			</p>
+			<ul class="conservative-choice">
+				<li class=" conservative_all conservative-choice-active" data-name="account-status" data-value="">[@lang_res k='global.all'/]</li>
+				<li data-name="account-status" data-key="[@lang_res k='sys.account.status.1'/]" data-value="1">[@lang_res k='sys.account.status.1'/]</li>
+				<li data-name="account-status" data-key="[@lang_res k='sys.account.status.0'/]" data-value="0">[@lang_res k='sys.account.status.0'/]</li>
+			</ul>
+		</div>
+		<div class="conservative-choice-wrap">
+				<p class="conservative-choice-title">[@lang_res k='list.search.rpqDate'/]</p>
+				<ul class="conservative-choice">
+					<li class="conservative_all conservative-choice-active" data-name="rpq" data-value="" >[@lang_res k='global.all'/]</li>
+					<li data-name="rpq" data-key="[@lang_res k='list.search.doc.overdue'/]" data-value="o">[@lang_res k='list.search.doc.overdue'/]</li>
+					<li data-name="rpq" data-key="[@lang_res k='list.search.doc.3d'/]" data-value="3D">[@lang_res k='list.search.doc.3d'/]</li>
+					<li data-name="rpq" data-key="[@lang_res k='list.search.doc.1w'/]" data-value="1W">[@lang_res k='list.search.doc.1w'/]</li>
+					<li data-name="rpq" data-key="[@lang_res k='list.search.doc.2w'/]" data-value="2W">[@lang_res k='list.search.doc.2w'/]</li>
+					<li data-name="rpq" data-key="[@lang_res k='list.search.doc.1m'/]" data-value="1M">[@lang_res k='list.search.doc.1m'/]</li>
+				</ul>
+		</div>
+		<div class="conservative-choice-wrap">
+				<p class="conservative-choice-title">[@lang_res k='list.search.docDate'/]</p>
+				<ul class="conservative-choice">
+					<li class="conservative_all conservative-choice-active" data-name="doc" data-value="" >[@lang_res k='global.all'/]</li>
+					<li data-name="doc" data-key="[@lang_res k='list.search.doc.overdue'/]" data-value="o">[@lang_res k='list.search.doc.overdue'/]</li>
+					<li data-name="doc" data-key="[@lang_res k='list.search.doc.3d'/]" data-value="3D">[@lang_res k='list.search.doc.3d'/]</li>
+					<li data-name="doc" data-key="[@lang_res k='list.search.doc.1w'/]" data-value="1W">[@lang_res k='list.search.doc.1w'/]</li>
+					<li data-name="doc" data-key="[@lang_res k='list.search.doc.2w'/]" data-value="2W">[@lang_res k='list.search.doc.2w'/]</li>
+					<li data-name="doc" data-key="[@lang_res k='list.search.doc.1m'/]" data-value="1M">[@lang_res k='list.search.doc.1m'/]</li>
+					
+				</ul>
+		</div>
+		<div class="conservative-choice-wrap">
+				<p class="conservative-choice-title">[@lang_res k='assets.marketValue'/]</p>
+				<ul class="conservative-choice">
+					<li class="conservative_all conservative-choice-active" data-name="market" data-value="" >[@lang_res k='global.all'/]</li>
+					<li data-name="market" data-key="<1M" data-value="<1M">&lt;1M</li>
+                    <li data-name="market" data-key="1M ~ 5M" data-value="1M ~ 5M">1M ~ 5M</li>
+                    <li data-name="market" data-key="5M ~ 10M" data-value="5M ~ 10M" >5M ~ 10M</li>
+                    <li data-name="market" data-key=">10M" data-value=">10M">&gt;10M</li>
+                    
+					</ul>
+		</div>
+		<div class="conservative-choice-wrap">
+				<p class="conservative-choice-title">[@lang_res k='client.aum'/]</p>
+				<ul class="conservative-choice">
+					<li class="conservative_all conservative-choice-active" data-name="asset" data-value="" >[@lang_res k='global.all'/]</li>
+				    <li data-name="asset" data-key="<1M" data-value="<1M">&lt;1M</li>
+                    <li data-name="asset" data-key="1M ~ 5M" data-value="1M ~ 5M">1M ~ 5M</li>
+                    <li data-name="asset" data-key="5M ~ 10M" data-value="5M ~ 10M" >5M ~ 10M</li>
+                    <li data-name="asset" data-key=">10M" data-value=">10M">&gt;10M</li>
+				</ul>
+		</div>
+		<div class="conservative-choice-wrap">
+			<p class="conservative-choice-title">[@lang_res k='account.list.clientName'/]</p>
+				<ul>
+                    <li>
+                        <div class="search-condition">
+                            <input type="text" id="txtKeyWord" placeholder="[@lang_res k='account.detail.accountNo'/],[@lang_res k='account.list.clientName'/]">
+                       		<input type="hidden" id="memberId">
+                       		<span class="icon_search" id="searchKeyBtn"></span>
+                        </div>
+                    </li>
+                </ul>
+		</div>
+       <div class="account-wrap">
+            <div class="account-list-choose">
+                <div class="account-choose-left">
+					<p class="account-xiala-title">[@lang_res k='account.list.cur'/]</p>
+					<div class="proposal_xiala">
+                        <input type="text" placeholder="${curName!}" value="${curName!}" id="currencyName" readonly="" > 
+                         <input type="hidden" value="${currency!}" readonly="" id="currency"> 
+                        <span class="icon_xiala"></span>
+                        <ul class="cur-xiala">
+                        [#if currencList?exists && currencList?size gt 0]
+                        [#list currencList as list]
+                        	<li data-conversion="${list.id!}">${list.name!}</li>
+                        	[/#list][/#if]
+                        </ul>
+                    </div>
+				</div>
+            </div>
+            <div class="listContent"  >
+               <div class="funds_list_selected">
+			         <p class="funds_selected_title">[@lang_res k='global.selectedCondition'/] </p>
+			         <ul class="selection_criteria">
+			             <p class="funds_title_selection">[@lang_res k='fund.info.resetFilter'/] </p>
+			         </ul>
+			     </div>
+			     <div class="accountList">
+			     <input type="hidden" id="decimal" value="${decimal!}">
+            <table class="funds_search_information strategies_List myProposalList">
+              <tbody>
+                <tr class="funds_tables_th">
+                 <th class="funds_tables_header">[@lang_res k='account.detail.accountNo'/]</th>
+                 <th class="funds_tables_header">[@lang_res k='account.list.clientName'/]</th>
+                 <th class="funds_tables_header">[@lang_res k='assets.marketValue'/]</th>
+                 <th class="funds_tables_header">[@lang_res k='assets.totalAsset'/]</th>
+                 <th class="funds_tables_header">[@lang_res k='account.list.risk'/]</th>
+                 <th class="funds_tables_header">[@lang_res k='account.list.cur'/]</th>
+                 <th class="funds_tables_header">[@lang_res k='account.list.property'/]</th>
+                 <th class="funds_tables_header">[@lang_res k='member.distributor'/]</th>
+                 <th class="funds_tables_header">[@lang_res k='pipeline.content.kyc.rpqDate'/]</th>
+                 <th class="funds_tables_header">[@lang_res k='pipeline.content.kyc.docDate'/]</th>
+                 <th class="funds_tables_header">[@lang_res k='sys.account.status'/]</th>
+                </tr>
+               <tr ng-repeat="list in dataList" ng-init="checkLast($last)">
+                 <td class="funds_search_tdcenter "><a class="proposal-a-href" href="${base}/front/strategy/info/clientDetailKyc.do" ng-if="list.openStatus=='1'">{{list.accountNo}}</a><span ng-if="list.openStatus!='1'">{{list.accountNo}}</span></td>
+                
+                 <td class="funds_search_tdcenter">{{list.loginCode}}</td>
+                 <td class="funds_search_tdcenter">{{list.productValue | formatCurrency:'':decimal}} {{currencyName}}</td>
+                 <td class="funds_search_tdcenter">{{list.totalAssets | formatCurrency:'':decimal}} {{currencyName}}</td>
+                 <td class="funds_search_tdcenter">{{list.riskLevel}}</td>
+                 <td class="funds_search_tdcenter">{{list.baseCurName}}</td>
+                 <td class="funds_search_tdcenter">{{list.cies}} {{list.faca}}</td>
+                 <td class="funds_search_tdcenter">{{list.distributor}}</td>
+                 <td class="funds_search_tdcenter">{{list.nextRPQDateStr}}</td>
+                 <td class="funds_search_tdcenter">{{list.nextDCDateStr}}</td>
+                 <td class="funds_search_tdcenter">{{list.openStatus}}</td>
+               </tr>
+              </tbody>
+            </table>
+            <wmespage conf="account_page"></wmespage>
+            <div class="no_list_tips">
+	            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+	            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+             </div>
+            </div>
+            
+            
+          </div> 
+        </div>
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+     seajs.use('${base}/res/web/openAccount/ifafirmAccountList.js');
+</script>

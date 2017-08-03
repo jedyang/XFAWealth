@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作流管理</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="right-side container-fluid">
+        <div class="r-side-container">
+            <ul class="tab" id="tab-search">
+                <li class="tab-li-crr">
+                    <a href="#tab_wrap">工作流列表</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+	                    <div class="row pd10">
+	                        <div class="col-md-4">
+	                        	<label for="txtName">流程名称</label>
+	                        	<input type="text"  class="form-control keyWord" id="txtName">
+	                        </div>
+	                        <div class="col-md-4">
+	                        	<label for="txtInvokeCode">流程编号</label>
+	                        	<input type="text"  class="form-control keyWord" id="txtInvokeCode">
+	                       	</div>
+	                        <div class="col-md-4">
+	                        	<button type="submit" id="btnToDoSearch"
+												class="btn btn-primary">
+												查询
+											</button>
+	                        </div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20">
+                    	<a id="btnAddInfoForm" href="javascript:void(0);" class="btn-blue-s">新增</a>
+                        <a href="#" class="btn-blue-s">删除</a>
+                    </div>
+                    <div>
+                        <table id="datalist" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+	                           <tr>
+	                               <th class="table-head">流程名称</th>
+	                               <th class="table-head">流程编码</th>
+	                               <th class="table-head">状态</th>
+	                               <th class="table-head">操作</th>
+	                            </tr>                                
+                            </tbody>
+                        </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+ 
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+
+		bindList(0);
+
+		$('#btnToDoSearch').click(function() {
+			bindList(0);
+		});
+		
+		$('#btnAddInfoForm').click(function() {
+			//window.location.href = 'info_form.do';
+			
+			//modify wwluo 160810
+			var url = 'info_form.do';
+			showform('info-form','[@lang_res k="global.add"/]',url);
+			//end
+		});
+		
+		setAutoSearch('.keyWord',bindList,0);
+		
+	
+	var types = [BootstrapDialog.TYPE_DEFAULT, 
+                     BootstrapDialog.TYPE_INFO, 
+                     BootstrapDialog.TYPE_PRIMARY, 
+                     BootstrapDialog.TYPE_SUCCESS, 
+                     BootstrapDialog.TYPE_WARNING, 
+                     BootstrapDialog.TYPE_DANGER];	
+    $(document).on('click','.show_action', function () {
+    	var procedureid = $(this).parent().find('.del_info').attr('procedureid'); 
+    	//window.location.href = 'action_list.do?procedureid='+procedureid;
+        BootstrapDialog.show({
+				title : '环节定义',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('action_list.do?procedureid='+procedureid),
+				buttons : [  {
+					label : '确定',
+					cssClass : 'btn-primary',
+					action : function() {
+						 
+					}
+				},  {
+					label : '关闭',
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
+    });
+    
+    	//动态绑定删除按钮事件
+		$(document).on('click', '.del_info', function() { 
+			var procedureid = $(this).parent().find('.del_info').attr('procedureid');
+			var postData = { 'procedureid': procedureid };
+			layer.confirm('删除后将不可恢复，您确认要删除该流程吗？', { icon: 3  },function () {
+		        $.ajax({
+	            type: "post",
+	            url : "${base}/console/workflow/deleteinfo.do?datestr="+ new Date().getTime(),
+	            data: postData,
+	            async: false,
+	            dataType: "json",
+	            error: function (XMLHttpRequest, textStatus, errorThrown) {
+	
+	            },
+	            success: function (data, textStatus) {
+	               // console.log(data);
+	               var result = data.result;
+	               if(result==true)
+	               { 
+	               layer.msg('删除成功', {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            bindList(0); 
+                        });
+	               //alert('删除成功'); bindList(0); 
+	               }
+	               else alert('删除失败');
+	            }
+	        });
+		    });
+	        
+		});
+
+	});
+
+	//分页绑定Table数据
+	function bindList(pageid) {
+		var name = $('#txtName').val();
+		var invokecode = $('#txtInvokeCode').val();
+		if (name == undefined)
+			name = "";
+		$.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : "${base}/console/workflow/listJson.do?datestr="
+							+ new Date().getTime(),
+					data : {
+						name : name,
+						page : pageid + 1,
+						rows : 6
+					},
+					success : function(json) {
+						var total = json.total;
+						var table = json.rows;
+						var html = '';
+						$("#datalist tbody tr:gt(0)").empty();
+						$
+								.each(
+										table,
+										function(i, n) {
+											var status = n.isDel;
+											if (status == 'S')
+												status = '启用';
+											else
+												status = '停用';
+											/*html += '<tr><td><a href="#" onclick="showform(\''+n.id+'\')">'
+													+ n.procedureName*/
+													
+										    //modify wwluo 160810
+										      var url = '${base}/console/workflow/detail.do?id=' + n.id;
+										      html += '<tr><td><a href="#" onclick="showform(\''
+												    +                n.id  + '\',\''+ n.procedureName + '\',\'' + url + '\')">'
+												    +             n.procedureName
+										    //end
+													+ '</a></td><td>'
+													+ n.invokCode
+													+ '</td><td>'
+													+ status
+													+ '</td><td>'
+													+ '<button procedureid="'+ n.id +'" type="button" class="btn btn-default btn-sm show_action"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> 环节定义</button> '
+													+ '<button procedureid="'+ n.id +'" type="button" class="btn btn-default btn-sm del_info"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除流程</button>'
+													+ '</td></tr>'
+										});
+						$('#datalist').append(html);
+
+						$("#pagination").pagination(total, {
+							callback : pageselectCallback,
+							numDetail : '',
+							items_per_page : 6,
+							num_display_entries : 4,
+							current_page : pageid,
+							num_edge_entries : 2
+						});
+					}
+				})
+		//回调
+		function pageselectCallback(page_id, jq) {
+			bindList(page_id);
+		}
+	}
+    
+    //delete wwluo 160810
+	/*function showform(id) {
+		window.location.href = '${base}/console/workflow/detail.do?id=' + id;
+	}*/
+</script>
+</body>
+</html>

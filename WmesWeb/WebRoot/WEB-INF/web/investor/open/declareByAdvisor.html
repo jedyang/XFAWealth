@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>wmes</title>
+    <link rel="stylesheet" href="${base}/res/css/wmes_en.css">  
+    <script>
+    	var base_root = '${base}';
+    	var lang = '${Session["_LANG_CODE_"]!'sc'}';
+    </script>
+    <script type="text/javascript" src="${base}/res/js/base.js"></script>
+    <script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+    <script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+    <script src="${base}/res/js/util.js"></script>
+	<style type="text/css">
+	    html, body{
+	        [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']
+	            font-family:  arial;
+	        [#elseif Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']
+	            font-family:Microsoft YaHei;
+	        [#else]
+	             font-family:Microsoft YaHei;
+	        [/#if]
+	    }
+	</style>
+</head>
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<body>
+<div class="blue_background">
+    	<div class="kaihu_div">
+            <div class="statement_wrap">   
+   				<p class="statement_title" style="text-align:left;">Declaration By Advisor (Means the Authorized and Licensed Representative of the Financial Intermediary or FI as defined in clause 1 of the Terms and Conditions)</p>
+   				<p class="statement_dt">Origination of Instructions</p>
+   				<p class="statement_ct">
+	   				I (i.e. the advisor), the undersigned, hereby confirm that:
+	   				<br>
+	   				<span class="statement_space"></span>
+	   				(i) I have provided the applicant(s) with a copy of the Terms and Conditions; 
+	   				<br>
+	   				<span class="statement_space"></span>
+	   				(ii) I have explained to the applicant(s) the roles of AIM and ANL, and the relationships between them;
+	   				<br>
+	   				<span class="statement_space"></span>
+	   				(iii) I have provided the risk disclosure statements set out in clause 10 of the Terms and Conditions, and have invited the applicant(s) to read the risk disclosure statements, ask questions, and take independent advice if the applicant(s) so wish; and
+	   				<br>
+	   				<span class="statement_space"></span>
+	   				(iv) I/We hold and will continue to hold all relevant licenses, authorizations and registrations to provide all the relevant services to the applicant(s);
+	   				<br>
+	   				<span class="statement_space"></span>
+	   				I/We have disclosed to the applicant(s) about the retention of any cash or money rebates by me/us and its approximate amount;
+	   				<br>
+	   				<span class="statement_space"></span>
+	   				I comply with and will continue to comply with all relevant laws, regulations, codes and guidelines relating to the services provided by me to the applicant
+	   				<br>
+	   				<span class="statement_space"></span>
+	   				The investment advice was given in Hong Kong.
+   				</p>
+
+
+	   			<div class="wenti_btn">
+				[#if ifIfaCheck?? && "true"==ifIfaCheck]
+                	<a class="wenti_btn_bule" id="j_Agree" href="javascript:;">[@lang_res k='open.account.declare.agree'/]</a>
+                	<a class="wenti_btn_yellow" id="j_Disagree"  href="javascript:;">[@lang_res k='open.account.declare.disagree'/]</a>
+                [#else]
+                	<a class="wenti_btn_yellow" id="j_Close"  href="javascript:;">[@lang_res k='open.account.declare.close'/]</a>
+                [/#if]
+                </div>
+            </div>
+        </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    seajs.use('jquery', function($){
+
+      $("#j_Agree").on("click",function(){
+        	//window.parent.window.byadvisor();
+    	  parent.document.getElementById("byadvisor").click();
+      });
+      $("#j_Disagree").on("click",function(){
+	      	//window.parent.window.byadvisorSrclno();
+    	  parent.document.getElementById("byadvisorSrclno").click();
+      });
+      
+      $("#j_Close").on("click",function(){
+  		parent.document.getElementById("iframeCloseLink").click(); 
+	});
+  });
+</script>
+</html>
+        

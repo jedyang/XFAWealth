@@ -1,0 +1,242 @@
+[#include "../../../inc/head_v2.html"/]
+<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+<link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+<style type="text/css">
+.wmes-logo{height: 60px; width: 80px;}
+.r-side-container{margin-left: 80px;}
+</style>
+
+<input id="btnCloseIframe" type="hidden" />
+<div style="margin-left:10px;">
+<div class="wmes-content" id="wmes_wraper">
+    <div class="tab_wrap dis_ifafirm_condition" id="tab_wrap">
+        <div class="wmes-wrap-title">
+            <p>[@lang_res k='notice.target.D1'/]</p>
+        </div>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div>
+	                    <div class="row pd10">
+	                        <div class="col-md-4">
+	                        	<label for="txtIfafirmName">[@lang_res k='console.membercompanyifafirm.ifafirmname'/]</label>
+	                        	<input type="text"  class="form-control searchCondition" id="txtIfafirmName">
+	                        	<button type="button" id="btnSearch" class="btn btn-primary">
+	                    			[@lang_res k='global.query'/]
+	                    		</button>
+	                        </div>
+	                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="pdt20" style="padding-top: 5px;">
+                    	<a id="btnAdd" href="javascript:void(0);" class="btn-blue-s"> [@lang_res k='global.add'/]</a>
+                    </div>
+                    
+                    <div>
+                        <table id="infoList" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+                            <tbody>
+								<tr>
+									<!--<th hidden class="table-head">ID</th>-->
+									<th class="table-head">Logo</th>
+									<th class="table-head">[@lang_res k='console.membercompanyifafirm.ifafirmname'/]</th>
+									<th class="table-head">[@lang_res k='distributor.list.entityType'/]</th>
+									<th class="table-head">[@lang_res k='ifafirm.list.registerNo'/]</th>
+									<th class="table-head">[@lang_res k='member.info.website'/]</th>
+									<th class="table-head">[@lang_res k='member.info.incorporationPlace'/]</th>
+									<th class="table-head">[@lang_res k='global.operate'/]</th>
+	                            </tr>                                
+                            </tbody>
+                        </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>               
+            </div>            
+        </div>
+    </div>
+</div>
+</div>
+[#include "../../../inc/foot_v2.html"/]
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+<script type="text/javascript">
+var grid_selector = "#infoList";
+var pageSize = 10;
+</script>
+<script type="text/javascript">
+$(function(){
+	//跳转表单页面
+	$('#btnAddInfoForm').on('click',function(){
+		infoFormDialog("");	
+	});
+	//绑定查询按钮事件
+	$("#btnSearch").click(function () {                
+		bindList(0);
+	});
+	
+	bindList(0);
+ 	setAutoSearch('.searchCondition',bindList,0);
+	//关闭iframe
+	$('#btnCloseIframe').click(function() {
+	 	$(".close").click();			
+	});
+	
+	//add
+    $('#btnAdd').click(function (){
+		var url = '${base}/console/distributorifafirm/disInputIfafirm.do?datestr='+ new Date().getTime();
+    	window.open(url);
+    });
+    
+   /* //添加
+    $('#btnAdd').on("click", function() {
+   		addDialog("","[@lang_res k='global.add'/]");
+    });*/
+    
+});
+
+//分页绑定Table数据
+function bindList(curPage){
+	var ifafirmName = $("#txtIfafirmName").val();
+	$.ajax({
+		type : 'post',
+		datatype : 'json',
+		url : '${base}/console/distributorifafirm/listJson.do?',
+		data : {
+			'ifafirmName' : ifafirmName,
+			'page' : curPage+1,
+			'rows' : pageSize,
+			'order' : 'desc'
+		},
+		success : function(json) {
+			var total = json.total;
+			var table = json.rows;
+			$("#infoList tbody tr:gt(0)").empty();
+			  var tr = "";
+              var list = json.rows;
+              $.each(list, function (index, array) { //遍历json数据列					
+                  var id = array['id'] == null ? "" : array['id'];
+              	  var ifafirmName = array['ifafirmName'] == null ? "" : array['ifafirmName'];
+              	 //modify by rawang 20170614
+              	 var firmLogo = array['ifafirm']['firmLogo'] == null? "" : array['ifafirm']['firmLogo'];
+              	 var entityType = array['ifafirm']['entityType'] == null ? "" : array['ifafirm']['entityType'];
+				 switch (entityType) {
+                    case ('1'):
+                    entityType = "[@lang_res k='entityType.option.1'/]";
+                        break;
+                    case ('2'):
+                    entityType = "[@lang_res k='entityType.option.2'/]";
+                        break;
+                    case ('3'):
+                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.3'/]";
+                        break;
+                    case ('4'):
+                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.4'/]";
+                        break;
+                    case ('5'):
+                    entityType = "[@lang_res k='console.ifafirm.list.select.entityType.5'/]";
+                        break;
+                    default:
+                     entityType = '';
+                 }
+                 var registerNo = array['ifafirm']['registerNo'] == null ? "" : array['ifafirm']['registerNo'];
+                 var website = array['ifafirm']['website'] == null ? "" : array['ifafirm']['website'];
+              	 var incorporationPlace = array['ifafirm']['incorporationPlace'] == null ? "" : array['ifafirm']['incorporationPlace']; 
+              	 var ifaFirmId= array['ifafirm']['id'] == null ? "" : array['ifafirm']['id'];
+                 var url = '${base}/console/distributorifafirm/ifafirmFundList.do?ifaFirmId=' + ifaFirmId;
+                  
+                  tr += '<tr><td>'
+                  	  + '<img id="imgFile" style="width:90px;height:35px;" src="${base}'+firmLogo+'" value="'+firmLogo+'"/>' + '</td><td>'
+                      + ifafirmName + '</td><td>'
+                      + entityType + '</td><td>'
+                      + registerNo + '</td><td>'
+                      + website + '</td><td>'
+                      + incorporationPlace + '</td><td>'			//+ '</td><td>'暂时不需要此功能 modify by rawang 业务逻辑不对，表弃用
+                      //+ '<a target="_blank" href="'+url+'">[@lang_res k='console.distributor.ifafirm.actingProducts'/]</a> '
+                      + "<a href=\"javascript:void(0);\" onclick=\"deleteIfaFirm('"+id+"')\">" +'[@lang_res  k='console.ifa.team.add.remove'/]'+ "</a>"
+                      + '</td></tr>';
+              });
+             $("#infoList tbody").append(tr);
+			
+		  	$("#pagination").pagination(total, {
+                 callback: pageselectCallback,
+                 numDetail: '',
+                 items_per_page: pageSize,
+                 num_display_entries: 4,
+                 current_page: curPage,
+                 num_edge_entries: 2
+           	});
+		}
+	})
+	//回调
+    function pageselectCallback(page_id, jq) {
+        bindList(page_id);
+    }
+}	
+//点击删除
+function deleteIfaFirm(id){
+	//alert(id);
+	layer.confirm("[@lang_res  k='pipeline.clientType.delete.confirm'/]", 
+			{title:"[@lang_res  k='console.ifa.team.add.remove'/]", 
+		icon: 3,
+		btn: [langMutilForJs["global.confirm"],langMutilForJs["global.cancel"]]},
+		function (index){
+			$.ajax({
+				url:'${base}/console/distributorifafirm/del.do?id='+id,
+				type:'post',
+				dataType:'json',
+				data:{
+					id: id,
+				},
+				success:function(data){
+					if(data.result){
+						layer.msg("[@lang_res  k='global.delete.success'/]",{icon:2,time:1000},
+							function(){
+								bindList(0);
+								closeTab();
+							}
+						);
+					}
+		        },
+				error:function(){
+					
+				}
+			});
+	    	
+	    	layer.close(index);
+	});
+}
+
+//添加
+function addDialog(id,titleTxt){
+		var src = '${base}/console/distributorifafirm/disInputIfafirm.do?datestr='+ new Date().getTime();
+		BootstrapDialog.show({
+			title : titleTxt,
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="yes" frameborder="0" name="role_iframe" onload="this.height=role_iframe.document.body.scrollHeight+160" width="100%" src="'+src+'"></iframe></div>').load(),
+			buttons : [{
+					label : "[@lang_res k='global.close'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+			}]
+		});
+	}
+</script>
+

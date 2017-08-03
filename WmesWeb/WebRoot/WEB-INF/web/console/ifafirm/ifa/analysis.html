@@ -1,0 +1,395 @@
+[#include "../../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/wmes_console.css">
+<div class="wmes-content analysis_content">
+	<div class="analysis_contentbox">
+		<p class="wmes-wrap-title" style="margin:0px 12px 8px 12px;padding-top:15px">Sales Stats</p>
+		<div class="application-information-tabcon" style="margin-left:12px;margin-right:12px">
+			<ul class="builder-tab application-information-tab">
+				<li class="tab-active">Sales Analysis<span></span></li>
+				<li>Teams<span></span></li>
+				<li>Products<span></span></li>
+				<li>Clients<span></span></li>
+			</ul>
+		</div>
+		<div class="analysis_tabcontent analysis_tabcontentac">
+			<div class="analysis_contentcon">
+				<div class="analysis_left">
+					<div class="analysis_left_title">
+						<p>Sales Stats</p>
+						<ul class="analysis_left_ul">
+							<li>Annual</li>
+							<li>Monthly</li>
+							<li class="analysis_left_titleac">Weekly</li>
+						</ul>
+					</div>
+					<div id="salesleft"></div>
+				</div>
+				<div class="analysis_left">
+					<div class="analysis_left_title">
+						<p>Compared with
+							<a href="#">Aug</a> last
+							<a href="#">5</a> years</p>
+					</div>
+					<div id="salesright"></div>
+				</div>
+			</div>
+			<!--<div class="sales_structure_analysis">
+					<p class="sales_structure_analysis_title">Sales Structure Analysis</p>
+					<div class="sales_structure_analysis_clickmore"><a href="#">Please click the "Red Spot" of the chart,then disover...</a></div>
+				</div>-->
+			<div class="sales_structure_analysis">
+				<p class="sales_structure_analysis_title">Top 5 Team -- Aug 2016</p>
+				<div class="sales_structure_analysisbox">
+					<div id="sales_structure_analysispic"></div>
+					<div class="sales_structure_analysisleft">
+						<table class="funds_search_information strategies_List">
+							<tbody>
+								<tr class="funds_tables_th">
+									<th class="funds_tables_header" style="text-align: center;">
+										UC Team
+									</th>
+									<th class="funds_tables_header">
+										This Period
+									</th>
+									<th class="funds_tables_header">
+										Last Month
+									</th>
+
+									<th class="funds_tables_header">
+										The Same Period Last Year
+									</th>
+
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Headcoundts
+									</td>
+									<td class="funds_search_tdcenter">23</td>
+									<td class="funds_search_tdcenter">20</td>
+
+									<td class="funds_search_tdcenter">
+										12
+									</td>
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Ranking
+									</td>
+									<td class="funds_search_tdcenter">No.1</td>
+									<td class="funds_search_tdcenter">No.3</td>
+
+									<td class="funds_search_tdcenter">
+										No.6
+									</td>
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Sales(HK$ Million)
+									</td>
+									<td class="funds_search_tdcenter">8.97(32%)</td>
+									<td class="funds_search_tdcenter">5.65(20%)</td>
+
+									<td class="funds_search_tdcenter">
+										1.42(3%)
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="analysis_tabcontent">
+			<div class="analysis_contentcon">
+				<div class="analysis_left">
+					<div class="analysis_left_title">
+						<p>Sales Stats</p>
+						<ul class="analysis_left_ul">
+							<li>Annual</li>
+							<li>Monthly</li>
+							<li class="analysis_left_titleac">Weekly</li>
+						</ul>
+					</div>
+					<div id="teamleft"></div>
+				</div>
+				<div class="analysis_left">
+					<div class="analysis_left_title">
+						<p>Compared with
+							<a href="#">Aug</a> last
+							<a href="#">5</a> years</p>
+					</div>
+					<div id="teamright"></div>
+				</div>
+			</div>
+			<!--<div class="sales_structure_analysis">
+					<p class="sales_structure_analysis_title">Sales Structure Analysis</p>
+					<div class="sales_structure_analysis_clickmore"><a href="#">Please click the "Red Spot" of the chart,then disover...</a></div>
+				</div>-->
+			<div class="sales_structure_analysis">
+				<p class="sales_structure_analysis_title">Top 5 Team -- Aug 2016</p>
+				<div class="sales_structure_analysisbox">
+					<div id="team_structure_analysispic"></div>
+					<div class="sales_structure_analysisleft">
+						<table class="funds_search_information strategies_List">
+							<tbody>
+								<tr class="funds_tables_th">
+									<th class="funds_tables_header" style="text-align: center;">
+										UC Team
+									</th>
+									<th class="funds_tables_header">
+										This Period
+									</th>
+									<th class="funds_tables_header">
+										Last Month
+									</th>
+
+									<th class="funds_tables_header">
+										The Same Period Last Year
+									</th>
+
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Headcoundts
+									</td>
+									<td class="funds_search_tdcenter">23</td>
+									<td class="funds_search_tdcenter">20</td>
+
+									<td class="funds_search_tdcenter">
+										12
+									</td>
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Ranking
+									</td>
+									<td class="funds_search_tdcenter">No.1</td>
+									<td class="funds_search_tdcenter">No.3</td>
+
+									<td class="funds_search_tdcenter">
+										No.6
+									</td>
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Sales(HK$ Million)
+									</td>
+									<td class="funds_search_tdcenter">8.97(32%)</td>
+									<td class="funds_search_tdcenter">5.65(20%)</td>
+
+									<td class="funds_search_tdcenter">
+										1.42(3%)
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="analysis_tabcontent">
+			<div class="analysis_contentcon">
+				<div class="analysis_left">
+					<div class="analysis_left_title">
+						<p>Sales Stats</p>
+						<ul class="analysis_left_ul">
+							<li>Annual</li>
+							<li>Monthly</li>
+							<li class="analysis_left_titleac">Weekly</li>
+						</ul>
+					</div>
+					<div id="productleft"></div>
+				</div>
+				<div class="analysis_left">
+					<div class="analysis_left_title">
+						<p>Compared with
+							<a href="#">Aug</a> last
+							<a href="#">5</a> years</p>
+					</div>
+					<div id="productright"></div>
+				</div>
+			</div>
+			<!--<div class="sales_structure_analysis">
+					<p class="sales_structure_analysis_title">Sales Structure Analysis</p>
+					<div class="sales_structure_analysis_clickmore"><a href="#">Please click the "Red Spot" of the chart,then disover...</a></div>
+				</div>-->
+			<div class="sales_structure_analysis">
+				<p class="sales_structure_analysis_title">Top 5 Team -- Aug 2016</p>
+				<div class="sales_structure_analysisbox">
+					<div id="product_structure_analysispic"></div>
+					<div class="sales_structure_analysisleft">
+						<table class="funds_search_information strategies_List">
+							<tbody>
+								<tr class="funds_tables_th">
+									<th class="funds_tables_header" style="text-align: center;">
+										UC Team
+									</th>
+									<th class="funds_tables_header">
+										This Period
+									</th>
+									<th class="funds_tables_header">
+										Last Month
+									</th>
+
+									<th class="funds_tables_header">
+										The Same Period Last Year
+									</th>
+
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Headcoundts
+									</td>
+									<td class="funds_search_tdcenter">23</td>
+									<td class="funds_search_tdcenter">20</td>
+
+									<td class="funds_search_tdcenter">
+										12
+									</td>
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Ranking
+									</td>
+									<td class="funds_search_tdcenter">No.1</td>
+									<td class="funds_search_tdcenter">No.3</td>
+
+									<td class="funds_search_tdcenter">
+										No.6
+									</td>
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Sales(HK$ Million)
+									</td>
+									<td class="funds_search_tdcenter">8.97(32%)</td>
+									<td class="funds_search_tdcenter">5.65(20%)</td>
+
+									<td class="funds_search_tdcenter">
+										1.42(3%)
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="analysis_tabcontent">
+			<div class="analysis_contentcon">
+				<div class="analysis_left">
+					<div class="analysis_left_title">
+						<p>Sales Stats</p>
+						<ul class="analysis_left_ul">
+							<li>Annual</li>
+							<li>Monthly</li>
+							<li class="analysis_left_titleac">Weekly</li>
+						</ul>
+					</div>
+					<div id="clientleft"></div>
+				</div>
+				<div class="analysis_left">
+					<div class="analysis_left_title">
+						<p>Compared with
+							<a href="#">Aug</a> last
+							<a href="#">5</a> years</p>
+					</div>
+					<div id="clientright"></div>
+				</div>
+			</div>
+			<!--<div class="sales_structure_analysis">
+					<p class="sales_structure_analysis_title">Sales Structure Analysis</p>
+					<div class="sales_structure_analysis_clickmore"><a href="#">Please click the "Red Spot" of the chart,then disover...</a></div>
+				</div>-->
+			<div class="sales_structure_analysis">
+				<p class="sales_structure_analysis_title">Top 5 Team -- Aug 2016</p>
+				<div class="sales_structure_analysisbox">
+					<div id="client_structure_analysispic"></div>
+					<div class="sales_structure_analysisleft">
+						<table class="funds_search_information strategies_List">
+							<tbody>
+								<tr class="funds_tables_th">
+									<th class="funds_tables_header" style="text-align: center;">
+										UC Team
+									</th>
+									<th class="funds_tables_header">
+										This Period
+									</th>
+									<th class="funds_tables_header">
+										Last Month
+									</th>
+
+									<th class="funds_tables_header">
+										The Same Period Last Year
+									</th>
+
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Headcoundts
+									</td>
+									<td class="funds_search_tdcenter">23</td>
+									<td class="funds_search_tdcenter">20</td>
+
+									<td class="funds_search_tdcenter">
+										12
+									</td>
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Ranking
+									</td>
+									<td class="funds_search_tdcenter">No.1</td>
+									<td class="funds_search_tdcenter">No.3</td>
+
+									<td class="funds_search_tdcenter">
+										No.6
+									</td>
+								</tr>
+								<tr>
+									<td class="tdleft funds_tables_fnames">
+										Sales(HK$ Million)
+									</td>
+									<td class="funds_search_tdcenter">8.97(32%)</td>
+									<td class="funds_search_tdcenter">5.65(20%)</td>
+
+									<td class="funds_search_tdcenter">
+										1.42(3%)
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('jquery', function($) {
+		$('.workbench_tab').on('click', function() {
+			$('.workbench_tab').removeClass('workbench_tabac');
+			$(this).addClass('workbench_tabac');
+			$('.qiucon').removeClass('workbench_tabtop');
+			$(this).parents('.qiucon').addClass('workbench_tabtop');
+			var qiuindex = $(this).parents('.qiucon').index();
+			/*if($(this).parents('.qiucon').css('top') !== '120px') {
+
+			} else {
+				$('.marginCon').addClass('workbench_tabzz');
+				setTimeout(function() {
+					$('.ifa_workbench_content').removeClass('ifa_workbench_contentac');
+					$('.ifa_workbench_content').eq(qiuindex).addClass('ifa_workbench_contentac');
+					$('.marginCon').removeClass('workbench_tabzz');
+				}, 900);
+			}*/
+			$('.ifa_workbench_content').removeClass('ifa_workbench_contentac');
+			$('.ifa_workbench_content').eq(qiuindex).addClass('ifa_workbench_contentac');
+		});
+
+	});
+</script>
+<script type="text/javascript ">
+	seajs.use('${base}/res/web/ifa/analysis.js');
+</script>

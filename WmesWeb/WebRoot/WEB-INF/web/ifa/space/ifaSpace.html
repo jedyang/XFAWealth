@@ -1,0 +1,622 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/ifa.css"> 
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">${spaceVO.ifaName!}[@lang_res k='ifaspace.info.sSpace'/]</a>
+</div>
+<div class="wmes-content">
+<div class="ifa-space-row">
+    <div class="wmes-name-row" style="margin-right:0">
+        <div class="wmes-name-top">
+            [#if spaceVO?? && spaceVO.ifaHeadImg?? ]
+            <img class="wmes-name-touxiang" 
+            	src="${base}${spaceVO.ifaHeadImg!}" 
+            alt="">
+            [#else]
+            <img class="member_touxiang" src="${base}/res/images/hyzx_touxiang_07.png">
+            [/#if]
+            <div class="wmes-name-right">
+            	<input id="hidMemberId" value="${memberId!''}" type="hidden">
+            	<input id="hidloginMemberId" value="${loginMemberId!''}" type="hidden">
+                <p class="wmes-ifa-name" id="ifaName">[#if spaceVO??]${spaceVO.ifaName!}[/#if]</p>
+                <div class="wmes-ifa_label">
+		            [#if spaceVO.ifaPersonalCharacteristics?exists && spaceVO.ifaPersonalCharacteristics?size gt 0]
+					[#list spaceVO.ifaPersonalCharacteristics as x]
+					 <p>${x}</p>
+					[/#list]
+					[/#if]
+                </div>
+                <p class="space-ifa-word"><span class="ifa-popularity-title"><img src="${base}/res/images/ifa/popularity_ico2.png"></span>[#if spaceVO??]${spaceVO.popular!}[/#if]</p>
+                [#if matchNumber??&matchNumber>0]
+                	<p class="space-ifa-word"><span class="ifa-match-title">[@lang_res k='ifaspace.info.matchMe'/]</span>
+                	<img src="${base}/res/images/ifa/space_match.png"></p>
+                [#else]
+               		<p class="space-ifa-word"><span class="ifa-match-title">[@lang_res k='ifalist.list.notmatching'/]</span>
+                [/#if]
+                <!-- <p class="space-ifa-word"><span class="ifa-match-title">[@lang_res k='ifaspace.info.matchMe'/]</span>
+                <img src="${base}/res/images/ifa/space_match.png"></p> -->
+                <img title="${spaceVO.ifaFirmName!''}" class="space-ifa-img" style="height:20px;" src="${base}[#if spaceVO??]${spaceVO.ifaFirmLogoPath!}[/#if]">
+            </div>
+        </div>
+        <div class="wmes-name-bottom">
+            <div class="ifa-go-corner">
+                <img src="${base}/res/images/ifa/queit_ico.png">
+                <a class="ifa-a-href" href="${base}/front/ifa/info/cornerDetail.do?memberId=${memberId!''}"><span>[@lang_res k='ifaspace.info.welcomeTo'/] [#if spaceVO??]${spaceVO.ifaName!}[/#if] [@lang_res k='ifaspace.info.corner'/]</span></a>
+            </div>
+            <div class="ifa-add-friends">
+            [#if isShowAddFriendBtn??]
+            [#if isShowAddFriendBtn?string('true','false')='true']
+	            <a id="addFriend" href="javascript:void(0)">
+	            	<img src="${base}/res/images/ifa/addf.png">
+	            	<span>[@lang_res k='ifaspace.info.follows'/]</span>
+	            </a>
+             [/#if]
+             [/#if]
+            </div>
+        </div>
+    </div>
+    <div class="wmes-thehight zone-edit" style="height:240px;">
+        <p class="ifa-thehight-title">[@lang_res k='ifaspace.info.theHighlight'/]</p>
+        <textarea id="txtHightLight" class="ifa-thehight-word" readonly="" type="text" name="">[#if spaceVO?? && spaceVO.latestHighlight?exists]${spaceVO.latestHighlight!}[#else][@lang_res k='ifaspace.info.noContent'/][/#if]</textarea>
+        <!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         [#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				<span class="ifa-thehigt-edit"></span>
+				[#else]
+				
+				[/#if]
+            [/#if]
+        
+    </div>
+</div>
+<div class="ifa-space-his" style="padding-bottom:25px"> 
+    <p class="ifa-his-title" style="margin-top:10px;padding-bottom:30px;">[@lang_res k='ifaspace.info.performance'/]</p>
+        <ul class="ifa-his-wrap" style="position:relative;">
+            <li class="ifa-his-row">
+            	<div class="ifa-his-logo">
+                    <img src="${base}/res/images/ifa/aum.png" alt="">
+                </div>
+                <p class="ifa-his-title">[@lang_res k='ifaspace.info.AuM'/]</p>
+              <!-- 先判断是否有设置显示aumNum -->
+                 [#if spaceVO.isShowAumNum??]
+                 <!-- 已设置是否显示aumNum -->
+                 [#if  spaceVO.isShowAumNum?string('true','false')='true']
+                <div class="ifa-his-contents">
+                    <!-- 如果ifa_ext_info没记录 -->
+                    [#if spaceVO.aumNum?? ]
+                    [#if spaceVO.aumNum=0]
+                    	<p aumNum="0" class="ifa-his-title">N/A</p>
+                    [#else]
+                    	<div class="ifa-xiala">
+                        <input ifaDefCurrency="${spaceVO.defCurrency!}" ifaAum="${spaceVO.aumNum!}" id="txt-xiala-selected" class="ifa-aum-input" type="text" readonly value="${sysParamVO.name!}">
+                        <span class="icon_xiala"></span>
+                        <ul >
+	                         [#if sysParamList?exists &&sysParamList?size gt 0]
+								[#list sysParamList as each]
+					             <li data-name="defCurrency" data-key="${each.name!}" data-value="${each.code!}">
+					               ${each.name!}
+					            </li>
+								[/#list]
+								[/#if]
+                        </ul>
+                    </div> 
+                    	<p id="p_exchange_aum" aumNum="${spaceVO.aumNum!}" class="ifa-xiala-number">[#if spaceVO??] [@num_color s='${spaceVO.aumNum!}' c='${defDisplayColor!}' f='#,###.00'/][/#if]</p>
+					[/#if]
+                    [/#if]
+                    
+                    
+                      
+                </div>   
+				[#else]
+					 <div class="ifa-his-contents">
+				 	<p aumNum="0" class="ifa-his-latitle">N/A</p>
+				 	</div>
+				[/#if]
+				 [#else]
+				 <div class="ifa-his-contents">
+				 	<p aumNum="0" class="ifa-his-title">N/A</p>
+				 	</div>
+				 [/#if]
+				<!-- <div class="ifa-his-compile"></div> -->
+            </li>
+            <li class="ifa-his-row ifa-his-line">
+                
+                
+                
+                
+				<div class="ifa-his-logo">
+                    <img src="${base}/res/images/ifa/portfolios.png" alt="">
+                </div>
+				<p class="ifa-his-title">[@lang_res k='ifaspace.info.totalReturnRate'/]</p>
+					<div class="ifa-his-contents">
+                    <p class="ifa-his-midt">[#if spaceVO??]${spaceVO.topProtfoliosName!}[/#if]</p>
+                    [#if  spaceVO.isSpaceShowPerformance?string('true','false')='true']
+                    <p class="ifa-his-mida"><span class="ifa-his-midn">
+                    [#if spaceVO??] 
+                     [#if spaceVO.totalReturnValue=0]
+                     	[@num_fmt s='${spaceVO.totalReturnValue!}'   /]%
+                     [#else]
+                    	[@num_color s='${spaceVO.totalReturnValue!}' c='${defDisplayColor!}'  /]
+                     [/#if]
+                    [/#if]</span></p>
+                    [#else]
+                    <p aumNum="0" class="ifa-his-title">N/A</p>
+                    [/#if]
+                    <!-- <p class="ifa-his-top5">Top 5</p> -->
+                	</div>
+				
+				<!-- <div class="ifa-his-compile"></div> -->
+            </li>
+            <li class="ifa-his-row">
+				<div class="ifa-his-logo">
+                    <!--<a href="${base}/front/investor/myInsight/list.do?memberId=${memberId!''}">-->
+                        <img src="${base}/res/images/ifa/insights.png" alt="">
+                    <!--</a>-->
+                </div>
+                <p class="ifa-his-title">[@lang_res k='ifaspace.info.latestInsight'/]</p>
+            [#if lateInsightVo?? && lateInsightVo?exists]
+					
+                <div class="ifa-his-contents">
+                    <p class="ifa-his-latitle"><a insightid="${lateInsightVo.insightId}" class="ifa-a-href recommend-news-title" href="javascript:void(0)">[#if lateInsightVo??]${lateInsightVo.title!}[/#if]</a></p>
+                </div>
+				[#else]
+				 <div class="ifa-his-contents">
+                    <p class="ifa-his-latitle">N/A</p>
+                </div>
+				[/#if]
+				<!-- <div class="ifa-his-compile"></div> -->
+            </li>
+             [#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+					[#if spaceVO.isShowAumNum??]
+                 <!-- 已设置是否显示aumNum -->
+                 [#if  spaceVO.isShowAumNum?string('true','false')='true']
+                 <span field="1" id="aum_setting_eye" class="setting_eye setting_eyeac" style="position:absolute;bottom:10px;left:29%;"></span>
+                 [#else]
+                 <span field="0" id="aum_setting_eye" class="setting_eye" style="position:absolute;bottom:10px;left:29%;"></span>
+                 [/#if]
+              [/#if]    
+             [#if  spaceVO.isSpaceShowPerformance?string('true','false')='true']
+                    <span field="1" id="topporflio_setting_eye" class="setting_eye setting_eyeac" style="position:absolute;bottom:10px;left:59%;"></span>
+                 [#else]
+                 <span field="0" id="topporflio_setting_eye" class="setting_eye" style="position:absolute;bottom:10px;left:59%;"></span>
+                 [/#if]
+				[/#if]
+			[/#if]
+            
+        </ul>
+</div>
+<!-- -->
+<div class="ifa-space-popup" style="display:none;">
+    <div class="ifa-space-mask"></div>
+    <div class="space-mask-wrap">
+        <div class="space-mask">
+            <a href="javascript:;" class="space-mask-close"></a>
+            <p class="space-mask-title">[@lang_res k='ifaspace.info.hisCV'/]</p>
+            <div class="space-mask-ifo">
+                <ul class="mask-ifo-left">
+                    <li><p class="mask-ifo-title">Location</p><p class="mask-ifo-word">${spaceVO.address!''}<span> , </span>${spaceVO.nationality!''}</p></li>
+                    <li><p class="mask-ifo-title">firm</p><p class="mask-ifo-word">${spaceVO.ifaFirmName!''}</p></li>
+                </ul>
+                <ul class="mask-ifo-right">
+                    <li><p class="mask-ifo-title">Language</p><p class="mask-ifo-word">${spaceVO.languageDesc!''}</p></li>
+                </ul>
+            </div>
+            <p class="space-mask-content">
+                ${spaceVO.introduction!''}
+            </p>
+        </div>
+    </div>
+</div>
+<!-- 弹出层 -->
+<div class="ifa-space-popup">
+    <div class="ifa-space-mask"></div>
+    <div class="space-mask-wrap">
+        <div class="space-mask">
+            <div class="wmes-close" id="space-popup-close"></div>
+            <p class="space-mask-title">[@lang_res k='ifaspace.info.IFACV'/]</p>
+            <div class="space-mask-ifo">
+                <ul class="mask-ifo-left">
+                    <li><p class="mask-ifo-title">[@lang_res k='ifaspace.info.liveRegion'/]</p><p class="mask-ifo-word">${spaceVO.liveRegion!''}</p></li>
+                    <li><p class="mask-ifo-title">[@lang_res k='ifaspace.info.languageSpoken'/]</p><p class="mask-ifo-word">${spaceVO.languageSpoken!''}</p></li>
+                    <li><p class="mask-ifo-title">[@lang_res k='ifaspace.info.IFAFirm'/]</p><p class="mask-ifo-word">${spaceVO.ifaFirmName!''}</p></li>
+                    
+                </ul>
+            </div>
+
+            <p class="space-mask-content">
+                ${spaceVO.introduction!''}
+            </p>
+            <div class="space-performance-wrap" style="display:none;">
+                <div class="space-mask-ifo">
+                    <ul class="mask-ifo-left">
+                        <li>
+                            <p class="mask-ifo-title">Adviser Fee</p>
+                            <p class="mask-ifo-word">At least 1000</p>
+                            <p class="mask-ifo-word">At most 1,0000</p>
+                        </li>
+                    </ul>
+                </div>
+                <p class="space-performance-title">Performance fee</p>
+                <table class="space-performance-table">
+                    <tr class="space-performance-header">
+                        <th>#</th>
+                        <th>Aum</th>
+                        <th>Fee</th>
+                    </tr>
+                    [#if ifaFeeItemList?exists && ifaFeeItemList?size gt 0]
+					[#list ifaFeeItemList as each]
+					  <tr>
+                        <td>${each.index}</td>
+                        <td>${each.aumNumber}</td>
+                        <td>${each.feeNumber}</td>
+                    </tr>
+					[/#list]
+					[/#if]
+                </table>
+            </div>    
+        </div>
+    </div>
+</div>
+<div class="ifa-space-his">
+    <p class="ifa-his-title" style="margin-top:10px;padding-bottom:30px;">[@lang_res k='ifaspace.info.recommendation'/]</p>
+    <div class="ifa-his-map" style="margin-top:0;">
+        <p class="ifa-his-map-title">[@lang_res k='ifaspace.info.location'/]</p>
+        <ul id="ul_geo_allocation">
+            <li data-name="geo_allocation" data-value="">
+                <p class="ifa-chioce-count"><span class="ifa-his-country">[@lang_res k='ifaspace.info.all'/]</span></p>
+            </li>
+            [#if serviceRegionList?? && serviceRegionList?exists &&serviceRegionList?size gt 0]
+			[#list serviceRegionList as rList]
+             <li data-name="geo_allocation" data-key="${rList.name}" data-value="${rList.code}">
+               <p class="ifa-chioce-count"><span class="ifa-his-country">${rList.name!}</span></p>
+            </li>
+			[/#list]
+			[/#if]
+           
+        </ul>            
+        <div class="ifa-his-xiala"></div>
+    </div>
+    <div class="ifa-his-map">
+        <p class="ifa-his-map-title">[@lang_res k='ifaspace.info.sector'/]</p>
+        <ul id="ul_sector">
+            <li data-name="sector" data-value="">
+                <p class="ifa-chioce-count"><span class="ifa-his-country">[@lang_res k='ifaspace.info.all'/]</span></p>
+            </li>
+            [#if sectionTypeList?? && sectionTypeList?exists &&sectionTypeList?size gt 0]
+			[#list sectionTypeList as rList]
+             <li data-name="sector" data-key="${rList.name}" data-value="${rList.code}">
+               <p class="ifa-chioce-count"><span class="ifa-his-country">${rList.name!}</span></p>
+            </li>
+			[/#list]
+			[/#if]
+        </ul>            
+        <div class="ifa-his-xiala"></div>
+    </div>
+    <ul class="ifa-his-type-list">
+        <li>
+            <p class="ifa-type-title">
+            [#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				<a href="${base}/front/ifa/space/viewStrategiesList.do?id=${memberId!''}">
+				[#else]
+				<a href="${base}/front/ifa/space/viewStrategiesList.do?id=${memberId!''}">
+				[/#if]
+            [/#if]
+            [@lang_res k='strategy.title'/] [#if IfaSpaceStrategyInfoListCount=0]<span class="ifa-type-num" id="sp_strategyinfolistcount" style="background-color:transparent;display:none;">[#else]<span class="ifa-type-num"  id="sp_strategyinfolistcount" style="display:none;">[/#if]${IfaSpaceStrategyInfoListCount!}</span></a>
+            </p>
+            <p class="ifa-type-word" style="text-align: center;padding: 0px 10px 0px 10px;line-height: 120%;"><a id="a_lateststrategybame" class="ifa-a-href" href="${base}/front/strategy/info/strategiesdetail.do?id=${latestStrategyId!}">${latestStrategyName!}</a></p>
+            <div class="ifa-type-content">
+            [#if IfaSpaceStrategyInfoListCount = 0]
+            	<!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         		[#if viewerIsSpaceOwner??]
+					<div class="wmes-nodata-tips portfolioTips" style="display:block;padding: 0px 0;">
+                          <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                          <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                   	</div>
+				[/#if]
+            [#else]
+               <p id="p_lateststrategyproductcount" class="ifa-type-parsent ifa-type-black">${latestStrategyProductCount!}</p>
+                <p class="ifa-type-date">[@lang_res k='ifaspace.info.fund'/]</p> 
+             [/#if]
+            </div>
+            <!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         		[#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				 <a href="${base}/front/strategy/info/myList.do"><span class="ifa-thehigt-edit"></span></a>
+				[#else]
+				
+				[/#if]
+            [/#if]    
+                          
+        </li>
+        <li>
+            <p class="ifa-type-title" style="background:#50adf5">
+            [#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				<a href="${base}/front/portfolio/arena/myList.do">
+				[#else]
+				<a href="${base}/front/ifa/space/viewPofolioList.do?id=${memberId!''}">
+				[/#if]
+            [/#if]
+            	[@lang_res k='portfolio.title'/] [#if IfaSpacePortfoliosCount=0]<span class="ifa-type-num" id="sp_IfaSpacePortfoliosCount" style="background-color:transparent;color:#000000;display:none;">[#else]<span class="ifa-type-num" id="sp_IfaSpacePortfoliosCount" style="display:none;">[/#if]${IfaSpacePortfoliosCount!}</span></a>
+            </p>
+            <p class="ifa-type-word" style="text-align: center;padding: 0px 10px 0px 10px;line-height: 120%;">
+            <a id="a_latestPortfoliosName" class="ifa-a-href" href="${base}/front/portfolio/arena/detail.do?id=${latestPortfoliosId!}">${latestPortfoliosName!}</a>
+            </p>
+            <div class="ifa-type-content">
+            [#if IfaSpacePortfoliosCount = 0]
+            	[#if viewerIsSpaceOwner??]
+					<div class="wmes-nodata-tips portfolioTips" style="display:block;padding: 0px 0;">
+                          <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                          <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                   	</div>
+				[/#if]
+            [#else]
+               <div class="type-portfolios-left">
+                    <img class="ifa-type-portfolios" src="${base}/res/images/ifa/Portfolios_img.png">
+                </div>
+                <div class="type-portfolios-right">
+                    <p id="p_latestPortfoliosRate" class="ifa-type-parsent">[@num_color s='${latestPortfoliosRate!}' c='${defDisplayColor!}'  /]</p>
+                    <p class="ifa-type-date">[@lang_res k='ifaspace.info.cumOneMon'/]</p>
+                </div>           
+             [/#if] 
+            </div> 
+            <!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         		[#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				 <a href="${base}/front/portfolio/arena/myList.do"><span class="ifa-thehigt-edit"></span></a>
+				[#else]
+				
+				[/#if]
+            [/#if]    
+            
+        </li>
+        <li>
+            <p class="ifa-type-title"  style="background:#2a8cd8">
+            [#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				<a href="${base}/front/ifa/space/viewFundList.do?id=${memberId!''}">
+				[#else]
+				<a href="${base}/front/ifa/space/viewFundList.do?id=${memberId!''}">
+				[/#if]
+            [/#if]
+            [@lang_res k='ifaspace.info.funds'/] [#if recommendedFundCount=0]<span class="ifa-type-num" id="sp_recommendedFundCount" style="background-color:transparent;color:#000000;display:none;">[#else][/#if]${recommendedFundCount!}</span></a></p>
+            <p class="ifa-type-word" style="text-align: center;padding: 0px 10px 0px 10px;line-height: 120%;"><a id="a_latestFundName" class="ifa-a-href" href="${base}/front/fund/info/fundsdetail.do?id=${latestFundId!}">${latestFundName!}</a></p>
+            <div class="ifa-type-content">
+             [#if recommendedFundCount = 0]
+             	<!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         		[#if viewerIsSpaceOwner??]
+				<div class="wmes-nodata-tips portfolioTips" style="display:block;padding: 0px 0;">
+                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                 	</div>
+            [/#if]      
+            	
+            [#else]
+              	<p id="p_latestFundincreaseRate" class="ifa-type-parsent">[@num_color s='${latestFundincreaseRate!}' c='${defDisplayColor!}'  /]<!-- ${latestFundincreaseRate!}% --></p>
+                <p id="p_latestPeriodName" class="ifa-type-date">${latestPeriodName!}</p>
+             [/#if]
+            </div>         
+            <!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         		[#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				 <a href="${base}/front/ifa/info/ifarecommendfund.do"><span class="ifa-thehigt-edit"></span></a>
+				[#else]
+				
+				[/#if]
+            [/#if]      
+        </li>
+    </ul>
+    <div class="ifa-insights">
+        <p class="insights-title">
+        
+        <!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         [#if viewerIsSpaceOwner??]
+			[#if  viewerIsSpaceOwner?string('true','false')='true']
+			<a href="${base}/front/ifa/myInsight/list.do"> 
+			<span class="insights-title-word">[@lang_res k='ifaspace.info.recommendInsights'/]</span><span class="ifa-thehigt-edit"></span></a>
+			[#else]
+			<a href="${base}/front/investor/myInsight/list.do?memberId=${memberId!}""> 
+			<span class="insights-title-word">[@lang_res k='ifaspace.info.recommendInsights'/]</span></a>
+			[/#if]
+           [/#if]
+        
+        
+         <!--  [#if ifaSpaceInsightCount=0]
+         <span class="insights-title-num" id="sp_IfaSpaceInsightListCount" style="background-color:transparent;color: #999999;display:none;">0</span>
+         [#else]
+         <span class="insights-title-num" id="sp_IfaSpaceInsightListCount" style="display:none;">${ifaSpaceInsightCount}</span>
+         [/#if]-->
+         
+        <!--  <img class="insights-more" src="${base}/res/images/ifa/more_ico.png">--></p>
+         [#if IfaSpaceInsightList?exists && IfaSpaceInsightList?size = 0]
+            	<!--  <p id="id_not_insights" style="color: #b5b4b4;">[@lang_res k='ifaspace.info.noRecommendation'/]</p>-->
+            	<div class="wmes-nodata-tips portfolioTips" style="display:block;padding: 10px 0;text-align: center;">
+                         <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                         <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                  	</div>
+             [/#if] 
+        <ul id="ul_insightsList" class="ifa-insights">
+             [#if IfaSpaceInsightList?exists && IfaSpaceInsightList?size gt 0]
+			[#list IfaSpaceInsightList as iList] 
+			[#if iList_index lt 4]
+				<li>
+                <p class="insights-content"><span class="gray-box"></span> <a insightid="${iList.insightId}" class="ifa-a-href recommend-news-title" href="javascript:void(0)">${iList.title!}</a></p>
+                <p class="insights-date">
+                    <span class="insights-time">${iList.createTime!}</span>
+                    <div class="insights-ico-wrap">
+                        <p class="insights-ico"><img class="" src="${base}/res/images/ifa/view_ico.png"><span>${iList.views!}</span></p>
+                        <!-- <p class="insights-ico"><img class="" src="${base}/res/images/ifa/comment_ico.png"><span>${iList.comments!}</span></p> -->  
+                    </div>
+                </p>
+            </li>
+			[/#if]
+            
+            [/#list]
+			[/#if]
+        </ul>
+    </div>
+    <div class="ifa-news" style="display:none;">
+        <p class="insights-title"><span class="insights-title-word">[@lang_res k='ifaspace.info.recommendNews'/]</span>
+        <!-- 判断是不是自己的空间，是就显示编辑按钮 -->
+         [#if viewerIsSpaceOwner??]
+				[#if  viewerIsSpaceOwner?string('true','false')='true']
+				<a href="${base}/front/ifa/myInsight/list.do"><span class="ifa-thehigt-edit"></span></a> 
+				[#else]
+				
+				[/#if]
+            [/#if]
+        <span class="insights-title-num" id="sp_IfaSpaceNewsListCount">[#if IfaSpaceNewsList??]${IfaSpaceNewsList?size!}[/#if]</span><img class="insights-more" src="${base}/res/images/ifa/more_ico.png"></p>
+         [#if IfaSpaceNewsList?exists && IfaSpaceNewsList?size = 0]
+            	<p id="id_not_news" style="color: #b5b4b4; padding-bottom:60px;">[@lang_res k='ifaspace.info.noRecommendation'/]</p>
+             [/#if] 
+        <ul class="ifa-news-contents" id="ul_newsList">
+        
+        [#if IfaSpaceNewsList?exists && IfaSpaceNewsList?size gt 0]
+			[#list IfaSpaceNewsList as newsList]
+			 <li>
+                <p class="insights-content"><span class="gray-box"></span> <span>${newsList.ifaRecommendedReason!}</span> <a class="ifa-news-a class-share">【分享】</a></p>
+                <div class="news-word-wrap">
+                    <a class="ifa-news-img" href="javascript:;">
+                        <img src="${newsList.thumbnailImagePath!}">
+                    </a>
+                    <div class="news-wrap">
+                         <p class="ifa-news-word"><a class="ifa-a-href" href="${newsList.url!}">${newsList.title!}</a></p>
+                        <p class="insights-time">${newsList.createTime!}</p>
+                    </div>                             
+                </div>
+            </li>
+			[/#list]
+			[/#if]
+			
+            
+            <!--<li>
+                <p class="insights-content"><span class="gray-box"></span>Speaking at a regular briefing, Bristow said that, as anticipated, the complexity of dealing with multiple ore types from different sources had affected throughput, recovery and grade in the first half of the year.</p>
+                <div class="news-word-wrap">
+                    <a class="ifa-news-img" href="javascript:;">
+                        <img src="${base}/res/images/ifa/newsimg.png">
+                    </a>
+                    <div class="news-wrap">
+                         <p class="ifa-news-word">China's foreign service trade deficit widens in June</p>
+                        <p class="insights-time">2016-07-27 18:52</p>
+                    </div>                             
+                </div>
+            </li>-->
+        </ul>
+    </div>
+</div>
+<!-- <div class="mid-inverstor-left">
+    <div class="ifa-space-live">
+        <div class="ifa-recent">
+            <p class="ifa-live-btitle">Live</p>
+        </div>
+        <div class="ifa-live-list-wrap" id="ifa-live-list-wrap"> 
+            <ul class="ifa-live-wrap">
+                <li class="ifa-live" style="display:${leftFirstLiveDisplay!}">
+                    <div class="ifa-live-date">
+                        <p class="live-date">${leftFirstLiveIssuedTime!}</p>
+                        <p class="live-date-playing">Playing</p>
+                    </div>
+                    <span class="ifa-live-dian ifa-live-nowdian"></span>
+                    <img src="${base}/res/images/ifa/live.png">
+                    <div class="ifa-live-content">
+                        <p class="ifa-live-title">${leftFirstLiveTitle!}</p>
+                        <p class="ifa-live-word">${leftFirstLiveContent!}</p> 
+                    </div>
+                </li>
+                [#if notLiveList?exists && notLiveList?size gt 0]
+				[#list notLiveList as v]
+				 <li class="ifa-live">
+	                    <div class="ifa-live-date">
+	                        <p class="live-date">${v.issuedTime}</p>
+	                    </div>
+	                    <p class="ifa-live-title">${v.title}</p>
+	                    <span class="ifa-live-dian"></span>
+	                </li>
+				[/#list]
+				[/#if]
+                
+                
+            </ul>
+        </div>
+        <div class="ifa-live-schedule">
+            <p class="live-schedule-title">Schedule</p>
+            <div class="ifa-schedule-list" id="ifa-schedule-list">
+                <ul class="schedule-ul">
+                
+                 [#if ifaSpaceLivedList?exists && ifaSpaceLivedList?size = 0]<p class="ifa-his-word" style="padding-left:0%;text-align: center;">未有节目</p>[/#if]
+                [#if ifaSpaceLivedList?exists && ifaSpaceLivedList?size gt 0]
+				[#list ifaSpaceLivedList as v]
+				  <li>
+                        <div class="schedule-trailer-wrap">
+                            <p class="schedule-date">${v.issuedTime}</p>
+                            <p class="schedule-trailer">Traileraa</p>
+                        </div>
+                        <p class="schedule-word">${v.title}</p>
+                    </li>
+				[/#list]
+				[/#if]
+                </ul>  
+            </div>
+        </div>
+        
+    </div>
+</div>      -->
+    <div class="ifa-space-recent">
+        <div class="ifa-recent" style="padding-top:0;">
+            <p class="ifa-his-title" style="margin-top:30px;padding-bottom:30px;">[@lang_res k='ifaspace.info.latestVistors'/]</p>
+            <!-- [#if IfaSpaceVisitList?exists && IfaSpaceVisitList?size = 0]<p class="ifa-his-word" style="padding-left:0%;text-align: center;">[@lang_res k='ifaspace.info.noVisitorRecently'/]</p>[#else]<p class="ifa-his-word">今天最新${IfaSpaceVisitList?size!}个访客</p>[/#if] -->
+        </div>
+        <ul class="ifa-visitor">
+            [#if IfaSpaceVisitList?exists && IfaSpaceVisitList?size gt 0]
+			[#list IfaSpaceVisitList as vList]
+			  <li>
+			     [#if vList.memberType=2]<a class="ifa-a-href" href="${base}/front/community/space/ifaSpace.do?id=${vList.memberId!}">[/#if]<img class="ifa-visitor-tou" src="${base}${vList.memberHeadImg!}">[#if vList.memberType=2]</a>[/#if]
+                [#if vList.memberType=2]<a class="ifa-a-href" href="${base}/front/community/space/ifaSpace.do?id=${vList.memberId!}">[/#if]<p class="ifa-visitor-aries">${vList.name!}[#if vList.memberType=2]</a>[/#if] <span class="ifa-visitor-hea">
+                [#if vList.memberType=1]([@lang_res k='member.memberType.1'/])
+                [#elseif vList.memberType=2]([@lang_res k='member.memberType.2'/])
+                [#elseif vList.memberType=3]([@lang_res k='member.memberType.3'/])[/#if]
+                </span></p>
+                <span class="insights-time">${vList.visitDateTimeStr!}</span>
+            </li>
+			[/#list]
+			[/#if]
+        </ul>
+    </div>   
+</div>
+<!-- 弹出层 -->
+        	<div class="ifa-article-zhe"></div>
+        	<div class="ifa-article-space">
+				<div class="ifa-article-wrap">
+					<!-- 
+						<div class="wmes-close" id="space-article-close"></div>
+			            <p class="wmes-wrap-title">Kenny Law Recommended Insights</p>
+			            <p class="ifa-article-title">What could surprise on the upside or the downside?</p>
+			            <p class="ifa-article-time">2016-07-27 18:52 </p>
+			            <p class="ifa-article-word">China is the key driver for the mining sector as the country consumes approximately 50% of the world’s mined commodities. Market sentiment towards China turned very negative in the second half of 2015. However, better-than-expected economic data points this year have somewhat eased the market’s concerns around the potential for a hard landing in China. The situation in the country is highly uncertain but if sentiment towards China meaningfully improves / deteriorates then this would likely see the mining sector surprise on the up / the downside.</p>
+			            <div class="article-retopst-wrap">
+			                <img class="article-retopst-ico" src="${base}/res/images/ifa/retopst_ico.png">
+			                <p class="article-retopst-word">Retopst</p>
+			                <p class="article-retopst-time">Retopst 24 times</p>
+			            </div>
+			            <div class="article-article-button">Join the conversation</div>
+			          -->
+				</div>
+			</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var IFASPACE_LANG_NoRecommendation = "[@lang_res k='ifaspace.info.noRecommendation'/]";
+	var IFASPACE_LANG_CannotAddYourself = "[@lang_res k='ifaspace.info.cannotAddYourself'/]";
+	var IFASPACE_LANG_LoginToAddFriends = "[@lang_res k='ifaspace.info.loginToAddFriends'/]";
+	var IFASPACE_LANG_SureToAddFriends = "[@lang_res k='ifaspace.info.sureToAddFriends'/]";
+	var IFASPACE_LANG_WaitToAddFriends = "[@lang_res k='ifaspace.info.waitToAddFriends'/]";
+	var IFASPACE_LANG_Alert = "[@lang_res k='layer.alert'/]";
+	var IFASPACE_LANG_NODATA_TIPS = "[@lang_res k='global.nodata.tips'/]";
+	
+	var MEMBER_MEMBERTYPE_1 = "[@lang_res k='member.memberType.1'/]";
+	var MEMBER_MEMBERTYPE_2 = "[@lang_res k='member.memberType.2'/]";
+	var MEMBER_MEMBERTYPE_3 = "[@lang_res k='member.memberType.3'/]";
+	var GLOBAL_CLOSEWINDOW = "[@lang_res k='global.close'/]";
+
+     seajs.use('${base}/res/web/ifa/ifaSpace.js');
+</script>

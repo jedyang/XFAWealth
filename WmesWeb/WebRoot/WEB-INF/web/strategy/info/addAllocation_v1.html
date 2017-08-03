@@ -1,0 +1,269 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<style type="text/css">
+input radio {margin-right:20px;}
+.OpenAccount_liucheng_div{ overflow:hidden;background-color:white;margin:0px;padding-left:100px;}
+.OpenAccount_liucheng{ width:100%;}
+.OpenAccount_liucheng ul li{ float:left; height:39px; text-align:center; line-height:39px; font-size:16px;}
+.liucheng_jiantou{ width:20px;}
+.liucheng_first{border-radius: 5px 0px 0px 5px; background:#edeff0; width:300px; height:39px; color:#8d9094;}
+.liucheng_kuai{ background:#edeff0; width:300px; height:39px; color:#8d9094;}
+.liucheng_last{border-radius:0px 5px 5px 0px; background:#edeff0; width:300px; height:39px; color:#8d9094;}
+
+.liucheng_light{ background:#fedbad; color:#c34907;} 
+.liucheng_orange{ background:#f6a03a; color:#fff;} 
+
+.OpenAccount_liucheng_content{ clear:both; margin:0 20px; padding-top:34px; font-size:14px;}
+.OpenAccount_liucheng_content_tishi{ color:#b36a39;}
+
+.select_header_option{overflow: hidden;margin: 15px 0px; color: #000000;background-color: #ffffff;}
+.select_header_option li{width:120px;height:40px;line-height:40px;text-align:center; cursor: pointer;float: left;font-size: 14px;padding:0 17px;border:1px solid #eef0f2; }
+.select_header_option li:hover{background-color: lightgreen;}
+.select_header_option .select_active{color:#ffffff;background-color:green;font-weight:blod;}
+
+.w {width:30px;white-space:nowrap;padding:0px 5px 0px 5px;text-align:center;}
+.r {border-bottom:1px solid #eef0f2;}
+th {
+height:35px;
+line-height:35px;
+font-weight:bold;
+text-align:center; /*设置水平居中*/
+vertical-align:middle;/*设置垂直居中*/
+}
+td {
+height:35px;
+line-height:35px;
+text-align:center; /*设置水平居中*/
+vertical-align:middle;/*设置垂直居中*/
+}
+</style>
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='strategy.title'/]</a>
+</div>
+<div class="blue_background personalWrap">
+    <div class="white_background" style="padding:0px;">   
+                
+		<div class="zhongxin_right">
+            <div class="OpenAccount_big_title" style="background-color:white;">
+                <h2>[@lang_res k='strategy.info.form.newStrategy'/]</h2>
+            </div>
+
+                <div class="OpenAccount_liucheng_div">
+                    <div class="OpenAccount_liucheng">
+                        <ul>
+                            <li class="liucheng_first"><div class="font_height">1.[@lang_res k='strategy.info.flow.start'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_07.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_light"><div class="font_height">2.[@lang_res k='strategy.info.flow.allocation'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"></div>
+                            </li>
+                            <li class="liucheng_last"><div class="font_height">3.[@lang_res k='strategy.info.flow.release'/]</div></li>
+                        </ul>
+                    </div>    
+                </div>
+
+            <div class="insight-left-content">
+                <form id="addForm">
+                    <div class="insight-row">
+                        <span class="insight-row-title">Allocation Method：</span>
+                        <ul class="select_header_option">
+			                <li currentSort="Geographical" class="select_active">
+			                    <p>Geographical</p>                    
+			                </li>
+			                <li currentSort="Sector">
+			                    <p>Sector</p>                  
+			                </li>
+			                <li currentSort="FundType">
+                                <p>Fund Type</p>                  
+                            </li>
+			            </ul>
+                    </div>      
+                    <div class="insight-row">
+                            <p class="insight-row-title">Asset Allocation：</p>
+                    </div>
+                    <div class="insight-row">
+	                    <div class="left">
+	                        <div id="allocationTableDiv" style="overflow:hidden;text-align:center;display:block;">
+	                            <select id="geoAllocation" name="geoAllocation" class="insight-input-select" style="float: left;">
+	                                <option value="">=== Select Geographic Item ===</option>
+	                                [#if regionList?exists && regionList?size gt 0 ]
+	                                [#list regionList as x]
+	                                <option value="${x.itemCode!}">${x.name!}</option>
+	                                [/#list]
+	                                [/#if]
+	                            </select>
+	                            <a id="btnAddGeo" class="btn_middle addAlo" style="width:96px;" href="javascript:;">[@lang_res k='global.add'/]</a>
+		                        <table id="allocationTable" class="dataTable" style="width:80%;">
+							        <tbody>
+							            <tr style="border-bottom:1px solid #000000;">
+							                <th class="w" style="width:45%;">Item</th>
+							                <th class="w" style="width:35%;">Weight</th>
+							                <th class="w" style="width:20%;"></th>
+							            </tr>
+                                    [#if regionAllocation?exists && regionAllocation?size gt 0 ]
+                                    [#list regionAllocation as x]
+                                        <tr class="r">
+                                            <td class="w" style="width:45%;">${x.name!}</td>
+                                            <td class="w" style="width:35%;">
+                                                <input type="text" style="width:50px;height:25px;" name="Wei_geoAllocation" value="${x.itemWeight!}">%
+                                                <input type="hidden" name="Sel_geoAllocation" value="${x.itemCode!}">
+                                            </td>
+                                            <td class="w" style="width:20%;">
+                                                <a class="delete" style="display:inline-block;overflow:hidden;" href="javascrpit:;" itemId="${x.id!}"><img style="width:24px;height:24px;margin-bottom: -12px;" src="${base}/res/images/u204.png" /></a>
+                                            </td>
+                                        </tr>
+                                    [/#list]
+                                    [/#if]							            
+		                            </tbody>
+		                        </table>    
+		                        <table style="width:80%;">
+		                            <tbody>
+		                                <tr>
+		                                    <th class="w" style="width:45%;">All</th>
+		                                    <th class="w" id="total_geoAllocation" style="width:35%;">100%</th>
+		                                    <th class="w" style="width:20%;"></th>
+		                                </tr>
+		                            </tbody>
+		                        </table>	
+	                        </div>
+	
+	                        <div id="sectorTableDiv" style="overflow: hidden;text-align:center;display:none;">
+	                            <select id="sectorAllocation" name="sectorAllocation" class="insight-input-select" style="float: left;">
+	                                <option value="">=== Select Sector Item ===</option>
+	                                [#if sectorList?exists && sectorList?size gt 0 ]
+	                                [#list sectorList as x]
+	                                <option value="${x.itemCode!}">${x.name!}</option>
+	                                [/#list]
+	                                [/#if]
+	                            </select>
+	                            <a id="btnAddSector" class="btn_middle addAlo" style="width:96px;" href="javascript:;">[@lang_res k='global.add'/]</a>
+		                        <table id="sectorTable" class="dataTable" style="width:80%;">
+		                            <tbody>
+		                                <tr style="border-bottom:1px solid #000000;">
+		                                    <th class="w" style="width:45%;">Item</th>
+		                                    <th class="w" style="width:35%;">Weight</th>
+		                                    <th class="w" style="width:20%;"></th>
+		                                </tr>
+                                    [#if sectorAllocation?exists && sectorAllocation?size gt 0 ]
+                                    [#list sectorAllocation as x]
+                                        <tr class="r">
+                                            <td class="w" style="width:45%;">${x.name!}</td>
+                                            <td class="w" style="width:35%;">
+                                                <input type="text" style="width:50px;height:25px;" name="Wei_sectorAllocation" value="${x.itemWeight!}">%
+                                                <input type="hidden" name="Sel_sectorAllocation" value="${x.itemCode!}">
+                                            </td>
+                                            <td class="w" style="width:20%;">
+                                                <a class="delete" style="display:inline-block;overflow:hidden;" href="javascrpit:;" itemId="${x.id!}"><img style="width:24px;height:24px;margin-bottom: -12px;" src="${base}/res/images/u204.png" /></a>
+                                            </td>
+                                        </tr>
+                                    [/#list]
+                                    [/#if]  
+		                            </tbody>
+		                        </table>    
+		                        <table style="width:80%;">
+		                            <tbody>
+		                                <tr>
+		                                    <th class="w" style="width:45%;">All</th>
+		                                    <th class="w" id="total_sectorAllocation" style="width:35%;">100%</th>
+		                                    <th class="w" style="width:20%;"></th>
+		                                </tr>
+		                            </tbody>
+		                        </table>    
+	                        </div>
+	
+	                        <div id="fundTypeTableDiv" style="overflow: hidden;text-align:center;display:none;">
+	                            <select id="ftAllocation" name="ftAllocation" class="insight-input-select" style="float:left;">
+	                                <option value="">=== Select Fund Type Item ===</option>
+	                                [#if fundTypeList?exists && fundTypeList?size gt 0 ]
+	                                [#list fundTypeList as x]
+	                                <option value="${x.itemCode!}">${x.name!}</option>
+	                                [/#list]
+	                                [/#if]
+	                            </select>
+	                            <a id="btnAddFT" class="btn_middle addAlo" style="width:96px;" href="javascript:;">[@lang_res k='global.add'/]</a>
+		                        <table id="fundTypeTable" class="dataTable" style="width:80%;">
+		                            <tbody>
+		                                <tr style="border-bottom:1px solid #000000;">
+		                                    <th class="w" style="width:45%;">Item</th>
+		                                    <th class="w" style="width:35%;">Weight</th>
+		                                    <th class="w" style="width:20%;"></th>
+		                                </tr>
+                                    [#if typeAllocation?exists && typeAllocation?size gt 0 ]
+                                    [#list typeAllocation as x]
+                                        <tr class="r">
+                                            <td class="w" style="width:45%;">${x.name!}</td>
+                                            <td class="w" style="width:35%;">
+                                                <input type="text" style="width:50px;height:25px;" name="Wei_ftAllocation" value="${x.itemWeight!}">%
+                                                <input type="hidden" name="Sel_ftAllocation" value="${x.itemCode!}">
+                                            </td>
+                                            <td class="w" style="width:20%;">
+                                                <a class="delete" style="display:inline-block;overflow:hidden;" href="javascrpit:;" itemId="${x.id!}"><img style="width:24px;height:24px;margin-bottom: -12px;" src="${base}/res/images/u204.png" /></a>
+                                            </td>
+                                        </tr>
+                                    [/#list]
+                                    [/#if]      
+		                            </tbody>
+		                        </table>    
+		                        <table style="width:80%;">
+		                            <tbody>
+		                                <tr>
+		                                    <th class="w" style="width:45%;">All</th>
+		                                    <th class="w" id="total_ftAllocation" style="width:35%;">100%</th>
+		                                    <th class="w" style="width:20%;"></th>
+		                                </tr>
+		                            </tbody>
+		                        </table>    
+	                        </div>
+	
+	                    </div>
+	                    <div class="right">
+	                        <div id="allocationChartDiv" style="overflow:hidden;text-align:center;margin-top: 10px;">
+	                            <img src="${base}/res/images/chart1.png"/>
+	                        </div>
+	                    </div>
+                    </div>
+                    
+                    <div class="clear">
+                    <div class="insight-row">
+                        <!-- 
+                            <a href="javascript:;" id="btnAdd" class="btn_middle" style="width:150px;">Add product</a>-->
+                            <p>Note: Click the item name to filter the product list, click the "All" to clear the filter.</p>
+                    </div>
+
+                    <div class="gary_title" style="">Recommended Product List (optional)</div>
+                    <div class="insight-row" style="padding:0px 0px 20px 0px;">
+                        <div id="tableList" style="overflow: auto;text-align: center;">
+                        </div>
+                        <input type="hidden" id="ids" name="ids" value="">
+                    </div>
+                    
+                <div class="btn_middle_div" style="overflow:hidden;">
+                    <a id="btnCancle" class="wenti_btn_LightBlue" style="float:left;" href="${base}/front/strategy/info/myList.do">[@lang_res k='open.account.Cancel'/]</a>
+                    <a class="wenti_btn_LightBlue" style="margin-left:59%;" href="${base}/front/strategy/info/addStart.do?id=${(strategyVO.id)?if_exists}">[@lang_res k='open.account.Previous'/]</a>
+                    <a id="btnNext" class="wenti_btn_bule" href="javascript:;">[@lang_res k='open.account.Next'/]</a>
+                    <a id="btnSave" class="wenti_btn_bule" style="float:right;" href="javascript:;">[@lang_res k='global.save'/]</a>
+                    <input type="hidden" id="id" name="id" value="${(strategyVO.id)?if_exists}">
+                    <input type="hidden" id="next" value="false">
+                    
+                    <input type="hidden" name="allocationMethod" id="allocationMethod">
+                    <input type="hidden" id="regions" name="regions" value="${(strategyVO.geoAllocation)?if_exists}">
+                    <input type="hidden" id="sectors" name="sectors" value="${(strategyVO.sector)?if_exists}">
+                    <input type="hidden" id="types" name="types" value="${(strategyVO.fundType)?if_exists}">
+                    <input type="hidden" id="regionsWeight" name="regionsWeight" value="">
+                    <input type="hidden" id="sectorsWeight" name="sectorsWeight" value="">
+                    <input type="hidden" id="typesWeight" name="typesWeight" value="">
+                </div>
+                </form>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+seajs.use('${base}/res/web/strategy/info/addAllocation.js');
+</script>

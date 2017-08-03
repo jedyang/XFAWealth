@@ -1,0 +1,257 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/ifa.css"> 
+<link rel="stylesheet" href="${base}/res/css/client.css">  
+<link rel="stylesheet" href="${base}/res/css/discover.css">
+<style>
+.clientdetail-contents-wrap{margin:0;padding:0;}
+</style>
+<div class="wmes-top">
+	<a id="wmes-go-back" href="javascript:history.go(-1);"><img class="wmes-back" src="${base}/res/images/back_ico.png" alt=""></a>
+    <a href="javascript:;" class="header-over">IFA</a>
+</div>
+<div class="wmes-content">
+	<div class="my-buddy-wrap">
+		<div class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='buddy.title'/]
+		
+		</div>
+		
+		<div class="my-ifa-buddy">
+			<ul class="noline_tab_tab clientsdetail-tab" style="margin-bottom:15px;">
+                <li class="now">[@lang_res k='buddy.title'/]<span></span></li>
+                <li [#if isInvestor?? && isInvestor=='1'] style="display:none"[/#if]>[@lang_res k='ifateam.title'/]<span></span></li>
+                
+            </ul>
+            <div class="clientdetail-contents-wrap clientdetail-contents-active">
+            	<ul class="my-buddy-contens">
+					[#if myBuddy?exists && myBuddy?size gt 0][#list myBuddy as list]
+					<li class="[#if list.state?exists && list.state='1']my-buddy-active[/#if]">
+						<div class="my-ifa-portrait">
+							<a   relateId="${list.memberId}" class="user-head" href="[#if list.toMemberType?? && list.toMemberType=='1']${base}/front/community/space/investorSpace.do?id=${list.memberId!}[#else]${base}/front/community/space/ifaSpace.do?id=${list.memberId!}[/#if]"><img class="new-buddy-portrait " src="${base}[@user_head u='${list.iconUrl!}' g='${list.gender!}'/]"></a>
+							<p class="my-ifa-msg" style="display:none">0</p>
+						</div>
+						<div class="my-ifa-information">
+							<p class="my-ifa-name"><span class="myifa-name"> <a href="[#if list.toMemberType?? && list.toMemberType=='1']${base}/front/community/space/investorSpace.do?id=${list.memberId!}[#else]${base}/front/community/space/ifaSpace.do?id=${list.memberId!}[/#if]">${list.nickName!}</a></span><img  class="myifa-img" src="${base}/res/images/ifa/buddy_call.png"></p>
+							<div class="my-ifa-contact">
+								<p><img src="${base}/res/images/ifa/my_ifa_phone.png" style="vertical-align:middle;">+${list.mobileNumber!}</p>
+								<p><img src="${base}/res/images/ifa/my_ifa_email.png">${list.email!}</p>
+							</div>
+						</div>
+						<img class="my-ifa-liaotian  layim-pop-chat" layim-pop-id="${list.memberId!}" nickName="${list.nickName!}" src="${base}/res/images/ifa/top_chat.png">
+					</li>
+					[/#list]
+					[#else]
+					<div class="wmes-nodata-tips" style="display:block;">
+                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                    </div>
+					[/#if]
+				</ul>
+            </div>
+            <div class="clientdetail-contents-wrap">
+            	<ul class="my-buddy-contens">
+					[#if teamList?exists && teamList?size gt 0][#list teamList as list]
+					<li class="[#if list.state?exists && list.state='1']my-buddy-active[/#if]">
+						<div class="my-ifa-portrait">
+							<a   relateId="${list.memberId}" class="user-head" href="${base}/front/community/space/ifaSpace.do?id=${list.memberId!}"><img class="new-buddy-portrait " src="${base}[@user_head u='${list.iconUrl!}' g='${list.gender!}'/]"></a>
+							<p class="my-ifa-msg" style="display:none">0</p>
+						</div>
+						<div class="my-ifa-information">
+							<p class="my-ifa-name"><span class="myifa-name"> <a href="${base}/front/community/space/ifaSpace.do?id=${list.memberId!}">${list.nickName!}</a></span><img  class="myifa-img" src="${base}/res/images/ifa/buddy_call.png"></p>
+							<div class="my-ifa-contact">
+								<p><img src="${base}/res/images/ifa/my_ifa_phone.png">+${list.mobileNumber!}</p>
+								<p><img src="${base}/res/images/ifa/my_ifa_email.png">${list.email!}</p>
+							</div>
+						</div>
+						<img class="my-ifa-liaotian  layim-pop-chat" layim-pop-id="${list.memberId!}" nickName="${list.nickName!}" src="${base}/res/images/ifa/top_chat.png">
+					</li>
+					[/#list]
+					[#else]
+					<div class="wmes-nodata-tips" style="display:block;">
+                        <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                        <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                    </div>
+					[/#if]
+				</ul>
+            </div>
+		</div>
+		<div class="my-ifa-right">
+			<div class="my-new-buddy">
+				<p class="new-buddy-title">[@lang_res k='buddy.new'/]</p>
+				<ul class="new-buddy-ul">
+					
+					[#if newBuddy?exists && newBuddy?size gt 0][#list newBuddy as list]
+					<li>
+						<a   relateId="${list.memberId}" class="user-head" href="[#if list.toMemberType?? && list.toMemberType=='1']${base}/front/community/space/investorSpace.do?id=${list.memberId!}[#else]${base}/front/community/space/ifaSpace.do?id=${list.memberId!}[/#if]"><img class="new-buddy-portrait" src="${base}[@user_head u='${list.iconUrl!}' g='${list.gender!}'/]"></a>
+						<p class="new-buddy-name">${list.nickName!}</p>
+						<p class="new-buddy-additional-msg">
+							<span class="new-buddy-additional-title">[@lang_res k='buddy.msg'/]:</span>
+							<span class="new-buddy-additional-word" title="${list.msg!}">${list.msg!}</span>
+						</p>
+						<div class="new-buddy-button">
+							<a class="new-buddy-orgean acceptbtn" relateId="${list.id}" href="javascript:;">[@lang_res k='buddy.accept'/]</a>
+							<a href="javascript:;" class="rejectbtn" relateId="${list.id}">[@lang_res k='buddy.reject'/]</a>
+						</div>
+					</li>
+					[/#list]
+					[#else]
+					<div class="wmes-nodata-tips" style="display:block;">
+                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+             </div>
+					[/#if]
+				</ul>
+			</div>
+			<div class="my-new-buddy">
+				<p class="new-buddy-title">[@lang_res k='buddy.focus'/]</p>
+				
+				[#if focusList?exists && focusList?size gt 0][#list focusList as list]
+				[#if list_index%4=0]
+				<ul class="new-buddy-focus">
+				[/#if]
+					<li>
+						<a   relateId="${list.memberId}" class="user-head" href="[#if list.memberType?? && list.memberType==1]${base}/front/community/space/investorSpace.do?id=${list.memberId!}[#else]${base}/front/community/space/ifaSpace.do?id=${list.memberId!}[/#if]"><img class="new-buddy-portrait" src="${base}[@user_head u='${list.iconUrl!}' g='${list.gender!}'/]"></a>
+						<p class="buddy-focus-name">${list.nickName!}</p>
+						<p class="buddy-focus-score"></p>
+					</li>
+					[#if list_index%4=3 || list_index=list?size]
+					</ul>
+					[/#if]
+					
+					[/#list]
+					[#else]
+					<div class="wmes-nodata-tips" style="display:block;">
+	                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+	                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+	             </div>
+					[/#if]
+					
+				
+			</div>
+		</div>
+	</div>
+	<div class="investment-wrap investment-hide">
+	<!-- investment 浮动的框 -->
+	<div class="investment-plan-wrap">
+		<p class="investment-plan-title" style="border-bottom:1px solid #eef0f2;margin-top:0;margin-bottom:15px;">[@lang_res k='pipeline.member.title'/]</p>
+		<div class="investment-close-ico wmes-close"></div>
+		<div class="information-plan-rows">
+			<div class="information-plan-left">
+				<img class="information-plan-portrait" src="${base}/res/images/ifa/linshi_ifa_04.png">
+				<p class="information-topper-name">Lam</p>
+			</div>
+			<div class="information-plan-right">
+				<div class="information-date-rows">
+					<p class="information-date-title ">[@lang_res k='pipeline.member.regisDate'/]</p>
+					<p class="information-date-time registrationDate">2016-10-25 14:33:45</p>
+				</div>
+				<div class="information-date-rows">
+					<p class="information-date-title ">[@lang_res k='pipeline.member.lastLogin'/]</p>
+					<p class="information-date-time loginDate">2016-10-24 16:19:22</p>
+				</div>
+			</div>
+		</div>
+		<div class="information-plan-rows">
+			<p class="information-plan-title">[@lang_res k='pipeline.member.contactInfo'/]</p>
+			<ul class="information-contact-list">
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/ifa/small_phone_ico.png">
+					<p class="information-contact-word mobile primary" field="mobile_number">+0085 **** 3440</p>
+				</li>
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/ifa/small_email_ico.png">
+					<p class="information-contact-word email primary"  field="email">Rlee@gmail.com</p>
+				</li>
+			</ul>
+			<ul class="information-contact-list">
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/client/wetchat_ico.png">
+					<p class="information-contact-word wetchat primary" field="webchat_code">******df</p>
+				</li>
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/client/weibo_ico.png">
+					<p class="information-contact-word weibo primary"  field="weibo_code">****y</p>
+				</li>
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/client/facebook_ico.png">
+					<p class="information-contact-word facebook primary" field="facebook_code">N/A</p>
+				</li>
+			</ul>
+			<ul class="information-contact-list">
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/client/twitter_ico.png">
+					<p class="information-contact-word twitter primary" field="twitter_code">tc212451254</p>
+				</li>
+				<li class="information-contact-li">
+					<img class="information-contact-ico" src="${base}/res/images/client/linke_ico.png">
+					<p class="information-contact-word linkedin primary"  field="linkedin_code">sfdsdgdfgsdft</p>
+				</li>
+			</ul>
+		</div>
+		<div class="information-plan-rows">
+			<p class="information-plan-title">[@lang_res k='pipeline.member.invRelated'/]</p>
+			<div class="information-paragraph-rows">
+				<p class="information-paragraph-title">[@lang_res k='member.info.investStyle'/]</p>
+				<ul class="information-paragraph-list style">
+					<li class="information-describe-yellow">Steady</li>
+					<li class="information-describe-yellow">Value</li>
+				</ul>
+			</div>
+			<div class="information-paragraph-rows">
+				<p class="information-paragraph-title">[@lang_res k='member.info.investField'/]</p>
+				<ul class="information-paragraph-list field">
+					<li class="information-describe-blue">Gold</li>
+					<li class="information-describe-blue">Energy</li>
+					<li class="information-describe-blue">Healthcare</li>
+					<li class="information-describe-blue">Commodity Futures</li>
+				</ul>
+			</div>
+		</div>
+		<div class="information-plan-rows">
+			<p class="information-plan-title">[@lang_res k='pipeline.member.basicInfo'/]</p>
+			<div class="information-basic-top">
+				<div class="information-basic-rows">
+					<p class="information-paragraph-title">Employment Details</p>
+					<p class="information-basic-word employment">China, HongKong</p>
+				</div>
+				<div class="information-basic-rows">
+					<p class="information-paragraph-title">[@lang_res k='pipeline.member.nationality'/]</p>
+					<p class="information-basic-word nationality">China</p>
+				</div>
+			</div>
+			<div class="information-basic-top">
+				<div class="information-basic-rows">
+					<p class="information-paragraph-title">[@lang_res k='pipeline.member.education'/]</p>
+					<p class="information-basic-word education"></p>
+				</div>
+				<div class="information-basic-rows">
+					<p class="information-paragraph-title">[@lang_res k='pipeline.member.occupation'/]</p>
+					<p class="information-basic-word occupation">***</p>
+				</div>
+			</div>
+		</div>
+		<div class="information-plan-rows">
+			<p class="information-plan-title">[@lang_res k='pipeline.member.additionalInfo'/]</p>
+			<div class="information-paragraph-rows">
+				<p class="information-paragraph-title">[@lang_res k='member.info.hobbyType'/]</p>
+				<ul class="information-paragraph-list hobby">
+				</ul>
+			</div>
+			<div class="information-paragraph-rows">
+				<p class="information-paragraph-title">[@lang_res k='member.info.liveRegion'/]</p>
+				<ul class="information-paragraph-list region">
+				</ul>
+			</div>
+			<div class="information-paragraph-rows">
+				<p class="information-paragraph-title">[@lang_res k='member.info.languageSpoken'/]</p>
+				<ul class="information-paragraph-list spoken">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- investment 浮动的框 -->
+</div>
+</div>
+[#include "../inc/foot_v2.html"/] 
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/myBuddy.js');
+</script>

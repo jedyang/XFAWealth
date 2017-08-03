@@ -1,0 +1,5 @@
+<script language="JavaScript">
+<!--
+window.location.href='${base}/console/sys/param/list.do';
+//-->
+</script>

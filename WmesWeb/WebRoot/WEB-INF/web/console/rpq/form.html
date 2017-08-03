@@ -1,0 +1,237 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问卷信息</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+        <div class="tab-side-container" >
+            <div class="page-header mt-10">
+                <h4><b>问卷信息</b></h4>
+            </div>
+             <ul class="tab" id="tab-search">
+                <li class="tab-li-crr">
+                    <a href="javascript:;">简体基础信息</a>
+                </li>
+                 <li class="tab-li">
+                    <a href="javascript:;">繁体基础信息</a>
+                </li>
+                 <li class="tab-li">
+                    <a href="javascript:;">英文基础信息</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtTitleSc" class="label-control">问卷名称</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input id="txtTitleSc" type="text" class="form-control " value="${(sc.title)?if_exists}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="selClientType" class="label-control">适应客户</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select id="selClientType" class="form-control">
+                      			<option value='Individual' [#if page?? && page.clientType?exists && page.clientType=='Individual']selected[/#if]>[@lang_res  k='console.rpq.Individual'/]</option>
+                              	<option value='Corporate' [#if page?? && page.clientType?exists && page.clientType=='Corporate']selected[/#if]>[@lang_res  k='console.rpq.Corporate'/]</option>
+                              	<option value='FI' [#if page?? && page.clientType?exists && page.clientType=='FI']selected[/#if]>[@lang_res  k='console.rpq.FI'/]</option>
+                            </select> 
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="selLangcode" class="label-control">问卷语言</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select id="selLangcode" class="form-control">
+                   				<option value='sc' [#if page?? && page.langCode?exists && page.langCode=='sc']selected[/#if]>简体中文</option>
+                             	<option value='tc' [#if page?? && page.langCode?exists && page.langCode=='tc']selected[/#if]>繁体中文</option>
+                              	<option value='en' [#if page?? && page.langCode?exists && page.langCode=='en']selected[/#if]>英文</option>
+                            </select> 
+                        </div>
+                    </div>     
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="selIsdeafault" class="label-control">是否默认问卷</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select id="selIsdeafault" class="form-control">
+                            		   <option value='1' [#if page?? && page.isDef?exists && page.isDef=='1']selected[/#if]>是</option>
+	                                   <option value='0' [#if page?? && page.isDef?exists && page.isDef=='0']selected[/#if]>否</option>  
+                            </select> 
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="selIsCalScore" class="label-control">是否计算分值</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select id="selIsCalScore" class="form-control">
+                            		   <option value='1' [#if page?? && page.isCalScore?exists && page.isCalScore=='0']selected[/#if]>是</option>
+	                                   <option value='0' [#if page?? && page.isCalScore?exists && page.isCalScore=='0']selected[/#if]>否</option>  
+	                            </select> 
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="selPagetype" class="label-control">适应类型</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select id="selPagetype" class="form-control">
+	                   			<option value='O' [#if page?? && page.pageType?exists && page.pageType=='O']selected[/#if]>[@lang_res k='console.rpq.openAccountRpq'/]</option>
+	                            <option value='C' [#if page?? && page.pageType?exists && page.pageType=='C']selected[/#if]>[@lang_res k='console.rpq.KYCrpq'/]</option>
+                            </select> 
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="selStatus" class="label-control">问卷状态</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select id="selStatus" class="form-control">
+                            		 <option value='using' [#if page?? && page.status?exists && page.status=='using']selected[/#if]>[@lang_res k="global.status.using"/]</option>
+	                                 <option value='unusing' [#if page?? && page.status?exists && page.status=='unusing']selected[/#if]>[@lang_res k="global.status.unusing"/]</option>
+	                                 <option value='draft' [#if page?? && page.status?exists && page.status=='draft']selected[/#if]>[@lang_res k="global.status.draft"/]</option>
+	                                 <option value='delete' [#if page?? && page.status?exists && page.status=='delete']selected[/#if]>[@lang_res k="global.status.delete"/]</option>
+	                            </select> 
+                        </div>
+                    </div>        
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtRemark" class="label-control">问卷说明</label>
+                        </div>
+                        <div class="col-sm-7">
+                           <textarea id="txtRemarkSc" class="form-control " rows="5">${(sc.remark)?if_exists}</textarea>
+                        </div>
+                    </div>
+                    
+                </form>
+                <form class="form-horizontal" style="display:none;">
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtTitleTc" class="label-control">问卷名称</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input id="txtTitleTc" type="text" class="form-control " value="${(tc.title)?if_exists}">
+                        </div>
+                    </div>   
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtRemarkTc" class="label-control">问卷说明</label>
+                        </div>
+                        <div class="col-sm-7">
+                           <textarea id="txtRemarkTc" class="form-control " rows="5">${(tc.remark)?if_exists}</textarea>
+                        </div>
+                    </div>
+                    
+                </form>
+                <form class="form-horizontal" style="display:none;">
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtTitleEn" class="label-control">问卷名称</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input id="txtTitleEn" type="text" class="form-control " value="${(en.title)?if_exists}">
+                        </div>
+                    </div>   
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtRemarkEn" class="label-control">问卷说明</label>
+                        </div>
+                        <div class="col-sm-7">
+                           <textarea id="txtRemarkEn" class="form-control " rows="5">${(en.remark)?if_exists}</textarea>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="text-center pd10">
+                	<button id="btnSave" class="btn-blue-s" >
+							保存
+						</button>
+                    <!--<a href="#" onclick="javascript:history.go(-1);" class="btn-blue-s2">返回</a>
+                --></div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		//保存公司信息
+		$('#btnSave').on('click',SaveFirm);
+		
+		function SaveFirm() {
+			//var id = '${(rpqPageId)?if_exists}';
+			var id = '${rpqPageId}' == null ? '' : '${rpqPageId}';
+			var titleSc = $('#txtTitleSc').val();
+			var remarkSc = $('#txtRemarkSc').val();
+			var clientType = $('#selClientType').val();
+			var langCode = $('#selLangcode').val();
+			var isDefault = $('#selIsdeafault').val();
+			var isCalScore = $('#selIsCalScore').val();//是否计算分值
+			var pageType = $('#selPagetype').val();
+			var status = $('#selStatus').val();
+			//TC
+			var titleTc = $('#txtTitleTc').val();
+			var remarkTc = $('#txtRemarkTc').val();
+			//en
+			var titleEn = $('#txtTitleEn').val();
+			var remarkEn = $('#txtRemarkEn').val();
+			
+			if(titleSc==''){layer.msg("问卷名称不能为空，请输入问卷名称", { icon:3,time: 2000 });return false;}
+			var postData = { 'id':id,'titleSc': titleSc, 'clientType': clientType, 'langCode': langCode, 'isDefault': isDefault, 'pageType': pageType, 'status': status, 'remarkSc': remarkSc,'titleTc': titleTc,'remarkTc': remarkTc,'titleEn': titleEn,'remarkEn': remarkEn,'isCalScore': isCalScore }; 
+			//console.log(postData);
+        	$.ajax({
+	            type: "post",
+	            url : "${base}/console/ifafirm/savePageInfo.do?datestr="+ new Date().getTime(),
+	            data: postData,
+	            async: false,
+	            dataType: "json",
+	            beforeSend: function () {layer.msg("正在保存数据中.....", {icon:3, time: 500000 });},
+	            error: function (XMLHttpRequest, textStatus, errorThrown) {
+	
+	            },
+	            success: function (data, textStatus) {
+               	var result = data.result;
+	            if(result==true)
+	               { 
+	               		layer.msg('保存成功', {icon: 2, time: 2000}, function () { layer.closeAll(); /*window.location.href = 'list.do';*/ });
+	               		window.parent.bindList(0);
+	               }
+				else layer.msg('保存失败', {icon: 1, time: 2000}, function () { });
+            }
+        });
+        
+		}
+		
+	});
+
+	
+</script>
+</body>
+</html>

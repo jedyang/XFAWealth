@@ -1,0 +1,67 @@
+package com.fsll.wmes.bond.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.fsll.common.base.service.BaseService;
+import com.fsll.wmes.bond.service.BondInfoService;
+import com.fsll.wmes.bond.vo.BondProductVO;
+import com.fsll.wmes.entity.BondInfo;
+import com.fsll.wmes.entity.BondInfoEn;
+import com.fsll.wmes.entity.BondInfoSc;
+import com.fsll.wmes.entity.BondInfoTc;
+import com.fsll.wmes.entity.StockInfo;
+import com.fsll.wmes.entity.StockInfoEn;
+import com.fsll.wmes.entity.StockInfoSc;
+import com.fsll.wmes.entity.StockInfoTc;
+import com.fsll.wmes.stock.service.StockInfoService;
+import com.fsll.wmes.stock.vo.StockProductVO;
+
+/**
+ * 债券信息查询服务接口实现
+ * @author Yan
+ * @date 2016-12-09
+ */
+@Service("bondInfoService")
+//@Transactional
+public class BondInfoServiceImpl extends BaseService implements BondInfoService {
+
+	/**
+	 * 获取债券基础数据列表
+	 * @return
+	 */
+	@Override
+	public List<BondProductVO> getBondProductVoList(String langCode) {
+		List<BondProductVO> voList = new ArrayList<BondProductVO>();
+//		List params = new ArrayList();
+		String hql = " FROM BondInfo r "
+			+ " INNER JOIN " + this.getLangString("BondInfo", langCode)+" i ON r.id=i.id ";
+		List<Object> list = this.baseDao.find(hql, null, false);
+		if(!list.isEmpty()){
+			for (int i = 0; i < list.size(); i++) {
+				Object[] objRead = (Object[])list.get(i);
+				BondInfo info = (BondInfo)objRead[0];
+				BondProductVO vo = new BondProductVO();
+				vo.setId(info.getId());
+				if(!"".equals(info.getProduct()) && null!=info.getProduct()){
+					vo.setProductId(info.getProduct().getId());
+				}
+				if("sc".equals(langCode)){
+					BondInfoSc sc = (BondInfoSc)objRead[1];
+					vo.setName(sc.getBondName());
+				} else if("tc".equals(langCode)){
+					BondInfoTc tc = (BondInfoTc)objRead[1];
+					vo.setName(tc.getBondName());
+				} else if("en".equals(langCode)){
+					BondInfoEn en = (BondInfoEn)objRead[1];
+					vo.setName(en.getBondName());
+				}
+				voList.add(vo);
+			}
+		}
+		return voList;
+	}
+
+}

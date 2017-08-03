@@ -1,0 +1,607 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/third/bootstrap/css/bootstrap.css"> 
+	<link rel="stylesheet" href="${base}/res/third/slider/bootstrap-slider.css">  
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link href="${base}/res/third/laydate/need/laydate.css"
+			rel="stylesheet">
+	<link href="${base}/res/third/laydate/skins/yalan/laydate.css"
+				rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/other.css">
+	<style>
+	.proposal-edit-rows{margin-bottom: 5px;}
+	.funds_search_negative{color: red;}
+	.funds_search_positive{color: #24b31d;}
+	.unit_redeem{
+	    line-height: 25px;
+	    width: 200px;
+	    background-color: #4982AB;
+	    border-radius: 6px;
+	    color: white;
+	    margin: 0 auto;
+	}
+	.weight-total{
+		font-size: 18px;
+	    font-weight: bold;
+	    margin-top: 15px;
+	    margin-bottom: 30px;
+	    position: relative;
+	    left: 74%;
+	}
+	.weight-total p{
+		float: left;
+    	margin-right: 100px;
+	}
+	.weight-total input{
+	    float: left;
+	    border: 0px;
+	    width: 60px;
+	    text-align: right;
+	}
+	.ifa-space-popup {display: none;}
+	.ifa-space-active {display: block;}
+	.ifa-space-mask {
+	    position: fixed;
+	    top: 0px;
+	    left: 0px;
+	    background-color: black;
+	    height: 100%;
+	    width: 100%;
+	    opacity: 0.6;
+	    z-index: 99;
+	}
+	.space-mask-wrap {
+	    text-align: center;
+	    width: 100%;
+	    height: 100%;
+	    position: absolute;
+	    top: 700px;
+	    left: -3%;
+	    z-index: 99;
+	    padding-left: 100px;
+	    box-sizing: border-box;
+	    -moz-box-sizing: border-box;
+	    -webkit-box-sizing: border-box;
+	}
+	.space-mask {
+	    background-color: white;
+	    margin: 0 auto;
+	    padding: 10px 20px;
+	    position: relative;
+    }
+    .space-mask-close {
+	    position: absolute;
+	    background: 0 0;
+	    right: 30px;
+	    cursor: pointer;
+	    height: 30px;
+	    width: 20px;
+	    top: 6px;
+	    right: 10px;
+	}
+	.space-mask-close:after, .space-mask-close:before {content: '';background: #74bfff;height: 2px;width: 20px;}
+	.space-mask-close:after{-moz-transform: translate(0,-6px) rotate(45deg);-ms-transform: translate(0,-6px) rotate(45deg);-webkit-transform: translate(0,-6px) rotate(45deg);transform: translate(0,-6px) rotate(45deg);position: absolute;bottom: 8px;left: -1px;}
+	.space-mask-close:before{-moz-transform: translate(0,6px) rotate(-45deg);-ms-transform: translate(0,6px) rotate(-45deg);-webkit-transform: translate(0,6px) rotate(-45deg);transform: translate(0,6px) rotate(-45deg);position: absolute;top: 8px;left: -1px;}
+	.aipstate_button{float: left;  width: 42px; height: 20px; background: url('${base}/res/images/ifa/op_choose_01.png') no-repeat; cursor: pointer; margin-right: 10px;margin-top: 10px; }
+	.aipstate_button_active{background: url('${base}/res/images/ifa/op_choose_02.png') no-repeat;}
+	.product-del-ico{cursor: pointer;}
+	.product-table-input {width: 100px;}
+	input, button, select, textarea{line-height:normal;}
+	.input-ctrl-border{border: 0px solid #e3e3e3;}
+	</style>
+    <div class="wmes-content">
+        <div class="proposal-wrap" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+           <div class="stepThree-rows">
+            <p class="wmes-wrap-title">[@lang_res k='order.plan.rebalance.title'/]</p>
+            <div class="createflow">
+                <div class="Straegy_Define">[@lang_res k='order.plan.rebalance.fundsMixer'/]</div>
+                <div class="createflownext">></div>
+                <div class="Release">[@lang_res k='order.plan.rebalance.commissionConfirm'/]</div>
+                <div class="createflownext">></div>
+                <div class="Release">[@lang_res k='order.plan.rebalance.completer'/]</div>
+			</div>
+				<!-- client -->
+            	[#if detail?? && detail.memberType?? && detail.memberType==2]
+            	<div class="order-plan-client">
+            		<p class="builder-title">[@lang_res k='order.plan.rebalance.client.detail'/]<span id="analysis-chart-ico" class="proposal-more-ico"></span></p>
+	                <div style="margin: 40px 0 80px 50px">
+	                <img class="client-top-portrait" style="width: 70px;" src="${base!}${(detail.clientIconUrl)!}">
+	                 <div class="client-top-left">
+	                    <div class="client-top-nwrap">
+							<input type="hidden" name="hdId" value="${(detail.customerId)!}" id="hdId"/>
+	                        <div class="client-top-namebox">
+	                        	<input class="client-top-name" readonly="readonly" type="text" value="${(detail.nickName)?if_exists}"/>
+	                        </div>
+	                    </div>
+	                    <div class="client-top-wico">
+	                        <p class="client-top-ico"><img src="${base}/res/images/client/phone_ico.png">${(detail.mobileNumber)!}</p>
+	                        <p class="client-top-ico"><img src="${base}/res/images/client/email_ico.png">${(detail.email)!}</p>
+	                    </div>
+	                 </div>
+                	</div>
+            	</div>
+            	[/#if]
+            	<!-- accounts -->
+            	<div class="order-plan-client order-plan-rows">
+	            	<p class="client-bg-title ">[@lang_res k='order.plan.rebalance.Inv.account.summary'/] 
+	            	<span id="account-detail-ico" class="proposal-more-ico"></span>
+	            	</p>
+	                <table class="account-detail-table client-table order-table">
+	                    <tbody>
+	                        <tr class="client-table-th">
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.distributor'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.accoutNo'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.inv.account.type'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='ifa.detail.account.baseCurrency'/]</th>
+	                            <th width="15%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.asset'/]</th>
+	                            <th width="15%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.cash'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.account.table.market.value'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.table.th.rpq.riskLevel'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.authorizedToIFA'/]</th>
+	                        </tr>
+	                        [#if detail?? && detail.investorAccountVOs?? && detail.investorAccountVOs?size gt 0]
+	                        [#list detail.investorAccountVOs as items]
+	                        <tr class="ifa-check-hold-account">
+	                            <td class="portfolio-tdcenter account-td-distributor" data-distributor-id="${items.distributorId!}">
+	                            	<img style="width:100px" class="rebalance-distributor-img" src="${base}${items.distributorIconUrl!}">
+	                            </td>
+	                            <td class="portfolio-tdcenter">${items.accountNo!}</td>
+	                            <td class="portfolio-tdcenter">${items.subFlagDisplay!}</td>
+	                            <td class="portfolio-tdcenter">${items.currency!}</td>
+	                            <td class="portfolio-tdcenter">
+	                            [#if items.totalCash??]
+	                            <div class="please-login-data">
+                            		<span class="conversion-flag total-value">[@num_fmt s='${items.totalCash!"0.00"}'/]</span>
+                            		<span class="to-currency" style="margin-left:5px">${items.currency!}</span>
+                            	</div>
+	                            [#else]-[/#if]
+	                            </td>
+	                            <td class="portfolio-tdcenter">
+	                            [#if items.cashAvailable??]
+	                            <div class="please-login-data">
+                            		<span class="conversion-flag cash-value">[@num_fmt s='${items.cashAvailable!"0.00"}'/]</span>
+                            		<span class="to-currency" style="margin-left:5px">${items.currency!}</span>
+                            	</div>
+	                            [#else]-[/#if]
+	                            </td>
+	                            <td class="portfolio-tdcenter">
+	                            	[#if items.marketValue??]
+	                            	<span class="conversion-flag">[@num_fmt s='${items.marketValue!}'/]</span>
+                            		<span class="to-currency" style="margin-left:5px">${items.currency!}</span>
+	                           		[/#if]
+	                            </td>
+	                            <td class="portfolio-tdcenter">${items.rpqRiskLevel!'N/A'}</td>
+	                            <td class="portfolio-tdcenter" style="color:#ff6908;">
+	                            [#if items.authorized?? && items.authorized == '1']
+	                            [@lang_res k='order.plan.table.authorized.1'/]
+	                            [#else]
+	                            [@lang_res k='order.plan.table.authorized.0'/]
+	                            [/#if]
+	                            </td>
+	                        </tr>
+	                        [/#list]
+	                        [#else]
+	                        <tr class="tr-wmes-nodata-tips">
+	                        	<td colspan="7">
+	                        		<div class="wmes-nodata-tips" style="display:block">
+	             						<img class="wmes-nodata-img" style="width:73px;height:64px" src="${base}/res/images/no_data_ico.png">
+	             						<span class="wmes-nodate-word" style="color:red;font-size: 17px">[@lang_res k='order.plan.rebalance.account.nodata.tips'/]</span>
+	          						</div>
+	                        	</td>
+	                        </tr>
+	                        [/#if]
+	                    </tbody>
+	                </table>
+               </div>
+            	 <!-- Proposal 详情栏 -->
+            	 <div class="stepThree-rows" style="margin-top: 20px;">
+                 <p class="builder-title">[@lang_res k='order.plan.rebalance.portfolioDetail'/]<span id="portfolio-Detail-ico" class="proposal-more-ico"></span></p>
+                 <div class="portfolio-builder-edit-wrap" id="portfolio-Detail">
+                     <div class="portfolio-edit-rows">
+                     <form id="overview-form" method="post">
+                         <div class="portfolio-edit-rows-left">
+                             <p class="portfolio-edit-rows-title">[@lang_res k='order.plan.rebalance.portfolioName'/]</p>
+                             <input class="portfolio-edit-name" id="txtProposalName" type="text" value="${(detail.portfolioName)!}" name="portfolio.portfolioName" readonly>
+                         </div>
+                     </form>
+                     </div>
+                     <div class="portfolio-edit-rows">
+                     	<!-- Risk Level -->
+                     	<div style="float:right;margin-right: 18px;margin-top: -40px;">
+                     	 <p class="allocation-chart-level" style="float:left;color: #999999;margin-bottom: 0px;">[@lang_res k='order.plan.rebalance.riskLevel'/]</p>
+                     	 <div style="float:left	;">
+                     	 	<p><span id="risk-level-average" style="color:red;margin: 0 10px 0 25px;">N/A</span><span style="color: #999999;">( [@lang_res k='order.plan.rebalance.riskLevel.weightedAverage'/] )</span></p>
+                         	<p><span id="risk-level-max" style="color:red; margin: 0 10px 0 25px;">N/A</span><span style="color: #999999;">( [@lang_res k='order.plan.rebalance.riskLevel.max'/] )</span></p>  
+                     	 </div>
+                     	</div>
+                     	<div style="">
+                     	 	<p class="portfolio-edit-rows-title" style="width: 170px;text-align: left;margin-top: 5px;">[@lang_res k='order.plan.rebalance.cash.available'/]</p>
+                        	<input readonly="readonly" style="height: 24px;margin-left: -80px;width: 160px;" class="portfolio-edit-rows-input conversion-flag input-ctrl-border" id="txtCashAvailable" type="text" value="[@num_fmt s='${(detail.cashAvailable)!}'/]" name="cashAvailable">
+                        	<span style="margin-left: 10px;" class="to-currency"></span>
+                     	</div>
+                     	<div style="float: right;margin-top:10px">
+                     	 	<p class="portfolio-edit-rows-title">[@lang_res k='order.plan.rebalance.CUR'/]</p>
+	                        <div class="proposal_xiala" style="width: 100px;">
+	                            <input id="hidDefCurrency" value="${(detail.currencyCode)!}" type="hidden">
+	                            <input id="portfolio-currency" style="width: 60px;" class="portfolio-currency" type="text"  value="" readonly>
+	                            <span class="icon_xiala portfolio-currency"></span>
+	                            <ul id="currency-choice" style="width:99px;"></ul>
+	                        </div>
+                     	</div>
+                     </div>
+                 </div>
+                     <div class="portfolio-edit-button">
+                        <a id="btnAddFund" class="portfolio-button" href="javascript:;">[@lang_res k='order.plan.rebalance.quickAdd'/]</a>
+                        <a id="btnReset" class="portfolio-button" href="javascript:;">[@lang_res k='order.plan.rebalance.reset'/]</a>
+                     </div>
+                 </div>
+                 <div id="fundList" class="products-list-wrap">
+                  <!-- 组合的当前市值 -->
+                  <input id="hidTotalMarketValue" type="hidden" value="" name="totalMarketValue">
+                   <!-- 转换的基金跟转换的份额集合-->
+                  <input id="inFunds" type="hidden" value="" name="inFunds">
+                  <button id="btnAddConversionFund" type="button" value="" style="display:none;"></button>
+                    <table class="portfolio-table transformation-wrap">
+                    	<tbody>
+                    		<tr class="portfolio-table-th">
+                                <th class="portfolio_tables_fnames portfolio-tr-20">[@lang_res k='order.plan.rebalance.table.productName'/]</th>
+                                <th class="portfolio_tables_header portfolio-tr-10">[@lang_res k='order.plan.rebalance.table.accoutNo'/]</th>
+                                <th class="portfolio_tables_header portfolio-tr-10">[@lang_res k='order.plan.rebalance.table.lastNav'/]</th>
+                                <th class="portfolio_tables_header portfolio-tr-10">[@lang_res k='order.plan.rebalance.table.holdingUnit'/]</th>
+                                <th class="portfolio_tables_header portfolio-tr-10">[@lang_res k='order.plan.rebalance.table.availableUnit'/]</th>
+                                <th class="portfolio_tables_header portfolio-tr-20" style="width:19%">[@lang_res k='order.plan.rebalance.table.holdingAmount'/] <br>([@lang_res k='order.plan.rebalance.table.weight'/] %)</th>
+                                <th class="portfolio_tables_header portfolio-tr-5" style="width:6%">[@lang_res k='order.plan.rebalance.table.newWeight'/](%)</th>
+                                <th class="portfolio_tables_header portfolio-tr-15">[@lang_res k='order.plan.rebalance.table.actions'/]</th>
+                            </tr>
+                    	</tbody>
+                        [#if detail?? && detail.planProductVOs ?? && detail.planProductVOs?size gt 0]
+                        [#list detail.planProductVOs as items]
+                        <tbody class="">
+                            <tr id="${items.fundInfoId!}">
+                                <td class="portfolio_tables_fnames">
+                                	<a target="_self" href="${base!}/front/fund/info/fundsdetail.do?id=${(items.fundInfoId)!}" class="product-fund-name">${items.fundName!''}</a>
+                                    <div class="portfolio_tables_nameWord">
+                                        <p class="portfolio_tables_risk" style="width:30%">
+	                                        [#if items.riskLevel??]
+	                                        <span class="product-risk-level">
+	                                        ${items.riskLevel!''}
+	                                        </span> 
+	                                        [@lang_res k='order.plan.rebalance.table.risk'/]
+	                                        [/#if]
+                                        </p>
+                                        <p class="portfolio_tables_risk" style="width:70%">${items.fundType!''}</p>
+                                    </div>
+                                </td>
+                                <td data-account-Id="${items.accountId!''}" data-account-no="${items.accountNo!''}" class="portfolio-tdcenter hold-prodcut-accountNo">
+                                ${items.accountNo!''}
+                                </td>
+                                <td class="portfolio-tdcenter">
+	                                [#if items.lastNav??]
+	                                <span class="product-last-nav conversion-flag" >[@num_fmt s='${items.lastNav!"0.00"}'/]</span> 
+	                                <span class="to-currency">${items.currencyName!''}</span>
+	                                [/#if]
+                                </td>
+                                <td class="portfolio-tdcenter product-hold-unit">
+                                ${(items.holdingUnit)!'-'}
+                                </td>
+                                <td class="portfolio-tdcenter product-available-unit">
+                                ${items.availableUnit!'-'}
+                                </td>
+                                <td class="portfolio-tdcenter">
+                                	<p>
+                                		<span class="product-hold-amount conversion-flag">
+	                                	[@num_fmt s='${items.referenceCost!"0.00"}'/]</span>
+										<span class="to-currency">${items.toCurrencyName!''}</span>
+									</p>
+                                	<p>( <span class="product-old-weight">${(items.productWeight)!"0.00"}%</span> )</p>
+                                </td>
+                                <td class="portfolio-tdcenter portfolio-table-blue product-new-weight"></td>
+                                <td class="portfolio-tdcenter">
+	                                <div class="product-actions">
+	                                	<img class="product-cart-ico action-add" title="[@lang_res k='order.plan.rebalance.product.subscription.purchase'/]" src="${base}/res/images/client/product_cart_ico.png">
+	                                	<img class="product-update-ico action-conversion" title="[@lang_res k='order.plan.rebalance.switch.switch'/]" src="${base}/res/images/client/product_update_ico.png">
+	                                	<img class="product-reduce-ico action-reduction" title="[@lang_res k='order.plan.rebalance.redemption'/]" src="${base}/res/images/client/product_reduce_ico.png">
+	                               	</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        [/#list]
+                        [/#if]
+                        <!--end-->
+                        <tbody class="tbody-total">
+                            <tr class="rebalance-product-total" style="display:none">
+                                <td class="portfolio-tdcenter" colspan="3"></td>
+                                <td class="portfolio-tdcenter portfolio-bold">[@lang_res k='order.plan.rebalance.table.total'/]:</td>
+                                <td class="portfolio-tdcenter" colspan="2"></td>
+                                <td class="portfolio-tdcenter portfolio-table-blue portfolio-bold product-total-weight"></td>
+                               	<td class="portfolio-tdcenter"></td>
+                            </tr>
+                            <tr class="rebalance-product-nodata-tips" style="display:none;">
+                                <td class="portfolio-tdcenter" colspan="8">
+                                	<div class="wmes-nodata-tips" style="display:block">
+	             						<img class="wmes-nodata-img" style="width:73px;height:64px" src="${base}/res/images/no_data_ico.png">
+	             						<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+	          						</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                 </div>
+            </div>
+            </div>
+            <div class="stepThree-rows">
+            <div class="ifa-space-popup" id="order-plan-fund-switch">
+		    	<div class="ifa-space-mask"></div>
+		    		<div class="space-mask-wrap">
+		        		<div class="space-mask">
+		            		<a href="javascript:;" class="space-mask-close" id="pipeline-search-close"></a>
+				            <div class="wmes-content" style="margin-left: 0px;margin: 20px;">
+				        	<div class="fund-switch-wrap">     	
+					    		<div class="fund-switch-top">
+					    			<div class="fund-switch-left">
+					    				<p class="switch-top-title">[@lang_res k='order.plan.rebalance.switch.out'/]</p>
+					    				<p class="switch-top-select" id="outFundOption"></p>
+					    				<div class="switch-rows-written">
+					    					<div class="switch-written">
+					    						<p class="switch-written-title">[@lang_res k='order.plan.rebalance.switch.availableUnit'/]</p>
+					    						<p id="available-value" class="switch-written-word">
+					    						</p>
+					    					</div>
+					    					<div class="switch-written">
+					    						<p class="switch-written-title">[@lang_res k='order.plan.rebalance.switch.holdingUnit'/]</p>
+					    						<p id="unit-hold-value" class="switch-written-word">
+												</p>
+					    					</div>
+					    				</div>
+					    				<div class="switch-rows-written">
+				    						<p class="switch-written-title">[@lang_res k='order.plan.rebalance.switch.unitRedeem'/]</p>
+					    					<input id="txtUnitRedeem" style="height: 10px;" type="text" class="switch-written-input" required/>
+					    				</div>
+					    				<ul class="switch-written-ul">
+				    						<li value="1">[@lang_res k='order.plan.rebalance.switch.all'/]</li>
+				    						<li value="2">1/2</li>
+				    						<li value="3">1/3</li>
+				    						<li value="4">1/4</li>
+				    					</ul>
+					    			</div>
+					    			<div class="fund-switch-main">
+					    				<img class="fund-switch-img" src="${base}/res/images/fund/fund_switch_ico.png">
+					    				<a id="btnSwitch" class="fund-switch-button" href="javascript:;">[@lang_res k='order.plan.rebalance.switch.switch'/]</a>
+					    			</div>
+					    			<div class="fund-swicth-right">
+					    				<p class="switch-top-title">[@lang_res k='order.plan.rebalance.switch.in'/]</p>
+					    				<select id="fund-in-sel" class="switch-top-select">
+					    				</select>
+					    				<div class="switch-rows-written">
+					    					<div class="switch-written">
+					    						<p class="switch-written-title">[@lang_res k='order.plan.rebalance.CUR'/]</p>
+					    						<p id="txtCurrency" class="switch-written-word"></p>
+					    					</div>
+					    					<div class="switch-written">
+					    						<p class="switch-written-title">[@lang_res k='order.plan.rebalance.switch.fundType'/]</p>
+					    						<p id="txtFundType" class="switch-written-word"></p>
+					    					</div>
+					    				</div>
+					    				<div class="switch-rows-written">
+				    						<div class="switch-written">
+					    						<p class="switch-written-title">[@lang_res k='order.plan.rebalance.table.lastNav'/]</p>
+					    						<p id="txtLatestNAV" class="switch-written-word conversion-flag"></p><span style="margin-left: 3px" class="switch-written-word product-in-fund-toCurrency to-currency"></span>
+					    					</div>
+					    				</div>
+					    			</div>
+					    		</div>
+					    		<div class="fund-switch-content">
+					    			<p class="fund-switch-title">[@lang_res k='order.plan.rebalance.switch.switchResult'/]</p>
+					    			<table id="fundSwitchTable" class="funds_search_information strategies_List">
+				                        <tbody class="switch_funds_tables_tbody">
+				                            <tr class="funds_tables_th">
+				                                <th style="width:20%" class="funds_tables_header">[@lang_res k='order.plan.rebalance.switch.out'/]</th>
+				                                <th style="width:15%" class="funds_tables_header">[@lang_res k='order.plan.rebalance.table.lastNav'/]</th>
+				                                <th style="width:10%" class="funds_tables_header">[@lang_res k='order.plan.rebalance.switch.unitRedeem'/]</th>
+				                                <th style="width:15%" class="funds_tables_header">[@lang_res k='order.plan.rebalance.switch.ref.amount'/]</th>
+				                                <th style="width:20%" class="funds_tables_header">[@lang_res k='order.plan.rebalance.switch.in'/]</th>
+				                                <th style="width:10%" class="funds_tables_header">[@lang_res k='order.plan.rebalance.switch.ref.unit'/]</th>
+				                                <th style="width:10%" class="funds_tables_header">[@lang_res k='order.plan.rebalance.table.actions'/]</th>
+				                            </tr>
+				                            <tr class="funds_tables_th switch_table_tbody_tip">
+				                               <td colspan="7">
+					                               <div style="display:block" class="wmes-nodata-tips">
+							                            <img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+							                            <span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+							                       </div>
+				                               </td>
+				                            </tr>
+				                        </tbody>
+				                    </table>
+				                    <div class="switch-button-wrap">
+				                    	<a id="btnSave" style="display:none" class="switch-button-blue" href="javascritp:;">[@lang_res k='global.save'/]</a>
+				                    	<a id="btnCansel" class="switch-button-red" href="javascritp:;">[@lang_res k='global.cancel'/]</a>
+				                    </div>
+					    		</div>
+					    	</div>
+				        </div>
+			        </div>
+		        </div>
+	        </div>
+            <div id="div_setrange" class="div_setrange"></div>
+            <div class="proposal-button-wrap">
+                <div class="proposal-button-wrap-left">
+                	<!-- 当前基金id集合  -->
+               		<input type="hidden" id="ids">
+               		<!-- 刷新基金table按钮  -->
+               		<button type="button" id="popupWinReturn" style="display:none;"></button>
+                </div>
+                <div class="proposal-button-wrap-right" style="margin-bottom: 20px;">
+                	<a class="proposal-button" id="btnAnalysis" href="javascript:void(0)">[@lang_res k='order.plan.analysis'/]</a>
+                    <a id="btnNext" class="proposal-button" href="javaScript:void(0)">[@lang_res k='global.next'/]</a>
+                    <a id="btnCancel" style="margin-left: 0px;" class="rebalance-cancel-button" href="javascript:history.go(-1)">[@lang_res k='global.cancel'/]</a>
+                </div>
+            </div>
+        </div>
+    <!-- jump varify -->
+	<div class="rebalance-jump" style="display:none;position: absolute;top: 0;left: 0;width: 100%;height:100%;z-index: 100;background: rgba(0,0,0,0.6);">
+		<div class="rebalance-jump-wrap" style="position: absolute;padding: 10px 15px;min-width: 800px;width:40%;height: 250px;top: 10%;left: 15%;background: #fff;">
+		    <div style="text-align: center;margin-top: 50px;">
+			    <p style="font-size: 25px;" id="jump-content">[@lang_res k='order.plan.alert.no.hold'/]</p><br>
+			    <p style="font-size: 20px;"><span style="font-size: 18px;margin:10px">[@lang_res k='order.plan.rebalance.tips.goTo'/]</span><a id="rebalance-jump-url" style="color:#007aff;" href="${base!}/front/tradeRecord/orderPlanList.do">[@lang_res k='order.plan.rebalance.tips.newPage'/]</a></p>
+		    </div>
+		</div>
+	</div>
+	<!-- 定投 -->
+	    <div class="proposal-mask-wrap"></div>
+	    <div class="proposal-mask-contents">
+	    	<div class="proposal-mask-mainer aipdetail-wrap" id="aip-info">
+	    		<div class="wmes-close" id="proposal-mask-close"></div>
+	    		<p class="wmes-wrap-title">[@lang_res k='create.portfolio.step.three.aip.title'/]</p>
+		    	<div class="order-setting-wrapper">
+		    		<div class="order-setting-left">
+		    			<ul class="order-setting-list">
+		    				<li id="aipExecCycle" class="order-setting-rows">
+		    					<p class="order-setting-list-name"><span style="color: red;margin-right:5px">*</span>[@lang_res k='order.plan.rebalance.AIP.execCycle'/] :</p>
+		    					<p class="order-setting-cycle aip-exec-cycle [#if detail?? && detail.aipExecCycle?? && (detail.aipExecCycle == 'b'||detail.aipExecCycle == 'm')][#else]order-cycle-active[/#if]" data-day="w"><span>[@lang_res k='order.plan.rebalance.AIP.execCycle.w'/]</span></p>
+		    					<p class="order-setting-cycle aip-exec-cycle [#if detail?? && detail.aipExecCycle?? && detail.aipExecCycle == 'b']order-cycle-active[/#if]" data-day="b"><span>[@lang_res k='order.plan.rebalance.AIP.execCycle.b'/]</span></p>
+		    					<p class="order-setting-cycle aip-exec-cycle [#if detail?? && detail.aipExecCycle?? && detail.aipExecCycle == 'm']order-cycle-active[/#if]" data-day="m"><span>[@lang_res k='order.plan.rebalance.AIP.execCycle.m'/]</span></p>
+		    				</li>
+		    				<li class="order-setting-rows">
+		    					<p class="order-setting-list-name">[@lang_res k='order.plan.rebalance.AIP.timeDistance'/] :</p>
+		    					<input id="hidAipTimeDistance" class="order-money-input" value="${(detail.aipTimeDistance)!}" data-cycle="" type="hidden" name="aipTimeDistance">
+		    					<select id="selChargeDay" class="order-setting-cdate" style="width:70px;border-radius: 4px;">
+		    						[#if detail?? && detail.aipExecCycle?? && detail.aipExecCycle == 'm']
+		    							<option value="${(detail.aipTimeDistance)!}">${(detail.aipTimeDistance)!}</option>
+		    						[#else]
+		    							<option value="2" [#if detail?? && detail.aipTimeDistance?? && detail.aipTimeDistance == 2]selected="selected"[/#if]>[@lang_res k='create.portfolio.step.three.mon'/]</option>
+			    						<option value="3" [#if detail?? && detail.aipTimeDistance?? && detail.aipTimeDistance == 3]selected="selected"[/#if]>[@lang_res k='create.portfolio.step.three.tue'/]</option>
+			    						<option value="4" [#if detail?? && detail.aipTimeDistance?? && detail.aipTimeDistance == 4]selected="selected"[/#if]>[@lang_res k='create.portfolio.step.three.wed'/]</option>	
+			    						<option value="5" [#if detail?? && detail.aipTimeDistance?? && detail.aipTimeDistance == 5]selected="selected"[/#if]>[@lang_res k='create.portfolio.step.three.thu'/]</option>
+			    						<option value="6" [#if detail?? && detail.aipTimeDistance?? && detail.aipTimeDistance == 6]selected="selected"[/#if]>[@lang_res k='create.portfolio.step.three.fri'/]</option>	
+		    						[/#if]
+		    					</select>
+		    					<p class="order-setting-last-word">
+		    						<span style="color: red;margin-right:5px">*</span>
+		    						[@lang_res k='order.plan.rebalance.AIP.amount'/] :
+		    						<input id="txtAipAmount" style="line-height: normal;float:none;width:100px;border-radius: 4px;" class="order-money-input conversion-flag" value="[@num_fmt s='${(detail.aipAmount)!}'/]" type="text" name=""/>
+		    						<span class="to-currency"></span>
+		    					</p>
+		    				</li>
+		    				<li class="order-setting-rows">
+		    					<p class="order-setting-list-name aip-theNextRepaymentDate">
+		    					[@lang_res k='order.plan.rebalance.AIP.theNextRepaymentDate'/] :</p>
+		    					<span id="txtNextChargeDate">[#if detail?? && detail.aipInitTime??]${(detail.aipInitTime)?string('yyyy-MM-dd')}[/#if]</span>
+		    				</li>
+		    			</ul>
+		    		</div>
+		    		<div class="order-setting-right">
+		    			<ul class="order-setting-list">
+		    				<li class="order-setting-rows aip-end-type">
+		    					<p class="order-setting-list-name">[@lang_res k='order.plan.rebalance.AIP.expirationCondition'/] :</p>
+		    					<p data-value="1" class="order-setting-cycle order-setting-end [#if detail?? && detail.aipEndType?? && (detail.aipEndType == '2'||detail.aipEndType == '3')][#else]order-cycle-active[/#if]"><span>[@lang_res k='order.plan.rebalance.AIP.endDate'/]</span></p>
+		    					<p data-value="2" class="order-setting-cycle order-setting-end [#if detail?? && detail.aipEndType?? && detail.aipEndType == '2']order-cycle-active[/#if]"><span>[@lang_res k='order.plan.rebalance.AIP.endCount'/]</span></p>
+		    					<p data-value="3" class="order-setting-cycle order-setting-end [#if detail?? && detail.aipEndType?? && detail.aipEndType == '3']order-cycle-active[/#if]"><span>[@lang_res k='order.plan.rebalance.AIP.endTotalAmont'/]</span></p>
+		    				</li>
+		    			</ul>
+		    			<div class="order-choice-list">
+		    				<div class="order-choice-date" style="display:[#if detail?? && detail.aipEndType?? && (detail.aipEndType == '2'||detail.aipEndType == '3')]none[#else]block[/#if];">
+		        				<p class="order-choice-title">
+		        				<span style="color: red;margin-right:5px">*</span>
+		        				[@lang_res k='order.plan.rebalance.AIP.endDate.input'/]
+		        				</p>
+		        				<input id='hidAipEndDate' type="hidden" value="[#if detail?? && detail.aipEndDate??]${(detail.aipEndDate)?string('yyyy-MM-dd')}[/#if]">
+	                            <input id='txtAipEndDate' readonly="" type="text" class="laydate-icon" style="width: 180px;height: 22px;"
+	                                    name="txtAipEndDate" value="[#if detail?? && detail.aipEndDate??]${(detail.aipEndDate)?string('yyyy-MM-dd')}[/#if]">
+		        			</div>  
+		        			<div class="order-choice-date" style="display:[#if detail?? && detail.aipEndType?? && detail.aipEndType == '2']block[#else]none[/#if]">
+		        				<p class="order-choice-title">
+		        				<span style="color: red;margin-right:5px">*</span>
+		        				[@lang_res k='order.plan.rebalance.AIP.endCount.input'/]
+		        				</p>
+		        				<input id="order-number-choice" type="" value="${(detail.aipEndCount)!}" name="" onKeyUp="this.value=this.value.replace(/[^\.\d]/g,'');this.value=this.value.replace('.','');">
+		        				<div class="order-number-sroll">
+		        					<a class="order-number-top" href="javascript:;"></a>
+		        					<a class="order-number-bottom" href="javascript:;"></a>
+		        				</div>
+		        			</div>
+		        			<div class="order-choice-date" style="display:[#if detail?? && detail.aipEndType?? && detail.aipEndType == '3']block[#else]none[/#if]">
+		        				<p class="order-choice-title">
+		        				<span style="color: red;margin-right:5px">*</span>
+		        				[@lang_res k='order.plan.rebalance.AIP.endTotalAmont.input'/]
+		        				</p>
+		        				<input id="order-money-choice" class="conversion-flag" value="[@num_fmt s='${(detail.aipEndTotalAmount)!}'/]">
+		        				<p class="order-choice-title to-currency" style="color:#000;margin-left:10px;float:right"></p>
+		        			</div>
+		    			</div>
+		    		</div>
+		    	</div>		
+	    		<div class="proposal-mask-button-wrap">
+	    			<a id="btnSaveAip" class="proposal-mask-button-save" href="javascript:;">[@lang_res k='global.save'/]</a>
+	    			<a class="proposal-mask-button-cancel" href="javascript:;">[@lang_res k='global.cancel'/]</a>	
+	    		</div>
+			</div>
+	    </div>
+<div class="client-portfolio-new-mask">
+	<div class="analysis-chart-content" style="width:90%;height:800px;background:#fff;left:7%;position:absolute;border-radius: 10px;">
+		<div class="order-plan-rows">
+           <div class="wmes-close"></div>
+		   <div class="wmes-wrap-title" style="margin: 15px;">[@lang_res k='order.plan.rebalance.analysisChart'/]</div>
+           <div id="analysis-chart">
+                <ul class="builder-tab" style="margin-bottom: 10px">
+                    <li class="tab-active">[@lang_res k='order.plan.rebalance.performanceChart'/]<span></span></li>
+                    <li>[@lang_res k='order.plan.rebalance.allocationMap'/]</li>
+                   </ul>
+                <div class="builder-main-contents">
+                    <div class="builder-chart" style="display:block">
+                        <ul class="builder-chart-tab" style="margin-bottom: 40px">
+                            <li class="tab-active chart-tab" id="builder-chart-aggregate">[@lang_res k='order.plan.rebalance.aggregate'/]</li>
+                            <li class="chart-tab" id="builder-chart-separateness">[@lang_res k='order.plan.rebalance.individual'/]</li>
+                        </ul>
+                        <div class="builder-chart-wrap">
+                            <ul class="builder-chart-date">
+                                <li data-month="1M">[@lang_res k='order.plan.rebalance.1M'/]</li>
+                                <li data-month="3M">[@lang_res k='order.plan.rebalance.3M'/]</li>
+                                <li data-month="6M">[@lang_res k='order.plan.rebalance.6M'/]</li>
+                                <li class="now" data-month="1Y">[@lang_res k='order.plan.rebalance.1Y'/]</li>
+                                <li data-month="3Y">[@lang_res k='order.plan.rebalance.3Y'/]</li>
+                                <li data-month="5Y">[@lang_res k='order.plan.rebalance.5Y'/]</li>
+                                <li data-month="YTD">[@lang_res k='order.plan.rebalance.YTD'/]</li>
+                            </ul>
+                            <div class="builder-chart-one" id="builder-chart-one"></div>
+                        </div> 
+                        <div class="allocation-chart-title-0-emtpy" style="display:none;margin-top: -350px;margin-left: -90px">
+                         	<div class="wmes-nodata-tips" style="display:block">
+         						<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+         						<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+      						</div>
+                        </div>
+                    </div>
+                    <div class="allocation-map">
+                        <div class="allocation-chart">
+                            <div class="allocation-left-chart">
+                                <p class="allocation-chart-title allocation-chart-title-1" style="display:none;margin-top: 50px;margin-left: -100px;">[@lang_res k='order.plan.rebalance.geoAllocation'/]</p>
+                                <div id="allocation-chart-propose" style="margin:0 auto;margin-bottom: 50px;"></div>
+                            </div>
+                            <div class="allocation-right-chart">
+                                <p class="allocation-chart-title allocation-chart-title-2" style="display:none;margin-top: 50px;margin-left: -150px;">[@lang_res k='order.plan.rebalance.sectorType'/]</p>
+                               	<div id="allocation-chart-change"></div>
+                            </div>
+                        </div>
+                        <div class="allocation-chart-title-1-emtpy" style="display:none;margin-top: -350px;margin-left: -90px">
+                          	<div class="wmes-nodata-tips" style="display:block">
+          						<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+          						<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+       						</div>
+                         </div>
+                    </div>
+                </div>
+             </div>
+          </div>
+	</div>
+</div>	    
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var props = [@load_prop k=''/];
+	 var prop = [@load_prop k='order.plan'/];
+	 var prop1 = [@load_prop k='create'/];
+	 var globalProp = [@load_prop k='global'/];
+	 var planId = '${planId!}';
+     seajs.use('${base}/res/web/trade/rebalance/transaction.js');
+</script>

@@ -1,0 +1,73 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<div class="wmes-content">
+    <div class="kaihu_div white_background">
+    <p class="wmes-wrap-title">My application for opening account</p>
+            <!-- <div class="white_background" >   
+                <div class="OpenAccount_big_title">
+                  <h2>My application for opening account</h2>
+                </div> -->
+                
+                <div class="OpenAccount_liucheng_content">
+              		 <div class="list_keyserach">
+   						<input type="text">
+   						<span class="icon_search"></span>
+   					</div>
+                  <p class="account_list_xiala_text">Search:</p>
+
+                   <table  class="account_list_table">
+                   		<tbody>
+                   			<tr class="account_list_th">
+                   				<th width="10%">Customer Name</th>
+                   				<th width="15%">Account type</th>
+                   				<th width="15%">Distributor</th>
+                   				<th width="15%">Mobile</th>
+                   				<th width="15%">IFA</th>
+                   				<th width="15%">Submit Time</th>
+                   				<th width="15%">Actions</th>
+                   			</tr>
+                   			[#if approvalList??]
+                   			[#list approvalList as rec]
+                   			<tr>
+                                <td>[#if rec.member??]${rec.member.nickName!""}[/#if]</td>
+                                <td>[#if rec.member??]
+                                    [#switch rec.member.memberType]
+                                    [#case 0] [@lang_res k='member.memberType.0'/] [#break]
+                                    [#case 1]
+                                        [@lang_res k='member.memberType.1'/]
+                                        [#if rec.member.subMemberType??]-
+                                             [#switch rec.member.subMemberType]
+                                             [#case 11][@lang_res k='member.memberType.11'/][#break]
+                                             [#case 12][@lang_res k='member.memberType.12'/][#break]
+                                             [#case 13][@lang_res k='member.memberType.13'/][#break]
+                                             [/#switch]
+                                        [/#if]
+                                    [#break]
+                                    [#case 2]
+                                        [@lang_res k='member.memberType.2'/]
+                                        [#if rec.member.subMemberType??]-
+                                             [#switch rec.member.subMemberType]
+                                             [#case 21][@lang_res k='member.memberType.21'/][#break]
+                                             [#case 22][@lang_res k='member.memberType.22'/][#break]
+                                             [/#switch]
+                                        [/#if]
+                                    [#break]
+                                    [#case 3] [@lang_res k='member.memberType.3'/]  [#break]
+                                    [/#switch]
+                                [/#if]</td>
+                                <td>[#if rec.distributor??]${rec.distributor.companyName!""}[/#if]</td>
+                                <td>[#if rec.member??]+${rec.member.mobileCode!""}-${rec.member.mobileNumber!""}[/#if]</td>
+                                <td>[#if rec.ifa??]${rec.ifa.nickName!""}[/#if]</td>
+                                <td>[#if rec.lastUpdate??]${rec.lastUpdate?string("yyyy-MM-dd HH:mm:ss")}[/#if]</td>
+                                <td><a href="${base}/front/investor/accountStart.do?accountId=${rec.id!''}">进入编辑【${rec.curStep!""}】</a></td>
+                            </tr>
+                   			[/#list]
+                   			[/#if]
+                   		</tbody>
+                   </table>
+                </div>
+  
+        <!--     </div> -->
+    </div>
+</div>
+[#include "../../inc/foot_v2.html"/]

@@ -1,0 +1,314 @@
+[#include "../../inc/head_v2.html"/]
+	<link rel="stylesheet" href="${base}/res/third/bootstrap/css/bootstrap.css"> 
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+<style>
+	.strategies_list_ifaname{max-width:none !important;}
+</style>
+<div class="wmes-content">
+	<div class="strategies_list_wrap">
+		<div class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='portfolio.detail.title'/]</div>
+		<div class="wmes-detail-title">${(portfolioVO.portfolioName)!}
+			<div class="collectcon">
+				[#if allowFav?? && allowFav]
+				[#if myself?? && myself=='1']
+			<div class="amend-type"></div>
+			[#else]
+				<div isFollow="${isFollow!}" class="portfolio_fav_img_amend1 [#if isFollow?? && isFollow=='1']portfolio_fav_img_amend1active[/#if]"></div>
+				[/#if]
+				[/#if]
+			</div>
+			<span class="lump-equity-grade funds_leveal_${portfolioVO.riskLevel!}" title="Risk Level ${portfolioVO.riskLevel!}" style="float:right;margin:0 15px 0 0;">${portfolioVO.riskLevel!}</span>
+		</div>
+		<i class="strategies_list_goal strategiesdetail_list_goal">${portfolioVO.sector} [#if portfolioVO.sector?? && portfolioVO.sector!='' && portfolioVO.geoAllocation?? && portfolioVO.geoAllocation!='']丨 [/#if] ${portfolioVO.geoAllocation}</i>
+			<!--<i class="strategies_list_fund strategiesdetail_list_fund">[@lang_res k='account.list.risk'/] ${(portfolioVO.riskLevel)!} </i>
+		-->
+		<div class="strategies_detail_fav"></div>
+		<div class="strategies_detail_inf strategiesdetail_detail_inf">
+			<div class="strategies_inf_left">
+				<a href="${base}/front/community/space/ifaSpace.do?id=${portfolioVO.creator.id!}">
+				    [#if portfolioVO.ifa?? && portfolioVO.ifa.member??]
+					<img class="strategies_inf_img" src="${base}[@user_head u=portfolioVO.ifa.member.iconUrl t='u' g=portfolioVO.ifa.gender/]">
+					[#else]
+					<img class="strategies_inf_img" src="${base}[@user_head u='' t='f' /]">
+					[/#if]
+					<p class="strategies_list_ifaname strategiesdetail_list_ifaname">
+					${portfolioVO.creatorName!}
+					</p>
+				</a>
+				<p class="strategies_time_word strategiesdetail_time_word">${portfolioVO.createTime!}</p>
+			</div>
+			<div class="strategies_inf_right">
+				<img class="strategies_eve_img" src="${base}/res/images/fund/strategies_eve.png">
+				<p class="strategies_eve_num">[#if portfolioVO.click??]${portfolioVO.click!}[#else]0[/#if]</p>
+			</div>
+		</div>
+		<div class="strategiesdetail_inf_Abstractcon">
+			<div class="strategiesdetail_inf_Abstract" style="background:url(${base}/res/images/fund/Abstract.png)">[@lang_res k='strategy.abstract'/]</div>
+			<div data-ellipsis="true" data-ellipsis-max-line="3" title="${portfolioVO.reason!}">${portfolioVO.reason!}</div>
+
+		</div>
+	<div class="strategies_inf_word strategiesdetail_inf_word">
+	        <div class="strategies_detail_list">
+				<p class="strategies_detail_product strategies_detail_product_amend">[@lang_res k='portfolio.detail.description'/]</p>
+				<span class="ifa-more-ico"></span>
+			</div>
+			
+			<div class="strategies_inf_goal strategiesdetail_inf_goal">
+				<p class="strategies_inf_title">[@lang_res k='portfolio.detail.investmentGoal'/]</p>
+				<p class="strategies_top_word">${(portfolioVO.investmentGoal)!}
+				</p>
+			</div>
+			<div class="strategies_inf_goal strategiesdetail_inf_goal" style="border:none;">
+				<p class="strategies_inf_title">[@lang_res k='portfolio.detail.reason'/]</p>
+				<p class="strategies_top_word">${(portfolioVO.reason)!}
+				</p>
+			</div>
+			<div class="strategies_inf_goal strategiesdetail_inf_goal" style="border:none;">
+				<p class="strategies_inf_title">[@lang_res k='portfolio.info.list.investor'/]</p>
+				<p class="strategies_top_word">${(portfolioVO.suitability)!}
+				</p>
+			</div>
+		</div>
+	    <div class="strategies_inf_word strategiesdetail_inf_word">
+			<div class="strategies_detail_list">
+				<p class="strategies_detail_product strategies_detail_product_amend">[@lang_res k='portfolio.detail.performance'/]</p>
+				<span class="ifa-more-ico"></span>
+			</div>
+			
+			<div class="conservative-time-choose conservative-time-choose_amend">
+                    <div class="funds-time-wrap">
+                        <p class="conservative-time-title conservative-time-title_amend">[@lang_res k='fund.info.detail.Period'/]</p>
+                        <ul class="conservative-time-list">
+                            <li period="1W">[@lang_res k='search.period.1w'/]</li>
+                            <li period="1M">[@lang_res k='search.period.1m'/]</li>
+                            <li period="3M" class="list-active">[@lang_res k='search.period.3m'/]</li>
+                            <li period="6M" >[@lang_res k='search.period.6m'/]</li>
+                            <li period="YTD">[@lang_res k='search.period.ytd'/]</li>
+                            <li period="1Y">[@lang_res k='search.period.1y'/]</li>
+                            <li period="3Y">[@lang_res k='search.period.3y'/]</li>
+                            <li period="5Y">[@lang_res k='search.period.5y'/]</li>
+                            
+                            <!--
+                            <li period="">[@lang_res k='global.all'/]</li>
+                            <li data-type="Other">[@lang_res k='search.period.other'/]</li>
+                        --></ul>
+                        <!--<div class="conservative-date-wrap">
+                            <div class="account-choose-input-wrap">
+                                <input id="account-date-to" readonly="" class="account-choose-date" type="" name="">
+                                <input id='account-date-to' type="text" class="laydate-icon " style="height: 22px;" name="txtAipEndDate" value="">
+                            </div>
+                            <p class="account-choose-name">to</p>
+                            <div class="account-choose-input-wrap">
+                                <input id="account-date-from" readonly="" class="account-choose-date" type="" name="">
+                                <input id='account-date-from' type="text" class="laydate-icon" style="height: 22px;" name="txtAipEndDate" value="">
+                            </div>
+                            <span class="recommend-date-ok">OK</span>
+                        </div>
+                    --></div>
+                    
+                </div>
+                <div class="my-period-chart">
+					<div class="asset-cart" id="asset-cart"></div>
+				</div>
+			    <div id="porfolios-chart"></div>
+			    <div class="wmes-nodata-tips chart_noTips " >
+                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+             </div>
+			    <!--<div style="text-align:center;margin-top:30px;display:none;height:200px;line-height:200px;" class="chart_noTips"><p>暂没有数据！</p></div>
+				--></div>
+			<div class="strategies_inf_word strategiesdetail_inf_word">
+		<div class="strategies_detail_list">
+				<p class="strategies_detail_product strategies_detail_product_amend">[@lang_res k='portfolio.detail.allocationOverview'/]</p>
+				<span class="ifa-more-ico"></span>
+				
+		</div>
+		
+		<div class="Allocation_Overview_con">
+			<div id="Allocation_Overview_left" data-value='{"name": ["Healthcare 25%","Consumer 15%","Basic Materials 15%","Energy 10%","Technology 35%"],"value": [250,150,150,100,350]}'></div>
+			<div id="Allocation_Overview_center" data-value='{"name": ["Great China15%","Janpan 35%","Europe 20%","US 20%","Russia 10%"],"value": [150,350,200,200,100]}'></div>
+			<div id="Allocation_Overview_right" data-value='{"name": ["Balanced Funds 40%","Commodity Funds 15%","Equity Funds 25%","Fixed income Funds 20%"],"value": [400,150,250,200]}'></div>
+		</div>
+		</div>
+		</div>
+        <div id="strategies_list" ng-controller="Strategies" ng-app="myStrategies">
+		<div class="strategies_detail_list">
+			<p class="strategies_detail_product">
+				[@lang_res k='portfolio.detailproductList'/]
+				[#if fundList?? && fundList?size gt 0]<span class="strategies_detail_sum">${fundList?size}</span>[/#if]
+			</p>
+			<span class="ifa-more-ico"></span>
+		</div>
+		<div>
+			<table class="funds_search_information strategies_List"  id="tableList">
+			</table>
+			[#if fundList?exists && fundList?size == 0]
+			<div style="text-align:center;margin-top:30px;"><p>[@lang_res k='strategy.info.form.norecommendtips'/]</p></div>
+			[/#if]
+		</div>
+	</div>
+</div>
+[#if webView??]
+<div class="view_permissions_settingcon">
+	<div class="view_permissions_settingbox" style="width:74%">
+		<p class="wmes-wrap-title">[@lang_res k='global.setting'/]</p>
+		<div class="wmes-close setting-close"></div>
+		<div class="ifa_keyserach_wrap">
+			<div class="stepOne-rows">
+            	<ul class="view_permissions_setting" style="width: 650px;">
+					<li>[@lang_res k='strategy.info.release.permission.view'/]:</li>
+					<li>
+						<input [#if webView?? && webView.scopeFlag == '1']checked="checked"[/#if] type="radio"  name="permit" id="permit0" value="1">[@lang_res k='strategy.info.release.permission.onlyme'/]
+					</li>
+					<li>
+						<input [#if webView?? && webView.scopeFlag == '2']checked="checked"[/#if] type="radio" name="permit" id="permit1" value="2">[@lang_res k='strategy.info.release.permission.public'/]
+					</li>
+					<li>
+						<input [#if webView?? && webView.scopeFlag == '3']checked="checked"[/#if] type="radio" name="permit" id="permit2" value="3">[@lang_res k='strategy.info.release.permission.specify'/]
+					</li>
+				</ul>
+				<div id="permit_ext" class="pushToSettingmenu pushToSettingmenu1" style="[#if webView?? && webView.scopeFlag == '3']display:block;[/#if]">
+					<ul>
+						<li data-id="permit_clients" class="[#if webView?? && (webView.clientFlag == '1' || webView.clientFlag == '-1')]setting_active[/#if]">
+							<div class="pushToSettingCheckbox">
+								<input type="checkbox" [#if webView?? && (webView.clientFlag == '1' || webView.clientFlag == '-1')]checked="checked"[/#if] class="setting" id="permit_client" name="permit_client" value="">[@lang_res k='strategy.info.release.specify.myClient'/]
+							</div>
+							[#if existings?? && existings?size gt 0]
+								[#list existings as item]
+								    [#if item.fullName?length gt 9]
+								    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+								    [#else]
+								    	[#assign fullName=item.fullName/]
+								    [/#if]
+									[#if item_index gt 2]
+										<p class="pushToSettingName" style="margin-right:30px">...</p>
+										[#break]
+									[/#if]
+									[#if item_index == 2]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+									[#else]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if existings?size == 1][#else]<span> ,</span>[/#if]</p>
+									[/#if]
+								[/#list]
+							[#else]
+									<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+							[/#if]
+							<a data-user-type="existing" class="j-permitASetting a-permit-clients" href="javascript:;"></a>
+						</li>
+						<li data-id="permit_prospects" class="[#if webView?? && (webView.prospectFlag == '1' || webView.prospectFlag == '-1')]setting_active[/#if]">
+							<div class="pushToSettingCheckbox">
+								<input type="checkbox" [#if webView?? && (webView.prospectFlag == '1' || webView.prospectFlag == '-1')]checked="checked"[/#if] class="setting" id="permit_prospect" name="permit_prospect" value=""/>[@lang_res k='strategy.info.release.specify.myProspect'/]
+							</div>
+							[#if prospects?? && prospects?size gt 0]
+								[#list prospects as item]
+								    [#if item.fullName?length gt 9]
+								    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+								    [#else]
+								    	[#assign fullName=item.fullName/]
+								    [/#if]
+									[#if item_index gt 2]
+										<p class="pushToSettingName" style="margin-right:30px">...</p>
+										[#break]
+									[/#if]
+									[#if item_index == 2]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+									[#else]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if prospects?size == 1][#else]<span> ,</span>[/#if]</p>
+									[/#if]
+								[/#list]
+							[#else]
+									<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+							[/#if]
+							<a data-user-type="prospect" class="j-permitASetting a-permit-prospects" href="javascript:;"></a>
+						</li>
+						<li data-id="permit_buddies" class="[#if webView?? && (webView.buddyFlag == '1' || webView.buddyFlag == '-1')]setting_active[/#if]">
+							<div class="pushToSettingCheckbox">	
+								<input type="checkbox" [#if webView?? && (webView.buddyFlag == '1' || webView.buddyFlag == '-1')]checked="checked"[/#if] class="setting" id="permit_buddy" name="permit_buddy" value=""/>[@lang_res k='strategy.info.release.specify.myBuddy'/]
+							</div>
+							[#if buddies?? && buddies?size gt 0]
+								[#list buddies as item]
+								    [#if item.fullName?length gt 9]
+								    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+								    [#else]
+								    	[#assign fullName=item.fullName/]
+								    [/#if]
+									[#if item_index gt 2]
+										<p class="pushToSettingName" style="margin-right:30px">...</p>
+										[#break]
+									[/#if]
+									[#if item_index == 2]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+									[#else]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if buddies?size == 1][#else]<span> ,</span>[/#if]</p>
+									[/#if]
+								[/#list]
+							[#else]
+									<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+							[/#if]
+							<a data-user-type="buddy" class="j-permitASetting a-permit-buddies" href="javascript:;"></a>
+						</li>
+						<li data-id="permit_colleagues" class="[#if webView?? && (webView.colleagueFlag == '1' || webView.colleagueFlag == '-1')]setting_active[/#if]">
+							<div class="pushToSettingCheckbox">
+								<input type="checkbox" [#if webView?? && (webView.colleagueFlag == '1' || webView.colleagueFlag == '-1')]checked="checked"[/#if] class="setting" id="permit_colleague" name="permit_colleague" value=""/>[@lang_res k='strategy.info.release.specify.myTeamMember'/]
+							</div>
+							[#if colleagues?? && colleagues?size gt 0]
+								[#list colleagues as item]
+								    [#if item.fullName?length gt 9]
+								    	[#assign fullName=item.fullName?substring(0,9)+'...'/]
+								    [#else]
+								    	[#assign fullName=item.fullName/]
+								    [/#if]
+									[#if item_index gt 2]
+										<p class="pushToSettingName" style="margin-right:30px">...</p>
+										[#break]
+									[/#if]
+									[#if item_index == 2]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}</p>
+									[#else]
+										<p class="pushToSettingName" title="${item.fullName}" style="margin-right:30px">${fullName}[#if colleagues?size == 1][#else]<span> ,</span>[/#if]</p>
+									[/#if]
+								[/#list]
+							[#else]
+									<p class="pushToSettingName select-all" style="margin-right:30px">[@lang_res k='global.all'/]</p>
+							[/#if]
+							<a data-user-type="colleague" class="j-permitASetting a-permit-colleagues" href="javascript:;"></a>
+						</li>
+					</ul>
+					<input type="hidden" id="permitSetting" name="permitSetting" value="">
+				</div>
+            </div>
+    		<div class="proposal-button-wrap" style="margin-bottom: 50px;">
+    			<a id="btnSave" class="proposal-button" href="javascript:void(0)">[@lang_res k='global.publish'/]</a>
+    		</div>
+		</div>
+	</div>
+	<form id="addForm">
+      <input type="hidden" name="permit" id="permit" value="${webView.scopeFlag!}">
+      <input id="permit_clients" type="hidden" value="${existingIds!}">
+	  <input id="permit_prospects" type="hidden" value="${prospectIds!}">
+	  <input id="permit_buddies" type="hidden" value="${buddyIds!}">
+	  <input id="permit_colleagues" type="hidden" value="${colleagueIds!}">
+	  
+      <input id="clients_names" type="hidden" value="">
+	  <input id="prospect_names" type="hidden" value="">
+	  <input id="buddy_names" type="hidden" value="">
+	  <input id="colleague_names" type="hidden" value="">
+	</form>
+	<div class="selectnamelistbox" style="display:none;position: absolute;top:0;left:0;background:rgba(0,0,0,0.3)">
+		<!-- 选择用户控件 -->
+	</div>
+</div>
+[/#if]
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	var sectorList = ${sectorList};
+	var geoList = ${geoList};
+	var typeList = ${typeList};
+	var cumperfList=${cumperfList};
+	var fundList=${fundListJson};
+	var _fundIds='${(fundIds)!}';
+	var _id_='${portfolioVO.id!}'
+	var props = [@load_prop k=''/];
+	seajs.use('${base}/res/web/ifa/porfoliosdetail.js');	
+</script>

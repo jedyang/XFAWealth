@@ -1,0 +1,551 @@
+[#include "../../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/swiper.css">
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/strategy.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+
+<style type="text/css">
+	.swiper-button-next {
+		top: 80px;
+		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23bbbbbb'%2F%3E%3C%2Fsvg%3E")
+	}
+	
+	.swiper-button-prev {
+		top: 80px;
+		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23bbbbbb'%2F%3E%3C%2Fsvg%3E");
+	}
+	
+	.tips-div {
+		text-align: center;
+		background: white;
+		padding-top: 20px;
+	}
+	
+	.buddy-btn {
+		margin: 15px 35px;
+		height: 37px;
+		color: #fff;
+		background: #1c9ddc;
+		text-align: center;
+		line-height: 37px;
+		border-radius: 3px;
+		font-size: 14px;
+		cursor: pointer;
+		font-weight: 700;
+	}
+	
+	.buddy-btn:hover {
+		background: #0976dc;
+	}
+	
+	.PortfoliosTips {
+		color: #999;
+	}
+	
+	.ifa-zone-taccount .tips-div {
+		background: none;
+		color: #fff;
+	}
+	
+	.ifa-zone-row-hide {
+		height: 30px
+	}
+	
+	.search-button {
+		background: #2d80ce;
+		color: white;
+		padding: 0px 30px;
+		margin-right: 15px;
+		border-radius: 4px;
+		float: right;
+		font-size: 14px;
+	}
+	
+	.my-assets-rows:nth-child(1) {
+		width: 28%;
+	}
+	
+	.my-assets-rows:nth-child(2) {
+		width: 28%;
+	}
+	
+	.my-assets-rows:nth-child(3) {
+		width: 37%;
+	}
+	
+	.portfolios_list .portfolios_list_blue {
+		border: 1px solid #e0e0e0;
+	}
+	
+	.portfolios_list_content li {
+		margin-top: 26px;
+		width: 22%;
+		text-align: center;
+	}
+	
+	.portfolios_list_content li:nth-child(1) {
+		margin-top: 16px;
+		width: 66px;
+		margin-right: 15px;
+	}
+	
+	.portfolios_list_content li:nth-child(2) {
+		width: 23%;
+		text-align: left;
+		margin-top:13px;
+	}
+	
+	.portfolios_list_content li:nth-child(2) .my-assets-word{
+		height:auto;
+	}
+	
+	.my-assets-word> span {
+		display: inline-block;
+		float: none;
+		vertical-align:middle;
+	}
+	
+	.my-assets-word .eve_ico {
+		display: inline-block;
+		float: none;
+		margin-top: 2px;
+	}
+	
+	.my-main-assets {
+		padding-bottom: 0;
+		border: 0;
+	}
+	.portfolios_list_content li:nth-child(2) .my-assets-word span{
+		width: 46px;
+    height: 22px;
+	}
+	.ifa-zone-row .my-assets-title{color:#000;font-size:18px;margin-bottom:15px;}
+	.wmes-wrap-title{overflow:visible;}
+	.c100:after{background:#fff;}
+</style>
+<!--<div class="wmes-top">
+	<a href="javascript:;" class="header-over">My Zone</a>
+</div>
+--><div class="wmes-content">
+	<div class="ifa-zone-row">
+		<div class="wmes-wrap-title">[@lang_res k='assets.myAssets'/]
+			<div class="investor-choose-left">
+				<p class="investor-xiala-title">[@lang_res k='account.list.cur'/]: </p>
+				<div class="investor-xiala">
+					<input type="text" id="txtCurrency" itemCode="${currencyCode!}" value="${currency!}"  readonly="">
+					<span class="icon_xiala"></span>
+					<ul class="xiala-list">
+					[#if currencyType?exists && currencyType?size gt 0]
+					[#list currencyType as list]
+						<li data-name="defCurrency" data-key="${list.itemCode!}" data-value="${list.itemCode!}">${list.name!}</li>
+						[/#list]
+						[/#if]
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="my-assets-wrap">
+			<div class="my-assets-rows">
+
+				<p class="my-assets-title">[@lang_res k='assets.totalAsset'/] (${currency!})</p>
+				<p class="my-assets-word"><span class="eve-hide"><font>[@num_fmt s='${assetsVO.totalAssets!}' f='${numFormat}'/]</font></span><img class="eve_ico" src="${base}/res/images/application/eye_show.png"></p>
+
+				<div class="myassets-num-leftcon">
+					<p>[@lang_res k='assets.totalReturn'/] (${currency!})</p>
+					<p class="price_positive eve-hide"><font>[@num_color  s='${assetsVO.totalReturnValue!}' f='${numFormat}' c='${displayColor!}'/]</font></p>
+				</div>
+				<div class="myassets-num-leftcon">
+					<p>[@lang_res k='assets.totalReturn.rate'/]</p>
+					<p class="price_positive eve-hide"><font>[@num_color  s='${assetsVO.totalReturnRate!}' f='#,##0.00%' c='${displayColor!}'/]</font></p>
+				</div>
+			</div>
+			<div class="my-assets-rows">
+				<p class="my-assets-title">[@lang_res k='assets.marketValue'/](${currency!})</p>
+
+				<p class="my-assets-word">
+					<span class="eve-hide"><font>[@num_fmt  s='${assetsVO.totalMarketValue!}' f='${numFormat}'/]</font></span>
+				</p>
+				<div class="myassets-num-middlecon" style="display:none">
+					<p>[@lang_res k='assets.yesterdayReturn'/] (${currency!})</p>
+					<p class="eve-hide"><font>[@num_color  s='${assetsVO.yesterdayReturnValue!}' f='${numFormat}' c='${displayColor!}'/]</font></p>
+				</div>
+				<div class="myassets-num-middlecon"  style="display:none">
+					<p>[@lang_res k='assets.yesterdayReturnRate'/]</p>
+					<p class="eve-hide"><font>[@num_color  s='${assetsVO.yesterdayReturnRate!}' f='#,##0.00%' c='${displayColor!}'/]</font></p>
+				</div>
+			</div>
+			<div class="my-assets-rows">
+				<p class="my-assets-title">[@lang_res k='assets.cash'/] (${currency!})</p>
+
+				<p class="my-assets-word">
+					<span class="eve-hide"><font>[@num_fmt  s='${assetsVO.totalCashValue!}' f='${numFormat}'/]</font></span>
+				</p>
+				<div class="myassets-num-rightcon">
+					<p><font>[@lang_res k='account.detail.cashAvailable'/](${currency!})</font></p>
+					<p class="eve-hide"><font>[@num_fmt s='${assetsVO.cashAvailable!}' f='${numFormat}'/]</font></p>
+				</div>
+				<div class="myassets-num-rightcon">
+					<p><font>[@lang_res k='account.detail.cashAvailableWithdrawal'/](${currency!})</font></p>
+					<p class="eve-hide"><font>[@num_fmt s='${assetsVO.cashWithdrawal!}' f='${numFormat}'/]</font></p>
+				</div>
+				<div class="myassets-num-rightcon">
+					<p><font>[@lang_res k='account.detail.cashHeldForPendingTran'/](${currency!})</font></p>
+					<p class="eve-hide"><font>[@num_fmt s='${assetsVO.cashHold!}' f='${numFormat}'/]</font></p>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="myassets-myporfoliocon">
+		<div class="myassets-tittle">[@lang_res k='assets.myPortfolios'/]</div>
+		<div class="my-assets-wrap">
+		[#if portfolioList?exists && portfolioList?size gt 0]
+			<ul class="portfolios_list">
+			
+					[#list portfolioList as list]
+				<li class="portfolios_list_blue" portfolioId="${list.portfolioId!}">
+					<ul class="portfolios_list_content">
+					
+						<li>
+							<div id="bluecircle" class="c100 p${list.assetRate?ceiling}">
+								<span  style="color:#00a1e9">[@num_fmt s='${list.assetRate!}' f='#,##0.00'/]%</span>
+								<div class="slice">
+									<div class="bar"></div>
+									<div class="fill"></div>
+								</div>
+							</div>
+						</li>
+						
+						<li>
+							<a href="javascript:void(0);"><p class="my-assets-littletitle" id='${list.portfolioId!}'>${list.portfolioName!}</p></a>
+							<p class="my-assets-word">
+								<span class="funds_leveal_5"></span>
+							</p>
+						</li>
+						<li>
+							<p class="my-assets-title">[@lang_res k='assets.totalAsset'/] (${currency!})</p>
+							<p class="my-assets-word"><span class="eve-hide"><font class="price_zero" style="color:#000">[@num_fmt s='${list.totalAssets!}' f='${numFormat}'/]</font></span></p>
+						</li>
+						<li>
+							<p class="my-assets-title">[@lang_res k='assets.portfolio.1mReturn'/] (${currency!})</p>
+							<p class="my-assets-word">
+								<span class="eve-hide"><font>[@num_color  s='${list.totalReturnValue!}' f='${numFormat}' c='${displayColor!}'/]</font></span>
+							</p>
+						</li>
+						<li>
+							<p class="my-assets-title">[@lang_res k='assets.portfolio.1mReturnRate'/]</p>
+							<p class="my-assets-word">
+							
+								<span class="eve-hide"><font>[#if list.totalReturnRate??][@num_color  s='${list.totalReturnRate!}' f='#,##0.00%' c='${displayColor!}'/][#else]-[/#if]</font></span>
+								<!--<span class="eve-hide">[@num_fmt  s='${list.totalReturnRate!}' f='#,##0.00%' c='${displayColor!}'/]</span>
+								
+							--></p>
+						</li>
+					</ul>
+				</li>
+				[/#list]
+				</ul>
+				[#else]
+				 <div  style="dispaly:block;    text-align: center;">
+                     <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                     <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+				  </div>
+				[/#if]
+		</div>
+	</div>
+	<div class="myassets-profitcon">
+		<div class="myassets-tittle">[@lang_res k='portfolio.hold.detail.plStatistics'/]</div>
+		<div class="my-main-assets">
+			<div class="my-cassets-tab">
+				<p class="period-time">[@lang_res k='portfolio.hold.detail.timeperiod'/]</p>
+				<ul class="my-period-list">
+					<li period="1W">[@lang_res k='search.period.1w'/]</li>
+					<li period="2W">[@lang_res k='search.period.2w'/]</li>
+					<li period="1M">[@lang_res k='search.period.1m'/]</li>
+					<li period="3M">[@lang_res k='search.period.3m'/]</li>
+					<li period="6M" class="period-active">[@lang_res k='search.period.6m'/]</li>
+					<li period="1Y">[@lang_res k='search.period.1y'/]</li>
+					<li period="3Y">[@lang_res k='search.period.3y'/]</li>
+					<li period="5Y">[@lang_res k='search.period.5y'/]</li>
+					<li period="YTD">[@lang_res k='search.period.ytd'/]</li>
+				</ul>
+			</div>
+			<div class="my-period-choose">
+				<p class="my-period-active">[@lang_res k='assets.cumulativProfitAndLoss'/]</p>
+				<p>[@lang_res k='assets.dailyProfitAndLoss'/]</p>
+			</div>
+			<div class="my-period-chart">
+				<div class="asset-cart" id="asset-cart"></div>
+				<div class="wmes-nodata-tips assetsTips">
+					<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+					<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="myassets-positionInformationcon">
+		<div class="myassets-tittle">[@lang_res k='portfolio.hold.detail.productList'/]</div>
+		<div class="myassets-positionInformation">
+		[#if chartList?exists && chartList?size gt 0]
+			<div id="positionInformation" data-value='${chartListJson!}'></div>
+			<div class="positionInformation">
+			[#list chartList as list]
+			[#if list.yesterdayPl?? && list.yesterdayPl!='']
+				<p>[@lang_res k='assets.yesterdayReturn'/]<b class="price_positive">${list.yesterdayPl!}</b><span>${currency!}</span></p>
+				[/#if]
+				[/#list]
+				</div>
+		[#else]
+		 <div  style="dispaly:block;    text-align: center;">
+                   <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                   <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+		  </div>
+		[/#if]
+		</div>
+
+	</div>
+	<div class="myassets-listcon">
+		<ul class="funds_search_tab" style="display:block;margin-bottom: 14px;">
+			<li class="now" name="[@lang_res k='allocation.fund'/]">[@lang_res k='allocation.fund'/]</li>
+			<li name="[@lang_res k='allocation.stock'/]">[@lang_res k='allocation.stock'/]</li>
+			<li name="[@lang_res k='allocation.bond'/]">[@lang_res k='allocation.bond'/]</li>
+			<li name="[@lang_res k='allocation.insure'/]">[@lang_res k='allocation.insure'/]</li>
+		</ul>
+		<div class="conservative-position-rows" style="display:block;">
+                        <table class="funds_search_information strategies_List">
+                            <tbody>
+                                <tr class="funds_tables_th">
+                                    <th width="8%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.weight'/]</th>
+                                    <th width="12%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.fundName'/]</th>
+                                    <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.holdingUnit'/]</th>
+                                    <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.availableUnit'/]</th>
+                                    <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.referenceCost'/] (${currency!})</th>
+                                    <th width="11%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.curPrice'/] (${currency!})</th>
+                                   <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.marketValue'/] (${currency!})</th>
+                                    <th width="13%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.pl'/] (${currency!})</th>
+                                    
+                                    <th width="11%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.accountNo'/]</th>
+                                </tr>
+                                [#if fundList?exists && fundList?size gt 0]
+                                [#list fundList as list]
+                                <tr>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.weight!}' f='#,##0.00%' /]</td>
+                                    <td class="funds_search_tdcenter"><a href='${base}/front/fund/info/fundsdetail.do?id=${list.id!}'>${list.productName!}</a></td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.holdUnit!}' f='${numFormat}' /]</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.availableUnit!}' f='${numFormat}' /]</td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.referenceCost!}' f='${numFormat}' /]</td>
+                                     <td class="funds_search_tdcenter">[@num_fmt s='${list.curPrice!}' f='${numFormat}' /] </td>
+                                    <td class="funds_search_tdcenter">[@num_fmt s='${list.marketValue!}' f='${numFormat}' /] </td>
+                                    <td class="funds_search_tdcenter">
+                                        <span class="price_negative">[@num_color  s='${list.pl!}' c='${displayColor!}' f='${numFormat}' /]</span> 
+                                        <br>
+                                        (<span class="price_negative">[@num_color  s='${list.plRate!}' c='${displayColor!}' f='#,##0.00%' /]</span>)
+                                    </td>
+                                    
+                                    <td class="funds_search_tdcenter">${list.accountNo!}</td>
+                                </tr>
+                                [/#list]
+                                 [#else]
+                                
+                                 <tr>
+                                 <td colspan="9">
+                                  <div  style="dispaly:block;    text-align: center;padding-top: 20px;">
+				                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+				                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+				                      </div>
+                                 </td>
+                                 </tr>
+                                [/#if]
+                               
+                            </tbody>
+                        </table>
+                        <div class="conservative-position-contents" style="display:none">
+                            <div class="conservative-position-half">
+                                <p class="position-half-title">行业分布</p>
+                                <div class="position-half-chart" data-value="[{'name':'金融','value':20},{'name':'工业','value':10},{'name':'消费必需品','value':20},{'name':'原材料','value':10},{'name':'能源','value':10},{'name':'现金','value':30}]"></div>
+                            </div>
+                            <div class="conservative-position-half">
+                                <p class="position-half-title">地区分布</p>
+                                <div class="position-half-chart" data-value="[{'name':'中国','value':50},{'name':'香港','value':30},{'name':'新加波','value':10},{'name':'印度','value':10}]"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="conservative-position-rows" >
+		<table class="funds_search_information strategies_List" style="display:table;">
+			<tbody>
+				<tr class="funds_tables_th">
+					 <th width="8%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.weight'/]</th>
+                     <th width="12%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.stockName'/]</th>
+                     <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.holdingUnit'/]</th>
+                     <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.availableUnit'/]</th>
+                     <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.referenceCost'/](${currency!})</th>
+                     <th width="11%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.curPrice'/](${currency!})</th>
+                     <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.marketValue'/](${currency!})</th>
+                     <th width="13%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.pl'/](${currency!})</th>
+                     
+                     <th width="11%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.accountNo'/]</th>
+				</tr>
+				[#if stockList?exists && stockList?size gt 0]
+                   [#list stockList as list]
+                   <tr>
+                      <td class="funds_search_tdcenter">[@num_fmt s='${list.weight!}' f='#,##0.00%' /]</td>
+                       <td class="funds_search_tdcenter">${list.productName!}</td>
+                       <td class="funds_search_tdcenter">[@num_fmt s='${list.holdUnit!}' f='${numFormat}' /]</td>
+                       <td class="funds_search_tdcenter">[@num_fmt s='${list.availableUnit!}' f='${numFormat}' /]</td>
+                       <td class="funds_search_tdcenter">[@num_fmt s='${list.referenceCost!}' f='${numFormat}' /] </td>
+                        <td class="funds_search_tdcenter">[@num_fmt s='${list.curPrice!}' f='${numFormat}' /]</td>
+                       <td class="funds_search_tdcenter">[@num_fmt s='${list.marketValue!}' f='${numFormat}' /]</td>
+                       <td class="funds_search_tdcenter">
+                           <span class="price_negative">[@num_color  s='${list.pl!}' c='${displayColor!}' f='${numFormat}' /]</span>
+                           <br>
+                           (<span class="price_negative">[@num_color  s='${list.plRate!}' c='${displayColor!}' f='#,##0.00%' /]</span>)
+                       </td>
+                       
+                       <td class="funds_search_tdcenter">${list.accountNo!}</td>
+                   </tr>
+                   [/#list]
+                    [#else]
+                    <tr>
+                    <td colspan="9">
+                     <div  style="dispaly:block;    text-align: center;padding-top: 20px;">
+                   <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                   <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+              </div>
+                    </td>
+                    </tr>
+           
+                   [/#if]
+			</tbody>
+		</table>
+		</div>
+        <div class="conservative-position-rows">
+            <table class="funds_search_information strategies_List">
+                <tbody>
+                    <tr class="funds_tables_th">
+                         <th width="8%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.weight'/]</th>
+                        <th width="12%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.bondName'/]</th>
+                        <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.holdingUnit'/]</th>
+                        <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.availableUnit'/]</th>
+                        <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.referenceCost'/] (${currency!})</th>
+                        <th width="11%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.curPrice'/](${currency!})</th>
+                        <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.marketValue'/](${currency!})</th>
+                        <th width="13%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.pl'/](${currency!})</th>
+                        
+                        <th width="11%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.accountNo'/]</th>
+                    </tr>
+                    [#if bondList?exists && bondList?size gt 0]
+                    [#list bondList as list]
+                    <tr>
+                        <td class="funds_search_tdcenter">[@num_fmt s='${list.weight!}' f='#,##0.00%' /]</td>
+                        <td class="funds_search_tdcenter">${list.productName!}</td>
+                        <td class="funds_search_tdcenter">[@num_fmt s='${list.holdUnit!}' f='${numFormat}' /]</td>
+                        <td class="funds_search_tdcenter">[@num_fmt s='${list.availableUnit!}' f='${numFormat}' /]</td>
+                        <td class="funds_search_tdcenter">[@num_fmt s='${list.referenceCost!}' f='${numFormat}' /]</td>
+                         <td class="funds_search_tdcenter">[@num_fmt s='${list.curPrice!}' f='${numFormat}' /] </td>
+                        <td class="funds_search_tdcenter">[@num_fmt s='${list.marketValue!}' f='${numFormat}' /] </td>
+                        <td class="funds_search_tdcenter">
+                            <span class="price_negative">[@num_color  s='${list.pl!}' c='${displayColor!}' f='${numFormat}' /]</span>
+                            <br>
+                            (<span class="price_negative">[@num_color  s='${list.plRate!}' c='${displayColor!}' f='#,##0.00%' /]</span>)
+                        </td>
+                        
+                        <td class="funds_search_tdcenter">${list.accountNo!}</td>
+                    </tr>
+                    [/#list]
+                     [#else]
+                     <tr>
+                     <td colspan="9">
+                      <div  style="dispaly:block;    text-align: center;padding-top: 20px;">
+                    <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                    <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+              </div>
+                     </td>
+                     </tr>
+                    [/#if]
+                    
+                </tbody>
+            </table>
+        </div>
+         <div class="conservative-position-rows">
+             <table class="funds_search_information strategies_List">
+                 <tbody>
+                     <tr class="funds_tables_th">
+                         <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.insureName'/]</th>
+                         <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.holdingUnit'/]</th>
+                         <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.marketValue'/](${currency!})</th>
+                           <th width="15%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.pl'/](${currency!})</th>
+                         <th width="10%" class="funds_search_tdcenter">[@lang_res k='portfolio.hold.detail.productList.accountNo'/]</th>
+                     </tr>
+                     [#if insureList?exists && insureList?size gt 0]
+                     [#list insureList as list]
+                     <tr>
+                         <td class="funds_search_tdcenter">${list.productName!}</td>
+                          <td class="funds_search_tdcenter">[@num_fmt s='${list.marketValue!}' f='${numFormat}' /] </td>
+                         <td class="funds_search_tdcenter">
+                             <span class="price_negative">[@num_color  s='${list.pl!}' c='${displayColor!}' f='${numFormat}' /]</span> 
+                             <br>
+                             (<span class="price_negative">[@num_color  s='${list.plRate!}' c='${displayColor!}' f='#,##0.00%' /]</span>)
+                         </td>
+                       
+                         <td class="funds_search_tdcenter">${list.accountNo!}</td>
+                     </tr>
+                     [/#list]
+                     [#else]
+                      <tr>
+                      <td colspan="9">
+                       <div  style="dispaly:block;    text-align: center;padding-top: 20px;">
+                     <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                     <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+               </div>
+                      </td>
+                      </tr>
+                     [/#if]
+                     
+                 </tbody>
+             </table>
+         </div>
+       </div>
+         <div class="ifa-zone-taccount">
+		<div class="zone-taccount-rows" onclick="window.location.href='${base}/front/investor/myAccountList.do'" style="height:245px">
+			<div class="zone-taccount-ico">
+				<span class="zone-taccount-people"></span>
+			</div>
+			[#if accountNumber.totalCount?? && accountNumber.totalCount>0]
+			<p class="zone-taccount-title"><span>[@lang_res k='assets.account'/]</span></p>
+			<p class="zone-taccount-word">
+			[@lang_res k='assets.account.tips.total'/] ${accountNumber.totalCount!}
+			[#if accountNumber.totalCount > 1] [@lang_res k='assets.account.tips.accounts'/]
+			[#else][@lang_res k='assets.account.tips.account'/][/#if],
+			${accountNumber.auditedCount!'0'} 
+			[#if accountNumber.auditedCount?? && accountNumber.auditedCount>1][@lang_res k='assets.account.tips.accounts'/] [@lang_res k='assets.account.tips.areapproved'/]
+			[#else] [@lang_res k='assets.account.tips.account'/] [@lang_res k='assets.account.tips.isapproved'/][/#if]
+			
+			</p>
+			[#else]
+			<p class="zone-taccount-title"><span><a >[@lang_res k='assets.account'/]</a></span></p>
+			<div class="tips-div">
+				<a class="PortfoliosTips" style=" margin-top: 30px;">[@lang_res k='assets.account.notips'/]</a>
+			</div>
+			[/#if]
+		</div>
+		<div class="zone-taccount-rows" onclick="window.location.href='${base}/front/crm/proposal/myProposal.do'" style="height:245px">
+			<div class="zone-taccount-ico">
+				<span class="zone-taccount-pen"></span>
+			</div>
+			[#if proposalNumber.totalCount?? && proposalNumber.totalCount>0]
+			<p class="zone-taccount-title"><span><a href="${base}/front/crm/proposal/myProposal.do">[@lang_res k='assets.proposal'/]</a></span></p>
+			<p class="zone-taccount-word">
+			${proposalNumber.tips!}
+			</p>
+			[#else]
+			<p class="zone-taccount-title"><span><a >[@lang_res k='assets.proposal'/]</a></span></p>
+			<div class="tips-div"> <a class="PortfoliosTips"  style=" margin-top: 30px;">[@lang_res k='assets.proposal.notips'/]</a></div>
+			[/#if]
+		</div>
+	</div>
+	</div>
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+var _currency='${currency!}';
+	seajs.use('${base}/res/web/community/myAssets.js');
+</script>

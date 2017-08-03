@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fund Selector</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script>
+        var base_root = '${base}';
+        var lang = '${Session["_LANG_CODE_"]!}';
+        var lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        if(lang=='en'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_EN.js";  
+        }else if(lang=='tc'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_TC.js";
+        }else if(lang=='sc'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        }
+    </script>
+    <script type="text/javascript" src="${base}/res/js/base.js"></script>
+    <script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+    <script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+    <script src="${base}/res/js/util.js"></script>
+    <style type="text/css">
+    html, body{font-size: 14px;}
+    .white_background{min-height: 100%;}
+    img{ border:0;}
+    .page_title{color: #3876b4;display: inline-block;font-size: 18px;font-weight: bold;margin:0px;}
+    .row_title {
+	    background: #f5f5f5;
+	    height: 30px;
+	    line-height: 30px;
+	    color: #171717;
+	    font-weight: bold;
+	    margin: 10px 0px 3px -5px;
+	    padding-left: 5px;
+	    padding-right: 5px;
+	    border-radius:3px;
+	    width:100%;
+	}
+	.row_title img {float:right;padding-top:10px;padding-right:7px;}
+	
+	.row_selection {width:100%;height:30px;line-height:30px;padding-left:20px;margin-top:0px;overflow:hidden;}
+	.row_selection .left {float:left;width:200px;}
+	.row_selection .right {float:right;width:auto;margin-right:36px;}
+	.row_selection span{color:red;}
+	
+	.text-overflow{
+		display:block;                     /*内联对象需加*/
+		width:31em;
+		word-break:keep-all;           /* 不换行 */
+		white-space:nowrap;          /* 不换行 */
+		overflow:hidden;               /* 内容超出宽度时隐藏超出部分的内容 */
+		text-overflow:ellipsis;         /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+	}
+
+    .btn_middle_div{ clear:both; text-align:center;padding-top:40px;padding-bottom:20px;}
+    .btn_middle{ width:100px; height:30px;z-index: 13; line-height:30px; color:#fff; font-size:14px; text-align:center; background:#2d80ce; border-radius:3px; display:inline-block;}
+
+    .label {display:inline-block; overflow:hidden;color:#000000;min-width: 900px;}
+    .label ul {margin: auto;overflow:hidden; padding-left:10px;}
+/*    .label li {padding-right:5px;margin-right:15px;border:0px;float:left;width:180px;height:50px;text-align:left;list-style-type:none;background-color:#CCFF99;}
+    .label li img{float:left;width:48px;height:48px;padding:1px;}
+	.label li a{float:right;display:block;}
+	.label li a img {width:24px; height:24px;padding-top: 11px;}
+	.label li .star {width:16px; height:16px;float: left;padding-top: 27px;padding-left: 5px;}
+	.label li .selected_active{background-color:green;color: white;}*/
+	
+	li{ overflow:hidden;list-style:none;cursor: pointer;}
+	.box{ width:90px;padding:0 0 0 10px;}
+	.box li{ float:left;margin-right:2px;}
+
+	.container {padding-right:5px;margin-right:15px;margin-bottom:5px;border:0px;float:left;width:200px;height:50px;text-align:left;list-style-type:none;background-color:#CCFF99;}
+	.container .left {float:left;width:50px;height:50px;}
+	.container .left  img {float:left;width:48px;height:48px;padding:1px;}
+	.container .right {float:right;width:30px;display:block;margin-top: -18px;}
+	.container .right img {width:24px; height:24px;padding-top:0px;padding-left:5px;}
+	.container .content {width:120px;padding-left:50px;}
+	.container .content .title {text-align:left;height:32px;}
+	.container .content .star {width:120px; height:16px;float: left;padding-top: 1px;overflow:hidden;}
+	</style>
+	
+	</head>
+	<body>
+    <div class="main">
+        <div class="white_background">   
+            <div>
+              <p class="page_title">Please select the name list</p>
+            </div> 
+            <div class="zhongxin_right">
+                   <div class="clear"></div>
+       	
+                   <div class="row_title">My Client <img src="${base}/res/images/ifa/u173.png" alt=""></div>
+                   <div class="div_clients">
+                       <div class="label">
+                           <div class="row_selection"> 
+                                <div class="left"><span class="count">0</span> clients selected.</div>
+                                <div class="right">Select: <input class="selAll" type="checkbox">Select All <a class="reverse" href="javascript:;">Reverse</a></div>
+                           </div>
+                           <ul>
+                           [#if clients??]
+                               [#list clients as x]
+                               <li data-id="${x.member.id!''}" data-type="clients" class="container">
+                                   <div class="left"><img src="${base}/res/images/ifa1.png" alt=""></div>
+                                   <div class="content">
+                                       <div class="title">${x.firstName!""} ${x.lastName!""}</div>
+                                       <div class="star">
+                                           <ul class="box">
+                                         <li><img src="${base}/res/images/ifa/u164.png" alt=""></li>
+                                         <li><img src="${base}/res/images/ifa/u164.png" alt=""></li>
+                                         <li><img src="${base}/res/images/ifa/u39.png" alt=""></li>
+                                           </ul>
+                                       </div>
+                                   </div>
+                                   <div class="right"><a class="checked" style="display:none" href="javascript:;"><img src="${base}/res/images/ifa/u176.png" alt=""></a></div>
+                               </li>
+                               [/#list]
+                           [/#if]
+                           </ul>
+                       </div>
+                   </div>                          
+                   <div class="row_title">My Prospect <img src="${base}/res/images/ifa/u173.png" alt=""></div>
+                   <div class="div_prospects">
+                       <div class="label">
+                           <div class="row_selection"> 
+                                <div class="left"><span class="count">0</span> clients selected.</div>
+                                <div class="right">Select: <input class="selAll" type="checkbox">Select All <a class="reverse" href="javascript:;">Reverse</a></div>
+                           </div>
+                           <ul>
+                           [#if prospects??]
+                               [#list prospects as x]
+                               <li data-id="${x.member.id!''}" data-type="prospects" class="container">
+                                   <div class="left"><img src="${base}/res/images/ifa1.png" alt=""></div>
+                                   <div class="content">
+                                       <div class="title">${x.firstName!""}</div>
+                                       <div class="star">
+                                           <ul class="box">
+                                               <li><img src="${base}/res/images/ifa/u164.png" alt=""></li>
+                                               <li><img src="${base}/res/images/ifa/u164.png" alt=""></li>
+                                               <li><img src="${base}/res/images/ifa/u39.png" alt=""></li>
+                                           </ul>
+                                       </div>
+                                   </div>
+                                   <div class="right"><a class="checked" style="display:none" href="javascript:;"><img src="${base}/res/images/ifa/u176.png" alt=""></a></div>
+                               </li>
+                               [/#list]
+                           [/#if]
+                           </ul>
+                       </div>
+                   </div>
+                   <div class="row_title">My Buddy <img src="${base}/res/images/ifa/u173.png" alt=""></div>
+                   <div class="div_buddies">
+                       <div class="label">
+                           <div class="row_selection"> 
+                                <div class="left"><span class="count">0</span> clients selected.</div>
+                                <div class="right">Select: <input class="selAll" type="checkbox">Select All <a class="reverse" href="javascript:;">Reverse</a></div>
+                           </div>
+                           <ul>
+                           [#if buddies??]
+                               [#list buddies as x]
+                               <li data-id="${x.member.id!''}" data-type="buddies" class="container">
+                                   <div class="left"><img src="${base}/res/images/ifa1.png" alt=""></div>
+                                   <div class="content">
+                                       <div class="title">${x.firstName!""}</div>
+                                       <div class="star">
+                                           <ul class="box">
+                                               <li><img src="${base}/res/images/ifa/u164.png" alt=""></li>
+                                               <li><img src="${base}/res/images/ifa/u164.png" alt=""></li>
+                                               <li><img src="${base}/res/images/ifa/u39.png" alt=""></li>
+                                           </ul>
+                                       </div>
+                                   </div>
+                                   <div class="right"><a class="checked" style="display:none" href="javascript:;"><img src="${base}/res/images/ifa/u176.png" alt=""></a></div>
+                               </li>
+                               [/#list]
+                           [/#if]
+                           </ul>
+                       </div>
+                   </div>
+                   <div class="row_title">My Team <img src="${base}/res/images/ifa/u24.png" alt=""></div>
+                   <div class="div_colleagues">
+                       <div class="label">
+                           <div class="row_selection"> 
+                                <div class="left"><span class="count">0</span> colleagues selected.</div>
+                                <div class="right">Select: <input class="selAll" type="checkbox">Select All <a class="reverse" href="javascript:;">Reverse</a></div>
+                           </div>
+                           <ul>
+                           [#if colleagues??]
+                               [#list colleagues as x]
+                               <li data-id="${x.member.id!''}" data-type="colleagues" class="container">
+                                   <div class="left"><img src="${base}/res/images/ifa1.png" alt=""></div>
+                                   <div class="content">
+                                       <div class="title">${x.firstName!""}</div>
+                                       <div class="star">
+                                           <ul class="box">
+                                               <li><img src="${base}/res/images/ifa/u164.png" alt=""></li>
+                                               <li><img src="${base}/res/images/ifa/u164.png" alt=""></li>
+                                               <li><img src="${base}/res/images/ifa/u39.png" alt=""></li>
+                                           </ul>
+                                       </div>
+                                   </div>
+                                   <div class="right"><a class="checked" style="display:none" href="javascript:;"><img src="${base}/res/images/ifa/u176.png" alt=""></a></div>
+                               </li>
+                               [/#list]
+                           [/#if]
+                           </ul>
+                       </div>
+                   </div>
+	           </div>
+	    	</div>
+	        <div class="clear"></div>
+            <div class="btn_middle_div">
+               <a id="btn_update" class="btn_middle" href="javascript:;">[@lang_res k='global.update'/]</a>
+               <a id="btn_cancel" class="btn_middle" href="javascript:window.close();">[@lang_res k='global.cancel'/]</a>
+               <input type="hidden" name="clients" id="clients">
+               <input type="hidden" name="prospects" id="prospects">
+               <input type="hidden" name="buddies" id="buddies">
+               <input type="hidden" name="colleagues" id="colleagues">
+            </div>
+        </div>
+    </body>
+</html>
+
+<script type="text/javascript">
+seajs.use('jquery', function($){
+    $("li").on("click",function(){//可多选
+        $(this).addClass("selected_active");
+        var id = $(this).attr("data-id");
+        var type = $(this).attr("data-type");
+        //alert($(this).find("a").attr("style"));
+        if ($(this).find("a").attr("style")=="display:none"){
+            $(this).find("a").attr("style","display:block");
+
+	        if (type=="clients") $("#clients").val($("#clients").val()+","+id);
+	        if (type=="prospects") $("#prospects").val($("#prospects").val()+","+id);
+	        if (type=="buddies") $("#buddies").val($("#buddies").val()+","+id);
+	        if (type=="colleagues") $("#colleagues").val($("#colleagues").val()+","+id);
+
+        }else{
+            $(this).find("a").attr("style","display:none");
+
+	        if (type=="clients") $("#clients").val( $("#clients").val().replace(','+id, ''));
+	        if (type=="prospects") $("#prospects").val($("#prospects").val().replace(','+id, ''));
+	        if (type=="buddies") $("#buddies").val($("#buddies").val().replace(','+id, ''));
+	        if (type=="colleagues") $("#colleagues").val($("#colleagues").val().replace(','+id, ''));
+        }
+        //alert($("#clients").val());
+        var span = $(this).parent().parent().find("span.count");
+        var val = "";
+        if (type=="clients") val = $("#clients").val();
+        if (type=="prospects") val = $("#prospects").val();
+        if (type=="buddies") val = $("#buddies").val();
+        if (type=="colleagues") val = $("#colleagues").val();
+        //alert(val);
+        $(span).html(countVal(val));
+    });
+    
+    /**
+    * 根据父窗口的类型，和 已选值，自动选定（适于编辑状态）
+    */
+    function checkSelection(type, selected){
+	    //alert(type);
+	    //alert(selected);
+        if (!type) return;
+        if (!selected) return;
+
+        var ifAll = false;
+        if (selected.indexOf("ALL")>=0) ifAll = true;
+        
+        var strArr = selected.split(",");
+        if (strArr.length==0) return;
+   
+        $.each(strArr, function(i,val){  
+            //alert("val="+val);
+            if (!val || val.length==0) return true;//continue
+	        $(document).find("li").each(function(){
+	            var _type = $(this).attr("data-type");
+	            var _li = $(this);
+	            if (_type==type){
+			        var id = $(this).attr("data-id")+"";
+			        //alert("id="+id);
+		            if (ifAll || (val && val.length>0 && val == id)){
+		              if (_li.find("a").attr("style")=="display:none")
+		                _li.click();
+		                if (!ifAll) return false;
+	                }
+		        }
+		    });
+        });
+    }
+    
+    /**
+    * 根据父窗口的类型，和 已选值，自动选定（适于编辑状态）
+    */
+    function initial(){
+        //window.name = "${win_name!!}";
+        //alert(window.name);
+        var parent_parm_clients = new Object(); 
+        var parent_parm_prospects = new Object(); 
+        var parent_parm_buddies = new Object(); 
+        var parent_parm_colleagues = new Object(); 
+        
+        if (window.name == "permitASetting"){
+            parent_parm_clients = window.opener.document.getElementById("permit_clients");
+            parent_parm_prospects = window.opener.document.getElementById("permit_prospects");
+            parent_parm_buddies = window.opener.document.getElementById("permit_buddies");
+            parent_parm_colleagues = window.opener.document.getElementById("permit_colleagues");
+        }
+        if (window.name == "pushASetting"){
+            parent_parm_clients = window.opener.document.getElementById("push_clients");
+            parent_parm_prospects = window.opener.document.getElementById("push_prospects");
+            parent_parm_buddies = window.opener.document.getElementById("push_buddies");
+            parent_parm_colleagues = window.opener.document.getElementById("push_colleagues");
+        }
+        checkSelection("clients", parent_parm_clients.value);
+        checkSelection("prospects", parent_parm_prospects.value);
+        checkSelection("buddies", parent_parm_buddies.value);
+        checkSelection("colleagues", parent_parm_colleagues.value);
+    }
+    
+    /**
+    * 返回（保存）当前选定值，自动设置父窗口对应的对象值，需保证变量定义一致
+    */
+    $("#btn_update").on("click",function(){
+        if (!window.opener){
+            alert("Getting opener unsuccessfully.\nThe result can not be return.\n");
+            return;
+        }
+            
+        try{
+	        var cnt_clients = ${clients?size};
+	        window.opener.document.getElementById("cnt_clients").value=cnt_clients;
+	        
+	        var cnt_prospects = ${prospects?size};
+	        window.opener.document.getElementById("cnt_prospects").value=cnt_prospects;
+	        
+	        var cnt_buddies = ${buddies?size};
+	        window.opener.document.getElementById("cnt_buddies").value=cnt_buddies;
+	        
+	        var cnt_colleagues = ${colleagues?size};
+	        window.opener.document.getElementById("cnt_colleagues").value=cnt_colleagues;
+
+            //alert(window.name);
+	        //if (!id) return;
+	        //获取父窗口的id对象，添加新id值
+	        if (window.name == "permitASetting"){
+		        var parent_parm_clients = window.opener.document.getElementById("permit_clients");
+		        parent_parm_clients.value=$("#clients").val();
+		        
+		        var parent_parm_prospects = window.opener.document.getElementById("permit_prospects");
+		        parent_parm_prospects.value =$("#prospects").val();
+		        
+		        var parent_parm_buddies = window.opener.document.getElementById("permit_buddies");
+		        parent_parm_buddies.value=$("#buddies").val();
+		        
+		        var parent_parm_colleagues = window.opener.document.getElementById("permit_colleagues");
+		        parent_parm_colleagues.value=$("#colleagues").val();
+	        }
+	        else if (window.name == "pushASetting"){
+	            var parent_parm_clients = window.opener.document.getElementById("push_clients");
+	            parent_parm_clients.value=$("#clients").val();
+	            
+	            var parent_parm_prospects = window.opener.document.getElementById("push_prospects");
+	            parent_parm_prospects.value =$("#prospects").val();
+	            
+	            var parent_parm_buddies = window.opener.document.getElementById("push_buddies");
+	            parent_parm_buddies.value=$("#buddies").val();
+	            
+	            var parent_parm_colleagues = window.opener.document.getElementById("push_colleagues");
+	            parent_parm_colleagues.value=$("#colleagues").val();
+	        }
+	        /*
+	        alert(parent_parm_clients.value);
+	        alert(parent_parm_prospects.value);
+	        alert(parent_parm_buddies.value);
+	        alert(parent_parm_colleagues.value);*/
+	        //alert(parent_parm_ids.value);
+	        //调用父窗口的基金列表刷新方法
+	        window.opener.document.getElementById("refreshSelection").click();
+        }catch(e){
+            alert("返回时出现错误。");
+        }
+        window.close();
+    });
+    
+        
+    //全部选择
+    $("input:checkbox[class='selAll']").on("click",function(){
+        var _this = $(this);
+        var _parent = _this.parent().parent().parent().parent();
+        //alert(_parent.html())
+        if (_this.is(':checked')){//检查checkbox是否选中
+	        _parent.find("li").each(function(){
+	           var _li = $(this);
+	           if (_li.find("a").attr("style")=="display:none")
+	               _li.click();
+	        });
+        }else{
+            _parent.find("li").each(function(){
+               var _li = $(this);
+               if (_li.find("a").attr("style")=="display:block")
+                   _li.click();
+            });
+        }
+    });
+    
+    //反选
+    $("a[class='reverse']").on("click",function(){
+        var _this = $(this);
+        var _parent = _this.parent().parent().parent().parent();
+        //alert(_parent.html());
+        //只需每个li做一次click事件即可反选
+        _parent.find("li.container").each(function(){
+        //alert($(this).html());
+            $(this).click();
+        });
+    });
+    
+    function countVal(str){
+        if (!str) return 0;
+        str = str.substring(str.indexOf(",")+1);//去掉首字符为逗号
+        str = str.replace("ALL,");
+        var strArr = str.split(",");
+        return strArr.length;
+    }
+    
+    //初始化页面
+    initial();
+
+});    
+</script>
+

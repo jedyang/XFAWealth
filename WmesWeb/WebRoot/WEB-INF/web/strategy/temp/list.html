@@ -1,0 +1,177 @@
+[#include "../../inc/head.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<div class="blue_background">
+        <div class="kaihu_div">
+            <div class="white_background" >   
+                <div class="OpenAccount_big_title">
+                  <h2>[@lang_res k='strategy.info.list.title'/]</h2>
+                </div>
+                
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">Issued Date :</p>
+                    <ul class="funds_choice">
+                        <li data-name="Issued" data-key=""   data-value=""  class="funds_all fund_choice_active">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+                        <li data-name="Issued" data-key="1 Week"  data-value="1W">1 Week</li>
+                        <li data-name="Issued" data-key="1 Month" data-value="1M">1 Month</li>
+                        <li data-name="Issued" data-key="3 Month" data-value="3M">3 Month</li>
+                        <li data-name="Issued" data-key="6 Month" data-value="6M">6 Month</li>
+                        <li data-name="Issued" data-key="1 Year"  data-value="3Y">1 Year</li>
+                    </ul>
+                    <input class="insight-input-date" id="fromDate" readonly type="text" name="title">
+                    <input class="insight-input-date" id="toDate" readonly type="text" name="title">
+                </div>
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">Relate Geo Allocation :</p>
+                    <ul class="funds_choice funds_logo_b" id="letter_choice">
+                        <li data-letter="" class="funds_all fund_choice_active" data-name="Allocation">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+                        <li data-letter="A">A</li>
+                        <li data-letter="B">B</li>
+                        <li data-letter="C">C</li>
+                        <li data-letter="D">D</li>
+                        <li data-letter="E">E</li>
+                        <li data-letter="F">F</li>
+                        <li data-letter="G">G</li>
+                        <li data-letter="H">H</li>
+                        <li data-letter="I">I</li>
+                        <li data-letter="J">J</li>
+                        <li data-letter="K">K</li>
+                        <li data-letter="L">L</li>
+                        <li data-letter="M">M</li>
+                        <li data-letter="N">N</li>
+                        <li data-letter="O">O</li>
+                        <li data-letter="P">P</li>
+                        <li data-letter="Q">Q</li>
+                        <li data-letter="R">R</li>
+                        <li data-letter="S">S</li>
+                        <li data-letter="T">T</li>
+                        <li data-letter="U">U</li>
+                        <li data-letter="V">V</li>
+                        <li data-letter="W">W</li>
+                        <li data-letter="S">S</li>
+                        <li data-letter="Y">Y</li>
+                        <li data-letter="Z">Z</li>
+                    </ul>
+                    <ul class="funds_logo_choice" id="letter_search_choice">
+                    [#if regionList?exists && regionList?size gt 0 ]
+                    [#list regionList as x]
+                    <li style="display:none;" title="${x.name!}" data-letter="${x.key!}" data-key="${x.name!}" data-name="Allocation" data-value="${x.itemCode!}" >
+                        ${x.name!}</li>
+                    [/#list]
+                    [/#if]
+                    </ul>
+                </div>
+                <div class="funds_choice_wrap">
+                    <p class="funds_choice_title">Relate Sector :</p>
+                    <ul class="funds_choice">
+                        <li data-name="Sector" data-key=""   data-value=""  class="funds_all fund_choice_active">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.searchAll'/]</li>
+                        [#if sectorList?exists && sectorList?size gt 0 ]
+	                    [#list sectorList as x]
+	                        <li data-name="Sector" data-key="${x.name!}" data-value="${x.itemCode!}">${x.name!}</li>
+	                    [/#list]
+	                    [/#if]
+                    </ul>
+                </div>
+                <div class="funds_choice_wrap" style="text-align:right;">
+                    <ul class="sort_choice" style="padding-right:200px;">
+                        Sort by : <li data-name="sort" data-key="views"   data-value="views"  class="sort_choice_active">Views</li>
+                                <li data-name="issued" data-key="issued"   data-value="issued" >Issued date</li>
+                    </ul>
+                </div>
+                
+	            <div class="white_background funds_selected_wrap" ng-controller="Searchctrl"  ng-app="mySearch">   
+	                <div class="funds_selected">
+	                    <p class="funds_selected_title">[@lang_res l=Session["_LANG_CODE_"] k='global.selectedCondition'/] :</p>
+	                    <ul class="selection_criteria">
+	                    <p class="funds_title_selection">[@lang_res l=Session["_LANG_CODE_"] k='fund.info.resetFilter'/] </p>
+	                    </ul>
+	                </div>
+	                <div class="funds_keyserach_wrap">
+	                    <div class="funds_keyserach">
+	                        <input type="text"  id="txtKeyword" placeholder="[@lang_res l=Session["_LANG_CODE_"] k='pipeline.search.keyword'/]" >
+	                        <span class="icon_search" id="searchKeyBtn"></span>
+	                    </div>
+	                    <div class="funds_serach_results">
+	                        <p class="funds_serach_sum">
+	                        Total of  <span class="funds_serach_digital" ng-bind="{{'datatotal'}}"></span> records found</p>
+	                    </div>
+	                </div>
+	            </div>
+                
+                
+                <div class="OpenAccount_BasicInfo_content">
+                    <a href="${base}/front/strategy/add.do" id="btnAdd" class="btn_middle" style="width:96px;">[@lang_res k='global.add'/]</a>
+                    <a href="${base}/front/strategy/add.do" id="btnOverhead" class="btn_middle" style="width:96px;">Overhead</a>
+                
+                    <div class="OpenAccount_tab">
+                          <ul>
+                              <li>
+                                <a class="now" href="javascript:;" formName="acc_detail" actionName="accountDetailSave">Publish</a>
+                              </li>
+                              <li>
+                                <a href="javascript:;" formName="main_contact_detail" actionName="mainContactSave">Draft</a>
+                              </li>
+                          </ul>
+                    </div>  
+                                    
+                    <div class="Strategy_public_list_content">
+	                    <table id="tableList" class="account_list_table">
+	                        <tbody>
+	                            <tr class="account_list_th">
+	                                <th>[@lang_res  k='strategy.info.list.strategyName'/]</th>
+	                                <th>Issued Date</th>
+	                                <th>Actions</th>
+	                            </tr>
+	                            [#if dataList?exists && dataList?size gt 0 ]
+		                        [#list dataList as x]
+		                            
+                                <tr class="account_list_td">
+                                    <td>
+                                        <div style="font-weight:bold;padding:5px 5px 5px 20px;text-align:left">${x.strategyName!}</div><br>
+                                        <div style="font-weight:bold;padding:5px 5px 0px 20px;text-align:left">[@lang_res  k='strategy.info.list.goal'/]:<br></div>
+                                        <div style="padding:0px 5px 0px 20px;text-align:left">${x.investmentGoal!}</div>
+                                    </td>
+                                    <td>
+                                        <div style="font-weight:bold;padding:5px 5px 5px 20px;text-align:center">${x.lastUpdate?string("yyyy-MM-dd HH:mm")}</div><br>
+                                        <div style="font-weight:bold;padding:5px 5px 5px 20px;text-align:center;">
+	                                        <a id="view" style="display:inline-block;overflow:hidden;" href="javascrpit:;"><img style="width:36px;height:36px;" src="${base}/res/images/u64.png" /></a> 10
+	                                        <a id="visitors" style="display:inline-block;overflow:hidden;" href="javascrpit:;"><img style="width:36px;height:36px;" src="${base}/res/images/u280.png" /></a> 30
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a id="view" style="display:inline-block;overflow:hidden;" href="${base}/front/strategy/input.do?id=${x.id!}"><img style="width:24px;height:24px;" src="${base}/res/images/u211.png" /></a>
+                                        <a id="edit" style="display:inline-block;overflow:hidden;" href="${base}/front/strategy/add.do?id=${x.id!}"><img style="width:24px;height:24px;" src="${base}/res/images/u210.png" /></a>
+                                        <a id="delete" style="display:inline-block;overflow:hidden;" href="javascrpit:;"><img style="width:24px;height:24px;" src="${base}/res/images/u204.png" /></a>
+                                        <a id="up" style="display:inline-block;overflow:hidden;" href="javascrpit:;"><img style="width:24px;height:24px;" src="${base}/res/images/u222.png" /></a>
+                                        <a id="down" style="display:inline-block;overflow:hidden;" href="javascrpit:;"><img style="width:30px;height:30px;" src="${base}/res/images/u292.png" /></a>
+                                    </td>
+                                </tr>
+		                        [/#list]
+		                        [/#if]
+	                        </tbody>
+	                   </table>
+	                </div>
+	                <div class="Strategy_draft_list_content">
+	                </div>
+                
+            </div>
+        </div>
+</div>
+[#include "../../inc/foot.html"/] 
+<script type="text/javascript">
+seajs.use('${base}/res/js/jsDatePick.jquery.min.1.3.js');
+seajs.use('${base}/res/web/strategy/list.js');
+window.onload = function(){
+    new JsDatePick({
+      useMode:2,
+      target:"fromDate",
+      dateFormat:"%Y-%m-%d"
+    });
+    new JsDatePick({
+      useMode:2,
+      target:"toDate",
+      dateFormat:"%Y-%m-%d"
+    });
+};
+</script>

@@ -1,0 +1,154 @@
+
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>sys log</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	</head>
+
+	<body>
+		<div class="container-fluid pd0" id="wmes_wraper">
+
+			<div style="padding-left: 20px; padding-right: 20px;">
+				<div class="page-header mt-10">
+					<h4>
+						<b>[@lang_res k='accessory.info.accessoryDetail'/]</b>
+					</h4>
+				</div>
+				<div>
+					<form class="form-horizontal">
+						<div class="form-group">
+							<div class="col-md-3 text-right">
+								<label for="txtFilename" class="label-control">
+									[@lang_res k='accessory.info.filename'/]
+								</label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" class="form-control" id="txtLoginCode" value="${(file.fileName)?if_exists}">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-3 text-right">
+								<label for="txtFilepath" class="label-control">
+									[@lang_res k='accessory.info.filepath'/]
+								</label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" class="form-control" id="txtNickName" value="${(file.filePath)?if_exists}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-3 text-right">
+								<label for="txtFiletype" class="label-control">
+									[@lang_res k='accessory.info.filetype'/]
+								</label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" class="form-control" id="txtModuleType" value="${(file.fileType)?if_exists}">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-3 text-right">
+								<label for="txtModuletype" class="label-control">
+									[@lang_res k='accessory.info.moduletype'/]
+								</label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" class="form-control" id="txtIP" value="${(file.moduleType)?if_exists}">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-3 text-right">
+								<label for="txtlangcode" class="label-control">
+									[@lang_res k='accessory.info.langcode'/]
+								</label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" class="form-control" id="txtCreateTime" value="${(file.langCode)?if_exists}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-3 text-right">
+								<label for="txtcreateby" class="label-control">
+									[@lang_res k='accessory.info.createby'/]
+								</label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" class="form-control" id="txtCreateTime" value="${(creater)?if_exists}">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-3 text-right">
+								<label for="txtcreatetime" class="label-control">
+									[@lang_res k='accessory.info.createtime'/]
+								</label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" class="form-control" id="txtCreateTime" value="${(file.createTime)?if_exists}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-3 text-right">
+								<label for="txtRemark" class="label-control">
+									[@lang_res k='accessory.info.remark'/]
+								</label>
+							</div>
+							<div class="col-md-7">
+								<textarea id="txtRemark" class="form-control" rows="5">${(file.remark)?if_exists}</textarea>
+							</div>
+						</div>
+					</form>
+					<div class="text-center pd10" id="btnDiv">
+						<!--<a href="#" onclick="" download="/wmes${(file.filePath)?if_exists}" class="btn-blue-s2">下载</a>
+						-->
+						<a href="#" onclick="javascript:closeTab();" class="btn-blue-s2">[@lang_res k='global.close'/]</a>
+					</div>
+				</div>
+				<div class="clear">
+				</div>
+			</div>
+		</div>
+
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+		<script>
+	$(function() {
+		var html = "";
+		if (browserIsIe()) {
+			html = "<a href='javascript:downloadFile(\"${(file.filePath)?if_exists} \",\"${(file.fileName)?if_exists} \");' class='btn-blue-s2'>[@lang_res k='accessory.info.accessoryDownload'/]</a>";
+		} else {
+			//html = "<a href='/wmes${(file.filePath)?if_exists} ' download='/wmes${(file.filePath)?if_exists}' class='btn-blue-s2'>下载</a>";
+			html = "<a href='${(file.filePath)?if_exists} ' download='${(file.filePath)?if_exists}' class='btn-blue-s2'>[@lang_res k='accessory.info.accessoryDownload'/]</a>";
+		}
+		$("#btnDiv").prepend(html);
+	});
+
+	function downloadFile(url, fileName) {
+		//url = "/wmes" + url;
+		url = url;
+
+		if (browserIsIe()) {
+			DownLoadReportIMG(url, fileName);
+		} else {
+			window.location.href = url; //window.location.href = url;
+		}
+	}
+
+	
+</script>
+	</body>
+</html>

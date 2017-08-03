@@ -1,0 +1,119 @@
+/*
+ * Copyright (c) 2016-2019 by fsll
+ * All rights reserved.
+ */
+package com.fsll.common.mongodb;
+
+import java.util.List;
+
+import org.bson.Document;
+
+import com.fsll.common.util.JsonPaging;
+import com.mongodb.BasicDBObject;
+
+/**
+ * 增删改查
+ * @author 黄模建 E-mail:mjhuang@fsll.cn
+ * @version 1.0.0
+ * Created On: 2016-8-8
+ */
+public interface MongoDao {
+
+	/**
+	 * 保存记录创建索引
+	 * @param table表名
+	 * @param 数据
+	 */
+	public void createIndex(String table,Document doc);
+	
+	/**
+	 * 保存记录创建索引
+	 * @param table表名
+	 * @param 数据
+	 */
+	public void deleteIndex(String table,Document doc);
+	
+	/**
+	 * 保存记录
+	 * @param table表名
+	 * @param 数据
+	 */
+	public void saveObj(String table, Object obj);
+	
+	/**
+	 * 保存一条记录
+	 * @param collection
+	 * @param doc
+	 */
+    public void saveOne(String table, Document doc);
+    
+	/**
+	 * 保存多条记录
+	 * @param collection
+	 * @param doc
+	 */
+    public void saveMany(String table,List<Document> list);
+
+	/**
+	 * 删除数据
+	 * @param table 
+	 * @param obj
+	 */
+	public void delete(String table,Object obj);
+	
+	/**
+	 * 删除一个表的所有数据
+	 * @param table 
+	 */
+	public void deleteTable(String table);
+	
+	/**
+	 * 按条件清空记录
+	 * @param table
+	 * @param query
+	 */
+    public long deleteByFilter(String table,BasicDBObject query);
+
+	/**
+	 * 修改数据
+	 * @param table
+	 * @param queryObj
+	 * @param obj
+	 */
+	public void update(String table,Object queryObj,Object obj);
+	
+	/**
+	 * 修改第一个符合条件的数据
+	 * @param table
+	 * @param queryObj
+	 * @param updateObj
+	 */
+    public void updateOne(String table,BasicDBObject queryObj,BasicDBObject updateObj);
+    
+	/**
+	 * 修改多条符合条件的数据
+	 * @param table
+	 * @param queryObj
+	 * @param updateObj
+	 */
+    public long updateMany(String table,BasicDBObject queryObj,BasicDBObject updateObj);
+	
+    /**
+     * 获得总记录数
+     * @param table
+     * @param query 条件,可以为空
+     * @return
+     */
+	public List<Document> find(String table,BasicDBObject query,BasicDBObject sort);
+	
+	
+    /**
+     * 分页获得记录数
+     * @param table
+     * @param jsonPaging
+     * @param query 条件
+     * @param sort 排序
+     * @return
+     */
+    public JsonPaging selectJsonPaging(String table,JsonPaging jsonPaging,BasicDBObject query,BasicDBObject sort);
+}

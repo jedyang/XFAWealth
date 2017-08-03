@@ -1,0 +1,275 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+<!-- 
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='strategy.title'/]</a>
+</div> -->
+<style>
+.ifa_insight_tb tr {
+    margin: 5px;
+}
+.ifa_insight_tb tr:nth-child(2n) {
+    background-color: white;
+}
+.select_choice {font-size:12px;color:#ffb657;border: 2px solid #ffffff;margin-left: 130px;overflow: hidden;padding:5px;}
+.select_choice li{position: relative;cursor: pointer;display: inline-block;width: 130px;height:30px;line-height:24px;text-align: center;padding: 0px 0px;border: 1px solid #dddddd;margin-right:-1px;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+.select_choice .select_choice_active{border: 2px solid #ffb657;}
+	.ifa_pagint_now span {
+		color: black;
+	}
+	
+	.page_left {
+		background:rgba(0, 0, 0, 0) url("${base}/res/images/ifa/left_ico.png") no-repeat scroll 0 0;
+		width: 62px;
+		height: 62px;
+		position: absolute;
+		cursor: pointer;
+		font-size: 30px;
+		text-align: center;
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+		background-color: #ccc;
+		color: white;
+		line-height: 62px;
+		border-radius: 10%;
+		margin: auto;
+		left: 0px;
+		top: 250px;
+		bottom: 0;
+	}
+	
+	.page_left:hover {
+		background-color: #4ba6de;
+	}
+	
+	.page_right {
+		background:rgba(0,
+		0,
+		0,
+		0) url("${base}/res/images/ifa/right_ico.png") no-repeat scroll 0 0;
+		width: 62px;
+		height: 62px;
+		position: absolute;
+		font-size: 30px;
+		text-align: center;
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+		background-color: #ccc;
+		color: white;
+		line-height: 62px;
+		cursor: pointer;
+		border-radius: 10%;
+		margin: auto;
+		right: 1px;
+		top: 250px;
+		bottom: 0;
+	}
+	
+	.page_right:hover {
+		background-color: #4ba6de;
+	}
+	.ng-cloak,
+	.x-ng-cloak,
+	.ng-hide{display:none !important;}ng\:form{display:block;}
+	.ng-animate-start{clip:rect(0,auto,auto,0);-ms-zoom:1.0001;}
+	.ng-animate-active{clip:rect(-1px,auto,auto,0);-ms-zoom:1;}
+</style>
+	<div ng-controller="ifaTableCtrl"  ng-app="ifaTable" class="wmes-content wmes-content-position">
+	<input type="hidden" id="dateTimeFormat" value="${dateTimeFormat!}">
+	<input type="hidden" id="dateFormat" value="${dateFormat!}">
+	<div class="strategies_list_wrap" style="padding-top:20px;">
+		<div class="wmes-wrap-title">
+			[@lang_res k='strategy.mylist.title'/]
+		</div>
+		<div class="strategies_list">
+			<!--<div class="page_left"></div>
+			--><div class="application-information-tabcon">
+				<ul class="builder-tab application-information-tab" style="margin-top:30px;">
+					<li data-active="publish" class="tab-active">[@lang_res k='list.search.publish'/]<span></span></li>
+					<li data-active="draft">[@lang_res k='list.search.draft'/]<span></span></li>
+				</ul>
+				<div class="ifa_keyserach_wrap">
+					<a href="javascript:void();" class="mylist-new-bn">[@lang_res k='strategy.mylist.new'/]</a>
+					<div class="funds_keyserach ifa_keyserach">
+						<input type="text" id="fundName" placeholder="[@lang_res k='strategy.info.list.strategyName'/]">
+						<span class="icon_search" id="searchKeyBtn"></span>
+					</div>
+				</div>
+				<div class="tabcut">
+					<div class="tabcutcon">
+						<table class="funds_search_information strategies_List myProposalList">
+						<tbody>
+							<tr class="funds_tables_th">
+								<th class="funds_tables_header" style="width:35%;text-align: center;">
+									[@lang_res k='strategy.info.list.strategyName'/]
+								</th>
+								<th class="funds_tables_header" style="width:15%;">
+									[@lang_res k='list.search.riskLevel'/]
+								</th>
+								<th class="funds_tables_header" style="width:5%;">
+								</th>
+								<th class="funds_tables_header" style="width:14%;text-align: left;">
+									[@lang_res k='list.search.issuedDate'/]
+								</th>
+								<th class="funds_tables_header" style="width:15%;">
+									[@lang_res k='list.search.action'/]
+								</th>
+							</tr>
+							<tr ng-cloak ng-repeat="items in dataList" ng-if="items.isPublic=='1'" class="ng-cloak">
+								<td class="tdleft funds_tables_fnames funds_tables_fnames_amend">
+									<a href="${base}/front/strategy/info/strategiesdetail.do?id={{items.id}}" ng-bind="items.strategyName"></a><br/>
+									<span ng-bind="items.reason | characters:150:true" data-ellipsis="true" data-ellipsis-max-line="3" title="{{items.reason}}" ></span>
+								</td>
+								<td class="funds_search_tdcenter" ng-if="items.riskLevel=='1'">
+									[@lang_res k='strategy.risk1'/]
+								</td>
+								<td class="funds_search_tdcenter" ng-if="items.riskLevel=='2'">
+									[@lang_res k='strategy.risk2'/]
+								</td>
+								<td class="funds_search_tdcenter" ng-if="items.riskLevel=='3'">
+									[@lang_res k='strategy.risk3'/]
+								</td>
+								<td class="funds_search_tdcenter" ng-if="items.riskLevel=='4'">
+									[@lang_res k='strategy.risk4'/]
+								</td>
+								<td class="funds_search_tdcenter" ng-if="items.riskLevel=='5'">
+									[@lang_res k='strategy.risk5'/]
+								</td>
+								<td class="funds_search_tdcenter">
+								</td>
+								<td class="funds_search_tdcenter myProposalList_time">
+									<p ng-bind="items.lastUpdate|datetime:dateTimeFormatStr"></p>
+									<div style="height:17px;padding-top:8px;" class="visited" data-item-id="{{items.id}}">
+										<img src="${base}/res/images/discover/eve_ico.png" style="width:18px;height:10px;margin-top:6px;"/><span ng-bind="items.visitCount" style="color: #666;margin-left: 5px;"></span>
+										<div title="" class="visited-click" data-item-id="{{items.id}}" style="float: left;">
+											<img src="${base}/res/images/fund/msg_ico.png" style="width:15px;height:18px;margin-top:3px;margin-left:10px;"/>
+											<span class="visitCount" ng-bind="items.customerVisitCount" style="margin-left: 5px;"></span>
+										</div>
+									</div>
+								</td>
+								<td class="funds_search_tdcenter">
+									<a class="view" href="javascript:void(0);" itemId="{{items.id}}"><img  src="${base}/res/images/fund/change_ico.png" style="width:20px;height:20px;" /></a>
+									<a class="delete" href="javascript:void(0);" itemId="{{items.id}}"><img  src="${base}/res/images/fund/delete_ico.png" style="width:21px;height:21px;" /></a>
+									<a class="down" href="javascript:void(0);" itemId="{{items.id}}" ng-if="items.overhead=='1'"><img   src="${base}/res/images/application/u292.png" style="width:16px;height:24px;" /></a>
+									<a class="up" href="javascript:void(0);" itemId="{{items.id}}" ng-if="items.overhead!='1'"><img   src="${base}/res/images/fund/down_ico.png" style="width:16px;height:20px;" /></a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="no_list_tips">
+            			<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+            			<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+        			</div>
+					</div>
+					
+					<ul  class="wmes_list_paging">
+		                <li class="wmes_pagint_num" ng-repeat="items in page.ListPage" ng-class="{wmes_pagint_now: items.PageShow == page.nowPage}" ng-bind="{{'items.PageShow'}}" data-page="{{items.PageShow}}"></li>
+		            </ul>
+				</div>
+				<div class="tabcut ifa-more-ico-hidden">
+					<div class="tabcutcon1">
+					<table class="funds_search_information strategies_List myProposalList">
+						<tbody>
+							<tr class="funds_tables_th">
+								<th class="funds_tables_header" style="width:35%;text-align: center;">
+									[@lang_res k='strategy.info.list.strategyName'/]
+								</th>
+								<th class="funds_tables_header" style="width:15%;">
+									[@lang_res k='list.search.riskLevel'/]
+								</th>
+								<th class="funds_tables_header" style="width:5%;">
+									
+								</th>
+								<th class="funds_tables_header" style="width:14%;text-align: left;">
+									[@lang_res k='strategy.createDate'/]
+								</th>
+								<th class="funds_tables_header" style="width:15%;">
+									[@lang_res k='list.search.action'/]
+								</th>
+							</tr>
+							<tr ng-repeat="items in dataList" ng-if="items.status=='0'">
+								<td class="tdleft funds_tables_fnames funds_tables_fnames_amend">
+									<a href="${base}/front/strategy/info/strategiesdetail.do?id={{items.id}}" ng-bind="items.strategyName"></a><br/>
+									<span ng-bind="items.reason | characters:150:true"></span>
+								</td>
+								<td class="funds_search_tdcenter" ng-if="items.riskLevel=='1'">
+									[@lang_res k='strategy.risk1'/]
+								</td>
+								<td class="funds_search_tdcenter" ng-if="items.riskLevel=='2'">
+									[@lang_res k='strategy.risk2'/]
+								</td>
+								<td class="funds_search_tdcenter" ng-if="items.riskLevel=='3'">
+									[@lang_res k='strategy.risk3'/]
+								</td>
+								<td class="funds_search_tdcenter" ng-if="items.riskLevel=='4'">
+									[@lang_res k='strategy.risk4'/]
+								</td>
+								<td class="funds_search_tdcenter" ng-if="items.riskLevel=='5'">
+									[@lang_res k='strategy.risk5'/]
+								</td>
+								<td class="funds_search_tdcenter">
+									
+								</td>
+								<td class="funds_search_tdcenter myProposalList_time">
+									<p>{{items.lastUpdate|datetime:dateTimeFormatStr}}</p>
+								</td>
+								<td class="funds_search_tdcenter">
+									<a class="view" href="javascript:void(0);" itemId="{{items.id}}"><img src="${base}/res/images/fund/change_ico.png" /></a>
+									<a class="delete" href="javascript:void(0);" itemId="{{items.id}}"><img src="${base}/res/images/fund/delete_ico.png" /></a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="no_list_tips">
+            			<img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+            			<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+        			</div>
+					</div>
+					<ul  class="wmes_list_paging">
+	                	<li class="wmes_pagint_num" ng-repeat="items in page.ListPage" ng-class="{wmes_pagint_now: items.PageShow == page.nowPage}" ng-bind="{{'items.PageShow'}}" data-page="{{items.PageShow}}"></li>
+	            	</ul>
+				</div>
+			</div>
+			</div>
+	</div>
+	<div class="visitedconlayer"></div>
+	<div class="visitedcon">
+		<p class="visitedcontitle">[@lang_res k='strategy.mylist.recentVisitors'/]</p>
+		<div class="visitedbox">
+			<ul >
+				<li ng-repeat="friend in friendList">
+					<img alt="" src="${base}{{friend.iconUrl}}" style="width:32px;height:32px;"/>
+					<div class="visitedinformation">
+						<p ng-bind="friend.nickName"></p>
+						<p ng-if="friend.vistiPeriodType!=null && friend.vistiPeriodType=='H'">{{friend.vistiPeriodTime}} hour ago</p>
+						<p ng-if="friend.vistiPeriodType!=null && friend.vistiPeriodType=='M'">{{friend.vistiPeriodTime}} mins ago</p>
+						<p ng-if="friend.vistiPeriodType==null" ng-bind="friend.vistiTime|date:'yyyy-MM-dd'"></p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<img style="display:none" class="visitedleft" src="${base}/res/images/ifa/left_ico.png" />
+		<img style="display:none" class="visitedright" src="${base}/res/images/ifa/right_ico.png" />
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+//seajs.use('${base}/res/js/jsDatePick.jquery.min.1.3.js');
+seajs.use('${base}/res/web/strategy/info/myList.js');
+/*window.onload = function(){
+    new JsDatePick({
+      useMode:2,
+      target:"fromDate",
+      dateFormat:"%Y-%m-%d"
+    });
+    new JsDatePick({
+      useMode:2,
+      target:"toDate",
+      dateFormat:"%Y-%m-%d"
+    });
+};*/
+</script>

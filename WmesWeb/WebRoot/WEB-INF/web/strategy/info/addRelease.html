@@ -1,0 +1,237 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/strategy.css">
+<style type="text/css">
+	.conservative-date-wrap {
+		float: right;
+		margin-top: 6px;
+		margin-right: 60px;
+		display: none;
+	}
+	
+	.account-choose-input-wrap {
+		float: left;
+	}
+	
+	.account-choose-date {
+		width: 80px;
+	}
+	
+	.account-choose-name {
+		float: left;
+	}
+	
+	.account-data-search {
+		float: left;
+	}
+	.strategies_list_wrap{
+		min-height:659px;
+	}
+	.strategies_list_wrap{
+		margin-bottom:0;
+	}
+	.client_name{
+	max-width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	}
+</style>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<div class="wmes-content wmes-content-position">
+	<div class="strategies_list_wrap">
+		<div class="wmes-wrap-title" style="height:16px;">
+			<p>[#if isNew?? && isNew=="1"][@lang_res k='strategy.info.form.newStrategy'/][#else][@lang_res k='strategy.info.form.editStrategy'/][/#if]</p>
+		</div>
+  		<div class="proposal-step-wrap">
+    			<ul class="proposal-step">
+    				<li class="proposal-step-title proposal-step-old">[@lang_res k='strategy.info.flow.start'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title proposal-step-old">[@lang_res k='strategy.info.flow.allocation'/]</li>
+    				<li class="proposal-step-ico"><img src="${base}/res/images/strategy/strategy_step_ico.png"></li>
+    				<li class="proposal-step-title proposal-step-now">[@lang_res k='strategy.info.flow.release'/]</li>
+    			</ul>
+    	</div>
+		<div class="tabcut">
+			<div class="ifa_keyserach_wrap">
+				<ul class="view_permissions_setting">
+					<li>[@lang_res k='strategy.info.release.permission.view'/]:</li>
+					<li><input type="radio"  name="permit" id="permit0" value="1" [#if webViewVO.scopeFlag?? && webViewVO.scopeFlag=="1"]checked="checked"[/#if] />[@lang_res k='strategy.info.release.permission.onlyme'/]</li>
+					<li><input type="radio" name="permit" id="permit1" value="2" [#if webViewVO.scopeFlag?? && webViewVO.scopeFlag=="2"]checked="checked"[/#if]/>[@lang_res k='strategy.info.release.permission.public'/]</li>
+					<li>
+						<input type="radio" name="permit" id="permit2" value="3" [#if webViewVO.scopeFlag?? && webViewVO.scopeFlag=="3"]checked="checked"[/#if] />[@lang_res k='strategy.info.release.permission.specify'/]
+					</li>
+				</ul>
+				<div id="permit_ext" class="pushToSettingmenu pushToSettingmenu1" [#if webViewVO.scopeFlag?? && webViewVO.scopeFlag=='3']style="display: block;"[/#if] >
+					<ul>
+						<li [#if webViewVO?exists && webViewVO.clientFlag?? && (webViewVO.clientFlag=='1' || webViewVO.clientFlag=='-1')]class="setting_active"[/#if]>
+							<div class="pushToSettingCheckbox ">
+								<input type="checkbox"  class="setting"  permitType="client" name="permit_client" id="check_client" value="${webViewVO.clientFlag!}" [#if webViewVO.clientFlag?? && (webViewVO.clientFlag=='1' || webViewVO.clientFlag=='-1')]checked="checked"[/#if] />[@lang_res k='strategy.info.release.specify.myClient'/]
+							</div>
+							<p class="pushToSettingName client_name" id="existingNames">[#if   webViewVO.clientFlag?? && webViewVO.clientFlag=='1'][@lang_res k='global.all'/][#else]${webViewVO.clientNames!}[/#if]</p>
+							<a class="j-permitASetting" type="existing" type1="clients"  href="javascript:;"></a>
+						</li>
+						<li [#if webViewVO?exists && webViewVO.prospectFlag?? && (webViewVO.prospectFlag=='1' || webViewVO.prospectFlag=='-1')]class="setting_active"[/#if]>
+							<div class="pushToSettingCheckbox ">
+								<input type="checkbox" class="setting" permitType="prospect" name="permit_prospect" id="check_prospect" value="${webViewVO.prospectFlag!}" [#if webViewVO.prospectFlag?? && (webViewVO.prospectFlag=='1' || webViewVO.prospectFlag=='-1')]checked="checked"[/#if]/>[@lang_res k='strategy.info.release.specify.myProspect'/]
+							</div>
+							<p class="pushToSettingName client_name" id="prospectNames">[#if webViewVO.prospectFlag?? && webViewVO.prospectFlag=='1'][@lang_res k='global.all'/][#else]${webViewVO.prospectNames!}[/#if]</p>
+							<a class="j-permitASetting" type="prospect" type1="prospects"  href="javascript:;"></a>
+						</li>
+						<li [#if webViewVO?exists && webViewVO.buddyFlag?? && (webViewVO.buddyFlag=='1' || webViewVO.buddyFlag=='-1')]class="setting_active"[/#if]>
+							<div class="pushToSettingCheckbox ">	
+								<input type="checkbox" class="setting"  permitType="buddy" name="permit_buddy" id="check_buddy" value="${webViewVO.buddyFlag!}" [#if webViewVO.buddyFlag?? && (webViewVO.buddyFlag=='1' || webViewVO.buddyFlag=='-1')]checked="checked"[/#if]/>[@lang_res k='strategy.info.release.specify.myBuddy'/]
+							</div>
+							<p class="pushToSettingName client_name" id="buddyNames">[#if  webViewVO.buddyFlag?? && webViewVO.buddyFlag=='1'][@lang_res k='global.all'/][#else]${webViewVO.buddyNames!}[/#if]</p>
+							<a class="j-permitASetting" type="buddy"   type1="buddies"   href="javascript:;"></a>
+						</li>
+						<li [#if webViewVO.colleagueFlag?? && (webViewVO.colleagueFlag=='1' || webViewVO.colleagueFlag=='-1')]class="setting_active"[/#if]>
+							<div class="pushToSettingCheckbox ">
+								<input type="checkbox" class="setting"  permitType="colleague" name="permit_colleague" id="check_colleague" value="${webViewVO.colleagueFlag!}" [#if webViewVO.colleagueFlag?? && (webViewVO.colleagueFlag=='1' || webViewVO.colleagueFlag=='-1')]checked="checked"[/#if]/>[@lang_res k='strategy.info.release.specify.myTeamMember'/]
+							</div>
+							<p class="pushToSettingName client_name" id="colleagueNames">[#if webViewVO.colleagueFlag?? && webViewVO.colleagueFlag=='1'][@lang_res k='global.all'/][#else]${webViewVO.colleagueNames!}[/#if]</p>
+							<a class="j-permitASetting" type="colleague" type1="colleagues" href="javascript:;"></a>
+						</li>
+					</ul>
+					<input type="hidden" id="permitSetting" name="permitSetting" value="${webViewVO.scopeFlag!}">
+				</div>
+			<!-- 	<ul class="view_permissions_setting" style="margin-top:20px">
+					<li>[@lang_res k='strategy.info.release.push'/]:</li>
+					<li><input type="radio" name="push" id="push0" value="0" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag=="0"]checked="checked"[/#if] />[@lang_res k='strategy.info.release.push.none'/]</li>
+					<li><input type="radio" name="push" id="push1" value="1" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag=="1"]checked="checked"[/#if] />[@lang_res k='strategy.info.release.push.all'/]</li>
+					<li><input type="radio" name="push" id="push2" value="2" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag=="2"]checked="checked"[/#if] class="letmespecify" />[@lang_res k='strategy.info.release.permission.specify'/]</li>
+				</ul>
+				<div id="push_ext" class="pushToSettingmenu pushToSettingmenu1" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag=="2"] style="margin-left: 30%; display: block;"[#else]style="margin-left: 30%;"[/#if]>
+					<ul>
+						<li><input type="checkbox" class="setting" id="push_client" name="push_client" value="${webPushVO.clientFlag!}" [#if webPushVO.clientFlag?? && webPushVO.clientFlag=='1']checked="checked"[/#if]/>[@lang_res k='strategy.info.release.specify.myClient'/]</li>
+						<li><input type="checkbox" class="setting" id="push_prospect" name="push_prospect" value="${webPushVO.prospectFlag!}" [#if webPushVO.prospectFlag?? && webPushVO.prospectFlag=='1']checked="checked"[/#if]/>[@lang_res k='strategy.info.release.specify.myProspect'/]</li>
+						<li><input type="checkbox" class="setting" id="push_buddy" name="push_buddy" value="${webPushVO.buddyFlag!}" [#if webPushVO.buddyFlag?? && webPushVO.buddyFlag=='1']checked="checked"[/#if]/>[@lang_res k='strategy.info.release.specify.myBuddy'/]</li>
+						<li><input type="checkbox" class="setting" id="push_colleague" name="push_colleague" value="${webPushVO.colleagueFlag!}" [#if webPushVO.colleagueFlag?? && webPushVO.colleagueFlag=='1']checked="checked"[/#if]/>[@lang_res k='strategy.info.release.specify.myTeamMember'/]</li>
+					</ul>
+					<a href="" id="pushASetting">[@lang_res k='strategy.info.release.specify.advance'/]</a>
+					 <input type="hidden" id="pushSetting" name="pushSetting" value="${webPushVO.scopeFlag!}">
+				</div> -->
+
+
+			</div>
+			
+			<div class="creatlistbn" style="margin-top:40px;">
+				<a class="craetbnSave" id="btnSave" href="javascript:;">[@lang_res k='global.save'/]</a>
+				<a class="craetbnNext" id="btnNext" href="javascript:;">[@lang_res k='global.publish'/]</a>
+				<a class="craetbnPrevious" href="javascript:;"> [@lang_res k='open.account.Previous'/]</a>
+				<a class="craetbnCancel" id="btnCancle" href="${base}/front/strategy/info/myList.do">[@lang_res k='open.account.Cancel'/]</a>
+			</div>
+			
+            <a id="refreshSelection" href="javascript:;" style="display:none;"></a>   
+		</div>
+		 <form id="addForm" >
+		    <input type="hidden" name="permit" id="permit" value="${webViewVO.scopeFlag!}">
+		     <input type="hidden" name="permit_client" id="permit_client" value="${webViewVO.clientFlag!}">
+		     <input type="hidden" name="permit_prospect" id="permit_prospect" value="${webViewVO.prospectFlag!}">
+		     <input type="hidden" name="permit_buddy" id="permit_buddy" value="${webViewVO.buddyFlag!}">
+		     <input type="hidden" name="permit_colleague" id="permit_colleague" value="${webViewVO.colleagueFlag!}">
+		   
+			<input type="hidden" name="id" id="id" value="${strategyVO.id}">
+			<input type="hidden" name="permit_clients" id="permit_clients" value="${webViewVO.clients!}">
+			<input type="hidden" name="permit_prospects" id="permit_prospects" value="${webViewVO.prospects!}">
+			<input type="hidden" name="permit_buddies" id="permit_buddies" value="${webViewVO.buddies!}">
+			<input type="hidden" name="permit_colleagues" id="permit_colleagues" value="${webViewVO.colleagues!}"><!--
+			<input type="hidden" name="push_clients" id="push_clients" value="${webPushVO.clients!}">
+			<input type="hidden" name="push_prospects" id="push_prospects" value="${webPushVO.prospects!}">
+			<input type="hidden" name="push_buddies" id="push_buddies" value="${webPushVO.buddies!}">
+			<input type="hidden" name="push_colleagues" id="push_colleagues" value="${webPushVO.colleagues!}">-->
+			<input type="hidden" name="ifPublish" id="ifPublish" value="false">
+			<!--<input type="hidden" id="cnt_clients" value="${cnt_clients!0}">
+			<input type="hidden" id="cnt_prospects" value="${cnt_prospects!0}">
+			<input type="hidden" id="cnt_buddies" value="${cnt_buddies!0}">
+			<input type="hidden" id="cnt_colleagues" value="${cnt_colleagues!0}">
+		--></form>
+	</div>
+	
+	<div class="selectnamelistbox" style="display:none;position: absolute;top:0;left:0;background:rgba(0,0,0,0.3)">
+		<!-- 选择用户控件 -->
+	</div>
+</div>
+
+<!--<div class="wmes-content personalWrap">
+    <div class="white_background">   
+        <p class="wmes-wrap-title">[@lang_res k='strategy.info.form.editStrategy'/]</p>
+		 <div class="zhongxin_right">
+            <div class="OpenAccount_big_title" style="background-color:white;">
+                <h2>[@lang_res k='strategy.info.form.newStrategy'/]</h2>
+            </div> 
+
+                <div class="createflow">
+			<div class="Straegy_Overview">Straegy Overview</div>
+			<div class="createflownext">></div>
+			<div class="Straegy_Define">Straegy Define</div>
+			<div class="createflownext">></div>
+			<div class="Release">Release</div>
+		   </div>
+            <div class="insight-left-content">
+                <form id="addForm">
+
+                    <div class="gary_title">Additional setting</div>
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>View permit setting:</p>
+                            <input type="radio" name="permit" id="permit0" value="0" [#if webViewVO.scopeFlag?? && webViewVO.scopeFlag=="0"]checked="checked"[/#if] >Only me
+                            <input type="radio" name="permit" id="permit1" value="1" [#if webViewVO.scopeFlag?? && webViewVO.scopeFlag=="1"]checked="checked"[/#if] >Public
+                            <input type="radio" name="permit" id="permit2" value="2" [#if webViewVO.scopeFlag?? && webViewVO.scopeFlag=="2"]checked="checked"[/#if] >Let me specify
+                            <a id="permitASetting" href="javascript:;">Advance setting</a>
+                            <input type="hidden" id="permitSetting" name="permitSetting" value="${webViewVO.scopeFlag!}">
+                    </div>      
+                    <div id="permit_ext" class="insight-row" style="padding-left:110px;display:none;">
+                        <input type="checkbox" class="setting" id="permit_client" name="permit_client" value="${webViewVO.clientFlag!}" [#if webViewVO.clientFlag?? && webViewVO.clientFlag=='1']checked="checked"[/#if]>My Client
+                        <input type="checkbox" class="setting" id="permit_prospect" name="permit_prospect" value="${webViewVO.prospectFlag!}" [#if webViewVO.prospectFlag?? && webViewVO.prospectFlag=='1']checked="checked"[/#if]>My Prospect
+                        <input type="checkbox" class="setting" id="permit_buddy" name="permit_buddy" value="${webViewVO.buddyFlag!}" [#if webViewVO.buddyFlag?? && webViewVO.buddyFlag=='1']checked="checked"[/#if]>My Buddy
+                        <input type="checkbox" class="setting" id="permit_colleague" name="permit_colleague" value="${webViewVO.colleagueFlag!}" [#if webViewVO.colleagueFlag?? && webViewVO.colleagueFlag=='1']checked="checked"[/#if]>My Colleague
+                    </div>      
+                    
+                    <div class="insight-row">
+                            <p class="insight-row-title"><span>*</span>Push to setting:</p>
+                            <input type="radio" name="push" id="push0" value="0" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag=="0"]checked="checked"[/#if] >None
+                            <input type="radio" name="push" id="push1" value="1" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag=="1"]checked="checked"[/#if] >All
+                            <input type="radio" name="push" id="push2" value="2" [#if webPushVO.scopeFlag?? && webPushVO.scopeFlag=="2"]checked="checked"[/#if] >Let me specify
+                            <a id="pushASetting" href="javascript:;">Advance setting</a>
+                            <input type="hidden" id="pushSetting" name="pushSetting" value="${webPushVO.scopeFlag!}">
+                    </div>      
+                    <div id="push_ext" class="insight-row" style="padding-left:110px;display:none;">
+                        <input type="checkbox" class="setting" id="push_client" name="push_client" value="${webPushVO.clientFlag!}" [#if webPushVO.clientFlag?? && webPushVO.clientFlag=='1']checked="checked"[/#if]>My Client
+                        <input type="checkbox" class="setting" id="push_prospect" name="push_prospect" value="${webPushVO.prospectFlag!}" [#if webPushVO.prospectFlag?? && webPushVO.prospectFlag=='1']checked="checked"[/#if]>My Prospect
+                        <input type="checkbox" class="setting" id="push_buddy" name="push_buddy" value="${webPushVO.buddyFlag!}" [#if webPushVO.buddyFlag?? && webPushVO.buddyFlag=='1']checked="checked"[/#if]>My Buddy
+                        <input type="checkbox" class="setting" id="push_colleague" name="push_colleague" value="${webPushVO.colleagueFlag!}" [#if webPushVO.colleagueFlag?? && webPushVO.colleagueFlag=='1']checked="checked"[/#if]>My Colleague
+                    </div>      
+
+                    <input type="hidden" name="id" id="id" value="${strategyVO.id}">
+                    <input type="hidden" name="permit_clients" id="permit_clients" value="${webViewVO.clients!}">
+                    <input type="hidden" name="permit_prospects" id="permit_prospects" value="${webViewVO.prospects!}">
+                    <input type="hidden" name="permit_buddies" id="permit_buddies" value="${webViewVO.buddies!}">
+                    <input type="hidden" name="permit_colleagues" id="permit_colleagues" value="${webViewVO.colleagues!}">
+                    <input type="hidden" name="push_clients" id="push_clients" value="${webPushVO.clients!}">
+                    <input type="hidden" name="push_prospects" id="push_prospects" value="${webPushVO.prospects!}">
+                    <input type="hidden" name="push_buddies" id="push_buddies" value="${webPushVO.buddies!}">
+                    <input type="hidden" name="push_colleagues" id="push_colleagues" value="${webPushVO.colleagues!}">
+                    <input type="hidden" name="ifPublish" id="ifPublish" value="false">
+                    
+	                <div class="btn_middle_div" style="overflow:hidden;">
+	                    <a id="btnCancle" class="wenti_btn_LightBlue" style="float:left;" href="${base}/front/strategy/info/myList.do">[@lang_res k='open.account.Cancel'/]</a>
+	                    <a class="wenti_btn_LightBlue" style="margin-left:59%;" href="${base}/front/strategy/info/addAllocation.do?id=${(strategyVO.id)?if_exists}">[@lang_res k='open.account.Previous'/]</a>
+	                    <a id="btnNext" class="wenti_btn_bule" href="javascript:;">[@lang_res k='global.release'/]</a>
+	                    <a id="btnSave" class="wenti_btn_bule" style="float:right;" href="javascript:;">[@lang_res k='global.save'/]</a>
+	                    
+	                    <input type="hidden" id="cnt_clients" value="${cnt_clients!0}">
+	                    <input type="hidden" id="cnt_prospects" value="${cnt_prospects!0}">
+	                    <input type="hidden" id="cnt_buddies" value="${cnt_buddies!0}">
+	                    <input type="hidden" id="cnt_colleagues" value="${cnt_colleagues!0}">
+	                    <a id="refreshSelection" href="javascript:;" style="display:none;"></a>                    
+	                </div>
+                </form>
+            </div>
+            <div class="clear">
+            </div>
+         </div> 
+    </div>
+</div>-->
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+seajs.use('${base}/res/web/strategy/info/addRelease.js');
+</script>

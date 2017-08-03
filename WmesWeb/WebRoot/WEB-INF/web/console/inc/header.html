@@ -1,0 +1,62 @@
+    <script>
+    	var base_root = '${base}';
+    	var logoutMsg = '[@lang_res k='global.confirm.logout'/]';
+    	var lang = '${Session["_LANG_CODE_"]!}';
+    	var menu = '${Session["_MENU_CODE_"]!}';
+    	var GLOBAL_PROMPT = '[@lang_res k='global.prompt'/]';
+    	var GLOBAL_CONTENT = '[@lang_res k="global.tab.prompt.content"/]';
+    	var GLOBAL_CLOSE = '[@lang_res k='global.close'/]';
+    	var OPEN_NEW_TAB = '[@lang_res k='global.openNewTab'/]';
+    </script>
+<div class="container-fluid pd0">
+    <nav class="navbar navbar-default border0 name-bg">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                <a class="navbar-brand logo" href="#"></a>
+            </div>
+            <div class="collapse navbar-collapse" id="defaultNavbar1">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                    </li>
+                    <li>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                <li>
+                        <a href="javascript:void(0);">${Session["_CONSOLE_USER_NAME_"]}</a>
+                    </li>  
+                    <li>
+                        <a id='logout' href="javascript:void(0);">[@lang_res k='global.admin.logout'/]</a>
+                    </li>                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                       		
+	          		       [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']
+	                       		English
+	                       [#elseif Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']
+	                      		 繁体中文
+	                      	[#else]
+	                      		简体中文 
+	                       [/#if]
+                       		<span class="caret"></span>
+                   		</a>
+                        <ul class="dropdown-menu" role="menu">                            
+                            <li>
+                               <a href="javascript:void(0);" class="langChange [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en'] langActive [/#if]" langCode="en">English</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="langChange [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"] !='tc' && Session["_LANG_CODE_"] !='en'] langActive [/#if]" langCode="sc">简体中文</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="langChange [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc'] langActive [/#if]" langCode="tc">繁体中文</a>
+                            </li>                                                       
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</div>

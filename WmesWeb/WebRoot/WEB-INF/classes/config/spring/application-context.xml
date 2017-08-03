@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"    
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:aop="http://www.springframework.org/schema/aop"   
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jee="http://www.springframework.org/schema/jee"  
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xsi:schemaLocation="    
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd  
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd  
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd  
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd"
+    default-lazy-init="true">
+    
+    <!-- 自动扫描的包注解  -->
+	<context:component-scan base-package="com.fsll">           
+	    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/classes/config/spring/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	  
+	<bean id="dataSourceProperties" class="com.fsll.common.util.ProEncryptBean">  
+        <property name="properties">  
+            <props>  
+                <prop key="user">${cpool.user}</prop>  
+                <prop key="password">${cpool.password}</prop>
+		        <prop key="initialPoolSize">5</prop>
+		        <prop key="minPoolSize">10</prop>
+		        <prop key="maxPoolSize">100</prop>
+		        <prop key="maxIdleTime">25000</prop>
+		        <prop key="acquireIncrement">3</prop>
+		        <!--  
+		        <prop key="testConnectionOnCheckout">true</prop>
+		        <prop key="idleConnectionTestPeriod">18000</prop>
+		        <prop key="testConnectionOnCheckin">true</prop>
+		        <prop key="automaticTestTable">sys_server_config</prop>
+		        -->
+            </props>  
+        </property>  
+    </bean>
+	
+	<!-- 写库 --> 
+	<bean id="wDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	    <property name="driverClass" value="${cpool.driver}" />
+		<property name="jdbcUrl" value="${wcpool.url}" />
+		<property name="properties" ref="dataSourceProperties"/>
+	</bean>
+	
+	<!-- 读库 --> 
+	<bean id="rDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${cpool.driver}" />
+		<property name="jdbcUrl" value="${rcpool.url}" />
+		<property name="properties" ref="dataSourceProperties"/>
+	</bean>
+	
+    <!-- 动态数据源 通过key-value关联数据源 -->
+    <bean id="dataSource" class="com.fsll.common.web.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry value-ref="wDataSource" key="wDataSource"></entry>
+                <entry value-ref="rDataSource" key="rDataSource"></entry>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="wDataSource"/>
+    </bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="packagesToScan">
+			<list>
+				<value>com.fsll.core.entity</value>
+				<value>com.fsll.wmes.entity</value>
+			</list> 
+		</property>	
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=${cpool.dialect}
+				<!--  
+				hibernate.autoReconnect=true
+				-->
+				hibernate.show_sql=true
+				hibernate.format_sql=false
+				hibernate.query.substitutions=true 1, false 0
+				hibernate.jdbc.fetch_size=50
+                hibernate.jdbc.batch_size=50
+                hibernate.id.new_generator_mappings=false               
+			</value>
+		</property>
+	</bean>
+	
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!--开启自动代理功能 true使用CGLIB-->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+    
+    <!-- 切换数据源 -->
+    <bean id="dataSourceAdvice" class="com.fsll.common.web.DataSourceAdvice"/>
+    <aop:config>
+        <aop:advisor pointcut="execution(* com.fsll.wmes.*.service.*.*(..)) or execution(* com.fsll.app.*.service.*.*(..)) or execution(* com.fsll.appifa.*.service.*.*(..)) or execution(* com.fsll.buscore.*.service.*.*(..)) or execution(* com.fsll.core.service.*.*(..)) or execution(* com.fsll.oms.service.*.*(..))" advice-ref="dataSourceAdvice" />
+    </aop:config>
+    
+	<!-- 配置事务管理器 -->
+	<bean id="txManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">  
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+    <!-- 注解实现事务 <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true" /> -->
+    
+    <!--配置事务的传播特性  -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<!-- 对增\删\改方法进行事务支持--> 
+			<tx:method name="save*" propagation="REQUIRED"/>  
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="create*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="edit*" propagation="REQUIRED" />
+			<tx:method name="merge*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="put*" propagation="REQUIRED" />
+			<tx:method name="use*" propagation="REQUIRED" />
+			<tx:method name="clear*" propagation="REQUIRED" />
+            <tx:method name="copy*" propagation="REQUIRED" />
+            <tx:method name="migrate*" propagation="REQUIRED" />
+			
+            <!--对查找方法进行只读事务 -->
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="query*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="load*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="count*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="check*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="valid*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="list*" propagation="SUPPORTS" read-only="true" />
+			
+            <!--对其它方法进行只读事务 -->
+            <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 只对业务逻辑层实施事务 -->
+	<aop:config expose-proxy="true">
+	    <aop:pointcut id="txPointcut" expression="execution(* com.fsll.wmes.*.service.*.*(..)) or execution(* com.fsll.app.*.service.*.*(..)) or execution(* com.fsll.appifa.*.service.*.*(..)) or execution(* com.fsll.buscore.*.service.*.*(..)) or execution(* com.fsll.core.service.*.*(..)) or execution(* com.fsll.oms.service.*.*(..))" />		
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+	</aop:config>
+	
+	<bean id="properties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/classes/config/properties/config.properties</value>
+			</list>
+		</property>
+		<qualifier value="main"/>
+	</bean>
+	<bean id="propertyUtils" class="com.fsll.common.util.PropertyUtils">
+		<property name="properties" ref="properties"/>
+	</bean>
+	
+ 	<bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+ 		<property name="defaultEncoding">
+ 			<value>utf-8</value>
+ 		</property>
+ 	</bean>
+	<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<!-- 解决 HttpMediaTypeNotAcceptableException: Could not find acceptable representation -->
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+
+ 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	  <property name="fileEncoding" value="UTF-8" />
+	  <property name="ignoreResourceNotFound" value="false"/>
+	</bean>
+	
+	<!--  
+	<bean id="websocket" class="com.fsll.wmes.websocket.handler.WebsocketEndPoint"/>
+	<websocket:handlers>
+	    <websocket:mapping path="/websocket" handler="websocket"/>
+	    <websocket:handshake-interceptors>
+	    <bean class="com.fsll.wmes.websocket.handler.HandshakeInterceptor"/>
+	    </websocket:handshake-interceptors>
+	</websocket:handlers>
+	-->
+	<!--
+    <import resource="classpath:config/spring/mongodb-context.xml" />
+	<import resource="classpath:config/spring/memcached-context.xml" />
+	<import resource="classpath:config/spring/elasticseach-context.xml" />
+	-->
+</beans>

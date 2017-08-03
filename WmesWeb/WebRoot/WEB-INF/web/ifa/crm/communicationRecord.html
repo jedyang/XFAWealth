@@ -1,0 +1,166 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/Funds.css"> 
+<link rel="stylesheet" href="${base}/res/css/other.css"> 
+<link rel="stylesheet" href="${base}/res/css/client.css"> 
+<link rel="stylesheet" href="${base}/res/css/wmesupload.css"> 
+<link rel="stylesheet" href="${base}/res/css/swiper.css"> 
+<link rel="stylesheet" href="${base}/res/css/strategy.css"> 
+<style type="text/css">
+		/*swiper 重写*/
+		/*.swiper-button-next, .swiper-button-prev {position: absolute;top: 80px;width: 50px;height: 50px;opacity: 0.7;margin-top: -22px;z-index: 10;cursor: pointer;background-position: center;background-repeat: no-repeat;display: none;}*/
+		/*.swiper-button-disabled{display: none!important;}*/
+		.swiper-button-prev{background: url('${base}/res/images/ifa/left_ico.png') no-repeat;background-size: 100% 100%;left: 0px;}
+		.swiper-button-next{background: url('${base}/res/images/ifa/right_ico.png') no-repeat;background-size: 100% 100%;right: 0px;}     
+		.ifa_choose_condition{border-bottom:0;}
+		.document-gallery-contents .swiper-button-prev{background-size: 100% 100%;left: 0px;width: 45px;opacity: 0.8;top: 45%;left: 2.5%;}
+		.document-gallery-contents .swiper-button-next{background-size: 100% 100%;right: 0px;width: 45px;opacity: 0.8;top: 45%;right: 2.5%;}
+		.upload-box{float:left;margin:45px 22px 11px 33px;}
+</style>
+<div class="wmes-content" ng-controller="ifaTableCtrl"  ng-app="ifaTable">
+<input type="hidden" id="nickName" value="[#if customer??]${customer.nickName!}[/#if]">
+ <input type="hidden" id="memberId" value="[#if customer??]${customer.member.id!}[/#if]">
+<input type="hidden" id="noTips" value="${notfind!}">
+<input type="hidden" id="dateFormat" value="${dateFormat!}">
+	<div class="ifa_choose_condition" style="min-height:678px;">
+		<p class="wmes-wrap-title">
+			<a href="javascript:history.go(-1)">
+          				<span class="wmes-ruturn"></span>
+          			</a>[@lang_res k='communication.title'/]</p>
+		<div class="funds_choice_wrap communication-choice-wrap">
+			<p class="funds_choice_title communication-choice-title">[@lang_res k='search.period'/]</p>
+			<ul class="funds_choice communication-choice">
+				<li class="fund_choice_active funds_all fund_choice_active2" data-name="Period Date" data-key="" data-value="Issue Date_00">[@lang_res k='global.all'/]</li>
+				<li data-name="Period" data-key="[@lang_res k='search.period.1w'/]" data-value="1W" >[@lang_res k='search.period.1w'/]</li>
+                <li data-name="Period" data-key="[@lang_res k='search.period.2w'/]" data-value="2W" >[@lang_res k='search.period.2w'/]</li>
+                <li data-name="Period" data-key="[@lang_res k='search.period.1m'/]" data-value="1M" >[@lang_res k='search.period.1m'/]</li>
+                <li data-name="Period" data-key="[@lang_res k='search.period.3m'/]" data-value="3M" >[@lang_res k='search.period.3m'/]</li>
+				<li class="recommend-date-li recommend-date-choice" data-name="Period" data-key="Optional" data-value="other">
+					<p class="recommend-other">[@lang_res k='global.other'/]</p>
+					<div class="recommend-other-wrap">
+						<div class="recom-input-wrap">
+							<!--<input id="recommend-date-to" readonly  class="recommend-date" type="" name="">
+							--><input id='recommend-date-to' type="text" class="laydate-icon " style="height: 22px;" name="txtAipEndDate" value="">
+						</div>
+						<p class="recommend-date-name">[@lang_res k='global.to'/]</p>
+						<div class="recom-input-wrap">
+						<!--<input id="recommend-date-from" readonly class="recommend-date" type="" name="">
+						-->
+						
+						<input id='recommend-date-from' type="text" class="laydate-icon" style="height: 22px;" name="txtAipEndDate" value="">
+						</div>
+						<a data-name="Recommend Date" class="recommend-date-button"   href="javascript:"></a>
+					</div>	
+				</li>
+			</ul>
+		</div>
+		<div class="funds_choice_wrap communication-choice-wrap">
+				<p class="funds_choice_title communication-choice-title">[@lang_res k='client.name'/]</p>
+				<ul class="communication-choice">
+                    <li>
+                        <div class="search-condition">
+                            <input type="text" id="searchKey" placeholder="" />
+                           
+                            <span class="icon_search" id="searchClientBtn"></span>
+                        </div>
+                    </li>
+                </ul>
+		</div>
+  
+		<div class="communication-contents">
+			<div class="funds_keyserach_wrap">
+				<a class="mylist-new-bn" href="javascript:;">[@lang_res k='global.add'/]</a>
+                <div class="funds_keyserach">
+                    <input type="text" id="fundName" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+                    <span class="icon_search" id="searchKeyBtn"></span>
+                </div>
+            </div>
+            
+            <ul class="communication-contents-list" style="display:none">
+            	<li class="communication-contents-rows dataListTr"  itemsId="{{items.id}}" ng-repeat="items in dataList" ng-init="checkLast($last)">
+            		<div class="communication-rows-left">
+            			<p class="communication-rows-date">{{items.date | datetime:dateFormat}}</p>
+            			<p class="communication-rows-time">{{items.time}}</p>
+            			<div class="communication-name-wrap">
+            				<img class="communication-name-img" src="${base}/res/images/client/the_villain.png">
+            				<p class="communication-name" memberId="{{items.memberId}}">{{items.clientName}}</p>
+            			</div>
+            		</div>
+            		<div class="communication-rows-right" >
+            			<textarea style="height:" disabled class="communication-textarea">{{items.memoText}}</textarea>
+                        <span class="communication-rows-edit"></span>
+                        <span class="communication-rows-del"></span>
+                        
+                        <div class="upload-box upload-album" style="display:none"></div>
+		      			<div class="photo-list" imgText="{{items.imgText}}">
+		      			<ul>
+		      			<li ng-repeat="each in items.fileList">
+		      			<input name="hid_photo_name" class="upload-eachimg-cla" type="hidden" value="{{each.filePath}}">
+		      			<div class="img-box selected" onclick="javascript:void(0);">
+		      			<img width="112" height="100" class="upload-eachimg upload-eachimg-click" id="img_{{each.id}}" src="${base}{{each.filePath | imgPath}}" bigsrc="${base}{{each.filePath  | imgPath}}" imgindex="0">
+		      			</div>
+		      			<div class="delatebc">
+		      			<a class="class-delimg a-href" id="delete_{{each.id}}" href="javascript:;" style="display: none;">
+		      			</a>&nbsp;&nbsp;
+		      			<a class="class-download a-href" id="download_{{each.id}}" href="javascript:void(0);" filepath="{{each.filePath}} ">
+		      			</a>
+		      			</div>
+		      			</li>
+		      			</ul>
+		      			</div>
+		      			
+					</div>
+            	</li>
+            </ul>
+            
+			<div class="wmes-nodata-tips">
+                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+             </div>
+		</div>
+	</div>
+	
+	
+</div>
+<div class="selectnamelistbox" style="display:none;top:0;left:0;background:rgba(0,0,0,0.3)">
+		<!-- 选择用户控件 -->
+	</div>
+<!-- 弹出层 -->
+<div class="order-plan-sapce" style="width:70%">
+	<div class="order-sapce-wrapper">
+		<div class="swiper-container">
+			<div class="order-sapce-hidden swiper-wrapper">
+				[#if crmList?exists && crmList?size gt 0] [#list crmList as list] [#if list_index%12==0]
+				<div class="order-sapce-contents swiper-slide">
+					[/#if]
+					<div class="order-space-rows" memberId="${list.memberId}">
+						<img class="order-space-portrait" src="[#if list.iconUrl?? && list.iconUrl!='']${base}${list.iconUrl}[#else][#if list.gender?? && list.gender=='F']${base}/res/images/head_f.png[#else]${base}/res/images/head_m.png[/#if][/#if]">
+						<p class="order-space-name">
+							${list.nickName}
+						</p>
+					</div>
+					[#if list_index%12==11]
+				</div>
+				[/#if] [/#list] [/#if]
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="swiper-button-next"></div>
+	<div class="swiper-button-prev"></div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<!-- 遮罩层 -->
+<div class="document-mask"></div>
+<!-- 图片查看 -->
+<div class="document-gallery-images">
+	<a href="javascript:;" class="document-gallery-close" id="document-gallery-close"></a>
+	<div class="document-gallery-contents">
+	    <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+	    <div class="document-gall-name-wrap"><span class="document-gall-name"></span> <span class="document-gall-serial">1</span>/<span class="document-gall-total">1</span></div>
+    </div>
+</div>
+<script type="text/javascript">
+	seajs.use('${base}/res/web/ifa/communicationRecord.js');
+</script>

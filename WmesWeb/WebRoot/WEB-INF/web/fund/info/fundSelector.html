@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fund Selector</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<!-- 
+功能名：基金选择器（简单）
+用途： 投资策略、组合的基金选择
+弹出窗尺寸：500x600
+
+调用前提：
+1）父窗口定义ids对象，用于保存所选的基金id值
+2）父窗口定义popupWinReturn的隐藏对象，用于选择了新基金后，回调父窗口的基金列表刷新函数
+3）父窗口定义popupWinReturn的click事件，父窗口的基金列表刷新函数
+
+输入：
+houseId - 基金公司id
+keyword - 关键词，用户基金名称查询
+
+输出：
+1）把所选的基金id值追加到父窗口的ids对象
+
+调用例子：
+http://localhost/wmes/front/fund/info/fundSelector.do?keyword=b
+ -->        
+    <script>
+        var base_root = '${base}';
+        var lang = '${Session["_LANG_CODE_"]!}';
+        var lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        if(lang=='en'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_EN.js";  
+        }else if(lang=='tc'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_TC.js";
+        }else if(lang=='sc'){
+            lang_config = base_root+"/res/third/formValidator/languages/jquery.validationEngine-zh_CN.js";
+        }        
+    </script>
+    <script type="text/javascript" src="${base}/res/js/base.js"></script>
+    <script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+    <script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+    <script type="text/javascript" src="${base}/res/third/layer/layer.js"></script>
+    <script src="${base}/res/js/util.js"></script>
+        
+    <link rel="stylesheet" href="${base}/res/css/Funds.css">
+	<style type="text/css">
+	.funds_keyword{float: left;margin-left: 20px;margin-right: 10px;}
+	.funds_keyword_div{position: relative;cursor: pointer;padding-right: 25px;border: 0px;float: left;background: url('${base}/res/images/xiala_ico.png') right no-repeat;border: #dcdadb 1px solid;border-radius: 3px;margin-left:0px;}
+	.funds_keyword_div input{cursor: pointer;color: #606060;outline: none;height: 25px;line-height: 25px;width: 400px;border: 0px;padding-left: 5px;}
+	.funds_keyword_xiala{display: none;border:1px solid #e0dfdf;z-index: 10;width: 430px;height:300px;overflow:auto;color: black;position: absolute;background-color: white;padding:0px 0px 0px 0px;}
+	.funds_keyword_xiala li{background-color: white;height: 30px;line-height: 30px; padding-left: 5px;   color: #606060;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+	.funds_keyword_xiala li:hover{  background-color: #4ba6de;color: white;}
+	
+	.funds_keyword_search {position: relative;cursor: pointer;width: 405px;padding-right: 25px;border: 0px;float: left;background: url('${base}/res/images/u47_16.png') right no-repeat;border: #dcdadb 1px solid;border-radius: 3px;margin-left:0px;padding-left:0px;}
+	.funds_keyword_input {cursor: pointer;color: #606060;outline: none;height: 25px;line-height: 25px;width: 400px;border: 0px;padding-left: 5px;}
+	.funds_keyword_search ul{width: 430px;padding-top:0px;}
+	.funds_keyword_search_xiala{border:1px solid #e0dfdf;z-index: 9;width: 430px;height:300px;overflow:auto;color: black;position:fixed;background-color: white;padding:0px 0px 0px 0px;font-size:14px; }
+	.funds_keyword_search_xiala li{background-color: white;height: 30px;line-height: 30px; padding-left: 5px;   color: #606060;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+	.funds_keyword_search_xiala li:hover{  background-color:#4ba6de;color: white;}
+	.funds_keyword_search_xiala .selected_active{background-color:orange;color: white;}
+	
+    .btn_middle_div{ clear:both; text-align:center;}
+	.btn_middle{ width:100px; height:35px;z-index: 13; line-height:35px; color:#fff; font-size:16px; text-align:center; background:#2d80ce; border-radius:3px; display:inline-block;text-decoration:none;}
+	</style>
+  </head>
+  
+  <body>
+    <div class="blue_background">
+        <div class="kaihu_div">
+            <div class="white_background funds_background">
+                <input type="hidden" id="id">
+                <table style="width:500px;border:0px;">
+                    <tr>
+                        <td align="center"><h3>[@lang_res k='fund.info.comparison.addFund'/]</h3></td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <div class="funds_keyword">
+	                        <div class="funds_keyword_div">
+	                            <input type="text" placeholder="[@lang_res k='fund.info.comparison.fundHouseSearch'/]" readonly>
+	                            <ul class="funds_keyword_xiala" style="">
+	                                <li data-id=''><-- [@lang_res k='fund.info.comparison.fundHouseSearch'/] --></li>
+	                            [#if fundHouseList??]
+	                            [#list fundHouseList as rec]
+	                                <li data-id='${rec.id!""}'>${rec.name!""}</li>
+	                            [/#list]
+	                            [/#if]
+	                            </ul>
+	                        </div>
+	                    </div>                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">&nbsp;</td>
+                    </tr>
+                    <tr valign="top" style="height:350px;">
+                        <td>
+                        <div class="funds_keyword">
+	                        <div class="funds_keyword_search">
+	                            <input type="text" id="keyword_input" class="funds_keyword_input" placeholder="[@lang_res k='fund.selector.keyword'/]" value="${keyword!}">
+	                            <ul class="funds_keyword_search_xiala">
+	                            </ul>
+	                        </div>
+	                    </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <div class="btn_middle_div">
+                            <a href="javascript:;" id="btnOK" class="btn_middle">[@lang_res k='global.confirm'/]</a>
+                            <a href="javascript:window.close();" id="btnCancel" class="btn_middle">[@lang_res k='global.cancel'/]</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
+<script type="text/javascript">
+seajs.use(['jquery','layer'], function($){
+    $(".funds_keyword_search_xiala").show();
+    refreshSelList($(this));
+    
+    $(".funds_keyword_div").on("click",function(){      
+
+        if( $(this).find("ul").hasClass("funds_keyword_active") ){
+            $(this).find("ul").removeClass("funds_keyword_active").hide();
+        }else{
+            $(this).find("ul").addClass("funds_keyword_active").show();
+        }
+    });
+    var houseId = '';
+    $(".funds_keyword_xiala li").on("click",function(){
+        if ($(this).attr("data-id"))
+            $(".funds_keyword_div").find("input").val($(this).html());
+        else
+            $(".funds_keyword_div").find("input").val("");
+        houseId = $(this).attr("data-id");
+        refreshSelList($(this));
+    });
+
+    
+/*    $(".funds_keyword_search_xiala").on("click",function(){
+        refreshSelList($(this));
+    });*/
+    $(".funds_keyword_search_xiala").on("click","li",function(){//可多选
+        //$(".funds_keyword_input").val($(this).html());
+        if ($(this).hasClass("selected_active"))
+            $(this).removeClass("selected_active");
+        else
+            $(this).addClass("selected_active");
+        var id = $(this).attr("data-id");
+        //alert(id);
+        //$("#id").val(id);
+        //alert($("#id").val());
+    });
+    // $(".funds_keyword_search").on("click",function(){        
+
+    //  if( $(this).find("ul").hasClass("funds_keyword_active") ){
+    //      $(this).find("ul").removeClass("funds_keyword_active").hide();
+    //  }else{
+    //      $(this).find("ul").addClass("funds_keyword_active").show();
+    //  }
+    // });
+    
+ 
+    $(".funds_keyword_input").on("focus",function(){
+        $(this).parent().find("ul").addClass("funds_keyword_active").show();
+        //refreshSelList($(this));
+    });
+   /*$(".funds_keyword_input").on("blur",function(){
+        var _this = $(this);
+        setTimeout(function(){
+            _this.parent().find("ul").removeClass("funds_keyword_active").hide();
+        },200);
+        
+    });*/
+    $(".funds_keyword_input").on("keyup",function(){
+        refreshSelList($(this));
+    });
+    function refreshSelList(obj){
+        $(".funds_keyword_search_xiala").children().remove();
+        $.post(base_root+"/front/fund/info/getFundList.do",{'houseId':houseId,'keyword':$("#keyword_input").val()}, function (values) {
+            //alert(values);
+            values = $.parseJSON( values ); //json字符串转对象
+            var len = 10;//限显示头10条记录。values.length;
+            for (var i=0;i<len;i++){
+                $(".funds_keyword_search_xiala").append('<li data-id="'+values[i].fundId+'">'+ values[i].name +'</li>');
+            }
+        }); 
+    }
+    
+    $("#btnOK").on("click",function(){
+        var id = "";
+        $(".selected_active").each(function() {
+            if (id.length>0) id += ",";
+                id += $(this).attr("data-id");
+　　　　});
+        
+        if (!id){
+            //alert("Please select a fund.");
+            layer.alert("[@lang_res k='fund.selector.pleaseSelect'/]");
+            return;
+        }
+
+        if (!window.opener){
+            //alert("Getting opener unsuccessfully.\nThe result can not be return:\n"+id);
+            layer.alert("[@lang_res k='fund.selector.openerError'/]"+id);
+            return;
+        }
+        
+        //获取父窗口的id对象，添加新id值
+        var parent_parm_ids = window.opener.document.getElementById("ids");
+        if (!parent_parm_ids){
+            //alert("Getting opener object unsuccessfully.\nThe result can not be return:\n"+id);
+            layer.alert("[@lang_res k='fund.selector.openerObjError'/]"+id);
+            return;
+        }        
+        var _ids_ = "";
+        try{
+            _ids_ = parent_parm_ids.value;
+        }catch(e){
+            _ids_ = "";
+        }
+        if (_ids_.length>0)
+            _ids_ += ","+id;
+        else _ids_ = id;
+        //alert(_ids_);
+        parent_parm_ids.value=_ids_;
+        
+        //alert(parent_parm_ids.value);
+        //调用父窗口的基金列表刷新方法
+        window.opener.document.getElementById("popupWinReturn").click();
+        window.close();
+    });
+    
+});    
+</script>

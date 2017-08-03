@@ -1,0 +1,999 @@
+package com.fsll.wmes.investor.action.console;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fsll.common.CommonConstants;
+import com.fsll.common.util.DateUtil;
+import com.fsll.common.util.JsonUtil;
+import com.fsll.common.util.PropertyUtils;
+import com.fsll.core.CoreConstants;
+import com.fsll.core.base.CoreBaseAct;
+import com.fsll.core.entity.AccessoryFile;
+import com.fsll.core.entity.SysAdmin;
+import com.fsll.core.service.SysParamService;
+import com.fsll.core.service.SysRoleService;
+import com.fsll.wmes.common.CommonConstantsWeb;
+import com.fsll.wmes.entity.FundInfo;
+import com.fsll.wmes.entity.InvestorAccount;
+import com.fsll.wmes.entity.InvestorAccountBank;
+import com.fsll.wmes.entity.InvestorAccountContact;
+import com.fsll.wmes.entity.InvestorAccountContactAddr;
+import com.fsll.wmes.entity.InvestorBackground;
+import com.fsll.wmes.entity.InvestorTraining;
+import com.fsll.wmes.entity.MemberAdmin;
+import com.fsll.wmes.entity.MemberBase;
+import com.fsll.wmes.entity.MemberDistributor;
+import com.fsll.wmes.entity.MemberIfa;
+import com.fsll.wmes.entity.PortfolioHoldProduct;
+import com.fsll.wmes.entity.ProductInfo;
+import com.fsll.wmes.entity.RpqExam;
+import com.fsll.wmes.fund.service.FundInfoService;
+import com.fsll.wmes.fund.vo.GeneralDataVO;
+import com.fsll.wmes.ifa.service.IfaManageService;
+import com.fsll.wmes.investor.service.InvestorService;
+import com.fsll.wmes.investor.service.InvestorServiceForConsole;
+import com.fsll.wmes.investor.vo.FileVO;
+import com.fsll.wmes.investor.vo.InvestorAccountHoldVO;
+import com.fsll.wmes.investor.vo.InvestorAccountVO;
+import com.fsll.wmes.member.service.MemberBaseService;
+import com.fsll.wmes.member.vo.DocListVO;
+import com.fsll.wmes.rpq.service.RpqService;
+import com.fsll.wmes.web.service.DistributorService;
+
+/*****
+ * Investor开户信息
+ * 
+ * @author zxtan 2016-08-22
+ */
+@Controller
+@RequestMapping(value = "/console/investor/account")
+public class ConsoleInvestorAccountAct extends CoreBaseAct {
+
+	@Autowired
+	private InvestorServiceForConsole investorService;
+	
+	@Autowired
+	private IfaManageService ifaManageService;
+	
+	@Autowired
+	private MemberBaseService memberBaseService;
+	
+	@Autowired
+	private DistributorService distributorService;
+	 
+	@Autowired
+	private InvestorService frontinvestorService;
+
+	@Autowired
+	private RpqService rpqService;
+	@Autowired
+	private SysParamService sysParamService;
+
+	private final static String COMP_WS_SERVER = "http://192.168.138.70/comp";
+
+	@Autowired
+	private SysRoleService sysRoleService;
+
+	@Autowired
+	private FundInfoService fundInfoService;
+	
+	 
+	
+	/**
+	 * 投资人账户列表
+	 * @author zxtan
+	 * @date 2016-08-22
+	 */
+	@RequestMapping(value = "/list")
+	public String accountlist(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		this.isMobileDevice(request, model);
+		String memberId = request.getParameter("memberId");
+		MemberBase memberBase = memberBaseService.findById(memberId);
+		model.put("memberBase",memberBase);
+		return "console/investor/account/list";
+	}
+
+	/**
+	 * 投资人账户列表json数据
+	 * @author qgfeng
+	 * @date 2016-11-30
+	 */
+	@RequestMapping(value = "/listJson")
+	public void listJson(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		jsonPaging = this.getJsonPaging(request);
+		String langCode=getLoginLangFlag(request);
+		String accountNo=request.getParameter("accountNo");
+		String distributor=request.getParameter("distributor");
+		String status=request.getParameter("status");
+		String customer=request.getParameter("customer");
+		InvestorAccountVO info=new InvestorAccountVO();
+		info.setAccountNo(accountNo);
+		info.setFlowStatus(status);
+		info.setDistributorName(distributor);
+		info.setNickName(customer);
+		
+		jsonPaging = investorService.findInvestorAccount(jsonPaging,info,langCode);
+		this.toJsonString(response, jsonPaging);
+	}
+
+	/**
+	 * 分页获得记录
+	 * @author zxtan
+	 */
+	@RequestMapping(value = "/input", method = RequestMethod.GET)
+	public String input(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String id = request.getParameter("id");
+		InvestorAccount obj = investorService.findInvestorAccountById(id);
+		model.put("infoVO", obj);
+		return "console/investor/account/input";
+	}
+	
+	/**
+	 * 分页获得记录
+	 * @author zxtan
+	 */
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String save(InvestorAccountVO info, HttpServletResponse response) {
+		Map<String,Object> obj = new HashMap<String, Object>();
+		boolean result = false;
+		try {
+			InvestorAccount account = investorService.findInvestorAccountById(info.getId());
+			if(account == null){
+				account = new InvestorAccount();
+				account.setCreateTime(new Date());
+			}
+			account.setAccountNo(info.getAccountNo());
+			account.setTotalFlag(info.getTotalFlag());
+			account.setFromType(info.getFromType());
+			account.setAccType(info.getAccType());
+			account.setInvestType(info.getInvestType());
+			account.setCies(info.getCies());
+			//account.setFaca(info.getFaca());
+			account.setDividend(info.getDividend());
+			account.setBaseCurrency(info.getBaseCurrency());
+			account.setPurpose(info.getPurpose());
+			account.setPurposeOther(info.getPurposeOther());
+			account.setSentBy(info.getSentBy());
+			account.setDiscFlag(info.getDiscFlag());
+			account.setSubmitStatus(info.getSubmitStatus());
+			account.setOpenStatus(info.getOpenStatus());
+			account.setCurStep(info.getCurStep());
+			account.setFinishStatus(info.getFinishStatus());
+			account.setFlowId(info.getFlowId());
+			account.setFinishStatus(info.getFinishStatus());
+			account.setLastUpdate(new Date());
+			account.setAuthorized(info.getAuthorized());
+			account.setIsValid(info.getIsValid());
+			MemberIfa ifa = ifaManageService.findIfaById(info.getIfaId());
+			MemberDistributor distributor = distributorService.findDistributorById(info.getDistributorId());
+			if(ifa != null){
+				account.setIfa(ifa);
+			}
+			if(distributor != null){
+				account.setDistributor(distributor);
+			}
+			account = frontinvestorService.saveOrUpdateInvestorAccount(account);
+			if(account != null){
+				result = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			obj.put("result",result);
+			JsonUtil.toWriter(obj, response);
+		}
+		
+		return null;
+	}
+	
+	
+
+	/**
+	 * 投资人开户列表分页列表
+	 * @author zxtan
+	 * @date 2016-08-22
+	 */
+	@RequestMapping(value = "/ifafirmToDoList")
+	public String ifafirmList(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+
+		this.isMobileDevice(request, model);
+		return "console/investor/account/ifafirmlist";
+	}
+
+	/**
+	 * 分页获得记录
+	 * 
+	 * @author zxtan
+	 */
+	@RequestMapping(value = "/listJsonForIfafirm", method = RequestMethod.POST)
+	public String listJsonForIfafirm(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+
+		jsonPaging = this.getJsonPaging(request);
+		// String keyword = request.getParameter("keyword");
+		//MemberAdmin memberAdmin = (MemberAdmin) request.getSession().getAttribute(CoreConstants.CONSOLE_USER_ADMIN);
+		//String adminType = memberAdmin.getType();
+		String adminType = "1";
+		//String adminTypeMemberId = "";
+
+		// adminType = "1";
+		if (CommonConstantsWeb.MEMBERADMIN_TYPE_IFA.equals(adminType)) {
+			//adminTypeMemberId = memberAdmin.getIfafirm().getId();
+			jsonPaging = investorService.findInvestorAccountForApproval(jsonPaging, adminType, null, null);
+		} else {
+			jsonPaging.setList(null);
+		}
+
+		this.toJsonString(response, jsonPaging);
+		return null;
+	}
+
+	/**
+	 * 投资人开户列表分页列表
+	 * 
+	 * @author zxtan
+	 * @date 2016-08-22
+	 */
+	@RequestMapping(value = "/distributorToDoList")
+	public String distributorList(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+
+		this.isMobileDevice(request, model);
+		return "console/investor/account/distributorlist";
+	}
+
+	/**
+	 * 分页获得记录
+	 * 
+	 * @author zxtan
+	 */
+	@RequestMapping(value = "/listJsonForDistributor", method = RequestMethod.POST)
+	public String listJsonForDistributor(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+
+		jsonPaging = this.getJsonPaging(request);
+		// String keyword = request.getParameter("keyword");
+		//MemberAdmin memberAdmin = (MemberAdmin) request.getSession().getAttribute(CoreConstants.CONSOLE_USER_ADMIN);
+		//String adminType = memberAdmin.getType();
+		//String adminTypeMemberId = "";
+		String adminType = "2";
+		if (CommonConstantsWeb.MEMBERADMIN_TYPE_DISTRIBUTOR.equals(adminType)) {
+			//adminTypeMemberId = memberAdmin.getDistributor().getId();
+			jsonPaging = investorService.findInvestorAccountForApproval(jsonPaging, adminType, null, null);
+		} else {
+			jsonPaging.setList(null);
+		}
+
+		this.toJsonString(response, jsonPaging);
+		return null;
+	}
+
+	/**
+	 * 投资账号审批（Ifafirm,Distributor审批）
+	 * 
+	 * @author zxtan
+	 * @date 2016-08-24
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping(value = "/approval", method = RequestMethod.POST)
+	public void updateFlowStatus(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		// modify by mqzou 2016-08-31
+		String actionMsg = "global.success";
+		String comment = request.getParameter("comment");
+		// String todoId = request.getParameter("id");
+		String todoId = "";
+		String status = request.getParameter("status");
+		String accountId = request.getParameter("accountId");
+		MemberAdmin memberAdmin = (MemberAdmin) request.getSession().getAttribute(CoreConstants.CONSOLE_USER_ADMIN);
+		String userId = memberAdmin.getMember().getId();
+
+		// 获取当前工作流信息
+		String urlString = COMP_WS_SERVER + "/service/component/workflow/get.r";
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("invokCode", "Investor_open_account");
+		jsonObj.put("businessId", accountId);
+		jsonObj.put("userId", userId);
+		String jsonString = jsonObj.toString();
+		String getResult = sendWebServiceByBody(urlString, jsonString);
+
+		String instanseId = "";
+
+		JSONObject instanseObj = new JSONObject();
+		JSONObject memberDataJSON = (JSONObject) JSONSerializer.toJSON(getResult);
+		if (null != memberDataJSON) {
+			String dataJson = memberDataJSON.getString("data");
+			if (null != dataJson && !"".equals(dataJson) && !"null".equals(dataJson)) {
+				instanseObj = (JSONObject) JSONSerializer.toJSON(dataJson);
+				if (null != instanseObj)
+					instanseId = instanseObj.getString("instanseId");
+			}
+		}
+
+		// 更新工作流
+		urlString = COMP_WS_SERVER + "/service/component/workflow/update.r";
+		jsonObj = new JSONObject();
+
+		jsonObj.put("todoId", todoId);
+		jsonObj.put("invokCode", "Investor_open_account");
+		jsonObj.put("businessId", accountId);
+		jsonObj.put("instanseId", instanseId);
+		jsonObj.put("checkStatus", status);
+		jsonObj.put("comment", comment);
+		jsonObj.put("flowUserId", userId);
+
+		jsonString = jsonObj.toString();
+		String result = sendWebServiceByBody(urlString, jsonString);
+
+		JSONObject resultObject = (JSONObject) JSONSerializer.toJSON(result);
+
+		Map<String, Object> obj = new HashMap<String, Object>();
+		String completeStatus = "";// 完成状态 0 待选择然后下一步 1本次流程已完成不需要下一步操作并且待下一个流程
+									// 2开户流程已完全完成
+		if (null != resultObject) {
+			String ret = resultObject.getString("ret");
+			if ("1".equals(ret)) {
+				String curFlowStatus = resultObject.getString("currFlowState");
+				String data = resultObject.getString("data");
+				if ("1".equals(curFlowStatus)) {// 如果当前环节已完成
+					if (null != data && !"".equals(data)) {
+						jsonObj = (JSONObject) JSONSerializer.toJSON(data);
+						instanseId = jsonObj.getString("id");
+						String roleId = jsonObj.getString("flowRole");
+						String flowRoleAlluser = jsonObj.getString("flowRoleAlluser");
+						String beginOrEnd = jsonObj.getString("beginOrEnd");
+
+						if (!"2".equals(beginOrEnd)) {// 如果流程未结束
+							if ("1".equals(flowRoleAlluser)) {
+								List userList = sysRoleService.findUserInRole(roleId);
+								// JSONArray jsonArray = new JSONArray();
+								data = addFlow(accountId, userId, instanseId,
+										data, userList);
+
+								InvestorAccount account = frontinvestorService.findInvestorAccountById(accountId);
+
+								String flowStatus = account.getFlowStatus();
+								int flowInt = Integer.parseInt(flowStatus);
+								String flowId = "";
+								if (null != data && !"".equals(data) && !"null".equals(data)) {
+									jsonObj = (JSONObject) JSONSerializer.toJSON(data);
+									flowId = jsonObj.getString("instanseId");
+								}
+								if ("1".equals(status)) {
+									account.setFlowStatus(String.valueOf(flowInt + 1));// 审批通过转到下一步
+								} else {
+									account.setFlowStatus("2");// 2流程审核不通过结束返回
+								}
+								account.setFlowId(flowId);
+
+								// 更新账户信息
+								frontinvestorService.saveOrUpdateInvestorAccount(account);
+								completeStatus = "1";// 本次流程已完成不需要下一步操作并且待下一个流程
+							} else {
+								completeStatus = "0";// 0 待选择然后下一步
+								obj.put("roleId", roleId);
+								obj.put("instanseId", instanseId);
+								obj.put("actionStatus", status);
+							}
+						} else {// 流程结束
+							obj.put("accountId", accountId);
+							completeStatus = "2";// 整个流程结束
+						}
+					}
+				} else if ("2".equals(curFlowStatus)) {// 退回
+					jsonObj = (JSONObject) JSONSerializer.toJSON(data);
+					instanseId = jsonObj.getString("id");
+					String roleId = jsonObj.getString("flowRole");
+					String flowRoleAlluser = jsonObj.getString("flowRoleAlluser");
+					if ("1".equals(flowRoleAlluser)) {
+						List userList = sysRoleService.findUserInRole(roleId);
+						data = addFlow(accountId, userId, instanseId, data,
+								userList);
+
+						InvestorAccount account = frontinvestorService.findInvestorAccountById(accountId);
+
+						String flowStatus = account.getFlowStatus();
+						int flowInt = Integer.parseInt(flowStatus);
+						String flowId = "";
+						if (null != data && !"".equals(data) && !"null".equals(data)) {
+							jsonObj = (JSONObject) JSONSerializer.toJSON(data);
+							flowId = jsonObj.getString("instanseId");
+						}
+						if ("1".equals(status)) {
+							account.setFlowStatus(String.valueOf(flowInt + 1));// 审批通过转到下一步
+						} else {
+							account.setFlowStatus("2");// 2流程审核不通过结束返回
+						}
+						account.setFlowId(flowId);
+
+						// 更新账户信息
+						frontinvestorService.saveOrUpdateInvestorAccount(account);
+						completeStatus = "1";// 本次流程已完成不需要下一步操作并且待下一个流程
+					} else {
+						completeStatus = "0";// 0 待选择然后下一步
+						obj.put("roleId", roleId);
+						obj.put("instanseId", instanseId);
+						obj.put("actionStatus", status);
+					}
+
+				} else if ("9".equals(curFlowStatus)) {// //整个流程结束
+					obj.put("accountId", accountId);
+					completeStatus = "2";// 整个流程结束
+				}
+				obj.put("result", true);
+				obj.put("status", completeStatus);
+				obj.put("msg", PropertyUtils.getPropertyValue(this.getLoginLangFlag(request), actionMsg, null));
+			} else {
+				obj.put("result", false);
+				String msg = resultObject.getString("errorMsg");
+				obj.put("msg", msg);
+			}
+		}
+
+		JsonUtil.toWriter(obj, response);
+	}
+
+	/**
+	 * 添加待办
+	 * @param accountId
+	 * @param userId
+	 * @param instanseId
+	 * @param data
+	 * @param userList
+	 * @return
+	 */
+	private String addFlow(String accountId, String userId, String instanseId,
+			String data, List userList) {
+		String urlString;
+		JSONObject jsonObj;
+		String jsonString;
+		String result;
+		JSONObject resultObject;
+		if (null != userList && !userList.isEmpty()) {
+			urlString = COMP_WS_SERVER + "/service/component/workflow/insert.r";
+			Iterator it = userList.iterator();
+			while (it.hasNext()) {
+				MemberBase user = (MemberBase) it.next();
+				jsonObj = new JSONObject();
+				jsonObj.put("invokCode", "Investor_open_account");
+				jsonObj.put("businessId", accountId);
+				jsonObj.put("instanseId", instanseId);
+				jsonObj.put("flowUserIds", userId);
+				jsonObj.put("todoUrl", "");
+				jsonObj.put("userId", user.getId());
+				// jsonArray.add(jsonObj);
+				jsonString = jsonObj.toString();
+				result = sendWebServiceByBody(urlString, jsonString);
+				resultObject = new JSONObject();
+				resultObject = (JSONObject) JSONSerializer.toJSON(result);
+				if (null != resultObject.getString("data") && !"".equals(resultObject.getString("data")) && !"null".endsWith(resultObject.getString("data")))
+					data = resultObject.getString("data");
+			}
+		}
+		return data;
+	}
+
+	/**
+	 * 设置审批人后添加待办
+	 * 
+	 * @author mqzou
+	 * @date 2016-09-02
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/submitApprover", method = RequestMethod.POST)
+	public void insertFlow(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String userId = request.getParameter("userId");
+		String accountId = request.getParameter("accountId");
+		String instanseId = request.getParameter("instanceId");
+		String status = request.getParameter("status");
+
+		String urlString = COMP_WS_SERVER + "/service/component/workflow/insert.r";
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("invokCode", "Investor_open_account");
+		jsonObj.put("businessId", accountId);
+		jsonObj.put("instanseId", instanseId);
+		jsonObj.put("flowUserIds", userId);
+		jsonObj.put("todoUrl", "");
+		jsonObj.put("userId", userId);
+		String jsonString = jsonObj.toString();
+		String result = sendWebServiceByBody(urlString, jsonString);
+		Map<String, Object> obj = new HashMap<String, Object>();
+
+		jsonObj = (JSONObject) JSONSerializer.toJSON(result);
+		if ("1".equals(jsonObj.getString("ret"))) {
+			obj.put("result", true);
+		} else {
+			obj.put("result", false);
+			obj.put("msg", jsonObj.getString("errorMsg"));
+
+		}
+
+		InvestorAccount account = frontinvestorService.findInvestorAccountById(accountId);
+		String flowStatus = account.getFlowStatus();
+		int flowInt = Integer.parseInt(flowStatus);
+		String flowId = "";
+		String data = jsonObj.getString("data");
+		if (null != data && !"".equals(data) && !"null".equals(data)) {
+			jsonObj = (JSONObject) JSONSerializer.toJSON(data);
+			flowId = jsonObj.getString("instanseId");
+		}
+		if ("1".equals(status)) {
+			account.setFlowStatus(String.valueOf(flowInt + 1));// 审批通过转到下一步
+		} else {
+			account.setFlowStatus("2");// 退回到ifa提交以前
+		}
+		account.setFlowId(flowId);
+
+		// 更新账户信息
+		frontinvestorService.saveOrUpdateInvestorAccount(account);
+		JsonUtil.toWriter(obj, response);
+	}
+
+	/**
+	 * 输入帐号页面
+	 * 
+	 * @author mqzou
+	 * @date 2016-09-05
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/inputAccountNo", method = RequestMethod.GET)
+	public String showAccountComplete(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		/*
+		 * String roleId = request.getParameter("roleId"); List userList =
+		 * sysRoleService.findUserInRole(roleId); model.put("users", userList);
+		 */
+
+		String accountId = request.getParameter("accountId");
+		model.put("accountId", accountId);
+		return "console/investor/approve/dialog_completeaccount";
+	}
+
+	/**
+	 * 写入帐号
+	 * 
+	 * @author mqzou
+	 * @date 2016-09-05
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping(value = "/completeAccountNo", method = RequestMethod.POST)
+	public void completeAccountNo(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String accountId = request.getParameter("accountId");
+		String accountNo = request.getParameter("accountNo");
+		InvestorAccount account = investorService.findById(accountId);
+		Map<String, Object> obj = new HashMap<String, Object>();
+		if (null != account) {
+			account.setAccountNo(accountNo);
+			account = frontinvestorService.saveOrUpdateInvestorAccount(account);
+			if (null != account)
+				obj.put("result", true);
+			else {
+				obj.put("result", false);
+			}
+		} else {
+			obj.put("result", false);
+		}
+		JsonUtil.toWriter(obj, response);
+	}
+
+	/**
+	 * 开户申请审批选择审批人页面（IFA、IFA supervisor）
+	 * 
+	 * @author mqzou
+	 * @date 2016-09-01
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/selectApprover", method = RequestMethod.GET)
+	public String showSelectUserDialog(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String roleId = request.getParameter("roleId");
+		List userList = sysRoleService.findUserInRole(roleId);
+		model.put("users", userList);
+
+		return "console/investor/approve/dialog_selectapproveuser";
+	}
+
+	/**
+	 * 开户申请审批页面（IFA、IFA supervisor）
+	 * 
+	 * @author mqzou
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/accountApprove", method = RequestMethod.GET)
+	public String accountApprove(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String accountId = request.getParameter("accountId");
+		model.put("accountId", accountId);
+
+		return "console/investor/approve/approveform";
+		// return "investor/accountApprove";
+	}
+
+	/**
+	 * 开户申请审批页面（IFA、IFA supervisor）
+	 * 
+	 * @author mqzou
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/accountInfomartion", method = RequestMethod.GET)
+	public String accountInfomartion(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String accountId = request.getParameter("accountId");
+		model.put("accountId", accountId);
+		String lang = this.getLoginLangFlag(request);
+
+		List hisList = investorService.findApproveHis(accountId);
+		model.put("approveHis", hisList);
+
+		List imgList = investorService.findAccountFileList(accountId, lang, "appli_form_image");// 开户的扫描件
+
+		List list = new ArrayList();
+
+		Iterator it = imgList.iterator();
+		while (it.hasNext()) {
+			AccessoryFile file = (AccessoryFile) it.next();
+			FileVO vo = new FileVO();
+			vo.setAlt("");
+			vo.setPid(file.getId());
+			vo.setSrc("${base}" + file.getFilePath());
+			vo.setThumb("${base}" + file.getFilePath());
+			list.add(vo);
+		}
+		model.put("imgList", list);
+		model.put("imgJson", JsonUtil.toJson(list));
+
+		List docList = investorService.findAccountFileList(accountId, lang, "doc_check");// 开户的扫描件
+
+		list = new ArrayList();
+
+		it = docList.iterator();
+		while (it.hasNext()) {
+			AccessoryFile file = (AccessoryFile) it.next();
+			FileVO vo = new FileVO();
+			vo.setAlt("");
+			vo.setPid(file.getId());
+			vo.setSrc("${base}" + file.getFilePath());
+			vo.setThumb("${base}" + file.getFilePath());
+			list.add(vo);
+		}
+		model.put("docList",  list);
+		model.put("docJson", JsonUtil.toJson(list));
+
+		return "console/investor/approve/accountInfomartion";
+		// return "investor/accountApprove";
+	}
+
+	// basic
+	@RequestMapping(value = "/basicInformation", method = RequestMethod.GET)
+	public String basicInformation(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String lang = this.getLoginLangFlag(request);
+		// 财富来源
+		List<GeneralDataVO> fundsSource = findSysParameters("", lang);
+		String iAccountId = request.getParameter("accountId");
+		InvestorAccount iAccount = investorService.findInvestorAccountById(iAccountId);
+
+		InvestorAccountContact iContact = frontinvestorService.findIContactByType(iAccount, "M", lang);// 主要联系人
+		InvestorAccountContactAddr iContactAddrR = frontinvestorService.findIContactAddr(iContact, "R");
+		InvestorAccountContactAddr iContactAddrP = frontinvestorService.findIContactAddr(iContact, "P");
+		InvestorAccountContactAddr iContactAddrC = frontinvestorService.findIContactAddr(iContact, "C");
+		InvestorAccountBank iBank = frontinvestorService.findBankAgeasByAccid(iAccount);
+
+		InvestorAccountContact iContactJoint = new InvestorAccountContact();
+		InvestorAccountContactAddr iContactJointAddrR = new InvestorAccountContactAddr();
+		InvestorAccountContactAddr iContactJointAddrP = new InvestorAccountContactAddr();
+		InvestorAccountContactAddr iContactJointAddrC = new InvestorAccountContactAddr();
+		if (null != iAccount && "J".equals(iAccount.getAccType())) {
+			iContactJoint = frontinvestorService.findIContactByType(iAccount, "J", lang);// 关联联系人
+			iContactJointAddrR = frontinvestorService.findIContactAddr(iContactJoint, "R");
+			iContactJointAddrP = frontinvestorService.findIContactAddr(iContactJoint, "P");
+			iContactJointAddrC = frontinvestorService.findIContactAddr(iContactJoint, "C");
+		}
+		model.put("accountId", iAccountId);
+		model.put("iAccount", iAccount);
+		model.put("iContact", iContact);
+		model.put("iContactAddr_r", iContactAddrR);
+		model.put("iContactAddr_p", iContactAddrP);
+		model.put("iContactAddr_c", iContactAddrC);
+		model.put("iContactJoint", iContactJoint);
+		model.put("iContactJointAddr_r", iContactJointAddrR);
+		model.put("iContactJointAddr_p", iContactJointAddrP);
+		model.put("iContactJointAddr_c", iContactJointAddrC);
+		model.put("iBank", iBank);
+		model.put("fundSource", fundsSource);
+
+		return "console/investor/approve/basicInfo";
+	}
+
+	// applicantsform
+	@RequestMapping(value = "/applicantsformation", method = RequestMethod.GET)
+	public String applicantsform(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String lang = this.getLoginLangFlag(request);
+		String accountId = request.getParameter("accountId");
+
+		List<AccessoryFile> imgList = investorService.findAccountFileList(accountId, lang, "appli_form_image");// 开户的扫描件
+
+		List list = new ArrayList();
+
+		Iterator it = imgList.iterator();
+		while (it.hasNext()) {
+			AccessoryFile file = (AccessoryFile) it.next();
+			FileVO vo = new FileVO();
+			vo.setAlt("");
+			vo.setPid(file.getId());
+			vo.setSrc("${base}" + file.getFilePath());
+			vo.setThumb("${base}" + file.getFilePath());
+			list.add(vo);
+		}
+		model.put("imgList", list);
+		return "console/investor/approve/applicantsform";
+	}
+
+	// dialogshowpdf
+	@RequestMapping(value = "/dialogshowpdf", method = RequestMethod.GET)
+	public String dialogshowpdf(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String accountId = request.getParameter("accountId");
+		String lang = this.getLoginLangFlag(request);
+
+		List pdfList = investorService.findAccountFileList(accountId, lang, "appli_form_pdf");// 开户的pdf文件
+		model.put("pdfList", pdfList);
+		return "console/investor/approve/dialog_showpdf";
+	}
+
+	// rqp
+	@RequestMapping(value = "/rpqInformation", method = RequestMethod.GET)
+	public String rpqInformation(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+
+		String accountId = request.getParameter("accountId");
+		InvestorAccount investorAccount = rpqService.getInvestorAccount(accountId);
+
+		/*String examId = investorAccount.getRpqExam().getId();
+		RpqPageLevel level = rpqService.loadRpqLevelMsg(examId, this.getLoginLangFlag(request));
+		List<RpqListVO> examList = rpqService.findExamList(examId, this.getLoginLangFlag(request));
+
+		model.put("level", level);
+		model.put("rpqList", examList);
+		model.put("examId", examId);*/
+		model.put("validity", "true");
+		model.put("accountId", accountId);
+		model.put("investorAccount", investorAccount);
+
+		return "console/investor/approve/rqpInfo";
+
+	}
+
+	// docCheck
+	@RequestMapping(value = "/docCheckInformation", method = RequestMethod.GET)
+	public String docCheckInfo(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+
+		String accountId = request.getParameter("accountId");
+		InvestorAccount iAccount = investorService.findInvestorAccountById(accountId);
+		String memberId = iAccount.getMember().getId();
+		String mainContactId = frontinvestorService.getAccountContactId(accountId, "M");
+		String accType = iAccount.getAccType();
+		String distrubuteId = "1";
+
+		List<DocListVO> contactDocList = frontinvestorService.findContactDocList(memberId, distrubuteId, mainContactId, this.getLoginLangFlag(request));
+		if ("J".equals(accType)) {
+			// 获取关联用户附件
+			model.put("jContactDocList", null);
+		}
+		model.put("accountId", accountId);
+		model.put("acc_type", accType);// 账户类型,I:Individual Account J:Joint
+										// Account
+		model.put("contactDocList", contactDocList);
+		return "console/investor/approve/docCheckInfo";
+	}
+
+	// declare
+	@RequestMapping(value = "/declareInformation", method = RequestMethod.GET)
+	public String declareInfo(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String accountId = request.getParameter("accountId");
+		model.put("accountId", accountId);
+		model.put("declaration", frontinvestorService.findInvestorAccountDeclarationAgeasForAccount(accountId));
+		return "console/investor/approve/declareInfo";
+	}
+
+	// approveList
+	@RequestMapping(value = "/approvalListInfo", method = RequestMethod.GET)
+	public String approvalListInfo(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String accountId = request.getParameter("accountId");
+		model.put("accountId", accountId);
+		// model.put("declaration",
+		// investorService.findInvestorAccountDeclarationAgeasForAccount(accountId));
+		return "console/investor/approve/approveList";
+	}
+	
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public String accountDetail(HttpServletRequest request, HttpServletResponse response, ModelMap model){
+		SysAdmin loginUser=getLoginUser(request);
+		
+		String accountId = request.getParameter("id");
+		String currency = request.getParameter("cur");
+		String langCode = this.getLoginLangFlag(request);
+		
+		if(null==currency || "".equals(currency))
+			currency=CommonConstants.DEF_CURRENCY; 
+         
+		
+		InvestorAccountVO vo=investorService.findAccountDetail(accountId, langCode, currency);
+		InvestorAccount account = investorService.findInvestorAccountById(accountId);
+		
+
+		if (null != account) {
+
+			model.put("account", vo);
+			
+			List currencyList=investorService.findAccountCurrency(accountId);
+			model.put("currencyList", currencyList);
+			
+			String numFormat="#,##0.00";
+			if("JPY".equals(currency)){
+				numFormat="#,##0";
+			}
+			model.put("numFormat", numFormat);
+
+			//获取hold数据
+			int number = 0;
+			List<InvestorAccountHoldVO> investorAccountHoldVOList = new ArrayList<InvestorAccountHoldVO>();
+			List<PortfolioHoldProduct> portfolioHoldProductList = investorService.findPortfolioHoldProductByAccountId(accountId);
+			if(null!=portfolioHoldProductList&&!portfolioHoldProductList.isEmpty()){
+				for(PortfolioHoldProduct each : portfolioHoldProductList){
+					number++;
+					InvestorAccountHoldVO holdvo = new InvestorAccountHoldVO();
+					holdvo.setNumber(number);
+					holdvo.setAccountId(accountId);
+					holdvo.setAvailableUnit(each.getAvailableUnit());
+					holdvo.setBaseCurrency(each.getBaseCurrency());
+					//holdvo.setMemberId(memberId);
+					holdvo.setReferencecost(each.getReferenceCost());
+					holdvo.setHoldingUnit(each.getHoldingUnit());
+					//获取产品信息
+					ProductInfo product = each.getProduct();
+					if(null!=product&&""!=product.getId()){ //获取持苍产品，判断是基金或股票或债卷  产品类型,fund基金,stock股票,bond债券,futures期货
+						String productType = product.getType();
+						String productId = product.getId();
+						if("fund".equals(productType)){//如果是基金
+							FundInfo fund = fundInfoService.getFundInfoByProductId(productId, langCode);
+							if(null!=fund){
+								holdvo.setProductInformation(fund.getTempFundName());
+								holdvo.setLatestMarketPrice(fund.getLastNav());
+								holdvo.setProductId(fund.getId());
+								
+								holdvo.setProductType(productType);
+								investorAccountHoldVOList.add(holdvo);
+							}
+						} 
+					}
+					
+				}
+			}
+			model.put("investorAccountHoldVOList", investorAccountHoldVOList);
+			// 获取该账号的KYC、背景信息、培训信息、交易记录
+			// 判断当前登录的角色是投资人还是IFA
+			Integer memberType = 0;
+			/*if (loginUser != null) {
+				memberType = loginUser.getMemberType();
+				model.put("curMemberType", memberType);
+			}*/
+
+			List<InvestorBackground> ibList = investorService.findInvestorbackground(account.getMember().getId());
+			for (int i = 0; i < ibList.size(); i++) {
+				ibList.get(i).setNumber(i + 1);
+			}
+			model.put("ibList", ibList);
+
+			List<InvestorTraining> trainingList = investorService.findInvestorTraining(account.getMember().getId());
+			/*for (int i = 0; i < trainingList.size(); i++) {
+				trainingList.get(i).setNumber(i + 1);
+			}*/
+			model.put("trainingList", trainingList);
+
+			List<RpqExam> rqpExamList = investorService.findRpqExamByMemberId(langCode, account.getMember().getId());
+			if (1 == memberType) { // 如果是投资人，取最新一条
+				if (null != rqpExamList && !rqpExamList.isEmpty()) {
+					RpqExam latestRpq = rqpExamList.get(0);
+					if (null != latestRpq) {
+						Integer riskLevel = latestRpq.getRiskLevel();
+						if(latestRpq.getUserRiskLevel() != null){
+							riskLevel = latestRpq.getUserRiskLevel();
+						}
+						String riskLevelResult = rpqService.getRiskLevelResult(latestRpq.getId(), riskLevel, langCode);
+						model.put("riskLevel", riskLevelResult);
+						Date lastUpdate = latestRpq.getLastUpdate();
+						Date expireDate = latestRpq.getExpireDate();
+						try {
+							if(null!=expireDate&&null!=expireDate){
+								int betweenDay = DateUtil.daysBetween(lastUpdate, expireDate);
+								model.put("betweenDay", betweenDay);
+							} 
+							
+						} catch (ParseException e) {
+							model.put("betweenDay", "");
+							e.printStackTrace();
+						}
+					}
+				}
+			} else {
+				model.put("rqpExamList", rqpExamList);
+				if (null != rqpExamList && !rqpExamList.isEmpty()) {
+					for (int i = 0; i < rqpExamList.size(); i++) {
+						rqpExamList.get(i).setNumber(i + 1);
+					}
+					// RPQ过期提醒 如果全部RPQ过期，则按界面样例，显示提示信息，提醒用户更新RPQ
+					Boolean isExpire = true;// 默认过期
+					for (RpqExam each : rqpExamList) {
+						String status = each.getStatus();
+						if ("1".equals(status)) {
+							isExpire = false;
+							break;
+						}
+					}
+					model.put("isExpire", isExpire);
+				}
+			}
+
+			
+			// **************获取该账号的KYC、背景信息、培训信息、交易记录结束*****************/
+			
+			//****************kyc文档审查begin *************************************************/
+			String clientType = "J".equals(account.getAccType())?"JonitAccount":"Individual";
+			//1==sub_flag 子账户，0==sub_flag 主账户
+			InvestorAccount masterAccount = "1".equals(account.getSubFlag())?account.getMasterAccount():account;
+			
+			// kyc文档审核列表信息-scshi
+			String mainContactId = investorService.getAccountContactId(accountId, "M");
+			List<DocListVO> mainDoc = investorService.findContactDocList(vo.getMemberId(), vo.getDistributorId(), mainContactId, langCode,masterAccount.getId());
+			if (null == mainDoc || mainDoc.isEmpty()) {
+				// 如果是首次进入文档检查，从模板复制doclist到invest
+				investorService.copyDocListfromTemp(vo.getDistributorId(), clientType, this.getLoginLangFlag(request), vo.getMemberId(),
+						mainContactId,account);
+			}else{
+				//判断文档是否有更新
+				investorService.checkTemplateUpdate(vo,mainContactId,clientType,masterAccount.getId());
+			}
+			mainDoc = investorService.findContactDocList(vo.getMemberId(), vo.getDistributorId(), mainContactId, this.getLoginLangFlag(request),masterAccount.getId());
+			model.put("mainDoc", mainDoc);
+			
+			
+			//****************kyc文档审查end *************************************************/
+			
+			model.put("cur", currency);
+			String curName=sysParamService.findNameByCode(currency, langCode);
+			model.put("curName", curName);
+
+			List<GeneralDataVO> itemList = findSysParameters("currency_type", langCode);
+			model.put("currencyType", itemList);
+
+		}
+		return "console/investor/account/detail";
+	}
+}

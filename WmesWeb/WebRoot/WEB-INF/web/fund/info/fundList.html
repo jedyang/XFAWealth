@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>wmes</title>
+    <link rel="stylesheet" href="${base}/res/css/wmes_en.css">  
+    <script>
+    	var base_root = '${base}';
+    </script>
+    <script type="text/javascript" src="${base}/res/js/base.js"></script>
+    <script type="text/javascript" src="${base}/res/js/seajs/sea.js"></script>
+    <script type="text/javascript" src="${base}/res/js/config-sea.js"></script>
+    <script src="${base}/res/js/util.js"></script>
+    <!--[if lte IE 8]>
+	<script src="${base}/res/js/html5shiv.min.js" type="text/javascript"></script>
+	<script src="${base}/res/js/respond.min.js" type="text/javascript"></script>
+	<![endif]-->
+	 <script type="text/javascript">
+          seajs.use('${base}/res/js/currency.js');
+          function submitIframe(){
+        	  document.getElementById("listForm").submit();
+          }
+          function fundDetail(url){
+        	  window.parent.fundDetail(url);
+          }
+    </script>
+<style type="text/css">
+    html, body{
+        [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']
+            font-family:  arial;
+        [#elseif Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']
+            font-family:Microsoft YaHei;
+        [#else]
+             font-family:Microsoft YaHei;
+        [/#if]
+    }
+</style>
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/animate.css">
+</head>
+<body class="animated bounceInRight">				
+<form id="listForm" name="listForm" action="${base}/front/fund/info/fundsForScreener.do" >
+
+				<div class="funds_serach_results">
+					<p class="funds_serach_sum">[@lang_res k='fund.info.searchTip'/] <span class="funds_serach_digital">${jsonPaging.list?size}</span> [@lang_res k='fund.info.searchTip_2'/]</p>
+					<ul class="funds_search_tab">
+						<li class="now">[@lang_res k='fund.info.fundNAV'/] </li>
+						<li>[@lang_res k='fund.info.fundPerformance'/] </li>
+						<li>[@lang_res k='fund.info.fundRating'/] </li>
+					</ul>
+				</div>
+				
+				[#if jsonPaging.list?size gt 0]
+				<table class="funds_search_information">
+					<tbody>
+						<tr class="funds_search_th">
+							<th class="funds_search_name">[@lang_res k='fund.info.fundName'/] </th>
+							<th class="funds_search_half">
+								<div class="funds_search_left">
+									[@lang_res k='fund.info.riskrating'/] 
+								</div>
+								<div class="funds_search_right">
+									<span class="funds_arrow_top"></span>
+									<span class="funds_arrow_down"></span>
+								</div>							
+							</th>
+							<th class="funds_search_half" style="width:60px;">
+									[@lang_res k='fund.info.currency'/] 
+							</th>
+							<th class="funds_search_ACC">[@lang_res k='fund.info.ACC_INC'/] </th>
+							<th class="funds_search_IsIn">[@lang_res k='fund.info.ISIN'/] </th>
+						</tr>
+						[#if jsonPaging.list?size gt 0]
+						[#list jsonPaging.list as fundList]
+						<tr>
+							<td class="funds_search_name">
+							<a href="javascript:void(0)" onclick="fundDetail('${base}/front/fund/info/fundsdetail.do?id=${fundList.fundInfo.id!}')" style="color:#000000">
+							${fundList.fundName!""}
+							</a>
+							</td>
+							<td class="funds_search_half">${fundList.fundInfo.riskLevel!""}</td><!-- 风险评级 -->
+							<td class="funds_search_half">${fundList.fundCurrency!""}</td>
+							<td class="funds_search_ACC">${fundList.fundInfo.fundHouse!""}</td><!-- 基金公司 -->
+							<td class="funds_search_IsIn">${fundList.fundInfo.isinCode!""}</td>
+						</tr>
+						[/#list]
+						[/#if]
+					</tbody>
+				</table>
+				<div class="funds_search_wrap">		
+					<div class="funds_search_content">		
+						<table class="funds_search_information funds_search_Part" style="display:block;">
+							<tbody>
+								<tr class="funds_search_th">
+									<th class="funds_search_NAV">
+										<div class="funds_search_lastNav">
+											[@lang_res k='fund.info.LastNAV_rating'/]
+										</div>
+										<div class="funds_search_right">
+											<span class="funds_arrow_top"></span>
+											<span class="funds_arrow_down"></span>
+										</div>							
+									</th>
+									<th class="funds_search_Growth">
+										<div class="funds_search_left_Growth">
+											[@lang_res k='fund.info.Growthrate'/](%)
+										</div>
+										<div class="funds_search_right">
+											<span class="funds_arrow_top"></span>
+											<span class="funds_arrow_down"></span>
+										</div>							
+									</th>
+									<th class="funds_search_data">[@lang_res k='fund.info.price_date'/]</th>
+									<th class="funds_search_data">[@lang_res k='fund.info.YTD'/](%)</th>
+									<th class="funds_search_data">[@lang_res k='fund.info.YTDdate'/]</th>
+									<th class="funds_search_like"></th>
+								</tr>
+								[#if jsonPaging.list?size gt 0]
+								[#list jsonPaging.list as fundList_xx]
+								<tr>
+									<td class="funds_search_NAV Currency_conversion" data-original="${fundList_xx.fundInfo.lastNav!""}" data-exchange="${fundList_xx.fundCurrency!''}">${fundList_xx.fundInfo.lastNav!""}${fundList_xx.fundCurrency!""}</td>
+									<td class="funds_search_Growth">${fundList_xx.fundInfo.issuePrice!""}</td>
+									<td class="funds_search_data_td">[#if fundList_xx.fundInfo.issueDate??]${fundList_xx.fundInfo.issueDate?string("yyyy-MM-dd")}[/#if]</td>
+									<td><div class="funds_search_chart"></div></td>
+									<td class="funds_search_data_td">03/03/2015</td>
+									<td class="funds_search_like">
+										[#if Session["_FRONT_USER_LOGIN_"]?exists == true]
+											<span class="funds_cart"></span>
+											[#if fundList_xx.followStatus?exists && fundList_xx.followStatus=='1']
+											<span class="funds_heart funds_heart_active" followFlag="Delete" fundId="${fundList_xx.fundInfo.id!}"></span>
+											[#else]
+											<span class="funds_heart" followFlag="Follow" fundId="${fundList_xx.fundInfo.id!}"></span>
+											[/#if]
+										[#else]
+										<span class="funds_cart no_login"></span>
+										<span class="funds_heart no_login"></span>
+										[/#if]
+										
+									</td>
+								</tr>
+								[/#list]
+								[/#if]
+							</tbody>
+						</table>
+						<table class="funds_search_information funds_search_Part">
+							<tbody>
+								<tr class="funds_search_th">
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right">
+											[@lang_res k='fund.info.lastNAVprice'/]
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right" style="width:70px;">
+											[@lang_res k='fund.info.3YrRiskReturn'/]
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">[@lang_res k='fund.info.SharpeRatio'/]</th>
+									<th class="funds_search_data">[@lang_res k='fund.info.RevalationDate'/]</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width">
+											[@lang_res k='fund.info.per'/] [@lang_res k='fund.info.mon'/]
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width">
+											[@lang_res k='fund.info.per'/] [@lang_res k='fund.info.mon_3'/]
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width">
+											[@lang_res k='fund.info.per'/] [@lang_res k='fund.info.mon_6'/]
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width">
+											[@lang_res k='fund.info.per'/] [@lang_res k='fund.info.yr_1'/]
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width">
+											[@lang_res k='fund.info.per'/] [@lang_res k='fund.info.yr_3'/]
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width">
+											[@lang_res k='fund.info.per'/] [@lang_res k='fund.info.yr_5'/]
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width" style="width:70px;">
+											[@lang_res k='fund.info.per'/] [@lang_res k='fund.info.launch'/]
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_data">[@lang_res k='fund.info.IssueDate'/]</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width" style="    padding-top: 17px;">
+											[@lang_res k='fund.info.YTD'/]
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width">
+											[@lang_res k='fund.info.AR'/]</br>2016
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width">
+											[@lang_res k='fund.info.AR'/]</br>2015
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width">
+											[@lang_res k='fund.info.AR'/]</br>2014
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width">
+											[@lang_res k='fund.info.AR'/]</br>2013
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_lastest">
+										<div class="funds_search_lastest_right fund_per_width">
+											[@lang_res k='fund.info.AR'/]</br>2012
+										</div>
+										<div class="funds_search_right">
+												<span class="funds_arrow_top"></span>
+												<span class="funds_arrow_down"></span>
+										</div>	
+									</th>
+									<th class="funds_search_like"></th>
+								</tr>
+								[#if jsonPaging.list?size gt 0]
+								[#list jsonPaging.list as fundList_xxx]
+								<tr>
+									<td class="funds_search_lastest">${fundList_xxx.fundInfo.lastNav!""}</td>
+									<td class="funds_search_lastest">0.72</td>
+									<td class="funds_search_lastest">0.73</td>
+									<td class="funds_search_data_td">[#if fundList_xxx.fundInfo.lastNavUpdate??]${fundList_xxx.fundInfo.lastNavUpdate?string("yyyy-MM-dd")}[/#if]</td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnOneMonth lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturnOneMonth!""}</span></td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnThreeMonth lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturnThreeMonth!""}</span></td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnSixMonth lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturnSixMonth!""}</span></td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnOneYear lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturnOneYear!""}</span></td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnThreeYear lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturnThreeYear!""}</span></td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnFiveYear lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturnFiveYear!""}</span></td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnLaunch lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturnLaunch!""}</span></td>
+									<td class="funds_search_data_td">03/03/2015</td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnYTD lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturnYTD!""}</span></td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnYTD lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturn2016!""}</span></td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnYTD lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturn2015!""}</span></td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnYTD lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturn2014!""}</span></td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnYTD lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturn2013!""}</span></td>
+									<td align="right" class="funds_search_lastest"><span class="[#if fundList_xxx.fundReturnYTD lt 0 ]funds_search_negative[#else]funds_search_positive[/#if]">${fundList_xxx.fundReturn2012!""}</span></td>
+									<td class="funds_search_like">
+										<span class="funds_cart"></span>
+										[#if fundList_xxx.followStatus?exists && fundList_xxx.followStatus=='1']
+										<span class="funds_heart funds_heart_active" followFlag="Delete" fundId="${fundList_xxx.fundInfo.id!}"></span>
+										[#else]
+										<span class="funds_heart" followFlag="Follow" fundId="${fundList_xxx.fundInfo.id!}"></span>
+										[/#if]
+									</td>
+								</tr>
+								[/#list]
+								[/#if]
+							</tbody>
+						</table>
+						<table class="funds_search_information funds_search_Part">
+							<tbody>
+								<tr class="funds_search_th">
+									<th class="funds_search_rating">
+										<div class="funds_search_rating_left">
+											[@lang_res k='fund.info.lipperCR'/]
+										</div>
+										<div class="funds_search_right">
+											<span class="funds_arrow_top"></span>
+											<span class="funds_arrow_down"></span>
+										</div>							
+									</th>
+									<th class="funds_search_fitch">
+										<div class="funds_search_fitch_left">
+											[@lang_res k='fund.info.fitch'/]
+										</div>
+										<div class="funds_search_right">
+											<span class="funds_arrow_top"></span>
+											<span class="funds_arrow_down"></span>
+										</div>							
+									</th>
+									<th class="funds_search_rating">
+										<div class="funds_search_rating_left" style="width:56px;">
+											[@lang_res k='fund.info.citywire'/]
+										</div>
+										<div class="funds_search_right">
+											<span class="funds_arrow_top"></span>
+											<span class="funds_arrow_down"></span>
+										</div>							
+									</th>
+									<th class="funds_search_like"></th>
+								</tr>
+								[#if jsonPaging.list?size gt 0]
+                                [#list jsonPaging.list as fundList_xxx]
+								<tr>
+									<td class="funds_search_rating">
+									[#list 1..fundList_xxx.lipperCr as t]
+									   <img src="${base}/res/images/unNecessary.png" alt="">
+									[/#list]
+									</td>
+									<td class="funds_search_rating">
+									[#list 1..fundList_xxx.fitch as t]
+									   <img src="${base}/res/images/unNecessary.png" alt="">
+									[/#list]
+									</td>
+									<td class="funds_search_rating">
+									[#list 1..fundList_xxx.citywire as t]
+									   <img src="${base}/res/images/unNecessary.png" alt="">
+									[/#list]
+									</td>
+									<td class="funds_search_like">
+										<span class="funds_cart"></span>
+										[#if fundList_xxx.followStatus?exists && fundList_xxx.followStatus=='1']
+										<span class="funds_heart funds_heart_active" followFlag="Delete" fundId="${fundList_xxx.fundInfo.id!}"></span>
+										[#else]
+										<span class="funds_heart" followFlag="Follow" fundId="${fundList_xxx.fundInfo.id!}"></span>
+										[/#if]
+									</td>
+								</tr>
+								[/#list]
+                                [/#if]
+							</tbody>
+						</table>	
+					</div>
+				</div>
+				[#else]
+				<div style="width:50%;margin:0 auto">
+					<div class="noResult">[@lang_res k='fund.info.noFund.sorry'/]</div>
+					<p class="noResultText">[@lang_res k='fund.info.noFund.suggestion.one'/]<br>　　　　[@lang_res k='fund.info.noFund.suggestion.two'/]</p>
+				</div>
+				[/#if]
+<input type="hidden" name="keyword" value="${filters.keyword!}" id="keyword"/>
+<input type="hidden" name="fundHouseIds" value="${filters.fundHouseIds!}" id="fundHouseIds"/>
+<input type="hidden" name="fundName" value="${filters.fundName!}" id="fundName"/>
+<input type="hidden" name="fundSizeFrom" value="${filters.fundSizeFrom!}" id="fundSizeFrom"/>
+<input type="hidden" name="fundSizeTo" value="${filters.fundSizeTo!}" id="fundSizeTo"/>
+<input type="hidden" name="domicile" value="${filters.domicile!}" id="domicile"/>
+<input type="hidden" name="currency" value="${filters.currency!}" id="currency"/>
+<input type="hidden" name="fundType" value="${filters.fundType!}" id="fundType"/>
+<input type="hidden" name="sectorType" value="${filters.sectorType!}" id="sectorType"/>
+<input type="hidden" name="geoAllocation" value="${filters.geoAllocation!}" id="geoAllocation"/>
+<input type="hidden" name="riskLevel" value="${filters.riskLevel!}" id="riskLevel"/>
+<input type="hidden" name="perfLaunchFrom" value="${filters.perfLaunchFrom!}" id="perfLaunchFrom" class="perfClean"/>
+<input type="hidden" name="perfLaunchTo" value="${filters.perfLaunchTo!}" id="perfLaunchTo" class="perfClean"/>
+<input type="hidden" name="perfYTDFrom" value="${filters.perfYTDFrom!}" id="perfYTDFrom" class="perfClean"/>
+<input type="hidden" name="perfYTDTo" value="${filters.perfYTDTo!}" id="perfYTDTo" class="perfClean"/>
+<input type="hidden" name="perfOneWeekFrom" value="${filters.perfOneWeekFrom!}" id="perfOneWeekFrom" class="perfClean"/>
+<input type="hidden" name="perfOneWeekTo" value="${filters.perfOneWeekTo!}" id="perfOneWeekTo" class="perfClean"/>
+<input type="hidden" name="perfOneMonthFrom" value="${filters.perfOneMonthFrom!}" id="perfOneMonthFrom" class="perfClean"/>
+<input type="hidden" name="perfOneMonthTo" value="${filters.perfOneMonthTo!}" id="perfOneMonthTo" class="perfClean"/>
+<input type="hidden" name="perfThreeMonthFrom" value="${filters.perfThreeMonthFrom!}" id="perfThreeMonthFrom" class="perfClean"/>
+<input type="hidden" name="perfThreeMonthTo" value="${filters.perfThreeMonthTo!}" id="perfThreeMonthTo" class="perfClean"/>
+<input type="hidden" name="perfSixMonthFrom" value="${filters.perfSixMonthFrom!}" id="perfSixMonthFrom" class="perfClean"/>
+<input type="hidden" name="perfSixMonthTo" value="${filters.perfSixMonthTo!}" id="perfSixMonthTo" class="perfClean"/>
+<input type="hidden" name="perfOneYearFrom" value="${filters.perfOneYearFrom!}" id="perfOneYearFrom" class="perfClean"/>
+<input type="hidden" name="perfThreeYearFrom" value="${filters.perfOneYearTo!}" id="perfOneYearTo" class="perfClean"/>
+<input type="hidden" name="perfThreeYearFrom" value="${filters.perfThreeYearFrom!}" id="perfThreeYearFrom" class="perfClean"/>
+<input type="hidden" name="perfThreeYearTo" value="${filters.perfThreeYearTo!}" id="perfThreeYearTo" class="perfClean"/>
+<input type="hidden" name="lipperCrId" value="${filters.lipperCrId!}" id="lipperCrId"/>
+<input type="hidden" name="fitchId" value="${filters.fitchId!}" id="fitchId"/>
+<input type="hidden" name="citywireId" value="${filters.citywireId!}" id="citywireId"/>
+<input type="hidden" name="fitch" value="${filters.fitch!}" id="fitch"/>
+<input type="hidden" name="citywire" value="${filters.citywire!}" id="citywire"/>
+<input type="hidden" name="minInitialInv" value="${filters.minInitialInv!}" id="minInitialInv"/>
+<input type="hidden" name="mgtFee" value="${filters.mgtFee!}" id="mgtFee"/>             
+<input type="hidden" name="beforeYears" value="${filters.beforeYears!}" id="beforeYears"/>
+</form>				
+ <script type="text/javascript">
+    seajs.use('${base}/res/web/fund/info/fundsscreener.js');
+</script> 
+</body>
+</html>
+        

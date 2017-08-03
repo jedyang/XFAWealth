@@ -1,0 +1,277 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/ifa.css">  
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">My Zone</a>
+</div>
+<div class="wmes-content">
+	<div class="ifa-zone-row">
+		<p class="ifa-zone-title">My Asset<span class="ifa-more-ico"></span></p>
+		<div class="zone-asset-wrap">
+			<ul class="zone-asset-ul">
+				<li>
+					<p class="zone-asset-total">Total Asset</p>
+					<p class="zone-asset-sum">5,000,000</p>
+				</li>
+				<li>
+					<p class="zone-asset-total">Value Change</p>
+					<div class="zone-asset-xiala">
+						<select>
+							<option value="Today">Today</option>
+						</select>
+					</div>
+					<p class="zone-asset-num">+10,000</p>
+				</li>
+				<li>
+					<p class="zone-asset-total">Total Gain/Loss</p>
+					<p class="zone-asset-num">+100,000</p>
+				</li>
+			</ul>
+			<div class="zone-asset-cart-wrap">
+				<div class="zone-asset-cart" id="asset-cart">
+					
+				</div>
+				<ul class="zone-cart-date">
+					<li>1M</li>
+					<li>3M</li>
+					<li>6M</li>
+					<li>1Y</li>
+					<li>3Y</li>
+					<li>5Y</li>
+					<li>YTD</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="ifa-zone-row">
+		<p class="ifa-zone-title">My Portfolios<span class="ifa-more-ico"></span></p>
+		<div class="zone-mining-wrap">
+			<div class="zone-mining-left">
+				<p class="zone-mining-title"><a href="${base}/front/strategy/info/conservativePortfolio.do">Mining Fidelity Portfolio</a></p>
+				<p class="zone-mining-holdings">12 Holdings</p>
+				<div class="zone-mining-num">
+					<div class="zone-mining-cost">
+						<p class="zone-cost-title">Cost</p>
+						<p class="zone-cost-num">1,200,000</p>
+					</div>
+					<div class="zone-mining-cost">
+						<p class="zone-cost-title">Cost</p>
+						<p class="zone-cost-num">1,300,000</p>
+					</div>
+				</div>
+				<p class="zone-mining-change">Change</p>
+				<p class="zone-mining-positive">+120,000</p>
+				<p class="zone-mining-percentage">+23%</p>
+				<p class="zone-mining-yr">1yr Unrealised Gain/Loss</p>
+			</div>
+			<div class="zone-mining-right">
+				<p class="zone-mining-title"><a href="${base}/front/strategy/info/conservativePortfolio.do">Mining Fidelity Portfolio</a></p>
+				<p class="zone-mining-holdings">12 Holdings</p>
+				<div class="zone-mining-num">
+					<div class="zone-mining-cost">
+						<p class="zone-cost-title">Cost</p>
+						<p class="zone-cost-num">1,100,000</p>
+					</div>
+					<div class="zone-mining-cost">
+						<p class="zone-cost-title">Cost</p>
+						<p class="zone-cost-num">1,000,000</p>
+					</div>
+				</div>
+				<p class="zone-mining-change">Change</p>
+				<p class="zone-mining-positive zone-mining-red">-160,000</p>
+				<p class="zone-mining-percentage zone-mining-red">-15%</p>
+				<p class="zone-mining-yr">1yr Unrealised Gain/Loss</p>
+			</div>
+		</div>
+	</div>
+	<div class="ifa-zone-row">
+		<p class="ifa-zone-title">My Account<span class="ifa-more-ico"></span></p>
+		<div class="zone-account-wrap">
+			<div class="zone-account-left">
+				<div class="zone-account-title">
+					<!-- <img class="zone-account-img" src="${base}/res/images/ifa/ageas_ico.png"> -->
+					<p class="zone-account-name"><a href="${base}/front/strategy/info/myAccountlist.do">Account 001</a></p>
+					<p class="zone-account-rname">David Chen</p>
+				</div>
+				<ul class="zone-account-ul">
+					<li>
+						<p class="zone-account-price">$1,200,000</p>
+						<p class="zone-account-word">Total Asset</p>
+					</li>
+					<li>
+						<p class="zone-account-price">$0</p>
+						<p class="zone-account-word">Cash</p>
+					</li>
+					<li>
+						<p class="zone-account-price zone-account-green">$43,000</p>
+						<p class="zone-account-word">Acc. Return</p>
+					</li>
+				</ul>
+			</div>
+			<div class="zone-account-right">
+				<div class="zone-account-title">
+<!-- 					<img class="zone-account-img" src="${base}/res/images/ifa/ageas_ico.png"> -->
+					<p class="zone-account-name"><a href="${base}/front/strategy/info/myAccountlist.do">Account 002</a></p>
+					<p class="zone-account-rname">David Chen</p>
+				</div>
+				<ul class="zone-account-ul">
+					<li>
+						<p class="zone-account-price">$1,302,000</p>
+						<p class="zone-account-word">Total Asset</p>
+					</li>
+					<li>
+						<p class="zone-account-price">$0</p>
+						<p class="zone-account-word">Cash</p>
+					</li>
+					<li>
+						<p class="zone-account-price zone-account-green">$50,000</p>
+						<p class="zone-account-word">Acc. Return</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="ifa-zone-row">
+		<p class="ifa-zone-title"><a href="${base}/front/ifa/info/myfavorites.do">My Favourites</a><span class="ifa-more-ico"></span></p>
+		<ul class="ifa-zone-favorites">
+			<li>
+				<div class="zone-favorites-title">
+					<p class="zone-favorites-name">Portfolios</p>
+					<p class="zone-favorites-num">52</p>
+					<img class="zone-favorites-stars" src="${base}/res/images/ifa/favorites_stars.png">
+				</div>
+				<div class="zone-favorites-contents">
+					<div class="zone-favorites-left">
+						<img class="zone-favorites-porimg" src="${base}/res/images/ifa/porimg.png">
+						<img class="zone-favorites-pointer" src="${base}/res/images/ifa/propointer.png">
+					</div>
+					<div class="zone-favorites-right">
+						<p class="zone-favorites-word"><a href="">Portfolio A</a></p>
+						<p class="zone-favorites-percentage">23%</p>
+						<p class="zone-favorites-last">Last Activity</p>
+						<p class="zone-favorites-time">6 hours ago</p>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="zone-favorites-title">
+					<p class="zone-favorites-name">Watchlists</p>
+					<p class="zone-favorites-num">13</p>
+					<img class="zone-favorites-stars" src="${base}/res/images/ifa/favorites_stars.png">
+				</div>
+				<div class="zone-favorites-contents">	
+					<p class="zone-favorites-word">Engergy(>10%)</p>
+					<p class="zone-favorites-funds">(25 managed funds)</p>
+					<p class="zone-favorites-last">Last Activity</p>
+					<p class="zone-favorites-time">6 hours ago</p>
+				</div>
+			</li>
+			<li>
+				<div class="zone-favorites-title">
+					<p class="zone-favorites-name">Strategies</p>
+					<p class="zone-favorites-num">7</p>
+					<img class="zone-favorites-stars" src="${base}/res/images/ifa/favorites_stars.png">
+				</div>
+				<div class="zone-favorites-contents">	
+					<p class="zone-favorites-word">Strategy A</p>
+					<p class="zone-favorites-funds">(25 managed funds)</p>
+					<p class="zone-favorites-last">Last Activity</p>
+					<p class="zone-favorites-time">6 hours ago</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="ifa-zone-row">
+		<p class="ifa-zone-title"><a href="${base}/front/ifa/info/mybuddy.do">IFA</a><span class="ifa-more-ico"></span></p>
+		<div class="zone-ifa-wrap">
+			<div class="zone-ifa-left">
+				<img class="zone-ifa-img" src="${base}/res/images/ifa/ifa.png">
+				<p class="zone-ifa-name">Kenny Law</p>
+			</div>
+			<div class="zone-ifa-right">
+				<p class="zone-ifa-foucs">Boddy</p>
+				<div class="zone-ifa-list">
+					<ul class="zone-ifa-ul">
+						<li>
+							<img src="${base}/res/images/ifa1.png">
+							<p class="zone-ifaList-name">Joe Black</p>
+							<p class="zone-ifa-friends">Friends 45</p>
+						</li>
+						<li>
+							<img src="${base}/res/images/ifa2.png">
+							<p class="zone-ifaList-name">Joe Black</p>
+							<p class="zone-ifa-friends">Friends 45</p>
+						</li>
+						<li>
+							<img src="${base}/res/images/ifa3.png">
+							<p class="zone-ifaList-name">Joe Black</p>
+							<p class="zone-ifa-friends">Friends 45</p>
+						</li>
+					</ul>
+				</div>
+				<p class="zone-ifa-foucs">Focus on</p>
+				<div class="zone-ifa-list">
+					<div>
+						<div class="zone-ifa-title">
+							<div class="zone-ifa-block"></div>
+							Corners
+						</div>
+						<ul class="zone-focus-ifa-ul">
+							<li>
+								<p class="zone-focus-ifa-name">Ben</p>
+								<img class="zone-focus-ifa-img" src="${base}/res/images/ifa/focus_ifa01.png">
+								<p class="zone-focus-ifa-score">8.15</p>	
+							</li>
+							<li>
+								<p class="zone-focus-ifa-name">Sunny</p>
+								<img class="zone-focus-ifa-img" src="${base}/res/images/ifa/focus_ifa02.png">
+								<p class="zone-focus-ifa-score">8.05</p>
+							</li>
+							<li>
+								<p class="zone-focus-ifa-name">Alan</p>
+								<img class="zone-focus-ifa-img" src="${base}/res/images/ifa/focus_ifa03.png">
+								<p class="zone-focus-ifa-score">7.9</p>
+							</li>
+							<li>
+								<p class="zone-focus-ifa-name">Evea</p>
+								<img class="zone-focus-ifa-img" src="${base}/res/images/ifa/focus_ifa04.png">
+								<p class="zone-focus-ifa-score">7.85</p>
+							</li>
+						</ul>
+					</div>
+					<div>
+						<div class="zone-ifa-title">
+							<div class="zone-ifa-block"></div>
+							Space
+						</div>
+						<ul class="zone-focus-ifa-ul">
+							<li>
+								<p class="zone-focus-ifa-name">Evea</p>
+								<img class="zone-focus-ifa-img" src="${base}/res/images/ifa/focus_ifa03.png">
+								<p class="zone-focus-ifa-score">7.85</p>
+							</li>
+							<li>
+								<p class="zone-focus-ifa-name">Ben</p>
+								<img class="zone-focus-ifa-img" src="${base}/res/images/ifa/focus_ifa01.png">
+								<p class="zone-focus-ifa-score">8.15</p>	
+							</li>
+							<li>
+								<p class="zone-focus-ifa-name">Sunny</p>
+								<img class="zone-focus-ifa-img" src="${base}/res/images/ifa/focus_ifa02.png">
+								<p class="zone-focus-ifa-score">8.05</p>
+							</li>
+							<li>
+								<p class="zone-focus-ifa-name">Alan</p>
+								<img class="zone-focus-ifa-img" src="${base}/res/images/ifa/focus_ifa04.png">
+								<p class="zone-focus-ifa-score">7.9</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+     seajs.use('${base}/res/web/ifa/ifaMyzone.js');
+</script>

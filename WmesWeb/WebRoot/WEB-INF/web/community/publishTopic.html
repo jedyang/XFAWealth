@@ -1,0 +1,64 @@
+[#include "../inc/head_v2.html"/]
+<script src="${base}/res/css/news/js/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/community.css">
+<link rel="stylesheet" href="${base}/res/js/library/ueditor/themes/default/css/umeditor.css">
+	<div class="wmes-content">
+		<div class="wmes-community-wrap">
+			<div class="wmes-wrap-title" style="margin-bottom:50px;"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='topic.publish.pageTitle'/]</div>
+			<div class="wmes-topic-content">
+				<div class="wmes-publishtopic-wrap">
+					<p class="wmes-publishtopic-title">[@lang_res k='topic.publish.title'/]</p><input type="text" id="title"/>
+				</div>
+				<!-- ifa才能发表观点 -->
+				[#if memberType?? && memberType==1]
+				<div class="wmes-publishtopic-wrap">
+					<p class="wmes-publishtopic-title">[@lang_res k='topic.publish.originalInsight'/]</p>
+					<ul class="wmes-publishtopic-right">
+						<li><input type="radio" name="originalInsight" value="1"  class="originalInsight" checked="checked" />Yes</li>
+						<li><input type="radio" name="originalInsight" value="0"   class="originalInsight" />No</li>
+					</ul>
+				</div>
+				[/#if]
+				<div class="wmes-publishtopic-wrap">
+					<p class="wmes-publishtopic-title">[@lang_res k='topic.publish.section'/]</p>
+					<div class="register_xiala_long">
+						<input type="text" placeholder="[@lang_res k='topic.publish.section.tips'/]" readOnly  class="value_show ">
+						<input type="hidden" class="value_hidden sectionId">
+						<ul class="regiter_xiala_ul ">
+						[#if sectionList?exists && sectionList?size gt 0]
+						[#list sectionList as list]
+	  						<li id="${list.id!}">${list.name!}</li>
+	  						[/#list]
+	  						[/#if]
+						</ul>
+						<span class="register_xiala_ico"></span>
+					</div> 
+				</div>
+				<div class="wmes-publishtopic-wrap">
+					<p class="wmes-publishtopic-title">[@lang_res k='news.publishTo'/]</p>
+					<ul class="wmes-publishtopic-right">
+						<li><input type="radio" name="publishTo" class="publishTo" value="all" checked="checked"  />[@lang_res k='topic.publish.to.all'/]</li>
+						[#if memberType?? && memberType==1]
+						<li><input type="radio" name="publishTo" class="publishTo"  value="client"/>[@lang_res k='topic.publish.to.client'/]</li>
+						[/#if]
+						<li><input type="radio" name="publishTo" class="publishTo"  value="friend"/>[@lang_res k='topic.publish.to.friend'/]</li>
+					</ul>
+				</div>
+				<div class="publishtopic-editorcon">
+					<!-- 加载编辑器的容器 -->
+					
+	                <textarea id="topiccontent" style="display: none; width:700px;"></textarea> 
+	                <div class="wmes-topic-submitcon">
+	                	<div class="wmes-topic-submit">[@lang_res k='global.submit'/]</div>
+	                </div>
+				</div>
+			</div>
+		</div>
+	</div>
+[#include "../inc/foot_v2.html"/]
+<script src="${base}/res/js/library/layui/layui.js"></script>
+<link rel="stylesheet" type="text/css" href="${base}/res/js/library/layui/css/layui.css">
+<script type="text/javascript">
+   // seajs.use('${base}/res/web/ifa/community.js');
+    seajs.use('${base}/res/web/community/publishtopic.js');
+</script>

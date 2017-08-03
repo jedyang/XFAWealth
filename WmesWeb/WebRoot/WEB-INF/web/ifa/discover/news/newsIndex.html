@@ -1,0 +1,376 @@
+[#include "../../../inc/head_v2.html"/]
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Express News Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script src="${base}/res/css/news/js/jquery.min.js"></script>
+<!-- Custom Theme files -->
+
+<link href="${base}/res/css/news/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="${base}/res/css/news/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="${base}/res/css/Funds.css" rel="stylesheet" type="text/css" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script type="text/javascript" src="${base}/res/css/news/js/bootstrap.js"></script>
+
+
+<script src="${base}/res/css/news/js/responsiveslides.min.js"></script>
+	<script>
+		$(function () {
+		  $("#slider").responsiveSlides({
+			auto: true,
+			nav: true,
+			speed: 500,
+			namespace: "callbacks",
+			pager: true,
+		  });
+		});
+	</script>
+	<script type="text/javascript" src="${base}/res/css/news/js/move-top.js"></script>
+<script type="text/javascript" src="${base}/res/css/news/js/easing.js"></script>
+<!--/script-->
+<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},900);
+				});
+			});
+</script>
+	<div class="wmes-content">
+		<!-- header-section-starts-here -->
+		<div class="header">
+			<div class="header-bottom">
+				<div class="logo">
+					<a href="javascript:;"><p class="wmes-big-title">[@lang_res k='news.title'/]</p></a>
+				</div>
+				<div class="navigation">
+					<nav class="navbar navbar-default" role="navigation">
+			   <div class="wrap">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="newsIndex.do">[@lang_res k='news.category.home'/]</a></li>
+						<li><a href="newsList.do?code=headlines">[@lang_res k='news.category.headlines'/]</a></li>
+						
+						[#macro bpTree children]
+				        [#if children?? && children?size gt 0]
+				        [#list children as child]
+				        [#if child.children?? && child.children?size gt 0]
+				        <li class="dropdown">
+						<a href="javascirpt:;" class="dropdown-toggle" data-toggle="dropdown">${child.name!}<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+						   <li><a href="newsList.do?id=${child.id!}">[@lang_res k='global.all'/]</a></li> 
+						   <li class="clearfix"></li>
+						   [@bpTree children=child.children /]
+							</ul>
+					   </li>
+				        [#else]
+				           <li><a href="newsList.do?id=${child.id!}">${child.name}</a></li>  
+				           [#if child.parentId?? && child.parentId!='']  <li class="divider"></li>[/#if]
+				        [/#if]
+				       [/#list]
+				    [/#if]
+				    [/#macro]
+				    [@bpTree children=categoryList /]
+						<div class="clearfix"></div>
+					</ul>
+						
+					<div class="funds_keyserach ifa_keyserach" style="margin-top:8px;">
+             		  <input type="text" id="searchKeyWord" placeholder="[@lang_res k='pipeline.search.keyword'/]">
+             		  <span class="icon_search" id="searchKeyBtn"></span>
+         		    </div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				</div>
+			</nav>
+			</div>
+		</div>
+		<!-- header-section-ends-here -->
+		<!-- content-section-starts-here -->
+		<div class="main-body">
+			<div class="wrap">
+				<div class="col-md-8 content-left articles" style="margin-top:0px;">
+					<header>
+						<a href="${base}/front/news/info/newsList.do?code=headlines"><h3 class="title-head">[@lang_res k='news.category.headlines'/]</h3></a>
+					</header>
+					<div class="slider">
+						<div class="callbacks_wrap">
+							<ul class="rslides" id="slider">
+							[#if topList?exists && topList?size gt 0]
+							[#list topList as list]
+								<li>
+									<img src="${list.url!}" alt="">
+									<div class="caption">
+										<a href="newsContent.do?id=${list.id!}">${list.title!}</a>
+									</div>
+								</li>
+								[/#list]
+								[/#if]
+								</ul>
+						</div>
+					</div>
+					<div class="articles">				
+						<div class="article">
+							<header>
+								<a href="${base}/front/news/info/newsList.do?id=40280a25559b852e01559b8615da0010"><h3 class="title-head">[@lang_res k='news.category.policy'/]</h3></a>
+							</header>
+							[#if policyList?exists && policyList?size gt 0]
+							[#list policyList as list]
+							[#if list.url?? && list.url!='']
+							<div class="article-left">
+								<a href="newsContent.do?id=${list.id!}"><img src="${list.url!}"></a>
+							</div>
+							[/#if]
+							<div class="article-right">
+								<div class="article-title">
+									<p>${list.lastUpdate!}</p>
+									<a class="title" href="newsContent.do?id=${list.id!}"> ${list.title!}</a>
+								</div>
+								<div class="article-text">
+									<p>${list.description!}</p>
+									<!--<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+									--><div class="clearfix"></div>
+								</div>
+							</div>
+							[/#list]
+							[/#if]
+							<div class="clearfix"></div>
+						</div>
+						<div class="article">
+							<header>
+								<a href="${base}/front/news/info/newsList.do?id=40280a25559b852e01559b8615da0009"><h3 class="title-head">[@lang_res k='news.category.economy'/]</h3></a>
+							</header>
+							[#if economyList?exists && economyList?size gt 0]
+							[#list economyList as list]
+							<div class="life-style-grids">
+								[#if list.url?? && list.url!='']
+							<div class="article-left">
+								<a href="newsContent.do?id=${list.id!}"><img src="${list.url!}"></a>
+							</div>
+							[/#if]
+								<div class="article-right">
+									<div class="article-title">
+										<p>${list.lastUpdate!}</p>
+										<a class="title" href="newsContent.do?id=${list.id!}">${list.title!}</a>
+									</div>
+									<div class="article-text">
+										<p>${list.description!}</p>
+										<!--<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+										--><div class="clearfix"></div>
+									</div>
+								</div>
+								[/#list]
+							[/#if]
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+					<div class="life-style">
+						<header>
+							<a href="${base}/front/news/info/newsList.do?id=40280a25559b852e01559b8615da0005"><h3 class="title-head">[@lang_res k='news.category.markets'/]</h3></a>
+						</header>
+						<div class="life-style-grids">
+						[#if marketList?exists && marketList?size gt 0]
+							[#list marketList as list]
+							<div class="life-style-grids">
+							[#if list.url?? && list.url!='']
+								[#if list.url?? && list.url!='']
+							<div class="article-left">
+								<a href="newsContent.do?id=${list.id!}"><img src="${list.url!}"></a>
+							</div>
+							[/#if]
+								[/#if]
+								<div class="article-right">
+									<div class="article-title">
+										<p>${list.lastUpdate!}</p>
+										<a class="title" href="newsContent.do?id=${list.id!}">${list.title!}</a>
+									</div>
+									<div class="article-text">
+										<p>${list.description!}</p>
+										<!--<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+										--><div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							[/#list]
+							[/#if]
+							</div>
+					</div>
+					<div class="life-style">
+						<header>
+							<a href="${base}/front/news/info/newsList.do?id=40280a25559b852e01559b8615da0008"><h3 class="title-head">[@lang_res k='news.category.industries'/]</h3></a>
+						</header>
+						<div class="life-style-grids">
+						[#if industriesList?exists && industriesList?size gt 0]
+							[#list industriesList as list]
+							 <div class="life-style-grids">
+							   [#if list.url?? && list.url!='']
+								<div class="article-left">
+									<a href="newsContent.do?id=${list.id!}"><img src="${list.url!}"></a>
+								</div>
+								[/#if]
+								<div class="article-right">
+									<div class="article-title">
+										<p>${list.lastUpdate!}</p>
+										<a class="title" href="newsContent.do?id=${list.id!}">${list.title!}</a>
+									</div>
+									<div class="article-text">
+										<p>${list.description!}</p>
+										<!--<a href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+										--><div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							[/#list]
+							[/#if]
+							</div>
+					</div>
+					<div class="sports-top">
+								<div class="s-grid-left">
+									<div class="cricket">
+										<header>
+											<a href="${base}/front/news/info/newsList.do?id=40280a25559b852e01559b8615da0012"><h3 class="title-head">[@lang_res k='news.category.world'/]</h3></a>
+										</header>
+										[#if worldList?exists && worldList?size gt 0]
+							[#list worldList as list]
+							[#if list_index==0]
+										<div class="c-sports-main">
+												[#if list.url?? && list.url!='']
+												<div class="article-left">
+													<a href="newsContent.do?id=${list.id!}"><img src="${list.url!}"></a>
+												</div>
+												[/#if]
+												<div class="c-text">
+													<a class="power" href="newsContent.do?id=${list.id!}">${list.title!}</a>
+													<p class="date">${list.lastUpdate!}</p>
+													<!--<a class="reu" href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+													--><div class="clearfix"></div>
+												</div>
+												<div class="clearfix"></div>
+											</div>
+											[#else]
+											<div class="s-grid-small">
+											[#if list.url?? && list.url!='']
+							 					[#if list.url?? && list.url!='']
+												<div class="article-left">
+													<a href="newsContent.do?id=${list.id!}"><img src="${list.url!}"></a>
+												</div>
+												[/#if]
+												[/#if]
+											<div class="sc-text">
+												<a class="power" href="newsContent.do?id=${list.id!}">${list.title}</a>
+												<p class="date">${list.lastUpdate!}</p>
+												<!--<a class="reu" href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+													--><div class="clearfix"></div>
+											</div>
+											<div class="clearfix"></div>
+											</div>
+											[/#if]
+											[/#list]
+							                [/#if]
+											<!--<div class="s-grid-small">
+												<div class="sc-image">
+													<a href="newsContent.do"><img src="${base}/res/css/news/images/bus3.jpg" alt="" /></a>
+												</div>
+											<div class="sc-text">
+												<a class="power" href="newsContent.do">It is a long established fact that a reader</a>
+												<p class="date">On Jan 25, 2015</p>
+												<a class="reu" href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+													<div class="clearfix"></div>
+											</div>
+											<div class="clearfix"></div>
+											</div>
+										--></div>
+									</div>
+								<div class="s-grid-right">
+									<div class="cricket">
+										<header>
+											<a href="${base}/front/news/info/newsList.do?id=40280a25559b852e01559b8615da0014"><h3 class="title-head">[@lang_res k='news.category.indepth'/]</h3></a>
+										</header>
+										[#if indepthList?exists && indepthList?size gt 0]
+							[#list indepthList as list]
+							[#if list_index==0]
+										<div class="c-sports-main">
+												[#if list.url?? && list.url!='']
+												<div class="article-left">
+													<a href="newsContent.do?id=${list.id!}"><img src="${list.url!}"></a>
+												</div>
+												[/#if]
+												<div class="c-text">
+													<a class="power" href="newsContent.do?id=${list.id!}">${list.title!}</a>
+													<p class="date">${list.lastUpdate!}</p>
+													<!--<a class="reu" href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+													--><div class="clearfix"></div>
+												</div>
+												<div class="clearfix"></div>
+											</div>
+											[#else]
+											<div class="s-grid-small">
+											[#if list.url?? && list.url!='']
+							 					<div class="sc-image">
+													<a href="newsContent.do?id=${list.id!}"><img src="${list.url!}" alt="" /></a>
+												</div> 
+												[/#if]
+											<div class="sc-text">
+												<a class="power" href="newsContent.do?id=${list.id!}">${list.title}</a>
+												<p class="date">${list.lastUpdate!}</p>
+												<!--<a class="reu" href="newsContent.do"><img src="${base}/res/css/news/images/more.png" alt="" /></a>
+													--><div class="clearfix"></div>
+											</div>
+											<div class="clearfix"></div>
+											</div>
+											[/#if]
+											[/#list]
+							                [/#if]
+										</div>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+								
+					</div>
+				
+			</div>
+			[#include "right.html"/] 
+		</div>
+		<!-- footer-section-ends-here -->
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		$().UItoTop({ easingType: 'easeOutQuart' });
+		});
+		</script>
+<a href="#to-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+<!---->
+[#include "../../../inc/foot_v2.html"/]
+<script type="text/javascript">
+ /*$(".sb-icon-search").on("click",function(){
+		 var key=$(".sb-search-input").val();
+		 window.location.href=base_root+"/front/news/info/searchNews.do?key="+key;
+	 })*/
+	 
+$("#searchKeyWord").keydown(function(e){
+   if(e.keyCode==13){
+     search()
+}
+});
+$("#searchKeyBtn").on("click",function(){
+search()
+})
+function search(){
+
+ var key=$("#searchKeyWord").val();
+	  window.location.href=base_root+"/front/news/info/searchNews.do?key="+key;
+}
+
+</script> 

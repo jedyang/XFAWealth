@@ -1,0 +1,150 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<div class="wmes-top">
+    <a href="javascript:;" class="header-over">[@lang_res k='open.account.title'/]</a>
+</div>
+<div class="wmes-content">
+    <div class="kaihu_div white_background">
+    <p class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='open.account.title'/]</p>
+            <div class="white_background" >   
+                <!-- <div class="OpenAccount_big_title">
+                  <h2>Open account</h2>
+                </div> -->
+                
+                <div class="OpenAccount_liucheng_div">
+                    <div class="OpenAccount_liucheng">
+                        <ul>
+                        <!-- 
+                            <li class="liucheng_first liucheng_light"><div class="font_height">[@lang_res k='open.account.Start'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"/></div>
+                            </li> -->
+                            <li class="liucheng_kuai liucheng_light"><div class="font_height">[@lang_res k='open.account.RPQ'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou liucheng_light"><img src="${base}/res/images/liucheng_02.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_light"><div class="font_height">[@lang_res k='open.account.BasicInfo'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"/></div>
+                            </li>
+                            <li class="liucheng_kuai liucheng_light"><div>[@lang_res k='open.account.DocumentCheck'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_02.png"></div>
+                            </li>
+                            <li class="liucheng_kuai  liucheng_light"><div class="font_height">[@lang_res k='open.account.Declaration'/]</div></li>
+                            <li>
+                              <div class="liucheng_jiantou"><img src="${base}/res/images/liucheng_03.png"></div>
+                            </li>
+                            <li class="liucheng_last liucheng_orange"><div class="font_height">[@lang_res k='open.account.Submit'/]</div></li>
+                        </ul>
+                    </div>    
+                </div>
+                <div class="OpenAccount_liucheng_content">                  
+                    <div class="Summit_text"> 
+                                           
+                    </div>
+                    <div class="Summit_myClient">
+                        <p class="Summit_myClient_title">[@lang_res k='open.account.Start.MyClient'/]:</p>
+                        [#if accountUser?exists]
+                        <p class="Summit_myClient_name">
+                            <img src="${base}[@user_head u=accountUser.iconUrl /]" alt="" width="38px" height="38px">
+                            <span>${accountUser.loginCode!}</span>
+                        </p>
+                        <p class="Summit_myClient_phone">
+                            <span class="Summit_left_title">[@lang_res k='open.account.Start.phone'/]:</span>
+                            <span>${accountUser.mobileCode!}-${accountUser.mobileNumber!}</span>
+                        </p>
+                        <p class="Summit_myClient_Email">
+                            <span class="Summit_left_title">[@lang_res k='open.account.Start.email'/]:</span>
+                            <span>${accountUser.email!}</span>
+                        </p>
+                        [/#if]
+                    </div>
+                    <div class="OpenAccount_summit_row">
+                        <p class="Summit_row_title">[@lang_res k='open.account.approval.ifa.print'/]</p>
+                        <div class="Summit_row_content">
+                            <p class="Summit_language">[@lang_res k='open.account.approval.submit.rptLang'/]</p>
+                            <select class="Summit_language_select">
+                              <option value ="[@lang_res k='open.account.approval.submit.rptLang.english'/]">[@lang_res k='open.account.approval.submit.rptLang.english'/]</option>
+                              <option value ="[@lang_res k='open.account.approval.submit.rptLang.china'/]">[@lang_res k='open.account.approval.submit.rptLang.china'/]</option>
+                            </select>
+                            <a class="Summit_button_green printForm" href="javascript:;">[@lang_res k='open.account.approval.submit.print'/]</a>
+                            <a class="Summit_button_green viewPdf" href="javascript:;">[@lang_res k='open.account.approval.submit.preview'/]</a>
+                            <a class="Summit_button_green expPdf" href="javascript:;">[@lang_res k='open.account.approval.submit.export'/]</a>
+                        </div>
+                    </div>
+                    <div class="OpenAccount_summit_row">
+                        <p class="Summit_row_title">[@lang_res k='open.account.approval.ifa.upload'/]</p>
+                        <div class="Summit_row_content docController">
+                            <div style="float: left;">
+                                    <a href="javascript:;" class="picker" id="pickerUpload">
+                                    <img src="${base}/res/images/addPhoto.png"/></a>
+                            </div>
+                            <ul class="Summit_img_wrap filelist">
+                                <!-- <li>
+                                    <a href="javascript:;" class="picker" id="pickerUpload">
+                                    <img src="${base}/res/images/addPhoto.png"/></a>
+                                </li> -->
+                                [#if docList?? && docList?size gt 0]
+                                [#list docList as file]
+                                    <li class="img_li" fileid="${file.id!}" id="img_li_${file.id!}">
+                                        <p class="imgWrap"><img src="${base}/loadImgSrcByPath.do?filePath=${file.filePath!}" height="85px" class="lightense"/></p>
+                                        <p class="progress"><span></span></p>
+                                        <div class="file-panel div_btn" >
+                                            <span class="cancel">[@lang_res k='open.account.approval.submit.file.delete'/]</span>
+                                            <span class="thumb">[@lang_res k='open.account.approval.submit.file.preview'/]</span>
+                                        </div>
+                                    </li>
+                                [/#list]
+                                [/#if]
+                            </ul>
+                        </div>
+                    </div>
+                    [#if account?? && account.finishStatus?? && account.finishStatus=='1']
+                    <div class="OpenAccount_summit_row">
+                        <p class="Summit_row_title">[@lang_res k='open.account.approval.ifa.hist'/]</p>
+                        <div class="Summit_row_content" id="approvalList" style="height:200px;overflow-y:auto;">
+                            
+                        </div>
+                    </div>
+                    <br>
+                    <div class="OpenAccount_addwrap">
+                        <p class="Summit_row_title">[@lang_res k='open.account.approval.ifa.submit'/]</p>
+                        <p class="OpenAccount_addWrap_title">[@lang_res k='open.account.approval.submit.ifaComment'/]</p>
+                        <textarea class="OpenAccount_addContent" id="msg" name="msg" rows="8" cols="60"></textarea>
+                    </div>
+                    [/#if]
+                    <div class="wenti_btn">
+                        <a class="wenti_btn_bule" style="float:left;" href="${base}/front/investor/accountDeclare.do?accountId=${accountId!}">[@lang_res k='open.account.Previous'/]</a>
+                        <a id="btn_cancel" class="wenti_btn_LightBlue" href="javascript:;" style="float:left;">[@lang_res k='open.account.Cancel'/]</a>
+                        <a id="sendToInvestor" class="wenti_btn_bule" href="javascript:;" style="float:right;width:auto;padding:0 15px;">[@lang_res k='open.account.sendToInvestor'/]</a>
+                        [#if account?? && account.finishStatus?? && '1'=account.finishStatus]
+                        <a id="submitToOfficer" class="wenti_btn_bule" href="javascript:;" style="float:right;width:auto;padding:0 15px;">[@lang_res k='open.account.submitForApproval'/]</a>
+                        [/#if]
+                        <input type="hidden" id="accountId" name="accountId" id="${accountId!}">
+                    </div>
+                </div>
+            </div>
+    
+
+        </div>
+<div class="doc_imgWrap">
+    <div class="doc_img">
+        <div class="doc_img_close">
+          <span class="doc_close_ico">X</span>
+        </div>
+        <img id="img_zone"  src="" />
+    </div>  
+</div>
+</div>
+
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+[#if validity?exists && validity == "false" ]
+  alert( "抱歉，当前开户关联的accountId有误，请检查开户流程是否正确？" );
+  window.location.href = "${base}/front/investor/accountStart.do?accountId=${accountId!''}"+"&r="+Math.random();
+[/#if]
+    seajs.use('${base}/res/web/openAccount/openAccountSubmit.js');
+    var accountId = "${accountId!}";
+    var submitBy = "IFA";
+</script>

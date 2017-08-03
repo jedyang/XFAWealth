@@ -1,0 +1,466 @@
+[#include "../../inc/head_v2.html"/]
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <style type="text/css">
+		.order-setting-top{margin-top: 0px;}
+	</style>
+    <div class="wmes-content">
+         <div class="client-kyc-wrap">
+         	[#if detail?? && detail.approvalView?? && detail.status=='1' && detail.approvalView=='1']
+         	<p class="wmes-wrap-title">[@lang_res k='order.plan.confirm.title'/]</p>
+         	[#else]
+         	<p class="wmes-wrap-title">[@lang_res k='order.plan.detail.title'/]</p>
+         	[/#if]
+            <div class="client-detail-iof-wrap">
+            	<div class="order-plan-choice">
+            		<div class="order-detail-brief">
+                    	<div class="order-brief-left">
+                    		<div class="order-brief-text">
+                    			<p class="order-brief-title">[@lang_res k='create.proposal.step.proposalDetail.proposalName'/]</p>
+                    			<p class="order-brief-word">${(detail.portfolioName)!''}</p>
+                    		</div>
+                    		<div class="order-brief-text">
+                    			<p class="order-brief-title">[@lang_res k='pipeline.search.clientName'/]</p>
+                    			<p class="order-brief-word">
+                    			<span>${(detail.nickName)!}</span>
+                    			<span>(</span>
+                    			[#if detail.mobileNumber??]
+                    			<span style="margin-right:10px;">${(detail.mobileNumber)!}</span>
+                    			[/#if]
+                    			[#if detail.email??]
+                    			<span>${(detail.email)!}</span>
+                    			[/#if]
+                    			<span>)</span>
+                    			</p>
+                    		</div>
+                    		<div class="order-brief-text">
+                    			<p class="order-brief-title">[@lang_res k='order.plan.detail.createTime'/]</p>
+                    			<p class="order-brief-word">${(detail.createDate)!''}</p>
+                    		</div>
+                    	</div>
+                    </div>
+                    <div class="order-brief-text" style="margin-bottom:10px;">
+            			<p class="order-brief-title" style="text-align: -webkit-center;color:black;font-weight: bold;float:right;width: 195px;"><span>[@lang_res k='order.plan.detail.status'/]:</span><span style="">${(detail.statusDisplay)!''}</span></p>
+            		</div>
+            		[#if detail.ifaNickName??]
+            		<div class="order-brief-text" style="">
+              			<p class="order-brief-word" style="float: right;">${(detail.ifaNickName)!}</p>
+              			<p class="order-brief-title" style="width: 45px;float: right;">[@lang_res k='member.register.ifa'/]</p>
+              		</div>
+              		[/#if]
+                    <div class="order-plan-cur-fillin">
+                   	 	<p class="order-plan-cur-title">[@lang_res k='order.plan.rebalance.CUR'/]</p>
+                        <div class="client_xiala proposal_xiala" style="width: 100px;">
+                           <input id="hidDefCurrency" value="${(detail.currencyCode)!''}" type="hidden">
+                           <input id="portfolio-currency" style="width: 60px;" class="portfolio-currency" type="text"  value="" readonly>
+                           <span class="icon_xiala portfolio-currency" style="margin-top: 7px;"></span>
+                           <ul id="currency-choice" style="width:98px"></ul>
+                        </div>
+                   	</div>
+                </div>
+		        <!-- accounts -->
+		        <div class="order-plan-rows">
+	                <p class="client-bg-title">[@lang_res k='order.plan.rebalance.Inv.account.summary'/] <span class="client-more-ico"></span></p>
+	                <table class="client-table order-table">
+	                    <tbody>
+	                        <tr class="client-table-th">
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.distributor'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.accoutNo'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.inv.account.type'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.account.table.basic.cur'/]</th>
+	                            <th width="15%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.asset'/]</th>
+	                            <th width="15%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.cash'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.account.table.market.value'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.table.th.rpq.riskLevel'/]</th>
+	                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.authorizedToIFA'/]</th>
+	                        </tr>
+	                        [#if detail?? && detail.investorAccountVOs?? && detail.investorAccountVOs?size gt 0]
+	                        [#list detail.investorAccountVOs as items]
+	                        <tr>
+	                            <td class="portfolio-tdcenter account-td-distributor" data-distributor-id="${items.distributorId!}">
+	                            	<img style="width:100px" class="rebalance-distributor-img" src="${base}${items.distributorIconUrl!}">
+	                            </td>
+	                            <td class="portfolio-tdcenter">${items.accountNo!}</td>
+	                            <td class="portfolio-tdcenter">${items.subFlagDisplay!}</td>
+	                            <td class="portfolio-tdcenter">${items.currency!}</td>
+	                            <td class="portfolio-tdcenter">
+	                            [#if items.totalCash??]
+	                            <div class="please-login-data">
+                            		<span class="conversion-flag total-value">[@num_fmt s='${items.totalCash!"0.00"}'/]</span>
+                            		<span class="to-currency" style="margin-left:5px">${items.currency!}</span>
+                            	</div>
+	                            [#else]-[/#if]
+	                            </td>
+	                            <td class="portfolio-tdcenter">
+	                            [#if items.cashAvailable??]
+	                            <div class="please-login-data">
+                            		<span class="conversion-flag cash-value">[@num_fmt s='${items.cashAvailable!"0.00"}'/]</span>
+                            		<span class="to-currency" style="margin-left:5px">${items.currency!}</span>
+                            	</div>
+	                            [#else]-[/#if]
+	                            </td>
+	                            <td class="portfolio-tdcenter">
+	                            	[#if items.marketValue??]
+	                            	<span class="conversion-flag">[@num_fmt s='${items.marketValue!}'/]</span>
+                            		<span class="to-currency" style="margin-left:5px">${items.currency!}</span>
+	                           		[/#if]
+	                            </td>
+	                            <td class="portfolio-tdcenter">${items.rpqRiskLevel!'N/A'}</td>
+	                            <td class="portfolio-tdcenter" style="color:#ff6908;">
+	                            [#if items.authorized?? && items.authorized == '1']
+	                            [@lang_res k='order.plan.table.authorized.1'/]
+	                            [#else]
+	                            [@lang_res k='order.plan.table.authorized.0'/]
+	                            [/#if]
+	                            </td>
+	                        </tr>
+	                        [/#list]
+	                        [#else]
+	                        <tr class="tr-wmes-nodata-tips">
+	                        	<td colspan="7">
+	                        		<div class="wmes-nodata-tips" style="display:block">
+	             						<img class="wmes-nodata-img" style="width:73px;height:64px" src="${base}/res/images/no_data_ico.png">
+	             						<span class="wmes-nodate-word">[@lang_res k='order.plan.rebalance.account.nodata.tips'/]</span>
+	          						</div>
+	                        	</td>
+	                        </tr>
+	                        [/#if]
+	                    </tbody>
+	                </table>
+	            </div>
+	            <!-- AIP -->
+	            [#if detail?? && detail.aipFlag?? && detail.aipFlag=='1']
+	            <div class="rebalance-table-rows">
+	                <p class="client-bg-title" style="margin-top: 20px;">[@lang_res k='order.plan.rebalance.regularSubscribtionPlan'/] <span style="margin-right: 0px;" class="client-more-ico"></span></p>
+	                <div class="order-setting-contents">
+	                    <div class="order-setting-left">
+	                        <ul class="order-setting-list">
+	                            <li class="order-setting-rows">
+			    					<p class="order-setting-list-name">[@lang_res k='order.plan.rebalance.AIP.execCycle'/] :</p>
+			    					[#if detail?? && detail.aipExecCycle?? && detail.aipExecCycle == 'w']
+			    						<span>[@lang_res k='order.plan.rebalance.AIP.execCycle.w'/]</span>
+			    					[#elseif detail?? && detail.aipExecCycle?? && detail.aipExecCycle == 'b']
+			    						<span>[@lang_res k='order.plan.rebalance.AIP.execCycle.b'/]</span>
+			    					[#elseif detail?? && detail.aipExecCycle?? && detail.aipExecCycle == 'm']
+			    						<span>[@lang_res k='order.plan.rebalance.AIP.execCycle.m'/]</span>
+			    					[/#if]
+			    				</li>
+	                            <li class="order-setting-rows">
+	                            	<p class="order-setting-list-name">[@lang_res k='order.plan.rebalance.AIP.timeDistance'/] :</p>
+			    					<input id="hidAipTimeDistance" class="order-money-input" value="${(detail.aipTimeDistance)!}" data-cycle="" type="hidden" name="aipTimeDistance">
+			    					[#if detail?? && detail.aipExecCycle?? && detail.aipExecCycle == 'm']
+			    						<span style="float: left;">${(detail.aipTimeDistance)!}</span>
+		    						[#else]
+		    							[#if detail.aipTimeDistance?? && detail.aipTimeDistance == 2]
+		    								<span style="float: left;">[@lang_res k='create.portfolio.step.three.mon'/]</span>
+		    							[#elseif detail.aipTimeDistance?? && detail.aipTimeDistance == 3]
+		    								<span style="float: left;">[@lang_res k='create.portfolio.step.three.tue'/]</span>
+		    							[#elseif detail.aipTimeDistance?? && detail.aipTimeDistance == 4]
+		    								<span style="float: left;">[@lang_res k='create.portfolio.step.three.wed'/]</span>
+		    							[#elseif detail.aipTimeDistance?? && detail.aipTimeDistance == 5]
+		    								<span style="float: left;">[@lang_res k='create.portfolio.step.three.thu'/]</span>
+		    							[#elseif detail.aipTimeDistance?? && detail.aipTimeDistance == 6]
+		    								<span style="float: left;">[@lang_res k='create.portfolio.step.three.fri'/]</span>
+		    							[/#if]
+		    						[/#if]
+			    					<p class="order-setting-last-word">
+			    						[@lang_res k='order.plan.rebalance.AIP.amount'/] :
+			    						[#if detail.aipAmount??]
+			    						<span class="conversion-flag">[@num_fmt s='${(detail.aipAmount)!}'/]</span>
+			    						<span class="to-currency"></span>
+			    						[/#if]
+			    					</p>
+	                            </li>
+	                            <li class="order-setting-rows">
+	               					<p  style="width: 200px !important;" class="order-setting-list-name aip-theNextRepaymentDate">
+			    					[@lang_res k='order.plan.rebalance.AIP.theNextRepaymentDate'/] :</p>
+			    					<span id="txtNextChargeDate">[#if detail.aipInitTime??]${(detail.aipInitTime)?string('yyyy-MM-dd')}[/#if]</span>
+			    				</li>
+	                        </ul>
+	                    </div>
+	                    <div class="order-setting-right">
+	                        <ul class="order-setting-list">
+	                            <li class="order-setting-rows aip-end-type">
+			    					<p class="order-setting-list-name">[@lang_res k='order.plan.rebalance.AIP.expirationCondition'/] :</p>
+			    					[#if detail?? && detail.aipEndType?? && detail.aipEndType == '1']
+			    						<span>[@lang_res k='order.plan.rebalance.AIP.endDate'/]</span>
+			    					[#elseif detail?? && detail.aipEndType?? && detail.aipEndType == '2']
+			    						<span>[@lang_res k='order.plan.rebalance.AIP.endCount'/]</span>
+			    					[#elseif detail?? && detail.aipEndType?? && detail.aipEndType == '3']
+			    						<span>[@lang_res k='order.plan.rebalance.AIP.endTotalAmont'/]</span>
+			    					[/#if]
+			    				</li>
+	                        </ul>
+	                        <div class="order-choice-list">
+	               				<div class="order-choice-date" style="float:left;margin-left: 40px;display:[#if detail?? && detail.aipEndType?? && detail.aipEndType == '1']block[#else]none[/#if];">
+			        				<p class="order-choice-title">
+			        				[@lang_res k='order.plan.rebalance.AIP.endDate.input'/]:
+			        				</p>
+			        				<span class="order-choice-title" style="color: black;">[#if detail.aipEndDate??]${(detail.aipEndDate)?string('yyyy-MM-dd')}[/#if]</span>
+			        			</div>  
+			        			<div class="order-choice-date" style="float:left;margin-left: 30px;display:[#if detail?? && detail.aipEndType?? && detail.aipEndType == '2']block[#else]none[/#if]">
+			        				<p class="order-choice-title">
+			        				[@lang_res k='order.plan.rebalance.AIP.endCount.input'/]:
+			        				</p>
+			        				<span class="order-choice-title" style="color: black;">${(detail.aipEndCount)!}</span>
+			        			</div>
+			        			<div class="order-choice-date" style="float:left;margin-left: 30px;display:[#if detail?? && detail.aipEndType?? && detail.aipEndType == '3']block[#else]none[/#if]">
+			        				<p class="order-choice-title">
+			        				[@lang_res k='order.plan.rebalance.AIP.endTotalAmont.input'/]:
+			        				</p>
+			        				[#if detail.aipEndTotalAmount??]
+			        				<span class="order-choice-title conversion-flag">[@num_fmt s='${(detail.aipEndTotalAmount)!}'/]</span>
+			        				<span class="order-choice-title to-currency" style="color:#000;margin-left:10px;float:right">USD</span>
+			        				[/#if]
+			        			</div>
+	               			</div>
+	                    </div>
+	                </div>
+	            </div>
+	            [/#if]
+	            <!-- Detail -->
+		        <div class="order-plan-rows" style="margin-top:20px">
+		        	<p class="client-bg-title">[@lang_res k='order.plan.rebalance.product.list'/] <span class="client-more-ico"></span></p>
+		        	<div class="order-setting-table-rows  subscription-table-div">
+			        	<!-- <div class="order-setting-top">
+		            		<p class="order-setting-title">[@lang_res k='order.plan.rebalance.product.subscription.purchase'/]</p>
+		            		<span class="order-setting-xiala"></span>
+		            	</div> -->
+		            	<table class="client-table order-table subscription-table">
+		                    <tbody>
+		                        <tr class="client-table-th">
+		                            <th width="25%" class="client-tables-header">[@lang_res k='order.plan.rebalance.product.Information'/]</th>
+		                            <th width="5%" class="client-tables-header">[@lang_res k='order.plan.account.table.basic.cur'/]</th>
+		                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.lastNav'/]</th>
+		                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.detail.subscribe.table.th.3'/]</th>
+		                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.create.portfolio.table.amount'/]</th>
+		                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.create.portfolio.table.tranFee'/]<br/>( [@lang_res k='order.plan.create.portfolio.table.tranRate'/] )</th>
+		                            <th width="15%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.tradingAccount'/]</th>
+		                         	<!--    
+		                         	<th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.dividendOption'/]</th> 
+		                         	-->
+		                        </tr>
+		                        [#if detail?? && detail.planProductVOs?? && detail.planProductVOs?size gt 0]
+		                        [#list detail.planProductVOs as item]
+		                        [#if item.tranType?? && item.tranType=='B']
+		                        <tr>
+		                            <td class="portfolio-tdcenter order-tables-name">
+			                            <a target="_self" href="${base!}/front/fund/info/fundsdetail.do?id=${(item.fundInfoId)!}">
+			                            [#if item.rpqRiskLevel?? && item.riskLevel?? && item.riskLevel > item.rpqRiskLevel]
+		                               		<img style="width: 15px;height: 13px;" class="product-update-ico" src="${base}/res/images/client/product_war_ico.png">
+		                               	[/#if]
+			                            ${(item.fundName)!}
+			                            </a>
+		                                <div class="portfolio_tables_nameWord" style="color: #9f9f9f;">
+		                                    <p class="portfolio_tables_risk" style="width: 35%;float: left;">
+		                                    [#if item.riskLevel??]
+		                                   		<span class="product-risk-level">${(item.riskLevel)!'N/A'}</span> 
+		                                    	[@lang_res k='order.plan.rebalance.table.risk'/]
+		                                    [/#if]
+		                                    </p>
+		                                    <p class="portfolio_tables_risk" style="width: 55%;float: left;">${item.fundType!''}</p>
+		                                </div>
+		                            </td>
+		                            <td class="portfolio-tdcenter">${(item.fundCurrencyName)!}</td>
+		                            <td class="portfolio-tdcenter">
+		                            [#if (item.lastNav)??]
+		                            	<span class="conversion-flag">[@num_fmt s='${(item.lastNav)!""}'/]</span>
+		                            	<span class="to-currency">${(detail.currencyName)!''}</span>
+	                            	[#else]
+                            			-
+	                            	[/#if]
+		                            </td>
+		                            <td class="portfolio-tdcenter">
+		                            [#if (item.minSubscribeAmount)??]
+	                            		<span class="conversion-flag">[@num_fmt s='${(item.minSubscribeAmount)!""}'/]</span>
+	                            		<span class="to-currency">${(detail.currencyName)!''}</span>
+	                            	[#else]
+                            			-
+	                            	[/#if]
+		                            </td>
+		                            <td class="portfolio-tdcenter">
+		                            [#if (item.amount)??]
+		                            	<span class="conversion-flag">[@num_fmt s='${(item.amount)!""}'/]</span>
+		                            	<span class="to-currency">${(detail.currencyName)!''}</span>
+	                            	[#else]
+                           				-
+	                            	[/#if]
+		                            </td>
+		                            <td class="portfolio-tdcenter">
+		                            [#if (item.tranFee)??]
+		                            	<span class="conversion-flag">[@num_fmt s='${(item.tranFee)!""}'/]</span>
+		                            	<span class="to-currency">${(detail.currencyName)!''}</span>
+		                            	<br>( [@num_fmt s='${(item.tranRate)!"0.00"}'/]% )
+	                            	[#else]
+	                            		-
+	                            	[/#if]
+		                            </td>
+		                            <td class="portfolio-tdcenter">
+		                            [#if (item.accountNo)??]
+		                            	${(item.accountNo)!""}<br>
+		                            	<img style="width: 100px;" alt="" src="${base!}${(item.distributorLogoUrl)!}"> 
+	                            	[#else]
+	                            		-
+	                            	[/#if]
+		                            </td>
+		                            <!-- <td class="portfolio-tdcenter">
+		                            	${(item.dividendDisplay)!"-"}
+		                            </td> -->
+		                        </tr>
+		                        [/#if]
+		                        [/#list]
+		                        [/#if]
+		                    </tbody>
+		                </table>
+                    </div>
+                    <div class="order-setting-table-rows redemption-table-div" style="margin-top:20px">
+                    	<!-- <div class="order-setting-top">
+		            		<p class="order-setting-title">[@lang_res k='order.plan.rebalance.redemption'/]</p>
+		            		<span class="order-setting-xiala"></span>
+		            	</div> -->
+		            	<table class="client-table order-table redemption-table">
+		                    <tbody>
+		                        <tr class="client-table-th">
+		                            <th width="25%" class="client-tables-header">[@lang_res k='order.plan.rebalance.product.Information'/]</th>
+		                            <th width="5%" class="client-tables-header">[@lang_res k='order.plan.account.table.basic.cur'/]</th>
+		                            <th width="10%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.lastNav'/]</th>
+		                            <th width="15%" class="client-tables-header">[@lang_res k='order.plan.detail.redemption.table.th.3'/]</th>
+		                            <th width="15%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.redemptionUnit'/]</th>
+		                            <th width="15%" class="client-tables-header">[@lang_res k='order.plan.create.portfolio.table.tranFee'/]<br/>( [@lang_res k='order.plan.create.portfolio.table.tranRate'/] )</th>
+		                            <th width="15%" class="client-tables-header">[@lang_res k='order.plan.rebalance.table.tradingAccount'/]</th>
+		                        </tr>
+		                        [#if detail?? && detail.planProductVOs?? && detail.planProductVOs?size gt 0]
+		                        [#list detail.planProductVOs as item]
+		                        [#if item.tranType?? && item.tranType=='S']
+		                        <tr>
+		                            <td class="portfolio-tdcenter order-tables-name">
+		                            	<a target="_self" href="${base!}/front/fund/info/fundsdetail.do?id=${(item.fundInfoId)!}">
+		                            	[#if item.rpqRiskLevel?? && item.riskLevel?? && item.riskLevel > item.rpqRiskLevel]
+		                               		<img style="width: 15px;height: 13px;" class="product-update-ico" src="${base}/res/images/client/product_war_ico.png">
+		                               	[/#if]
+		                            	${(item.fundName)!}
+		                            	</a>
+		                                <div class="portfolio_tables_nameWord" style="color: #9f9f9f;">
+		                                    <p class="portfolio_tables_risk" style="width: 35%;float: left;">
+		                                    [#if item.riskLevel??]
+		                                   		<span class="product-risk-level">${(item.riskLevel)!'N/A'}</span> 
+		                                    	[@lang_res k='order.plan.rebalance.table.risk'/]
+		                                    [/#if]
+		                                    </p>
+		                                    <p class="portfolio_tables_risk" style="width: 60%;float: left;">${item.fundType!''}</p>
+		                                </div>
+		                            </td>
+		                            <td class="portfolio-tdcenter">${(item.fundCurrencyName)!}</td>
+		                            <td class="portfolio-tdcenter">
+		                            [#if (item.lastNav)??]
+		                            	<span class="conversion-flag">[@num_fmt s='${(item.lastNav)!""}'/]</span>
+		                            	<span class="to-currency">${(detail.currencyName)!''}</span>
+	                            	[#else]
+                            			-
+	                            	[/#if]
+		                            </td>
+		                            <td class="portfolio-tdcenter">
+		                            [#if (item.minRedemptionAmount)??]
+		                            	<span class="conversion-flag">${(item.minRedemptionAmount)!""}</span>
+	                            	[#else]
+                            			-
+	                            	[/#if]
+		                            </td>
+		                            <td class="portfolio-tdcenter">${(item.unit)!""}</td>
+		                            <td class="portfolio-tdcenter">
+		                            [#if (item.tranFee)??]
+		                            	<span class="conversion-flag">[@num_fmt s='${(item.tranFee)!""}'/]</span>
+		                            	<span class="to-currency">${(detail.currencyName)!''}</span>
+		                            	<br>( [@num_fmt s='${(item.tranRate)!"0.00"}'/]% )
+	                            	[#else]
+	                            		-
+	                            	[/#if]
+		                            </td>
+		                            <td class="portfolio-tdcenter">
+		                            [#if (item.accountNo)??]
+		                            	${(item.accountNo)!""}
+		                            	<br><img style="width: 100px;" alt="" src="${base!}${(item.distributorLogoUrl)!}"> 
+	                            	[#else]
+	                            		-
+	                            	[/#if]
+		                            </td>
+		                        </tr>
+		                        [/#if]
+		                        [/#list]
+		                        [/#if]
+		                    </tbody>
+		                </table>
+                    </div>
+		        </div>
+           		<div class="wmes-nodata-tips product-nodata-tips" style="display:none">
+					<img class="wmes-nodata-img" style="width:73px;height:64px" src="${base}/res/images/no_data_ico.png">
+					<span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+				</div>
+		        <div class="product-tips-wrap rpq-risk-level-tips" style="margin-top:20px;margin-bottom: 50px;">
+                	<img  style="float: left;" class="product-tips-ico" src="${base}/res/images/client/product_war_ico.png">
+                	<p style="float: left;margin-left: 5px" class="product-tips-word">[@lang_res k='order.plan.rebalance.table.caveat'/].</p>
+                </div>
+                <!-- Approval record -->
+                [#if detail?? && detail.approvalRecordView?? && detail.approvalRecordView=='1' && detail.checkVOs??]
+            	<div class="order-plan-rows" style="clear: both;">
+		            <p class="client-bg-title">[@lang_res k='order.plan.check.table.title'/]<span class="client-more-ico"></span></p>
+		            <table class="client-table order-table">
+	                    <tbody>
+	                        <tr class="client-table-th">
+	                            <th width="25%" class="client-tables-header">[@lang_res k='order.plan.check.table.th.approval'/]</th>
+	                            <th width="25%" class="client-tables-header">[@lang_res k='order.plan.check.table.th.status'/]</th>
+	                            <th width="25%" class="client-tables-header">[@lang_res k='order.plan.check.table.th.date'/]</th>
+	                            <th width="25%" class="client-tables-header">[@lang_res k='order.plan.check.table.th.opinon'/]</th>
+	                        </tr>
+	                        [#if detail?? && detail.checkVOs?? && detail.checkVOs?size gt 0]
+	                        <tr id="">
+		                        <td class="portfolio-tdcenter">${(detail.creatorName)!}</td>
+		                        <td class="portfolio-tdcenter">${(detail.creatorName)!} [@lang_res k='order.plan.check.submitted'/]</td>
+		                        <td class="portfolio-tdcenter">${(detail.lastUpdateStr)!'-'}</td>
+		                        <td class="portfolio-tdcenter">-</td>
+	                        </tr>
+	                        [#list detail.checkVOs as item]
+	                        <tr id="${item.id!}">
+		                        <td class="portfolio-tdcenter">${item.approval!'-'}</td>
+		                        <td class="portfolio-tdcenter">${item.checkStatusDisplay!'-'}</td>
+		                        <td class="portfolio-tdcenter">${item.checkTimeStr!'-'}</td>
+		                        <td class="portfolio-tdcenter">${item.checkResult!'-'}</td>
+	                        </tr>
+	                        [/#list]
+	                        [/#if]
+	                    </tbody>
+	                </table>
+		        </div> 
+		        [/#if]
+		        [#if detail?? && detail.approvalView?? && detail.status=='1' && detail.approvalView=='1']
+			         <div class="order-setting-top" style="clear: both;margin: 20px 0;">
+	            		<p class="order-setting-title">[@lang_res k='order.plan.check.opinon.title'/]</p>
+	            	 </div>
+			         <div>
+	            		<textarea id="txtOpinon" style="width: 98%;height:100px;border-radius: 4px;resize: none;" rows="" cols=""></textarea>
+	            	 	<p style="display:none;color:red;margin-left:5px;" class="approval-opinon-empty">[@lang_res k='order.plan.check.opinon.not.empty'/]</p>
+	            	 </div>
+		             <div class="order-plan-button">
+			        	<a id="btnApproved" class="order-button-approved" href="javascript:void(0);">[@lang_res k='global.approve'/]</a>
+			        	<a id="btnReject" class="order-button-approved" href="javascript:void(0);">[@lang_res k='global.reject'/]</a>
+			        	<a id="btnCancel" style="cursor: pointer;" class="order-button-close">[@lang_res k='global.cancel'/]</a>
+			         </div>
+	            [/#if]
+	            [#if detail?? && detail.planSubmitView?? && detail.planSubmitView == '1']
+	            	 <div class="order-plan-button">
+			        	<a id="btnSubmit" class="order-button-approved" href="javascript:void(0);">[@lang_res k='order.plan.order'/]</a>
+			         </div>
+	            [/#if]
+	            [#if detail?? && detail.planSubmitView?? && detail.planSubmitView != '1' && detail.approvalView?? && detail.approvalView != '1']
+	            	 <div class="order-plan-button">
+			        	<a class="order-button-approved" href="${base!}/front/tradeRecord/orderPlanList.do">[@lang_res k='global.confirm'/]</a>
+			         </div>
+	            [/#if]
+            </div>
+         </div>
+    </div>
+[#include "../../inc/foot_v2.html"/] 
+<script type="text/javascript">
+	 var globalProp = [@load_prop k='global'/]; 
+	 var props = [@load_prop k=''/];
+	 seajs.use('${base}/res/web/trade/step/orderPlanConfirm.js');
+</script>

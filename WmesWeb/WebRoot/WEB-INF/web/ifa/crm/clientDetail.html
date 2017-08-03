@@ -1,0 +1,602 @@
+[#include "../../inc/head_v2.html"/]
+	<link href="${base}/res/third/fullcalendar/css/fullcalendar.print.css"
+			rel="stylesheet" media="print">
+	<link href="${base}/res/third/fullcalendar/css/fullcalendar.min.css"
+			rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/client.css">
+    <link rel="stylesheet"  type="text/css" href="${base}/res/css/ifa.css">
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <link href="${base}/res/third/laydate/need/laydate.css">
+	<link href="${base}/res/third/laydate/skins/yalan/laydate.css">
+	<link href="${base}/res/third/minicolor/jquery.minicolors.css" rel="stylesheet" type="text/css">
+    <style>
+    .take_list_date {
+	    float: right;
+	    margin-right: 25px;
+	    cursor: pointer;
+	    width: 32px;
+	    height: 32px;
+	    background: url('${base}/res/images/ifa/take_list_date.png') no-repeat;
+	}
+	.take_list_contents {
+	    float: right;
+	    margin-right: 25px;
+	    cursor: pointer;
+	    width: 32px;
+	    height: 32px;
+	    background: url('${base}/res/images/ifa/shulie_01_02.png') no-repeat;
+	}
+	.funds_fixed {position: fixed;z-index: 1;}
+	.tasklist-metting-choice {padding-bottom: 10px;}
+    .client-account-button{float: none;}
+    .client-more-ico{margin-top: 5px;}
+    .ifa-space-mask{position: fixed;top: 0px;left: 0px;background-color: black;height: 100%;width: 100%;opacity: 0.3;z-index: 99;}
+    .space-mask-wrap{text-align: center;width: 100%;height: 100%;position: absolute;top: 10px;left: 0px;z-index: 99;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+    .space-mask{background-color: white;padding: 1% 1.5%;position: relative;left: 20px;top: 10px;}
+	.mask-layer1{display: none;z-index: 100;width: 100%;position: absolute;top: 0;left: 0;height: 100%;background: rgba(0,0,0,0.3);}
+    .account-rows-hide{height:50px;overflow: hidden;}
+    .schedule-group-list-button{
+    background-color: #58adeb;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin: 5px auto;
+    display: block;
+    width: 20% !important;}
+    .ifa-home-calendar {
+    display: block;
+	}
+	.conservative-date-wrap {
+    float: left;
+    display: block;
+	}
+	.register_xiala_long input {
+    width: 91%;
+    color: black;
+	}
+	.member-comment-topper {
+     overflow: inherit;
+	}
+	.schedule-save-load {display: none;height: 100%;width: 100%; background: rgba(0, 0, 0, 0.42);position: absolute;z-index: 999999;top: 0;}
+	.schedule-save-load-gif {position: fixed;left: 50%;top: 40%;}
+	.client-top-rows{padding:22px;}
+	
+	.portfolios_list .portfolios_list_blue {
+		border: 1px solid #e0e0e0;
+	}
+	
+	.portfolios_list_content li {
+		margin-top: 26px;
+		width: 22%;
+		text-align: center;
+	}
+	
+	.portfolios_list_content li:nth-child(1) {
+		margin-top: 16px;
+		width: 66px;
+		margin-right: 15px;
+	}
+	
+	.portfolios_list_content li:nth-child(2) {
+		width: 23%;
+		text-align: left;
+		margin-top:13px;
+	}
+	.portfolios_list_content li:nth-child(2) .my-assets-word span{
+		float:left;
+	}
+	.portfolios_list_content li:nth-child(2) .my-assets-word{
+		height:auto;
+	}
+	.my-assets-word > span{float:none;}
+    </style>
+    <div class="wmes-content">
+        <div class="client-top-rows" style="padding-bottom:10px;border-bottom:5px solid #ecf0f5;">
+        	<div class="wmes-wrap-title"><a href="javascript:history.go(-1)"><span class="wmes-ruturn"></span></a>[@lang_res k='client.detail.title'/]</div>    
+            <input type="hidden" id="currency" value="${currency!}">
+            <input type="hidden" id="displayColor" value="${displayColor!}">
+            <input type="hidden" id="dateTimeFormat" value="${dateTimeFormat!}">
+            <input type="hidden" id="dateFormat" value="${dateFormat!}">
+            <input type="hidden" id="currencyName" value="${currencyName!}">
+                 <a href="${base}/front/community/space/investorSpace.do?id=${(customerVO.memberId)?if_exists}"><img class="client-top-portrait" src="${base}[@user_head u='${(customerVO.iconUrl)?if_exists}' g='${customerVO.gender!}'/]"></a>
+                 <div class="client-top-left">
+                    <div class="client-top-nwrap">
+						<input type="hidden" name="hdId" value="${(customerVO.id)?if_exists}" id="hdId"/>
+                        <div class="client-top-namebox">
+                        	<input class="client-top-name" tyle="text" [#if customerVO.clientType?? && customerVO.clientType=='1']readonly[/#if] value="[#if customerVO.clientType?? && customerVO.clientType=='1']${customerVO.clientName!}[#else]${customerVO.nickName!}[/#if]"/>
+                            <input type="hidden" id="id" value="${(customerVO.id)?if_exists}">                        
+                        </div>
+                        <img class="client-top-date" style="display:none" src="${base}/res/images/client/exclamatory_ico.png">
+                        <p class="client-top-level" style="display:none">1</p>
+                    </div>
+                    <p class="client-top-from">${(customerVO.nationalityName)?if_exists}</p>
+                    <div class="client-top-wico">
+                        <p class="client-top-ico"><img src="${base}/res/images/client/phone_ico.png">${(customerVO.mobileNumber)?if_exists}</p>
+                        <p class="client-top-ico"><img src="${base}/res/images/client/email_ico.png">${(customerVO.email)?if_exists}</p>
+                        <p class="client-top-ico"><img src="${base}/res/images/client/time_ico.png">${customerVO.lastLogin?if_exists}</p>
+                    </div>
+                 </div>
+            </div>
+            <div class="client-wrap">
+                <ul class="tab_list_tab">
+                    <li id="detail-portfolio">[@lang_res k='client.detail.portfolio'/]<span></span></li>
+                    <li id="detail-schedule">[@lang_res k='client.detail.schedule'/]<span></span></li>
+                    <li id="detail-account">[@lang_res k='client.detail.account'/]<span></span></li>
+                    <li>[@lang_res k='client.detail.proposal'/]<span></span></li>
+                    <li id="detail-transaction">[@lang_res k='client.detail.transaction'/]<span></span></li>
+                    <li>[@lang_res k='client.detail.info'/]<span></span></li>
+                </ul>
+                <div class="client-detail-contents">
+                    <div id="divTabPortfolio" class="content">
+                     <ul class="portfolios_list" style="margin-top:30px;margin-left:20px;margin-right:20px">
+                     
+                     
+                     </ul>
+                    
+                    <div class="wmes-nodata-tips portfolioTips">
+                            <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                            <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                      </div>
+                            
+                    </div>
+                    <!-- 日程 -->
+                    <div style="*+height:100%;_height:1000px;" class="content">
+	                   <div class="ifa-home-calendar" style="margin:50px;">
+	                        <!-- Calendar -->
+	                   </div>
+                    </div>
+                    <div id="divTabAccount" class="content">
+                        <div class="client-account-button">
+                            <a id="addAccount" class="client-button" href="javascript:;">[@lang_res k='client.detail.account.add'/]</a>
+                        </div>
+                         <div class="wmes-nodata-tips accountTips">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                        </div>
+                        <!-- AccountList -->    
+                    </div>
+                    <div id="divTabProposal" class="content">
+                        <div class="client-account-button">
+                        [#if Session["role"]?exists &&(Session["role"]=='IFA' ||Session["role"]=='investor')]
+                            <a class="client-button" href="${base}/front/crm/proposal/createProposalSetOne.do?memberId=${customerVO.memberId}">[@lang_res k='clients.proposal.createProposal'/]</a>
+                        [/#if]             
+                        </div>
+                         <div class="wmes-nodata-tips proposalTips">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                          </div>
+                        <!-- Proposal -->
+                    </div>
+                   
+                    <div class="content">
+                        <div class="client-transaction-rows">
+                            <div class="client-choice-wrap">
+                                <p class="client-choice-title">[@lang_res k='clients.proposal.period'/]</p>
+                                <ul class="client-choice">
+                                    <li data-name="period" data-key="period : 1day" data-value="1day"  class="client-all client-choice-active per-child">Today</li>
+                                    <li data-name="period" data-key="period : 1week" data-value="1week">[@lang_res k='client.detail.transaction.week_1'/]</li>
+                                    <li data-name="period" data-key="period : 1month" data-value="1month">[@lang_res k='client.detail.transaction.mon_1'/]</li>
+                                    <li data-name="period" data-key="period : 2month" data-value="2month">[@lang_res k='client.detail.transaction.mon_2'/]</li>
+                                    <li data-name="period" data-key="period : 6month" data-value="6month">[@lang_res k='client.detail.transaction.mon_6'/]</li>
+                                    <li data-name="period" data-key="period : 1year" data-value="1year">[@lang_res k='client.detail.transaction.year_1'/]</li>
+                                    <li data-name="period" data-key="period : other" data-value="other">[@lang_res k='global.other'/]</li>
+                                </ul>
+                            </div>
+                            <div class="client-choice-wrap">
+                                <p class="client-choice-title">[@lang_res k='global.status'/]</p>
+                                <ul class="client-choice">
+                                    <li data-name="status" data-key="" data-value="" class="client-all client-choice-active per-child">[@lang_res k='global.all'/]</li>
+                                    <li data-name="status" data-key="status : Wait" data-value="Wait">[@lang_res k='client.detail.transaction.status.wait'/]</li>
+                                    <li data-name="status" data-key="status : Success" data-value="Success">[@lang_res k='client.detail.transaction.status.success'/]</li>
+                                    <li data-name="status" data-key="status : Failure" data-value="Failure">[@lang_res k='client.detail.transaction.status.failure'/]</li>
+                                    <li data-name="status" data-key="status : Revoke" data-value="Revoke">[@lang_res k='client.detail.transaction.status.revoke'/]</li>
+                                </ul>
+                            </div>
+							<input type="hidden" name="hdPeriod" value="1day" id="hdPeriod"/>
+							<input type="hidden" name="hdStatus" value="" id="hdStatus"/>
+                        </div>
+                        <div class="client-transaction-rows">
+                            <table class="client-table">
+                                <tbody>
+                                    <tr class="client-table-th">
+                                        <th class="">[@lang_res k='client.detail.transaction.list.date'/]</th>
+                                        <th class="client-tables-header">[@lang_res k='client.detail.transaction.list.product'/]</th>
+                                        <th class="client-tables-header">[@lang_res k='client.detail.transaction.list.unit'/]</th>
+                                        <th class="client-tables-header">[@lang_res k='client.detail.transaction.list.amount'/]</th>
+                                        <th class="client-tables-header">[@lang_res k='client.detail.transaction.list.fee'/]</th>
+                                        <th class="client-tables-header">[@lang_res k='client.detail.transaction.list.type'/]</th>
+                                        <th class="client-tables-header">[@lang_res k='client.detail.transaction.list.account'/]</th>
+                                        <th class="client-tables-header">[@lang_res k='client.detail.transaction.list.status'/]</th>
+                                        <th class="client-tables-header">[@lang_res k='client.detail.transaction.list.action'/]</th>
+                                    </tr>
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="wmes-nodata-tips transactionTip">
+                                <img class="wmes-nodata-img" src="${base}/res/images/no_data_ico.png">
+                                <span class="wmes-nodate-word">[@lang_res k='global.nodata.tips'/]</span>
+                          </div>
+                    </div>
+                   <div class="content">
+                        <div class="client-detail-info">
+                            <ul class="client-info-wrap">
+                               
+                                
+                                 <li>
+                                    <p class="client-info-title">[@lang_res k='member.register.firstnameinenglish'/]</p>
+                                    <p class="client-info-word">${(customerVO.firstName)?if_exists}</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">[@lang_res k='member.register.nameinchinese'/]</p>
+                                    <p class="client-info-word">${(customerVO.nameChn)?if_exists}</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">[@lang_res k='member.register.nationality'/]</p>
+                                    <p class="client-info-word">${(customerVO.nationalityName)?if_exists}</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">[@lang_res k='member.register.employmentdetails'/]</p>
+                                    <p class="client-info-word">${(customerVO.employmentName)?if_exists}</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">[@lang_res k='member.register.levelofeducation'/]</p>
+                                    <p class="client-info-word">${(customerVO.educationName)?if_exists}</p>
+                                </li><!--
+                                <li>
+                                    <p class="client-info-title">Annual Income</p>
+                                    <p class="client-info-word"></p>
+                                </li>
+                                --><li>
+                                    <p class="client-info-title">[@lang_res k='member.register.mobilenumber'/]</p>
+                                    <p class="client-info-word">${(customerVO.mobileCode)?if_exists}  ${(customerVO.mobileNumber)?if_exists}</p>
+                                </li>
+                            </ul>
+                            <ul class="client-info-wrap">
+                             <li>
+                                    <p class="client-info-title">[@lang_res k='member.register.lastnameinenglish'/]</p>
+                                    <p class="client-info-word">${(customerVO.lastName)?if_exists}</p>
+                                </li>
+                             <li>
+                                    <p class="client-info-title">[@lang_res k='member.register.gender'/]</p>
+                                    <p class="client-info-word">[#if customerVO.gender?? && customerVO.gender=='F'][@lang_res k='member.register.female'/][#else][@lang_res k='member.register.male'/][/#if]</p>
+                                </li>
+                              
+                               
+                                <li>
+                                    <p class="client-info-title">[@lang_res k='member.register.dateofbirth'/]</p>
+                                    <p class="client-info-word">${(customerVO.born)?if_exists}</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">[@lang_res k='member.register.occupation'/]</p>
+                                    <p class="client-info-word">${(customerVO.occupationName)?if_exists}</p>
+                                </li>
+                                <li>
+                                    <p class="client-info-title">[@lang_res k='member.register.idorpassportno'/]</p>
+                                    <p class="client-info-word">${(customerVO.certNo)?if_exists}</p>
+                                </li>
+                                <!--<li>
+                                    <p class="client-info-title">Liguid Asset</p>
+                                    <p class="client-info-word"></p>
+                                </li>
+                                --><li>
+                                    <p class="client-info-title">[@lang_res k='member.register.email'/]</p>
+                                    <p class="client-info-word">${(customerVO.email)?if_exists}</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="client-info-remark">
+                                <p class="client-info-title">[@lang_res k='ifa.crm.kyc.Remark'/]</p>
+                                <p class="client-info-word">${(customerVO.remark)?if_exists}</p>
+                        </div>
+                        <div class="client-account-rows">
+                            <div class="client-account-title">
+                                <p class="account-title-name">[@lang_res k='ifa.detail.socialContact'/]</p>
+                                <span class="client-more-ico"></span>
+                            </div>
+                            <div class="client-detail-info">
+                                <ul class="client-info-wrap">
+                                        <li>
+                                            <p class="client-info-title"><img class="administration-contact-ico" src="${base}/res/images/client/wetchat_ico.png">[@lang_res k='member.info.webchatCode'/]</p>
+                                            <p class="client-info-word">${(customerVO.webchatCode)?if_exists}</p>
+                                        </li>
+                                        <li>
+                                            <p class="client-info-title"><img class="administration-contact-ico" src="${base}/res/images/client/weibo_ico.png">[@lang_res k='member.info.weiboCode'/]</p>
+                                            <p class="client-info-word">${(customerVO.weiboCode)?if_exists}</p>
+                                        </li>
+                                        <li>
+                                            <p class="client-info-title"><img class="administration-contact-ico" src="${base}/res/images/client/twitter_ico.png">[@lang_res k='member.info.twitterCode'/]</p>
+                                            <p class="client-info-word">${(customerVO.twitterCode)?if_exists}</p>
+                                        </li>
+                                </ul>
+                                <ul class="client-info-wrap">
+                                    <li>
+                                        <p class="client-info-title"><img class="administration-contact-ico" src="${base}/res/images/client/facebook_ico.png">[@lang_res k='member.info.facebookCode'/]</p>
+                                        <p class="client-info-word">${(customerVO.facebookCode)?if_exists}</p>
+                                    </li>
+                                    <li>
+                                        <p class="client-info-title"><img class="administration-contact-ico" src="${base}/res/images/client/linke_ico.png">[@lang_res k='member.info.linkedinCode'/]</p>
+                                        <p class="client-info-word">${(customerVO.linkedinCode)?if_exists}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="client-account-rows">
+                            <div class="client-account-title">
+                                <p class="account-title-name">[@lang_res k='member.otherInfo'/]</p>
+                                <span class="client-more-ico"></span>
+                            </div>
+                            <div>
+                            	<div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">[@lang_res k='member.info.investStyle'/]</p>
+                                <ul class="information-paragraph-list">
+                                [#if investStyle?exists && investStyle?size gt 0]
+                                [#list investStyle as list]
+                                    <li class="information-describe-yellow">${list.name!}</li>
+                                    [/#list]
+                                    [/#if]
+                                   
+                                </ul>           
+                            </div>
+                            <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">[@lang_res k='member.info.investField'/]</p>
+                                <ul class="information-paragraph-list">
+                                 [#if investField?exists && investField?size gt 0]
+                                [#list investField as list]
+                                    <li class="information-describe-yellow">${list.name!}</li>
+                                    [/#list]
+                                    [/#if]
+                                    
+                                </ul>           
+                            </div>
+                            <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">[@lang_res k='member.info.hobbyType'/]</p>
+                                <ul class="information-paragraph-list">
+                                 [#if hobbyList?exists && hobbyList?size gt 0]
+                                [#list hobbyList as list]
+                                    <li class="information-describe-yellow">${list.name!}</li>
+                                    [/#list]
+                                    [/#if]
+                                   
+                                </ul>           
+                            </div>
+                             <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">[@lang_res k='member.info.languageSpoken'/]</p>
+                                <ul class="information-paragraph-list">
+                                 [#if languageSpoken?exists && languageSpoken?size gt 0]
+                                [#list languageSpoken as list]
+                                    <li class="information-describe-yellow">${list.name!}</li>
+                                    [/#list]
+                                    [/#if]
+                                   
+                                </ul>           
+                            </div>
+                            <div class="information-paragraph-rows">
+                                <p class="information-paragraph-title">[@lang_res k='member.info.liveRegion'/]</p>
+                                <ul class="information-paragraph-list">
+                                 [#if liveRegion?exists && liveRegion?size gt 0]
+                                [#list liveRegion as list]
+                                    <li class="information-describe-yellow">${list.name!}</li>
+                                    [/#list]
+                                    [/#if]
+                                   
+                                </ul>           
+                            </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+<!-- 弹出层 -->
+<div class="mask-layer1" style="display:none">
+   	<div class="create_groupbox">
+   		<div id="wmes-group-close" class="wmes-close"></div>
+   		<p class="wmes-wrap-title tanchutitle">[@lang_res k='schedule.create.group.title'/]</p>
+   		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table" style="margin-top:18px;">
+			<tbody>
+				<tr>
+					<td align="right" class="register_table_left" style="width:200px;padding-left:30px;">
+						<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.group.input.0'/]</span>
+					</td>
+					<td class="register_table_right">
+						<div class="add_scheduletextareacon">
+							<input id="txtGroupName" class="register_input" type="text" style="width:400px;">
+							<p class="alert-group-name" style="display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.groupName'/]</p>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td align="right" style="width:200px;padding-left:30px;">
+						<span class="price_negative">*</span><span style="margin-left:5px" class="font_gray_left"> [@lang_res k='schedule.create.group.input.1'/]</span>
+					</td>
+					<td class="register_table_right">
+						<div class="register_xiala_long" style="width:406px;">
+							<input type="text" id="txtGroupColor" style="width: 356px;color: #b0afaf;" class="value_show" data-position="bottom left" value="">
+                            <p class="alert-group-color" style="display:none;margin:35px 5px;color:red;">[@lang_res k='schedule.alert.empty.groupColor'/]</p>
+                            <!--<input type="hidden" class="value_hidden">
+                            <span class="register_xiala_ico"></span>
+                        --></div> 
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<a id="add_group_save" class="add_schedule_save">[@lang_res k='global.save'/]</a>
+		<a id="add_group_delete" style="display:none" class="add_schedule_delete">[@lang_res k='global.delete'/]</a>
+		<a id="add_group_cancel" class="add_schedule_cancel">[@lang_res k='global.cancel'/]</a>
+   	</div>
+</div>
+<!-- 弹出层 -->
+<div class="ifa-space-popup " id="add_Schedule" style="display: none;">
+	<div class="ifa-space-mask"></div>
+	<div class="space-mask-wrap" style="position: absolute;">
+		<div class="space-mask space-mask-investors" style="margin-left:12%;">
+			<div class="wmes-close" id="add_Schedule-close"></div>
+			<div class="ifa-home-contents">
+				<p class="wmes-wrap-title tanchutitle schedule-add-title" style="text-align: left;">[@lang_res k='schedule.create.schedule.title'/]</p>
+				<p class="wmes-wrap-title tanchutitle schedule-edit-title" style="display:none;text-align: left;">[@lang_res k='schedule.create.schedule.title.edit'/]</p>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+				<tbody>
+					<tr>
+						<td align="right" class="register_table_left" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.0'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="add_scheduletextareacon" style="width:504px">
+								<input id="hidScheduleId" class="register_input" type="hidden" style="width:400px;">
+								<input id="txtTitle" maxlength="50" class="register_input" style="float:left;width:400px;" type="text">
+								<div class="account-choose-input-wrap" style="float:left;margin: 5px;">
+                                	<input id="cheImportantFlag" type="checkbox" style="" name="important"/><span class="" style="color: #939292;">[@lang_res k='schedule.create.schedule.checkbox.important'/]</span>
+								</div>
+								<div class="member-comment-topper" style="margin-right: 100px;">
+									<p class="member-number-words-add_scheduletextareacon">[@lang_res k='create.portfolio.step.two.input.prefix'/] 50 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="title-inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="title-left">50</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]</p>
+								</div>
+								<p class="alert-schedule-title-name" style="clear:both;display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.title'/]</p>
+							</div>
+						</td>
+					</tr>
+					<tr>
+    						<td align="right" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.3'/]</span>
+    						</td>
+    						<td class="register_table_right">
+    							<div class="conservative-date-wrap">
+                                <div class="account-choose-input-wrap">
+                                    <input id="txtStartAt" class="laydate-icon form-control form-control-laydate schedule-choose-date" readonly="readonly" type="" name="" style="width:200px;">
+                                	<p class="alert-schedule-start-at" style="display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.startTime'/]</p>
+                                </div>
+                                <div class="account-choose-input-wrap schedule-dialog-creator" style="margin: 5px;">
+                                	<span style="margin:0 10px;color: #939292;">[@lang_res k='schedule.create.schedule.creator'/] :</span><span id="schedule-creator-text" style="color: #939292;"></span>
+                            	</div>
+                            </div>
+    						</td>
+    					</tr>
+    					<tr>
+    						<td align="right" style="width:200px;padding-left:30px;">
+    							<span class="font_gray_left"><span class="price_negative">*</span> [@lang_res k='schedule.create.schedule.input.4'/]</span>
+    						</td>
+    						<td class="register_table_right">
+    							<div class="conservative-date-wrap">
+                                <div class="account-choose-input-wrap">
+                                    <input id="txtEndAt" class="laydate-icon form-control form-control-laydate schedule-choose-date" readonly="readonly" type="" name="" style="width:200px;">
+                                	<p class="alert-schedule-end-at" style="display:none;margin:5px;color:red;">[@lang_res k='schedule.alert.empty.endTime'/]</p>
+                                </div>
+                                <div class="account-choose-input-wrap" style="margin: 5px;">
+                                    <input id="cheRecurrentFlag" type="checkbox" name="recurrent"/><span class="" style="color: #939292;">[@lang_res k='schedule.create.schedule.checkbox.recurrent'/]</span>
+                                </div>
+                            </div>
+    						</td>
+    					</tr>
+					<tr class="repeat_typecon repeat_typecon_none">
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.recurrentType'/]</span>
+						</td>
+						<td class="register_table_right" style="padding-top:10px;">
+							<ul class="repeat_type">
+								<li><input id="repeatDay-0" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.0'/]</li>
+								<li><input id="repeatDay-1" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.1'/]</li>
+								<li><input id="repeatDay-2" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.2'/]</li>
+								<li><input id="repeatDay-3" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.3'/]</li>
+								<li><input id="repeatDay-4" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.4'/]</li><br><br>
+								<li><input id="repeatDay-5" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.5'/]</li>
+								<li style="margin-left: 6px;"><input id="repeatDay-6" type="checkbox" name="repeatDay"/>[@lang_res k='schedule.create.schedule.input.week.6'/]</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.5'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="register_xiala_long" style="width:406px;">
+	                            <input id="txtCustomer" data-value="" readonly="readonly" type="text" class="value_show">
+	                            <input type="hidden" class="value_hidden">
+	                            <ul id="selCustomer" class="regiter_xiala_ul"></ul>
+	                            <span class="register_xiala_ico"></span>
+	                        </div> 
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.6'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="register_xiala_long" style="width:406px;">
+	                            <input id="txtGroup" data-value="" readonly="readonly" type="text" class="value_show">
+	                            <input type="hidden" class="value_hidden">
+	                            <ul id="selGroup" class="regiter_xiala_ul"></ul>
+	                            <span class="register_xiala_ico"></span>
+	                        </div> 
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.7'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="register_xiala_long" style="width:406px;">
+	                            <input id="txtRemind" data-value="" readonly="readonly" type="text" placeholder=" " class="value_show">
+	                            <input type="hidden" class="value_hidden">
+	                            <ul id="selRemind" class="regiter_xiala_ul"></ul>
+	                            <span class="register_xiala_ico"></span>
+	                        </div> 
+						</td>
+					</tr>
+					<tr>
+						<td align="right" style="width:200px;padding-left:30px;">
+							<span class="font_gray_left">[@lang_res k='schedule.create.schedule.input.8'/]</span>
+						</td>
+						<td class="register_table_right">
+							<div class="add_scheduletextareacon">
+								<textarea id="txtContent" maxlength="500" class="member-comment-text" style="width:406px;"></textarea>
+								<div class="member-comment-topper">
+									<p class="member-number-words-add_scheduletextareacon">[@lang_res k='create.portfolio.step.two.input.prefix'/] 500 [@lang_res k='create.portfolio.step.two.input.infix.0'/] <span id="content-inputed">0</span> [@lang_res k='create.portfolio.step.two.input.infix.1'/] <span id="content-left">500</span> [@lang_res k='create.portfolio.step.two.input.suffix'/]</p>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+				<a  id="add_schedule_save" class="add_schedule_save">[@lang_res k='global.save'/]</a>
+				<a id="add_schedule_delete" style="display:none" class="add_schedule_delete">[@lang_res k='global.delete'/]</a>
+				<a id="add_schedule_cancel" class="add_schedule_cancel">[@lang_res k='global.cancel'/]</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="schedule-save-load">
+	<div class="schedule-save-load-gif">
+		<img style="width: 100px;" src="${base}/res/images/saving.gif">
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+var globalProp = [@load_prop k='global'/]; 
+var prop = [@load_prop k='schedule'/];	
+seajs.use('${base}/res/web/ifa/crm/schedule.js');
+var clientType='${customerVO.clientType!}';
+var _checkList='${checkList!}';
+var _accountType="${accountType!}";
+     seajs.use('${base}/res/web/ifa/crm/clientDetail.js');
+     
+//验证登录后回调事件
+function callbackloginresult(json){
+	 	 seajs.use('jquery', function($){
+		 //	console.log(json);
+		 	var count=0;
+		 	$.each(json,function(i,n){
+			 	if(n.status="1"){
+			 	count++;
+		 	    }
+		 	})
+		 	if(count>0){
+		 	 setTimeout(function(){
+		       window.location.url= window.location.url+"&check=1";
+		     },1000);
+		    }
+	    });
+ 	}
+</script>

@@ -1,0 +1,474 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问卷分数区间等级管理</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet"  >
+    <style>
+           .login-dialog .modal-dialog {width: 800px;}
+            .firminfo-dialog .modal-dialog{width: 900px;}
+            .teaminfo-dialog .modal-dialog{width: 700px;}
+            .btneditnode{text-decoration:underline;}
+        </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+        <div class="tab-side-container">
+        <div class="page-header mt-10">
+                <h4><b>问卷【${title!}】等级管理</b></h4>
+            </div>
+            <div class="clear"></div>
+            <div class="tab_wrap">
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                    <div class="clear"></div>
+                    <div class="pdt20" style="padding-top: 5px;">
+                    	<a id="btnAddInfoForm" href="javascript:void(0);" class="btn-blue-s">
+                    	<!-- 注释掉图标 
+                    	 --> [@lang_res k='global.add'/]</a>
+                    </div>
+                    <div>
+                        <table border="0" id="pagedatalist" cellpadding="0" cellspacing="0" class="table table-hover table-striped" >
+                                <tbody>
+                                    <tr>
+                                        <th class="table-head" style="">分值区间</th>
+                                        <th class="table-head">评估数值</th>
+                                         <th class="table-head">评估结果</th>
+                                        <th class="table-head" style="width:50%;">评估说明</th>
+                                        <th class="table-head">操作</th>
+                                    </tr>
+                                </tbody>
+                               
+                            </table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>         
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/My97DatePicker/WdatePicker.js"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		//跳转表单页面
+		$('#btnAddInfoForm').on('click',showLevelForm);
+		//收缩所有
+		$('#btnCollapseAll').on('click',CollapseAll);
+		//保存整个团队信息
+		$('#btnSaveInfoForm').on('click',SaveInfoForm);
+		//跳转表单页面
+		function addInfoForm()
+		{
+			window.location.href = '${base}/console/rpq/quest_form.do?id=' ;
+		}
+		//收缩所有
+		function CollapseAll()
+		{
+			$('#tree').treetable('collapseAll'); return false;
+		}
+		//
+		function ShowFirmDialog()
+		{
+			 window.location.href = '${base}/console/rpq/form.do' ;
+		}
+		//
+		function SaveInfoForm()
+		{
+			var checkifafirmid = $('#txtSelectedCompanyName').attr('companyid');
+			if(checkifafirmid==''||checkifafirmid==null||checkifafirmid==undefined)
+			{ layer.msg("[@lang_res  k='ifafirm.message.promptNotSelectedIfafirm'/]", { icon: 0, time: 1000 }, function () { }); return false;}
+			
+			 var TotalData = '{"PlanList":[';
+			 var json = '[';
+			 $("#tree tbody tr").each(function (i, n) {
+			 		var ifafirmid = $(this).attr('ifafirmid');
+                    var teamid = $(this).attr('id');
+                    var parentid = $(this).attr('data-tt-parent-id');
+                    var classlayer = $(this).attr('classlayer');
+                    var html = $(this).html(); // (planid);
+                    var teamname = $(this).find('td:eq(0)').find('span:eq(1)').text();
+                    var code = $(this).find('td:eq(1)').text();
+                    var sort = $(this).find('td:eq(2)').find('input').val();
+                    if(sort==''||sort==undefined)sort='99';
+                    //给装JSON
+                    if(classlayer!=undefined&&classlayer!='0')//标题栏跟公司信息不需包含
+                    {
+	                     json += '{"id":"' + teamid + '","parentid":"'+parentid+'","ifafirmid":"'+ifafirmid+'","name":"' + teamname + '","code":"' + code + '","orderby":"' + sort + '","classlayer":"' + classlayer + '"},';
+	                    //TotalData += json;
+                    }
+                });
+                console.log();
+                json = json.substring(0, json.length - 1);json+= ']';
+                console.log(json);
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url : "${base}/console/ifafirm/saveallteaminfo.do?datestr="+ new Date().getTime(),
+	            	data: { 'json': json },
+                    beforeSend: function () {
+                        indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptSaveTeamInfoLoading'/]", { time: 50000 });
+                    },
+                    complete: function () {
+
+                    },
+                    error: function (data) {
+                        layer.msg("[@lang_res  k='global.failed.save'/]", { icon: 0, time: 2000 }, function () { });
+                    },
+                    success: function (json) {
+                        layer.msg("[@lang_res  k='global.success.save'/]", { icon: 1, time: 2000 }, function () {window.parent.bindList(0);});
+                    }
+                });
+			                
+			               
+		}
+		//
+		
+		//点击编辑
+            $("body").on('click', '.btneditnode', '', function () {
+            	
+                //获取前个节点
+                var pageid = $(this).parent().find('a').attr('pageid');
+                window.location.href = '${base}/console/rpq/detail.do?id='+pageid;
+            });
+            
+			//点击团队成员管理，弹出管理窗口
+            $("body").on('click', '.btnedituser', '', function () {
+                //获取前个节点
+                var teamid = $(this).parent().parent().attr('id');//所属团队
+                var ifafirmid = $(this).parent().find('.btnaddchildnode').attr('ifafirmid'); //所属公司
+
+                 BootstrapDialog.show({
+				title : "[@lang_res  k='ifafirm.list.managementTeamUser'/]",
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('dialogTeamUser.do?teamid='+teamid+'&ifafirmid='+ifafirmid),
+				buttons : [  {
+					label : "[@lang_res  k='global.confirm'/]",
+					cssClass : 'btn-primary',
+					action : function() {
+					     var list = '';
+						 $("#selTeamifaList option").each(function () { //遍历全部option
+				            var name = $(this).text();
+				            var ifaid = $(this).val();
+				            list+= ifaid + ',';
+				        });
+				        if(list!='')
+				        {
+				        	 $.ajax({
+					                type: "post", //统一用post方式 
+					                url: "${base}/console/ifafirm/saveteammemberifainfo.do?datestr="+ new Date().getTime(),
+					                data: {"teamid":teamid,"list":list,"ifafirmid":ifafirmid}, //传送的参数列表
+					                dataType: "json",
+					                crossDomain: true,
+					                error: function (XMLHttpRequest, textStatus, errorThrown) {
+					                    //错误时在这里添加一些提示信息
+					                    layer.alert(errorThrown);
+					                },
+					                beforeSend: function () {
+					                    index = layer.msg('正在保存数据中....', {  time: 50000 });
+					                },
+					                success: function (data, textStatus) {
+										console.log(data);
+										if(data.result == true)
+											layer.msg('保存成功', { icon: 1, time: 2000 }, function () { });
+										else
+											layer.msg('保存败', { icon: 0, time: 2000 }, function () { });
+					                },
+					                complete: function () { layer.close(index); }
+					            });
+				        }
+					}
+				},  {
+					label : "[@lang_res  k='global.back'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+				});
+            });
+            
+           function getguid() {
+			    //    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxx'.replace(/[xy]/g, function (c) {
+			    //        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			    //        return v.toString(16);
+			    //    });
+			    function fourchar() { return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1); }
+			    var guid = (fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar() + fourchar()).toUpperCase();
+			    return guid;
+			}
+			
+            var child=0;
+         	
+            
+            //
+            //点击删除
+            $("body").on('click', '.btndellevel', '', function () {
+                var levelid = $(this).parent().find('a').attr('id'); 
+                 layer.confirm("你确认要删除该等级数据？", { icon: 3  },function () { 
+
+	                $.ajax({
+						type : 'post',
+						datatype : 'json',
+						url : "${base}/console/rpq/delPageLevel.do?datestr="
+								+ new Date().getTime(),
+						data : {'id':levelid  },
+						 beforeSend: function () {
+                        indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", { time: 500000 });
+                    },
+                    complete: function () {
+						layer.close(indexmsg);
+                    },
+						success : function(json) {
+							console.log(json);
+							json = JSON.parse(json);
+							var result = json.result;
+							if(result==true||result=='true'){
+								layer.msg("[@lang_res  k='global.success.delete'/]", { icon: 1, time: 1500 }, function () { window.location.href = window.location.href; });
+							}
+						}
+					});
+                    
+                 });
+            });
+            
+            
+            
+            //效果
+            $("body").on("mouseover", ".class_planname", function () {
+                $(this).css({ 'color': '#ffffff', 'background-color': '#2d80ce', 'cursor': 'pointer', 'border-bottom-right-radius': '4px', 'border-bottom-left-radius': '4px', 'border-top-right-radius': '4px', 'border-top-left-radius': '4px' });
+            });
+            $("body").on("mouseleave", ".class_planname", function () {
+                $(this).css({ 'color': '#000000', 'background-color': '' });
+            });
+            $("body").on("mouseover", ".btneditnode", function () {
+                $(this).css({ 'text-decoration': 'underline' });
+            });
+            $("body").on("mouseleave", ".btneditnode", function () {
+                $(this).css({ 'text-decoration': 'none' });
+            });
+		//bindList(0);
+		//$('#btnShowFirmDialog').on('click',showFirmDialog);
+		$('#btnToDoSearch').click(function() {
+			bindList(0);
+		});
+		
+		
+		
+	
+	var types = [BootstrapDialog.TYPE_DEFAULT, 
+                     BootstrapDialog.TYPE_INFO, 
+                     BootstrapDialog.TYPE_PRIMARY, 
+                     BootstrapDialog.TYPE_SUCCESS, 
+                     BootstrapDialog.TYPE_WARNING, 
+                     BootstrapDialog.TYPE_DANGER];	
+
+    
+		
+		//分页绑定Table数据
+		bindList();
+	function bindList() {
+		var pageid = getQueryString('pageid');
+		$.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : "${base}/console/rpq/listPageLevel.do?datestr="
+							+ new Date().getTime(),
+					data : {
+						pageid : pageid
+					},
+					 beforeSend: function () {
+                        indexmsg = layer.msg("正在加载数据中，请稍候....", { time: 50000 });
+                    },
+                    complete: function () {
+						layer.close(indexmsg);
+                    },
+					success : function(json) {
+						var total = json.total;
+						var table = JSON.parse(json.levelJson);
+						var html = '';
+						$("#pagedatalist tbody tr:gt(0)").empty();
+						$.each(table,function(i, n) {
+								var id = n[0].id;
+								var beginScore = n[0].beginScore;
+								var endScore = n[0].endScore;
+								var begin_end = beginScore + ' - ' + endScore;
+								var remark = n[1].remark;
+								var result = n[1].result;
+								var status = n[0].status;
+								var riskLevel = n[0].riskLevel;
+								var button = '<a id="'+id+'"  class="btneditquest" href="javascript:editlink(\''+id+'\')" > '+"[@lang_res  k='global.edit'/]"+'</a>&nbsp;&nbsp;&nbsp;&nbsp;<a  id="' + id + '" class="btndellevel" href="javascript:void(0);"> '+"[@lang_res  k='global.delete'/]"+'</a>';
+								
+								html += '<tr id="tr_'+id+'" begeinscore="'+beginScore+'" endscore="'+endScore+'" titlesc="" remarksc="'+remark+'"  ><td><a href="#" onclick="editlink(\''+id+'\')">'
+										+ begin_end
+										+ '</a></td><td>'
+										+  riskLevel
+										+ '</td><td>'+result+'</td><td>'+remark+'</td><td>'+button+'</td></tr>'
+							});
+						$('#pagedatalist').append(html);
+
+					}
+				})
+	}
+
+	function showform(id) {
+		window.location.href = '${base}/console/workflow/detail.do?id=' + id;
+	}
+	});
+
+	function delnode(id)
+    {
+    layer.confirm("[@lang_res  k='ifafirm.message.promptIsDelTeam'/]", { title:"[@lang_res  k='global.prompt'/]",btn:["[@lang_res  k='global.confirm'/]","[@lang_res  k='global.cancel'/]"], icon: 3   },function () { 
+    		$('#tree tr[data-tt-parent-id="'+id+'"]').remove();
+    		$('#tree tr[id="'+id+'"]').remove();
+    		layer.closeAll();
+    		
+    		 //删除节点的数据库
+	                $.ajax({
+						type : 'post',
+						datatype : 'json',
+						url : "${base}/console/ifafirm/delIfafirmTeamInfo.do?datestr="
+								+ new Date().getTime(),
+						data : {'id':id  },
+						 beforeSend: function () {
+                        indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", { time: 500000 });
+                    },
+                    complete: function () {
+						layer.close(indexmsg);
+                    },
+						success : function(json) {
+							console.log(json);
+							json = JSON.parse(json);
+							var result = json.result;
+							if(result==true||result=='true'){
+								layer.msg("[@lang_res  k='global.success.save'/]", { icon: 1, time: 2000 }, function () { });
+							}
+						}
+					});
+    	});
+    }
+    
+    function editSuperFirm(id)
+    {
+    	window.location.href = '${base}/console/ifafirm/dialogFirmInfo.do?id=' + id;
+    }
+    
+    function editlink(id)
+{
+	showLevelForm(id);
+}
+   //
+   function showLevelForm(id)
+    	{ 
+    	var pageid = getQueryString('pageid');
+    	if(typeof id!='string')id='';
+			
+    		 BootstrapDialog.show({
+				title : '等级风险评估数据管理',
+				cssClass : 'login-dialog',
+				type:BootstrapDialog.TYPE_PRIMARY,
+				size:BootstrapDialog.SIZE_WIDE,
+            	draggable: true,
+				message : $('<div></div>').load('level_form.do?id='+id),
+				onshown:function(){ //alert(typeof id=='string' );
+					if(typeof id=='string')//如果是点编辑过来的
+					{ 
+						
+					}
+				 },
+				buttons : [  {
+					label : "[@lang_res  k='global.confirm'/]",
+					cssClass : 'btn-primary',
+					action : function(dialogItself) { //直接点击按钮后保存进数据库
+						if(typeof id!='string') id = Date.parse(new Date());
+						 var beginScore = $('#txtBeginScore').val();  
+						 var endScore = $('#txtEndScore').val();
+						 var riskLevel = $('#selRiskLevel').val();
+						 //SC
+						 var resultSc = $('#txtResultSc').val();
+						 var remarkSc = $('#txtRemarkSc').val();
+						 //TC
+						 var resultTc = $('#txtResultTc').val();
+						 var remarkTc = $('#txtRemarkTc').val();
+						 //En
+						 var resultEn = $('#txtResultEn').val();
+						 var remarkEn = $('#txtRemarkEn').val();
+						 //console.log(selectedid);console.log(selectedname);
+						 if(beginScore == undefined || beginScore == '')
+						 {
+						 	layer.msg("请输入开始分值", { icon: 0, time: 1000 }, function () {});
+						 	return;
+						 }
+						 if(endScore == undefined || endScore == '')
+						 {
+						 	layer.msg("请输入结束分值", { icon: 0, time: 1000 }, function () {});
+						 	return;
+						 }
+						 if(typeof id!='string')id='';
+						  $.ajax({
+					                type: "post", //统一用post方式 
+					                url: "${base}/console/rpq/savePageLevel.do?datestr="+ new Date().getTime(),
+					                data: {"id":id, "pageid":pageid,"beginScore":beginScore,"endScore":endScore,"riskLevel":riskLevel,"resultSc":resultSc,"remarkSc":remarkSc,"resultTc":resultTc,"remarkTc":remarkTc,"resultEn":resultEn,"remarkEn":remarkEn}, //传送的参数列表
+					                dataType: "json",
+					                crossDomain: true,
+					                error: function (XMLHttpRequest, textStatus, errorThrown) {
+					                    //错误时在这里添加一些提示信息
+					                    layer.alert(errorThrown);
+					                },
+					                beforeSend: function () {
+					                    index = layer.msg('正在保存数据中....', {  time: 50000 });
+					                },
+					                success: function (data, textStatus) {
+										console.log(data);
+										if(data.result == true)
+											layer.msg('保存成功', { icon: 1, time: 2000 }, function () { window.location.href = window.location.href; });
+										else
+											layer.msg('保存失败', { icon: 0, time: 2000 }, function () { });
+					                },
+					                complete: function () { layer.close(index); }
+					            });
+
+						dialogItself.close();
+					}
+				},  {
+					label : "[@lang_res  k='global.back'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
+    	}
+</script>
+</body>
+</html>
+

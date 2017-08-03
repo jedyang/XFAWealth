@@ -1,0 +1,339 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>member company</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+		<div class="tab-side-container">
+            <div class="page-header mt-10">
+                <h4><b>[@lang_res k='console.company.title'/]</b></h4>
+            </div>
+            <div class="tab_wrap">
+				<!-- SC -->
+                <form class="form-horizontal" style="display:block;">
+                    <!-- ID
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtId" class="label-control">ID</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="txtId" readonly="readonly" value="${(infoVo.id)?if_exists}" >
+                        </div>
+                    </div> -->
+                    <!-- Company -->
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="companyId" class="label-control"><span class="red">*</span>[@lang_res k='console.membercompany.companyname'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select class="form-control " id="companyId"  name="companyId">
+                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                               [#if companyVoList?exists && companyVoList?size gt 0]
+                                 [#list companyVoList as md]
+                                   <option value="${md[0].id}" [#if infoVo?exists&&infoVo.company?exists&&infoVo.company.id == md[0].id]selected[/#if]>${md[1].name}</option>
+                                 [/#list]
+                               [/#if]
+                            </select> 
+                        </div>
+                    </div>
+                    <!-- type -->
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="radType" class="label-control"><span class="red">*</span>[@lang_res k='console.membercompany.memberType'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <span id="radType" >
+                             &nbsp;<input type="radio"  value="1" id="radType-1"  name="radType"/>[@lang_res k='console.membercompany.companies'/]
+                             &nbsp;<input type="radio"  value="0" id="radType-2"  name="radType"/>[@lang_res k='console.membercompany.investor'/]
+                             </span>
+                            </span>
+                         </div>
+                    </div>
+                    <!-- 公司 -->
+                    <div class="form-group" id="companyList" style="display:none;">
+                        <div class="col-sm-3 text-right">
+                            <label for="radCompanyType" class="label-control"><span class="red">*</span>[@lang_res k='console.membercompany.Company'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <span id="radType" >
+                             &nbsp;<input type="radio"  value="1" id="radCompanyType-1"  name="radCompanyType" />[@lang_res k='console.membercompany.ifaFirm'/]
+                             &nbsp;<input type="radio"  value="0" id="radCompanyType-2"  name="radCompanyType" />[@lang_res k='console.membercompany.Distributor'/]
+                             </span>
+                            </span>
+                         </div>
+                    </div>
+                    <!-- IFA firm -->
+                    <div class="form-group" id="ifafirmList" style="display:none;">
+                        <div class="col-sm-3 text-right">
+                            <label for="ifaFirmId" class="label-control"><span class="red">*</span>[@lang_res k='console.membercompany.ifaFirm'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select class="form-control" id="ifaFirmId"  name="ifaFirmId">
+                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option> 
+                               [#if ifafirmList?exists && ifafirmList?size gt 0]
+                                 [#list ifafirmList as md]
+                                   <option value="${md[0].id}" [#if infoVo?exists&&infoVo.company?exists&&infoVo.company.id == md[0].id]selected[/#if]>${md[1].name}</option>
+                                 [/#list]
+                               [/#if]
+                            </select> 
+                        </div>
+                    </div>
+                    <!-- Distributor -->
+                    <div class="form-group" id="distributorList" style="display:none;">
+                        <div class="col-sm-3 text-right">
+                            <label for="distributorId" class="label-control"><span class="red">*</span>[@lang_res k='console.membercompany.Distributor'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select class="form-control" id="distributorId"  name="distributorId">
+                            <!-- 
+                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                               [#if ifafirmList?exists && ifafirmList?size gt 0]
+                                 [#list ifafirmList as md]
+                                   <option value="${md[0].id}" [#if infoVo?exists&&infoVo.company?exists&&infoVo.company.id == md[0].id]selected[/#if]>${md[1].name}</option>
+                                 [/#list]
+                               [/#if] -->
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="form-group" id="memberList" style="display:none;">
+                    	<div class="col-sm-3 text-right">
+                            <label for="chkMember" class="label-control"><span class="red">*</span>[@lang_res k='console.membercompany.memberList'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                        	<table id="chkMember"  name="chkMember">
+                        		<!-- 
+                        		<input type="checkbox" />memberName&nbsp;&nbsp;
+                        		<input type="checkbox" />memberName -->
+                        	</table>
+                        </div>
+                    </div>
+                    <!-- 
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="memberId" class="label-control">[@lang_res k='console.membercompany.companyname'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select class="form-control " id="memberId" name="memberId">
+                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                               [#if memberList?exists && memberList?size gt 0]
+                                 [#list memberList as md]
+                                   <option value="${md.id}" [#if infoVo?exists&&infoVo.member?exists&&infoVo.member.id == md.id]selected[/#if]>${md.nickName}</option>
+                                 [/#list]
+                               [/#if]
+                            </select> 
+                        </div>
+                    </div>   --> 
+                </form>
+                <!--<div class="text-center pd10">
+                    <a href="#" onclick="closeTab();" class="btn-blue-s2">[@lang_res k='global.close'/]</a>
+                </div>
+           <div class="clear"></div>-->
+            </div>
+        </div>
+        <div class="text-center pd10">
+           	<button id="btnSave" class="btn-blue-s" >
+				[@lang_res k='global.save'/]
+			</button>
+        </div> 
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+
+<script type="text/javascript">
+$(function() {
+	//选择Ifafirm
+	$('#ifaFirmId').on('change',function(){
+		var ifafirmId = $(this).val();
+		getMemberList(ifafirmId,'ifafirm');
+		$('#memberList').show();
+	});
+	//选择Distributor
+	$('#distributorId').on('change',function(){
+		var distributorId = $(this).val();
+		getMemberList(distributorId,'distributor');
+		$('#memberList').show();
+	});
+	//选择类别
+	$('input[name="radType"]').on('click',function(){
+		if('1'==$('input[name="radType"]:checked').val()){	//公司
+			$('#memberList').hide();
+			$('#companyList').show();
+		}else if('0'==$('input[name="radType"]:checked').val()){	//个人
+			$('#companyList').hide();
+			$('#ifafirmList').hide();
+			$('#distributorList').hide();
+			getMemberList('','investor');
+			$('#memberList').show();
+		}
+	});
+	//选择公司
+	$('input[name="radCompanyType"]').on('click',function(){
+		$('#memberList').hide();
+		var companyId = $('#companyId').val() == null ? "" : $('#companyId').val();
+		if(null==companyId||""==companyId){
+			layer.msg('[@lang_res k='console.membercompany.companyTip'/]');
+			return ;
+		}
+		if('1'==$('input[name="radCompanyType"]:checked').val()){	//IFA firm
+			$('#distributorList').hide();
+			getIfafirmList(companyId);
+			$('#ifafirmList').show();
+		}else if('0'==$('input[name="radCompanyType"]:checked').val()){	//Distributor
+			$('#ifafirmList').hide();
+			getDistributorList(companyId);
+			$('#distributorList').show();
+		}
+	});
+	//获取ifa firm列表
+	function getIfafirmList(companyId){
+		var companyId = $('#companyId').val() == null ? "" : $('#companyId').val();
+		$.ajax({
+            type: "post",
+            url : "${base}/console/membercompany/getIfaFirmList.do?",
+            data: {'companyId':companyId},
+            async: false,
+            dataType: "json",
+            error: function (XMLHttpRequest, textStatus, errorThrown) {},
+            success: function (data) {
+            	var total = data.total;
+    			var list = data.rows;
+    			$('#ifaFirmId').empty();
+           		var html='<option value="">[@lang_res k='global.pleaseSelect'/]</option>';
+           	 	$.each(list, function (index, array) {
+           	 		var id = array['id'] == null ? "" : array['id'];
+           	 	 	var companyId = array['company']['id'] == null ? "" : array['company']['id'];
+           	 	 	var companyName = array['companyName'] == null ? "" : array['companyName'];
+           	 	 	var ifafirmId = array['ifafirm']['id'] == null ? "" : array['ifafirm']['id'];
+           	 	 	var ifafirmName = array['ifafirmName'] == null ? "" : array['ifafirmName'];
+           			html += '<option value="'+ifafirmId+'">'+ifafirmName+'</option>';
+           	 	});
+				$('#ifaFirmId').append(html);
+           	}
+       	});
+	}
+	//获取distributor列表
+	function getDistributorList(companyId){
+		var companyId = $('#companyId').val() == null ? "" : $('#companyId').val();
+		$.ajax({
+            type: "post",
+            url : "${base}/console/membercompany/getDistributorList.do?",
+            data: {'companyId':companyId},
+            async: false,
+            dataType: "json",
+            error: function (XMLHttpRequest, textStatus, errorThrown) {},
+            success: function (data) {
+            	var total = data.total;
+    			var list = data.rows;
+    			$('#distributorId').empty();
+           		var html='<option value="">[@lang_res k='global.pleaseSelect'/]</option>';
+           	 	$.each(list, function (index, array) {
+           	 		var id = array['id'] == null ? "" : array['id'];
+           	 	 	var companyId = array['company']['id'] == null ? "" : array['company']['id'];
+           	 	 	var companyName = array['companyName'] == null ? "" : array['companyName'];
+           	 	 	var distributorId = array['distributor']['id'] == null ? "" : array['distributor']['id'];
+           	 	 	var distributorName = array['distributorName'] == null ? "" : array['distributorName'];
+           			html += '<option value="'+distributorId+'">'+distributorName+'</option>';
+           	 	});
+				$('#distributorId').append(html);
+           	}
+       	});
+	}
+	
+	//获取member列表
+	function getMemberList(id,type){
+		$.ajax({
+            type: "post",
+            url : "${base}/console/membercompany/getMemberList.do?",
+            data: {'id':id,'type':type},
+            async: false,
+            dataType: "json",
+            error: function (XMLHttpRequest, textStatus, errorThrown) {},
+            success: function (data) {
+            	var total = data.total;
+    			var list = data.rows;
+    			$('#chkMember').empty();
+           		var html='';
+           		if(list.length>0){
+	           	 	$.each(list, function (index, array) {
+	           	 		var id = array['id'] == null ? "" : array['id'];
+	           	 	 	var nickName = array['nickName'] == null ? "" : array['nickName'];
+	           			html += '<tr><td><input type="checkbox" name="memberId" data-id="'+id+'"/></td><td>'
+	           				+ nickName + '</td></tr>';
+	           	 	});
+					$('#chkMember').append(html);
+	            }else{
+	            	layer.msg('[@lang_res k='console.membercompany.noMember'/]');
+	            }
+           	}
+       	});
+	}
+	
+	//返回
+	$('#btnBack').on('click',back);
+	function back() {
+		window.location.href = '${base}/console/membercompany/list.do?';
+	}
+
+	//保存信息
+	$('#btnSave').on('click',save);	
+	function save() {
+		//获取地址栏参数
+		var id = getQueryString('id');
+		var companyId = $('#companyId').val() == null ? "" : $('#companyId').val();
+		var memberId = $('#memberId').val() == null ? "" : $('#memberId').val();
+		var memberList = "";
+		var obj = $('#chkMember').find('input[name="memberId"]');
+		
+		if(null!=obj&&""!=obj){
+			for(i in obj){
+				if(obj[i].checked){
+					memberList+=obj.eq(i).attr('data-id')+',';
+				}
+			}
+		}else{
+			layer.msg('[@lang_res k='console.membercompany.memberListTis'/]');
+			return ;
+		}
+		
+		//console.log(memberList);
+		var postData = { 
+			'id' : id,
+			'companyId' : companyId,
+			'memberList' : memberList
+		}; 
+       	$.ajax({
+            type: "post",
+            url : "${base}/console/membercompany/save.do?",
+            data: postData,
+            async: false,
+            dataType: "json",
+            error: function (XMLHttpRequest, textStatus, errorThrown) {},
+            success: function (data, textStatus) {
+            	var result = data.result;
+               	if(result==true) { 
+               		layer.msg('[@lang_res k='global.success.save'/]', {icon: 1, time: 2000}, function () { 
+               			parent.document.getElementById("btnSearch").click();
+               			parent.document.getElementById("btnCloseIframe").click(); 
+               		});          			
+               } else 
+            	   layer.msg('global.failed.save', {icon: 0, time: 2000}, function () {  });
+           	}
+       	});
+	}
+});
+</script>
+</body>
+</html>

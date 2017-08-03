@@ -1,0 +1,312 @@
+[#include "../../inc/head_v2.html"/]
+<style>
+        .ifa_pagint_now span{ color:black;}
+        .page_left {
+        background:rgba(0, 0, 0, 0) url("${base}/res/images/ifa/left_ico.png") no-repeat scroll 0 0;
+		 width: 62px;
+		 height: 62px;
+		 position:absolute;
+		 cursor:pointer;
+		 font-size:30px;
+		 text-align:center;
+		 filter:alpha(opacity=50); 
+		-moz-opacity:0.5; 
+		opacity:0.5;
+		background-color: #ccc;
+      	color: white;
+		line-height: 62px;
+
+		  border-radius: 10%;
+
+
+		 margin:auto;
+		 left:0px;
+ 
+		 top:300px;
+		 bottom:0;
+		}
+		.page_left:hover{background-color: #4ba6de;}
+		.page_right {
+		background:rgba(0, 0, 0, 0) url("${base}/res/images/ifa/right_ico.png") no-repeat scroll 0 0;
+		 width: 62px;
+		 height: 62px;
+		 position:absolute;
+		  font-size:30px;
+		 text-align:center;
+		 filter:alpha(opacity=50); 
+		-moz-opacity:0.5; 
+		opacity:0.5;
+		background-color: #ccc;
+      	color: white;
+		line-height: 62px;
+		cursor:pointer;
+	  	border-radius: 10%;
+		 margin:auto;
+		 right:1px;
+ 
+		 top:300px;
+		 bottom:0;
+		}
+		.page_right:hover{background-color: #4ba6de;}
+	</style>
+        <link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css"> 
+        <div class="wmes-top">
+            <a href="javascript:;" class="header-over">Portfolios</a>
+        </div>
+        <div class="wmes-content">
+        		<div class="ifa_choose_condition">
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">Issue Date</p>
+						<ul class="funds_choice">
+							<li  class="fund_choice_active funds_all"  data-name="Issue Date" data-key="" data-value="Issue Date_00">Today</li>
+							<li data-name="Issue Date" data-key="1 Week" data-value="Issue Date_01">1 Week</li>
+							<li data-name="Issue Date" data-key="1 Month" data-value="Issue Date_02">1 Month</li>
+							<li data-name="Issue Date" data-key="2 Month" data-value="Issue Date_03">2 Month</li>
+							<li data-name="Issue Date" data-key="3 Month" data-value="Issue Date_04">3 Month</li>
+							<li data-name="Issue Date" data-key="6 Month" data-value="Issue Date_05">6 Month</li>
+							<li data-name="Issue Date" data-key="1 Year" data-value="Issue Date_06">1 Year</li>
+						</ul>
+					</div>
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">Source</p>
+						<ul class="funds_choice">
+							<li class="fund_choice_active  funds_all"  data-name="Source" data-key="" data-value="Source_00">All</li>
+							<li data-name="Source" data-key="IFA" data-value="Source_01">IFA</li>
+							<li data-name="Source" data-key="Distributor" data-value="Source_02">Distributor</li>
+							<li data-name="Source" data-key="System" data-value="Source_03">System</li>
+							<li data-name="Source" data-key="Me" data-value="Source_04">Me</li>
+						</ul>
+					</div>
+					<div class="funds_choice_wrap">
+						<p class="funds_choice_title">Risk Level</p>
+						<ul class="funds_choice">
+							<li class="fund_choice_active  funds_all" data-name="Risk Level" data-key="" data-value="Risk Level_00">All</li>
+							<li data-name="Risk Level" data-key="Low" data-value="Risk Level_01">Low</li>
+							<li data-name="Risk Level" data-key="Medium" data-value="Risk Level_02">Medium</li>
+							<li data-name="Risk Level" data-key="High" data-value="Risk Level_03">High</li>
+						</ul>
+					</div>
+					<div class="ifa_more_wrap">
+						<p id="yfunds_hidde_title">More selectors <span class="funds_xia_ico"></span></p>
+					</div>
+        		</div>
+        		<div class="portfolio_list_wrap">       			
+	    			<div class="funds_list_selected">
+		                <p class="funds_selected_title">Selected condition </p>
+						<ul class="selection_criteria">
+							<p class="funds_title_selection">Reset filter </p>
+						</ul>
+					</div>
+					<div class="ifa_keyserach_wrap">
+						<p class="ifa_serach_sum">
+							A total of 					
+							<span class="funds_serach_digital ng-binding" ng-bind="datatotal">8</span> portfolios to meet your requirements</p>
+						<div class="funds_keyserach ifa_keyserach">
+							<input type="text" id="fundName" placeholder="Please enter keyword search">
+							<span class="icon_search" id="searchKeyBtn"></span>
+						</div>
+					</div>
+					<div class="portfolio_list">
+						<div class="page_left"></div>
+						<ul class="portfolio_list_ul">
+							<li>
+								<div class="portfolio_list_contents">
+									<a href=""></a>
+									<p class="portfolio_name"><a href="${base}/front/ifa/info/porfoliosdetail.do">Portfolio That Seeks to Tamp Down Risk</a><img class="portfolio_fav_img" src="${base}/res/images/fund/strategies_fav.png"></p>
+									<div class="portfolio_total">
+										<div class="portfolio_index_wrap">
+											<img class="portfolio_porimg" src="${base}/res/images/strategy/risk_level_03.png">
+										</div>
+										<div class="portfolio_return">
+											<p class="portfolio_percent">46.19%</p>
+											<p class="portfolio_return_word">Total Return</p>
+										</div>
+									</div>
+								</div>		
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa4.png">
+									<p class="strategies_list_ifaname">Jenny Fo</p>
+									<p class="strategies_time_word">2016-03-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+								</li>
+								
+								
+							<li>
+								<div class="portfolio_list_contents">
+									<a href=""></a>
+									<p class="portfolio_name"><a href="${base}/front/ifa/info/porfoliosdetail.do">Low Risk And High Return Investment Portfolio</a><img class="portfolio_fav_img" src="${base}/res/images/fund/strategies_fav.png"></p>
+									<div class="portfolio_total">
+										<div class="portfolio_index_wrap">
+											<img class="portfolio_porimg" src="${base}/res/images/strategy/risk_level_06.png">
+										</div>
+										<div class="portfolio_return">
+											<p class="portfolio_percent">10.19%</p>
+											<p class="portfolio_return_word">Total Return</p>
+										</div>
+									</div>
+								</div>		
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa1.png">
+									<p class="strategies_list_ifaname">Andy Liu</p>
+									<p class="strategies_time_word">2016-03-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+							</li>
+								
+								
+							<li>
+								<div class="portfolio_list_contents">
+									<a href=""></a>
+									<p class="portfolio_name"><a href="${base}/front/ifa/info/porfoliosdetail.do">Mining Low Equity Funds Portfolio</a><img class="portfolio_fav_img" src="${base}/res/images/fund/strategies_fav.png"></p>
+									<div class="portfolio_total">
+										<div class="portfolio_index_wrap">
+											<img class="portfolio_porimg" src="${base}/res/images/strategy/risk_level_02.png">
+										</div>
+										<div class="portfolio_return">
+											<p class="portfolio_percent">30.19%</p>
+											<p class="portfolio_return_word">Total Return</p>
+										</div>
+									</div>
+								</div>		
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa2.png">
+									<p class="strategies_list_ifaname">Jacky SUN</p>
+									<p class="strategies_time_word">2016-03-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+							</li>
+								
+								
+							<li>
+								<div class="portfolio_list_contents">
+									<a href=""></a>
+									<p class="portfolio_name"><a href="${base}/front/ifa/info/porfoliosdetail.do">High And New Technology Investment Portfolio
+									</a><img class="portfolio_fav_img" src="${base}/res/images/fund/strategies_fav.png"></p>
+									<div class="portfolio_total">
+										<div class="portfolio_index_wrap">
+											<img class="portfolio_porimg" src="${base}/res/images/strategy/risk_level_05.png">
+										</div>
+										<div class="portfolio_return">
+											<p class="portfolio_percent">89.19%</p>
+											<p class="portfolio_return_word">Total Return</p>
+										</div>
+									</div>
+								</div>		
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa3.png">
+									<p class="strategies_list_ifaname">Lily Tse</p>
+									<p class="strategies_time_word">2016-03-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+							</li>
+								
+								
+								
+							<li>
+								<div class="portfolio_list_contents">
+									<a href=""></a>
+									<p class="portfolio_name"><a href="${base}/front/ifa/info/porfoliosdetail.do">Bond Portfolio</a><img class="portfolio_fav_img" src="${base}/res/images/fund/strategies_fav.png"></p>
+									<div class="portfolio_total">
+										<div class="portfolio_index_wrap">
+											<img class="portfolio_porimg" src="${base}/res/images/strategy/risk_level_03.png">
+										</div>
+										<div class="portfolio_return">
+											<p class="portfolio_percent">53.19%</p>
+											<p class="portfolio_return_word">Total Return</p>
+										</div>
+									</div>
+								</div>		
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa4.png">
+									<p class="strategies_list_ifaname">Curry Ye</p>
+									<p class="strategies_time_word">2016-03-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+							</li>
+								
+								
+								
+							<li>
+								<div class="portfolio_list_contents">
+									<a href=""></a>
+									<p class="portfolio_name"><a href="${base}/front/ifa/info/porfoliosdetail.do">Low Risk And High Return Investment Portfolio</a><img class="portfolio_fav_img" src="${base}/res/images/fund/strategies_fav.png"></p>
+									<div class="portfolio_total">
+										<div class="portfolio_index_wrap">
+											<img class="portfolio_porimg" src="${base}/res/images/strategy/risk_level_06.png">
+										</div>
+										<div class="portfolio_return">
+											<p class="portfolio_percent">11.19%</p>
+											<p class="portfolio_return_word">Total Return</p>
+										</div>
+									</div>
+								</div>		
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa2.png">
+									<p class="strategies_list_ifaname">Carls Mo</p>
+									<p class="strategies_time_word">2016-03-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+							</li>
+							<li>
+								<div class="portfolio_list_contents">
+									<a href=""></a>
+									<p class="portfolio_name"><a href="${base}/front/ifa/info/porfoliosdetail.do">Mining Fidelity Funds Portfolio
+								</a><img class="portfolio_fav_img" src="${base}/res/images/fund/strategies_fav.png"></p>
+									<div class="portfolio_total">
+										<div class="portfolio_index_wrap">
+											<img class="portfolio_porimg" src="${base}/res/images/strategy/risk_level_04.png">
+										</div>
+										<div class="portfolio_return">
+											<p class="portfolio_percent">87.56%</p>
+											<p class="portfolio_return_word">Total Return</p>
+										</div>
+									</div>
+								</div>		
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa1.png">
+									<p class="strategies_list_ifaname">CAROLYN SUN</p>
+									<p class="strategies_time_word">2016-03-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+							</li>
+								
+								
+								
+							<li>
+								<div class="portfolio_list_contents">
+									<a href=""></a>
+									<p class="portfolio_name"><a href="${base}/front/ifa/info/porfoliosdetail.do">Mining Low Equity Funds Portfolio</a><img class="portfolio_fav_img" src="${base}/res/images/fund/strategies_fav.png"></p>
+									<div class="portfolio_total">
+										<div class="portfolio_index_wrap">
+											<img class="portfolio_porimg" src="${base}/res/images/strategy/risk_level_02.png">
+										</div>
+										<div class="portfolio_return">
+											<p class="portfolio_percent">28.19%</p>
+											<p class="portfolio_return_word">Total Return</p>
+										</div>
+									</div>
+								</div>		
+								<div class="strategies_list_inf">
+									<img class="strategies_inf_img" src="${base}/res/images/ifa4.png">
+									<p class="strategies_list_ifaname">CAROLYN SUN</p>
+									<p class="strategies_time_word">2016-03-03 15:09</p>
+									<img class="strategies_time_img" src="${base}/res/images/fund/strategies_time.png">
+								</div>
+							</li>
+						</ul>
+						<div class="page_right"></div>
+					</div>
+	 				<ul class="ifa_list_paging">
+	 					<li class="ifa_pagint_num">1</li>
+	 					<li class="ifa_pagint_num">2</li>
+	 					<li class="ifa_pagint_num ifa_pagint_now">3</li>
+	 					<li class="ifa_pagint_some">...</li>
+	 					<li class="ifa_pagint_num">10</li>
+	 				</ul>
+        		</div>
+        </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('${base}/res/web/ifa/porfolios.js');
+</script>

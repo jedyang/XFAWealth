@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product company</title>
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div class="tab-side container-fluid">
+		<div class="tab-side-container">
+            <div class="page-header mt-10">
+                <h4><b>[@lang_res k='console.company.title'/]</b></h4>
+            </div>
+			<div class="tab_wrap">
+				<!-- SC -->
+                <form class="form-horizontal" style="display:block;">
+                    <!--<div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtId" class="label-control">ID</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="txtId" readonly="readonly" value="${(infoVo.id)?if_exists}" >
+                        </div>
+                    </div>-->
+                    <!-- 运营公司 -->
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="selCompanyId" class="label-control"><span class="red">*</span>[@lang_res k='console.productcompany.companyname'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select class="form-control " id="selCompanyId"  name="selCompanyId">
+                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                               [#if companyVoList?exists && companyVoList?size gt 0]
+                                 [#list companyVoList as l]
+                                   <option value="${l[0].id}" [#if infoVo?exists&&infoVo.company?exists&&infoVo.company.id == l[0].id]selected[/#if]>${l[1].name!}</option>
+                                 [/#list]
+                               [/#if]
+                            </select> 
+                        </div>
+                    </div>      
+                    <!-- 代理公司 
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="selDistributorId" class="label-control"><span class="red">*</span>[@lang_res k='console.productcompany.distributorname'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select class="form-control " id="selDistributorId"  name="selDistributorId">
+                            	<option value="">[@lang_res k='global.pleaseSelect'/]</option>
+                               [#if distributorList?exists && distributorList?size gt 0]
+                                 [#list distributorList as l]
+                                   <option value="${l.id}" [#if infoVo?exists&&infoVo.distributor?exists&&infoVo.distributor.id == l.id]selected[/#if]>${l.companyName!}</option>
+                                 [/#list]
+                               [/#if]
+                            </select> 
+                        </div>
+                    </div> -->
+                    <!-- 产品类型 -->
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="selType" class="label-control"><span class="red">*</span>[@lang_res k='console.product.type'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select class="form-control " id="selType"  name="selType">
+                            	<option value="fund" [#if type?exists&&type == "fund"]selected[/#if]>[@lang_res k='console.product.type.fund'/]</option>
+                            	<option value="stock" [#if type?exists&&type == "stock"]selected[/#if]>[@lang_res k='console.product.type.stock'/]</option>
+                            	<option value="bond" [#if type?exists&&type == "bond"]selected[/#if]>[@lang_res k='console.product.type.bond'/]</option>
+                            </select> 
+                        </div>
+                    </div> 
+                    <!-- 产品 -->
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="selProductId" class="label-control"><span class="red">*</span>[@lang_res k='console.product.info.name'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <select class="form-control " id="selProductId"  name="selProductId">
+                            	<!--<option value="">[@lang_res k='global.pleaseSelect'/]</option>-->
+                               [#if productList?exists && productList?size gt 0]
+                                 [#list productList as l]
+                                 	[#if infoVo?exists&&infoVo.product?exists&&l.productId?exists ]
+                                   <option value="${l.productId!}" [#if infoVo.product.id == l.productId]selected[/#if]>${l.name!}</option>
+                                 	[/#if]
+                                 [/#list]
+                               [/#if]
+                            </select> 
+                        </div>
+                    </div> 
+                    <!-- 产品编码 
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="txtCode" class="label-control">[@lang_res k='console.proproductcompanyde'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="txtCode" value="${(infoVo.code)?if_exists}" >
+                        </div>
+                    </div> -->
+                    <!-- Publish 
+                    <div class="form-group">
+                        <div class="col-sm-3 text-right">
+                            <label for="typeLable" class="label-control"><span class="red">*</span>[@lang_res k='global.publish'/]</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <span id="typeLable" >
+                             &nbsp;<input type="radio"  value="1" id="radiocode-1"  name="isPublish"  [#if infoVo?exists == false || infoVo.isPublish?exists == false || infoVo.isPublish == '1']checked[/#if]>[@lang_res k='fund.distributor.form.isPublish.1'/]&nbsp;&nbsp;&nbsp;&nbsp;
+                             <input type="radio"  value="0" id="radiocode-2"  name="isPublish" [#if infoVo?exists && infoVo.isPublish?exists && infoVo.isPublish == '0']checked[/#if]>[@lang_res k='fund.distributor.form.isPublish.0'/]</span>
+                            </span>
+                         </div>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+        <div class="text-center pd10">
+           	<button id="btnSave" class="btn-blue-s" >
+				保存
+			</button>
+        </div> 
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+<script src="${base}/res/js/util.js"></script>
+
+<script type="text/javascript">
+$(function() {
+	//改变产品类型时获取对应产品列表
+	$('#selType').change(function(){
+		var type = $('#selType').val();
+		$.ajax({
+			type : 'post',
+			url : '${base}/console/productcompany/changeType.do?',
+			data : { 'type' : type },
+			dataType : 'json',
+			error: function (XMLHttpRequest, textStatus, errorThrown) {},
+            success: function (data) {
+            	$('#selProductId').find('option').remove();
+            	var list = data.rows;
+            	for ( var i=0; i<list.length; i++) {
+            		var html = '<option value="'+list[i].productId+'">'+list[i].name+'</option>';
+            		$('#selProductId').append(html);
+				}
+            }
+		});
+	});
+	
+	$('#btnBack').on('click',back);
+	function back() {
+		window.location.href = '${base}/console/productcompany/list.do?';
+	}
+
+	//保存信息
+	$('#btnSave').on('click',save);
+	
+	function save() {
+		//获取地址栏参数
+		var id = getQueryString('id');
+		var companyId = $('#selCompanyId').val();
+		//var distributorId = $('#selDistributorId').val();
+		var productId = $('#selProductId').val();
+		var type = $('#selType').val();
+		//var code = $('#txtCode').val();
+		//var isPublish = $('input:radio[name="isPublish"]:checked').val();
+		
+		var postData = { 
+			'id' : id,
+			'companyId' : companyId,
+			//'distributorId' : distributorId,
+			'productId' : productId,
+			//'type' : type,
+			//'code' : code,
+			//'isPublish' : isPublish
+		}; 
+       	$.ajax({
+            type: "post",
+            url : "${base}/console/productcompany/save.do?",
+            data: postData,
+            async: false,
+            dataType: "json",
+            error: function (XMLHttpRequest, textStatus, errorThrown) {},
+            success: function (data, textStatus) {
+            	var result = data.result;
+               	if(result==true) { 
+               		layer.msg('保存成功', {icon: 1, time: 2000}, function () { 
+               			parent.document.getElementById("btnSearch").click();
+               			parent.document.getElementById("btnCloseIframe").click(); 
+               		});          			
+               } else 
+            	   layer.msg('保存失败', {icon: 0, time: 2000}, function () {  });
+           	}
+       	});
+	}
+});
+</script>
+</body>
+</html>

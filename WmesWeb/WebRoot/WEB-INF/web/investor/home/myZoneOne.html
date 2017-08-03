@@ -1,0 +1,413 @@
+[#include "../../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/ifa.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/css/community.css">
+<link rel="stylesheet" href="${base}/res/css/swiper.css">
+<style>
+	/*swiper 重写*/
+	
+	.swiper-button-next,
+	.swiper-button-prev {
+		position: absolute;
+		top: 80px;
+		width: 50px;
+		height: 50px;
+		opacity: 0.7;
+		margin-top: -22px;
+		z-index: 10;
+		cursor: pointer;
+		background-position: center;
+		background-repeat: no-repeat;
+		display: none;
+	}
+	
+	.swiper-button-disabled {
+		display: none!important;
+	}
+	
+	.swiper-button-prev {
+		background: url('${base}/res/images/ifa/left_ico.png') no-repeat;
+		background-size: 100% 100%;
+		left: 0px;
+	}
+	
+	.swiper-button-next {
+		background: url('${base}/res/images/ifa/right_ico.png') no-repeat;
+		background-size: 100% 100%;
+		right: 0px;
+	}
+	.swiper-button-next,
+	.swiper-button-prev {
+		display: block;
+		top:100px;
+	}
+	.wmes-myzone-myifa .community-popularity-wrap-mes-name {
+		margin-top: 7px;
+	}
+	.community-popularity-wrap {
+		border-bottom: 1px dashed #dedede;
+		padding-bottom: 12px;
+	}
+	.ifa-news-contents li{width:46%;float:left;border:0;margin-bottom:0;}
+	.ifa-news-contents li:nth-child(1){margin-right:6%;}
+	.ifa-news-contents{overflow:hidden;margin-top:15px;}
+	.news-word-wrap{margin-bottom:0;}
+	.gray-box{margin-top:10px;}
+	.myzone-noticeconright{width:calc(100% - 44px);float:none;padding:0;padding:22px;background:#fff;margin-bottom:14px;}
+	.myzone-noticeconleft{width:calc(100% - 44px);border:0;}
+	.myzone-noticeconright ul li i{margin-left:40px;}
+	.myzone-recommended-rightnotice{padding:22px;background:#fff;}
+	.myzone-noticecon{border:0;}
+	.myzone-noticecon > p{font-size:16px;color:#3399cc;margin-top:25px;}
+	.myzone-notice-list li p{max-width:calc(100% - 146px);}
+	.wmes-wrap-title{font-size: 22px;line-height: 22px;min-height: 22px;}
+	.dialog-notice{
+	    position: fixed;
+	    top: 0px;
+	    z-index: 999999;
+	}
+	.selectSector-title-sub{
+		display:inline-block;
+		font-size: 14px;
+	    padding-bottom:15px;
+	    color:#b7b5b5;
+	    margin-right:25px;
+	}
+	.notice-content{
+		clear: both;
+	    margin: 0 2%;
+	}
+	.dispaly-active{
+		height: 100%;
+	 	width: calc(100% - 110px);
+	}
+	.selectSector {
+	    height: auto;
+	    position: absolute;
+	    width: calc(93% - 90px);
+	    padding: 26px 33px 0 33px;
+	    box-shadow: 0px 0px 8px #ccc7c7;
+	    background: #fff;
+	    top: 20px;
+	    left: 90px;
+	}
+</style>
+<div class="wmes-content" ng-app="investorHome">
+	<div class="wmes-myzone-bg">
+		<div class="wmes-myzone-left">
+			<div class="wmes-myzone-left-top">
+				<div ng-controller="investorMyAssetsCtrl" class="myzone-myassets">
+					<p class="wmes-wrap-title">[@lang_res k='assets.myAssets'/]</p>
+					<div class="myzone-myassets-content">
+						<ul class="myzone-myassets-choose">
+							<li ng-click="selectPortfolioAssets($event)" ng-if="allPortfolioAssets.portfolioAssets.length != 1" class="myzone-myassets-chooseac">[@lang_res k='investor.zone.allPortfolio'/]</li>
+							<li ng-click="selectPortfolioAssets($event,portfolioAsset.holdId)" ng-repeat="portfolioAsset in allPortfolioAssets.portfolioAssets" id="{{portfolioAsset.holdId}}" ng-bind="portfolioAsset.portfolioName"></li>
+						</ul>
+						<ul class="myzone-myassets-rows">
+							<li>
+								<p class="my-assets-title">[@lang_res k='investor.zone.totalAssets'/] [#if (vo.currencyName)??](${(vo.currencyName)!})[/#if]</p>
+								<p class="my-assets-word investor_eve_ico_flag"><span ng-bind-html="currentTotalAsset|currencyColor:''"></span><img class="eve_ico investor_eve_ico" src="${base!}/res/images/ifa/eves_ico_02.png"></p>
+							</li>
+							<li>
+								<p class="my-assets-title">[@lang_res k='investor.zone.cash'/] [#if (vo.currencyName)??](${(vo.currencyName)!})[/#if]</p>
+								<p class="my-assets-word investor_eve_ico_flag"><span ng-bind-html="currentTotalCash|currencyColor:''"></span></p>
+							</li>
+							<li>
+								<p class="my-assets-title">[@lang_res k='investor.zone.accReturn'/] [#if (vo.currencyName)??](${(vo.currencyName)!})[/#if]</p>
+								<p class="my-assets-word investor_eve_ico_flag"><span ng-bind-html="currentAccReturn|currencyColor:'%'"></span></p>
+							</li>
+						</ul>
+						<div id="mycharts"></div>
+					</div>
+					<div class="investor-nodata-zone" style="display:none;">
+       					<img class="investor-nodata-img" style="width:725px;height:450px" src="${base!}/res/images/investor_zone_logo.png">
+       					<div class="investor-nodata-wwrap">
+       						<div class="investor-nodata-bg">
+        						<p class="investor-nodata-title">[@lang_res k='global.search.noData'/]</p>
+        						<p class="investor-nodata-word"></p>
+       						</div>
+       					</div>
+       				</div>
+				</div>
+				<div class="wmes-myzone-performancecon">
+					<p class="wmes-wrap-title">[@lang_res k='investor.zone.topPerform'/]</p>
+					<ul class="wmes-community-tab">
+						<li class="wmes-community-tabac">[@lang_res k='myfavourites.portfolios'/]</li>
+						<li>[@lang_res k='myfavourites.strategies.funds'/]</li>
+					</ul>
+					<div class="myzone-topPerformance-list">
+					[#if vo?? && vo.topPerformancePortfolios?? && vo.topPerformancePortfolios?size gt 0]
+						[#list vo.topPerformancePortfolios as items]
+						[#if items_index == 0]
+						<div data-id="${(items.portfolioId)!}" class="myzone-topPerformance-first">
+							<div class="myzone-topPerformance-title"><span>1</span><a target="_self" href="${base!}/front/portfolio/arena/detail.do?id=${(items.portfolioId)!}">${(items.portfolioName)!}</a></div>
+							<p class="price_positive" data-value="${(items.increasePercent)!}">[@num_color s='${(items.increasePercent)!""}' c='${(vo.displayColor)!}'/]</p>
+							<p>[@lang_res k='list.search.return' /]</p>
+							<div class="funds_leveal_${(items.riskLevel)!}"></div>
+							[#if items.increaseImagePath??]
+							<img style="height: 100px;" data-src="${(items.increaseImagePath)!}" src="${base!}/loadImgSrcByPath.do?filePath=${(items.increaseImagePath)!}"/>
+							[#else]
+							<img style="height: 100px;" src="${base!}/res/images/application/portfolio_nodata.png">
+							[/#if]
+						</div>
+						[/#if]
+						[/#list]
+						<ul>
+						[#list vo.topPerformancePortfolios as items]
+						[#if items_index gt 0]
+							<li id="${(items.portfolioId)!}">
+								<div class="myzone-topPerformance-title"><span>${items_index+1}</span><a target="_self" href="${base!}/front/portfolio/arena/detail.do?id=${(items.portfolioId)!}">${(items.portfolioName)!}</a></div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_${(items.riskLevel)!}"></div>
+									<div>
+										<p class="price_positive" data-value="${(items.increasePercent)!}">[@num_color s='${(items.increasePercent)!""}' c='${(vo.displayColor)!}'/]</p>
+										<p>[@lang_res k='list.search.return' /]</p>
+									</div>
+								</div>
+								[#if items.increaseImagePath??]
+								<img style="height: 50px;" data-src="${(items.increaseImagePath)!}" src="${base!}/loadImgSrcByPath.do?filePath=${(items.increaseImagePath)!}"/>
+								[#else]
+								<img style="height: 50px;" src="${base!}/res/images/application/portfolio_nodata.png">
+								[/#if]
+							</li>
+						[/#if]
+						[/#list]
+						</ul>
+					[#else]
+						<div class="wmes-nodata-tips" style="height: 198px;display:block">
+							<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+							<span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+						</div>
+					[/#if]
+					</div>
+					<div class="myzone-topPerformance-list myzone-topPerformance-fundslist">
+					[#if vo?? && vo.topPerformanceFunds?? && vo.topPerformanceFunds?size gt 0]
+						[#list vo.topPerformanceFunds as items]
+						[#if items_index == 0]
+						<div data-id="${(items.fundId)!}" class="myzone-topPerformance-first">
+							<div class="myzone-topPerformance-title"><span>1</span><a target="_self" href="${base!}/front/fund/info/fundsdetail.do?id=${(items.fundId)!}">${(items.fundName)!}</a></div>
+							<p class="price_positive" data-value="${(items.increase)!}">[@num_color s='${(items.increase)!""}' c='${(vo.displayColor)!}'/]</p>
+							<p>[@lang_res k='assets.totalReturn'/]</p>
+							<div class="funds_leveal_${(items.riskLevel)!}"></div>
+							[#if items.increaseImagePath??]
+							<img style="height: 100px;" data-src="${(items.increaseImagePath)!}" src="${base!}/loadImgSrcByPath.do?filePath=${(items.increaseImagePath)!}"/>
+							[#else]
+							<img style="height: 100px;" src="${base!}/res/images/application/portfolio_nodata.png">
+							[/#if]
+						</div>
+						[/#if]
+						[/#list]
+						<ul>
+						[#list vo.topPerformanceFunds as items]
+						[#if items_index gt 0]
+							<li>
+								<div class="myzone-topPerformance-title"><span>${items_index+1}</span><a target="_self" href="${base!}/front/fund/info/fundsdetail.do?id=${(items.fundId)!}">${(items.fundName)!}</a></div>
+								<div class="myzone-topPerformance-licon">
+									<div class="funds_leveal_${(items.riskLevel)!}"></div>
+									<div>
+										<p class="price_positive" data-value="${(items.increase)!}">[@num_color s='${(items.increase)!""}' c='${(vo.displayColor)!}'/]</p>
+										<p>[@lang_res k='list.search.return'/]</p>
+									</div>
+								</div>
+								[#if items.increaseImagePath??]
+								<img style="height: 50px;" data-src="${(items.increaseImagePath)!}" src="${base!}/loadImgSrcByPath.do?filePath=${(items.increaseImagePath)!}"/>
+								[#else]
+								<img style="height: 50px;" src="${base!}/res/images/application/portfolio_nodata.png">
+								[/#if]
+							</li>
+						[/#if]
+						[/#list]
+						</ul>
+					[#else]
+						<div class="wmes-nodata-tips" style="height: 198px;display:block">
+							<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+							<span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+						</div>
+					[/#if]
+					</div>
+				</div>
+				<div class="myzone-selectedfundscon">
+					<p class="myzone-big-title" style="margin-left:9px;">[@lang_res k='investor.zone.mostSelected'/]</p>
+					[#if vo?? && vo.mostSelectedFunds?? && vo.mostSelectedFunds?size gt 0]
+					<ul class="myzone-selectedfunds">
+					[#list vo.mostSelectedFunds as items]
+						<li id="${(items.fundId)!}">
+							<p class="myzone-selectedfunds-title"><a target="_self" href="${base!}/front/fund/info/fundsdetail.do?id=${(items.fundId)!}">${(items.fundName)!}</a></p>
+							<div class="myzone-selectedfunds-content">
+								<div class="funds_leveal_${(items.riskValue)!}"></div>
+								<div class="myzone-selectedfunds-contentright">
+									<p>${(items.rankingNum)!'-'}</p>
+									<p>[@lang_res k='assets.portfolios'/]</p>
+								</div>
+							</div>
+							<div class="myzone-selectedfundsbg">${items_index+1}</div>
+						</li>
+					[/#list]
+					</ul>
+					[#else]
+					<div class="wmes-nodata-tips" style="display:block;padding: 10px 0;">
+						<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+						<span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+					</div>
+					[/#if]
+				</div>
+			</div>
+		</div>
+		<div ng-controller="investorNoticeCtrl" class="wmes-myzone-right">
+			<div class="myzone-noticeconright">
+				<div class="myzone-big-title" style="margin-bottom:8px"><a class="click-into-list" target="_self" href="${base!}/front/investor/statement.do">[@lang_res k='investor.zone.e.statement'/]</a></div>
+				<ul class="e-Statement-list">
+					<li id="{{items.reports}}" ng-repeat="items in reports">
+						<img src="${base}/res/images/community/zhangdan.png"/>
+						<div class="e-Statement-content">
+							<p><a href="${base!}/res/images/Fundprofile & Analysis - xinhua.pdf" target="_self" ng-bind="items.name"></a></p>
+							<p ng-bind="items.lastUpdate"></p>
+						</div>
+					</li>
+					<div ng-if="reports==null||reports.length==0" class="wmes-nodata-tips" style="display:block;">
+						<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+						<span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+					</div>
+				</ul>
+			</div>
+			<div class="myzone-recommended-rightnotice">
+				<div class="myzone-noticecon">
+					<div class="myzone-big-title" style="margin-bottom:8px"><a target="_self" href="${base!}/front/notice/previewNotices.do">[@lang_res k='notice.list.title'/]</a></div>
+					<div class="myzone-announcement-list">
+						<img src="${base}/res/images/community/fundlist.png"/><span>[@lang_res k='investor.zone.announcement.myPortfolio'/]</span>
+						<a target="_self" href="${base!}/front/notice/previewNotices.do?type=fund"><p>[@lang_res k='global.more'/]</p></a>
+					</div>
+					<ul class="myzone-announcement-fundlist">
+						<li id="{{items.id}}" ng-repeat="items in fundNotices">
+							<div class="myzone-announcement-fundlisttop">
+								<span class="gray-box"></span>
+								<p ng-click="previewNotice(items.annoName,items.annoDate,items.releaseByName,items.annoContent)" title="{{items.annoName}}" ng-bind="items.annoName|characters:40"></p>
+							</div>
+							<div class="myzone-announcement-fundlistbottom">
+								<p ng-bind="items.releaseByName"></p>
+								<b ng-bind="items.annoDate"></b>
+							</div>
+						</li>
+						<li ng-if="fundNotices==null">
+							<div class="wmes-nodata-tips" style="display:block;">
+								<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+								<span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+							</div>
+						</li>
+					</ul>
+					<div class="myzone-announcement-list">
+						<img src="${base}/res/images/community/system.png"/><span>[@lang_res k='investor.zone.announcement.corporate'/]</span>
+						<a target="_self" href="${base!}/front/notice/previewNotices.do?type=system"><p>[@lang_res k='global.more'/]</p></a>
+					</div>
+					<ul class="myzone-announcement-fundlist myzone-announcement-systemlist">
+						<li id="{{items.id}}" ng-repeat="items in sysNotices">
+							<div class="myzone-announcement-fundlisttop">
+								<span class="gray-box"></span>
+								<p ng-click="previewNotice(items.subject,items.releaseDate,items.releaseByName,items.content)" title="{{items.subject}}" ng-bind="items.subject|characters:40"></p>
+							</div>
+							<div class="myzone-announcement-fundlistbottom">
+								<p ng-bind="items.releaseByName"></p>
+								<b ng-bind="items.releaseDate"></b>
+							</div>
+						</li>
+						<li ng-if="sysNotices==null">
+							<div class="wmes-nodata-tips" style="display:block;">
+								<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+								<span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="myzone-noticeconright" style="margin-top: 14px;margin-bottom:0px">
+				<div class="myzone-big-title" style="margin-bottom:8px"><a target="_self" href="${base!}/front/investor/formsDownload.do">[@lang_res k='investor.zone.forms.download'/]</a></div>
+				<ul class="myzone-pdfdown-list">
+					<li>
+						<a target="_self" href="${base!}/res/images/1-fc09947b6d.jpg">
+							<img src="${base!}/res/images/community/pdf.png"/>
+							<p>Account application forms</p>
+						</a>
+					</li>
+					<li>
+						<a target="_self" href="${base!}/res/images/1-fc09947b6d.jpg">
+							<img src="${base}/res/images/community/pdf.png"/>
+							<p>Dividend Forms</p>
+						</a>
+					</li>
+					<li>
+						<a target="_self" href="${base!}/res/images/1-fc09947b6d.jpg">
+							<img src="${base}/res/images/community/pdf.png"/>
+							<p>Change personal information</p>
+						</a>
+					</li>
+					<li>
+						<a target="_self" href="${base!}/res/images/1-fc09947b6d.jpg">
+							<img src="${base}/res/images/community/pdf.png"/>
+							<p>Market research forms</p>
+						</a>
+					</li>
+					<li>
+						<a target="_self" href="${base!}/res/images/1-fc09947b6d.jpg">
+							<img src="${base}/res/images/community/pdf.png"/>
+							<p>Transaction application forms</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div ng-controller="investorRecommendedCtrl" class="myzone-recommended">
+		<p class="myzone-recommended-title">[@lang_res k='investor.zone.recommended'/]</p>
+		<div class="myzone-recommended-rows">
+			<p class="myzone-little-title"><b></b><a class="click-into-list" href="javascript:void(0)">[@lang_res k='myfavourites.strategies.funds'/]</a><span class="ifa-more-ico"></span></p>
+			<div class="swiper-container">
+				<ul class="swiper-wrapper myzone-list">
+					<li id="{{items.fundInfo.id}}" ng-repeat="items in funds" class="swiper-slide">
+						<p><a target="_self" href="${base!}/front/fund/info/fundsdetail.do?id={{items.fundInfo.id}}" ng-bind="items.fundName"></a></p>
+						<div class="myzone-list-msg">
+							<p ng-bind="items.sectorType"></p>
+							<span ng-if="items.sectorType!=null && items.geoAllocation!=null">丨</span>
+							<p ng-bind="items.geoAllocation"></p>
+						</div>
+						<div class="myzone-list-licon">
+							<div class="funds_leveal_{{items.fundInfo.riskLevel}}"></div>
+							<div>
+								<p class="price_positive" ng-bind-html="items.fundReturnOneMonth | percentColor:'%':${(vo.displayColor)!}"></p>
+								<p>[@lang_res k='fund.info.screener.performance.1MonthReturn'/]</p>
+							</div>
+						</div>
+					</li>
+					<li ng-if="funds==null">
+						<div class="wmes-nodata-tips" style="display:block;">
+							<img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+							<span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+						</div>
+					</li>
+				</ul>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- preview notice -->
+<div id="previewNoticeDialog" class="wmes-content-position dialog-notice" style="background: rgba(0,0,0,0.3);display:none;width:100%">
+	<div class="selectSector">
+		<div class="investment-wrap investment-hide">
+			<div class="investment-plan-wrap">
+				<div class="wmes-close"></div>
+				<p style="margin-bottom: 15px;font-size:25px;text-align: -webkit-center;" class="selectSector-title notice-dialog-title"></p>
+				<div style="text-align:center;">
+					<p class="selectSector-title-sub">[@lang_res k='notice.edit.dialog.notice.preview.releaseDate'/] : <span class="notice-dialog-release-date-time"></span></p>
+					<p class="selectSector-title-sub">[@lang_res k='notice.edit.dialog.notice.preview.releaseBy'/] : <span class="notice-dialog-release-by"></span></p>
+				</div>
+				<div class="notice-content dialog-notice-content"></div>
+				<div class="character-button-rows"></div>
+			</div>
+		</div>
+	</div>
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('${base!}/res/web/investor/investorHome.js');
+</script>

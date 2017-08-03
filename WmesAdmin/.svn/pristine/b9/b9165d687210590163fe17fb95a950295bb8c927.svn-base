@@ -1,0 +1,80 @@
+ /*上传样式*/
+.upload-box{ position:relative; display:inline-block; height:32px; vertical-align:middle; zoom:1; *display:inline;}
+	.upload-box .upload-btn{ display:inline-block; height:32px; zoom:1; *display:inline; }
+	.upload-box .upload-progress{ position:absolute; top:0; left:0; padding:2px 5px; width:115px; height:26px; border:1px solid #d7d7d7; background:#fff; overflow:hidden; }
+	.upload-box .upload-progress .txt{ display:block; padding-right:10px; font-weight:normal; font-style:normal; font-size:11px; line-height:18px; height:18px; text-overflow:ellipsis; overflow:hidden; }
+	.upload-box .upload-progress .bar{ position:relative; display:block; width:112px; height:4px; border:1px solid #1da76b; }
+	.upload-box .upload-progress .bar b{ display:block; width:0%; height:4px; font-weight:normal; text-indent:-99em; background:#28B779; overflow:hidden; }
+	.upload-box .upload-progress .close{ position:absolute; display:block; top:1px; right:1px; width:14px; height:14px; text-indent:-99em; background:url(skin_icons.png) -56px -196px no-repeat; cursor:pointer; overflow:hidden; }
+	
+/*图片相册样式*/
+.photo-list{ margin:0; padding:10px 0 0 0; }
+	.photo-list ul{ margin:0 0 0 -15px; }
+	.photo-list ul li{ float:left; margin-left:15px; text-align:center; *width:118px;     border: 1px solid #C0C0C0;padding: 5px;margin-bottom: 5px; }
+	.photo-list ul li .img-box{ position:relative; margin:5px auto;  border:3px #efefed solid; cursor:pointer; overflow:hidden; }
+	.photo-list ul li .img-box.selected{ border:0px #f60 solid; }
+	.photo-list ul li .img-box img{ width:100%; height:100%; opacity:1;  cursor: pointer;  transition: all 0.6s;}
+	 .photo-list ul li .img-box img:hover{ transform: scale(1.4);}  
+	.photo-list ul li .img-box .remark{ position:absolute; display:block; left:0; right:0; bottom:0; margin:0; padding:3px 2px; height:18px; line-height:18px; background:#000; filter:alpha(opacity=50); opacity:0.5; -moz-opacity:0.5; text-align:left; overflow:hidden;}
+	.photo-list ul li .img-box .remark:hover{ top:0; bottom:0; height:100%; }
+	.photo-list ul li .img-box .remark i{ position:relative; font-size:12px; color:#fff; font-style:normal; line-height:18px; }
+	.photo-list ul li a{ padding-right:1em; }
+	
+	.video-list{ margin:0; padding:10px 0 0 0; }
+	
+/*=====================以下部分是WebUploader必须的====================*/
+.webuploader-container{ position:relative; }
+.webuploader-element-invisible{ position:absolute !important; clip: rect(1px 1px 1px 1px); /* IE6, IE7 */ clip: rect(1px,1px,1px,1px); }
+.webuploader-pick{ position:relative; display:inline-block; width:65px; line-height:30px; height:30px; border:1px solid #e1e1e1; cursor:pointer; background:#fff; color:#333; text-align:center; overflow:hidden; zoom:1; *display:inline; }
+.webuploader-pick-hover{ background:#fafafa; }
+.webuploader-pick-disable{ opacity:0.6; pointer-events:none; }
+/*=====================以上部分是WebUploader必须的====================*/
+
+/**删除/预览按钮样式*/
+	.fileList li{
+		 font-size: 12px;
+	     margin: 8px;
+	     overflow: hidden;
+	     position: relative;
+	     text-align: center;
+	     float:left;
+	}
+	.fileList div.file-panel {
+        background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
+        height: 0;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 300;
+    }
+    
+	.fileList div.file-panel span {
+        background: rgba(0, 0, 0, 0) url("../images/icons.png") no-repeat scroll 0 0;
+        cursor: pointer;
+        display: inline;
+        float: right;
+        height: 24px;
+        margin: 5px 1px 1px;
+        overflow: hidden;
+        text-indent: -9999px;
+        width: 24px;
+    }
+    
+	.fileList div.file-panel span.cancel {
+        background-position: -48px -24px;
+    }
+    
+	.fileList div.file-panel span.cancel:hover {
+        background-position: -48px 0;
+    }
+    
+	.fileList div.file-panel span.thumb {
+        background-position: -70px -24px;
+    }
+    
+	.fileList div.file-panel span.thumb:hover {
+        background-position: -70px -1px;
+    }   
+    

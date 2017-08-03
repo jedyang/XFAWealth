@@ -1,0 +1,122 @@
+[#include "../../inc/head_no_menu.html"/]  
+<style>
+	.wmes-wraper{position: relative;}
+</style>
+<link rel="stylesheet" href="${base}/res/css/openaccount.css">
+<link rel="stylesheet" href="${base}/res/css/Funds.css">
+<link rel="stylesheet" href="${base}/res/css/jsDatePick_ltr.css">
+[#include "../../inc/regist_head.html"/]  
+<div class="wmes-content" style="margin-left:0px;">
+    <div class="regist-bg">
+       <div class="register_div">
+            <p class="regist-big-title">[@lang_res k='member.register.title'/]</p>
+            <div class="register_liucheng">
+                <ul>
+                    <li>
+                        <span class="circle_orange">1</span>
+                        <span class="font_orange">[@lang_res k='member.register.step1'/]</span>
+                    </li>
+                    <li class="jiantou_width">
+                        <span class="register_jiantou"></span>
+                    </li>
+                    <li>
+                        <span class="circle_gray">2</span>
+                        <span>[@lang_res k='member.register.step2'/]</span>
+                    </li>
+                    <li class="jiantou_width">
+                        <span class="register_jiantou"></span>
+                    </li>
+                    <li>
+                        <span class="circle_gray">3</span>
+                        <span>[@lang_res k='member.register.step3'/]</span>
+                    </li>
+                    <li class="jiantou_width">
+                        <span class="register_jiantou"></span>
+                    </li>
+                    <li>
+                        <span class="circle_gray">4</span>
+                        <span>[@lang_res k='member.register.step4'/]</span>
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="register_conter_1">
+                <div class="register_big_ico register_unChoice" sub_type="1">
+                    <a class="register_ico_140 register_Unchecked" href="javascript:;">
+                        <span><img src="${base}/res/images/register/register_ico1_03.png" width="140" height="140" alt=""/></span>                           
+                    </a>
+                    <a class="register_ico_140 register_Selected" href="javascript:;">
+                        <span><img src="${base}/res/images/register/register_ico2_03.png" width="140" height="140" alt=""/></span>                           
+                    </a>
+                    <div>[@lang_res k='member.register.investor'/]</div>                                               
+                    
+                    <div class="register_small_ico_individual register_Selected">
+                        <a class="register_ico_62 Small_unchoice" href="javascript:;" data-type="Individual">
+                            <span class="Small_Selected"><img src="${base}/res/images/register/register_ico4_03.png" width="62" height="62" alt=""/></span>           
+                            <span class="Small_Unchecked"><img src="${base}/res/images/register/register_ico3_03.png" width="62" height="62" alt=""/></span>                                                        
+                        </a>
+                        <div>[@lang_res k='member.register.individual'/]</div>
+                    </div>
+                    
+                   <div class="register_small_ico_corporate register_Selected">
+                        <a class="register_ico_62" href="javascript:;">
+                            <span class="Small_Selected"><img src="${base}/res/images/register/register_ico3_08.png" width="62" height="62" alt=""/></span>                                  
+                        </a>
+                        <div>[@lang_res k='member.register.corporate'/]</div>
+                    </div>                     
+                     <div class="register_small_ico_fi register_Selected">
+                        <a class="register_ico_62" href="javascript:;">
+                            <span class="Small_Selected"><img src="${base}/res/images/register/register_ico3_10.png" width="62" height="62" alt=""/></span>                                                                      
+                        </a>
+                        <div>[@lang_res k='member.register.fi'/]</div>
+                    </div> 
+                </div>
+                <div class="register_big_ico register_unChoice" sub_type="2">
+                    <a class="register_ico_140 register_Unchecked" href="javascript:;">
+                        <span><img src="${base}/res/images/register/register_ico1_05.png" width="140" height="140" alt=""/></span>                           
+                    </a>
+                    <a class="register_ico_140 register_Selected" href="javascript:;">
+                        <span><img src="${base}/res/images/register/register_ico2_05.png" width="140" height="140" alt=""/></span>                           
+                    </a>
+                    <div>[@lang_res k='member.register.ifa'/]</div>
+                    
+                    <div class="register_small_ico_IFAUser register_Selected">
+                        <a class="register_ico_62 Small_unchoice" href="javascript:;" data-type="IFA User">
+                            <span class="Small_Selected"><img src="${base}/res/images/register/register_ico4_12.png" width="62" height="62" alt=""/></span>
+                            <span class="Small_Unchecked"><img src="${base}/res/images/register/register_ico3_12.png" width="62" height="62" alt=""/></span>                                                                
+                        </a>
+                        <div>[@lang_res k='member.register.ifauser'/]</div>
+                    </div>
+                    
+                    <div class="register_small_ico_IFAFirm register_Selected">
+                        <a class="register_ico_62 Small_unchoice" href="javascript:;" data-type="IFA Firm">
+                            <span class="Small_Selected"><img src="${base}/res/images/register/register_ico4_13.png" width="62" height="62" alt=""/></span>
+                            <span  class="Small_Unchecked"><img src="${base}/res/images/register/register_ico3_13.png" width="62" height="62" alt=""/></span>                                                           
+                        </a>
+                        <div>[@lang_res k='member.register.ifafirm'/]</div>
+                    </div>
+                </div>
+                <div class="register_big_ico register_unChoice Small_unchoice" data-type="Distributor" sub_type="3">
+                    <a class="register_ico_140 register_Unchecked" href="javascript:;">
+                        <span><img style="cursor:default;" src="${base}/res/images/register/register_ico1_07.png" width="140" height="140" alt=""/></span>
+                    </a>
+                    <a class="register_ico_140 register_Selected" href="javascript:;">
+                        <span><img src="${base}/res/images/register/register_ico2_07.png" width="140" height="140" alt=""/></span>
+                    </a>
+                    <div>[@lang_res k='member.register.distributor'/]</div>
+                </div>                 
+            </div>
+            <input type="hidden" value="" id="member_type">
+            <input type="hidden" value="" id="sub_type">
+            <div class="btn_next_div">
+                <!--<a class="btn_previous" href="JavaScript:history.go(-1)">[@lang_res k='member.register.previous'/]</a>-->
+                <a id="btn_next" class="btn_next" href="javascript:;">[@lang_res k='member.register.next'/]</a>
+            </div>
+            <div class="clear"></div>
+       </div> 
+    </div>
+</div>
+    [#include "../../inc/foot_v2.html"/] 
+    <script type="text/javascript">
+        seajs.use('${base}/res/web/member/regist/registration.js');
+    </script>

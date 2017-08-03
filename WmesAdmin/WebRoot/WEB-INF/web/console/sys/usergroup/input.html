@@ -1,0 +1,540 @@
+
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>[#if usergrouvo?exists && usergrouvo.id?exists] [@lang_res k='usergroup.detail'/] [#else] [@lang_res k='usergroup.add'/] [/#if]</title>
+		<link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+		<link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+	</head>
+
+	<body>
+		<!-- header -->
+
+		<div class="container-fluid pd0" id="wmes_wraper">
+			<!--<div class="right-side container-fluid">
+				<div class="r-side-container">-->
+			<div style="padding-left: 20px; padding-right: 20px;">
+				<ul class="tab" id="dialog_tab-search">
+
+					[#if usergrouvo?exists && usergrouvo.id?exists]
+					<li>
+						<a href="javascript:;"> [@lang_res k='usergroup.detail'/] </a>
+					</li>
+					<li class="tab-li-crr">
+						<a href="javascript:;" onclick="javascript:bindRoleUser(0);">[@lang_res k='usergroup.info.userinfo'/]</a>
+					</li>
+					[#else]
+					<li class="tab-li-crr">
+						<a href="javascript:;"> [@lang_res k='usergroup.detail'/] </a>
+					</li>
+					<li style="display: none">
+						<a href="javascript:;" onclick="javascript:bindRoleUser(0);">[@lang_res k='usergroup.info.userinfo'/]</a>
+					</li>
+					[/#if]
+				</ul>
+				<div class="tab_wrap dialog_tab_wrap">
+					[#if usergrouvo?exists && usergrouvo.id?exists]
+					<form class="form-horizontal" id="frm" method="post" style="display: none">
+						[#else]
+						<form class="form-horizontal" id="frm" method="post">
+							[/#if]
+							<input type="hidden" id="id" name="id" value="${(usergrouvo.id)?if_exists}">
+							<div class="form-group">
+								<div class="col-sm-3 text-right">
+									<label for="txtName" class="label-control">
+										[@lang_res k='usergroup.info.name'/]
+									</label>
+								</div>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="txtName" name="name" value="${(usergrouvo.name)?if_exists}">
+								</div>
+							</div>
+							<!--如果是系统管理员则可以新增其他类型的用户组-->
+							[#if curMember?exists && curMember.id?exists && curMember.memberType==0]
+							<div class="form-group">
+								<div class="col-sm-3 text-right">
+									<label for="txtType" class="label-control">
+										[@lang_res k='usergroup.info.type'/]
+									</label>
+								</div>
+								<div class="col-sm-7">
+									<select id="ddlGroupType" class="form-control" name="type" value="${(usergrouvo.type)?if_exists}">
+										<option value="">
+											[@lang_res k='global.pleaseSelect'/]
+										</option>
+										<option value="0" [#if usergrouvo?exists&&usergrouvo.type?exists&&usergrouvo.type=="0"]selected[/#if]>
+											[@lang_res k='usergroup.info.type.system'/]
+										</option>
+										<option value="1" [#if usergrouvo?exists&&usergrouvo.type?exists&&usergrouvo.type=="1"]selected[/#if]>
+											[@lang_res k='usergroup.info.type.ifafirm'/]
+										</option>
+										<option value="2" [#if usergrouvo?exists&&usergrouvo.type?exists&&usergrouvo.type=="2"]selected[/#if]>
+											[@lang_res k='usergroup.info.type.distributor'/]
+										</option>
+									</select>
+								</div>
+							</div>
+							[#if usergrouvo?exists&&usergrouvo.type?exists&&usergrouvo.type=="1"]
+							<div class="form-group" id="divIfafirm">
+								[#else]
+								<div class="form-group" id="divIfafirm" style="display: none">
+									[/#if]
+									<div class="col-sm-3 text-right">
+										<label for="txtType" class="label-control">
+											[@lang_res k='member.admin.company'/]
+										</label>
+									</div>
+									<div class="col-sm-7">
+										<select id="ddlIfaFirm" class="form-control" name="ifafirmId" value="${(adminVo.ifafirmId)?if_exists}">
+											<option value="">
+												[@lang_res k='global.pleaseSelect'/]
+											</option>
+											[#if ifafirmlist?exists && ifafirmlist?size gt 0] [#list ifafirmlist as ifafirm]
+											<option value="${ifafirm.id}" [#if usergrouvo?exists&usergrouvo.relateId?exists&&usergrouvo.relateId==ifafirm.id]selected[/#if]>
+												${(ifafirm.companyName)?if_exists}
+											</option>
+											[/#list] [/#if]
+										</select>
+									</div>
+								</div>
+
+								[#if usergrouvo?exists&&usergrouvo.type?exists&&usergrouvo.type=="2"]
+								<div class="form-group" id="divDistributor">
+									[#else]
+									<div class="form-group" id="divDistributor" style="display: none">
+										[/#if]
+										<div class="col-sm-3 text-right">
+											<label for="txtType" class="label-control">
+												[@lang_res k='member.admin.company'/]
+											</label>
+										</div>
+										<div class="col-sm-7">
+											<select id="ddlDistributor" class="form-control" name="distributorId" value="${(adminVo.distributorId)?if_exists}">
+												<option value="">
+													[@lang_res k='global.pleaseSelect'/]
+												</option>
+												[#if distributorList?exists && distributorList?size gt 0] [#list distributorList as dis]
+												<option value="${dis.id}" [#if usergrouvo?exists&&usergrouvo.relateId?exists&&usergrouvo.relateId==dis.id]selected[/#if]>
+													${dis.companyName?if_exists}
+												</option>
+												[/#list] [/#if]
+											</select>
+										</div>
+									</div>
+									[/#if] [#if usergrouvo?exists && usergrouvo.id?exists]
+									<div class="form-group">
+										<div class="col-sm-3 text-right">
+											<label for="txtCreateBy" class="label-control">
+												[@lang_res k='usergroup.info.createBy'/]
+											</label>
+										</div>
+										<div class="col-sm-7">
+											<input rows="4" id="txtCreateBy" readonly="readonly" class="form-control" name="loginCode" value="${(usergrouvo.createBy.nickName)?if_exists}">
+										</div>
+									</div>
+									[/#if]
+									<div class="form-group">
+										<div class="col-sm-3 text-right">
+											<label for="txtRemark" class="label-control">
+												[@lang_res k='usergroup.info.remark'/]
+											</label>
+										</div>
+										<div class="col-sm-7">
+											<textarea rows="4" id="txtRemark" class="form-control" name="remark">${(usergrouvo.remark)?if_exists}</textarea>
+										</div>
+									</div>
+
+									<div class="text-center pd10">
+										<button id="btnSave" type="submit" class="btn btn-primary">
+											[@lang_res k='global.save'/]
+										</button>
+
+									</div>
+						</form>
+						[#if usergrouvo?exists && usergrouvo.id?exists]
+						<div class="form-inline divUser">
+							[#else]
+							<div class="form-inline divUser" style="display: none;">
+								[/#if]
+								<div>
+									<div class="row pd10">
+										<div class="col-sm-5">
+											<label for="s-1">
+												[@lang_res k='member.list.keyword'/]
+											</label>
+											<input id='txtkeyword1' type="text" class="form-control" id="s-1">
+										</div>
+
+										<div class="col-sm-5">
+											<button type="button" class="btn btn-primary" id="btnSearch1">
+												 [@lang_res k='global.query'/]
+											</button>
+										</div>
+									</div>
+									<div class="clear"></div>
+									<div class="pdt20">
+										<a href="#" id="btnAdd" class="btn-blue-s">[@lang_res k='global.add'/]</a>
+										<!--<a href="#" id="btnAdd" class="btn-blue-s" onclick="javascript:history.go(-1);">[@lang_res k='global.back'/]</a>
+
+									-->
+									</div>
+									<div>
+										<table id="userlist" border="0" cellpadding="0" cellspacing="0" class="table table-hover table-striped">
+											<thead>
+												<tr>
+													<th class="table-head">
+														[@lang_res k='member.info.loginCode'/]
+													</th>
+													<th class="table-head">
+														[@lang_res k='member.info.nickName'/]
+													</th>
+													<th class="table-head">
+														[@lang_res k='member.info.email'/]
+													</th>
+													<th class="table-head">
+														[@lang_res k='member.info.memberType'/]
+													</th>
+													<th class="table-head">
+														[@lang_res k='global.operate'/]
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+
+											</tbody>
+										</table>
+										<ul id='userPagination' class="pagination pull-right now">
+
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="clear">
+						</div>
+				</div>
+			</div>
+
+
+
+		</div>
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+		<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+		<script src="${base}/res/third/bootstrap/js/bootstrapValidator.js"></script>
+		<script src="${base}/res/console/js/jquery.form.js"></script>
+		<script src="${base}/res/console/js/jquery.pagination.js"></script>
+		<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+		<script src="${base}/res/third/layer/layer_v2.js"></script>
+		<script>
+	$(function() {
+	    
+	     //弹出选项窗体
+		//tab
+	    $("#dialog_tab-search li").click(function(){
+			 $(this).addClass("tab-li-crr").siblings().removeClass();
+			 $(".dialog_tab_wrap").children().hide().eq($(this).index()).show()
+		 });
+	    
+		$("#frm").bootstrapValidator({
+			feedbackIcons : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			fields : {
+				name : {
+					message : '用户组名称还没有验证',
+					validators : {
+						notEmpty : {
+							message : '用户组名称不能为空'
+						},
+						callback : {
+							message : '用户组名称已被使用',
+							callback : function(value, validate) {
+								var url = "${base}/console/sys/usergroup/checkName.do?datestr=" + new Date().getTime() + "&name=" + encodeURI(encodeURI(value)) + "&id=" + encodeURI(encodeURI($("#id").val()));
+								var res = true;
+								/*if ($("#txtLoginCode").val() != value
+										&& "" != value) {*/
+								$.ajax({
+									url : url,
+									method : 'post',
+									dataType : 'json',
+									async : false,
+									success : function(data) {
+										res = data.result;
+									},
+									error : function() {
+									}
+								});
+								//}
+								return res;
+							}
+						}
+					}
+				},
+				ifafirmId : {
+					validators : {
+						callback : {
+							message : '请选择所属公司',
+							callback : function(value, validate) {
+								var type = $("#ddlGroupType").val();
+								if (type == "1" && (value == undefined || value == "")) {
+									return false;
+								}
+								return true;
+							}
+						}
+					}
+				},
+				distributorId : {
+					validators : {
+						callback : {
+							message : '请选择所属公司',
+							callback : function(value, validate) {
+								var type = $("#ddlGroupType").val();
+								if (type == "2" && (value == undefined || value == "")) {
+									return false;
+								}
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}).on('success.form.bv', function(e) {
+			e.preventDefault();
+			//alert('valid ok');
+			Save();
+		});
+
+		bindRoleUser(0);
+		$("#btnSearch1").bind("click", function() {
+		
+			bindRoleUser(0);
+		})
+		
+		  $("#ddlGroupType").bind("change", function() {
+			var type = $("#ddlGroupType").val();
+			if (type == "1") {
+				$("#divIfafirm").css("display", "");
+				$("#divDistributor").css("display", "none");
+			} else if (type == "2") {
+				$("#divDistributor").css("display", "");
+				$("#divIfafirm").css("display", "none");
+			} else {
+				$("#divIfafirm").css("display", "none");
+				$("#divDistributor").css("display", "none");
+			}
+			$("#frm").data('bootstrapValidator').updateStatus("ifafirmId","NOT_VALIDATED");
+			$("#frm").data('bootstrapValidator').updateStatus("distributorId","NOT_VALIDATED");
+		})
+
+		$("#btnAdd").bind("click", function() {
+			// window.location.href = '${base}/console/sys/role/dialogMember.do?id='+$("#id").val();
+
+			BootstrapDialog.show({
+				title : '[@lang_res k='usergroup.info.selectUser'/]',
+				cssClass : 'login-dialog',
+				type : BootstrapDialog.TYPE_PRIMARY,
+				size : BootstrapDialog.SIZE_WIDE,
+				draggable : true,
+				message : $('<div></div>').load('dialogMember.do?procedureid='),
+				buttons : [ {
+					label : '[@lang_res k='global.confirm'/]',
+					cssClass : 'btn-primary',
+					action : function(dialogItself) {
+
+						var ids = "";
+						var selected = $("#userdatalist").find(":checkbox:checked");
+						if (selected == undefined || selected.length == 0) {
+							layer.alert('[@lang_res k='usergroup.info.selectUser'/]', {
+								icon : 0
+							});
+							return;
+						} else {
+							$.each(selected, function(i, n) {
+								var id = $(n).attr("userid");
+								ids += id + ",";
+							});
+							$.ajax({
+								type : 'post',
+								datatype : 'json',
+								url : "${base}/console/sys/usergroup/saveUser.do",
+								data : {
+									id : $("#id").val(),
+									userIds : ids
+								},
+								success : function(json) {
+									if (json.result) {
+									bindRoleUser(0);
+										layer.msg("[@lang_res k='global.success.save'/]",{icon:1,time:1000})
+									} else {
+										layer.msg("[@lang_res k='global.failed.save'/]",{icon:5,time:1000});
+									}
+								}
+							})
+						}
+						bindRoleUser(0);
+
+						dialogItself.close();
+					}
+				}, {
+					label : '[@lang_res k='global.close'/]',
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
+		})
+	});
+	function Save() {
+	var params = $("#frm").serialize();
+		params = decodeURIComponent(params,true);
+	$.ajax({
+	  type:'post',
+	  datatype:'json',
+	  url: "${base}/console/sys/usergroup/save.do?datestr=" + new Date().getTime(),
+	  data:{postData:params},
+	  success:function(data){
+	  
+				if (data.result) {
+				    layer.msg("[@lang_res k='global.success.save'/]", {
+						icon : 1,
+						time : 1000
+					});
+					$("#id").val(data.id);
+					$("#dialog_tab-search li:eq(0)").removeClass("tab-li-crr");
+					$("#dialog_tab-search li:eq(0)").css("display","");
+					$("#dialog_tab-search li:eq(1)").addClass("tab-li-crr");
+					$("#dialog_tab-search li:eq(1)").css("display","");
+					$("#dialog_tab-search li:eq(2)").css("display","");
+					$("#frm").css("display","none");
+					$(".divUser").css("display","");
+					$("#btnSave").removeAttr("disabled");
+	  }
+	  }
+	});
+		/*$("#frm").ajaxSubmit({
+			url : "${base}/console/sys/usergroup/save.do?datestr=" + new Date().getTime(),
+			iframe : true,
+			success : function(data, status) {
+				var dataObj = $.parseJSON(data.replace(/<.*?>/ig, ""));
+				if (dataObj.result) {
+				    layer.msg("[@lang_res k='global.success.save'/]", {
+						icon : 1,
+						time : 1000
+					});
+					$("#id").val(dataObj.id);
+					$("#dialog_tab-search li:eq(0)").removeClass("tab-li-crr");
+					$("#dialog_tab-search li:eq(0)").css("display","");
+					$("#dialog_tab-search li:eq(1)").addClass("tab-li-crr");
+					$("#dialog_tab-search li:eq(1)").css("display","");
+					$("#dialog_tab-search li:eq(2)").css("display","");
+					$("#frm").css("display","none");
+					$(".divUser").css("display","");
+					$("#btnSave").removeAttr("disabled");
+					//window.location.href = "${base}/console/sys/usergroup/detail.do?id="+dataObj.id;
+				} else {
+					$('#contact-form-error').show().fadeOut(10000);
+				}
+			},
+			error : function() {
+				$('#contact-form-error').show().fadeOut(10000);
+			}
+		});*/
+	}
+//按下回车键搜索
+	document.onkeydown = function(e) {
+		var ev = document.all ? window.event : e;
+		if (ev.keyCode == 13) {
+			bindRoleUser(0);
+		}
+	}
+	function bindRoleUser(curPage) {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : '${base}/console/sys/usergroup/groupMember.do?datestr=' + new Date().getTime(),
+			data : {
+				'keyword' : $("#txtkeyword1").val(),
+				'id' : $("#id").val(),
+				'page' : curPage + 1,
+				'rows' : 10,
+				'sort' : '',
+				'order' : ''
+			},
+			success : function(json) {
+				var html = "";
+				var total = json.total;
+				var table = json.rows;
+				$.each(table, function(i, n) {
+				var type=n[0].memberType;
+				var typeValue="";
+				if(type==0){ 
+				
+				 typeValue="[@lang_res k='member.info.memberType.platform'/]";
+				}else if(type==1){
+				 typeValue="[@lang_res k='member.info.memberType.inverstor'/]";
+				}else if(type==2){
+				 typeValue="[@lang_res k='member.info.memberType.ifa'/]";
+				}
+				else if(type=="3"){
+				 typeValue="[@lang_res k='member.info.memberType.distributor'/]";
+				}
+					html += "<tr><td><a href='${base}/console/sys/usergroup/detail.do?id=" + n[0].loginCode + "'>" + n[0].loginCode + "</td><td>" + n[0].nickName + "</td><td>" + n[0].email + "</td><td>" +typeValue + "</td><td><a href='#' onclick='javascript:deleteUser(\"" + n[0].id + "\");'>[@lang_res  k='global.delete'/]<a/>&nbsp;&nbsp;</td></tr>";
+				});
+				$("#userlist tbody").empty().append(html);
+
+				$("#userPagination").pagination(total, {
+					callback : pageselectCallback,
+					numDetail : '',
+					items_per_page : 10,
+					num_display_entries : 4,
+					current_page : curPage,
+					num_edge_entries : 2
+				});
+			}
+		});
+		function pageselectCallback(page_id, jq) {
+			bindRoleUser(page_id);
+		}
+	}
+	
+	function deleteUser(memberId){
+	layer.confirm("[@lang_res k='global.confirm.delete'/]", 
+	{title:"[@lang_res k='global.prompt'/]", 
+	icon: 3,
+	btn: ["[@lang_res k='global.confirm'/]","[@lang_res k='global.cancel'/]"]},
+	function (){
+	 $.ajax({
+	   type:'post',
+	   datatype:'json',
+	   url:"${base}/console/sys/usergroup/deleteUser.do?",
+	   data:{roleId:$("#id").val(),memberId:memberId},
+	   success:function(json){
+	   layer.closeAll();
+	    if(json.result){
+	    layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.success'/]",{title:"[@lang_res k='global.prompt'/]",icon:1,time:1000});
+	    bindRoleUser(0);
+	    }else{
+	    layer.msg("[@lang_res k='global.delete'/] [@lang_res k='global.failed'/]",{title:"[@lang_res k='global.prompt'/]",icon:5,time:1000});
+	    }
+	   
+	   }
+	   })
+	});
+	}
+</script>
+	</body>
+</html>

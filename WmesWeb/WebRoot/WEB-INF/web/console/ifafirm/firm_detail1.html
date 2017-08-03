@@ -1,0 +1,374 @@
+[#include "../../inc/head_v2.html"/]
+<style>
+	.ifa_pagint_now span {
+		color: black;
+	}
+	
+	.page_left {
+		background:rgba(0, 0, 0, 0) url("${base}/res/images/ifa/left_ico.png") no-repeat scroll 0 0;
+		width: 62px;
+		height: 62px;
+		position: absolute;
+		cursor: pointer;
+		font-size: 30px;
+		text-align: center;
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+		background-color: #ccc;
+		color: white;
+		line-height: 62px;
+		border-radius: 10%;
+		margin: auto;
+		left: 0px;
+		top: 300px;
+		bottom: 0;
+	}
+	
+	.page_left:hover {
+		background-color: #4ba6de;
+	}
+	
+	.page_right {
+		background:rgba(0,
+		0,
+		0,
+		0) url("${base}/res/images/ifa/right_ico.png") no-repeat scroll 0 0;
+		width: 62px;
+		height: 62px;
+		position: absolute;
+		font-size: 30px;
+		text-align: center;
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+		background-color: #ccc;
+		color: white;
+		line-height: 62px;
+		cursor: pointer;
+		border-radius: 10%;
+		margin: auto;
+		right: 1px;
+		top: 300px;
+		bottom: 0;
+	}
+	
+	.page_right:hover {
+		background-color: #4ba6de;
+	}
+</style>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/wmes_console.css">
+<link rel="stylesheet" href="${base}/res/css/wmesupload.css"> 
+<div class="wmes-content">
+	<div class="ifa_choose_condition">
+		<div class="wmes-wrap-title" style="height:16px;">
+			<p>[@lang_res k='console.ifafirm.detail.title'/]</p>
+		</div>
+		<ul class="builder-tab application-information-tab">
+			<li class="tab-active">[@lang_res k='console.ifafirm.detail.tab.title'/]<span></span></li>
+			<li>[@lang_res k='console.ifafirm.detail.tab.distributor'/]<span></span></li>
+		</ul>
+		<div class="AccountInfo">
+			<!-- <p>Account Info</p>  -->
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+				<tbody>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">
+							[@lang_res k='console.ifafirm.detail.form.label.companyName'/]
+							</span>
+						</td>
+						<td class="register_table_right">
+							<input id="hidIfaFirmId" type="hidden" value="${(ifafirm.id)?if_exists}">						
+							<input class="register_input" id="companyNameSc" name="companyNameSc" type="text" 
+							value="${(ifafirm.companyNameSc)?if_exists}" maxlength="20" data-prompt-position="inline" data-prompt-target="nameScError">
+							<span id="nameScError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.companyName'/](繁体)</span>
+						</td>
+						<td>
+							<input class="register_input" id="companyNameTc" name="companyNameTc" type="text" 
+							value="${(ifafirm.companyNameTc)?if_exists}" maxlength="20" data-prompt-position="inline" data-prompt-target="nameTcError">
+							<span id="nameTcError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.companyName'/](英文)</span>
+						</td>
+						<td>
+							<input class="register_input" id="companyNameEn" name="companyNameEn" type="text" 
+							value="${(ifafirm.companyNameEn)?if_exists}" maxlength="20" data-prompt-position="inline" data-prompt-target="nameEnError">
+							<span id="nameEnError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.entityType'/]</span>
+						</td>						
+						<td>
+							<select id="entityType"  class="register_input">
+										<option value='1'>
+											[@lang_res k='console.ifafirm.detail.form.select.entityType.1'/]
+										</option>
+										<option value='2'>
+											[@lang_res k='console.ifafirm.detail.form.select.entityType.2'/]
+										</option>
+										<option value='3'>
+											[@lang_res k='console.ifafirm.detail.form.select.entityType.3'/]
+										</option>
+										<option value='4'>
+											[@lang_res k='console.ifafirm.detail.form.select.entityType.4'/]
+										</option>
+										<option value='5'>
+											[@lang_res k='console.ifafirm.detail.form.select.entityType.5'/]
+										</option>
+									</select>
+							<span id="entityTypeError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.registerNo'/]</span>
+						</td>
+						<td>
+							<input class="register_input" id="registerNo" name="registerNo" type="text" 
+							value="${(ifafirm.registerNo)?if_exists}" maxlength="20" data-prompt-position="inline" data-prompt-target="registerNoError">
+							<span id="registerNoError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.isFinancial'/]</span>
+						</td>
+						<td>
+									<select id="isFinancial"  class="register_input">
+										<option value='1'>
+											[@lang_res k='global.true'/]
+										</option>
+										<option value='0'>
+											[@lang_res k='global.false'/]
+										</option>
+									</select>
+									<span id="isFinancialError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.giin'/]</span>
+						</td>
+						<td>
+							<input class="register_input" id="giin" name="giin" type="text" 
+							value="${(ifafirm.giin)?if_exists}" maxlength="20" data-prompt-position="inline" data-prompt-target="giinError">
+							<span id="giinError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.naturePurpose'/]</span>
+						</td>
+						<td>
+							<input class="register_input" id="naturePurpose" name="naturePurpose" type="text" 
+							value="${(ifafirm.naturePurpose)?if_exists}" maxlength="20" data-prompt-position="inline" data-prompt-target="naturePurposeError">
+							<span id="naturePurposeError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.incorporationDate'/]</span>
+						</td>
+						<td>
+							<input id='incorporationDate' type="text" 
+								        class="register_input laydate-icon form-control form-control-laydate" 
+								        onclick="laydate({istime: false, format: 'YYYY-MM-DD'})" name="born" value="${(ifafirm.incorporationDate)?if_exists}">
+							<span id="incorporationDateError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.incorporationPlace'/]</span>
+						</td>
+						<td>
+							<select id="incorporationPlace"  class="register_input">
+							[#if countryList?exists && countryList?size gt 0] [#list countryList as tp]
+										<option value="${tp.code}" [#if ifafirm.incorporationPlace?exists&&ifafirm.incorporationPlace==tp.code]selected[/#if]>${tp.name}</option>
+										[/#list] [/#if]
+							</select>
+							<span id="incorporationPlaceError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.registeredAddress'/]</span>
+						</td>
+						<td>
+							<input class="register_input" id="registeredAddress" name="registeredAddress" type="text" 
+							value="${(ifafirm.registeredAddress)?if_exists}" maxlength="200" data-prompt-position="inline" data-prompt-target="registeredAddressError">
+							<span id="registeredAddressError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.mailingAddress'/]</span>
+						</td>
+						<td>
+							<input class="register_input" id="mailingAddress" name="mailingAddress" type="text" 
+							value="${(ifafirm.mailingAddress)?if_exists}" maxlength="200" data-prompt-position="inline" data-prompt-target="mailingAddressError">
+							<span id="mailingAddressError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.country'/]</span>
+						</td>
+						<td>							
+						    <select id="country"  class="register_input">
+						    [#if countryList?exists && countryList?size gt 0] [#list countryList as tp]
+										<option value="${tp.code}" [#if ifafirm.country?exists&&ifafirm.country==tp.code]selected[/#if]>${tp.name}</option>
+										[/#list] [/#if]
+							</select>
+							<span id="countryError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.website'/]</span>
+						</td>
+						<td>
+							<input class="register_input" id="website" name="website" type="text" 
+							value="${(ifafirm.website)?if_exists}" maxlength="200" data-prompt-position="inline" data-prompt-target="websiteError">
+							<span id="websiteError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.approveMode'/]</span>
+						</td>
+						<td>
+							<select id="superCheckType"  class="register_input">
+								<option value='2'>
+									[@lang_res k='console.ifafirm.detail.form.select.approveMode.2'/]
+								</option>
+								<option value='3'>
+									[@lang_res k='console.ifafirm.detail.form.select.approveMode.3'/]
+								</option>
+								<option value='1'>
+									[@lang_res k='console.ifafirm.detail.form.select.approveMode.1'/]
+								</option>										
+							</select>
+							<span id="naturePurposeError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">[@lang_res k='console.ifafirm.detail.form.label.companyLogo'/]</span>
+						</td>
+						<td>
+							<!-- 
+							<img id="firmLogo" width="180" height="150" alt="logo" src="">
+								<div id="changeDiv" style="display:none;">
+									<input id="changeLogo" type="file" class="projectfile" multiple="multiple"/>
+								</div>
+								<a id="change" href="javascript:changeLogo()"><b>Change...</b></a>
+							 -->
+							<div class="upload-box upload-album"></div>
+		      				<div class="photo-list" imgText="{{ifafirm.firmLogo}}"><ul></ul></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<ul class="ifa_btn">
+				<a class="ifa_save" id="saveFirmInfo">[@lang_res k='global.save'/]</a>
+			</ul>
+
+		</div>
+		<div style="display:none;">
+			<!-- <p>Account Info</p>  -->
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="register_table">
+				<tbody>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">Nick Name ：</span>
+						</td>
+						<td>
+							<input class="register_input" type="text" name="nickName" maxlength="20">
+						</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top" class="register_table_left">
+							<span class="font_gray_left">Email：</span>
+						</td>
+						<td>
+							<input class="register_input" name="email" id="email" type="text" maxlength="30" data-prompt-position="inline" data-prompt-target="emailError">
+							<span id="emailError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">Mobile：</span>
+						</td>
+						<td>
+							<span>+</span>
+							<input class="register_input phone_code" type="text" style="width:108px;" id="regPhoneCode" name="mobileCode">
+							<input class="register_input_217" type="text" id="regPhoneKey" name="mobileNumber" data-prompt-position="inline" data-prompt-target="moblieError">
+							<input class="register_input_217" type="hidden" name="mobile" id="FiraPhone">
+							<span id="mobileError"></span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">Currency：</span>
+						</td>
+						<td>
+							<select class="register_input">
+								<option>&lt;--Please Select--&gt;</option>
+								<option>USD</option>
+								<option>CNY</option>
+								<option>HKD</option>
+								<option>JPY</option>
+								<option>EUR</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">Language：</span>
+						</td>
+						<td>
+							<select class="register_input">
+								<option>&lt;--Please Select--&gt;</option>
+								<option>English</option>
+								<option>简体中文</option>
+								<option>繁體中文</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" class="register_table_left">
+							<span class="font_gray_left">Status：</span>
+						</td>
+						<td style="padding-top:8px;">
+							<span style="color:blue;margin-top:8px;cursor: pointer;">草稿</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<ul class="ifa_btn">
+				<a class="ifa_save">保存</a>
+				<a class="ifa_startUsing">启用</a>
+				<a class="ifa_stopUsing">停用</a>
+				<a class="ifa_return">返回</a>
+			</ul>
+
+		</div>
+
+	</div>
+
+</div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('${base}/res/console/web/ifafirm/firmDetail.js');
+</script>

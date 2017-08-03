@@ -1,0 +1,53 @@
+[#include "../../inc/head_v2.html"/]
+<style type="text/css">
+    .stepThree-rows{background-color: white;    margin-top: -3px;}
+</style>
+    <link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">
+    <div class="wmes-top">
+        <a href="javascript:;" class="header-over">Create Portfolio</a>
+    </div>
+    <div class="wmes-content">
+        <img src="${base}/res/images/allimg/transaction/t01.png" style="width:100%;">
+        <div class="stepThree-rows">
+                <ul class="builder-tab">
+                    <li class="tab-active">Performance Chart<span></span></li>
+                    <li>Allocation Map<span></span></li>
+                    <li>Risk Analysis<span></span></li>
+                </ul>
+                <div class="builder-main-contents">
+                    <div class="builder-chart" style="display:block">
+                        <ul class="builder-chart-tab">
+                            <li class="tab-active">Aggregate</li>
+                            <li>Individual</li>
+                        </ul>
+                        <div class="builder-chart-wrap">
+                            <img src="${base}/res/images/allimg/transaction/t01_01.png" style="width:100%;">
+                            <img style="display:none;" src="${base}/res/images/allimg/transaction/t01_02.png" style="width:100%;">
+                        </div>
+                    </div>
+                    <div class="allocation-map">
+                        <img src="${base}/res/images/allimg/transaction/t02_01.png" style="width:100%;">
+                    </div>
+                    <div class="risk-analysis">
+                        <img src="${base}/res/images/allimg/transaction/t03_01.png" style="width:100%;">
+                    </div>
+                </div>
+             <a href="${base}/front/strategy/info/transactionTwo.do">
+                <img src="${base}/res/images/allimg/transaction/t02.png" style="width:100%;">
+            </a>   
+        </div>
+        
+    </div>
+[#include "../../inc/foot_v2.html"/]
+<script type="text/javascript">
+	seajs.use('jquery', function($){
+        $(".builder-tab li").on("click",function(){
+            $(this).siblings().removeClass("tab-active").end().addClass("tab-active");
+            $(".builder-main-contents > div").hide().eq($(this).index()).show();
+        });
+        $(".builder-chart-tab li").on("click",function(){
+            $(this).siblings().removeClass("tab-active").end().addClass("tab-active");
+            $(".builder-chart-wrap > img").hide().eq($(this).index()).show();
+        });
+  	});
+</script>

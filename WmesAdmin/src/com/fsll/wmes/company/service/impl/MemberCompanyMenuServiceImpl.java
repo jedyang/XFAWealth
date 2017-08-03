@@ -1,0 +1,146 @@
+package com.fsll.wmes.company.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.fsll.common.base.service.BaseService;
+import com.fsll.common.util.StrUtils;
+import com.fsll.core.vo.MenuTreeVO;
+import com.fsll.wmes.company.service.MemberCompanyMenuService;
+import com.fsll.wmes.entity.CompanyInfo;
+import com.fsll.wmes.entity.MemberCompanyMenu;
+import com.fsll.wmes.entity.MemberMenu;
+import com.fsll.wmes.web.service.FrontMenuService;
+
+@Service("memberCompanyMenuService")
+public class MemberCompanyMenuServiceImpl extends BaseService implements MemberCompanyMenuService{
+
+	@Autowired
+	private FrontMenuService frontMenuService;
+	
+	/**
+	 * 菜单数据获取
+	 * @author wwluo
+	 * @date 2017-06-23
+	 * @param companyId company_info.id
+	 * @param roleCode member_role.code
+	 * @param langCode 多语言标识
+	 * @param MenuTreeVO 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MenuTreeVO> getMenus(String companyId, String roleCode,
+			String langCode) {
+		List<MenuTreeVO> vos = null;
+		StringBuffer hql = new StringBuffer(""
+				+ " SELECT"
+				+ " r.menu,c.company.id"
+				+ " FROM"
+				+ " MemberRoleMenu r"
+				+ " LEFT JOIN"
+				+ " MemberCompanyMenu c"
+				+ " ON"
+				+ " r.menu.id=c.menu.id"
+				+ " AND"
+				+ " c.company.id=?"
+				+ " LEFT JOIN"
+				+ " MemberRole m"
+				+ " ON"
+				+ " m.id=r.role.id"
+				+ " WHERE 1=1"
+				+ "");
+		List<Object> params = new ArrayList<Object>();
+		params.add(companyId);
+		if (StringUtils.isNotBlank(roleCode)) {
+			hql.append(" AND m.code=?");
+			params.add(roleCode);
+		}
+		List<Object[]> objects = this.baseDao.find(hql.toString(), params.toArray(), false);
+		if(objects != null && !objects.isEmpty()){
+			List<MemberMenu> validMenus = frontMenuService.getFrontMenus(roleCode);
+			vos = new ArrayList<MenuTreeVO>();
+			for (Object[] objs : objects) {
+				MemberMenu memberMenu = (MemberMenu) objs[0];
+				String hasCompanyId = (String) objs[1];
+				if(validMenus != null && !validMenus.isEmpty() 
+						&& !validMenus.contains(memberMenu)){
+						continue;
+				}
+				MenuTreeVO vo = new MenuTreeVO();
+				vo.setId(memberMenu.getId());
+				if(memberMenu.getParent() != null){
+					vo.setpId(memberMenu.getParent().getId());
+				}
+				if (StringUtils.isNotBlank(hasCompanyId)) {
+					vo.setChecked(true);
+				}else{
+					vo.setChecked(false);
+				}
+				vo.setName(memberMenu.getMenuName(langCode));
+				vo.setOpen(true);
+				vos.add(vo);
+			}
+		}
+		return vos;
+	}
+
+	/**
+	 * 保存菜单权限
+	 * @author wwluo
+	 * @date 2017-06-23
+	 * @param companyId company_info.id
+	 * @param roleCode member_role.code
+	 * @param menuIds 菜单集合字符串
+	 */
+	@Override
+	public Boolean saveMenu(String companyId, String roleCode, String menuIds) {
+		Boolean flag = false;
+		if (StringUtils.isNotBlank(companyId) && StringUtils.isNotBlank(roleCode)) {
+			String hql = ""
+					+ " DELETE FROM"
+					+ " MemberCompanyMenu r"
+					+ " WHERE"
+					+ " r.company.id=?"
+					+ " AND"
+					+ " r.menu.id IN"
+					+ " (SELECT"
+					+ " m.menu.id"
+					+ " FROM"
+					+ " MemberRoleMenu m"
+					+ " LEFT JOIN"
+					+ " MemberRole mr"
+					+ " ON"
+					+ " mr.id=m.role.id"
+					+ " WHERE"
+					+ " mr.code=?"
+					+ " )";
+			List<String> params = new ArrayList<String>();
+			params.add(companyId);
+			params.add(roleCode);
+			baseDao.updateHql(hql, params.toArray());
+			if (StringUtils.isNotBlank(menuIds)) {
+				menuIds = StrUtils.reHeavy(menuIds);
+				if(menuIds.indexOf(",") > -1){
+					String[] Objs = menuIds.split(",");
+					for (String menuId : Objs) {
+						MemberCompanyMenu companyMenu = new MemberCompanyMenu();
+						MemberMenu menu = new MemberMenu();
+						menu.setId(menuId);
+						CompanyInfo info = new CompanyInfo();
+						info.setId(companyId);
+						companyMenu.setCompany(info);
+						companyMenu.setMenu(menu);
+						baseDao.create(companyMenu);
+					}
+				}
+			}
+			flag = true;
+		}
+		return flag;
+	}
+
+}

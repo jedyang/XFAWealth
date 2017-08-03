@@ -1,0 +1,111 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/wmes_console.css">
+<link href="${base}/res/console/css/pagination.css" rel="stylesheet">
+<style>
+.ifa_list_paging{text-align: center;}
+.ifa_list_paging > li{display: inline-block;}
+.ifa_pagint_some{}
+.ifa_pagint_num{cursor: pointer;width: 35px;height: 35px;line-height: 35px;background-color: white;border-radius: 50%;margin: 0px 1px;border: 1px solid #e4e4e4;}
+.ifa_pagint_now{background-color: #2d80ce;color: white;}
+.ifa_pagint_now a{color: white;}
+.no_list_tips{width:50%;margin:0 auto;display: none;text-align: center;}
+.notipswrap{display: inline-block;}
+.noResult{text-align: left;color: #00385a;height: 45px;margin: 80px auto 0;padding-left: 50px;}
+.noResultText{text-align:left;color: #00385a;margin: 20px auto 80px;}
+.ifa_list_more{background-color: #ebebeb;color: #999999;text-align: center;padding: 10px 0;margin-top: 20px;cursor: pointer;}
+.ifa_list_more:hover{color: #4f7395;box-shadow: 1px 4px 12px #ccc7c7;}
+</style>
+<div class="wmes-content">
+	<div class="ifa_choose_condition">
+		<div class="wmes-wrap-title" style="height:16px;">
+			<p>[@lang_res l=Session["_LANG_CODE_"] k='ifateam.title'/]</p>
+		</div>
+		<div class="ifa_manage-screencon">
+
+			<div class="ifateam-keyword-wrap">
+				<div class="ifateam_keyserach">
+					<input type="text" id="txtKeywords" placeholder="[@lang_res l=Session["_LANG_CODE_"] k='ifateam.placeholder'/]">
+					<span class="ifateam_search" id="searchKeyBtn"></span>
+				</div>
+			</div>
+			
+		</div>
+		
+		<ul class="ifa_btn" style="margin:0px;">
+			<!-- <a class="ifa_Addto" href="javascript:;">添加</a> -->
+			<!-- <a class="ifa_startUsing">启用</a>
+			<a class="ifa_stopUsing">停用</a>
+			<a class="ifa_returned">退回</a>
+			<a class="ifa_approve">审批</a> -->
+		</ul>
+		<table class="funds_search_information strategies_List" id="myifalist">
+			<tbody>
+				
+				<tr class="funds_tables_th">
+					<th class="funds_tables_header" width="15%">
+						[@lang_res l=Session["_LANG_CODE_"] k='ifateam.name'/]
+					</th>
+					<th class="funds_tables_header" width="20%">
+						[@lang_res l=Session["_LANG_CODE_"] k='ifateam.englishName'/]
+					</th>
+					<th class="funds_tables_header" width="15%">
+						[@lang_res l=Session["_LANG_CODE_"] k='ifateam.teamName'/]
+					</th>
+					<th class="funds_tables_header" width="15%">
+						[@lang_res l=Session["_LANG_CODE_"] k='ifateam.phoneNo'/]
+					</th>
+					<th class="funds_tables_header" width="15%">
+						[@lang_res l=Session["_LANG_CODE_"] k='ifateam.email'/]
+					</th>
+					<th class="funds_tables_header" width="10%">
+						[@lang_res l=Session["_LANG_CODE_"] k='ifateam.loginCode'/]
+					</th>
+					<th class="funds_tables_header" width="10%">
+						[@lang_res l=Session["_LANG_CODE_"] k='ifateam.nickName'/]
+					</th>
+				</tr>
+				<!-- <tr>
+					<td class="funds_search_tdcenter"><a href="${base}/front/ifa/info/ifaAdministration.do">赵晓聪</a></td>
+					<td class="funds_search_tdcenter">Xc Zhao</td>
+					<td class="funds_search_tdcenter">WMES</td>
+					<td class="funds_search_tdcenter">+852 9005 4421</td>
+					<td class="funds_search_tdcenter">xczhao@fsll.com</td>
+					<td class="funds_search_tdcenter">xczhao2016</td>
+					<td class="funds_search_tdcenter">Chung</td>
+				</tr>
+				<tr>
+					<td class="funds_search_tdcenter"><a href="${base}/front/ifa/info/ifaAdministration.do">何年希</a></td>
+					<td class="funds_search_tdcenter">Holiday</td>
+					<td class="funds_search_tdcenter">WMES</td>
+					<td class="funds_search_tdcenter">+852 1532 2158</td>
+					<td class="funds_search_tdcenter">Holiday@fsll.com</td>
+					<td class="funds_search_tdcenter">Holiday123</td>
+					<td class="funds_search_tdcenter">HolidayBB</td>
+				</tr>-->
+			</tbody>
+		</table>
+		 <ul id='pagination' class="wmes_list_paging">  </ul>
+		 <div class="no_list_tips">
+							<div class="notipswrap">
+								<div class="noResult" style="margin: 40px auto 0;">
+									[@lang_res k='ifateam.noresult'/]
+								</div>
+								
+							</div>
+						</div>
+		<!--  <ul class="wmes_list_paging">
+				<li class="wmes_pagint_num">1</li>
+				<li class="wmes_pagint_num">2</li>
+				<li class="wmes_pagint_num wmes_pagint_now">3</li>
+				<li class="wmes_pagint_some">...</li>
+				<li class="wmes_pagint_num">10</li>
+			</ul>-->
+		
+		
+	</div>
+
+</div>
+[#include "../inc/foot_v2.html"/]
+<script type="text/javascript">
+seajs.use('${base}/res/web/ifafirm/team/ifaMyTeamList.js');
+</script>

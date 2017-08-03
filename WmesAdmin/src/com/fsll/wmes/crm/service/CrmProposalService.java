@@ -1,0 +1,129 @@
+/**
+ * 
+ */
+package com.fsll.wmes.crm.service;
+
+import java.util.List;
+
+import com.fsll.common.util.JsonPaging;
+import com.fsll.wmes.crm.vo.CrmProposalVO;
+import com.fsll.wmes.entity.CrmProposal;
+import com.fsll.wmes.entity.MemberAdmin;
+import com.fsll.wmes.entity.PortfolioInfo;
+import com.fsll.wmes.entity.PortfolioInfoAip;
+import com.fsll.wmes.entity.PortfolioInfoProduct;
+
+/**
+ * 投资方案信息查询服务接口
+ * @author tan
+ * @date 2016-8-16
+ */
+public interface CrmProposalService {
+
+	/**
+	 * 获取列表
+	 * @author wwluo
+	 * @date 2017/6/6
+	 * @param jsonPaging
+	 * @param proposalVO
+	 * @param langCode 
+	 * @return jsonPaging
+	 */
+	public JsonPaging findAllProposal(JsonPaging jsonPaging,CrmProposalVO proposalVO, String langCode);
+	
+	/**
+	 * 获取内容信息
+	 * @param id
+	 * @return
+	 */
+	public CrmProposal findProposalById(String id);
+	
+	/**
+	 * 获取ifa管理的投资方案
+	 * @param jsonPaging
+	 * @param ifaMemberId
+	 * @param customerMemberId
+	 * @return
+	 */
+	public JsonPaging findProposalListForIfa(JsonPaging jsonPaging,String ifaMemberId, String customerMemberId);
+
+	/**
+	 * 删除投资方案（逻辑删除）
+	 * @author wwluo
+	 * @date 2016-09-18
+	 */
+	public boolean delProposal(String proposalId);
+
+	/**
+	 * 获取ifa的投资方案
+	 * @author wwluo
+	 * @param memberId 当前账号Id
+	 * @param investmentAmount 投资金额类型类型    S:Small M:Medium L:Large
+	 * @param period 期间
+	 * @param clientName 客户姓名
+	 * @param status 状态
+	 * @param objective 目的
+	 * @param keyWord 关键字
+	 * @date 2016-09-14
+	 */
+	public JsonPaging getProposal(JsonPaging jsonPaging, String memberId,
+			String investmentAmount, String period, String clientName,
+			String status, String objective, String keyWord);
+	
+	
+	/**
+	 * 新增投资方案
+	 * @author mqzou
+	 * @date 2016-09-29
+	 * @param crmProposal
+	 * @return
+	 */
+	public CrmProposal addCrmProposal(CrmProposal crmProposal);
+	
+	/**
+	 * 修改投资方案
+	 * @author mqzou
+	 * @date 2016-09-29
+	 * @param crmProposal
+	 * @return
+	 */
+	public CrmProposal updateCrmProposal(CrmProposal crmProposal);
+
+	/**
+	 * 根据方案查找组合
+	 * @author wwluo
+	 * @date 2016-09-29
+	 * @param crmProposal
+	 * @return
+	 */
+	public PortfolioInfo findPortfolioInfoByProposal(CrmProposal proposal);
+
+	/**
+	 * 创建方案时保存组合定投信息
+	 * @author wwluo
+	 * @date 2016-09-29
+	 * @param crmProposal
+	 * @return
+	 */
+	public PortfolioInfoAip saveAndUpdatePortfolioInfoAip(
+			PortfolioInfoAip portfolioInfoAip);
+
+	/**
+	 * 创建方案时保存组合产品信息
+	 * @author wwluo
+	 * @date 2016-09-29
+	 * @param crmProposal
+	 * @return
+	 */
+	public PortfolioInfoProduct saveAndUpdatePortfolioInfoProduct(
+			PortfolioInfoProduct portfolioInfoProduct);
+	
+	/**
+	 * 获取投资人的所有proposal
+	 * @author mqzou
+	 * @date 2016-10-21
+	 * @param memberId
+	 * @return
+	 */
+	public List findMyProposal(String memberId);
+}

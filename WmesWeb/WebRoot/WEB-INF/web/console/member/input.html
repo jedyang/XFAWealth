@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>${(title)?if_exists}</title>
+		<link href="${base}/res/console/css/bootstrap.css" rel="stylesheet">
+		<link href="${base}/res/console/css/css.css" rel="stylesheet">
+		<link href="${base}/res/console/css/font-awesome.min.css" rel="stylesheet">
+		<script src="${base}/res/console/js/jquery-1.11.2.min.js"></script>
+		<script src="${base}/res/console/js/jquery.form.js"></script>
+		<script src="${base}/res/console/js/bootstrap.js"></script>
+
+	</head>
+	<body>
+		<div class="container-fluid" id="box">
+			<div class="bg-white">
+				<!-- nva menu -->
+				<div class="w100per bg-white right-side" id="wmes_wraper">
+					<form id='frm' method='post'>
+						<input type="hidden" id="hidCountry" value="${(individualvo.country)?if_exists}">
+						<input type="hidden" id="hidNationality" value="${(individualvo.nationality)?if_exists}">
+						<input type="hidden" id="hidOccupation" value="${(individualvo.occupation)?if_exists}">
+						<input type="hidden" id="hidIndividualId" name="id" value="${(individualvo.id)?if_exists}">
+						<input type="hidden" id="hidCertType" name="id" value="${(individualvo.certType)?if_exists}">
+						<input type="hidden" id="hidGender" name="id" value="${(individualvo.gender)?if_exists}">
+						<div class="bg-white">
+							<div class="wems_title_wrap">
+								<p class="wems_title">
+									${(title)?if_exists}
+								</p>
+							</div>
+							<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0" class="form-table">
+								<tbody>
+									<tr>
+										<th width="150">
+											登录帐号
+										</th>
+										<td>
+											<input id='txtLoginCode' type="text" class="form-control form-input-w500px" name='loginCode' value="${(individualvo.loginCode)?if_exists}">
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											登录密码
+										</th>
+										<td>
+											<input id='txtPassword' type="text" class="form-control form-input-w500px" name='password' value="${(individualvo.password)?if_exists}">
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											邮箱
+										</th>
+										<td>
+											<input id='txtEmail' type="text" class="form-control form-input-w500px" name="email" value="${(individualvo.email)?if_exists}">
+										</td>
+									</tr>
+
+									<tr>
+										<th width="150">
+											手机号码
+										</th>
+										<td>
+											<input id='txtPhone' type="text" class="form-control form-input-w500px" name="mobileNumber" value="${(individualvo.mobileNumber)?if_exists}">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0" class="form-table">
+								<tbody>
+									<tr>
+										<th width="150">
+											姓
+										</th>
+										<td>
+											<input id="txtFirstName" type="text" class="form-control form-input-w500px" name="firstName" value="${(individualvo.firstName)?if_exists}">
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											名
+										</th>
+										<td>
+											<input id="txtLastName" type="text" class="form-control form-input-w500px" name="lastName" value="${(individualvo.lastName)?if_exists}">
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											中文姓名
+										</th>
+										<td>
+											<input id="txtChhName" type="text" class="form-control form-input-w500px" name="nameChn" value="${(individualvo.nameChn)?if_exists}">
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											别名
+										</th>
+										<td>
+											<input id="txtNickName" type="text" class="form-control form-input-w500px" name="nickName" value="${(individualvo.nickName)?if_exists}">
+										</td>
+									</tr>
+
+									<tr>
+										<th width="150">
+											出生国家
+										</th>
+										<td>
+											<select id="ddlCountry" class="form-control form-input-w500px" name="country" value="${(individualvo.country)?if_exists}">
+												<option value="">
+													请选择
+												</option>
+											</select>
+											<!--<input id='txtCountry' type="text" class="form-control form-input-w500px"  >-->
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											性别
+										</th>
+										<td>
+											<select id="ddlGender" class="form-control form-input-w500px" name="gender" value="${(individualvo.gender)?if_exists}">
+												<option selected="selected">
+													请选择
+												</option>
+												<option value="M">
+													男
+												</option>
+												<option value="F">
+													女
+												</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											出生日期
+										</th>
+										<td>
+											<input id='txtBirth' type="text" class="form-control form-input-w500px" name="born" value="${(individualvo.born)?if_exists}">
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											证件类型
+										</th>
+										<td>
+											<select id="ddlCertType" class="form-control form-input-w500px" name="certType" value="${(individualvo.certType)?if_exists}">
+												<option selected="selected">
+													请选择
+												</option>
+												<option value="1">
+													身份证
+												</option>
+												<option value="2">
+													护照
+												</option>
+											</select>
+
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											证件号码
+										</th>
+										<td>
+											<input id='txtCertNo' type="text" class="form-control form-input-w500px" name="certNo" value="${(individualvo.certNo)?if_exists}">
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											国籍
+										</th>
+										<td>
+											<select id="ddlNationality" name="nationality" class="form-control form-input-w500px" value="${(individualvo.nationality)?if_exists}">
+												<option value="">
+													请选择
+												</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											教育程度
+										</th>
+										<td>
+											<input id='txtEducation' type="text" class="form-control form-input-w500px" name="education" value="${(individualvo.education)?if_exists}">
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											就业情况
+										</th>
+										<td>
+											<input id='txtEmployment' type="text" class="form-control form-input-w500px" name="employment" value="${(individualvo.employment)?if_exists}">
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											职业
+										</th>
+										<td>
+											<select id="ddlOccupation" class="form-control form-input-w500px" name="occupation" value="${(individualvo.occupation)?if_exists}">
+												<option value="">
+													请选择
+												</option>
+											</select>
+
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											联系地址
+										</th>
+										<td>
+											<input id='txtAddress' type="text" class="form-control form-input-w500px" name="address" value="${(individualvo.address)?if_exists}">
+										</td>
+									</tr>
+									<tr>
+										<th width="150">
+											固定电话
+										</th>
+										<td>
+											<input id='txtTelephone' type="text" class="form-control form-input-w500px" name="telephone" value="${(individualvo.telephone)?if_exists}">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</form>
+					<div style="padding-left: 180px;">
+						<button id="btnSave" type="submit" class="btn btn-primary">
+							保存
+						</button>
+						<button id="btnBack" class="btn btn-primary" onclick="javascript:history.go(-1);">
+							返回
+						</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+	$(function() {
+		$("#btnSave").bind('click', Save);
+		bindCountry();
+		bindOccupation();
+
+		$("#ddlCertType").val($("#hidCertType").val());
+		$("#ddlGender").val($("#hidGender").val());
+	});
+	function Save() {
+		$("#frm")
+				.ajaxSubmit(
+						{
+							url : "${base}/console/individual/save.do?datestr="
+									+ new Date().getTime(),
+							iframe : true,
+							success : function(data, status) {
+
+								var dataObj = eval("(" + data + ")");
+								if (dataObj.result) {
+									window.location.href = "${base}/console/individual/list.do?datestr="
+											+ new Date().getTime();
+								} else {
+									$('#contact-form-error').show().fadeOut(
+											10000);
+								}
+							},
+							error : function() {
+								alder("失败");
+								$('#contact-form-error').show().fadeOut(10000);
+							}
+						});
+	}
+
+	function bindCountry() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/countryList.do?datestr="
+					+ new Date().getTime(),
+			data : {},
+			success : function(json) {
+				if (json != undefined && json.result == true) {
+					var data = JSON.parse(json.countryJson);
+					var html = "";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.id+"'>" + n.nameSC
+								+ "</option>"
+					});
+
+					$("#ddlCountry").append(html);
+					$("#ddlNationality").append(html);
+					$('#ddlCountry').val($('#hidCountry').val());
+					$('#ddlNationality').val($('#hidNationality').val());
+				}
+
+			}
+		})
+	}
+	function bindOccupation() {
+		$.ajax({
+			type : 'post',
+			datatype : 'json',
+			url : "${base}/console/occupationList.do?datestr="
+					+ new Date().getTime(),
+			data : {},
+			success : function(json) {
+				if (json != undefined && json.result == true) {
+					var data = JSON.parse(json.occupationJSON).list;
+					var html = "";
+					$.each(data, function(i, n) {
+						html += "<option value='"+n.configCode+"'>" + n.nameSC
+								+ "</option>"
+					});
+
+					$("#ddlOccupation").append(html);
+					$("#ddlOccupation").val($("#hidOccupation").val());
+				}
+
+			}
+		})
+	}
+</script>

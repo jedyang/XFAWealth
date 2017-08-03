@@ -1,0 +1,249 @@
+[#include "../inc/head_v2.html"/]
+<link rel="stylesheet" type="text/css" href="${base}/res/css/strategy.css">  
+<link rel="stylesheet" type="text/css" href="${base}/res/css/Funds.css">
+<link href="${base}/res/third/laydate/need/laydate.css">
+<link href="${base}/res/third/laydate/skins/yalan/laydate.css">
+<style>
+.notice-filter-mode-left{
+	float:left;
+	width: 58%;
+}
+.notice-filter-mode-right{
+	float:right;
+	width: 42%;
+}
+.notice-filter-title{
+	float:left;
+	color: #606060;
+	width: 100px;
+	line-height: 30px;
+	text-align: -webkit-right;
+	margin-right: 30px;
+}
+.notice-filter-time{
+	float:left;
+	padding:0 6px;
+	line-height:30px;
+	text-align: -webkit-center;
+}
+.notice-filter-input{
+	float:left;
+	width:204px;
+    height: 28px;
+    border: #dcdadb 1px solid;
+    border-radius: 3px;
+    font-size: 14px;
+}
+.clear{
+	overflow: hidden;
+}
+.notice-filter-select-btn{
+	float:left;
+	margin-left:50px;
+    width: 80px;
+    height: 37px;
+    background: #2d80ce;
+    color: #fff;
+    font-size: 14px;
+    line-height: 37px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 3px;
+    cursor: pointer; 
+}
+.notice-actions{
+	margin-left: 10px;
+    font-weight: bold;
+}
+.notice_tables_header {
+    padding: 0px 15px;
+    text-align: center;
+    position: relative;
+    z-index: 4;
+}
+.creat-time{margin:10px 0;}
+.image-bulletin{margin:10px 0;}
+.release-time input{width:150px !important;}
+.creat-time input{width:150px !important;}
+.notice-filter-mode-right input{
+	width:204px;
+    height: 28px;
+    border: #dcdadb 1px solid;
+    border-radius: 3px;
+    font-size: 14px;
+}
+.notice-filter-mode-right select{
+	width:208px;
+	border: 1px solid #d8d8d8;
+    border-radius: 4px;
+    height: 28px;
+}
+.dialog-notice{
+    position: fixed;
+    top: 0px;
+    z-index: 999999;
+}
+.selectSector-title-sub{
+	display:inline-block;
+	font-size: 14px;
+    padding-bottom:15px;
+    color:#b7b5b5;
+    margin-right:25px;
+    float: none;
+}
+.notice-content{
+	clear: both;
+    margin: 0 2%;
+}
+.dispaly-active{
+	height: 100%;
+ 	width: calc(100% - 110px);
+}
+.selectSector {
+    height: auto;
+    position: absolute;
+    width: calc(93% - 90px);
+    padding: 26px 33px 0 33px;
+    box-shadow: 0px 0px 8px #ccc7c7;
+    background: #fff;
+    top: 20px;
+    left: 90px;
+}
+</style>
+<div ng-app="notice" ng-controller="noticeCtrl" class="wmes-content">
+	<div class="ifa_choose_condition">
+		<p class="wmes-wrap-title">
+			[@lang_res k='notice.list.title'/]
+		</p>
+		<div>
+			<div class="notice-filter-mode-left">
+				<!-- <div class="clear" style="margin: 10px 0;">
+					<p class="notice-filter-title">[@lang_res k='notice.list.filter.title'/]</p>
+					<input id="txtTitle" class="notice-filter-input notice-bind-data">
+				</div>
+				<div class="clear" style="margin: 10px 0;">
+					<p class="notice-filter-title">[@lang_res k='notice.list.filter.releaseBy'/]</p>
+					<input id="txtReleaseName" class="notice-filter-input notice-bind-data">
+				</div> -->
+				<div class="clear image-bulletin">
+					<p class="notice-filter-title">[@lang_res k='notice.level'/]</p>
+					<select id="selLevel" class="notice-filter-input notice-bind-data">
+						<option selected value="">[@lang_res k='global.all'/]</option>
+						<option value="0">[@lang_res k='notice.level.0'/]</option>
+						<option value="1">[@lang_res k='notice.level.1'/]</option>
+					</select>	
+				</div>
+				<div class="clear release-time" style="margin: 10px 0;">
+					<p class="notice-filter-title">[@lang_res k='notice.list.filter.releaseDate'/]</p>
+					<input id="startTime" class="notice-filter-input laydate-icon form-control-laydate" readonly="readonly">	
+					<p class="notice-filter-time">~</p>
+					<input id="endTime" class="notice-filter-input laydate-icon form-control-laydate" readonly="readonly">
+					<a class="notice-filter-select-btn">[@lang_res k='global.select'/]</a>
+				</div>
+			</div>	
+			<div class="notice-filter-mode-right">
+				<div class="clear">
+					<p class="notice-filter-title">[@lang_res k='notice.edit.input.scope'/]</p>
+					<select id="selTarget" class="notice-filter-input notice-bind-data">
+						<option selected value="">[@lang_res k='global.all'/]</option>
+						[#if sourceType?? && sourceType == 'ifafirm']
+							<option value="ALL">[@lang_res k='notice.target.ALL'/]</option>
+							<option value="I1">[@lang_res k='notice.target.I1'/]</option>
+							<option value="I2">[@lang_res k='notice.target.I2'/]</option>
+						[#elseif sourceType?? && sourceType == 'distributor']
+							<option value="ALL">[@lang_res k='notice.target.ALL'/]</option>
+							<option value="D1">[@lang_res k='notice.target.D1'/]</option>
+							<option value="D2">[@lang_res k='notice.target.D2'/]</option>
+						[/#if]
+					</select>	
+				</div>
+			</div>	
+		</div>	
+	</div>
+	<div class="recommend-list-wrap">
+		<div class="portfolio-edit-button" style="clear: both">
+           <a id="btnAdd" target="_self" class="portfolio-button" href="${base!}/console/notice/editNotice.do">[@lang_res k='global.add'/]</a>
+        </div>
+        <div class="funds_keyserach_wrap" style="float: left;">
+			<p class="ifa_serach_sum">
+				[@lang_res k='notice.list.notice.total.prefix'/] <span class="funds_serach_digital table-rows-total">0</span> [@lang_res k='notice.list.notice.total.suffix'/]
+			</p> 
+			<input id="hidPage" type="hidden" value="1"/>
+			<input id="hidOrder" type="hidden" value="DESC"/>
+			<input id="hidSort" type="hidden" value="n.releaseDate"/>
+        </div>
+        <div class="funds_keyserach">
+			<input type="text" id="txtKeyWord" title="[@lang_res k='notice.search.keyWord.placeholder'/]" placeholder="[@lang_res k='notice.search.keyWord.placeholder'/]">
+			<span id="btnKeyWordSearch" class="icon_search"></span>
+		</div>
+		<table class="funds_search_information strategies_List ng-cloak">
+             <tbody class="notice-table-data">
+                 <tr class="funds_tables_th">
+                     <th width="20%" class="notice_tables_header">[@lang_res k='notice.list.table.th.title'/]</th>
+                     <th width="20%" class="notice_tables_header">[@lang_res k='notice.list.table.th.releaseBy'/]</th>
+                     <th width="20%" style="cursor: pointer;" class="notice_tables_header notice_order notice_order_release_date">[@lang_res k='notice.list.table.th.releaseDate'/]
+	                     <p class="funds_arrow_wraps">
+		                     <span class="arrow_top_release_date arrow_top"></span>
+		                     <span class="arrow_down_release_date arrow_down down_active"></span>
+	                     </p>
+                     </th>
+                     <th width="15%" class="notice_tables_header">[@lang_res k='notice.edit.input.scope'/]</th>
+                     <th width="15%" class="notice_tables_header">[@lang_res k='notice.level'/]</th>
+                     <th width="10%" class="notice_tables_header">[@lang_res k='notice.list.table.th.actions'/]</th>
+                 </tr>
+                 <tr id="{{items.id}}" ng-repeat="items in notices">
+                 	<td class="funds_search_tdcenter">
+                 		<a ng-if="items.level=='1'" style="color:red;" class="notice-preview" sourceName="{{items.sourceName}}" title="{{items.subject}}" href="javascript:void(0)">{{items.subject}}</a>
+                 		<a ng-if="items.level!='1'" class="notice-preview" sourceName="{{items.sourceName}}" title="{{items.subject}}" href="javascript:void(0)">{{items.subject}}</a>
+                 		<input class="notice-table-content" type="hidden" value="{{items.content}}">
+               		</td>
+               		<td class="funds_search_tdcenter notice-table-release-by">{{items.releaseByName}}</td>
+               		<td class="funds_search_tdcenter notice-table-release-date">{{items.releaseDateStr}}</td>
+               		<td class="funds_search_tdcenter notice-td-target">{{items.targetDisplay}}</td>
+               		<td class="funds_search_tdcenter notice-td-level">{{items.levelDisplay}}</td>
+               		<td class="funds_search_tdcenter notice-td-actions">
+               			<a class="notice-actions notice-actions-edit" href="${base!}/console/notice/editNotice.do?id={{items.id}}">
+               			<img title="[@lang_res k='global.edit'/]" src="${base!}/res/images/notice/ico_edit.png"/>
+               			</a>
+               			<a class="notice-actions notice-actions-delete" href="javascri:void(0)">
+               			<img title="[@lang_res k='global.delete'/]" src="${base!}/res/images/notice/ico_delete.png"/>
+               			</a>
+               		</td>
+               	 </tr>
+             </tbody>
+             <tbody class="notice-nodata-tips">
+                 <tr>
+	                 <td colspan="7">
+	                 	<div class="wmes-nodata-tips" style="display: block;">
+	                           <img class="wmes-nodata-img" src="${base!}/res/images/no_data_ico.png">
+	                           <span class="wmes-nodate-word">[@lang_res k='global.search.noData'/]</span>
+	                     </div>
+	                 </td>
+                 </tr>
+             </tbody>
+         </table>
+         <wmespage conf="noticeConf"></wmespage>
+	</div>
+</div>
+<!-- preview notice -->
+<div id="previewNoticeDialog" class="wmes-content-position dialog-notice" style="background: rgba(0,0,0,0.3);display:none;width:100%">
+	<div class="selectSector">
+		<div class="investment-wrap investment-hide">
+			<div class="investment-plan-wrap">
+				<div class="wmes-close"></div>
+				<p style="margin-bottom: 15px;font-size:25px;text-align: center;" class="selectSector-title notice-dialog-title"></p>
+				<div style="text-align:center;">
+					<p class="selectSector-title-sub">[@lang_res k='notice.edit.dialog.notice.preview.releaseDate'/] : <span class="notice-dialog-release-date-time"></span></p>
+					<p class="selectSector-title-sub">[@lang_res k='notice.edit.dialog.notice.preview.releaseBy'/] : <span class="notice-dialog-release-by"></span></p>
+				</div>
+				<div class="notice-content dialog-notice-content" style="height: 450px;overflow: auto;"></div>
+				<div class="character-button-rows"></div>
+			</div>
+		</div>
+	</div>
+</div>
+[#include "../inc/foot_v2.html"/]
+<script type="text/javascript">
+	 var props = [@load_prop k=''/];
+     seajs.use('${base}/res/web/notice/list.js');
+</script>

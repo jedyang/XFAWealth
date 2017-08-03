@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+[#include "../../inc/head_pop.html"/]
+<title>Investment Style</title>
+<style>
+.label li a{display:block; width:100px; height:20px; border:1px solid red;}
+.label li span{display:inline-block; width:80px; height:20px; border:1px solid blue;}
+.label li{display:inline-block;padding:5px 10px 5px 10px; width:auto; height:20px; border:1px solid black;text-align=center;line-height:20px;overflow:hidden;}
+</style>
+</head>
+<body>
+<style type="text/css">
+    html, body{
+        [#if Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='en']
+            font-family:  arial;
+        [#elseif Session["_LANG_CODE_"]?exists && Session["_LANG_CODE_"]=='tc']
+            font-family:Microsoft YaHei;
+        [#else]
+             font-family:Microsoft YaHei;
+        [/#if]
+    }
+</style>
+<input type="hidden" value="${base}" id="site_base"><!-- 基本路径 -->
+<input type="hidden" value="[@lang_res  k='error.noLogin'/]" id="login_error">
+
+<div class="wmes_window">
+
+   <link rel="stylesheet" href="${base}/res/css/openaccount.css">
+    <link rel="stylesheet" href="${base}/res/css/css.css">
+	
+
+        <div class="gary_title">Investment Style</div>
+        <form id="saveAccountForm" name="saveAccountForm" action="">
+        <input type="hidden" name="investStyle" id="investStyle" value="${investStyle!}">
+        <div class="insight-row">
+             <p class="insight-row-title">Selected:</p>
+             <ul class="insight-channel-ul">
+             [#if myInvestStyle??]
+                 [#list myInvestStyle as x]
+                 <li class="selected_item insight-channel-choose" style="cursor: pointer;" data-id="${x.itemCode!''}" onclick="javascript:;">
+                    ${x.name!""}
+                 </li>
+                 [/#list]
+             [/#if]
+             </ul>
+        </div>
+        <div class="insight-row">
+             <p class="insight-row-title">Please Select your investment style：</p>
+             <ul class="insight-channel-ul">
+             [#if styleList??]
+                 [#list styleList as x]
+                 <li class="unselected_item insight-relate-choose" style="cursor: pointer;" data-id="${x.itemCode!''}" onclick="javascript:;"> 
+                    ${x.name!""}
+                 </li>
+                 [/#list]
+             [/#if]
+             </ul>
+        </div>
+        
+        </form>
+        
+        <div class="btn_middle_div">
+           <a id="btn_update" class="btn_middle" style="width:100px;" href="javascript:;">[@lang_res k='global.save'/]</a>
+           <a id="btn_cancel" class="btn_middle" style="width:100px;" href="javascript:;">[@lang_res k='global.cancel'/]</a>
+        </div>
+<script type="text/javascript">
+seajs.use('jquery', function($){
+    $(".selected_item").on("click",function(){
+        var code = $(this).attr("data-id");
+        //alert(code);
+        del(code);
+    });
+    
+    $(".unselected_item").on("click",function(){
+        var code = $(this).attr("data-id");
+        //alert(code);
+        add(code);
+    });
+    
+    $("#btn_update").on("click",function(){
+        saveData();
+        window.opener.location.href=window.opener.location.href;   
+        window.close();
+    });
+    
+    $("#btn_cancel").on("click",function(){
+        window.close();
+    });
+    
+    function del(code){
+        $("#investStyle").val($("#investStyle").val().replace(code,""));
+        saveData();
+    }
+    function add(code){
+        $("#investStyle").val($("#investStyle").val()+","+code);
+        saveData();
+    }
+    function saveData(){
+        $.ajax({
+            type:'get',
+            url: base_root + "/front/member/personal/saveInvestStyle.do",
+            datatype:"JSON",
+            data: {"investStyle" : $("#investStyle").val()},
+            success:function(data){
+//              alert(data);
+ /*               if(data.result){
+                    window.location.href= _root_+"/front/member/personal/info.do";
+                }else{
+                    $.Tips({ content: "Save failed" });
+                }*/
+                location.reload();
+            },
+            error:function(data){
+                // 
+            }
+        })
+    }
+});
+</script>
+
+  </div> 
+    <!-- 脚部 -->
+</div>
+</body>
+</html>

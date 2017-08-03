@@ -1,0 +1,357 @@
+[#include "../../inc/head_v2.html"/]
+    <link href="${base}/res/console/css/bootstrap-3.3.4.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/console/css/css.css" rel="stylesheet" type="text/css">
+    <link href="${base}/res/third/dialog/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="${base}/res/third/treetable/css/screen.css" rel="stylesheet" media="screen">
+    <link href="${base}/res/third/treetable/css/jquery.treetable.css" rel="stylesheet" >
+    <link href="${base}/res/third/treetable/css/jquery.treetable.theme.default.css" rel="stylesheet"  >
+    <link rel="stylesheet" type="text/css" href="/wmes/res/css/Funds.css">
+    <style>
+       	.login-dialog .modal-dialog {width: 1000px;}
+      	.firminfo-dialog .modal-dialog{width: 900px;}
+        .teaminfo-dialog .modal-dialog{width: 700px;}
+        .btneditnode{text-decoration:underline;}
+        .wmes-contentbox {
+            background: #ffffff;
+            padding-top: 5px;
+        }
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+ 		<script src="${base}/res/js/html5shiv.min.js"></script>
+	  	<script src="${base}/res/js/respond.min.js"></script>
+	<![endif]-->
+
+<div class="container-fluid pd0" id="wmes_wraper">
+    <div >
+        <div class="r-side-container" style="margin-left:80px">
+            <ul class="tab" id="tab-search">
+                <li class="tab-li-crr">
+                    <a href="#tab_wrap">[@lang_res  k='console.rpq.list.tab.title'/]</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="tab_wrap" id="tab_wrap" >
+                <!-- tab一 -->
+                <form class="form-inline" style="display:block;">
+                	<input type="hidden" value="" class="hiddenSearch" id="selClienttype"/>
+                	<input type="hidden" value="" class="hiddenSearch" id="selPagetype"/>
+                    <div class="funds_choice_wrap">
+                    	<p class="funds_choice_title">[@lang_res  k='console.rpq.clienttype'/]</p>
+                    	<ul class="funds_choice">
+                    		<li class="selClienttype period_all fund_choice_active2 fund_choice_active" data-name="selClienttype" data-key="" data-value="">[@lang_res k='ifaspace.info.all'/]</li>
+                    		<li class="" data-name="selClienttype" data-key="[@lang_res  k='console.rpq.Individual'/]" data-value="Individual">[@lang_res  k='console.rpq.Individual'/]</li>
+                    		<li class="" data-name="selClienttype" data-key="[@lang_res  k='console.rpq.Individual'/]" data-value="Corporate">[@lang_res  k='console.rpq.Individual'/]</li>
+                    		<li class="" data-name="selClienttype" data-key="[@lang_res  k='console.rpq.FI'/]" data-value="FI">[@lang_res  k='console.rpq.FI'/]</li>
+                    	</ul>
+                    </div>
+                    <div class="funds_choice_wrap">
+                    	<p class="funds_choice_title">[@lang_res  k='console.rpq.pagetype'/]</p>
+                    	<ul class="funds_choice">
+                    		<li class="selPagetype period_all fund_choice_active2 fund_choice_active" data-name="selPagetype" data-key="" data-value="">[@lang_res k='ifaspace.info.all'/]</li>
+                    		<li class="" data-name="selPagetype" data-key="[@lang_res k='console.rpq.openAccountRpq'/]" data-value="O">[@lang_res k='console.rpq.openAccountRpq'/]</li>
+                    		<li class="" data-name="selPagetype" data-key="[@lang_res k='console.rpq.openAccountRpq'/]" data-value="K">[@lang_res k='console.rpq.openAccountRpq'/]</li>
+                    	</ul>
+                    </div>
+                    <div class="clear"></div>
+                    <!--按钮 -->
+                    <div>
+                    	<a id="btnAddInfoForm" href="javascript:ShowFirmDialog('');" class="btn-blue-s">[@lang_res k='global.add'/]</a>
+                    	<a id="btnToDoSearch" href="javascript:void(0);" class="btn-blue-s">[@lang_res k='global.query'/]</a>
+                    	<a id="btnAddFromTemp" href="javascript:void(0);" class="btn-blue-s">[@lang_res k='global.addFromTemp'/]</a>
+                    </div>
+                    <!-- 筛选条件 -->
+                    <div class="funds_list_selected">
+			            <p class="funds_selected_title">[@lang_res k='criteria.selected'/]</p>
+						<ul class="selection_criteria">
+							<p class="funds_title_selection">[@lang_res k='criteria.selected.reset'/]</p>
+						</ul>
+					</div>
+					<!-- 数据条数与输入框查询 -->
+                    <div class="funds_keyserach_wrap">
+						<p class="ifa_serach_sum" style="line-height:33px;">
+							[@lang_res k='criteria.total.a'/]					
+							<span class="funds_serach_digital" id="dataTotal"></span> [@lang_res k='criteria.total.b'/]
+						</p> 
+					 	<div style="height:33px;" class="funds_keyserach ifa_keyserach">
+                       		<input type="text" class="searchCondition" id="txtTitle" placeholder="[@lang_res k='console.rpq.questionList.seachTitleTip'/]">
+                       		<span class="icon_search"></span>	
+                    	</div>
+			        </div>
+                    <div>
+                        <table border="0" id="pagedatalist" cellpadding="0" cellspacing="0" class="table table-hover table-striped" >
+							<tbody>
+								<tr>
+		                            <th class="table-head" style="widht:30%;">[@lang_res  k='console.rpq.title'/]</th>
+		                            <!--  <th class="table-head">问卷语言</th>-->
+		                            <th class="table-head">[@lang_res  k='console.rpq.clienttype'/]</th>
+		                            <th class="table-head">[@lang_res  k='console.rpq.pagetype'/]</th>
+		                            <th class="table-head">[@lang_res  k='global.status'/]</th>
+		                            <th class="table-head">[@lang_res k='global.operate'/]</th>
+		                        </tr>
+	                    	</tbody>
+						</table>
+                   
+		           		<nav  class="pull-right">
+			                <!-- log分页 -->
+			                <ul id='pagination' class="pagination pagination-sm">  
+			                	
+			                </ul>
+			            </nav>
+           				<div class="clear"></div>                      
+                    </div>
+                </form>         
+            </div>            
+        </div>
+    </div>
+</div>
+<script src="${base}/res/console/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/jquery.pagination.js"></script>
+<script src="${base}/res/console/js/bootstrap.js" type="text/javascript"></script>
+<script src="${base}/res/third/jqueryui/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/res/console/js/js.js" type="text/javascript"></script>
+<script src="${base}/res/third/dialog/js/bootstrap-dialog.js"></script>
+<script src="${base}/res/third/layer/layer_v2.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		//搜索條件點擊事件
+		$(".funds_choice li").on("click",function(){
+			$(this).siblings().removeClass("fund_choice_active2").end();
+			if($(this).index()==0){
+                $(this).addClass("fund_choice_active2");
+            }
+			$(this).siblings().removeClass("fund_choice_active").end().addClass("fund_choice_active");
+			
+			var selection_criterialenght = $(".selection_criteria li").length;
+			for(var i = 0; i < selection_criterialenght ;i++){
+				if($(".selection_criteria li").eq(i).attr("data-name") == $(this).attr("data-name") ){
+					$(".selection_criteria li").eq(i).remove();
+				}
+			}
+			if($(this).attr("data-key") != undefined && $(this).attr("data-key") != ""){
+				$(".funds_title_selection").before('<li data-name="' + $(this).attr("data-name") + '">' + $(this).attr("data-key") + '<span class="selection_delete"></span></li>')
+			}
+			
+			var selectId = $(this).attr("data-name");
+			var selectValue= $(this).attr("data-value");
+			$("#"+selectId).val(selectValue);
+			bindList(0)
+		});
+		
+		//执行清除方案点击操作
+		$(".funds_title_selection").on("click",function(){
+			$(".period_all").click();
+		});	
+		
+		//清除单个搜索条件
+		$(document).on("click",".selection_delete",function(){
+			var selectId = $(this).parent().data("name");
+			$("."+selectId).click();
+		});		
+		
+		//进入题库页面
+		$('#btnManagerRequ').on('click',managerRequ);
+		//进入题库页面
+		function managerRequ()
+		{
+			window.location.href = '${base}/console/rpq/quest_list.do' ;
+		}
+		
+     	//点击点转到设置关联题目页面
+        $("body").on('click', '.btnsetpagequest', '', function () {
+        	var pageid = ($(this).parent().find('a:eq(1)').attr('id'));
+            var url = '${base}/console/rpq/set_page_quest.do?pageid='+pageid;
+            showform('set-page-quest'+pageid,'[@lang_res k="console.rpq.list.table.operate.setQuestion"/]',url);
+        });
+         	
+        //点击点转到设置分数等级页面
+        $("body").on('click', '.btnsetlevel', '', function () {
+        	var pageid = ($(this).parent().find('a:eq(1)').attr('id'));
+            var url = '${base}/console/rpq/page_level_list.do?pageid='+pageid;
+            showform('set-page-level'+pageid,'[@lang_res k="console.rpq.list.table.operate.setLevel"/]',url);
+        });
+        
+		//从模板添加
+        $("body").on("click","#btnAddFromTemp","",function(){
+        	//alert("xitong");
+        	var url="${base}/console/rpqDistributor/pageFromTemp.do?r="+Math.random();
+        	showform("create-page-from-temp","[@lang_res k='global.addFromTemp'/]",url);
+        })
+        //点击删除问卷
+        $("body").on('click', '.btndelpage', '', function () {
+            //获取前个节点
+            var pageid = ($(this).parent().find('a:eq(1)').attr('id'));
+             layer.confirm("你确认要删除该问卷吗？", { icon: 3  },function () { 
+				 $.ajax({
+					type : 'post',
+					datatype : 'json',
+					url : "${base}/console/rpq/delPage.do?datestr="
+							+ new Date().getTime(),
+					data : {'id':pageid  },
+				 	beforeSend: function () {
+			                    //indexmsg = layer.msg("[@lang_res  k='ifafirm.message.promptDealLoading'/]", { time: 500000 });
+                 	},
+                 	complete: function () {
+			                	 
+                 	},
+					success : function(json) {
+						//console.log(json);
+						json = JSON.parse(json);
+						var result = json.result;
+						if(result==true||result=='true'){
+							layer.msg("[@lang_res  k='global.success.save'/]", { icon: 2, time: 1000 }, function () { bindList(0); });
+						}
+					}
+				});
+             	layer.closeAll();
+             });
+        });
+            
+		//效果
+		$("body").on("mouseover", ".class_planname", function () {
+		    $(this).css({ 'color': '#ffffff', 'background-color': '#2d80ce', 'cursor': 'pointer', 'border-bottom-right-radius': '4px', 'border-bottom-left-radius': '4px', 'border-top-right-radius': '4px', 'border-top-left-radius': '4px' });
+		});
+		$("body").on("mouseleave", ".class_planname", function () {
+		    $(this).css({ 'color': '#000000', 'background-color': '' });
+		});
+		$("body").on("mouseover", ".btneditnode", function () {
+		    $(this).css({ 'text-decoration': 'underline' });
+		});
+		$("body").on("mouseleave", ".btneditnode", function () {
+		    $(this).css({ 'text-decoration': 'none' });
+		});
+          
+		$('#btnToDoSearch').click(function() {
+			bindList(0);
+		});
+			
+		var types = [BootstrapDialog.TYPE_DEFAULT, 
+	                 BootstrapDialog.TYPE_INFO, 
+	                 BootstrapDialog.TYPE_PRIMARY, 
+	                 BootstrapDialog.TYPE_SUCCESS, 
+	                 BootstrapDialog.TYPE_WARNING, 
+	                 BootstrapDialog.TYPE_DANGER];	
+	 	setAutoSearch('.searchCondition',bindList,0);
+		//分页绑定Table数据
+		bindList(0);
+	});
+	
+	function bindList(pageid) {
+		var title = $('#txtTitle').val();
+		var clientType = $('#selClienttype').val();
+		var pageType = $('#selPagetype').val();
+		//var ifafirmid = $('#txtSelectedCompanyName').val();
+		$.ajax({
+					type : 'post',
+					dataType : 'json',
+					url : "${base}/console/rpqDistributor/listPageJson.do?datestr="
+							+ new Date().getTime(),
+					data : {
+						title : title,
+						clientType : clientType,
+						pageType : pageType,
+						page : pageid + 1,
+						rows : 8
+					},
+				 	beforeSend: function () {
+                        //indexmsg = layer.msg("正在加载数据中，请稍候....", { time: 50000 });
+                    },
+                    complete: function () {
+						//layer.close(indexmsg);
+                    },
+					success : function(json) {
+						var total = json.total;
+						var table = json.rows;
+						var html = '';
+						$("#pagedatalist tbody tr:gt(0)").empty();
+						if(!!total){
+							$("#dataTotal").html(total)
+						}else{
+							$("#dataTotal").html(0)
+						}
+						$.each(table,function(i, n) {
+								var id = n.rpqPageid;
+								var title = n.rpqPageTitle;
+								//客户类型
+								var clientType = n.clientType;
+								if('FI'==clientType){
+									clientType="[@lang_res  k='console.rpq.FI'/]";
+								}else if('Individual'==clientType){
+									clientType = "[@lang_res  k='console.rpq.Individual'/]";
+								}else if('Corporate'==clientType){
+									clientType = "[@lang_res  k='console.rpq.Corporate'/]"
+								}
+								//适用类型
+								var pageType = n.pageType;
+								if (pageType == 'O')
+									pageType = '[@lang_res k='console.rpq.openAccountRpq'/]';
+								else
+									pageType = '[@lang_res k='console.rpq.KYCrpq'/]';
+								
+								//题库状态
+								var status = n.status;	
+								var status_2 = '';
+								if('using' == status)
+									status_2 = '[@lang_res k="global.status.using"/]';
+								else if('unusing' == status)
+									status_2 = '[@lang_res k="global.status.unusing"/]';
+								else if('draft' == status)
+									status_2 = '[@lang_res k="global.status.draft"/]';
+								else if('delete' == status)
+									status_2 = '[@lang_res k="global.status.delete"/]';
+								
+								var langCode = n.langCode;
+								var button = '<a id="'+id+'" pageid="' + id 
+									+ '" class="btnsetpagequest" href="javascript:void(0);">[@lang_res k="console.rpq.setPageQuest"/]</a>&nbsp;&nbsp;'
+									+ '<a id="'+id+'" pageid="' + id 
+									+ '" class="btnsetlevel" href="javascript:void(0);">[@lang_res k="console.rpq.setLevel"/]</a>';
+								if('using' != status){
+									button += '&nbsp;&nbsp;<a classlayer="1" pageid="' + id 
+									+ '" class="btndelpage" href="javascript:void(0);">[@lang_res  k="global.delete"/]</a>'
+								}
+							  	html += '<tr><td><a href="javascript:void(0);" onclick="ShowFirmDialog(\''+id+'\')">'
+									+ title	+ '</a></td><td>'
+									+ clientType + '</td><td>'
+									+ pageType + '</td><td>'
+									+ status_2 + '</td><td>'
+									+ button + '</td></tr>'
+							});
+						$('#pagedatalist').append(html);
+
+						$("#pagination").pagination(total, {
+							callback : pageselectCallback,
+							numDetail : '',
+							items_per_page : 8,
+							num_display_entries : 4,
+							current_page : pageid,
+							num_edge_entries : 2
+						});
+					}
+			})
+		//回调
+		function pageselectCallback(page_id, jq) {
+			bindList(page_id);
+		}
+	}
+		
+    function ShowFirmDialog(id)	{
+		BootstrapDialog.show({
+			title : "[@lang_res  k='console.rpq.form.title'/]",
+			cssClass : 'login-dialog',
+			type : BootstrapDialog.TYPE_PRIMARY,
+			size : BootstrapDialog.SIZE_WIDE,
+			draggable : true,
+			message : $('<div><iframe scrolling="no" frameborder="0" name="Info1" onload="this.height=Info1.document.body.scrollHeight" width="100%" src="${base}/console/rpq/form.do?id='+id+'"></iframe></div>').load(),
+			buttons : [{
+					label : "[@lang_res  k='global.close'/]",
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+			}]
+		});
+	}
+</script>
+[#include "../../inc/foot_v2.html"/]
+
